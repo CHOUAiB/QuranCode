@@ -1,0 +1,70 @@
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, 
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, ****************************
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, Starting factorization of 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, using pretesting plan: normal
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, no tune info: using qs/gnfs crossover of 95 digits
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, ****************************
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, rho: x^2 + 3, starting 1000 iterations on C97
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, rho: x^2 + 2, starting 1000 iterations on C97
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, rho: x^2 + 1, starting 1000 iterations on C97
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, prp8 = 12004721
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, rho: x^2 + 1, starting 1000 iterations on C89
+02/10/17 13:36:16 v1.34.5 @ ALI-PC, pm1: starting B1 = 150K, B2 = gmp-ecm default on C89
+02/10/17 13:36:17 v1.34.5 @ ALI-PC, current ECM pretesting depth: 0.00
+02/10/17 13:36:17 v1.34.5 @ ALI-PC, scheduled 30 curves at B1=2000 toward target pretesting depth of 27.38
+02/10/17 13:36:17 v1.34.5 @ ALI-PC, Finished 30 curves using Lenstra ECM method on C89 input, B1=2K, B2=gmp-ecm default
+02/10/17 13:36:17 v1.34.5 @ ALI-PC, current ECM pretesting depth: 15.18
+02/10/17 13:36:17 v1.34.5 @ ALI-PC, scheduled 74 curves at B1=11000 toward target pretesting depth of 27.38
+02/10/17 13:36:23 v1.34.5 @ ALI-PC, Finished 74 curves using Lenstra ECM method on C89 input, B1=11K, B2=gmp-ecm default
+02/10/17 13:36:23 v1.34.5 @ ALI-PC, current ECM pretesting depth: 20.24
+02/10/17 13:36:23 v1.34.5 @ ALI-PC, scheduled 214 curves at B1=50000 toward target pretesting depth of 27.38
+02/10/17 13:37:28 v1.34.5 @ ALI-PC, Finished 216 curves using Lenstra ECM method on C89 input, B1=50K, B2=gmp-ecm default
+02/10/17 13:37:28 v1.34.5 @ ALI-PC, pm1: starting B1 = 3750K, B2 = gmp-ecm default on C89
+02/10/17 13:37:31 v1.34.5 @ ALI-PC, current ECM pretesting depth: 25.34
+02/10/17 13:37:31 v1.34.5 @ ALI-PC, scheduled 177 curves at B1=250000 toward target pretesting depth of 27.38
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, 
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, ****************************
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, Starting factorization of 97107832478322831038910110783613103476789832291076789101107836158961972971072383253294389107735378983253294383229719101297107615379779210721031936197792107297107198328910310779838989107132983297891329832971078983618323291018383198913832891071329832978913298321018383289373
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, using pretesting plan: normal
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, no tune info: using qs/gnfs crossover of 95 digits
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, ****************************
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, div: found prime factor = 47
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, div: found prime factor = 107
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, div: found prime factor = 1399
+02/10/17 13:39:47 v1.34.5 @ ALI-PC, prp266 = 13802409566803153722549329796204615585115953245454674411090135563831560078218581441832423993409401878433647302149281003815768132448635542263880491888688509759493180912950819596567071685742775291144290894508928839410237390969174100995332559513837588019353837566420463
+02/10/17 13:39:57 v1.34.5 @ ALI-PC, Total factoring time = 9.7500 seconds
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, 
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, ****************************
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, Starting factorization of 65453637459381111885198811211520302619172225361929424640503140562028284452523012121811111413242229967855624960451829383537598953548575881828345547330346069889322777641187811213598110111128995243111123109129752061651201762002867
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, using pretesting plan: normal
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, no tune info: using qs/gnfs crossover of 95 digits
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, ****************************
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, div: found prime factor = 29
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, rho: x^2 + 3, starting 1000 iterations on C226
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, rho: x^2 + 2, starting 1000 iterations on C226
+02/10/17 13:40:09 v1.34.5 @ ALI-PC, rho: x^2 + 1, starting 1000 iterations on C226
+02/10/17 13:40:10 v1.34.5 @ ALI-PC, pm1: starting B1 = 150K, B2 = gmp-ecm default on C226
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, current ECM pretesting depth: 0.00
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, scheduled 30 curves at B1=2000 toward target pretesting depth of 69.54
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, prp16 = 3158913266167907 (curve 1 stg2 B1=2000 sigma=4151607853 thread=0)
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, Finished 1 curves using Lenstra ECM method on C226 input, B1=2K, B2=gmp-ecm default
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, current ECM pretesting depth: 0.00
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, scheduled 29 curves at B1=2000 toward target pretesting depth of 64.62
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, prp12 = 231596882851 (curve 3 stg2 B1=2000 sigma=3258480051 thread=0)
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, Finished 3 curves using Lenstra ECM method on C210 input, B1=2K, B2=gmp-ecm default
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, current ECM pretesting depth: 0.00
+02/10/17 13:40:11 v1.34.5 @ ALI-PC, scheduled 26 curves at B1=2000 toward target pretesting depth of 61.23
+02/10/17 13:40:12 v1.34.5 @ ALI-PC, Finished 26 curves using Lenstra ECM method on C199 input, B1=2K, B2=gmp-ecm default
+02/10/17 13:40:12 v1.34.5 @ ALI-PC, current ECM pretesting depth: 15.18
+02/10/17 13:40:12 v1.34.5 @ ALI-PC, scheduled 74 curves at B1=11000 toward target pretesting depth of 61.23
+02/10/17 13:40:30 v1.34.5 @ ALI-PC, Finished 74 curves using Lenstra ECM method on C199 input, B1=11K, B2=gmp-ecm default
+02/10/17 13:40:30 v1.34.5 @ ALI-PC, current ECM pretesting depth: 20.24
+02/10/17 13:40:30 v1.34.5 @ ALI-PC, scheduled 214 curves at B1=50000 toward target pretesting depth of 61.23
+02/10/17 13:43:46 v1.34.5 @ ALI-PC, Finished 216 curves using Lenstra ECM method on C199 input, B1=50K, B2=gmp-ecm default
+02/10/17 13:43:46 v1.34.5 @ ALI-PC, pm1: starting B1 = 3750K, B2 = gmp-ecm default on C199
+02/10/17 13:43:56 v1.34.5 @ ALI-PC, current ECM pretesting depth: 25.34
+02/10/17 13:43:56 v1.34.5 @ ALI-PC, scheduled 430 curves at B1=250000 toward target pretesting depth of 61.23
+02/10/17 14:06:26 v1.34.5 @ ALI-PC, Finished 432 curves using Lenstra ECM method on C199 input, B1=250K, B2=gmp-ecm default
+02/10/17 14:06:26 v1.34.5 @ ALI-PC, pm1: starting B1 = 15M, B2 = gmp-ecm default on C199
+02/10/17 14:06:50 v1.34.5 @ ALI-PC, current ECM pretesting depth: 30.46
+02/10/17 14:06:50 v1.34.5 @ ALI-PC, scheduled 904 curves at B1=1000000 toward target pretesting depth of 61.23
