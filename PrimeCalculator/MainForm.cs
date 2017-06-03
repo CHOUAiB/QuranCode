@@ -354,18 +354,18 @@ public partial class MainForm : Form
             {
                 HistoryForewardLabel_Click(null, null);
             }
+            else if (e.KeyCode == Keys.Up)
+            {
+                NextPrimeNumber();
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                PreviousPrimeNumber();
+            }
             else if (e.KeyCode == Keys.Delete)
             {
                 HistoryDeleteLabel_Click(null, null);
             }
-        }
-        else if (e.KeyCode == Keys.Up)
-        {
-            NextPrimeNumber();
-        }
-        else if (e.KeyCode == Keys.Down)
-        {
-            PreviousPrimeNumber();
         }
         else if (e.KeyCode == Keys.Enter)
         {

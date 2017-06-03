@@ -27655,14 +27655,18 @@ public partial class MainForm : Form, ISubscriber
     private void UpdateSumOfDivisors(long value)
     {
         long sum_of_divisors = Numbers.SumOfDivisors(value);
+        string divisors = Numbers.GetDivisorsString(value);
         SumOfDivisorsTextBox.Text = sum_of_divisors.ToString();
         SumOfDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_divisors);
         SumOfDivisorsTextBox.Refresh();
+        ToolTip.SetToolTip(SumOfDivisorsTextBox, divisors);
 
         long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
+        string proper_divisors = Numbers.GetProperDivisorsString(value);
         SumOfProperDivisorsTextBox.Text = sum_of_proper_divisors.ToString();
         SumOfProperDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
+        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, proper_divisors);
 
         DisplayLetterFrequenciesTotals();
     }

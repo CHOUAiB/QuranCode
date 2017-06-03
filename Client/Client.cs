@@ -434,6 +434,10 @@ public class Client : IPublisher, ISubscriber
                         writer.WriteLine("Letter" + "\t" + "Value");
                         writer.WriteLine("----------------------------------------");
 
+                        int pos = text.IndexOf("----------------------------------------"); ;
+                        text = text.Substring(0, pos);
+
+
                         text = text.SimplifyTo(NumerologySystem.TextMode);
                         foreach (char character in text)
                         {
@@ -447,8 +451,13 @@ public class Client : IPublisher, ISubscriber
                             }
                             else
                             {
-                                writer.WriteLine(character.ToString() + "\t" + CalculateValue(character));
+                                writer.WriteLine(character.ToString() + "\t" + CalculateValue(character.ToString().ToUpper()));
                             }
+                        }
+
+                        if (!text.IsArabic())  // eg English
+                        {
+                            text = text.ToUpper();
                         }
                         writer.WriteLine("----------------------------------------");
                         writer.WriteLine("Total" + "\t" + CalculateValue(text));

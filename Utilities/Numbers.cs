@@ -3050,6 +3050,7 @@ public static class Numbers
     public static List<long> Factorize(long number)
     {
         List<long> result = new List<long>();
+
         if (number < 0L)
         {
             result.Add(-1L);
@@ -3097,6 +3098,8 @@ public static class Numbers
                 }
             }
         }
+
+        s_factors = result;
         return result;
     }
     /// <summary>
@@ -3107,6 +3110,7 @@ public static class Numbers
     public static Dictionary<long, int> FactorizeByPowers(long number)
     {
         Dictionary<long, int> result = new Dictionary<long, int>();
+
         int power = 0;
         List<long> factors = Factorize(number);
         result.Add(factors[0], power);
@@ -3123,36 +3127,118 @@ public static class Numbers
                 result[factor] = power;
             }
         }
+
+        s_factor_powers = result;
         return result;
     }
 
-    /// <summary>
-    /// Sum of all divisors except the number itself.
-    /// </summary>
-    /// <param name="number"></param>
-    /// <returns></returns>
-    public static long SumOfProperDivisors(long number)
+    private static List<long> s_factors = null;
+    private static Dictionary<long, int> s_factor_powers = null;
+    public static List<long> GetDivisors(long number)
     {
-        return SumOfDivisors(number) - number;
+        //if (s_factor_powers == null) 
+        s_factor_powers = FactorizeByPowers(number);
+        int factors_count = GetDivisorCount(number);
+        List<long> result = new List<long>(factors_count);
+
+        result.Insert(0, 1L);
+        int count = 1;
+        foreach (long key in s_factor_powers.Keys)
+        {
+            int count_so_far = count;
+            long prime = key;
+            int exponent = s_factor_powers[key];
+
+            long multiplier = 1L;
+            for (int j = 0; j < exponent; ++j)
+            {
+                multiplier *= prime;
+                for (int i = 0; i < count_so_far; ++i)
+                {
+                    result.Insert(count++, result[i] * multiplier);
+                }
+            }
+        }
+        return result;
     }
     public static long SumOfDivisors(long number)
     {
-        // Is 1 a perfect number?
-
         long result = 1L;
-        Dictionary<long, int> factors = FactorizeByPowers(number);
-        foreach (long key in factors.Keys)
+        //if (s_factor_powers == null) 
+        s_factor_powers = FactorizeByPowers(number);
+        foreach (long key in s_factor_powers.Keys)
         {
-            int sum = 0;
-            for (int i = 0; i <= factors[key]; i++)
+            long sum = 0;
+            for (int i = 0; i <= s_factor_powers[key]; i++)
             {
-                sum += (int)Math.Pow(key, i);
+                sum += (long)Math.Pow(key, i);
             }
-
             result *= sum;
         }
         return result;
     }
+    public static int GetDivisorCount(long number)
+    {
+        int result = 1;
+        //if (s_factor_powers == null) 
+        s_factor_powers = FactorizeByPowers(number);
+        foreach (long key in s_factor_powers.Keys)
+        {
+            result *= (s_factor_powers[key] + 1);
+        }
+        return result;
+    }
+    public static string GetDivisorsString(long number)
+    {
+        StringBuilder str = new StringBuilder();
+        str.Append("Sum of divisors = ");
+        List<long> divisors = GetDivisors(number);
+        foreach (long divisor in divisors)
+        {
+            str.Append(divisor.ToString() + "+");
+        }
+        if (str.Length > 0)
+        {
+            str.Remove(str.Length - 1, 1);
+        }
+        return str.ToString();
+    }
+
+    /// <summary>
+    /// Proper divisors are all divisors except the number itself.
+    /// </summary>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    public static List<long> GetProperDivisors(long number)
+    {
+        List<long> result = GetDivisors(number);
+        result.RemoveAt(result.Count - 1);
+        return result;
+    }
+    public static long SumOfProperDivisors(long number)
+    {
+        return SumOfDivisors(number) - number;
+    }
+    public static int GetProperDivisorCount(long number)
+    {
+        return GetDivisorCount(number) - 1;
+    }
+    public static string GetProperDivisorsString(long number)
+    {
+        StringBuilder str = new StringBuilder();
+        str.Append("Sum of proper divisors = ");
+        List<long> divisors = GetProperDivisors(number);
+        foreach (long divisor in divisors)
+        {
+            str.Append(divisor.ToString() + "+");
+        }
+        if (str.Length > 0)
+        {
+            str.Remove(str.Length - 1, 1);
+        }
+        return str.ToString();
+    }
+
     public static NumberKind GetNumberKind(long number)
     {
         long sum_of_proper_divisors = SumOfProperDivisors(number);
