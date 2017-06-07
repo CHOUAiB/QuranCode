@@ -3061,9 +3061,8 @@ public static partial class Research
                                + (ac == -1 ? "-" : ac.ToString()) + "\t"
                                + (xc == -1 ? "-" : xc.ToString())
                              );
+                str.Append("\r\n");
             }
-
-            str.Append("\r\n");
         }
         return str.ToString();
     }
