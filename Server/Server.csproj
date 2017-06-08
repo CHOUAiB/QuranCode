@@ -83,16 +83,13 @@
     <Content Include="Rules\Simplified36.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Values\English_Alphabet_Composites.txt">
+    <Content Include="Values\Original_English_Composites.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Values\English_Alphabet_Linear.txt">
+    <Content Include="Values\Original_English_Linear.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Values\English_Alphabet_Primes.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Values\Original_Alphabet_Primes.txt">
+    <Content Include="Values\Original_English_Primes.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Values\Original_Alphabet_Primes1.txt">

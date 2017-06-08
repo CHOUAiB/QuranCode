@@ -2797,6 +2797,78 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
+    public static void UniqueChapterWords(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Chapter> chapters = in_search_result ? client.Book.GetChapters(client.FoundVerses) : client.Selection.Chapters;
+        if (client.Book == null) return;
+        if (client.Book.Chapters == null) return;
+
+        Dictionary<Chapter, List<Word>> chapter_words = new Dictionary<Chapter, List<Word>>();
+        foreach (Chapter chapter in chapters)
+        {
+            chapter_words.Add(chapter, new List<Word>());
+        }
+
+        foreach (Chapter chapter in chapters)
+        {
+            foreach (Verse verse in chapter.Verses)
+            {
+                foreach (Word word in verse.Words)
+                {
+                    bool unique = true;
+
+                    foreach (Chapter c in client.Book.Chapters)
+                    {
+                        if (c == chapter) continue;
+
+                        foreach (Verse v in c.Verses)
+                        {
+                            foreach (Word w in v.Words)
+                            {
+                                if (w.Text == word.Text)
+                                {
+                                    unique = false;
+                                    break;
+                                }
+                            }
+                            if (!unique) break;
+                        }
+                        if (!unique) break;
+                    }
+
+                    if (unique)
+                    {
+                        chapter_words[chapter].Add(word);
+                    }
+                }
+            }
+        }
+
+        StringBuilder str = new StringBuilder();
+        foreach (List<Word> words in chapter_words.Values)
+        {
+            str.Append(words.Count + "\t");
+            foreach (Word word in words)
+            {
+                str.Append(word.Text + "\t");
+            }
+            if (str.Length > 0)
+            {
+                str.Remove(str.Length - 1, 1);
+            }
+            str.AppendLine();
+        }
+
+        string filename = "UniqueChapterWords" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, str.ToString());
+            FileHelper.DisplayFile(path);
+        }
+    }
     private static string DoChapterInformation(Client client, List<Chapter> chapters)
     {
         if (client == null) return null;
