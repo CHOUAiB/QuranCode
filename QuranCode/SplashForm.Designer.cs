@@ -62,6 +62,12 @@ partial class SplashForm
             this.ProgressBar.TabIndex = 6;
             this.ProgressBar.Value = 100;
             // 
+            // ToolTip
+            // 
+            this.ToolTip.AutoPopDelay = 50000;
+            this.ToolTip.InitialDelay = 500;
+            this.ToolTip.ReshowDelay = 100;
+            // 
             // BismAllahLabel
             // 
             this.BismAllahLabel.BackColor = System.Drawing.Color.Transparent;

@@ -438,7 +438,7 @@ public static partial class Research
                         {
                             string word_address = word.Address;
                             string word_text = word.Text;
-                            string word_lemma = (Globals.EDITION == Edition.Grammar) ? word.CorpusLemma : word_text;
+                            string word_lemma = (Globals.EDITION == Edition.Grammar) ? word.Lemma : word_text;
                             string root = client.Book.GetBestRoot(word_text);
                             if (root != null)
                             {
@@ -2805,10 +2805,10 @@ public static partial class Research
         if (client.Book == null) return;
         if (client.Book.Chapters == null) return;
 
-        Dictionary<Chapter, List<Word>> chapter_words = new Dictionary<Chapter, List<Word>>();
+        Dictionary<Chapter, List<Word>> unique_chapter_words = new Dictionary<Chapter, List<Word>>();
         foreach (Chapter chapter in chapters)
         {
-            chapter_words.Add(chapter, new List<Word>());
+            unique_chapter_words.Add(chapter, new List<Word>());
         }
 
         foreach (Chapter chapter in chapters)
@@ -2840,15 +2840,17 @@ public static partial class Research
 
                     if (unique)
                     {
-                        chapter_words[chapter].Add(word);
+                        unique_chapter_words[chapter].Add(word);
                     }
                 }
             }
         }
 
         StringBuilder str = new StringBuilder();
-        foreach (List<Word> words in chapter_words.Values)
+        int i = 0;
+        foreach (List<Word> words in unique_chapter_words.Values)
         {
+            str.Append("Chapter " + chapters[i++].Number.ToString() + "\t");
             str.Append(words.Count + "\t");
             foreach (Word word in words)
             {
@@ -2862,6 +2864,80 @@ public static partial class Research
         }
 
         string filename = "UniqueChapterWords" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, str.ToString());
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void UniqueChapterRoots(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Chapter> chapters = in_search_result ? client.Book.GetChapters(client.FoundVerses) : client.Selection.Chapters;
+        if (client.Book == null) return;
+        if (client.Book.Chapters == null) return;
+
+        Dictionary<Chapter, List<string>> unique_chapter_roots = new Dictionary<Chapter, List<string>>();
+        foreach (Chapter chapter in chapters)
+        {
+            unique_chapter_roots.Add(chapter, new List<string>());
+        }
+
+        foreach (Chapter chapter in chapters)
+        {
+            foreach (Verse verse in chapter.Verses)
+            {
+                foreach (Word word in verse.Words)
+                {
+                    bool unique = true;
+
+                    foreach (Chapter c in client.Book.Chapters)
+                    {
+                        if (c == chapter) continue;
+
+                        foreach (Verse v in c.Verses)
+                        {
+                            foreach (Word w in v.Words)
+                            {
+                                if (w.BestRoot == word.BestRoot)
+                                {
+                                    unique = false;
+                                    break;
+                                }
+                            }
+                            if (!unique) break;
+                        }
+                        if (!unique) break;
+                    }
+
+                    if (unique)
+                    {
+                        unique_chapter_roots[chapter].Add(word.BestRoot);
+                    }
+                }
+            }
+        }
+
+        StringBuilder str = new StringBuilder();
+        int i = 0;
+        foreach (List<string> roots in unique_chapter_roots.Values)
+        {
+            str.Append("Chapter " + chapters[i++].Number.ToString() + "\t");
+            str.Append(roots.Count + "\t");
+            foreach (string root in roots)
+            {
+                str.Append(root + "\t");
+            }
+            if (str.Length > 0)
+            {
+                str.Remove(str.Length - 1, 1);
+            }
+            str.AppendLine();
+        }
+
+        string filename = "UniqueChapterRoots" + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;

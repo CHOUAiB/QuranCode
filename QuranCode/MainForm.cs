@@ -3640,6 +3640,8 @@ public partial class MainForm : Form, ISubscriber
     private void ResearchMethodsRunButton_Click(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
+        this.Cursor = Cursors.WaitCursor;
+        this.Cursor = Cursors.WaitCursor;
         try
         {
             if (ResearchMethodsComboBox.SelectedItem != null)
@@ -12333,17 +12335,17 @@ public partial class MainForm : Form, ISubscriber
             string grammar_info = "";
             if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
             {
-                //if (word.CorpusLemma != null)
+                //if (word.Lemma != null)
                 //{
-                //    grammar_info += "Lemma\t" + word.CorpusLemma + "\t";
+                //    grammar_info += "Lemma\t" + word.Lemma + "\t";
                 //}
-                //if (word.CorpusRoot != null)
+                //if (word.Root != null)
                 //{
-                //    grammar_info += "Root\t" + word.CorpusRoot + "\t";
+                //    grammar_info += "Root\t" + word.Root + "\t";
                 //}
-                //if (word.CorpusSpecialGroup != null)
+                //if (word.SpecialGroup != null)
                 //{
-                //    grammar_info += "Special Group\t" + word.CorpusSpecialGroup + "\t";
+                //    grammar_info += "Special Group\t" + word.SpecialGroup + "\t";
                 //}
                 //if (grammar_info.Length > 0)
                 //{
@@ -12478,7 +12480,7 @@ public partial class MainForm : Form, ISubscriber
                             (TabControl.SelectedTab == RelatedWordsTabPage)
                            )
                         {
-                            string verb = m_client.Book.GetBestRoot(word);
+                            string verb = word.BestRoot;
                             if (verb != null)
                             {
                                 StringBuilder str = new StringBuilder();
@@ -12599,7 +12601,7 @@ public partial class MainForm : Form, ISubscriber
 
                     FindByTextTextBox.Text = text;
                     FindByTextTextBox.Refresh();
-                    text = m_client.Book.GetBestRoot(word);
+                    text = word.BestRoot;
                     FindByRoot(text);
                 }
             }

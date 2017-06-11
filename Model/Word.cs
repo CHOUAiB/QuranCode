@@ -147,12 +147,38 @@ namespace Model
             get { return parts; }
         }
 
-        private string corpus_root = null;
-        public string CorpusRoot
+        private string best_root = null;
+        public string BestRoot
         {
             get
             {
-                if (String.IsNullOrEmpty(corpus_root))
+                if (String.IsNullOrEmpty(best_root))
+                {
+                    best_root = "";
+                    if (this.Roots != null)
+                    {
+                        if (this.Roots.Count > 0)
+                        {
+                            foreach (string root in this.Roots)
+                            {
+                                if (best_root.Length < root.Length)
+                                {
+                                    best_root = root;
+                                }
+                            }
+                        }
+                    }
+                }
+                return best_root;
+            }
+        }
+
+        private string root = null;
+        public string Root
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(root))
                 {
                     if (parts != null)
                     {
@@ -160,22 +186,22 @@ namespace Model
                         {
                             if (!String.IsNullOrEmpty(part.Grammar.Root))
                             {
-                                corpus_root = part.Grammar.Root.ToArabic();
+                                root = part.Grammar.Root.ToArabic();
                                 break;
                             }
                         }
                     }
                 }
-                return corpus_root;
+                return root;
             }
         }
 
-        private string corpus_lemma = null;
-        public string CorpusLemma
+        private string lemma = null;
+        public string Lemma
         {
             get
             {
-                if (String.IsNullOrEmpty(corpus_lemma))
+                if (String.IsNullOrEmpty(lemma))
                 {
                     if (parts != null)
                     {
@@ -183,22 +209,22 @@ namespace Model
                         {
                             if (!String.IsNullOrEmpty(part.Grammar.Lemma))
                             {
-                                corpus_lemma += part.Grammar.Lemma.ToArabic();
+                                lemma += part.Grammar.Lemma.ToArabic();
                                 break;
                             }
                         }
                     }
                 }
-                return corpus_lemma;
+                return lemma;
             }
         }
 
-        private string corpus_special_group = null;
-        public string CorpusSpecialGroup
+        private string special_group = null;
+        public string SpecialGroup
         {
             get
             {
-                if (String.IsNullOrEmpty(corpus_special_group))
+                if (String.IsNullOrEmpty(special_group))
                 {
                     if (parts != null)
                     {
@@ -206,13 +232,13 @@ namespace Model
                         {
                             if (!String.IsNullOrEmpty(part.Grammar.SpecialGroup))
                             {
-                                corpus_special_group += part.Grammar.SpecialGroup.ToArabic();
+                                special_group += part.Grammar.SpecialGroup.ToArabic();
                                 break;
                             }
                         }
                     }
                 }
-                return corpus_special_group;
+                return special_group;
             }
         }
 

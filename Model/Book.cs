@@ -2509,27 +2509,6 @@ namespace Model
             }
             return null;
         }
-        public string GetBestRoot(Word word)
-        {
-            string best_root = "";
-            if (word != null)
-            {
-                if (word.Roots != null)
-                {
-                    if (word.Roots.Count > 0)
-                    {
-                        foreach (string root in word.Roots)
-                        {
-                            if (best_root.Length < root.Length)
-                            {
-                                best_root = root;
-                            }
-                        }
-                    }
-                }
-            }
-            return best_root;
-        }
         // get related words and verses
         public List<Word> GetRelatedWords(Word word)
         {
@@ -2564,7 +2543,7 @@ namespace Model
                     }
                     else // if no such root, search for the matching root_word by its verse position and get its root and then get all root_words
                     {
-                        string root = GetBestRoot(word);
+                        string root = word.BestRoot;
                         if (!String.IsNullOrEmpty(root))
                         {
                             if (root_words_dictionary.ContainsKey(root))
@@ -2621,7 +2600,7 @@ namespace Model
                     }
                     else // if no such root, search for the matching root_word by its verse position and get its root and then get all root_words
                     {
-                        string root = GetBestRoot(word);
+                        string root = word.BestRoot;
                         if (!String.IsNullOrEmpty(root))
                         {
                             if (root_words_dictionary.ContainsKey(root))
