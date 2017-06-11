@@ -2840,7 +2840,10 @@ public static partial class Research
 
                     if (unique)
                     {
-                        unique_chapter_words[chapter].Add(word);
+                        if (!unique_chapter_words[chapter].Contains(word))
+                        {
+                            unique_chapter_words[chapter].Add(word);
+                        }
                     }
                 }
             }
@@ -2914,7 +2917,10 @@ public static partial class Research
 
                     if (unique)
                     {
-                        unique_chapter_roots[chapter].Add(word.BestRoot);
+                        if (!unique_chapter_roots[chapter].Contains(word.BestRoot))
+                        {
+                            unique_chapter_roots[chapter].Add(word.BestRoot);
+                        }
                     }
                 }
             }
