@@ -889,14 +889,18 @@ public partial class MainForm : Form
     private void UpdateSumOfDivisors(long number)
     {
         long sum_of_divisors = Numbers.SumOfDivisors(number);
+        string divisors = Numbers.GetDivisorsString(number);
         SumOfDivisorsTextBox.Text = sum_of_divisors.ToString();
         SumOfDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_divisors);
         SumOfDivisorsTextBox.Refresh();
+        ToolTip.SetToolTip(SumOfDivisorsTextBox, divisors);
 
         long sum_of_proper_divisors = Numbers.SumOfProperDivisors(number);
+        string proper_divisors = Numbers.GetProperDivisorsString(number);
         SumOfProperDivisorsTextBox.Text = sum_of_proper_divisors.ToString();
         SumOfProperDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
+        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, proper_divisors);
     }
 
     private long DecimalPCIndexChainL2R(long number)
