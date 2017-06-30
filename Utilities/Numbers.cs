@@ -3191,7 +3191,6 @@ public static class Numbers
     public static string GetDivisorsString(long number)
     {
         StringBuilder str = new StringBuilder();
-        str.Append("Sum of divisors = ");
         List<long> divisors = GetDivisors(number);
         foreach (long divisor in divisors)
         {
@@ -3226,7 +3225,6 @@ public static class Numbers
     public static string GetProperDivisorsString(long number)
     {
         StringBuilder str = new StringBuilder();
-        str.Append("Sum of proper divisors = ");
         List<long> divisors = GetProperDivisors(number);
         foreach (long divisor in divisors)
         {

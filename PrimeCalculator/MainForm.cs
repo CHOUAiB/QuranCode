@@ -893,14 +893,138 @@ public partial class MainForm : Form
         SumOfDivisorsTextBox.Text = sum_of_divisors.ToString();
         SumOfDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_divisors);
         SumOfDivisorsTextBox.Refresh();
-        ToolTip.SetToolTip(SumOfDivisorsTextBox, divisors);
+        ToolTip.SetToolTip(SumOfDivisorsTextBox, "Sum Of Divisors\r\n" + divisors + " = " + sum_of_divisors);
 
         long sum_of_proper_divisors = Numbers.SumOfProperDivisors(number);
         string proper_divisors = Numbers.GetProperDivisorsString(number);
         SumOfProperDivisorsTextBox.Text = sum_of_proper_divisors.ToString();
         SumOfProperDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
-        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, proper_divisors);
+        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, "Sum Of Proper Divisors\r\n" + proper_divisors + " = " + sum_of_proper_divisors);
+    }
+
+    private void ValueInspectLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            InspectValueCalculations();
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void InspectValueCalculations()
+    {
+        long number = 0;
+        StringBuilder str = new StringBuilder();
+        if (long.TryParse(ValueTextBox.Text, out number))
+        {
+            str.AppendLine("Number\t\t=\t" + ValueTextBox.Text);
+
+            str.AppendLine();
+            str.AppendLine("Prime Factors\t=\t" + Numbers.FactorizeToString(number));
+            int nth_number_index = -1;
+            int nth_additive_number_index = -1;
+            int nth_non_additive_number_index = -1;
+            if (Numbers.IsPrime(number))
+            {
+                m_index_type = IndexType.Prime;
+                nth_number_index = Numbers.PrimeIndexOf(number);
+                nth_additive_number_index = Numbers.AdditivePrimeIndexOf(number);
+                nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(number);
+                str.AppendLine("P  Index\t=\t" + nth_number_index);
+                str.AppendLine("AP Index\t=\t" + nth_additive_number_index);
+                str.AppendLine("XP Index\t=\t" + nth_non_additive_number_index);
+            }
+            else // any other index type will be treated as IndexNumberType.Composite
+            {
+                m_index_type = IndexType.Composite;
+                nth_number_index = Numbers.CompositeIndexOf(number);
+                nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(number);
+                nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(number);
+                str.AppendLine("C  Index\t=\t" + nth_number_index);
+                str.AppendLine("AC Index\t=\t" + nth_additive_number_index);
+                str.AppendLine("XC Index\t=\t" + nth_non_additive_number_index);
+            }
+
+            str.AppendLine();
+            string divisors = Numbers.GetDivisorsString(number);
+            long sum_of_divisors = Numbers.SumOfDivisors(number);
+            str.AppendLine("Sum Of Divisors\t\t=\t" + sum_of_divisors + " = " + divisors);
+
+            string proper_divisors = Numbers.GetDivisorsString(number);
+            long sum_of_proper_divisors = Numbers.SumOfProperDivisors(number);
+            str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
+
+            m_number_kind = Numbers.GetNumberKind(number);
+            int number_kind_index = -1;
+            switch (m_number_kind)
+            {
+                case NumberKind.Deficient:
+                    {
+                        number_kind_index = Numbers.DeficientIndexOf(number) + 1;
+                    }
+                    break;
+                case NumberKind.Perfect:
+                    {
+                        number_kind_index = Numbers.PerfectIndexOf(number) + 1;
+                    }
+                    break;
+                case NumberKind.Abundant:
+                    {
+                        number_kind_index = Numbers.AbundantIndexOf(number) + 1;
+                    }
+                    break;
+                default:
+                    {
+                        number_kind_index = -1;
+                    }
+                    break;
+            }
+            str.AppendLine(m_number_kind.ToString() + " Index\t\t=\t" + number_kind_index);
+
+            str.AppendLine();
+            string squares1_str = "";
+            string squares2_str = "";
+            if (Numbers.IsUnit(number) || Numbers.IsPrime(number))
+            {
+                squares1_str = Numbers.Get4nPlus1EqualsSumOfTwoSquares(number);
+                squares2_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares(number);
+            }
+            else //if composite
+            {
+                squares1_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares(number);
+                squares2_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares2(number);
+            }
+            str.AppendLine("4n+1 Squares1\t\t=\t" + squares1_str);
+            str.AppendLine("4n+1 Squares2\t\t=\t" + squares2_str);
+
+            str.AppendLine();
+            str.AppendLine("Left-to-right prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainL2R(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryPCIndexChainL2R(number) + "  =  " + DecimalPCIndexChainL2R(number));
+            str.AppendLine();
+            str.AppendLine("Right-to-left prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainR2L(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryPCIndexChainR2L(number) + "  =  " + DecimalPCIndexChainR2L(number));
+            str.AppendLine();
+            str.AppendLine("Left-to-right composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainL2R(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryCPIndexChainL2R(number) + "  =  " + DecimalCPIndexChainL2R(number));
+            str.AppendLine();
+            str.AppendLine("Right-to-left composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainR2L(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryCPIndexChainR2L(number) + "  =  " + DecimalCPIndexChainR2L(number));
+
+            string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
+            if (Directory.Exists(Globals.NUMBERS_FOLDER))
+            {
+                filename = Globals.NUMBERS_FOLDER + "/" + filename;
+                FileHelper.SaveText(filename, str.ToString());
+
+                // show file content after save
+                if (File.Exists(filename))
+                {
+                    FileHelper.WaitForReady(filename);
+
+                    System.Diagnostics.Process.Start("Notepad.exe", filename);
+                }
+            }
+        }
     }
 
     private long DecimalPCIndexChainL2R(long number)

@@ -27661,14 +27661,14 @@ public partial class MainForm : Form, ISubscriber
         SumOfDivisorsTextBox.Text = sum_of_divisors.ToString();
         SumOfDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_divisors);
         SumOfDivisorsTextBox.Refresh();
-        ToolTip.SetToolTip(SumOfDivisorsTextBox, divisors);
+        ToolTip.SetToolTip(SumOfDivisorsTextBox, "Sum Of Divisors\r\n" + divisors + " = " + sum_of_divisors);
 
         long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
         string proper_divisors = Numbers.GetProperDivisorsString(value);
         SumOfProperDivisorsTextBox.Text = sum_of_proper_divisors.ToString();
         SumOfProperDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
-        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, proper_divisors);
+        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, "Sum Of Proper Divisors\r\n" + proper_divisors + " = " + sum_of_proper_divisors);
 
         DisplayLetterFrequenciesTotals();
     }
@@ -30425,10 +30425,14 @@ public partial class MainForm : Form, ISubscriber
                     }
 
                     str.AppendLine();
+                    string divisors = Numbers.GetDivisorsString(value);
                     long sum_of_divisors = Numbers.SumOfDivisors(value);
-                    str.AppendLine("Sum Of Divisors\t\t=\t" + sum_of_divisors);
+                    str.AppendLine("Sum Of Divisors\t\t=\t" + sum_of_divisors + " = " + divisors);
+
+                    string proper_divisors = Numbers.GetDivisorsString(value);
                     long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
-                    str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors);
+                    str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
+
                     m_number_kind = Numbers.GetNumberKind(value);
                     int number_kind_index = -1;
                     switch (m_number_kind)

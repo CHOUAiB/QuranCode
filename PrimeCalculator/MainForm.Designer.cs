@@ -72,6 +72,7 @@
             this.NthNumberTextBox = new System.Windows.Forms.TextBox();
             this.AddToSeparatorLine2Panel = new System.Windows.Forms.Panel();
             this.PrimeFactorsTextBox = new System.Windows.Forms.TextBox();
+            this.ValueInspectLabel = new System.Windows.Forms.Label();
             this.NotifyIconContextMenuStrip.SuspendLayout();
             this.ValuePanel.SuspendLayout();
             this.SuspendLayout();
@@ -462,6 +463,7 @@
             // 
             // ValuePanel
             // 
+            this.ValuePanel.Controls.Add(this.ValueInspectLabel);
             this.ValuePanel.Controls.Add(this.HistoryClearLabel);
             this.ValuePanel.Controls.Add(this.HistoryDeleteLabel);
             this.ValuePanel.Controls.Add(this.PCIndexChainLabel);
@@ -633,7 +635,7 @@
             this.ValueTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.ValueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValueTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValueTextBox.Location = new System.Drawing.Point(16, 3);
+            this.ValueTextBox.Location = new System.Drawing.Point(15, 3);
             this.ValueTextBox.Name = "ValueTextBox";
             this.ValueTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ValueTextBox.Size = new System.Drawing.Size(144, 20);
@@ -731,6 +733,21 @@
             this.PrimeFactorsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
             this.PrimeFactorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
+            // ValueInspectLabel
+            // 
+            this.ValueInspectLabel.BackColor = System.Drawing.SystemColors.Window;
+            this.ValueInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ValueInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValueInspectLabel.ForeColor = System.Drawing.Color.DimGray;
+            this.ValueInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValueInspectLabel.Image")));
+            this.ValueInspectLabel.Location = new System.Drawing.Point(4, 83);
+            this.ValueInspectLabel.Name = "ValueInspectLabel";
+            this.ValueInspectLabel.Size = new System.Drawing.Size(16, 18);
+            this.ValueInspectLabel.TabIndex = 252;
+            this.ValueInspectLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.ToolTip.SetToolTip(this.ValueInspectLabel, "Inspect");
+            this.ValueInspectLabel.Click += new System.EventHandler(this.ValueInspectLabel_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -813,4 +830,5 @@
     private System.Windows.Forms.TextBox PrimeFactorsTextBox;
     private System.Windows.Forms.Label HistoryClearLabel;
     private System.Windows.Forms.Label HistoryDeleteLabel;
+    private System.Windows.Forms.Label ValueInspectLabel;
 }
