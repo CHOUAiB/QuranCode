@@ -99,7 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Globals\Globals.csproj">
-      <Project>{B749FCA9-B5AF-45E7-9C65-140BC0A90F79}</Project>
+      <Project>{b749fca9-b5af-45e7-9c65-140bc0a90f79}</Project>
       <Name>Globals</Name>
     </ProjectReference>
   </ItemGroup>
