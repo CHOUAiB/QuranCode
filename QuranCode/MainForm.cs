@@ -27170,18 +27170,18 @@ public partial class MainForm : Form, ISubscriber
                     (sender as TextBoxBase).SelectAll();
                 }
             }
+            else if (e.KeyCode == Keys.Up)
+            {
+                IncrementValue();
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                DecrementValue();
+            }
         }
         else if (e.KeyCode == Keys.Enter)
         {
             CalculateExpression();
-        }
-        else if (e.KeyCode == Keys.Up)
-        {
-            IncrementValue();
-        }
-        else if (e.KeyCode == Keys.Down)
-        {
-            DecrementValue();
         }
         else
         {
