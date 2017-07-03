@@ -1013,7 +1013,7 @@ public partial class MainForm : Form, ISubscriber
         {
             RecitationsCancelSettingsLabel_Click(null, null);
         }
-        else if ((TranslationTextBox.Focused) || (Translation2TextBox.Focused))
+        else if ((TranslationTextBox.Focused) || (TranslationsTextBox.Focused))
         {
             DisplayTranslations(new List<Verse>(m_translated_verses));
         }
@@ -1125,9 +1125,9 @@ public partial class MainForm : Form, ISubscriber
                     TranslationTextBox.Text = null;
                     TranslationTextBox.Refresh();
 
-                    Translation2TextBox.WordWrap = m_active_textbox.WordWrap;
-                    Translation2TextBox.Text = null;
-                    Translation2TextBox.Refresh();
+                    TranslationsTextBox.WordWrap = m_active_textbox.WordWrap;
+                    TranslationsTextBox.Text = null;
+                    TranslationsTextBox.Refresh();
 
                     m_translation_readonly = true;
                     UpdateTranslationReadOnly();
@@ -2852,7 +2852,7 @@ public partial class MainForm : Form, ISubscriber
         RegisterContextMenu(MainTextBox);
         RegisterContextMenu(SearchResultTextBox);
         RegisterContextMenu(TranslationTextBox);
-        RegisterContextMenu(Translation2TextBox);
+        RegisterContextMenu(TranslationsTextBox);
         RegisterContextMenu(RelatedWordsTextBox);
         RegisterContextMenu(GrammarTextBox);
         RegisterContextMenu(VerbFormsTextBox);
@@ -3938,9 +3938,9 @@ public partial class MainForm : Form, ISubscriber
             TranslationTextBox.Font = m_translation_font;
             TranslationTextBox.ForeColor = m_translation_color;
             TranslationTextBox.Refresh();
-            Translation2TextBox.Font = m_translation_font;
-            Translation2TextBox.ForeColor = m_translation_color;
-            Translation2TextBox.Refresh();
+            //TranslationsTextBox.Font = m_translation_font;
+            //TranslationsTextBox.ForeColor = m_translation_color;
+            //TranslationsTextBox.Refresh();
 
             RelatedWordsTextBox.Font = m_translation_font;
             RelatedWordsTextBox.ForeColor = m_translation_color;
@@ -4856,6 +4856,7 @@ public partial class MainForm : Form, ISubscriber
                     // updates verse position and value when cursor goes to start of verse
                     CurrentVerseIndex = GetVerseIndex(verse);
                     UpdatePlayerButtons(verse);
+                    UpdateVersePositions(verse);
 
                     // backup highlighted verse
                     m_previous_highlighted_verse = verse;
@@ -11904,9 +11905,9 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                 }
                             }
-                            Translation2TextBox.WordWrap = false;
-                            Translation2TextBox.Text = str2.ToString();
-                            Translation2TextBox.Refresh();
+                            TranslationsTextBox.WordWrap = false;
+                            TranslationsTextBox.Text = str2.ToString();
+                            TranslationsTextBox.Refresh();
 
                             if (m_translated_verses != null)
                             {
@@ -11925,9 +11926,9 @@ public partial class MainForm : Form, ISubscriber
                         TranslationTextBox.Text = null;
                         TranslationTextBox.Refresh();
 
-                        Translation2TextBox.WordWrap = false;
-                        Translation2TextBox.Text = null;
-                        Translation2TextBox.Refresh();
+                        TranslationsTextBox.WordWrap = false;
+                        TranslationsTextBox.Text = null;
+                        TranslationsTextBox.Refresh();
 
                         m_translation_readonly = true;
                         UpdateTranslationReadOnly();
@@ -11991,9 +11992,9 @@ public partial class MainForm : Form, ISubscriber
                                 str2.Remove(str2.Length - 2, 2);
                             }
                         }
-                        Translation2TextBox.WordWrap = false;
-                        Translation2TextBox.Text = str2.ToString();
-                        Translation2TextBox.Refresh();
+                        TranslationsTextBox.WordWrap = false;
+                        TranslationsTextBox.Text = str2.ToString();
+                        TranslationsTextBox.Refresh();
                     }
                     else
                     {
@@ -12013,9 +12014,9 @@ public partial class MainForm : Form, ISubscriber
                                 }
                             }
                         }
-                        Translation2TextBox.WordWrap = true;
-                        Translation2TextBox.Text = str2.ToString();
-                        Translation2TextBox.Refresh();
+                        TranslationsTextBox.WordWrap = true;
+                        TranslationsTextBox.Text = str2.ToString();
+                        TranslationsTextBox.Refresh();
                     }
 
                     if (m_translated_verses != null)

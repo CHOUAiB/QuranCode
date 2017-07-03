@@ -291,7 +291,7 @@ partial class MainForm
             this.TranslationsCancelSettingsLabel = new System.Windows.Forms.Label();
             this.AllTranslatorsCheckBox = new System.Windows.Forms.CheckBox();
             this.Translator2ComboBox = new System.Windows.Forms.ComboBox();
-            this.Translation2TextBox = new System.Windows.Forms.TextBox();
+            this.TranslationsTextBox = new System.Windows.Forms.TextBox();
             this.TafseerTabPage = new System.Windows.Forms.TabPage();
             this.TafseerComboBox = new System.Windows.Forms.ComboBox();
             this.TafseerWebBrowser = new System.Windows.Forms.WebBrowser();
@@ -2032,12 +2032,13 @@ partial class MainForm
             // 
             // AuthorLabel
             // 
+            this.AuthorLabel.BackColor = System.Drawing.Color.Transparent;
             this.AuthorLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.AuthorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AuthorLabel.ForeColor = System.Drawing.Color.RosyBrown;
-            this.AuthorLabel.Location = new System.Drawing.Point(0, 35);
+            this.AuthorLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.AuthorLabel.Location = new System.Drawing.Point(0, 38);
             this.AuthorLabel.Name = "AuthorLabel";
-            this.AuthorLabel.Size = new System.Drawing.Size(152, 19);
+            this.AuthorLabel.Size = new System.Drawing.Size(152, 16);
             this.AuthorLabel.TabIndex = 84;
             this.AuthorLabel.Text = "Al-hamdu liAllah       الحمد لله ";
             this.AuthorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -5003,7 +5004,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(821, 199);
+            this.TabControl.Size = new System.Drawing.Size(821, 187);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5016,7 +5017,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(813, 173);
+            this.TranslationTabPage.Size = new System.Drawing.Size(813, 161);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = " Translation ";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse";
@@ -5024,7 +5025,9 @@ partial class MainForm
             // 
             // TranslationSplitContainer
             // 
-            this.TranslationSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TranslationSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TranslationSplitContainer.Location = new System.Drawing.Point(3, 3);
             this.TranslationSplitContainer.Name = "TranslationSplitContainer";
             // 
@@ -5042,8 +5045,8 @@ partial class MainForm
             this.TranslationSplitContainer.Panel2.Controls.Add(this.TranslationsCancelSettingsLabel);
             this.TranslationSplitContainer.Panel2.Controls.Add(this.AllTranslatorsCheckBox);
             this.TranslationSplitContainer.Panel2.Controls.Add(this.Translator2ComboBox);
-            this.TranslationSplitContainer.Panel2.Controls.Add(this.Translation2TextBox);
-            this.TranslationSplitContainer.Size = new System.Drawing.Size(807, 167);
+            this.TranslationSplitContainer.Panel2.Controls.Add(this.TranslationsTextBox);
+            this.TranslationSplitContainer.Size = new System.Drawing.Size(807, 154);
             this.TranslationSplitContainer.SplitterDistance = 317;
             this.TranslationSplitContainer.TabIndex = 0;
             this.TranslationSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.TranslationSplitContainer_SplitterMoved);
@@ -5056,7 +5059,7 @@ partial class MainForm
             this.EditSaveTranslationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EditSaveTranslationLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.EditSaveTranslationLabel.Image = ((System.Drawing.Image)(resources.GetObject("EditSaveTranslationLabel.Image")));
-            this.EditSaveTranslationLabel.Location = new System.Drawing.Point(299, 147);
+            this.EditSaveTranslationLabel.Location = new System.Drawing.Point(299, 136);
             this.EditSaveTranslationLabel.Name = "EditSaveTranslationLabel";
             this.EditSaveTranslationLabel.Size = new System.Drawing.Size(16, 18);
             this.EditSaveTranslationLabel.TabIndex = 4;
@@ -5071,7 +5074,7 @@ partial class MainForm
             this.TranslatorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TranslatorComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TranslatorComboBox.FormattingEnabled = true;
-            this.TranslatorComboBox.Location = new System.Drawing.Point(114, 148);
+            this.TranslatorComboBox.Location = new System.Drawing.Point(114, 135);
             this.TranslatorComboBox.Name = "TranslatorComboBox";
             this.TranslatorComboBox.Size = new System.Drawing.Size(183, 20);
             this.TranslatorComboBox.TabIndex = 2;
@@ -5089,7 +5092,7 @@ partial class MainForm
             this.TranslationTextBox.Name = "TranslationTextBox";
             this.TranslationTextBox.ReadOnly = true;
             this.TranslationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.TranslationTextBox.Size = new System.Drawing.Size(317, 167);
+            this.TranslationTextBox.Size = new System.Drawing.Size(317, 154);
             this.TranslationTextBox.TabIndex = 2;
             this.TranslationTextBox.WordWrap = false;
             this.TranslationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
@@ -5103,7 +5106,7 @@ partial class MainForm
             this.TranslationFontLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TranslationFontLabel.ForeColor = System.Drawing.SystemColors.Window;
             this.TranslationFontLabel.Image = ((System.Drawing.Image)(resources.GetObject("TranslationFontLabel.Image")));
-            this.TranslationFontLabel.Location = new System.Drawing.Point(469, 1);
+            this.TranslationFontLabel.Location = new System.Drawing.Point(469, 2);
             this.TranslationFontLabel.Name = "TranslationFontLabel";
             this.TranslationFontLabel.Size = new System.Drawing.Size(14, 15);
             this.TranslationFontLabel.TabIndex = 103;
@@ -5118,9 +5121,9 @@ partial class MainForm
             this.TranslatorsCheckedListBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.TranslatorsCheckedListBox.CheckOnClick = true;
             this.TranslatorsCheckedListBox.FormattingEnabled = true;
-            this.TranslatorsCheckedListBox.Location = new System.Drawing.Point(283, 0);
+            this.TranslatorsCheckedListBox.Location = new System.Drawing.Point(283, 1);
             this.TranslatorsCheckedListBox.Name = "TranslatorsCheckedListBox";
-            this.TranslatorsCheckedListBox.Size = new System.Drawing.Size(183, 169);
+            this.TranslatorsCheckedListBox.Size = new System.Drawing.Size(183, 154);
             this.TranslatorsCheckedListBox.TabIndex = 98;
             this.TranslatorsCheckedListBox.Visible = false;
             // 
@@ -5132,7 +5135,7 @@ partial class MainForm
             this.TranslationsApplySettingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TranslationsApplySettingsLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.TranslationsApplySettingsLabel.Image = ((System.Drawing.Image)(resources.GetObject("TranslationsApplySettingsLabel.Image")));
-            this.TranslationsApplySettingsLabel.Location = new System.Drawing.Point(469, 147);
+            this.TranslationsApplySettingsLabel.Location = new System.Drawing.Point(469, 136);
             this.TranslationsApplySettingsLabel.Name = "TranslationsApplySettingsLabel";
             this.TranslationsApplySettingsLabel.Size = new System.Drawing.Size(18, 18);
             this.TranslationsApplySettingsLabel.TabIndex = 5;
@@ -5148,7 +5151,7 @@ partial class MainForm
             this.TranslationsCancelSettingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TranslationsCancelSettingsLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.TranslationsCancelSettingsLabel.Image = ((System.Drawing.Image)(resources.GetObject("TranslationsCancelSettingsLabel.Image")));
-            this.TranslationsCancelSettingsLabel.Location = new System.Drawing.Point(469, 130);
+            this.TranslationsCancelSettingsLabel.Location = new System.Drawing.Point(469, 119);
             this.TranslationsCancelSettingsLabel.Name = "TranslationsCancelSettingsLabel";
             this.TranslationsCancelSettingsLabel.Size = new System.Drawing.Size(18, 18);
             this.TranslationsCancelSettingsLabel.TabIndex = 6;
@@ -5162,7 +5165,7 @@ partial class MainForm
             this.AllTranslatorsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AllTranslatorsCheckBox.AutoSize = true;
             this.AllTranslatorsCheckBox.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.AllTranslatorsCheckBox.Location = new System.Drawing.Point(434, 152);
+            this.AllTranslatorsCheckBox.Location = new System.Drawing.Point(434, 139);
             this.AllTranslatorsCheckBox.Name = "AllTranslatorsCheckBox";
             this.AllTranslatorsCheckBox.Size = new System.Drawing.Size(15, 14);
             this.AllTranslatorsCheckBox.TabIndex = 3;
@@ -5177,28 +5180,28 @@ partial class MainForm
             this.Translator2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Translator2ComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Translator2ComboBox.FormattingEnabled = true;
-            this.Translator2ComboBox.Location = new System.Drawing.Point(283, 148);
+            this.Translator2ComboBox.Location = new System.Drawing.Point(283, 135);
             this.Translator2ComboBox.Name = "Translator2ComboBox";
             this.Translator2ComboBox.Size = new System.Drawing.Size(183, 20);
             this.Translator2ComboBox.TabIndex = 105;
             this.Translator2ComboBox.SelectedIndexChanged += new System.EventHandler(this.TranslatorComboBox_SelectedIndexChanged);
             // 
-            // Translation2TextBox
+            // TranslationsTextBox
             // 
-            this.Translation2TextBox.BackColor = System.Drawing.Color.LightGray;
-            this.Translation2TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Translation2TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.Translation2TextBox.ForeColor = System.Drawing.Color.Navy;
-            this.Translation2TextBox.HideSelection = false;
-            this.Translation2TextBox.Location = new System.Drawing.Point(0, 0);
-            this.Translation2TextBox.Multiline = true;
-            this.Translation2TextBox.Name = "Translation2TextBox";
-            this.Translation2TextBox.ReadOnly = true;
-            this.Translation2TextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.Translation2TextBox.Size = new System.Drawing.Size(486, 167);
-            this.Translation2TextBox.TabIndex = 106;
-            this.Translation2TextBox.WordWrap = false;
-            this.Translation2TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            this.TranslationsTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.TranslationsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TranslationsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.TranslationsTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.TranslationsTextBox.HideSelection = false;
+            this.TranslationsTextBox.Location = new System.Drawing.Point(0, 0);
+            this.TranslationsTextBox.Multiline = true;
+            this.TranslationsTextBox.Name = "TranslationsTextBox";
+            this.TranslationsTextBox.ReadOnly = true;
+            this.TranslationsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.TranslationsTextBox.Size = new System.Drawing.Size(486, 154);
+            this.TranslationsTextBox.TabIndex = 106;
+            this.TranslationsTextBox.WordWrap = false;
+            this.TranslationsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
             // TafseerTabPage
             // 
@@ -5208,7 +5211,7 @@ partial class MainForm
             this.TafseerTabPage.Location = new System.Drawing.Point(4, 22);
             this.TafseerTabPage.Name = "TafseerTabPage";
             this.TafseerTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TafseerTabPage.Size = new System.Drawing.Size(813, 173);
+            this.TafseerTabPage.Size = new System.Drawing.Size(813, 161);
             this.TafseerTabPage.TabIndex = 191;
             this.TafseerTabPage.Text = " Tafseer ";
             this.TafseerTabPage.ToolTipText = "Exegesis/commentry of the current chapter/verse";
@@ -5221,7 +5224,7 @@ partial class MainForm
             this.TafseerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TafseerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TafseerComboBox.FormattingEnabled = true;
-            this.TafseerComboBox.Location = new System.Drawing.Point(612, 150);
+            this.TafseerComboBox.Location = new System.Drawing.Point(612, 141);
             this.TafseerComboBox.Name = "TafseerComboBox";
             this.TafseerComboBox.Size = new System.Drawing.Size(183, 20);
             this.TafseerComboBox.TabIndex = 2;
@@ -5233,7 +5236,7 @@ partial class MainForm
             this.TafseerWebBrowser.Location = new System.Drawing.Point(3, 3);
             this.TafseerWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.TafseerWebBrowser.Name = "TafseerWebBrowser";
-            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 167);
+            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 155);
             this.TafseerWebBrowser.TabIndex = 1;
             // 
             // GrammarTabPage
@@ -5242,7 +5245,7 @@ partial class MainForm
             this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
             this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
             this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(813, 173);
+            this.GrammarTabPage.Size = new System.Drawing.Size(813, 161);
             this.GrammarTabPage.TabIndex = 193;
             this.GrammarTabPage.Text = " Grammar";
             this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
@@ -5262,7 +5265,7 @@ partial class MainForm
             this.GrammarTextBox.Name = "GrammarTextBox";
             this.GrammarTextBox.ReadOnly = true;
             this.GrammarTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.GrammarTextBox.Size = new System.Drawing.Size(817, 171);
+            this.GrammarTextBox.Size = new System.Drawing.Size(817, 163);
             this.GrammarTextBox.TabIndex = 1;
             this.GrammarTextBox.Text = "Start QuranCode with Ctrl key for the Grammar Edition.";
             this.GrammarTextBox.WordWrap = false;
@@ -5274,7 +5277,7 @@ partial class MainForm
             this.VerbFormsTabPage.Controls.Add(this.VerbFormsTextBox);
             this.VerbFormsTabPage.Location = new System.Drawing.Point(4, 22);
             this.VerbFormsTabPage.Name = "VerbFormsTabPage";
-            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 173);
+            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 161);
             this.VerbFormsTabPage.TabIndex = 196;
             this.VerbFormsTabPage.Text = "Verb Forms";
             this.VerbFormsTabPage.ToolTipText = "Verb forms for the current word in Arabic";
@@ -5294,7 +5297,7 @@ partial class MainForm
             this.VerbFormsTextBox.Name = "VerbFormsTextBox";
             this.VerbFormsTextBox.ReadOnly = true;
             this.VerbFormsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.VerbFormsTextBox.Size = new System.Drawing.Size(817, 171);
+            this.VerbFormsTextBox.Size = new System.Drawing.Size(817, 163);
             this.VerbFormsTextBox.TabIndex = 1;
             this.VerbFormsTextBox.Text = "Click a word to display its verb forms in Arabic.";
             this.VerbFormsTextBox.WordWrap = false;
@@ -5307,7 +5310,7 @@ partial class MainForm
             this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
             this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
             this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 173);
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 161);
             this.RelatedWordsTabPage.TabIndex = 192;
             this.RelatedWordsTabPage.Text = "Related Words ";
             this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
@@ -5323,7 +5326,7 @@ partial class MainForm
             this.RelatedWordsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RelatedWordsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.RelatedWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("RelatedWordsButton.Image")));
-            this.RelatedWordsButton.Location = new System.Drawing.Point(795, 150);
+            this.RelatedWordsButton.Location = new System.Drawing.Point(795, 143);
             this.RelatedWordsButton.Name = "RelatedWordsButton";
             this.RelatedWordsButton.Size = new System.Drawing.Size(18, 18);
             this.RelatedWordsButton.TabIndex = 2;
@@ -5345,7 +5348,7 @@ partial class MainForm
             this.RelatedWordsTextBox.Name = "RelatedWordsTextBox";
             this.RelatedWordsTextBox.ReadOnly = true;
             this.RelatedWordsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.RelatedWordsTextBox.Size = new System.Drawing.Size(817, 171);
+            this.RelatedWordsTextBox.Size = new System.Drawing.Size(817, 163);
             this.RelatedWordsTextBox.TabIndex = 1;
             this.RelatedWordsTextBox.Text = "Click a word to display words from the same root.";
             this.RelatedWordsTextBox.WordWrap = false;
@@ -5360,7 +5363,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 173);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 161);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]";
@@ -5373,7 +5376,7 @@ partial class MainForm
             this.SymmetryIncludeBoundaryCasesCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.SymmetryIncludeBoundaryCasesCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SymmetryIncludeBoundaryCasesCheckBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.SymmetryIncludeBoundaryCasesCheckBox.Location = new System.Drawing.Point(595, 153);
+            this.SymmetryIncludeBoundaryCasesCheckBox.Location = new System.Drawing.Point(595, 146);
             this.SymmetryIncludeBoundaryCasesCheckBox.Name = "SymmetryIncludeBoundaryCasesCheckBox";
             this.SymmetryIncludeBoundaryCasesCheckBox.Size = new System.Drawing.Size(15, 14);
             this.SymmetryIncludeBoundaryCasesCheckBox.TabIndex = 272;
@@ -5388,7 +5391,7 @@ partial class MainForm
             this.SymmetryTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SymmetryTypeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SymmetryTypeComboBox.FormattingEnabled = true;
-            this.SymmetryTypeComboBox.Location = new System.Drawing.Point(612, 150);
+            this.SymmetryTypeComboBox.Location = new System.Drawing.Point(612, 142);
             this.SymmetryTypeComboBox.Name = "SymmetryTypeComboBox";
             this.SymmetryTypeComboBox.Size = new System.Drawing.Size(183, 20);
             this.SymmetryTypeComboBox.TabIndex = 8;
@@ -5402,7 +5405,7 @@ partial class MainForm
             this.SymmetryInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SymmetryInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.SymmetryInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("SymmetryInspectLabel.Image")));
-            this.SymmetryInspectLabel.Location = new System.Drawing.Point(796, 150);
+            this.SymmetryInspectLabel.Location = new System.Drawing.Point(796, 142);
             this.SymmetryInspectLabel.Name = "SymmetryInspectLabel";
             this.SymmetryInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.SymmetryInspectLabel.TabIndex = 9;
@@ -5423,7 +5426,7 @@ partial class MainForm
             this.SymmetryTextBox.Name = "SymmetryTextBox";
             this.SymmetryTextBox.ReadOnly = true;
             this.SymmetryTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.SymmetryTextBox.Size = new System.Drawing.Size(817, 170);
+            this.SymmetryTextBox.Size = new System.Drawing.Size(817, 163);
             this.SymmetryTextBox.TabIndex = 7;
             this.SymmetryTextBox.Text = "Select text to display its front/back symmetry.";
             this.SymmetryTextBox.WordWrap = false;
@@ -5434,7 +5437,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(813, 173);
+            this.MathsTabPage.Size = new System.Drawing.Size(813, 161);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations";
@@ -5549,7 +5552,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(813, 173);
+            this.MathsPanel.Size = new System.Drawing.Size(813, 161);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -6836,7 +6839,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(813, 173);
+            this.DistancesTabPage.Size = new System.Drawing.Size(813, 161);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word.";
@@ -6913,7 +6916,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(813, 173);
+            this.DistancesPanel.Size = new System.Drawing.Size(813, 161);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -7754,7 +7757,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 173);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 161);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
@@ -7767,7 +7770,7 @@ partial class MainForm
             this.CVWLSequenceTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CVWLSequenceTypeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CVWLSequenceTypeComboBox.FormattingEnabled = true;
-            this.CVWLSequenceTypeComboBox.Location = new System.Drawing.Point(612, 150);
+            this.CVWLSequenceTypeComboBox.Location = new System.Drawing.Point(612, 142);
             this.CVWLSequenceTypeComboBox.Name = "CVWLSequenceTypeComboBox";
             this.CVWLSequenceTypeComboBox.Size = new System.Drawing.Size(183, 20);
             this.CVWLSequenceTypeComboBox.TabIndex = 5;
@@ -7781,7 +7784,7 @@ partial class MainForm
             this.CVWLSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CVWLSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.CVWLSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceInspectLabel.Image")));
-            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(796, 150);
+            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(796, 142);
             this.CVWLSequenceInspectLabel.Name = "CVWLSequenceInspectLabel";
             this.CVWLSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.CVWLSequenceInspectLabel.TabIndex = 6;
@@ -7818,7 +7821,7 @@ partial class MainForm
             this.CVWLSequenceTextBox.Name = "CVWLSequenceTextBox";
             this.CVWLSequenceTextBox.ReadOnly = true;
             this.CVWLSequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.CVWLSequenceTextBox.Size = new System.Drawing.Size(817, 171);
+            this.CVWLSequenceTextBox.Size = new System.Drawing.Size(817, 163);
             this.CVWLSequenceTextBox.TabIndex = 1;
             this.CVWLSequenceTextBox.Text = "Select text to display concatenated chapter/verse/word/letter numbers and counts." +
     "";
@@ -7835,7 +7838,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 173);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 161);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
@@ -7848,7 +7851,7 @@ partial class MainForm
             this.ValuesSequenceScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ValuesSequenceScopeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValuesSequenceScopeComboBox.FormattingEnabled = true;
-            this.ValuesSequenceScopeComboBox.Location = new System.Drawing.Point(612, 150);
+            this.ValuesSequenceScopeComboBox.Location = new System.Drawing.Point(612, 142);
             this.ValuesSequenceScopeComboBox.Name = "ValuesSequenceScopeComboBox";
             this.ValuesSequenceScopeComboBox.Size = new System.Drawing.Size(183, 20);
             this.ValuesSequenceScopeComboBox.TabIndex = 2;
@@ -7859,7 +7862,7 @@ partial class MainForm
             this.ValuesSequenceRadixNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ValuesSequenceRadixNumericUpDown.BackColor = System.Drawing.SystemColors.Window;
             this.ValuesSequenceRadixNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ValuesSequenceRadixNumericUpDown.Location = new System.Drawing.Point(572, 152);
+            this.ValuesSequenceRadixNumericUpDown.Location = new System.Drawing.Point(572, 144);
             this.ValuesSequenceRadixNumericUpDown.Maximum = new decimal(new int[] {
             36,
             0,
@@ -7887,7 +7890,7 @@ partial class MainForm
             this.ValuesSequenceRadixLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ValuesSequenceRadixLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValuesSequenceRadixLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValuesSequenceRadixLabel.Location = new System.Drawing.Point(544, 154);
+            this.ValuesSequenceRadixLabel.Location = new System.Drawing.Point(544, 146);
             this.ValuesSequenceRadixLabel.Name = "ValuesSequenceRadixLabel";
             this.ValuesSequenceRadixLabel.Size = new System.Drawing.Size(27, 12);
             this.ValuesSequenceRadixLabel.TabIndex = 272;
@@ -7902,7 +7905,7 @@ partial class MainForm
             this.ValuesSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValuesSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ValuesSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceInspectLabel.Image")));
-            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(796, 150);
+            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(796, 142);
             this.ValuesSequenceInspectLabel.Name = "ValuesSequenceInspectLabel";
             this.ValuesSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.ValuesSequenceInspectLabel.TabIndex = 4;
@@ -7939,7 +7942,7 @@ partial class MainForm
             this.ValuesSequenceTextBox.Name = "ValuesSequenceTextBox";
             this.ValuesSequenceTextBox.ReadOnly = true;
             this.ValuesSequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ValuesSequenceTextBox.Size = new System.Drawing.Size(817, 171);
+            this.ValuesSequenceTextBox.Size = new System.Drawing.Size(817, 163);
             this.ValuesSequenceTextBox.TabIndex = 1;
             this.ValuesSequenceTextBox.Text = "Select text to convert its letter/word/verse/chapter values into a number sequenc" +
     "e in the specified base.";
@@ -7955,7 +7958,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 173);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 161);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
@@ -7986,7 +7989,7 @@ partial class MainForm
             this.DNASequenceSystemEditLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DNASequenceSystemEditLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.DNASequenceSystemEditLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceSystemEditLabel.Image")));
-            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(795, 150);
+            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(795, 142);
             this.DNASequenceSystemEditLabel.Name = "DNASequenceSystemEditLabel";
             this.DNASequenceSystemEditLabel.Size = new System.Drawing.Size(18, 18);
             this.DNASequenceSystemEditLabel.TabIndex = 4;
@@ -8000,7 +8003,7 @@ partial class MainForm
             this.DNASequenceSystemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DNASequenceSystemComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DNASequenceSystemComboBox.FormattingEnabled = true;
-            this.DNASequenceSystemComboBox.Location = new System.Drawing.Point(612, 150);
+            this.DNASequenceSystemComboBox.Location = new System.Drawing.Point(612, 142);
             this.DNASequenceSystemComboBox.Name = "DNASequenceSystemComboBox";
             this.DNASequenceSystemComboBox.Size = new System.Drawing.Size(183, 20);
             this.DNASequenceSystemComboBox.TabIndex = 2;
@@ -8020,7 +8023,7 @@ partial class MainForm
             this.DNASequenceTextBox.Name = "DNASequenceTextBox";
             this.DNASequenceTextBox.ReadOnly = true;
             this.DNASequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DNASequenceTextBox.Size = new System.Drawing.Size(817, 171);
+            this.DNASequenceTextBox.Size = new System.Drawing.Size(817, 163);
             this.DNASequenceTextBox.TabIndex = 1;
             this.DNASequenceTextBox.Text = "Select text to convert into a DNA sequence.";
             this.DNASequenceTextBox.WordWrap = false;
@@ -8032,7 +8035,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(813, 173);
+            this.UserTextTabPage.Size = new System.Drawing.Size(813, 161);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any text using the current value-letter system and show it" +
@@ -8054,7 +8057,7 @@ partial class MainForm
             this.UserTextTextBox.Name = "UserTextTextBox";
             this.UserTextTextBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.UserTextTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.UserTextTextBox.Size = new System.Drawing.Size(817, 168);
+            this.UserTextTextBox.Size = new System.Drawing.Size(817, 163);
             this.UserTextTextBox.TabIndex = 1;
             this.UserTextTextBox.Text = "بسم الله الرحمن الرحيم";
             this.UserTextTextBox.WordWrap = false;
@@ -10957,5 +10960,5 @@ partial class MainForm
     private System.Windows.Forms.ComboBox Translator2ComboBox;
     private System.Windows.Forms.SplitContainer TranslationSplitContainer;
     private System.Windows.Forms.TextBox TranslationTextBox;
-    private System.Windows.Forms.TextBox Translation2TextBox;
+    private System.Windows.Forms.TextBox TranslationsTextBox;
 }
