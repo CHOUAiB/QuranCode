@@ -224,7 +224,7 @@ public partial class MainForm : Form, ISubscriber
     private const string CAPTION_SEPARATOR = " ► ";
     private const string DEFAULT_QURAN_FONT_NAME = "me_quran";
     private const float DEFAULT_QURAN_FONT_SIZE = 14.0F;
-    private const int DEFAULT_TRANSLATION_BOX_WIDTH = 317;
+    private const int DEFAULT_TRANSLATION_BOX_WIDTH = 409;
     private const string DEFAULT_TRANSALTION_FONT_NAME = "Microsoft Sans Serif";
     private const float DEFAULT_TRANSALTION_FONT_SIZE = 10.0F;
     private static Color DEFAULT_TRANSALTION_FONT_COLOR = Color.Navy;
@@ -360,7 +360,7 @@ public partial class MainForm : Form, ISubscriber
                             splash_form.Information = "Loading translation info ...";
                             PopulateTranslatorsCheckedListBox();
                             PopulateTranslatorComboBox();
-                            PopulateTranslator2ComboBox();
+                            PopulateTranslatorsComboBox();
                             splash_form.Progress = 50;
                             Thread.Sleep(100);
 
@@ -1131,7 +1131,7 @@ public partial class MainForm : Form, ISubscriber
 
                     m_translation_readonly = true;
                     UpdateTranslationReadOnly();
-                    EditSaveTranslationLabel.Visible = false;
+                    EditSaveTranslationLabel.Enabled = false;
                 }
             }
             else
@@ -1606,26 +1606,26 @@ public partial class MainForm : Form, ISubscriber
                                                     }
                                                 }
                                                 break;
-                                            case "Translator2":
+                                            case "Translators":
                                                 {
                                                     try
                                                     {
                                                         int index = int.Parse(parts[1].Trim());
-                                                        if ((index >= 0) && (index < this.Translator2ComboBox.Items.Count))
+                                                        if ((index >= 0) && (index < this.TranslatorsComboBox.Items.Count))
                                                         {
-                                                            this.Translator2ComboBox.SelectedIndex = index;
+                                                            this.TranslatorsComboBox.SelectedIndex = index;
                                                         }
                                                     }
                                                     catch
                                                     {
-                                                        string item = m_client.Book.TranslationInfos[Client.DEFAULT_TRANSLITERATION].Name;
-                                                        if (this.Translator2ComboBox.Items.Contains(item))
+                                                        string item = m_client.Book.TranslationInfos[Client.DEFAULT_EMLAAEI_TEXT].Name;
+                                                        if (this.TranslatorsComboBox.Items.Contains(item))
                                                         {
-                                                            this.Translator2ComboBox.SelectedItem = item;
+                                                            this.TranslatorsComboBox.SelectedItem = item;
                                                         }
                                                         else
                                                         {
-                                                            this.Translator2ComboBox.SelectedIndex = -1;
+                                                            this.TranslatorsComboBox.SelectedIndex = -1;
                                                         }
                                                     }
                                                 }
@@ -2486,10 +2486,10 @@ public partial class MainForm : Form, ISubscriber
                         {
                             this.TranslatorComboBox.SelectedItem = item;
                         }
-                        item = m_client.Book.TranslationInfos[Client.DEFAULT_TRANSLITERATION].Name;
-                        if (this.Translator2ComboBox.Items.Contains(item))
+                        item = m_client.Book.TranslationInfos[Client.DEFAULT_EMLAAEI_TEXT].Name;
+                        if (this.TranslatorsComboBox.Items.Contains(item))
                         {
-                            this.Translator2ComboBox.SelectedItem = item;
+                            this.TranslatorsComboBox.SelectedItem = item;
                         }
                         item = Client.DEFAULT_TAFSEER.Replace("/", " - ");
                         if (this.TafseerComboBox.Items.Contains(item))
@@ -2568,7 +2568,7 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine("InformationPageIndex" + "=" + m_information_page_index);
                     writer.WriteLine("TranslationBoxWidth" + "=" + m_translation_box_width);
                     writer.WriteLine("Translator" + "=" + this.TranslatorComboBox.SelectedIndex);
-                    writer.WriteLine("Translator2" + "=" + this.Translator2ComboBox.SelectedIndex);
+                    writer.WriteLine("Translators" + "=" + this.TranslatorsComboBox.SelectedIndex);
                     writer.WriteLine("ShowAllTranslations" + "=" + m_show_all_translations);
                     writer.WriteLine("Tafseer" + "=" + this.TafseerComboBox.SelectedIndex);
                     writer.WriteLine("SymmetryType" + "=" + this.SymmetryTypeComboBox.SelectedIndex);
@@ -3938,9 +3938,18 @@ public partial class MainForm : Form, ISubscriber
             TranslationTextBox.Font = m_translation_font;
             TranslationTextBox.ForeColor = m_translation_color;
             TranslationTextBox.Refresh();
-            //TranslationsTextBox.Font = m_translation_font;
-            //TranslationsTextBox.ForeColor = m_translation_color;
-            //TranslationsTextBox.Refresh();
+
+            if (m_show_all_translations)
+            {
+                TranslationsTextBox.Font = new Font(DEFAULT_TRANSALTION_FONT_NAME, DEFAULT_TRANSALTION_FONT_SIZE);
+                TranslationsTextBox.ForeColor = DEFAULT_TRANSALTION_FONT_COLOR;
+            }
+            else
+            {
+                TranslationsTextBox.Font = m_translation_font;
+                TranslationsTextBox.ForeColor = m_translation_color;
+            }
+            TranslationsTextBox.Refresh();
 
             RelatedWordsTextBox.Font = m_translation_font;
             RelatedWordsTextBox.ForeColor = m_translation_color;
@@ -11362,12 +11371,12 @@ public partial class MainForm : Form, ISubscriber
             TranslatorComboBox.SelectedIndexChanged += new EventHandler(TranslatorComboBox_SelectedIndexChanged);
         }
     }
-    private void PopulateTranslator2ComboBox()
+    private void PopulateTranslatorsComboBox()
     {
         try
         {
-            for (int i = 0; i < 3; i++) Translator2ComboBox.SelectedIndexChanged -= new EventHandler(TranslatorComboBox_SelectedIndexChanged);
-            Translator2ComboBox.BeginUpdate();
+            for (int i = 0; i < 3; i++) TranslatorsComboBox.SelectedIndexChanged -= new EventHandler(TranslatorComboBox_SelectedIndexChanged);
+            TranslatorsComboBox.BeginUpdate();
 
             if (m_client != null)
             {
@@ -11385,26 +11394,26 @@ public partial class MainForm : Form, ISubscriber
                                 }
 
                                 string backup_translation_name = null;
-                                if (Translator2ComboBox.SelectedItem != null)
+                                if (TranslatorsComboBox.SelectedItem != null)
                                 {
-                                    backup_translation_name = Translator2ComboBox.SelectedItem.ToString();
+                                    backup_translation_name = TranslatorsComboBox.SelectedItem.ToString();
                                 }
 
                                 if (m_client.Book.TranslationInfos != null)
                                 {
-                                    Translator2ComboBox.Items.Clear();
+                                    TranslatorsComboBox.Items.Clear();
                                     foreach (string key in m_client.Book.Verses[0].Translations.Keys)
                                     {
                                         string name = m_client.Book.TranslationInfos[key].Name;
-                                        Translator2ComboBox.Items.Add(name);
+                                        TranslatorsComboBox.Items.Add(name);
                                     }
 
                                     if (!String.IsNullOrEmpty(backup_translation_name))
                                     {
                                         bool found = false;
-                                        for (int i = 0; i < Translator2ComboBox.Items.Count; i++)
+                                        for (int i = 0; i < TranslatorsComboBox.Items.Count; i++)
                                         {
-                                            if (Translator2ComboBox.Items[i].ToString() == backup_translation_name)
+                                            if (TranslatorsComboBox.Items[i].ToString() == backup_translation_name)
                                             {
                                                 found = true;
                                                 break;
@@ -11412,28 +11421,28 @@ public partial class MainForm : Form, ISubscriber
                                         }
                                         if (found)
                                         {
-                                            this.Translator2ComboBox.SelectedItem = backup_translation_name;
+                                            this.TranslatorsComboBox.SelectedItem = backup_translation_name;
                                         }
                                         else
                                         {
-                                            this.Translator2ComboBox.SelectedItem = m_client.Book.TranslationInfos[Client.DEFAULT_TRANSLATION].Name;
+                                            this.TranslatorsComboBox.SelectedItem = m_client.Book.TranslationInfos[Client.DEFAULT_TRANSLATION].Name;
                                         }
                                     }
                                     else // if all translations were cleared, we still have the 3 mandatory ones at minimum
                                     {
-                                        if (this.Translator2ComboBox.Items.Count >= 3)
+                                        if (this.TranslatorsComboBox.Items.Count >= 3)
                                         {
-                                            this.Translator2ComboBox.SelectedItem = m_client.Book.TranslationInfos[Client.DEFAULT_TRANSLATION].Name;
+                                            this.TranslatorsComboBox.SelectedItem = m_client.Book.TranslationInfos[Client.DEFAULT_TRANSLATION].Name;
                                         }
                                         else // if user deleted one or more of the 3 mandatory translations manually
                                         {
-                                            if (this.Translator2ComboBox.Items.Count > 0)
+                                            if (this.TranslatorsComboBox.Items.Count > 0)
                                             {
-                                                this.Translator2ComboBox.SelectedItem = 0;
+                                                this.TranslatorsComboBox.SelectedItem = 0;
                                             }
                                             else // if no transaltion at all was left
                                             {
-                                                Translator2ComboBox.SelectedIndex = -1;
+                                                TranslatorsComboBox.SelectedIndex = -1;
                                             }
                                         }
                                     }
@@ -11446,13 +11455,13 @@ public partial class MainForm : Form, ISubscriber
         }
         catch
         {
-            Translator2ComboBox.SelectedIndex = -1;
+            TranslatorsComboBox.SelectedIndex = -1;
         }
         finally
         {
-            Translator2ComboBox.Sorted = true;
-            Translator2ComboBox.EndUpdate();
-            Translator2ComboBox.SelectedIndexChanged += new EventHandler(TranslatorComboBox_SelectedIndexChanged);
+            TranslatorsComboBox.Sorted = true;
+            TranslatorsComboBox.EndUpdate();
+            TranslatorsComboBox.SelectedIndexChanged += new EventHandler(TranslatorComboBox_SelectedIndexChanged);
         }
     }
     private void TranslatorsCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -11515,8 +11524,9 @@ public partial class MainForm : Form, ISubscriber
     private void AllTranslatorsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_show_all_translations = AllTranslatorsCheckBox.Checked;
-        Translator2ComboBox.Enabled = !m_show_all_translations;
+        TranslatorsComboBox.Enabled = !m_show_all_translations;
         TranslatorComboBox_SelectedIndexChanged(null, null);
+        ApplyTranslationFontAndColor();
     }
     private void TranslatorComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -11543,16 +11553,19 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
-        else if ((m_translated_verses != null) && (m_translated_verses.Count > 1))
+        else
         {
-            DisplayTranslations(m_translated_verses);
-        }
-        else // single verse
-        {
-            Verse verse = GetCurrentVerse();
-            if (verse != null)
+            if ((m_translated_verses != null) && (m_translated_verses.Count > 1))
             {
-                DisplayTranslations(verse);
+                DisplayTranslations(m_translated_verses);
+            }
+            else // single verse
+            {
+                Verse verse = GetCurrentVerse();
+                if (verse != null)
+                {
+                    DisplayTranslations(verse);
+                }
             }
         }
     }
@@ -11810,7 +11823,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         PopulateTranslatorsCheckedListBox();
                         PopulateTranslatorComboBox();
-                        PopulateTranslator2ComboBox();
+                        PopulateTranslatorsComboBox();
 
                         if (m_client.Selection != null)
                         {
@@ -11882,42 +11895,70 @@ public partial class MainForm : Form, ISubscriber
                             TranslationTextBox.Text = str.ToString();
                             TranslationTextBox.Refresh();
 
-                            StringBuilder str2 = new StringBuilder();
-                            if (Translator2ComboBox.SelectedItem != null)
+                            StringBuilder strs = new StringBuilder();
+                            if (m_show_all_translations)
                             {
-                                if (m_client != null)
+                                if (m_selected_translations.Count > 0)
                                 {
-                                    string name = Translator2ComboBox.SelectedItem.ToString();
-                                    string key = m_client.GetTranslationKey(name);
-                                    if (key != null)
+                                    foreach (string key in m_selected_translations)
                                     {
-                                        foreach (Verse verse in verses)
+                                        if (verses[0].Translations.ContainsKey(key))
                                         {
-                                            if (verse.Translations.ContainsKey(key))
-                                            {
-                                                str2.AppendLine(verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
-                                            }
+                                            //strs.AppendLine("[" + key.Pad(13) + "]\t" + verses[0].PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verses[0].Translations[key]);
+                                            strs.AppendLine(verses[0].PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verses[0].Translations[key]);
                                         }
-                                        if (str2.Length > 2)
+                                    }
+                                    if (strs.Length > 2)
+                                    {
+                                        strs.Remove(strs.Length - 2, 2);
+                                    }
+                                }
+
+                                TranslationsTextBox.WordWrap = false;
+                                TranslationsTextBox.Text = strs.ToString();
+                                TranslationsTextBox.Refresh();
+                            }
+                            else
+                            {
+                                if (TranslatorsComboBox.SelectedItem != null)
+                                {
+                                    if (m_client != null)
+                                    {
+                                        string name = TranslatorsComboBox.SelectedItem.ToString();
+                                        string key = m_client.GetTranslationKey(name);
+                                        if (key != null)
                                         {
-                                            str2.Remove(str2.Length - 2, 2);
+                                            foreach (Verse verse in verses)
+                                            {
+                                                if (verse.Translations.ContainsKey(key))
+                                                {
+                                                    strs.AppendLine(verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
+                                                }
+                                            }
+                                            if (strs.Length > 2)
+                                            {
+                                                strs.Remove(strs.Length - 2, 2);
+                                            }
                                         }
                                     }
                                 }
+                                TranslationsTextBox.WordWrap = true;
+                                TranslationsTextBox.Text = strs.ToString();
+                                TranslationsTextBox.Refresh();
                             }
-                            TranslationsTextBox.WordWrap = false;
-                            TranslationsTextBox.Text = str2.ToString();
-                            TranslationsTextBox.Refresh();
 
-                            if (m_translated_verses != null)
+                            if (m_translated_verses != verses)
                             {
-                                m_translated_verses.Clear();
-                                m_translated_verses.AddRange(verses);
+                                if (m_translated_verses != null)
+                                {
+                                    m_translated_verses.Clear();
+                                    m_translated_verses.AddRange(verses);
+                                }
                             }
 
                             m_translation_readonly = true;
                             UpdateTranslationReadOnly();
-                            EditSaveTranslationLabel.Visible = (verses.Count == 1);
+                            EditSaveTranslationLabel.Enabled = (verses.Count == 1);
                         }
                     }
                     else // no verse is selected
@@ -11932,7 +11973,7 @@ public partial class MainForm : Form, ISubscriber
 
                         m_translation_readonly = true;
                         UpdateTranslationReadOnly();
-                        EditSaveTranslationLabel.Visible = false;
+                        EditSaveTranslationLabel.Enabled = false;
                     }
                 }
             }
@@ -11974,60 +12015,59 @@ public partial class MainForm : Form, ISubscriber
                     TranslationTextBox.Text = str.ToString();
                     TranslationTextBox.Refresh();
 
+                    StringBuilder strs = new StringBuilder();
                     if (m_show_all_translations)
                     {
-                        StringBuilder str2 = new StringBuilder();
                         if (m_selected_translations.Count > 0)
                         {
                             foreach (string key in m_selected_translations)
                             {
                                 if (verse.Translations.ContainsKey(key))
                                 {
-                                    //str2.AppendLine("[" + key.Pad(13) + "]\t" + verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
-                                    str2.AppendLine(verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
+                                    //strs.AppendLine("[" + key.Pad(13) + "]\t" + verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
+                                    strs.AppendLine(verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
                                 }
                             }
-                            if (str2.Length > 2)
+                            if (strs.Length > 2)
                             {
-                                str2.Remove(str2.Length - 2, 2);
+                                strs.Remove(strs.Length - 2, 2);
                             }
                         }
                         TranslationsTextBox.WordWrap = false;
-                        TranslationsTextBox.Text = str2.ToString();
+                        TranslationsTextBox.Text = strs.ToString();
                         TranslationsTextBox.Refresh();
                     }
                     else
                     {
-                        StringBuilder str2 = new StringBuilder();
-                        if (Translator2ComboBox.SelectedItem != null)
+                        if (TranslatorsComboBox.SelectedItem != null)
                         {
                             if (m_client != null)
                             {
-                                string name = Translator2ComboBox.SelectedItem.ToString();
+                                string name = TranslatorsComboBox.SelectedItem.ToString();
                                 string key = m_client.GetTranslationKey(name);
                                 if (key != null)
                                 {
                                     if (verse.Translations.ContainsKey(key))
                                     {
-                                        str2.Append(verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
+                                        strs.Append(verse.PaddedAddress + VERSE_ADDRESS_TRANSLATION_SEPARATOR + verse.Translations[key]);
                                     }
                                 }
                             }
                         }
                         TranslationsTextBox.WordWrap = true;
-                        TranslationsTextBox.Text = str2.ToString();
+                        TranslationsTextBox.Text = strs.ToString();
                         TranslationsTextBox.Refresh();
-                    }
 
-                    if (m_translated_verses != null)
-                    {
-                        m_translated_verses.Clear();
-                        m_translated_verses.Add(verse);
+                        if (m_translated_verses != null)
+                        {
+                            m_translated_verses.Clear();
+                            m_translated_verses.Add(verse);
+                        }
                     }
 
                     m_translation_readonly = true;
                     UpdateTranslationReadOnly();
-                    EditSaveTranslationLabel.Visible = true;
+                    EditSaveTranslationLabel.Enabled = true;
                 }
             }
         }
