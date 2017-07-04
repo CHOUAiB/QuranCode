@@ -79,7 +79,7 @@ partial class SplashForm
             this.BismAllahLabel.Name = "BismAllahLabel";
             this.BismAllahLabel.Size = new System.Drawing.Size(239, 27);
             this.BismAllahLabel.TabIndex = 0;
-            this.BismAllahLabel.Tag = "https://qurancode.com";
+            this.BismAllahLabel.Tag = "http://qurancode.com";
             this.BismAllahLabel.Text = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
             this.BismAllahLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ToolTip.SetToolTip(this.BismAllahLabel, "In the name of Allah\r\nthe most Merciful qualitatively\r\nthe best Merciful quantita" +
@@ -97,7 +97,7 @@ partial class SplashForm
             this.SsalawaaaaaaaaaaaaaatLabel.Name = "SsalawaaaaaaaaaaaaaatLabel";
             this.SsalawaaaaaaaaaaaaaatLabel.Size = new System.Drawing.Size(239, 20);
             this.SsalawaaaaaaaaaaaaaatLabel.TabIndex = 1;
-            this.SsalawaaaaaaaaaaaaaatLabel.Tag = "https://qurancode.com";
+            this.SsalawaaaaaaaaaaaaaatLabel.Tag = "http://qurancode.com";
             this.SsalawaaaaaaaaaaaaaatLabel.Text = "ٱللَّهُمَّ  صَلِّ  عَلَىٰ  مُحَمَّدٍ  وَءَالِ  مُحَمَّدٍ";
             this.SsalawaaaaaaaaaaaaaatLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ToolTip.SetToolTip(this.SsalawaaaaaaaaaaaaaatLabel, "may Allah draw nearer to Him muhammed and his progeny");
@@ -147,7 +147,7 @@ partial class SplashForm
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
             this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 21);
             this.WordFrequencyLabel.TabIndex = 5;
-            this.WordFrequencyLabel.Tag = "https://qurancode.com";
+            this.WordFrequencyLabel.Tag = "http://qurancode.com";
             this.WordFrequencyLabel.Text = "من  الله  ان  في  ما  لا  الذين  الا  علي";
             this.WordFrequencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.WordFrequencyLabel, resources.GetString("WordFrequencyLabel.ToolTip"));
@@ -164,7 +164,7 @@ partial class SplashForm
             this.InitialLettersLabel.Name = "InitialLettersLabel";
             this.InitialLettersLabel.Size = new System.Drawing.Size(239, 17);
             this.InitialLettersLabel.TabIndex = 4;
-            this.InitialLettersLabel.Tag = "https://qurancode.com";
+            this.InitialLettersLabel.Tag = "http://qurancode.com";
             this.InitialLettersLabel.Text = "نص حكيم له سر قاطع | علي صراط حق نمسكه";
             this.InitialLettersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.InitialLettersLabel, "Perfect text with a decisive secret. Ali is a Truth path we hold fast to.");

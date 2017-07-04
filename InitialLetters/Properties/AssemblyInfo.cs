@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("InitialLetters")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("https://github.com/offby1/anagrams")]
+[assembly: AssemblyCompany("http://github.com/offby1/anagrams")]
 [assembly: AssemblyProduct("Initial Letters")]
 [assembly: AssemblyCopyright("Copyright ©2007 OffBy1 and ©2012 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي")]
 [assembly: AssemblyTrademark("http://qurancode.com")]

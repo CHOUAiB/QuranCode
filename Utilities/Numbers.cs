@@ -81,7 +81,7 @@ public enum PolygonType
     Icositetragonal
 };
 
-// https://oeis.org  Chemical polyhex hydrocarbons with 19 hexagons
+// http://oeis.org  Chemical polyhex hydrocarbons with 19 hexagons
 public enum PolyhexType
 {
     C2hPolyhexHydrocarbon,
@@ -2224,7 +2224,7 @@ public static class Numbers
         return (PolygonNumbers(24).Contains(number));
     }
 
-    //https://en.wikipedia.org/wiki/Centered_polygonal_number
+    //http://en.wikipedia.org/wiki/Centered_polygonal_number
     // ith number of CenteredPolygon(sides=N) = (((N * i)/2) * (i-1)) + 1
     // Whereas a prime number p cannot be a polygon number, many centered polygon numbers are primes.
     private static Dictionary<int, List<long>> s_centered_polygon_numbers_dictionary = new Dictionary<int, List<long>>();
@@ -2662,7 +2662,7 @@ public static class Numbers
         return (CenteredIcosahedralNumbers.Contains(number));
     }
 
-    // https://oeis.org  // Chemical polyhex hydrocarbons with 19 hexagons
+    // http://oeis.org  // Chemical polyhex hydrocarbons with 19 hexagons
     // Number of Isomers of polyhex hydrocarbons with C_(2h) symmetry with nineteen hexagons
     // 3, 17, 66, 189, 589, 1677, 3829, 7948, 15649, 25543, 26931, 15472 
     // Number of isomers of polyhex hydrocarbons with C_(2v) symmetry with nineteen hexagons
@@ -2985,7 +2985,7 @@ public static class Numbers
     /// <summary>
     /// <para>Mersenne Prime is 2^p - 1 for some prime p exponent power</para>
     /// <para>the first 48 known Mersenne powers in 2015 are:</para>
-    /// <para>https://en.wikipedia.org/wiki/Mersenne_prime</para>
+    /// <para>http://en.wikipedia.org/wiki/Mersenne_prime</para>
     /// <para>2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127, 521, 607, 1279, 2203, 2281, 3217,</para>
     /// <para>4253, 4423, 9689, 9941, 11213, 19937, 21701, 23209, 44497, 86243, 110503, 132049,</para>
     /// <para>216091, 756839, 859433, 1257787, 1398269, 2976221, 3021377, 6972593, 13466917,</para>

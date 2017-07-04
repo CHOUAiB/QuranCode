@@ -12187,15 +12187,15 @@ public partial class MainForm : Form, ISubscriber
                                             switch (tafseer_folder)
                                             {
                                                 case "Ibn Katheer":
-                                                    zip_remote_folder = "https://ia902705.us.archive.org/22/items/IbnKatheer_201412";
+                                                    zip_remote_folder = "http://ia902705.us.archive.org/22/items/IbnKatheer_201412";
                                                     zip_filename = "IbnKatheer.zip";
                                                     break;
                                                 case "Maududi":
-                                                    zip_remote_folder = "https://ia802703.us.archive.org/6/items/Maududi_201412";
+                                                    zip_remote_folder = "http://ia802703.us.archive.org/6/items/Maududi_201412";
                                                     zip_filename = "Maududi.zip";
                                                     break;
                                                 case "Al-Tustari":
-                                                    zip_remote_folder = "https://ia902702.us.archive.org/28/items/AlTustari";
+                                                    zip_remote_folder = "http://ia902702.us.archive.org/28/items/AlTustari";
                                                     zip_filename = "Al-Tustari.zip";
                                                     break;
                                                 default:

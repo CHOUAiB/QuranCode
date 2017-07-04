@@ -736,7 +736,7 @@ partial class MainForm
             this.WebsiteLinkLabel.Name = "WebsiteLinkLabel";
             this.WebsiteLinkLabel.Size = new System.Drawing.Size(23, 21);
             this.WebsiteLinkLabel.TabIndex = 112;
-            this.WebsiteLinkLabel.Tag = "https://heliwave.com";
+            this.WebsiteLinkLabel.Tag = "http://heliwave.com";
             this.WebsiteLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.WebsiteLinkLabel, "Help");
             this.WebsiteLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
@@ -8455,7 +8455,7 @@ partial class MainForm
             this.FindByFrequencyLinkLabel.Name = "FindByFrequencyLinkLabel";
             this.FindByFrequencyLinkLabel.Size = new System.Drawing.Size(6, 4);
             this.FindByFrequencyLinkLabel.TabIndex = 110;
-            this.FindByFrequencyLinkLabel.Tag = "https://www.facebook.com/hadyalthahaby";
+            this.FindByFrequencyLinkLabel.Tag = "http://www.facebook.com/hadyalthahaby";
             this.FindByFrequencyLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "©2005 Hadi Al-Thehabi");
             this.FindByFrequencyLinkLabel.Visible = false;

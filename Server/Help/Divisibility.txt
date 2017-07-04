@@ -120,7 +120,7 @@ For example, the sequence ATCGTT might instruct for blue eyes,
        while the sequence ATCGCT might instruct for brown eyes.
 The complete DNA instruction book (genome) for a human contains about
 3 billion bases and about 20000 genes on 23 pairs of chromosomes.
-https://www.genome.gov/25520880/
+http://www.genome.gov/25520880/
 
 
 Ali Adams
