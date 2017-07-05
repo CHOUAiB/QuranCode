@@ -139,6 +139,28 @@
   <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>21, 1</value>
   </metadata>
+  <data name="WebsiteLinkLabel.ToolTip" xml:space="preserve">
+    <value>"Over it are 19." = "عَلَيْهَا تِسْعَةَ عَشَرَ"
+Quran has 114 chapters
+Chapter     114 has 6 verses
+                   114 =     6 × 19
+The 114th prime is 619
+
+"There is no god but Allah. Muhammed is the Messenger of Allah."
+لا اله الا الله  محمد رسول الله Frequency_Linear value = 114
+لا اله الا الله  محمد رسول الله Abjad_Gematria    value = 619
+
+114 ÷ 2      =    57
+mid(1..57)  =    29
+Chapter 57 has 29 verses
+
+57 × 29    =  1653
+16th prime =   53
+There are 16 additive primes up to 114
+There are 53 additive composites up to 114
+
+God &gt;</value>
+  </data>
   <data name="ChapterSortLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
