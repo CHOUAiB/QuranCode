@@ -1724,6 +1724,19 @@ public partial class MainForm : Form, ISubscriber
                                                     CVWLSequenceDirectionLabel_Click(null, null);
                                                 }
                                                 break;
+                                            case "CVWLSequenceShowFactors":
+                                                {
+                                                    try
+                                                    {
+                                                        m_cvwl_sequence_show_factors = bool.Parse(parts[1].Trim());
+                                                    }
+                                                    catch
+                                                    {
+                                                        m_cvwl_sequence_show_factors = false;
+                                                    }
+                                                    CVWLSequenceShowFactorsCheckBox.Checked = m_cvwl_sequence_show_factors;
+                                                }
+                                                break;
                                             case "ValuesSequenceRadix":
                                                 {
                                                     try
@@ -2575,6 +2588,7 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine("SymmetryIncludeBoundaryCases" + "=" + m_symmetry_include_boundary_cases);
                     writer.WriteLine("CVWLSequenceType" + "=" + this.CVWLSequenceTypeComboBox.SelectedIndex);
                     writer.WriteLine("CVWLSequenceDirection" + "=" + m_cvwl_sequence_right_to_left);
+                    writer.WriteLine("CVWLSequenceShowFactors" + "=" + m_cvwl_sequence_show_factors);
                     writer.WriteLine("ValuesSequenceRadix" + "=" + m_values_sequence_radix);
                     writer.WriteLine("ValuesSequenceScope" + "=" + this.ValuesSequenceScopeComboBox.SelectedIndex);
                     writer.WriteLine("ValuesSequenceDirection" + "=" + m_values_sequence_right_to_left);
@@ -16660,6 +16674,14 @@ public partial class MainForm : Form, ISubscriber
             CVWLSequenceTypeComboBox.SelectedIndexChanged += new EventHandler(CVWLSequenceTypeComboBox_SelectedIndexChanged);
         }
     }
+    private bool m_cvwl_sequence_show_factors = false;
+    private void CVWLSequenceShowFactorsCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        m_cvwl_sequence_show_factors = CVWLSequenceShowFactorsCheckBox.Checked;
+        CVWLSequenceShowFactorsCheckBox.Refresh();
+
+        DisplayCVWLSequence();
+    }
     private void CVWLSequenceTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (CVWLSequenceTypeComboBox.SelectedItem != null)
@@ -16667,7 +16689,33 @@ public partial class MainForm : Form, ISubscriber
             CVWLSequenceType cvwl_sequence_type = (CVWLSequenceType)Enum.Parse(typeof(CVWLSequenceType), CVWLSequenceTypeComboBox.SelectedItem.ToString());
             if (!String.IsNullOrEmpty(m_current_text))
             {
-                CVWLSequenceTextBox.Text = BuildCVWLSequence(cvwl_sequence_type, m_current_text);
+                if (m_cvwl_sequence_show_factors)
+                {
+                    string cvwl_str = BuildCVWLSequence(cvwl_sequence_type, m_current_text);
+                    cvwl_str = cvwl_str.Replace("\r", "");
+
+                    StringBuilder str = new StringBuilder();
+                    string[] lines = cvwl_str.Split('\n');
+                    foreach (string line in lines)
+                    {
+                        string factors_str = "";
+                        if (line.Length <= 19) // max long is 19 digits long
+                        {
+                            long number = 0L;
+                            if (long.TryParse(line, out number))
+                            {
+                                factors_str = Numbers.FactorizeToString(number);
+                            }
+                        }
+                        str.AppendLine(line + "\t\t" + factors_str);
+                    }
+
+                    CVWLSequenceTextBox.Text = str.ToString();
+                }
+                else
+                {
+                    CVWLSequenceTextBox.Text = BuildCVWLSequence(cvwl_sequence_type, m_current_text);
+                }
             }
         }
     }
@@ -18709,6 +18757,7 @@ public partial class MainForm : Form, ISubscriber
                 CVWLSequenceDirectionLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_right.png");
             }
         }
+        CVWLSequenceDirectionLabel.Refresh();
 
         DisplayCVWLSequence();
     }
@@ -18970,6 +19019,7 @@ public partial class MainForm : Form, ISubscriber
                 ValuesSequenceDirectionLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_right.png");
             }
         }
+        ValuesSequenceDirectionLabel.Refresh();
 
         ValuesSequenceScopeComboBox_SelectedIndexChanged(null, null);
     }
@@ -19139,6 +19189,7 @@ public partial class MainForm : Form, ISubscriber
                 DNASequenceDirectionLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_right.png");
             }
         }
+        DNASequenceDirectionLabel.Refresh();
 
         DNASequenceSystemComboBox_SelectedIndexChanged(null, null);
     }
@@ -19191,14 +19242,13 @@ public partial class MainForm : Form, ISubscriber
     private int m_user_text_selection_length = 0;
     private void CalculateUserTextValue(Point location)
     {
-        if (m_user_text_selection_length != UserTextTextBox.SelectedText.Length)
+        if ((m_user_text_selection_start == UserTextTextBox.SelectionStart) && (m_user_text_selection_length == UserTextTextBox.SelectedText.Length))
         {
-            m_user_text_selection_length = UserTextTextBox.SelectedText.Length;
+            return;
         }
-        else if (m_user_text_selection_start != UserTextTextBox.SelectionStart)
-        {
-            m_user_text_selection_start = UserTextTextBox.SelectionStart;
-        }
+
+        m_user_text_selection_length = UserTextTextBox.SelectedText.Length;
+        m_user_text_selection_start = UserTextTextBox.SelectionStart;
 
         ////////////////////////////////////////////////////
         // overwrite m_current_text to show LetterStatistics
@@ -19240,6 +19290,19 @@ public partial class MainForm : Form, ISubscriber
 
         BuildLetterFrequencies();
         DisplayLetterFrequencies();
+
+        if (UserTextTextBox.SelectedText.Length > 0)
+        {
+            DisplayWordFrequencies();
+            this.AcceptButton = null;  // prevent steeling focus by this.AcceptButton = FindByTextButton;
+        }
+        else
+        {
+            ChaptersInspectLabel.Visible = true;
+            WordsListBoxLabel.Visible = false;
+            WordsListBox.Visible = false;
+            WordsListBox.SendToBack();
+        }
     }
     private Point m_caret_position = new Point(0, 0);
     private void UserTextTextBox_KeyUp(object sender, KeyEventArgs e)
