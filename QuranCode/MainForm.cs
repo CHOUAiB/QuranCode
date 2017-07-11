@@ -23943,6 +23943,8 @@ public partial class MainForm : Form, ISubscriber
         FindByFrequencyButton.Enabled = ((m_find_by_phrase) && (m_phrase_text.Length > 0))
                                         ||
                                         ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+
+        RebuildLetterFrequencies();
     }
     private void ResetFindByFrequencyResultTypeLabels()
     {
@@ -24147,11 +24149,8 @@ public partial class MainForm : Form, ISubscriber
             m_current_phrase = FindByFrequencyPhraseTextBox.Text;
         }
 
-        if (m_current_phrase != FindByFrequencyPhraseTextBox.SelectedText)
-        {
-            BuildLetterFrequencies();
-            DisplayLetterFrequencies();
-        }
+        BuildLetterFrequencies();
+        DisplayLetterFrequencies();
     }
     private void FindByFrequencyPhraseTextBox_KeyUp(object sender, KeyEventArgs e)
     {
