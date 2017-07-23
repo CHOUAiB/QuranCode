@@ -954,7 +954,7 @@ public partial class MainForm : Form
             long sum_of_divisors = Numbers.SumOfDivisors(number);
             str.AppendLine("Sum Of Divisors\t\t=\t" + sum_of_divisors + " = " + divisors);
 
-            string proper_divisors = Numbers.GetDivisorsString(number);
+            string proper_divisors = Numbers.GetProperDivisorsString(number);
             long sum_of_proper_divisors = Numbers.SumOfProperDivisors(number);
             str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
 

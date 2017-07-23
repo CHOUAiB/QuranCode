@@ -30532,7 +30532,7 @@ public partial class MainForm : Form, ISubscriber
                     long sum_of_divisors = Numbers.SumOfDivisors(value);
                     str.AppendLine("Sum Of Divisors\t\t=\t" + sum_of_divisors + " = " + divisors);
 
-                    string proper_divisors = Numbers.GetDivisorsString(value);
+                    string proper_divisors = Numbers.GetProperDivisorsString(value);
                     long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
                     str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
 
