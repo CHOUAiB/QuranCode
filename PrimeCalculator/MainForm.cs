@@ -2190,6 +2190,35 @@ public partial class MainForm : Form
     {
         IndexTextBox.Text = IndexTextBox.Text.Replace(" ", "");
 
+        if (IndexTextBox.Text.EndsWith("11"))
+        {
+            NthLabel.Text = "th";
+        }
+        else if (IndexTextBox.Text.EndsWith("12"))
+        {
+            NthLabel.Text = "th";
+        }
+        else if (IndexTextBox.Text.EndsWith("13"))
+        {
+            NthLabel.Text = "th";
+        }
+        else if (IndexTextBox.Text.EndsWith("1"))
+        {
+            NthLabel.Text = "st";
+        }
+        else if (IndexTextBox.Text.EndsWith("2"))
+        {
+            NthLabel.Text = "nd";
+        }
+        else if (IndexTextBox.Text.EndsWith("3"))
+        {
+            NthLabel.Text = "rd";
+        }
+        else
+        {
+            NthLabel.Text = "th";
+        }
+
         int index = 0;
         string index_str = IndexTextBox.Text;
         if (int.TryParse(index_str, out index))
