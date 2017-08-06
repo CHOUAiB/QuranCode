@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
@@ -96,7 +97,7 @@ public enum ArithmeticOperator { Plus, Minus, Multiply, Divide, Modulus };
 
 public static class Numbers
 {
-    private static int s_max_number_limit = int.MaxValue / ((Globals.EDITION == Edition.Ultimate) ? 16 : 1024);
+    public static int s_max_number_limit = int.MaxValue / ((Globals.EDITION == Edition.Ultimate) ? 16 : 1024);
 
     // pi = circumference / diameter ~= 355/113
     public const double PI = 3.141592653589793238462643383279D;
@@ -3641,6 +3642,107 @@ public static class Numbers
         using (publicPrivateRsa)
         {
             publicRsa.Clear();
+        }
+    }
+
+
+
+    public static Color[] NUMBER_TYPE_COLORS =
+    { 
+        /* NumberType.None */                   Color.Black,
+        /* NumberType.Unit */                   Color.DarkViolet,
+        /* NumberType.Prime */                  Color.Green,
+        /* NumberType.AdditivePrime */          Color.Blue,
+        /* NumberType.NonAdditivePrime */       Color.Green,
+        /* NumberType.Composite */              Color.Black,
+        /* NumberType.AdditiveComposite */      Color.Brown,
+        /* NumberType.NonAdditiveComposite */   Color.Black,
+        /* NumberType.Odd */                    Color.Black,
+        /* NumberType.Even */                   Color.Black,
+        /* NumberType.Square */                 Color.Black,
+        /* NumberType.Cubic */                  Color.Black,
+        /* NumberType.Quartic */                Color.Black,
+        /* NumberType.Quintic */                Color.Black,
+        /* NumberType.Sextic */                 Color.Black,
+        /* NumberType.Septic */                 Color.Black,
+        /* NumberType.Octic */                  Color.Black,
+        /* NumberType.Nonic */                  Color.Black,
+        /* NumberType.Decic */                  Color.Black,
+        /* NumberType.Natural */                Color.Black
+    };
+    public static Color[] NUMBER_TYPE_BACKCOLORS =
+    { 
+        /* NumberType.None */                   Color.Black,
+        /* NumberType.Unit */                   Color.DarkViolet,
+        /* NumberType.Prime */                  Color.Green,
+        /* NumberType.AdditivePrime */          Color.FromArgb(224, 224, 255),
+        /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
+        /* NumberType.Composite */              Color.Black,
+        /* NumberType.AdditiveComposite */      Color.FromArgb(224, 192, 192),
+        /* NumberType.NonAdditiveComposite */   Color.FromArgb(208, 208, 208),
+        /* NumberType.Odd */                    Color.Black,
+        /* NumberType.Even */                   Color.Black,
+        /* NumberType.Square */                 Color.Black,
+        /* NumberType.Cubic */                  Color.Black,
+        /* NumberType.Quartic */                Color.Black,
+        /* NumberType.Quintic */                Color.Black,
+        /* NumberType.Sextic */                 Color.Black,
+        /* NumberType.Septic */                 Color.Black,
+        /* NumberType.Octic */                  Color.Black,
+        /* NumberType.Nonic */                  Color.Black,
+        /* NumberType.Decic */                  Color.Black,
+        /* NumberType.Natural */                Color.Black
+    };
+
+    public static Color[] NUMBER_KIND_COLORS =
+    { 
+        /* NumberKind.Deficient */          Color.FromArgb(255, 240, 240),
+        /* NumberKind.Perfect */            Color.FromArgb(255, 204, 204),
+        /* NumberKind.Abundant */           Color.FromArgb(255, 224, 224)
+    };
+    public static Color GetNumberTypeColor(long number)
+    {
+        return GetNumberTypeColor(number.ToString(), 10L);
+    }
+    public static Color GetNumberTypeColor(string value, long radix)
+    {
+        // if negative number, remove -ve sign
+        if (value.StartsWith("-")) value = value.Remove(0, 1);
+
+        if (IsUnit(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.Unit];
+        }
+
+        else if (IsNonAdditivePrime(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditivePrime];
+        }
+        else if (IsAdditivePrime(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.AdditivePrime];
+        }
+        else if (IsPrime(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.Prime];
+        }
+
+        else if (IsNonAdditiveComposite(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditiveComposite];
+        }
+        else if (IsAdditiveComposite(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.AdditiveComposite];
+        }
+        else if (IsComposite(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.Composite];
+        }
+
+        else
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.None];
         }
     }
 }

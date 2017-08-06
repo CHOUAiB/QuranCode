@@ -148,60 +148,6 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Constants
     ///////////////////////////////////////////////////////////////////////////////
-    private static Color[] NUMBER_TYPE_COLORS =
-    { 
-        /* NumberType.None */                   Color.Black,
-        /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
-        /* NumberType.AdditivePrime */          Color.Blue,
-        /* NumberType.NonAdditivePrime */       Color.Green,
-        /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.Brown,
-        /* NumberType.NonAdditiveComposite */   Color.Black,
-        /* NumberType.Odd */                    Color.Black,
-        /* NumberType.Even */                   Color.Black,
-        /* NumberType.Square */                 Color.Black,
-        /* NumberType.Cubic */                  Color.Black,
-        /* NumberType.Quartic */                Color.Black,
-        /* NumberType.Quintic */                Color.Black,
-        /* NumberType.Sextic */                 Color.Black,
-        /* NumberType.Septic */                 Color.Black,
-        /* NumberType.Octic */                  Color.Black,
-        /* NumberType.Nonic */                  Color.Black,
-        /* NumberType.Decic */                  Color.Black,
-        /* NumberType.Natural */                Color.Black
-    };
-    private static Color[] NUMBER_TYPE_BACKCOLORS =
-    { 
-        /* NumberType.None */                   Color.Black,
-        /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
-        /* NumberType.AdditivePrime */          Color.FromArgb(224, 224, 255),
-        /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
-        /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.FromArgb(224, 192, 192),
-        /* NumberType.NonAdditiveComposite */   Color.FromArgb(208, 208, 208),
-        /* NumberType.Odd */                    Color.Black,
-        /* NumberType.Even */                   Color.Black,
-        /* NumberType.Square */                 Color.Black,
-        /* NumberType.Cubic */                  Color.Black,
-        /* NumberType.Quartic */                Color.Black,
-        /* NumberType.Quintic */                Color.Black,
-        /* NumberType.Sextic */                 Color.Black,
-        /* NumberType.Septic */                 Color.Black,
-        /* NumberType.Octic */                  Color.Black,
-        /* NumberType.Nonic */                  Color.Black,
-        /* NumberType.Decic */                  Color.Black,
-        /* NumberType.Natural */                Color.Black
-    };
-
-    private static Color[] NUMBER_KIND_COLORS =
-    { 
-        /* NumberKind.Deficient */          Color.FromArgb(255, 240, 240),
-        /* NumberKind.Perfect */            Color.FromArgb(255, 204, 204),
-        /* NumberKind.Abundant */           Color.FromArgb(255, 224, 224)
-    };
-
     private static int c = 140;
     private static Color[] CHAPTER_INITIALIZATION_COLORS =
     { 
@@ -27549,9 +27495,9 @@ public partial class MainForm : Form, ISubscriber
                     nth_number_index = Numbers.PrimeIndexOf(value);
                     nth_additive_number_index = Numbers.AdditivePrimeIndexOf(value);
                     nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(value);
-                    NthNumberTextBox.BackColor = (nth_additive_number_index > -1) ? NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
-                    NthAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
-                    NthNonAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
+                    NthNumberTextBox.BackColor = (nth_additive_number_index > -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
+                    NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
+                    NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
                     ToolTip.SetToolTip(NthNumberTextBox, "Prime index");
                     ToolTip.SetToolTip(NthAdditiveNumberTextBox, "Additive prime index");
                     ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive prime index");
@@ -27562,9 +27508,9 @@ public partial class MainForm : Form, ISubscriber
                     nth_number_index = Numbers.CompositeIndexOf(value);
                     nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(value);
                     nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(value);
-                    NthNumberTextBox.BackColor = (nth_additive_number_index > -1) ? NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
-                    NthAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
-                    NthNonAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
+                    NthNumberTextBox.BackColor = (nth_additive_number_index > -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
+                    NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
+                    NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
                     ToolTip.SetToolTip(NthNumberTextBox, "Composite index");
                     ToolTip.SetToolTip(NthAdditiveNumberTextBox, "Additive composite index");
                     ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive composite index");
@@ -27639,19 +27585,19 @@ public partial class MainForm : Form, ISubscriber
             case NumberKind.Deficient:
                 {
                     number_kind_index = Numbers.DeficientIndexOf(value) + 1;
-                    NumberKindIndexTextBox.BackColor = NUMBER_KIND_COLORS[0];
+                    NumberKindIndexTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[0];
                 }
                 break;
             case NumberKind.Perfect:
                 {
                     number_kind_index = Numbers.PerfectIndexOf(value) + 1;
-                    NumberKindIndexTextBox.BackColor = NUMBER_KIND_COLORS[1];
+                    NumberKindIndexTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[1];
                 }
                 break;
             case NumberKind.Abundant:
                 {
                     number_kind_index = Numbers.AbundantIndexOf(value) + 1;
-                    NumberKindIndexTextBox.BackColor = NUMBER_KIND_COLORS[2];
+                    NumberKindIndexTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[2];
                 }
                 break;
             default:
@@ -28410,38 +28356,38 @@ public partial class MainForm : Form, ISubscriber
 
         if (Numbers.IsUnit(value, radix))
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.Unit];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.Unit];
         }
 
         else if (Numbers.IsNonAdditivePrime(value, radix))
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditivePrime];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.NonAdditivePrime];
         }
         else if (Numbers.IsAdditivePrime(value, radix))
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.AdditivePrime];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.AdditivePrime];
         }
         else if (Numbers.IsPrime(value, radix))
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.Prime];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.Prime];
         }
 
         else if (Numbers.IsNonAdditiveComposite(value, radix))
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditiveComposite];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.NonAdditiveComposite];
         }
         else if (Numbers.IsAdditiveComposite(value, radix))
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.AdditiveComposite];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.AdditiveComposite];
         }
         else if (Numbers.IsComposite(value, radix))
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.Composite];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.Composite];
         }
 
         else
         {
-            return NUMBER_TYPE_COLORS[(int)NumberType.None];
+            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.None];
         }
     }
     ///////////////////////////////////////////////////////////////////////////////

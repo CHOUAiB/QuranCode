@@ -30,60 +30,6 @@ public partial class MainForm : Form
         }
     }
 
-    private static Color[] NUMBER_TYPE_COLORS =
-    { 
-        /* NumberType.None */                   Color.Black,
-        /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
-        /* NumberType.AdditivePrime */          Color.Blue,
-        /* NumberType.NonAdditivePrime */       Color.Green,
-        /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.Brown,
-        /* NumberType.NonAdditiveComposite */   Color.Black,
-        /* NumberType.Odd */                    Color.Black,
-        /* NumberType.Even */                   Color.Black,
-        /* NumberType.Square */                 Color.Black,
-        /* NumberType.Cubic */                  Color.Black,
-        /* NumberType.Quartic */                Color.Black,
-        /* NumberType.Quintic */                Color.Black,
-        /* NumberType.Sextic */                 Color.Black,
-        /* NumberType.Septic */                 Color.Black,
-        /* NumberType.Octic */                  Color.Black,
-        /* NumberType.Nonic */                  Color.Black,
-        /* NumberType.Decic */                  Color.Black,
-        /* NumberType.Natural */                Color.Black
-    };
-    private static Color[] NUMBER_TYPE_BACKCOLORS =
-    { 
-        /* NumberType.None */                   Color.Black,
-        /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
-        /* NumberType.AdditivePrime */          Color.FromArgb(224, 224, 255),
-        /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
-        /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.FromArgb(224, 192, 192),
-        /* NumberType.NonAdditiveComposite */   Color.FromArgb(208, 208, 208),
-        /* NumberType.Odd */                    Color.Black,
-        /* NumberType.Even */                   Color.Black,
-        /* NumberType.Square */                 Color.Black,
-        /* NumberType.Cubic */                  Color.Black,
-        /* NumberType.Quartic */                Color.Black,
-        /* NumberType.Quintic */                Color.Black,
-        /* NumberType.Sextic */                 Color.Black,
-        /* NumberType.Septic */                 Color.Black,
-        /* NumberType.Octic */                  Color.Black,
-        /* NumberType.Nonic */                  Color.Black,
-        /* NumberType.Decic */                  Color.Black,
-        /* NumberType.Natural */                Color.Black
-    };
-
-    private static Color[] NUMBER_KIND_COLORS =
-    { 
-        /* NumberKind.Deficient */          Color.FromArgb(255, 240, 240),
-        /* NumberKind.Perfect */            Color.FromArgb(255, 204, 204),
-        /* NumberKind.Abundant */           Color.FromArgb(255, 224, 224)
-    };
-
     public const int DEFAULT_SLEEP_TIME = 40; // ms
     private int m_sleep_time = DEFAULT_SLEEP_TIME;
     public int SleepTime
@@ -346,19 +292,19 @@ public partial class MainForm : Form
                     (sender as TextBoxBase).SelectAll();
                 }
             }
-            else if (e.KeyCode == Keys.Left)
+            else if (e.KeyCode == Keys.Z)
             {
                 HistoryBackwardLabel_Click(null, null);
             }
-            else if (e.KeyCode == Keys.Right)
+            else if (e.KeyCode == Keys.Y)
             {
                 HistoryForewardLabel_Click(null, null);
             }
-            else if (e.KeyCode == Keys.Up)
+            else if ((e.KeyCode == Keys.Up) || (e.KeyCode == Keys.Right))
             {
                 NextPrimeNumber();
             }
-            else if (e.KeyCode == Keys.Down)
+            else if ((e.KeyCode == Keys.Down) || (e.KeyCode == Keys.Left))
             {
                 PreviousPrimeNumber();
             }
@@ -367,6 +313,14 @@ public partial class MainForm : Form
                 HistoryDeleteLabel_Click(null, null);
             }
         }
+        else if (e.KeyCode == Keys.Up)
+        {
+            IncrementValue();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementValue();
+        }
         else if (e.KeyCode == Keys.Enter)
         {
             CallRun();
@@ -374,6 +328,26 @@ public partial class MainForm : Form
         else
         {
             ValueTextBox.ForeColor = Color.DarkGray;
+        }
+    }
+    private void IncrementValue()
+    {
+        long value = 0L;
+        if (long.TryParse(ValueTextBox.Text, out value))
+        {
+            if (value < long.MaxValue) value++;
+            ValueTextBox.Text = value.ToString();
+            //FactorizeValue(value);
+        }
+    }
+    private void DecrementValue()
+    {
+        long value = 0L;
+        if (long.TryParse(ValueTextBox.Text, out value))
+        {
+            if (value > 0) value--;
+            ValueTextBox.Text = value.ToString();
+            //FactorizeValue(value);
         }
     }
     private void NextPrimeNumber()
@@ -453,6 +427,7 @@ public partial class MainForm : Form
             m_history_index++;
             ValueTextBox.Text = m_history[m_history_index];
         }
+        ValueTextBox.Focus();
     }
     private void HistoryBackwardLabel_Click(object sender, EventArgs e)
     {
@@ -461,6 +436,7 @@ public partial class MainForm : Form
             m_history_index--;
             ValueTextBox.Text = m_history[m_history_index];
         }
+        ValueTextBox.Focus();
     }
     private void HistoryDeleteLabel_Click(object sender, EventArgs e)
     {
@@ -501,6 +477,8 @@ public partial class MainForm : Form
 
         HistoryDeleteLabel.Enabled = (m_history.Count > 0);
         HistoryClearLabel.Enabled = (m_history.Count > 0);
+
+        ValueTextBox.Focus();
     }
     private void HistoryClearLabel_Click(object sender, EventArgs e)
     {
@@ -511,6 +489,8 @@ public partial class MainForm : Form
 
         HistoryDeleteLabel.Enabled = false;
         HistoryClearLabel.Enabled = false;
+
+        ValueTextBox.Focus();
     }
 
     private double m_double_value = 0.0D;
@@ -640,9 +620,9 @@ public partial class MainForm : Form
                         NthNumberTextBox.ForeColor = GetNumberTypeColor(prime_index);
                         NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(additive_prime_index);
                         NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(non_additive_prime_index);
-                        NthNumberTextBox.BackColor = (non_additive_prime_index == -1) ? NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
-                        NthAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
-                        NthNonAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
+                        NthNumberTextBox.BackColor = (non_additive_prime_index == -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
+                        NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
+                        NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
                         NthNumberTextBox.Text = prime_index.ToString();
                         NthAdditiveNumberTextBox.Text = additive_prime_index.ToString();
                         NthNonAdditiveNumberTextBox.Text = non_additive_prime_index.ToString();
@@ -659,9 +639,9 @@ public partial class MainForm : Form
                         NthNumberTextBox.ForeColor = GetNumberTypeColor(composite_index);
                         NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(additive_composite_index);
                         NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(non_additive_composite_index);
-                        NthNumberTextBox.BackColor = (non_additive_composite_index == -1) ? NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
-                        NthAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
-                        NthNonAdditiveNumberTextBox.BackColor = NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
+                        NthNumberTextBox.BackColor = (non_additive_composite_index == -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
+                        NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
+                        NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
                         NthNumberTextBox.Text = composite_index.ToString();
                         NthAdditiveNumberTextBox.Text = additive_composite_index.ToString();
                         NthNonAdditiveNumberTextBox.Text = non_additive_composite_index.ToString();
@@ -744,19 +724,19 @@ public partial class MainForm : Form
             case NumberKind.Deficient:
                 {
                     number_kind_index = Numbers.DeficientIndexOf(number) + 1;
-                    NumberKindIndexTextBox.BackColor = NUMBER_KIND_COLORS[0];
+                    NumberKindIndexTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[0];
                 }
                 break;
             case NumberKind.Perfect:
                 {
                     number_kind_index = Numbers.PerfectIndexOf(number) + 1;
-                    NumberKindIndexTextBox.BackColor = NUMBER_KIND_COLORS[1];
+                    NumberKindIndexTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[1];
                 }
                 break;
             case NumberKind.Abundant:
                 {
                     number_kind_index = Numbers.AbundantIndexOf(number) + 1;
-                    NumberKindIndexTextBox.BackColor = NUMBER_KIND_COLORS[2];
+                    NumberKindIndexTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[2];
                 }
                 break;
             default:
@@ -2195,6 +2175,142 @@ public partial class MainForm : Form
                     }
                 }
             }
+        }
+    }
+
+    private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (MainTabControl.SelectedIndex == 1)
+        {
+            IndexTextBox.Focus();
+            Numbers.s_max_number_limit = int.MaxValue / 32;
+        }
+    }
+    private void IndexTextBox_TextChanged(object sender, EventArgs e)
+    {
+        IndexTextBox.Text = IndexTextBox.Text.Replace(" ", "");
+
+        int index = 0;
+        string index_str = IndexTextBox.Text;
+        if (int.TryParse(index_str, out index))
+        {
+            index--;
+            if (index >= 0)
+            {
+                this.Cursor = Cursors.WaitCursor;
+                try
+                {
+                    long p = Numbers.Primes[index];
+                    long ap = Numbers.AdditivePrimes[index];
+                    long xp = Numbers.NonAdditivePrimes[index];
+                    long c = Numbers.Composites[index];
+                    long ac = Numbers.AdditiveComposites[index];
+                    long xc = Numbers.NonAdditiveComposites[index];
+
+                    PTextBox.Text = p.ToString();
+                    APTextBox.Text = ap.ToString();
+                    XPTextBox.Text = xp.ToString();
+                    CTextBox.Text = c.ToString();
+                    ACTextBox.Text = ac.ToString();
+                    XCTextBox.Text = xc.ToString();
+
+                    PTextBox.ForeColor = Numbers.GetNumberTypeColor(p);
+                    APTextBox.ForeColor = Numbers.GetNumberTypeColor(ap);
+                    XPTextBox.ForeColor = Numbers.GetNumberTypeColor(xp);
+                    CTextBox.ForeColor = Numbers.GetNumberTypeColor(c);
+                    ACTextBox.ForeColor = Numbers.GetNumberTypeColor(ac);
+                    XCTextBox.ForeColor = Numbers.GetNumberTypeColor(xc);
+                }
+                catch
+                {
+                    PTextBox.Text = "";
+                    APTextBox.Text = "";
+                    XPTextBox.Text = "";
+                    CTextBox.Text = "";
+                    ACTextBox.Text = "";
+                    XCTextBox.Text = "";
+                }
+                finally
+                {
+                    this.Cursor = Cursors.Default;
+                }
+
+                this.Cursor = Cursors.WaitCursor;
+                try
+                {
+                    long ab = Numbers.Abundants[index];
+                    long df = Numbers.Deficients[index];
+
+                    ABTextBox.Text = ab.ToString();
+                    DFTextBox.Text = df.ToString();
+
+                    ABTextBox.ForeColor = Numbers.GetNumberTypeColor(ab);
+                    DFTextBox.ForeColor = Numbers.GetNumberTypeColor(df);
+
+                    ABTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[2];
+                    DFTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[0];
+                }
+                catch
+                {
+                    ABTextBox.Text = "";
+                    DFTextBox.Text = "";
+                }
+                finally
+                {
+                    this.Cursor = Cursors.Default;
+                }
+            }
+            else
+            {
+                PTextBox.Text = "";
+                APTextBox.Text = "";
+                XPTextBox.Text = "";
+                CTextBox.Text = "";
+                ACTextBox.Text = "";
+                XCTextBox.Text = "";
+                ABTextBox.Text = "";
+                DFTextBox.Text = "";
+            }
+        }
+        else
+        {
+            PTextBox.Text = "";
+            APTextBox.Text = "";
+            XPTextBox.Text = "";
+            CTextBox.Text = "";
+            ACTextBox.Text = "";
+            XCTextBox.Text = "";
+            ABTextBox.Text = "";
+            DFTextBox.Text = "";
+        }
+    }
+    private void IndexTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+    }
+    private void IncrementIndex()
+    {
+        long index = 0L;
+        if (long.TryParse(IndexTextBox.Text, out index))
+        {
+            if (index < long.MaxValue) index++;
+            IndexTextBox.Text = index.ToString();
+        }
+    }
+    private void DecrementIndex()
+    {
+        long index = 0L;
+        if (long.TryParse(IndexTextBox.Text, out index))
+        {
+            if (index > 0) index--;
+            IndexTextBox.Text = index.ToString();
         }
     }
 
