@@ -65,7 +65,7 @@ public class Server : IPublisher
     }
     private void OnFileChanged(object sender, FileSystemEventArgs e)
     {
-        if (e.Name == "InterestingNumbers.txt")
+        if (e.Name.Contains("InterestingNumbers"))  // e.g. InterestingNumbers.txt
         {
             Numbers.LoadInterestingNumbers();
             NotifySubscribers(Subject.InterestingNumbers, e);
@@ -458,9 +458,10 @@ public class Server : IPublisher
     {
         if (book != null)
         {
-            if (File.Exists(Globals.DATA_FOLDER + "/" + "non-waw-words.txt"))
+            string filename = Globals.DATA_FOLDER + "/" + "non-waw-words.txt";
+            if (File.Exists(filename))
             {
-                List<string> non_waw_words = FileHelper.LoadLines(Globals.DATA_FOLDER + "/" + "non-waw-words.txt");
+                List<string> non_waw_words = FileHelper.LoadLines(filename);
                 if (non_waw_words != null)
                 {
                     foreach (Verse verse in book.Verses)
@@ -480,6 +481,11 @@ public class Server : IPublisher
                                     {
                                         // و رد الله الذين كفروا vs ولما ورد ماء مدين
                                         if ((verse.Words[i].Text == "ورد") && (verse.Words[i + 1].Text == "الله"))
+                                        {
+                                            str.Append(verse.Words[i].Text.Insert(1, " ") + " ");
+                                        }
+                                        // مرغما كثيرا و سعه vs ارض الله وسعه or نفسا الا وسعها
+                                        else if ((verse.Words[i].Text == "وسعه") && (verse.Words[i - 2].Text == "مرغما"))
                                         {
                                             str.Append(verse.Words[i].Text.Insert(1, " ") + " ");
                                         }

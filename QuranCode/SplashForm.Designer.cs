@@ -148,7 +148,7 @@ partial class SplashForm
             this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 19);
             this.WordFrequencyLabel.TabIndex = 5;
             this.WordFrequencyLabel.Tag = "http://qurancode.com";
-            this.WordFrequencyLabel.Text = "من  الله    ان  في  ما  لا  الذين  الا  علي";
+            this.WordFrequencyLabel.Text = "من  الله  ان  في  ما  لا  الذين  الا  علي";
             this.WordFrequencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.WordFrequencyLabel, resources.GetString("WordFrequencyLabel.ToolTip"));
             this.WordFrequencyLabel.Click += new System.EventHandler(this.LinkLabel_Click);
