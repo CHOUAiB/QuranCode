@@ -63,10 +63,47 @@
             this.XCLabel = new System.Windows.Forms.Label();
             this.ACLabel = new System.Windows.Forms.Label();
             this.CLabel = new System.Windows.Forms.Label();
-            this.NthLabel = new System.Windows.Forms.Label();
-            this.IndexLabel = new System.Windows.Forms.Label();
             this.ABLabel = new System.Windows.Forms.Label();
             this.DFLabel = new System.Windows.Forms.Label();
+            this.aTriangleLabel = new System.Windows.Forms.Label();
+            this.bTriangleLabel = new System.Windows.Forms.Label();
+            this.cTriangleLabel = new System.Windows.Forms.Label();
+            this.gammaTriangleLabel = new System.Windows.Forms.Label();
+            this.betaTriangleLabel = new System.Windows.Forms.Label();
+            this.alphaTriangleLabel = new System.Windows.Forms.Label();
+            this.HelpTriangleLabel = new System.Windows.Forms.Label();
+            this.dCircleLabel = new System.Windows.Forms.Label();
+            this.rCircleLabel = new System.Windows.Forms.Label();
+            this.piCircleLabel = new System.Windows.Forms.Label();
+            this.cCircleLabel = new System.Windows.Forms.Label();
+            this.piEqCircleLabel = new System.Windows.Forms.Label();
+            this.dEqCircleLabel = new System.Windows.Forms.Label();
+            this.cEqCircleLabel = new System.Windows.Forms.Label();
+            this.aEqCircleLabel = new System.Windows.Forms.Label();
+            this.aCircleLabel = new System.Windows.Forms.Label();
+            this.a2EqCircleLabel = new System.Windows.Forms.Label();
+            this.tTriangleLabel = new System.Windows.Forms.Label();
+            this.tUnitTriangleLabel = new System.Windows.Forms.Label();
+            this.angleUnitLabel = new System.Windows.Forms.Label();
+            this.sideUnitLabel = new System.Windows.Forms.Label();
+            this.t2UnitTriangleLabel = new System.Windows.Forms.Label();
+            this.hUnitTriangleLabel = new System.Windows.Forms.Label();
+            this.hTriangleLabel = new System.Windows.Forms.Label();
+            this.v3EqSphereLabel = new System.Windows.Forms.Label();
+            this.vEqSphereLabel = new System.Windows.Forms.Label();
+            this.vSphereLabel = new System.Windows.Forms.Label();
+            this.dEqSphereLabel = new System.Windows.Forms.Label();
+            this.piEqSphereLabel = new System.Windows.Forms.Label();
+            this.sSphereLabel = new System.Windows.Forms.Label();
+            this.dSphereLabel = new System.Windows.Forms.Label();
+            this.rSphereLabel = new System.Windows.Forms.Label();
+            this.piSphereLabel = new System.Windows.Forms.Label();
+            this.s2EqSphereLabel = new System.Windows.Forms.Label();
+            this.sEqSphereLabel = new System.Windows.Forms.Label();
+            this.pUnitTriangleLabel = new System.Windows.Forms.Label();
+            this.pTriangleLabel = new System.Windows.Forms.Label();
+            this.NthLabel = new System.Windows.Forms.Label();
+            this.IndexLabel = new System.Windows.Forms.Label();
             this.IndexTextBox = new System.Windows.Forms.TextBox();
             this.ValuePanel = new System.Windows.Forms.Panel();
             this.SquareDiffTextBox = new System.Windows.Forms.TextBox();
@@ -85,6 +122,7 @@
             this.AddToSeparatorLine2Panel = new System.Windows.Forms.Panel();
             this.PrimeFactorsTextBox = new System.Windows.Forms.TextBox();
             this.IndexPanel = new System.Windows.Forms.Panel();
+            this.EditionLabel = new System.Windows.Forms.Label();
             this.ABTextBox = new System.Windows.Forms.TextBox();
             this.DFTextBox = new System.Windows.Forms.TextBox();
             this.XCTextBox = new System.Windows.Forms.TextBox();
@@ -94,14 +132,42 @@
             this.APTextBox = new System.Windows.Forms.TextBox();
             this.PTextBox = new System.Windows.Forms.TextBox();
             this.MainTabControl = new System.Windows.Forms.TabControl();
-            this.ResultTabPage = new System.Windows.Forms.TabPage();
+            this.FactorsTabPage = new System.Windows.Forms.TabPage();
             this.IndexTabPage = new System.Windows.Forms.TabPage();
+            this.CircleTabPage = new System.Windows.Forms.TabPage();
+            this.aCircleTextBox = new System.Windows.Forms.TextBox();
+            this.cCircleTextBox = new System.Windows.Forms.TextBox();
+            this.dCircleTextBox = new System.Windows.Forms.TextBox();
+            this.rCircleTextBox = new System.Windows.Forms.TextBox();
+            this.piCircleTextBox = new System.Windows.Forms.TextBox();
+            this.SphereTabPage = new System.Windows.Forms.TabPage();
+            this.vSphereTextBox = new System.Windows.Forms.TextBox();
+            this.sSphereTextBox = new System.Windows.Forms.TextBox();
+            this.dSphereTextBox = new System.Windows.Forms.TextBox();
+            this.rSphereTextBox = new System.Windows.Forms.TextBox();
+            this.piSphereTextBox = new System.Windows.Forms.TextBox();
+            this.TriangleTabPage = new System.Windows.Forms.TabPage();
+            this.RunTriangleButton = new System.Windows.Forms.Button();
+            this.pTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.h1TriangleTextBox = new System.Windows.Forms.TextBox();
+            this.tTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.gammaTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.betaTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.alphaTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.cTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.bTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.aTriangleTextBox = new System.Windows.Forms.TextBox();
+            this.h2TriangleTextBox = new System.Windows.Forms.TextBox();
+            this.h3TriangleTextBox = new System.Windows.Forms.TextBox();
             this.NotifyIconContextMenuStrip.SuspendLayout();
             this.ValuePanel.SuspendLayout();
             this.IndexPanel.SuspendLayout();
             this.MainTabControl.SuspendLayout();
-            this.ResultTabPage.SuspendLayout();
+            this.FactorsTabPage.SuspendLayout();
             this.IndexTabPage.SuspendLayout();
+            this.CircleTabPage.SuspendLayout();
+            this.SphereTabPage.SuspendLayout();
+            this.TriangleTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // ElapsedTimeLabel
@@ -506,9 +572,9 @@
             this.PLabel.BackColor = System.Drawing.SystemColors.Control;
             this.PLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.PLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.PLabel.Location = new System.Drawing.Point(6, 17);
+            this.PLabel.Location = new System.Drawing.Point(6, 49);
             this.PLabel.Name = "PLabel";
-            this.PLabel.Size = new System.Drawing.Size(27, 19);
+            this.PLabel.Size = new System.Drawing.Size(24, 19);
             this.PLabel.TabIndex = 15;
             this.PLabel.Text = "P";
             this.PLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -519,9 +585,9 @@
             this.APLabel.BackColor = System.Drawing.SystemColors.Control;
             this.APLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.APLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.APLabel.Location = new System.Drawing.Point(6, 43);
+            this.APLabel.Location = new System.Drawing.Point(6, 75);
             this.APLabel.Name = "APLabel";
-            this.APLabel.Size = new System.Drawing.Size(27, 19);
+            this.APLabel.Size = new System.Drawing.Size(24, 19);
             this.APLabel.TabIndex = 17;
             this.APLabel.Text = "AP";
             this.APLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -532,9 +598,9 @@
             this.XPLabel.BackColor = System.Drawing.SystemColors.Control;
             this.XPLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.XPLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.XPLabel.Location = new System.Drawing.Point(6, 70);
+            this.XPLabel.Location = new System.Drawing.Point(6, 102);
             this.XPLabel.Name = "XPLabel";
-            this.XPLabel.Size = new System.Drawing.Size(27, 19);
+            this.XPLabel.Size = new System.Drawing.Size(24, 19);
             this.XPLabel.TabIndex = 19;
             this.XPLabel.Text = "XP";
             this.XPLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -545,9 +611,9 @@
             this.XCLabel.BackColor = System.Drawing.SystemColors.Control;
             this.XCLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.XCLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.XCLabel.Location = new System.Drawing.Point(200, 71);
+            this.XCLabel.Location = new System.Drawing.Point(199, 103);
             this.XCLabel.Name = "XCLabel";
-            this.XCLabel.Size = new System.Drawing.Size(27, 19);
+            this.XCLabel.Size = new System.Drawing.Size(24, 19);
             this.XCLabel.TabIndex = 25;
             this.XCLabel.Text = "XC";
             this.XCLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -558,9 +624,9 @@
             this.ACLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ACLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.ACLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ACLabel.Location = new System.Drawing.Point(200, 44);
+            this.ACLabel.Location = new System.Drawing.Point(199, 76);
             this.ACLabel.Name = "ACLabel";
-            this.ACLabel.Size = new System.Drawing.Size(27, 19);
+            this.ACLabel.Size = new System.Drawing.Size(24, 19);
             this.ACLabel.TabIndex = 23;
             this.ACLabel.Text = "AC";
             this.ACLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -571,20 +637,500 @@
             this.CLabel.BackColor = System.Drawing.SystemColors.Control;
             this.CLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.CLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CLabel.Location = new System.Drawing.Point(200, 17);
+            this.CLabel.Location = new System.Drawing.Point(206, 49);
             this.CLabel.Name = "CLabel";
-            this.CLabel.Size = new System.Drawing.Size(27, 19);
+            this.CLabel.Size = new System.Drawing.Size(11, 19);
             this.CLabel.TabIndex = 21;
             this.CLabel.Text = "C";
             this.CLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.CLabel, "Composite");
             // 
+            // ABLabel
+            // 
+            this.ABLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ABLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.ABLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ABLabel.Location = new System.Drawing.Point(6, 134);
+            this.ABLabel.Name = "ABLabel";
+            this.ABLabel.Size = new System.Drawing.Size(24, 19);
+            this.ABLabel.TabIndex = 31;
+            this.ABLabel.Text = "AB";
+            this.ABLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ToolTip.SetToolTip(this.ABLabel, "Abundant Number");
+            // 
+            // DFLabel
+            // 
+            this.DFLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DFLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.DFLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.DFLabel.Location = new System.Drawing.Point(199, 135);
+            this.DFLabel.Name = "DFLabel";
+            this.DFLabel.Size = new System.Drawing.Size(24, 19);
+            this.DFLabel.TabIndex = 30;
+            this.DFLabel.Text = "DF";
+            this.DFLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolTip.SetToolTip(this.DFLabel, "Deficient Number");
+            // 
+            // aTriangleLabel
+            // 
+            this.aTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.aTriangleLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.aTriangleLabel.Location = new System.Drawing.Point(12, 2);
+            this.aTriangleLabel.Name = "aTriangleLabel";
+            this.aTriangleLabel.Size = new System.Drawing.Size(62, 19);
+            this.aTriangleLabel.TabIndex = 26;
+            this.aTriangleLabel.Text = "a";
+            this.aTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.aTriangleLabel, "Side a");
+            // 
+            // bTriangleLabel
+            // 
+            this.bTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.bTriangleLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.bTriangleLabel.Location = new System.Drawing.Point(75, 2);
+            this.bTriangleLabel.Name = "bTriangleLabel";
+            this.bTriangleLabel.Size = new System.Drawing.Size(62, 19);
+            this.bTriangleLabel.TabIndex = 28;
+            this.bTriangleLabel.Text = "b";
+            this.bTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.bTriangleLabel, "Side b");
+            // 
+            // cTriangleLabel
+            // 
+            this.cTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.cTriangleLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cTriangleLabel.Location = new System.Drawing.Point(138, 2);
+            this.cTriangleLabel.Name = "cTriangleLabel";
+            this.cTriangleLabel.Size = new System.Drawing.Size(59, 19);
+            this.cTriangleLabel.TabIndex = 30;
+            this.cTriangleLabel.Text = "c";
+            this.cTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.cTriangleLabel, "Side c");
+            // 
+            // gammaTriangleLabel
+            // 
+            this.gammaTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.gammaTriangleLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gammaTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.gammaTriangleLabel.Location = new System.Drawing.Point(138, 43);
+            this.gammaTriangleLabel.Name = "gammaTriangleLabel";
+            this.gammaTriangleLabel.Size = new System.Drawing.Size(62, 19);
+            this.gammaTriangleLabel.TabIndex = 36;
+            this.gammaTriangleLabel.Text = "γ";
+            this.gammaTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.gammaTriangleLabel, "Gamma = angle opposite side c");
+            // 
+            // betaTriangleLabel
+            // 
+            this.betaTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.betaTriangleLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.betaTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.betaTriangleLabel.Location = new System.Drawing.Point(75, 43);
+            this.betaTriangleLabel.Name = "betaTriangleLabel";
+            this.betaTriangleLabel.Size = new System.Drawing.Size(62, 19);
+            this.betaTriangleLabel.TabIndex = 34;
+            this.betaTriangleLabel.Text = "β";
+            this.betaTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.betaTriangleLabel, "Beta = angle opposite side b");
+            // 
+            // alphaTriangleLabel
+            // 
+            this.alphaTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.alphaTriangleLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alphaTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.alphaTriangleLabel.Location = new System.Drawing.Point(12, 43);
+            this.alphaTriangleLabel.Name = "alphaTriangleLabel";
+            this.alphaTriangleLabel.Size = new System.Drawing.Size(62, 19);
+            this.alphaTriangleLabel.TabIndex = 32;
+            this.alphaTriangleLabel.Text = "α";
+            this.alphaTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.alphaTriangleLabel, "Alpha = angle opposite side a");
+            // 
+            // HelpTriangleLabel
+            // 
+            this.HelpTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.HelpTriangleLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.HelpTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
+            this.HelpTriangleLabel.ForeColor = System.Drawing.Color.LightCoral;
+            this.HelpTriangleLabel.Location = new System.Drawing.Point(207, 91);
+            this.HelpTriangleLabel.Name = "HelpTriangleLabel";
+            this.HelpTriangleLabel.Size = new System.Drawing.Size(18, 19);
+            this.HelpTriangleLabel.TabIndex = 55;
+            this.HelpTriangleLabel.Tag = "http://en.wikipedia.org/wiki/Solution_of_triangles";
+            this.HelpTriangleLabel.Text = "?";
+            this.HelpTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolTip.SetToolTip(this.HelpTriangleLabel, "Formulae");
+            this.HelpTriangleLabel.Click += new System.EventHandler(this.LinkLabel_Click);
+            // 
+            // dCircleLabel
+            // 
+            this.dCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.dCircleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.dCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.dCircleLabel.Location = new System.Drawing.Point(7, 71);
+            this.dCircleLabel.Name = "dCircleLabel";
+            this.dCircleLabel.Size = new System.Drawing.Size(89, 19);
+            this.dCircleLabel.TabIndex = 25;
+            this.dCircleLabel.Text = "Diameter           d";
+            this.dCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // rCircleLabel
+            // 
+            this.rCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.rCircleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.rCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.rCircleLabel.Location = new System.Drawing.Point(7, 44);
+            this.rCircleLabel.Name = "rCircleLabel";
+            this.rCircleLabel.Size = new System.Drawing.Size(89, 19);
+            this.rCircleLabel.TabIndex = 24;
+            this.rCircleLabel.Text = "Radius               r";
+            this.rCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // piCircleLabel
+            // 
+            this.piCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.piCircleLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.piCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.piCircleLabel.Location = new System.Drawing.Point(6, 167);
+            this.piCircleLabel.Name = "piCircleLabel";
+            this.piCircleLabel.Size = new System.Drawing.Size(14, 19);
+            this.piCircleLabel.TabIndex = 23;
+            this.piCircleLabel.Text = "π";
+            this.piCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cCircleLabel
+            // 
+            this.cCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.cCircleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.cCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cCircleLabel.Location = new System.Drawing.Point(7, 98);
+            this.cCircleLabel.Name = "cCircleLabel";
+            this.cCircleLabel.Size = new System.Drawing.Size(89, 19);
+            this.cCircleLabel.TabIndex = 27;
+            this.cCircleLabel.Text = "Circumference  C";
+            this.cCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // piEqCircleLabel
+            // 
+            this.piEqCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.piEqCircleLabel.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.piEqCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.piEqCircleLabel.Location = new System.Drawing.Point(7, 9);
+            this.piEqCircleLabel.Name = "piEqCircleLabel";
+            this.piEqCircleLabel.Size = new System.Drawing.Size(102, 19);
+            this.piEqCircleLabel.TabIndex = 28;
+            this.piEqCircleLabel.Text = "π  =  C / d";
+            this.piEqCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // dEqCircleLabel
+            // 
+            this.dEqCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.dEqCircleLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dEqCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.dEqCircleLabel.Location = new System.Drawing.Point(194, 71);
+            this.dEqCircleLabel.Name = "dEqCircleLabel";
+            this.dEqCircleLabel.Size = new System.Drawing.Size(33, 19);
+            this.dEqCircleLabel.TabIndex = 29;
+            this.dEqCircleLabel.Text = "2 r";
+            this.dEqCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cEqCircleLabel
+            // 
+            this.cEqCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.cEqCircleLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cEqCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.cEqCircleLabel.Location = new System.Drawing.Point(194, 98);
+            this.cEqCircleLabel.Name = "cEqCircleLabel";
+            this.cEqCircleLabel.Size = new System.Drawing.Size(33, 19);
+            this.cEqCircleLabel.TabIndex = 30;
+            this.cEqCircleLabel.Text = "2 π r";
+            this.cEqCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // aEqCircleLabel
+            // 
+            this.aEqCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.aEqCircleLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aEqCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.aEqCircleLabel.Location = new System.Drawing.Point(194, 125);
+            this.aEqCircleLabel.Name = "aEqCircleLabel";
+            this.aEqCircleLabel.Size = new System.Drawing.Size(33, 19);
+            this.aEqCircleLabel.TabIndex = 33;
+            this.aEqCircleLabel.Text = "π r";
+            this.aEqCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // aCircleLabel
+            // 
+            this.aCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.aCircleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.aCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.aCircleLabel.Location = new System.Drawing.Point(7, 125);
+            this.aCircleLabel.Name = "aCircleLabel";
+            this.aCircleLabel.Size = new System.Drawing.Size(89, 19);
+            this.aCircleLabel.TabIndex = 32;
+            this.aCircleLabel.Text = "Area                 A";
+            this.aCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // a2EqCircleLabel
+            // 
+            this.a2EqCircleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.a2EqCircleLabel.Font = new System.Drawing.Font("Times New Roman", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.a2EqCircleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.a2EqCircleLabel.Location = new System.Drawing.Point(215, 122);
+            this.a2EqCircleLabel.Name = "a2EqCircleLabel";
+            this.a2EqCircleLabel.Size = new System.Drawing.Size(10, 19);
+            this.a2EqCircleLabel.TabIndex = 34;
+            this.a2EqCircleLabel.Text = "2";
+            this.a2EqCircleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tTriangleLabel
+            // 
+            this.tTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.tTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.tTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.tTriangleLabel.Location = new System.Drawing.Point(3, 141);
+            this.tTriangleLabel.Name = "tTriangleLabel";
+            this.tTriangleLabel.Size = new System.Drawing.Size(71, 19);
+            this.tTriangleLabel.TabIndex = 38;
+            this.tTriangleLabel.Text = "Area          A";
+            this.tTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tUnitTriangleLabel
+            // 
+            this.tUnitTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.tUnitTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.tUnitTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.tUnitTriangleLabel.Location = new System.Drawing.Point(206, 141);
+            this.tUnitTriangleLabel.Name = "tUnitTriangleLabel";
+            this.tUnitTriangleLabel.Size = new System.Drawing.Size(18, 19);
+            this.tUnitTriangleLabel.TabIndex = 47;
+            this.tUnitTriangleLabel.Text = "m";
+            this.tUnitTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // angleUnitLabel
+            // 
+            this.angleUnitLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.angleUnitLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.angleUnitLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.angleUnitLabel.Location = new System.Drawing.Point(206, 59);
+            this.angleUnitLabel.Name = "angleUnitLabel";
+            this.angleUnitLabel.Size = new System.Drawing.Size(13, 19);
+            this.angleUnitLabel.TabIndex = 44;
+            this.angleUnitLabel.Text = "°";
+            this.angleUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // sideUnitLabel
+            // 
+            this.sideUnitLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.sideUnitLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.sideUnitLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.sideUnitLabel.Location = new System.Drawing.Point(206, 22);
+            this.sideUnitLabel.Name = "sideUnitLabel";
+            this.sideUnitLabel.Size = new System.Drawing.Size(18, 19);
+            this.sideUnitLabel.TabIndex = 42;
+            this.sideUnitLabel.Text = "m";
+            this.sideUnitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // t2UnitTriangleLabel
+            // 
+            this.t2UnitTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.t2UnitTriangleLabel.Font = new System.Drawing.Font("Times New Roman", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.t2UnitTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.t2UnitTriangleLabel.Location = new System.Drawing.Point(217, 138);
+            this.t2UnitTriangleLabel.Name = "t2UnitTriangleLabel";
+            this.t2UnitTriangleLabel.Size = new System.Drawing.Size(10, 19);
+            this.t2UnitTriangleLabel.TabIndex = 48;
+            this.t2UnitTriangleLabel.Text = "2";
+            this.t2UnitTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // hUnitTriangleLabel
+            // 
+            this.hUnitTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.hUnitTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.hUnitTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.hUnitTriangleLabel.Location = new System.Drawing.Point(206, 166);
+            this.hUnitTriangleLabel.Name = "hUnitTriangleLabel";
+            this.hUnitTriangleLabel.Size = new System.Drawing.Size(18, 19);
+            this.hUnitTriangleLabel.TabIndex = 51;
+            this.hUnitTriangleLabel.Text = "m";
+            this.hUnitTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // hTriangleLabel
+            // 
+            this.hTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.hTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.hTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.hTriangleLabel.Location = new System.Drawing.Point(3, 166);
+            this.hTriangleLabel.Name = "hTriangleLabel";
+            this.hTriangleLabel.Size = new System.Drawing.Size(71, 19);
+            this.hTriangleLabel.TabIndex = 50;
+            this.hTriangleLabel.Text = "Heights      h";
+            this.hTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // v3EqSphereLabel
+            // 
+            this.v3EqSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.v3EqSphereLabel.Font = new System.Drawing.Font("Times New Roman", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.v3EqSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.v3EqSphereLabel.Location = new System.Drawing.Point(217, 122);
+            this.v3EqSphereLabel.Name = "v3EqSphereLabel";
+            this.v3EqSphereLabel.Size = new System.Drawing.Size(10, 19);
+            this.v3EqSphereLabel.TabIndex = 49;
+            this.v3EqSphereLabel.Text = "3";
+            this.v3EqSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // vEqSphereLabel
+            // 
+            this.vEqSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.vEqSphereLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vEqSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.vEqSphereLabel.Location = new System.Drawing.Point(174, 127);
+            this.vEqSphereLabel.Name = "vEqSphereLabel";
+            this.vEqSphereLabel.Size = new System.Drawing.Size(53, 19);
+            this.vEqSphereLabel.TabIndex = 48;
+            this.vEqSphereLabel.Text = "4/3 π r /¾";
+            this.vEqSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // vSphereLabel
+            // 
+            this.vSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.vSphereLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.vSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.vSphereLabel.Location = new System.Drawing.Point(7, 125);
+            this.vSphereLabel.Name = "vSphereLabel";
+            this.vSphereLabel.Size = new System.Drawing.Size(89, 19);
+            this.vSphereLabel.TabIndex = 47;
+            this.vSphereLabel.Text = "Volume              V";
+            this.vSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // dEqSphereLabel
+            // 
+            this.dEqSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.dEqSphereLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dEqSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.dEqSphereLabel.Location = new System.Drawing.Point(174, 71);
+            this.dEqSphereLabel.Name = "dEqSphereLabel";
+            this.dEqSphereLabel.Size = new System.Drawing.Size(33, 19);
+            this.dEqSphereLabel.TabIndex = 45;
+            this.dEqSphereLabel.Text = "2 r";
+            this.dEqSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // piEqSphereLabel
+            // 
+            this.piEqSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.piEqSphereLabel.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.piEqSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.piEqSphereLabel.Location = new System.Drawing.Point(7, 9);
+            this.piEqSphereLabel.Name = "piEqSphereLabel";
+            this.piEqSphereLabel.Size = new System.Drawing.Size(102, 19);
+            this.piEqSphereLabel.TabIndex = 44;
+            this.piEqSphereLabel.Text = "π  =  C / d";
+            this.piEqSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // sSphereLabel
+            // 
+            this.sSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.sSphereLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.sSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.sSphereLabel.Location = new System.Drawing.Point(7, 98);
+            this.sSphereLabel.Name = "sSphereLabel";
+            this.sSphereLabel.Size = new System.Drawing.Size(89, 19);
+            this.sSphereLabel.TabIndex = 43;
+            this.sSphereLabel.Text = "Surface Area    S";
+            this.sSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // dSphereLabel
+            // 
+            this.dSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.dSphereLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.dSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.dSphereLabel.Location = new System.Drawing.Point(7, 71);
+            this.dSphereLabel.Name = "dSphereLabel";
+            this.dSphereLabel.Size = new System.Drawing.Size(89, 19);
+            this.dSphereLabel.TabIndex = 42;
+            this.dSphereLabel.Text = "Diameter           d";
+            this.dSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // rSphereLabel
+            // 
+            this.rSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.rSphereLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.rSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.rSphereLabel.Location = new System.Drawing.Point(7, 44);
+            this.rSphereLabel.Name = "rSphereLabel";
+            this.rSphereLabel.Size = new System.Drawing.Size(89, 19);
+            this.rSphereLabel.TabIndex = 41;
+            this.rSphereLabel.Text = "Radius               r";
+            this.rSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // piSphereLabel
+            // 
+            this.piSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.piSphereLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.piSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.piSphereLabel.Location = new System.Drawing.Point(6, 167);
+            this.piSphereLabel.Name = "piSphereLabel";
+            this.piSphereLabel.Size = new System.Drawing.Size(14, 19);
+            this.piSphereLabel.TabIndex = 40;
+            this.piSphereLabel.Text = "π";
+            this.piSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // s2EqSphereLabel
+            // 
+            this.s2EqSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.s2EqSphereLabel.Font = new System.Drawing.Font("Times New Roman", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.s2EqSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.s2EqSphereLabel.Location = new System.Drawing.Point(206, 94);
+            this.s2EqSphereLabel.Name = "s2EqSphereLabel";
+            this.s2EqSphereLabel.Size = new System.Drawing.Size(10, 19);
+            this.s2EqSphereLabel.TabIndex = 51;
+            this.s2EqSphereLabel.Text = "2";
+            this.s2EqSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // sEqSphereLabel
+            // 
+            this.sEqSphereLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.sEqSphereLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sEqSphereLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.sEqSphereLabel.Location = new System.Drawing.Point(174, 99);
+            this.sEqSphereLabel.Name = "sEqSphereLabel";
+            this.sEqSphereLabel.Size = new System.Drawing.Size(50, 19);
+            this.sEqSphereLabel.TabIndex = 50;
+            this.sEqSphereLabel.Text = "4 π r";
+            this.sEqSphereLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pUnitTriangleLabel
+            // 
+            this.pUnitTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.pUnitTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.pUnitTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.pUnitTriangleLabel.Location = new System.Drawing.Point(206, 116);
+            this.pUnitTriangleLabel.Name = "pUnitTriangleLabel";
+            this.pUnitTriangleLabel.Size = new System.Drawing.Size(18, 19);
+            this.pUnitTriangleLabel.TabIndex = 54;
+            this.pUnitTriangleLabel.Text = "m";
+            this.pUnitTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pTriangleLabel
+            // 
+            this.pTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.pTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.pTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.pTriangleLabel.Location = new System.Drawing.Point(3, 116);
+            this.pTriangleLabel.Name = "pTriangleLabel";
+            this.pTriangleLabel.Size = new System.Drawing.Size(71, 19);
+            this.pTriangleLabel.TabIndex = 53;
+            this.pTriangleLabel.Text = "Perimeter   P";
+            this.pTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // NthLabel
             // 
             this.NthLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.NthLabel.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.NthLabel.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.NthLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.NthLabel.Location = new System.Drawing.Point(161, 97);
+            this.NthLabel.Location = new System.Drawing.Point(162, 8);
             this.NthLabel.Name = "NthLabel";
             this.NthLabel.Size = new System.Drawing.Size(24, 19);
             this.NthLabel.TabIndex = 26;
@@ -596,44 +1142,18 @@
             this.IndexLabel.BackColor = System.Drawing.SystemColors.Control;
             this.IndexLabel.Font = new System.Drawing.Font("Tahoma", 9F);
             this.IndexLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.IndexLabel.Location = new System.Drawing.Point(23, 102);
+            this.IndexLabel.Location = new System.Drawing.Point(23, 12);
             this.IndexLabel.Name = "IndexLabel";
             this.IndexLabel.Size = new System.Drawing.Size(53, 19);
             this.IndexLabel.TabIndex = 27;
             this.IndexLabel.Text = "Index";
             this.IndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // ABLabel
-            // 
-            this.ABLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.ABLabel.Font = new System.Drawing.Font("Tahoma", 8F);
-            this.ABLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ABLabel.Location = new System.Drawing.Point(6, 135);
-            this.ABLabel.Name = "ABLabel";
-            this.ABLabel.Size = new System.Drawing.Size(27, 19);
-            this.ABLabel.TabIndex = 31;
-            this.ABLabel.Text = "AB";
-            this.ABLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ToolTip.SetToolTip(this.ABLabel, "Abundant Number");
-            // 
-            // DFLabel
-            // 
-            this.DFLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.DFLabel.Font = new System.Drawing.Font("Tahoma", 8F);
-            this.DFLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DFLabel.Location = new System.Drawing.Point(200, 136);
-            this.DFLabel.Name = "DFLabel";
-            this.DFLabel.Size = new System.Drawing.Size(27, 19);
-            this.DFLabel.TabIndex = 30;
-            this.DFLabel.Text = "DF";
-            this.DFLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.DFLabel, "Deficient Number");
-            // 
             // IndexTextBox
             // 
             this.IndexTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.IndexTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IndexTextBox.Location = new System.Drawing.Point(71, 99);
+            this.IndexTextBox.Location = new System.Drawing.Point(71, 9);
             this.IndexTextBox.MaxLength = 7;
             this.IndexTextBox.Name = "IndexTextBox";
             this.IndexTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -919,6 +1439,7 @@
             // IndexPanel
             // 
             this.IndexPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.IndexPanel.Controls.Add(this.EditionLabel);
             this.IndexPanel.Controls.Add(this.IndexTextBox);
             this.IndexPanel.Controls.Add(this.ABLabel);
             this.IndexPanel.Controls.Add(this.ABTextBox);
@@ -944,11 +1465,23 @@
             this.IndexPanel.Size = new System.Drawing.Size(226, 186);
             this.IndexPanel.TabIndex = 33;
             // 
+            // EditionLabel
+            // 
+            this.EditionLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.EditionLabel.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.EditionLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.EditionLabel.Location = new System.Drawing.Point(2, 169);
+            this.EditionLabel.Name = "EditionLabel";
+            this.EditionLabel.Size = new System.Drawing.Size(222, 13);
+            this.EditionLabel.TabIndex = 32;
+            this.EditionLabel.Text = "Start with CTRL or SHIFT for larger indexes";
+            this.EditionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ABTextBox
             // 
             this.ABTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ABTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ABTextBox.Location = new System.Drawing.Point(31, 133);
+            this.ABTextBox.Location = new System.Drawing.Point(31, 132);
             this.ABTextBox.Name = "ABTextBox";
             this.ABTextBox.ReadOnly = true;
             this.ABTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -960,7 +1493,7 @@
             // 
             this.DFTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.DFTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DFTextBox.Location = new System.Drawing.Point(114, 133);
+            this.DFTextBox.Location = new System.Drawing.Point(114, 132);
             this.DFTextBox.Name = "DFTextBox";
             this.DFTextBox.ReadOnly = true;
             this.DFTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -972,7 +1505,7 @@
             // 
             this.XCTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.XCTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.XCTextBox.Location = new System.Drawing.Point(116, 67);
+            this.XCTextBox.Location = new System.Drawing.Point(114, 99);
             this.XCTextBox.Name = "XCTextBox";
             this.XCTextBox.ReadOnly = true;
             this.XCTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -985,7 +1518,7 @@
             // 
             this.ACTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.ACTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ACTextBox.Location = new System.Drawing.Point(116, 40);
+            this.ACTextBox.Location = new System.Drawing.Point(114, 72);
             this.ACTextBox.Name = "ACTextBox";
             this.ACTextBox.ReadOnly = true;
             this.ACTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -998,7 +1531,7 @@
             // 
             this.CTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.CTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CTextBox.Location = new System.Drawing.Point(116, 13);
+            this.CTextBox.Location = new System.Drawing.Point(114, 45);
             this.CTextBox.Name = "CTextBox";
             this.CTextBox.ReadOnly = true;
             this.CTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1011,7 +1544,7 @@
             // 
             this.XPTextBox.BackColor = System.Drawing.Color.Lavender;
             this.XPTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.XPTextBox.Location = new System.Drawing.Point(33, 67);
+            this.XPTextBox.Location = new System.Drawing.Point(31, 99);
             this.XPTextBox.Name = "XPTextBox";
             this.XPTextBox.ReadOnly = true;
             this.XPTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1024,7 +1557,7 @@
             // 
             this.APTextBox.BackColor = System.Drawing.Color.Lavender;
             this.APTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.APTextBox.Location = new System.Drawing.Point(33, 40);
+            this.APTextBox.Location = new System.Drawing.Point(31, 72);
             this.APTextBox.Name = "APTextBox";
             this.APTextBox.ReadOnly = true;
             this.APTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1037,7 +1570,7 @@
             // 
             this.PTextBox.BackColor = System.Drawing.Color.Lavender;
             this.PTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PTextBox.Location = new System.Drawing.Point(33, 13);
+            this.PTextBox.Location = new System.Drawing.Point(31, 45);
             this.PTextBox.Name = "PTextBox";
             this.PTextBox.ReadOnly = true;
             this.PTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1048,8 +1581,11 @@
             // 
             // MainTabControl
             // 
-            this.MainTabControl.Controls.Add(this.ResultTabPage);
+            this.MainTabControl.Controls.Add(this.FactorsTabPage);
             this.MainTabControl.Controls.Add(this.IndexTabPage);
+            this.MainTabControl.Controls.Add(this.CircleTabPage);
+            this.MainTabControl.Controls.Add(this.SphereTabPage);
+            this.MainTabControl.Controls.Add(this.TriangleTabPage);
             this.MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainTabControl.Location = new System.Drawing.Point(0, 146);
             this.MainTabControl.Name = "MainTabControl";
@@ -1058,16 +1594,16 @@
             this.MainTabControl.TabIndex = 34;
             this.MainTabControl.SelectedIndexChanged += new System.EventHandler(this.MainTabControl_SelectedIndexChanged);
             // 
-            // ResultTabPage
+            // FactorsTabPage
             // 
-            this.ResultTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.ResultTabPage.Controls.Add(this.OutputTextBox);
-            this.ResultTabPage.Location = new System.Drawing.Point(4, 22);
-            this.ResultTabPage.Name = "ResultTabPage";
-            this.ResultTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ResultTabPage.Size = new System.Drawing.Size(232, 192);
-            this.ResultTabPage.TabIndex = 0;
-            this.ResultTabPage.Text = "Result";
+            this.FactorsTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.FactorsTabPage.Controls.Add(this.OutputTextBox);
+            this.FactorsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.FactorsTabPage.Name = "FactorsTabPage";
+            this.FactorsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.FactorsTabPage.Size = new System.Drawing.Size(232, 192);
+            this.FactorsTabPage.TabIndex = 0;
+            this.FactorsTabPage.Text = "Factors";
             // 
             // IndexTabPage
             // 
@@ -1078,7 +1614,398 @@
             this.IndexTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.IndexTabPage.Size = new System.Drawing.Size(232, 192);
             this.IndexTabPage.TabIndex = 1;
-            this.IndexTabPage.Text = "Numbers By Index";
+            this.IndexTabPage.Text = "Index";
+            // 
+            // CircleTabPage
+            // 
+            this.CircleTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.CircleTabPage.Controls.Add(this.a2EqCircleLabel);
+            this.CircleTabPage.Controls.Add(this.aEqCircleLabel);
+            this.CircleTabPage.Controls.Add(this.aCircleLabel);
+            this.CircleTabPage.Controls.Add(this.aCircleTextBox);
+            this.CircleTabPage.Controls.Add(this.cEqCircleLabel);
+            this.CircleTabPage.Controls.Add(this.dEqCircleLabel);
+            this.CircleTabPage.Controls.Add(this.piEqCircleLabel);
+            this.CircleTabPage.Controls.Add(this.cCircleLabel);
+            this.CircleTabPage.Controls.Add(this.cCircleTextBox);
+            this.CircleTabPage.Controls.Add(this.dCircleLabel);
+            this.CircleTabPage.Controls.Add(this.dCircleTextBox);
+            this.CircleTabPage.Controls.Add(this.rCircleLabel);
+            this.CircleTabPage.Controls.Add(this.rCircleTextBox);
+            this.CircleTabPage.Controls.Add(this.piCircleLabel);
+            this.CircleTabPage.Controls.Add(this.piCircleTextBox);
+            this.CircleTabPage.Location = new System.Drawing.Point(4, 22);
+            this.CircleTabPage.Name = "CircleTabPage";
+            this.CircleTabPage.Size = new System.Drawing.Size(232, 192);
+            this.CircleTabPage.TabIndex = 2;
+            this.CircleTabPage.Text = "Circle";
+            // 
+            // aCircleTextBox
+            // 
+            this.aCircleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.aCircleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aCircleTextBox.Location = new System.Drawing.Point(101, 122);
+            this.aCircleTextBox.Name = "aCircleTextBox";
+            this.aCircleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.aCircleTextBox.Size = new System.Drawing.Size(87, 26);
+            this.aCircleTextBox.TabIndex = 4;
+            this.aCircleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.aCircleTextBox.TextChanged += new System.EventHandler(this.CircleTextBox_TextChanged);
+            this.aCircleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CircleTextBox_KeyDown);
+            this.aCircleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // cCircleTextBox
+            // 
+            this.cCircleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.cCircleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cCircleTextBox.Location = new System.Drawing.Point(101, 95);
+            this.cCircleTextBox.Name = "cCircleTextBox";
+            this.cCircleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cCircleTextBox.Size = new System.Drawing.Size(87, 26);
+            this.cCircleTextBox.TabIndex = 3;
+            this.cCircleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cCircleTextBox.TextChanged += new System.EventHandler(this.CircleTextBox_TextChanged);
+            this.cCircleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CircleTextBox_KeyDown);
+            this.cCircleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // dCircleTextBox
+            // 
+            this.dCircleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.dCircleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dCircleTextBox.Location = new System.Drawing.Point(101, 68);
+            this.dCircleTextBox.Name = "dCircleTextBox";
+            this.dCircleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dCircleTextBox.Size = new System.Drawing.Size(87, 26);
+            this.dCircleTextBox.TabIndex = 2;
+            this.dCircleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dCircleTextBox.TextChanged += new System.EventHandler(this.CircleTextBox_TextChanged);
+            this.dCircleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CircleTextBox_KeyDown);
+            this.dCircleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // rCircleTextBox
+            // 
+            this.rCircleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.rCircleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rCircleTextBox.Location = new System.Drawing.Point(101, 41);
+            this.rCircleTextBox.Name = "rCircleTextBox";
+            this.rCircleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rCircleTextBox.Size = new System.Drawing.Size(87, 26);
+            this.rCircleTextBox.TabIndex = 1;
+            this.rCircleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rCircleTextBox.TextChanged += new System.EventHandler(this.CircleTextBox_TextChanged);
+            this.rCircleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CircleTextBox_KeyDown);
+            this.rCircleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // piCircleTextBox
+            // 
+            this.piCircleTextBox.BackColor = System.Drawing.Color.Lavender;
+            this.piCircleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.piCircleTextBox.Location = new System.Drawing.Point(20, 169);
+            this.piCircleTextBox.Name = "piCircleTextBox";
+            this.piCircleTextBox.ReadOnly = true;
+            this.piCircleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.piCircleTextBox.Size = new System.Drawing.Size(207, 20);
+            this.piCircleTextBox.TabIndex = 5;
+            this.piCircleTextBox.Text = resources.GetString("piCircleTextBox.Text");
+            this.piCircleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // SphereTabPage
+            // 
+            this.SphereTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.SphereTabPage.Controls.Add(this.s2EqSphereLabel);
+            this.SphereTabPage.Controls.Add(this.sEqSphereLabel);
+            this.SphereTabPage.Controls.Add(this.v3EqSphereLabel);
+            this.SphereTabPage.Controls.Add(this.vSphereLabel);
+            this.SphereTabPage.Controls.Add(this.vSphereTextBox);
+            this.SphereTabPage.Controls.Add(this.dEqSphereLabel);
+            this.SphereTabPage.Controls.Add(this.piEqSphereLabel);
+            this.SphereTabPage.Controls.Add(this.sSphereLabel);
+            this.SphereTabPage.Controls.Add(this.sSphereTextBox);
+            this.SphereTabPage.Controls.Add(this.dSphereLabel);
+            this.SphereTabPage.Controls.Add(this.dSphereTextBox);
+            this.SphereTabPage.Controls.Add(this.rSphereLabel);
+            this.SphereTabPage.Controls.Add(this.rSphereTextBox);
+            this.SphereTabPage.Controls.Add(this.piSphereLabel);
+            this.SphereTabPage.Controls.Add(this.piSphereTextBox);
+            this.SphereTabPage.Controls.Add(this.vEqSphereLabel);
+            this.SphereTabPage.Location = new System.Drawing.Point(4, 22);
+            this.SphereTabPage.Name = "SphereTabPage";
+            this.SphereTabPage.Size = new System.Drawing.Size(232, 192);
+            this.SphereTabPage.TabIndex = 4;
+            this.SphereTabPage.Text = "Sphere";
+            // 
+            // vSphereTextBox
+            // 
+            this.vSphereTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.vSphereTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vSphereTextBox.Location = new System.Drawing.Point(101, 122);
+            this.vSphereTextBox.Name = "vSphereTextBox";
+            this.vSphereTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.vSphereTextBox.Size = new System.Drawing.Size(69, 26);
+            this.vSphereTextBox.TabIndex = 4;
+            this.vSphereTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.vSphereTextBox.TextChanged += new System.EventHandler(this.SphereTextBox_TextChanged);
+            this.vSphereTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SphereTextBox_KeyDown);
+            this.vSphereTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // sSphereTextBox
+            // 
+            this.sSphereTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.sSphereTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sSphereTextBox.Location = new System.Drawing.Point(101, 95);
+            this.sSphereTextBox.Name = "sSphereTextBox";
+            this.sSphereTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.sSphereTextBox.Size = new System.Drawing.Size(69, 26);
+            this.sSphereTextBox.TabIndex = 3;
+            this.sSphereTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.sSphereTextBox.TextChanged += new System.EventHandler(this.SphereTextBox_TextChanged);
+            this.sSphereTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SphereTextBox_KeyDown);
+            this.sSphereTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // dSphereTextBox
+            // 
+            this.dSphereTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.dSphereTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dSphereTextBox.Location = new System.Drawing.Point(101, 68);
+            this.dSphereTextBox.Name = "dSphereTextBox";
+            this.dSphereTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dSphereTextBox.Size = new System.Drawing.Size(69, 26);
+            this.dSphereTextBox.TabIndex = 2;
+            this.dSphereTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dSphereTextBox.TextChanged += new System.EventHandler(this.SphereTextBox_TextChanged);
+            this.dSphereTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SphereTextBox_KeyDown);
+            this.dSphereTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // rSphereTextBox
+            // 
+            this.rSphereTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.rSphereTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rSphereTextBox.Location = new System.Drawing.Point(101, 41);
+            this.rSphereTextBox.Name = "rSphereTextBox";
+            this.rSphereTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rSphereTextBox.Size = new System.Drawing.Size(69, 26);
+            this.rSphereTextBox.TabIndex = 1;
+            this.rSphereTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.rSphereTextBox.TextChanged += new System.EventHandler(this.SphereTextBox_TextChanged);
+            this.rSphereTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SphereTextBox_KeyDown);
+            this.rSphereTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // piSphereTextBox
+            // 
+            this.piSphereTextBox.BackColor = System.Drawing.Color.Lavender;
+            this.piSphereTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.piSphereTextBox.Location = new System.Drawing.Point(20, 169);
+            this.piSphereTextBox.Name = "piSphereTextBox";
+            this.piSphereTextBox.ReadOnly = true;
+            this.piSphereTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.piSphereTextBox.Size = new System.Drawing.Size(207, 20);
+            this.piSphereTextBox.TabIndex = 5;
+            this.piSphereTextBox.Text = resources.GetString("piSphereTextBox.Text");
+            this.piSphereTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // TriangleTabPage
+            // 
+            this.TriangleTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.TriangleTabPage.Controls.Add(this.h3TriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.h2TriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.HelpTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.RunTriangleButton);
+            this.TriangleTabPage.Controls.Add(this.pUnitTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.pTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.pTriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.hUnitTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.hTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.h1TriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.t2UnitTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.tUnitTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.angleUnitLabel);
+            this.TriangleTabPage.Controls.Add(this.sideUnitLabel);
+            this.TriangleTabPage.Controls.Add(this.tTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.tTriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.gammaTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.gammaTriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.betaTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.betaTriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.alphaTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.alphaTriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.cTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.cTriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.bTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.bTriangleTextBox);
+            this.TriangleTabPage.Controls.Add(this.aTriangleLabel);
+            this.TriangleTabPage.Controls.Add(this.aTriangleTextBox);
+            this.TriangleTabPage.Location = new System.Drawing.Point(4, 22);
+            this.TriangleTabPage.Name = "TriangleTabPage";
+            this.TriangleTabPage.Size = new System.Drawing.Size(232, 192);
+            this.TriangleTabPage.TabIndex = 3;
+            this.TriangleTabPage.Text = "Triangle";
+            // 
+            // RunTriangleButton
+            // 
+            this.RunTriangleButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.RunTriangleButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RunTriangleButton.Location = new System.Drawing.Point(12, 89);
+            this.RunTriangleButton.Name = "RunTriangleButton";
+            this.RunTriangleButton.Size = new System.Drawing.Size(188, 23);
+            this.RunTriangleButton.TabIndex = 7;
+            this.RunTriangleButton.Text = "Calculate";
+            this.RunTriangleButton.UseVisualStyleBackColor = true;
+            this.RunTriangleButton.Click += new System.EventHandler(this.RunTriangleButton_Click);
+            // 
+            // pTriangleTextBox
+            // 
+            this.pTriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.pTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pTriangleTextBox.Location = new System.Drawing.Point(79, 115);
+            this.pTriangleTextBox.Name = "pTriangleTextBox";
+            this.pTriangleTextBox.ReadOnly = true;
+            this.pTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.pTriangleTextBox.Size = new System.Drawing.Size(121, 23);
+            this.pTriangleTextBox.TabIndex = 8;
+            this.pTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.pTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // h1TriangleTextBox
+            // 
+            this.h1TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.h1TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.h1TriangleTextBox.Location = new System.Drawing.Point(79, 165);
+            this.h1TriangleTextBox.Name = "h1TriangleTextBox";
+            this.h1TriangleTextBox.ReadOnly = true;
+            this.h1TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.h1TriangleTextBox.Size = new System.Drawing.Size(40, 23);
+            this.h1TriangleTextBox.TabIndex = 11;
+            this.h1TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.h1TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // tTriangleTextBox
+            // 
+            this.tTriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.tTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tTriangleTextBox.Location = new System.Drawing.Point(79, 140);
+            this.tTriangleTextBox.Name = "tTriangleTextBox";
+            this.tTriangleTextBox.ReadOnly = true;
+            this.tTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tTriangleTextBox.Size = new System.Drawing.Size(121, 23);
+            this.tTriangleTextBox.TabIndex = 9;
+            this.tTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // gammaTriangleTextBox
+            // 
+            this.gammaTriangleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.gammaTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gammaTriangleTextBox.Location = new System.Drawing.Point(138, 63);
+            this.gammaTriangleTextBox.MaxLength = 3;
+            this.gammaTriangleTextBox.Name = "gammaTriangleTextBox";
+            this.gammaTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.gammaTriangleTextBox.Size = new System.Drawing.Size(62, 23);
+            this.gammaTriangleTextBox.TabIndex = 6;
+            this.gammaTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.gammaTriangleTextBox.TextChanged += new System.EventHandler(this.AngleTriangleTextBox_TextChanged);
+            this.gammaTriangleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AngleTriangleTextBox_KeyDown);
+            this.gammaTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            this.gammaTriangleTextBox.Leave += new System.EventHandler(this.AngleTriangleTextBox_Leave);
+            // 
+            // betaTriangleTextBox
+            // 
+            this.betaTriangleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.betaTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.betaTriangleTextBox.Location = new System.Drawing.Point(75, 63);
+            this.betaTriangleTextBox.MaxLength = 3;
+            this.betaTriangleTextBox.Name = "betaTriangleTextBox";
+            this.betaTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.betaTriangleTextBox.Size = new System.Drawing.Size(62, 23);
+            this.betaTriangleTextBox.TabIndex = 5;
+            this.betaTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.betaTriangleTextBox.TextChanged += new System.EventHandler(this.AngleTriangleTextBox_TextChanged);
+            this.betaTriangleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AngleTriangleTextBox_KeyDown);
+            this.betaTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            this.betaTriangleTextBox.Leave += new System.EventHandler(this.AngleTriangleTextBox_Leave);
+            // 
+            // alphaTriangleTextBox
+            // 
+            this.alphaTriangleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.alphaTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alphaTriangleTextBox.Location = new System.Drawing.Point(12, 63);
+            this.alphaTriangleTextBox.MaxLength = 3;
+            this.alphaTriangleTextBox.Name = "alphaTriangleTextBox";
+            this.alphaTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.alphaTriangleTextBox.Size = new System.Drawing.Size(62, 23);
+            this.alphaTriangleTextBox.TabIndex = 4;
+            this.alphaTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.alphaTriangleTextBox.TextChanged += new System.EventHandler(this.AngleTriangleTextBox_TextChanged);
+            this.alphaTriangleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AngleTriangleTextBox_KeyDown);
+            this.alphaTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            this.alphaTriangleTextBox.Leave += new System.EventHandler(this.AngleTriangleTextBox_Leave);
+            // 
+            // cTriangleTextBox
+            // 
+            this.cTriangleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.cTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cTriangleTextBox.Location = new System.Drawing.Point(138, 21);
+            this.cTriangleTextBox.Name = "cTriangleTextBox";
+            this.cTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cTriangleTextBox.Size = new System.Drawing.Size(62, 23);
+            this.cTriangleTextBox.TabIndex = 3;
+            this.cTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cTriangleTextBox.TextChanged += new System.EventHandler(this.TriangleTextBox_TextChanged);
+            this.cTriangleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TriangleTextBox_KeyDown);
+            this.cTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // bTriangleTextBox
+            // 
+            this.bTriangleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.bTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bTriangleTextBox.Location = new System.Drawing.Point(75, 21);
+            this.bTriangleTextBox.Name = "bTriangleTextBox";
+            this.bTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.bTriangleTextBox.Size = new System.Drawing.Size(62, 23);
+            this.bTriangleTextBox.TabIndex = 2;
+            this.bTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.bTriangleTextBox.TextChanged += new System.EventHandler(this.TriangleTextBox_TextChanged);
+            this.bTriangleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TriangleTextBox_KeyDown);
+            this.bTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // aTriangleTextBox
+            // 
+            this.aTriangleTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.aTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aTriangleTextBox.Location = new System.Drawing.Point(12, 21);
+            this.aTriangleTextBox.Name = "aTriangleTextBox";
+            this.aTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.aTriangleTextBox.Size = new System.Drawing.Size(62, 23);
+            this.aTriangleTextBox.TabIndex = 1;
+            this.aTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.aTriangleTextBox.TextChanged += new System.EventHandler(this.TriangleTextBox_TextChanged);
+            this.aTriangleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TriangleTextBox_KeyDown);
+            this.aTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // h2TriangleTextBox
+            // 
+            this.h2TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.h2TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.h2TriangleTextBox.Location = new System.Drawing.Point(119, 165);
+            this.h2TriangleTextBox.Name = "h2TriangleTextBox";
+            this.h2TriangleTextBox.ReadOnly = true;
+            this.h2TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.h2TriangleTextBox.Size = new System.Drawing.Size(40, 23);
+            this.h2TriangleTextBox.TabIndex = 12;
+            this.h2TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.h2TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // h3TriangleTextBox
+            // 
+            this.h3TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.h3TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.h3TriangleTextBox.Location = new System.Drawing.Point(160, 165);
+            this.h3TriangleTextBox.Name = "h3TriangleTextBox";
+            this.h3TriangleTextBox.ReadOnly = true;
+            this.h3TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.h3TriangleTextBox.Size = new System.Drawing.Size(40, 23);
+            this.h3TriangleTextBox.TabIndex = 13;
+            this.h3TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.h3TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // MainForm
             // 
@@ -1114,9 +2041,15 @@
             this.IndexPanel.ResumeLayout(false);
             this.IndexPanel.PerformLayout();
             this.MainTabControl.ResumeLayout(false);
-            this.ResultTabPage.ResumeLayout(false);
-            this.ResultTabPage.PerformLayout();
+            this.FactorsTabPage.ResumeLayout(false);
+            this.FactorsTabPage.PerformLayout();
             this.IndexTabPage.ResumeLayout(false);
+            this.CircleTabPage.ResumeLayout(false);
+            this.CircleTabPage.PerformLayout();
+            this.SphereTabPage.ResumeLayout(false);
+            this.SphereTabPage.PerformLayout();
+            this.TriangleTabPage.ResumeLayout(false);
+            this.TriangleTabPage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1190,6 +2123,69 @@
     private System.Windows.Forms.Label DFLabel;
     private System.Windows.Forms.TextBox DFTextBox;
     private System.Windows.Forms.TabControl MainTabControl;
-    private System.Windows.Forms.TabPage ResultTabPage;
+    private System.Windows.Forms.TabPage FactorsTabPage;
     private System.Windows.Forms.TabPage IndexTabPage;
+    private System.Windows.Forms.TabPage CircleTabPage;
+    private System.Windows.Forms.TabPage TriangleTabPage;
+    private System.Windows.Forms.Label aEqCircleLabel;
+    private System.Windows.Forms.Label aCircleLabel;
+    private System.Windows.Forms.TextBox aCircleTextBox;
+    private System.Windows.Forms.Label cEqCircleLabel;
+    private System.Windows.Forms.Label dEqCircleLabel;
+    private System.Windows.Forms.Label piEqCircleLabel;
+    private System.Windows.Forms.Label cCircleLabel;
+    private System.Windows.Forms.TextBox cCircleTextBox;
+    private System.Windows.Forms.Label dCircleLabel;
+    private System.Windows.Forms.TextBox dCircleTextBox;
+    private System.Windows.Forms.Label rCircleLabel;
+    private System.Windows.Forms.TextBox rCircleTextBox;
+    private System.Windows.Forms.Label piCircleLabel;
+    private System.Windows.Forms.TextBox piCircleTextBox;
+    private System.Windows.Forms.Label a2EqCircleLabel;
+    private System.Windows.Forms.Label tTriangleLabel;
+    private System.Windows.Forms.TextBox tTriangleTextBox;
+    private System.Windows.Forms.Label gammaTriangleLabel;
+    private System.Windows.Forms.TextBox gammaTriangleTextBox;
+    private System.Windows.Forms.Label betaTriangleLabel;
+    private System.Windows.Forms.TextBox betaTriangleTextBox;
+    private System.Windows.Forms.Label alphaTriangleLabel;
+    private System.Windows.Forms.TextBox alphaTriangleTextBox;
+    private System.Windows.Forms.Label cTriangleLabel;
+    private System.Windows.Forms.TextBox cTriangleTextBox;
+    private System.Windows.Forms.Label bTriangleLabel;
+    private System.Windows.Forms.TextBox bTriangleTextBox;
+    private System.Windows.Forms.Label aTriangleLabel;
+    private System.Windows.Forms.TextBox aTriangleTextBox;
+    private System.Windows.Forms.Label t2UnitTriangleLabel;
+    private System.Windows.Forms.Label tUnitTriangleLabel;
+    private System.Windows.Forms.Label angleUnitLabel;
+    private System.Windows.Forms.Label sideUnitLabel;
+    private System.Windows.Forms.Label hUnitTriangleLabel;
+    private System.Windows.Forms.Label hTriangleLabel;
+    private System.Windows.Forms.TextBox h1TriangleTextBox;
+    private System.Windows.Forms.TabPage SphereTabPage;
+    private System.Windows.Forms.Label v3EqSphereLabel;
+    private System.Windows.Forms.Label vEqSphereLabel;
+    private System.Windows.Forms.Label vSphereLabel;
+    private System.Windows.Forms.TextBox vSphereTextBox;
+    private System.Windows.Forms.Label dEqSphereLabel;
+    private System.Windows.Forms.Label piEqSphereLabel;
+    private System.Windows.Forms.Label sSphereLabel;
+    private System.Windows.Forms.TextBox sSphereTextBox;
+    private System.Windows.Forms.Label dSphereLabel;
+    private System.Windows.Forms.TextBox dSphereTextBox;
+    private System.Windows.Forms.Label rSphereLabel;
+    private System.Windows.Forms.TextBox rSphereTextBox;
+    private System.Windows.Forms.Label piSphereLabel;
+    private System.Windows.Forms.TextBox piSphereTextBox;
+    private System.Windows.Forms.Label s2EqSphereLabel;
+    private System.Windows.Forms.Label sEqSphereLabel;
+    private System.Windows.Forms.Label EditionLabel;
+    private System.Windows.Forms.Label pUnitTriangleLabel;
+    private System.Windows.Forms.Label pTriangleLabel;
+    private System.Windows.Forms.TextBox pTriangleTextBox;
+    private System.Windows.Forms.Button RunTriangleButton;
+    private System.Windows.Forms.Label HelpTriangleLabel;
+    private System.Windows.Forms.TextBox h3TriangleTextBox;
+    private System.Windows.Forms.TextBox h2TriangleTextBox;
 }

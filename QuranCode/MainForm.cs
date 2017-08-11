@@ -12017,12 +12017,12 @@ public partial class MainForm : Form, ISubscriber
                         TranslationsTextBox.WordWrap = true;
                         TranslationsTextBox.Text = strs.ToString();
                         TranslationsTextBox.Refresh();
+                    }
 
-                        if (m_translated_verses != null)
-                        {
-                            m_translated_verses.Clear();
-                            m_translated_verses.Add(verse);
-                        }
+                    if (m_translated_verses != null)
+                    {
+                        m_translated_verses.Clear();
+                        m_translated_verses.Add(verse);
                     }
 
                     m_translation_readonly = true;

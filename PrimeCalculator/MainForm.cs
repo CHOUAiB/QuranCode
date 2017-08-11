@@ -1923,6 +1923,8 @@ public partial class MainForm : Form
             PrimeFactorsTextBox.Text = m_double_value.ToString();
         }
 
+        MainTabControl.SelectedIndex = 0;
+
         Run();
     }
     private bool m_multithreading = true;
@@ -2180,12 +2182,56 @@ public partial class MainForm : Form
 
     private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
     {
+        this.AcceptButton = null;
+
         if (MainTabControl.SelectedIndex == 1)
         {
             IndexTextBox.Focus();
-            Numbers.s_max_number_limit = int.MaxValue / 32;
+
+            switch (Globals.EDITION)
+            {
+                case Edition.Standard:
+                    {
+                        Numbers.s_max_number_limit = int.MaxValue / 512;
+                    }
+                    break;
+                case Edition.Grammar:
+                    {
+                        Numbers.s_max_number_limit = int.MaxValue / 128;
+                    }
+                    break;
+                case Edition.Research:
+                    {
+                        Numbers.s_max_number_limit = int.MaxValue / 64;
+                    }
+                    break;
+                case Edition.Ultimate:
+                    {
+                        Numbers.s_max_number_limit = int.MaxValue / 32;
+                    }
+                    break;
+                default:
+                    {
+                        Numbers.s_max_number_limit = int.MaxValue / 512;
+                    }
+                    break;
+            }
+        }
+        else if (MainTabControl.SelectedIndex == 2) // Circle
+        {
+            rCircleTextBox.Focus();
+        }
+        else if (MainTabControl.SelectedIndex == 3) // Sphere
+        {
+            rSphereTextBox.Focus();
+        }
+        else if (MainTabControl.SelectedIndex == 4) // Triangle
+        {
+            this.AcceptButton = RunTriangleButton;
+            aTriangleTextBox.Focus();
         }
     }
+
     private void IndexTextBox_TextChanged(object sender, EventArgs e)
     {
         IndexTextBox.Text = IndexTextBox.Text.Replace(" ", "");
@@ -2326,20 +2372,636 @@ public partial class MainForm : Form
     }
     private void IncrementIndex()
     {
-        long index = 0L;
-        if (long.TryParse(IndexTextBox.Text, out index))
+        int index = 0;
+        if (int.TryParse(IndexTextBox.Text, out index))
         {
-            if (index < long.MaxValue) index++;
+            if (index < int.MaxValue) index++;
             IndexTextBox.Text = index.ToString();
         }
     }
     private void DecrementIndex()
     {
-        long index = 0L;
-        if (long.TryParse(IndexTextBox.Text, out index))
+        int index = 0;
+        if (int.TryParse(IndexTextBox.Text, out index))
         {
             if (index > 0) index--;
             IndexTextBox.Text = index.ToString();
+        }
+    }
+
+    private void CircleTextBox_TextChanged(object sender, EventArgs e)
+    {
+        CircleCalculations(sender);
+    }
+    private void CircleTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementCircleParameter(sender);
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementCircleParameter(sender);
+        }
+    }
+    private void IncrementCircleParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value < double.MaxValue) value++;
+            (sender as TextBox).Text = value.ToString("0.0");
+        }
+    }
+    private void DecrementCircleParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value > 0.0D) value--;
+            (sender as TextBox).Text = value.ToString("0.0");
+        }
+    }
+    private void CircleCalculations(object sender)
+    {
+        double r = 0.0D;
+        double d = 0.0D;
+        double c = 0.0D;
+        double a = 0.0D;
+
+        try
+        {
+            rCircleTextBox.TextChanged -= CircleTextBox_TextChanged;
+            dCircleTextBox.TextChanged -= CircleTextBox_TextChanged;
+            cCircleTextBox.TextChanged -= CircleTextBox_TextChanged;
+            aCircleTextBox.TextChanged -= CircleTextBox_TextChanged;
+
+            if (sender == rCircleTextBox)
+            {
+                r = double.Parse(rCircleTextBox.Text);
+                d = 2.0D * r;
+                c = 2.0D * Math.PI * r;
+                a = Math.PI * r * r;
+                dCircleTextBox.Text = d.ToString("0.0");
+                cCircleTextBox.Text = c.ToString("0.0");
+                aCircleTextBox.Text = a.ToString("0.0");
+            }
+            else if (sender == dCircleTextBox)
+            {
+                d = double.Parse(dCircleTextBox.Text);
+                r = 0.5D * d;
+                c = 2.0D * Math.PI * r;
+                a = Math.PI * r * r;
+                rCircleTextBox.Text = r.ToString("0.0");
+                cCircleTextBox.Text = c.ToString("0.0");
+                aCircleTextBox.Text = a.ToString("0.0");
+            }
+            else if (sender == cCircleTextBox)
+            {
+                c = double.Parse(cCircleTextBox.Text);
+                r = c / (2.0D * Math.PI);
+                d = 2.0D * r;
+                a = Math.PI * r * r;
+                rCircleTextBox.Text = r.ToString("0.0");
+                dCircleTextBox.Text = d.ToString("0.0");
+                aCircleTextBox.Text = a.ToString("0.0");
+            }
+            else if (sender == aCircleTextBox)
+            {
+                a = double.Parse(aCircleTextBox.Text);
+                r = Math.Sqrt(a / Math.PI);
+                d = 2.0D * r;
+                c = 2.0D * Math.PI * r;
+                rCircleTextBox.Text = r.ToString("0.0");
+                dCircleTextBox.Text = d.ToString("0.0");
+                cCircleTextBox.Text = c.ToString("0.0");
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+            rCircleTextBox.TextChanged += CircleTextBox_TextChanged;
+            dCircleTextBox.TextChanged += CircleTextBox_TextChanged;
+            cCircleTextBox.TextChanged += CircleTextBox_TextChanged;
+            aCircleTextBox.TextChanged += CircleTextBox_TextChanged;
+        }
+    }
+
+    private void SphereTextBox_TextChanged(object sender, EventArgs e)
+    {
+        SphereCalculations(sender);
+    }
+    private void SphereTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementSphereParameter(sender);
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementSphereParameter(sender);
+        }
+    }
+    private void IncrementSphereParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value < double.MaxValue) value++;
+            (sender as TextBox).Text = value.ToString("0.0");
+        }
+    }
+    private void DecrementSphereParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value > 0.0D) value--;
+            (sender as TextBox).Text = value.ToString("0.0");
+        }
+    }
+    private void SphereCalculations(object sender)
+    {
+        double r = 0.0D;
+        double d = 0.0D;
+        double s = 0.0D;
+        double v = 0.0D;
+
+        try
+        {
+            rSphereTextBox.TextChanged -= SphereTextBox_TextChanged;
+            dSphereTextBox.TextChanged -= SphereTextBox_TextChanged;
+            sSphereTextBox.TextChanged -= SphereTextBox_TextChanged;
+            vSphereTextBox.TextChanged -= SphereTextBox_TextChanged;
+
+            if (sender == rSphereTextBox)
+            {
+                r = double.Parse(rSphereTextBox.Text);
+                d = 2.0D * r;
+                s = 4.0D * Math.PI * r * r;
+                v = (4.0D / 3.0D) * Math.PI * r * r * r;
+                dSphereTextBox.Text = d.ToString("0.0");
+                sSphereTextBox.Text = s.ToString("0.0");
+                vSphereTextBox.Text = v.ToString("0.0");
+            }
+            else if (sender == dSphereTextBox)
+            {
+                d = double.Parse(dSphereTextBox.Text);
+                r = 0.5D * d;
+                s = 4.0D * Math.PI * r * r;
+                v = (4.0D / 3.0D) * Math.PI * r * r * r;
+                rSphereTextBox.Text = r.ToString("0.0");
+                sSphereTextBox.Text = s.ToString("0.0");
+                vSphereTextBox.Text = v.ToString("0.0");
+            }
+            else if (sender == sSphereTextBox)
+            {
+                s = double.Parse(sSphereTextBox.Text);
+                r = Math.Sqrt(s / (4.0D * Math.PI));
+                d = 2.0D * r;
+                v = (4.0D / 3.0D) * Math.PI * r * r * r;
+                rSphereTextBox.Text = r.ToString("0.0");
+                dSphereTextBox.Text = d.ToString("0.0");
+                vSphereTextBox.Text = v.ToString("0.0");
+            }
+            else if (sender == vSphereTextBox)
+            {
+                v = double.Parse(vSphereTextBox.Text);
+                r = Math.Pow((v / ((4.0D / 3.0D) * Math.PI)), 1.0D / 3.0D);
+                d = 2.0D * r;
+                s = 4.0D * Math.PI * r * r;
+                rSphereTextBox.Text = r.ToString("0.0");
+                dSphereTextBox.Text = d.ToString("0.0");
+                sSphereTextBox.Text = s.ToString("0.0");
+            }
+        }
+        catch
+        {
+        }
+        finally
+        {
+            rSphereTextBox.TextChanged += SphereTextBox_TextChanged;
+            dSphereTextBox.TextChanged += SphereTextBox_TextChanged;
+            sSphereTextBox.TextChanged += SphereTextBox_TextChanged;
+            vSphereTextBox.TextChanged += SphereTextBox_TextChanged;
+        }
+    }
+
+    private void RunTriangleButton_Click(object sender, EventArgs e)
+    {
+        TriangleCalculations(sender);
+    }
+    private void TriangleTextBox_TextChanged(object sender, EventArgs e)
+    {
+        //TriangleCalculations(sender);
+    }
+    private void TriangleTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementTriangleParameter(sender);
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementTriangleParameter(sender);
+        }
+    }
+    private void IncrementTriangleParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value < double.MaxValue) value++;
+            value = Math.Floor(value);
+            (sender as TextBox).Text = value.ToString("0");
+        }
+        TriangleCalculations(sender);
+    }
+    private void DecrementTriangleParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value > 0.0D) value--;
+            value = Math.Floor(value);
+            (sender as TextBox).Text = value.ToString("0");
+        }
+        TriangleCalculations(sender);
+    }
+    private void AngleTriangleTextBox_TextChanged(object sender, EventArgs e)
+    {
+        //TriangleCalculations(sender);
+    }
+    private void AngleTriangleTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementAngleTriangleParameter(sender);
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementAngleTriangleParameter(sender);
+        }
+    }
+    private void AngleTriangleTextBox_Leave(object sender, EventArgs e)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value > 180.0D)
+            {
+                value = 180.0D;
+            }
+            else if (value < 0.0D)
+            {
+                value = 0.0D;
+            }
+        }
+        (sender as TextBox).Text = value.ToString("0");
+    }
+    private void IncrementAngleTriangleParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value > 180.0D)
+            {
+                value = 180.0D;
+            }
+            else if (value < 0.0D)
+            {
+                value = -1.0D;
+            }
+
+            if (value < 180.0D) value++;
+            value = Math.Floor(value);
+            (sender as TextBox).Text = value.ToString("0");
+        }
+    }
+    private void DecrementAngleTriangleParameter(object sender)
+    {
+        double value = 0.0D;
+        if (double.TryParse((sender as TextBox).Text, out value))
+        {
+            if (value > 180.0D)
+            {
+                value = 180.0D;
+            }
+            else if (value < 0.0D)
+            {
+                value = 0.0D;
+            }
+
+            if (value > 0.0D) value--;
+            value = Math.Floor(value);
+            (sender as TextBox).Text = value.ToString("0");
+        }
+    }
+    private void TriangleCalculations(object sender)
+    {
+        // http://en.wikipedia.org/wiki/Solution_of_triangles
+
+        double a = 0.0D;
+        double b = 0.0D;
+        double c = 0.0D;
+        double alpha = 0.0D;
+        double beta = 0.0D;
+        double gamma = 0.0D;
+        double p = 0.0D;
+        double t = 0.0D;
+        double h1 = 0.0D;
+        double h2 = 0.0D;
+        double h3 = 0.0D;
+
+        try
+        {
+            aTriangleTextBox.TextChanged -= TriangleTextBox_TextChanged;
+            bTriangleTextBox.TextChanged -= TriangleTextBox_TextChanged;
+            cTriangleTextBox.TextChanged -= TriangleTextBox_TextChanged;
+            alphaTriangleTextBox.TextChanged -= AngleTriangleTextBox_TextChanged;
+            betaTriangleTextBox.TextChanged -= AngleTriangleTextBox_TextChanged;
+            gammaTriangleTextBox.TextChanged -= AngleTriangleTextBox_TextChanged;
+
+            if (aTriangleTextBox.Text.Length > 0) a = double.Parse(aTriangleTextBox.Text);
+            if (bTriangleTextBox.Text.Length > 0) b = double.Parse(bTriangleTextBox.Text);
+            if (cTriangleTextBox.Text.Length > 0) c = double.Parse(cTriangleTextBox.Text);
+            if (alphaTriangleTextBox.Text.Length > 0) alpha = double.Parse(alphaTriangleTextBox.Text) / (180.0D / Math.PI);
+            if (betaTriangleTextBox.Text.Length > 0) beta = double.Parse(betaTriangleTextBox.Text) / (180.0D / Math.PI);
+            if (gammaTriangleTextBox.Text.Length > 0) gamma = double.Parse(gammaTriangleTextBox.Text) / (180.0D / Math.PI);
+
+
+            // SSS
+            if ((a > 0.0D) && (b > 0.0D) && (c > 0.0D))
+            {
+                alpha = Math.Acos(((b * b) + (c * c) - (a * a)) / (2 * b * c));
+                beta = Math.Acos(((a * a) + (c * c) - (b * b)) / (2 * a * c));
+                gamma = Math.Acos(((a * a) + (b * b) - (c * c)) / (2 * a * b));
+            }
+
+
+            // SAS
+            else if ((a > 0.0D) && (b > 0.0D) && (gamma > 0.0D))
+            {
+                c = Math.Sqrt((a * a) + (b * b) - (2 * a * b * Math.Cos((gamma))));
+                alpha = Math.Acos(((b * b) + (c * c) - (a * a)) / (2 * b * c));
+                beta = Math.Acos(((a * a) + (c * c) - (b * b)) / (2 * a * c));
+            }
+            else if ((a > 0.0D) && (c > 0.0D) && (beta > 0.0D))
+            {
+                b = Math.Sqrt((a * a) + (c * c) - (2 * a * c * Math.Cos((beta))));
+                alpha = Math.Acos(((b * b) + (c * c) - (a * a)) / (2 * b * c));
+                gamma = Math.Acos(((a * a) + (b * b) - (c * c)) / (2 * a * b));
+            }
+            else if ((b > 0.0D) && (c > 0.0D) && (alpha > 0.0D))
+            {
+                a = Math.Sqrt((b * b) + (c * c) - (2 * b * c * Math.Cos((alpha))));
+                beta = Math.Acos(((a * a) + (c * c) - (b * b)) / (2 * a * c));
+                gamma = Math.Acos(((a * a) + (b * b) - (c * c)) / (2 * a * b));
+            }
+
+
+            // SSA
+            else if ((a > 0.0D) && (b > 0.0D) && (alpha > 0.0D))
+            {
+                double D = b * Math.Sin(alpha) / a;
+                if (D > 1)
+                    beta = double.NaN;
+                else if (D == 1)
+                    beta = Math.PI / 2.0D;
+                else
+                    if (a < b)
+                        beta = Math.Asin(D);
+                    else
+                        beta = Math.PI - Math.Asin(D);
+                gamma = Math.PI - alpha - beta;
+                if (gamma < 0.0D)
+                {
+                    beta = Math.Asin(D);
+                    gamma = Math.PI - alpha - beta;
+                }
+                c = b * (Math.Sin(gamma) / Math.Sin(beta));
+            }
+            else if ((a > 0.0D) && (b > 0.0D) && (beta > 0.0D))
+            {
+                double D = a * Math.Sin(beta) / b;
+                if (D > 1)
+                    alpha = double.NaN;
+                else if (D == 1)
+                    alpha = Math.PI / 2.0D;
+                else
+                    if (a < b)
+                        alpha = Math.Asin(D);
+                    else
+                        alpha = Math.PI - Math.Asin(D);
+                gamma = Math.PI - alpha - beta;
+                if (gamma < 0.0D)
+                {
+                    alpha = Math.Asin(D);
+                    gamma = Math.PI - alpha - beta;
+                }
+                c = b * (Math.Sin(gamma) / Math.Sin(beta));
+            }
+            else if ((a > 0.0D) && (c > 0.0D) && (alpha > 0.0D))
+            {
+                double D = c * Math.Sin(alpha) / a;
+                if (D > 1)
+                    gamma = double.NaN;
+                else if (D == 1)
+                    gamma = Math.PI / 2.0D;
+                else
+                    if (a < b)
+                        gamma = Math.Asin(D);
+                    else
+                        gamma = Math.PI - Math.Asin(D);
+                beta = Math.PI - alpha - gamma;
+                if (beta < 0.0D)
+                {
+                    gamma = Math.Asin(D);
+                    beta = Math.PI - alpha - gamma;
+                }
+                b = a * (Math.Sin(beta) / Math.Sin(alpha));
+            }
+            else if ((a > 0.0D) && (c > 0.0D) && (gamma > 0.0D))
+            {
+                double D = a * Math.Sin(gamma) / c;
+                if (D > 1)
+                    alpha = double.NaN;
+                else if (D == 1)
+                    alpha = Math.PI / 2.0D;
+                else
+                    if (a < b)
+                        alpha = Math.Asin(D);
+                    else
+                        alpha = Math.PI - Math.Asin(D);
+                beta = Math.PI - alpha - gamma;
+                if (beta < 0.0D)
+                {
+                    alpha = Math.Asin(D);
+                    beta = Math.PI - alpha - gamma;
+                }
+                b = c * (Math.Sin(beta) / Math.Sin(gamma));
+            }
+            else if ((b > 0.0D) && (c > 0.0D) && (beta > 0.0D))
+            {
+                double D = c * Math.Sin(beta) / b;
+                if (D > 1)
+                    gamma = double.NaN;
+                else if (D == 1)
+                    gamma = Math.PI / 2.0D;
+                else
+                    if (a < b)
+                        gamma = Math.Asin(D);
+                    else
+                        gamma = Math.PI - Math.Asin(D);
+                alpha = Math.PI - beta - gamma;
+                if (alpha < 0.0D)
+                {
+                    gamma = Math.Asin(D);
+                    alpha = Math.PI - beta - gamma;
+                }
+                a = b * (Math.Sin(alpha) / Math.Sin(beta));
+            }
+            else if ((b > 0.0D) && (c > 0.0D) && (gamma > 0.0D))
+            {
+                double D = b * Math.Sin(gamma) / c;
+                if (D > 1)
+                    beta = double.NaN;
+                else if (D == 1)
+                    beta = Math.PI / 2.0D;
+                else
+                    if (a < b)
+                        beta = Math.Asin(D);
+                    else
+                        beta = Math.PI - Math.Asin(D);
+                alpha = Math.PI - beta - gamma;
+                if (alpha < 0.0D)
+                {
+                    beta = Math.Asin(D);
+                    alpha = Math.PI - beta - gamma;
+                }
+                a = c * (Math.Sin(alpha) / Math.Sin(gamma));
+            }
+
+
+            // ASA
+            else if ((a > 0.0D) && (beta > 0.0D) && (gamma > 0.0D))
+            {
+                alpha = Math.PI - beta - gamma;
+                b = a * (Math.Sin(beta) / Math.Sin(alpha));
+                c = a * (Math.Sin(gamma) / Math.Sin(alpha));
+            }
+            else if ((b > 0.0D) && (alpha > 0.0D) && (gamma > 0.0D))
+            {
+                beta = Math.PI - alpha - gamma;
+                a = b * (Math.Sin(alpha) / Math.Sin(beta));
+                c = b * (Math.Sin(gamma) / Math.Sin(beta));
+            }
+            else if ((c > 0.0D) && (alpha > 0.0D) && (beta > 0.0D))
+            {
+                gamma = Math.PI - alpha - beta;
+                a = c * (Math.Sin(alpha) / Math.Sin(gamma));
+                b = c * (Math.Sin(beta) / Math.Sin(gamma));
+            }
+
+
+            // SAA
+            else if ((a > 0.0D) && (alpha > 0.0D) && (beta > 0.0D))
+            {
+                gamma = Math.PI - alpha - beta;
+                b = a * (Math.Sin(beta) / Math.Sin(alpha));
+                c = a * (Math.Sin(gamma) / Math.Sin(alpha));
+            }
+            else if ((a > 0.0D) && (alpha > 0.0D) && (gamma > 0.0D))
+            {
+                beta = Math.PI - alpha - gamma;
+                b = a * (Math.Sin(beta) / Math.Sin(alpha));
+                c = a * (Math.Sin(gamma) / Math.Sin(alpha));
+            }
+            else if ((b > 0.0D) && (beta > 0.0D) && (alpha > 0.0D))
+            {
+                gamma = Math.PI - alpha - beta;
+                a = b * (Math.Sin(alpha) / Math.Sin(beta));
+                c = b * (Math.Sin(gamma) / Math.Sin(beta));
+            }
+            else if ((b > 0.0D) && (beta > 0.0D) && (gamma > 0.0D))
+            {
+                alpha = Math.PI - beta - gamma;
+                a = b * (Math.Sin(alpha) / Math.Sin(beta));
+                c = b * (Math.Sin(gamma) / Math.Sin(beta));
+            }
+            else if ((c > 0.0D) && (gamma > 0.0D) && (alpha > 0.0D))
+            {
+                beta = Math.PI - alpha - gamma;
+                a = c * (Math.Sin(alpha) / Math.Sin(gamma));
+                b = c * (Math.Sin(beta) / Math.Sin(gamma));
+            }
+            else if ((c > 0.0D) && (gamma > 0.0D) && (beta > 0.0D))
+            {
+                alpha = Math.PI - beta - gamma;
+                a = c * (Math.Sin(alpha) / Math.Sin(gamma));
+                b = c * (Math.Sin(beta) / Math.Sin(gamma));
+            }
+
+
+            // AAA
+            else if ((alpha > 0.0D) && (beta > 0.0D) && (gamma > 0.0D))
+            {
+                if ((a == 0.0D) && (b == 0.0D) && (c == 0.0D))
+                {
+                    a = 1; // The Unit
+                    b = a * (Math.Sin(beta) / Math.Sin(alpha));
+                    c = b * (Math.Sin(gamma) / Math.Sin(beta));
+                }
+                else if (a > 0.0D)
+                {
+                    b = a * (Math.Sin(beta) / Math.Sin(alpha));
+                    c = b * (Math.Sin(gamma) / Math.Sin(beta));
+                }
+                else if (b > 0.0D)
+                {
+                    a = b * (Math.Sin(alpha) / Math.Sin(beta));
+                    c = b * (Math.Sin(gamma) / Math.Sin(beta));
+                }
+                else if (c > 0.0D)
+                {
+                    a = c * (Math.Sin(alpha) / Math.Sin(gamma));
+                    b = a * (Math.Sin(beta) / Math.Sin(alpha));
+                }
+            }
+
+
+
+            p = a + b + c;
+            t = 0.25D * Math.Sqrt((a + b + c) * (-a + b + c) * (a - b + c) * (a + b - c));
+            h1 = 2 * t / a;
+            h2 = 2 * t / b;
+            h3 = 2 * t / c;
+
+            aTriangleTextBox.Text = a.ToString("0.0");
+            bTriangleTextBox.Text = b.ToString("0.0");
+            cTriangleTextBox.Text = c.ToString("0.0");
+            alphaTriangleTextBox.Text = (alpha * (180.0D / Math.PI)).ToString("0.0");
+            betaTriangleTextBox.Text = (beta * (180.0D / Math.PI)).ToString("0.0");
+            gammaTriangleTextBox.Text = (gamma * (180.0D / Math.PI)).ToString("0.0");
+            pTriangleTextBox.Text = p.ToString("0.0");
+            tTriangleTextBox.Text = t.ToString("0.0");
+            h1TriangleTextBox.Text = h1.ToString("0.0");
+            h2TriangleTextBox.Text = h2.ToString("0.0");
+            h3TriangleTextBox.Text = h3.ToString("0.0");
+        }
+        catch
+        {
+        }
+        finally
+        {
+            aTriangleTextBox.TextChanged += TriangleTextBox_TextChanged;
+            bTriangleTextBox.TextChanged += TriangleTextBox_TextChanged;
+            cTriangleTextBox.TextChanged += TriangleTextBox_TextChanged;
+            alphaTriangleTextBox.TextChanged += AngleTriangleTextBox_TextChanged;
+            betaTriangleTextBox.TextChanged += AngleTriangleTextBox_TextChanged;
+            gammaTriangleTextBox.TextChanged += AngleTriangleTextBox_TextChanged;
         }
     }
 
@@ -2402,7 +3064,6 @@ public partial class MainForm : Form
         Application.Exit();
         System.Environment.Exit(0);
     }
-
     private void LinkLabel_Click(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
