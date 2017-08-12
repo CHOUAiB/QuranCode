@@ -2227,7 +2227,7 @@ public partial class MainForm : Form
         }
         else if (MainTabControl.SelectedIndex == 4) // Triangle
         {
-            this.AcceptButton = RunTriangleButton;
+            this.AcceptButton = CalculateTriangleButton;
             aTriangleTextBox.Focus();
         }
     }
@@ -2479,6 +2479,7 @@ public partial class MainForm : Form
         }
         catch
         {
+            // skip error
         }
         finally
         {
@@ -2579,6 +2580,7 @@ public partial class MainForm : Form
         }
         catch
         {
+            // skip error
         }
         finally
         {
@@ -2589,9 +2591,27 @@ public partial class MainForm : Form
         }
     }
 
-    private void RunTriangleButton_Click(object sender, EventArgs e)
+    private void CalculateTriangleButton_Click(object sender, EventArgs e)
     {
         TriangleCalculations(sender);
+    }
+    private void ClearTriangleButton_Click(object sender, EventArgs e)
+    {
+        aTriangleTextBox.Text = "";
+        bTriangleTextBox.Text = "";
+        cTriangleTextBox.Text = "";
+
+        alphaTriangleTextBox.Text = "";
+        betaTriangleTextBox.Text = "";
+        gammaTriangleTextBox.Text = "";
+
+        pTriangleTextBox.Text = "";
+        tTriangleTextBox.Text = "";
+        h1TriangleTextBox.Text = "";
+        h2TriangleTextBox.Text = "";
+        h3TriangleTextBox.Text = "";
+
+        aTriangleTextBox.Focus();
     }
     private void TriangleTextBox_TextChanged(object sender, EventArgs e)
     {
@@ -2666,18 +2686,26 @@ public partial class MainForm : Form
         double value = 0.0D;
         if (double.TryParse((sender as TextBox).Text, out value))
         {
-            if (value > 180.0D)
+            double alpha = 0.0D;
+            double beta = 0.0D;
+            double gamma = 0.0D;
+            if (alphaTriangleTextBox.Text.Length > 0) alpha = double.Parse(alphaTriangleTextBox.Text) / (180.0D / Math.PI);
+            if (betaTriangleTextBox.Text.Length > 0) beta = double.Parse(betaTriangleTextBox.Text) / (180.0D / Math.PI);
+            if (gammaTriangleTextBox.Text.Length > 0) gamma = double.Parse(gammaTriangleTextBox.Text) / (180.0D / Math.PI);
+            if ((alpha + beta + gamma) < Math.PI)
             {
-                value = 180.0D;
+                if (value > 180.0D)
+                {
+                    value = 180.0D;
+                }
+                else if (value < 0.0D)
+                {
+                    value = -1.0D;
+                }
+                if (value < 180.0D) value++;
+                value = Math.Floor(value);
+                (sender as TextBox).Text = value.ToString("0");
             }
-            else if (value < 0.0D)
-            {
-                value = -1.0D;
-            }
-
-            if (value < 180.0D) value++;
-            value = Math.Floor(value);
-            (sender as TextBox).Text = value.ToString("0");
         }
     }
     private void DecrementAngleTriangleParameter(object sender)
@@ -2993,6 +3021,7 @@ public partial class MainForm : Form
         }
         catch
         {
+            // skip error
         }
         finally
         {

@@ -463,7 +463,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\non-waw-words.txt">
+    <Content Include="Data\waw-words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -434,7 +434,7 @@ public class Server : IPublisher
                         // build words before DataAccess.Loads
                         if (waw_as_word)
                         {
-                            SplitWawWords(s_book);
+                            SplitWawsArWords(s_book, text_mode);
                         }
                         DataAccess.LoadRecitationInfos(s_book);
                         DataAccess.LoadTranslationInfos(s_book);
@@ -454,38 +454,86 @@ public class Server : IPublisher
             }
         }
     }
-    private static void SplitWawWords(Book book)
+    private static void SplitWawsArWords(Book book, string text_mode)
     {
         if (book != null)
         {
-            string filename = Globals.DATA_FOLDER + "/" + "non-waw-words.txt";
+            string filename = Globals.DATA_FOLDER + "/" + "waw-words.txt";
             if (File.Exists(filename))
             {
-                List<string> non_waw_words = FileHelper.LoadLines(filename);
-                if (non_waw_words != null)
+                List<string> exception_words = new List<string>();
+                Dictionary<string, List<Verse>> non_exception_words_in_verses = new Dictionary<string, List<Verse>>();
+
+                List<string> lines = FileHelper.LoadLines(filename);
+                foreach (string line in lines)
                 {
-                    foreach (Verse verse in book.Verses)
+                    string[] parts = line.Split('\t');
+                    string exception_word = parts[0].SimplifyTo(text_mode);
+                    exception_words.Add(exception_word);
+                    if (parts.Length > 1)
                     {
-                        StringBuilder str = new StringBuilder();
-                        if (verse.Words.Count > 0)
+                        string[] sub_parts = parts[1].Split(',');
+                        foreach (string sub_part in sub_parts)
                         {
-                            for (int i = 0; i < verse.Words.Count; i++)
+                            string[] verse_address_parts = sub_part.Split(':');
+                            if (verse_address_parts.Length == 2)
                             {
-                                if (verse.Words[i].Text.StartsWith("و"))
+                                try
                                 {
-                                    if (!non_waw_words.Contains(verse.Words[i].Text))
+                                    Chapter chapter = book.Chapters[int.Parse(verse_address_parts[0]) - 1];
+                                    if (chapter != null)
                                     {
-                                        str.Append(verse.Words[i].Text.Insert(1, " ") + " ");
-                                    }
-                                    else // cases where sometimes waw-word and sometimes not
-                                    {
-                                        // و رد الله الذين كفروا vs ولما ورد ماء مدين
-                                        if ((verse.Words[i].Text == "ورد") && (verse.Words[i + 1].Text == "الله"))
+                                        Verse verse = chapter.Verses[int.Parse(verse_address_parts[1]) - 1];
+                                        if (verse != null)
                                         {
-                                            str.Append(verse.Words[i].Text.Insert(1, " ") + " ");
+                                            if (non_exception_words_in_verses.ContainsKey(exception_word))
+                                            {
+                                                List<Verse> verses = non_exception_words_in_verses[exception_word];
+                                                if (verses != null)
+                                                {
+                                                    verses.Add(verse);
+                                                    non_exception_words_in_verses.Add(exception_word, verses);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                List<Verse> verses = new List<Verse>();
+                                                if (verses != null)
+                                                {
+                                                    verses.Add(verse);
+                                                    non_exception_words_in_verses.Add(exception_word, verses);
+                                                }
+                                            }
                                         }
-                                        // مرغما كثيرا و سعه vs ارض الله وسعه or نفسا الا وسعها
-                                        else if ((verse.Words[i].Text == "وسعه") && (verse.Words[i - 2].Text == "مرغما"))
+                                    }
+                                }
+                                catch
+                                {
+                                    // skip error
+                                }
+                            }
+                        }
+                    }
+                }
+
+                foreach (Verse verse in book.Verses)
+                {
+                    StringBuilder str = new StringBuilder();
+                    if (verse.Words.Count > 0)
+                    {
+                        for (int i = 0; i < verse.Words.Count; i++)
+                        {
+                            if (verse.Words[i].Text.StartsWith("و"))
+                            {
+                                if (!exception_words.Contains(verse.Words[i].Text))
+                                {
+                                    str.Append(verse.Words[i].Text.Insert(1, " ") + " ");
+                                }
+                                else // don't split exception words unless they are in non_exception_words_in_verses
+                                {
+                                    if (non_exception_words_in_verses.ContainsKey(verse.Words[i].Text))
+                                    {
+                                        if (non_exception_words_in_verses[verse.Words[i].Text].Contains(verse))
                                         {
                                             str.Append(verse.Words[i].Text.Insert(1, " ") + " ");
                                         }
@@ -494,25 +542,29 @@ public class Server : IPublisher
                                             str.Append(verse.Words[i].Text + " ");
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    str.Append(verse.Words[i].Text + " ");
+                                    else
+                                    {
+                                        str.Append(verse.Words[i].Text + " ");
+                                    }
                                 }
                             }
-                            if (str.Length > 1)
+                            else
                             {
-                                str.Remove(str.Length - 1, 1); // " "
+                                str.Append(verse.Words[i].Text + " ");
                             }
                         }
-
-                        // re-create new Words with word stopmarks
-                        verse.RecreateWordsApplyStopmarks(str.ToString());
+                        if (str.Length > 1)
+                        {
+                            str.Remove(str.Length - 1, 1); // " "
+                        }
                     }
 
-                    // update verses/words/letters numbers and distances
-                    book.SetupBook();
+                    // re-create new Words with word stopmarks
+                    verse.RecreateWordsApplyStopmarks(str.ToString());
                 }
+
+                // update verses/words/letters numbers and distances
+                book.SetupBook();
             }
         }
     }

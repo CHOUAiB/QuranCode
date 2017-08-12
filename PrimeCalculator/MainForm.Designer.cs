@@ -147,7 +147,10 @@
             this.rSphereTextBox = new System.Windows.Forms.TextBox();
             this.piSphereTextBox = new System.Windows.Forms.TextBox();
             this.TriangleTabPage = new System.Windows.Forms.TabPage();
-            this.RunTriangleButton = new System.Windows.Forms.Button();
+            this.ClearTriangleButton = new System.Windows.Forms.Button();
+            this.h3TriangleTextBox = new System.Windows.Forms.TextBox();
+            this.h2TriangleTextBox = new System.Windows.Forms.TextBox();
+            this.CalculateTriangleButton = new System.Windows.Forms.Button();
             this.pTriangleTextBox = new System.Windows.Forms.TextBox();
             this.h1TriangleTextBox = new System.Windows.Forms.TextBox();
             this.tTriangleTextBox = new System.Windows.Forms.TextBox();
@@ -157,8 +160,6 @@
             this.cTriangleTextBox = new System.Windows.Forms.TextBox();
             this.bTriangleTextBox = new System.Windows.Forms.TextBox();
             this.aTriangleTextBox = new System.Windows.Forms.TextBox();
-            this.h2TriangleTextBox = new System.Windows.Forms.TextBox();
-            this.h3TriangleTextBox = new System.Windows.Forms.TextBox();
             this.NotifyIconContextMenuStrip.SuspendLayout();
             this.ValuePanel.SuspendLayout();
             this.IndexPanel.SuspendLayout();
@@ -754,15 +755,15 @@
             this.HelpTriangleLabel.BackColor = System.Drawing.SystemColors.Control;
             this.HelpTriangleLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HelpTriangleLabel.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
-            this.HelpTriangleLabel.ForeColor = System.Drawing.Color.LightCoral;
+            this.HelpTriangleLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.HelpTriangleLabel.Location = new System.Drawing.Point(207, 91);
             this.HelpTriangleLabel.Name = "HelpTriangleLabel";
             this.HelpTriangleLabel.Size = new System.Drawing.Size(18, 19);
-            this.HelpTriangleLabel.TabIndex = 55;
+            this.HelpTriangleLabel.TabIndex = 10;
             this.HelpTriangleLabel.Tag = "http://en.wikipedia.org/wiki/Solution_of_triangles";
             this.HelpTriangleLabel.Text = "?";
             this.HelpTriangleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.HelpTriangleLabel, "Formulae");
+            this.ToolTip.SetToolTip(this.HelpTriangleLabel, "Triangle Formulae");
             this.HelpTriangleLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 
             // dCircleLabel
@@ -1806,10 +1807,11 @@
             // TriangleTabPage
             // 
             this.TriangleTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.TriangleTabPage.Controls.Add(this.ClearTriangleButton);
             this.TriangleTabPage.Controls.Add(this.h3TriangleTextBox);
             this.TriangleTabPage.Controls.Add(this.h2TriangleTextBox);
             this.TriangleTabPage.Controls.Add(this.HelpTriangleLabel);
-            this.TriangleTabPage.Controls.Add(this.RunTriangleButton);
+            this.TriangleTabPage.Controls.Add(this.CalculateTriangleButton);
             this.TriangleTabPage.Controls.Add(this.pUnitTriangleLabel);
             this.TriangleTabPage.Controls.Add(this.pTriangleLabel);
             this.TriangleTabPage.Controls.Add(this.pTriangleTextBox);
@@ -1840,28 +1842,66 @@
             this.TriangleTabPage.TabIndex = 3;
             this.TriangleTabPage.Text = "Triangle";
             // 
-            // RunTriangleButton
+            // ClearTriangleButton
             // 
-            this.RunTriangleButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.RunTriangleButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RunTriangleButton.Location = new System.Drawing.Point(12, 89);
-            this.RunTriangleButton.Name = "RunTriangleButton";
-            this.RunTriangleButton.Size = new System.Drawing.Size(188, 23);
-            this.RunTriangleButton.TabIndex = 7;
-            this.RunTriangleButton.Text = "Calculate";
-            this.RunTriangleButton.UseVisualStyleBackColor = true;
-            this.RunTriangleButton.Click += new System.EventHandler(this.RunTriangleButton_Click);
+            this.ClearTriangleButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ClearTriangleButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ClearTriangleButton.Location = new System.Drawing.Point(12, 89);
+            this.ClearTriangleButton.Name = "ClearTriangleButton";
+            this.ClearTriangleButton.Size = new System.Drawing.Size(61, 23);
+            this.ClearTriangleButton.TabIndex = 7;
+            this.ClearTriangleButton.Text = "Clear";
+            this.ClearTriangleButton.UseVisualStyleBackColor = true;
+            this.ClearTriangleButton.Click += new System.EventHandler(this.ClearTriangleButton_Click);
+            // 
+            // h3TriangleTextBox
+            // 
+            this.h3TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.h3TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.h3TriangleTextBox.Location = new System.Drawing.Point(159, 165);
+            this.h3TriangleTextBox.Name = "h3TriangleTextBox";
+            this.h3TriangleTextBox.ReadOnly = true;
+            this.h3TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.h3TriangleTextBox.Size = new System.Drawing.Size(41, 23);
+            this.h3TriangleTextBox.TabIndex = 13;
+            this.h3TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.h3TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // h2TriangleTextBox
+            // 
+            this.h2TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.h2TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.h2TriangleTextBox.Location = new System.Drawing.Point(117, 165);
+            this.h2TriangleTextBox.Name = "h2TriangleTextBox";
+            this.h2TriangleTextBox.ReadOnly = true;
+            this.h2TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.h2TriangleTextBox.Size = new System.Drawing.Size(41, 23);
+            this.h2TriangleTextBox.TabIndex = 12;
+            this.h2TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.h2TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+            // 
+            // CalculateTriangleButton
+            // 
+            this.CalculateTriangleButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.CalculateTriangleButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CalculateTriangleButton.Location = new System.Drawing.Point(75, 89);
+            this.CalculateTriangleButton.Name = "CalculateTriangleButton";
+            this.CalculateTriangleButton.Size = new System.Drawing.Size(125, 23);
+            this.CalculateTriangleButton.TabIndex = 8;
+            this.CalculateTriangleButton.Text = "Calculate";
+            this.CalculateTriangleButton.UseVisualStyleBackColor = true;
+            this.CalculateTriangleButton.Click += new System.EventHandler(this.CalculateTriangleButton_Click);
             // 
             // pTriangleTextBox
             // 
             this.pTriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.pTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pTriangleTextBox.Location = new System.Drawing.Point(79, 115);
+            this.pTriangleTextBox.Location = new System.Drawing.Point(75, 115);
             this.pTriangleTextBox.Name = "pTriangleTextBox";
             this.pTriangleTextBox.ReadOnly = true;
             this.pTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.pTriangleTextBox.Size = new System.Drawing.Size(121, 23);
-            this.pTriangleTextBox.TabIndex = 8;
+            this.pTriangleTextBox.Size = new System.Drawing.Size(125, 23);
+            this.pTriangleTextBox.TabIndex = 9;
             this.pTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
@@ -1869,11 +1909,11 @@
             // 
             this.h1TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.h1TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.h1TriangleTextBox.Location = new System.Drawing.Point(79, 165);
+            this.h1TriangleTextBox.Location = new System.Drawing.Point(75, 165);
             this.h1TriangleTextBox.Name = "h1TriangleTextBox";
             this.h1TriangleTextBox.ReadOnly = true;
             this.h1TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.h1TriangleTextBox.Size = new System.Drawing.Size(40, 23);
+            this.h1TriangleTextBox.Size = new System.Drawing.Size(41, 23);
             this.h1TriangleTextBox.TabIndex = 11;
             this.h1TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.h1TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
@@ -1882,12 +1922,12 @@
             // 
             this.tTriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.tTriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tTriangleTextBox.Location = new System.Drawing.Point(79, 140);
+            this.tTriangleTextBox.Location = new System.Drawing.Point(75, 140);
             this.tTriangleTextBox.Name = "tTriangleTextBox";
             this.tTriangleTextBox.ReadOnly = true;
             this.tTriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tTriangleTextBox.Size = new System.Drawing.Size(121, 23);
-            this.tTriangleTextBox.TabIndex = 9;
+            this.tTriangleTextBox.Size = new System.Drawing.Size(125, 23);
+            this.tTriangleTextBox.TabIndex = 10;
             this.tTriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
@@ -1980,32 +2020,6 @@
             this.aTriangleTextBox.TextChanged += new System.EventHandler(this.TriangleTextBox_TextChanged);
             this.aTriangleTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TriangleTextBox_KeyDown);
             this.aTriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-            // 
-            // h2TriangleTextBox
-            // 
-            this.h2TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
-            this.h2TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.h2TriangleTextBox.Location = new System.Drawing.Point(119, 165);
-            this.h2TriangleTextBox.Name = "h2TriangleTextBox";
-            this.h2TriangleTextBox.ReadOnly = true;
-            this.h2TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.h2TriangleTextBox.Size = new System.Drawing.Size(40, 23);
-            this.h2TriangleTextBox.TabIndex = 12;
-            this.h2TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.h2TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-            // 
-            // h3TriangleTextBox
-            // 
-            this.h3TriangleTextBox.BackColor = System.Drawing.SystemColors.Control;
-            this.h3TriangleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.h3TriangleTextBox.Location = new System.Drawing.Point(160, 165);
-            this.h3TriangleTextBox.Name = "h3TriangleTextBox";
-            this.h3TriangleTextBox.ReadOnly = true;
-            this.h3TriangleTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.h3TriangleTextBox.Size = new System.Drawing.Size(40, 23);
-            this.h3TriangleTextBox.TabIndex = 13;
-            this.h3TriangleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.h3TriangleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // MainForm
             // 
@@ -2184,8 +2198,9 @@
     private System.Windows.Forms.Label pUnitTriangleLabel;
     private System.Windows.Forms.Label pTriangleLabel;
     private System.Windows.Forms.TextBox pTriangleTextBox;
-    private System.Windows.Forms.Button RunTriangleButton;
+    private System.Windows.Forms.Button CalculateTriangleButton;
     private System.Windows.Forms.Label HelpTriangleLabel;
     private System.Windows.Forms.TextBox h3TriangleTextBox;
     private System.Windows.Forms.TextBox h2TriangleTextBox;
+    private System.Windows.Forms.Button ClearTriangleButton;
 }
