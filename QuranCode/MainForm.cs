@@ -452,6 +452,11 @@ public partial class MainForm : Form, ISubscriber
                                 MainTextBox.Text = "Fast Mode";
                             }
                         }
+
+                        DisplayDeficientNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[0];
+                        DisplayPerfectNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[1];
+                        DisplayAbundantNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[2];
+
                         this.Activate(); // bring to foreground
                     }
                 }
@@ -23746,18 +23751,18 @@ public partial class MainForm : Form, ISubscriber
                             str.Append(value.ToString() + "\t");
                             str.Append(Numbers.FactorizeToString(value) + "\t");
 
-                            int p = Numbers.PrimeIndexOf(value);
-                            int ap = Numbers.AdditivePrimeIndexOf(value);
-                            int xp = Numbers.NonAdditivePrimeIndexOf(value);
-                            int c = Numbers.CompositeIndexOf(value);
-                            int ac = Numbers.AdditiveCompositeIndexOf(value);
-                            int xc = Numbers.NonAdditiveCompositeIndexOf(value);
-                            str.Append((p == -1 ? "-" : p.ToString()) + "\t"
-                                           + (ap == -1 ? "-" : ap.ToString()) + "\t"
-                                           + (xp == -1 ? "-" : xp.ToString()) + "\t"
-                                           + (c == -1 ? "-" : c.ToString()) + "\t"
-                                           + (ac == -1 ? "-" : ac.ToString()) + "\t"
-                                           + (xc == -1 ? "-" : xc.ToString())
+                            int p = Numbers.PrimeIndexOf(value) + 1;
+                            int ap = Numbers.AdditivePrimeIndexOf(value) + 1;
+                            int xp = Numbers.NonAdditivePrimeIndexOf(value) + 1;
+                            int c = Numbers.CompositeIndexOf(value) + 1;
+                            int ac = Numbers.AdditiveCompositeIndexOf(value) + 1;
+                            int xc = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
+                            str.Append((p == 0 ? "-" : p.ToString()) + "\t"
+                                           + (ap == 0 ? "-" : ap.ToString()) + "\t"
+                                           + (xp == 0 ? "-" : xp.ToString()) + "\t"
+                                           + (c == 0 ? "-" : c.ToString()) + "\t"
+                                           + (ac == 0 ? "-" : ac.ToString()) + "\t"
+                                           + (xc == 0 ? "-" : xc.ToString())
                                          );
                             str.Append("\t");
 
@@ -27486,16 +27491,16 @@ public partial class MainForm : Form, ISubscriber
                 PrimeFactorsTextBox.BackColor = (Numbers.Compare(value, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
                 PrimeFactorsTextBox.Refresh();
 
-                int nth_number_index = -1;
-                int nth_additive_number_index = -1;
-                int nth_non_additive_number_index = -1;
+                int nth_number_index = 0;
+                int nth_additive_number_index = 0;
+                int nth_non_additive_number_index = 0;
                 if (Numbers.IsPrime(value))
                 {
                     m_index_type = IndexType.Prime;
-                    nth_number_index = Numbers.PrimeIndexOf(value);
-                    nth_additive_number_index = Numbers.AdditivePrimeIndexOf(value);
-                    nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(value);
-                    NthNumberTextBox.BackColor = (nth_additive_number_index > -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
+                    nth_number_index = Numbers.PrimeIndexOf(value) + 1;
+                    nth_additive_number_index = Numbers.AdditivePrimeIndexOf(value) + 1;
+                    nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(value) + 1;
+                    NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
                     NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
                     NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
                     ToolTip.SetToolTip(NthNumberTextBox, "Prime index");
@@ -27505,23 +27510,23 @@ public partial class MainForm : Form, ISubscriber
                 else // any other index type will be treated as IndexNumberType.Composite
                 {
                     m_index_type = IndexType.Composite;
-                    nth_number_index = Numbers.CompositeIndexOf(value);
-                    nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(value);
-                    nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(value);
-                    NthNumberTextBox.BackColor = (nth_additive_number_index > -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
+                    nth_number_index = Numbers.CompositeIndexOf(value) + 1;
+                    nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(value) + 1;
+                    nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
+                    NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
                     NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
                     NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
                     ToolTip.SetToolTip(NthNumberTextBox, "Composite index");
                     ToolTip.SetToolTip(NthAdditiveNumberTextBox, "Additive composite index");
                     ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive composite index");
                 }
-                NthNumberTextBox.Text = nth_number_index.ToString();
+                NthNumberTextBox.Text = (nth_number_index > 0) ? nth_number_index.ToString() : "";
                 NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_number_index);
                 NthNumberTextBox.Refresh();
-                NthAdditiveNumberTextBox.Text = nth_additive_number_index.ToString();
+                NthAdditiveNumberTextBox.Text = (nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : "";
                 NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_additive_number_index);
                 NthAdditiveNumberTextBox.Refresh();
-                NthNonAdditiveNumberTextBox.Text = nth_non_additive_number_index.ToString();
+                NthNonAdditiveNumberTextBox.Text = (nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : "";
                 NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_non_additive_number_index);
                 NthNonAdditiveNumberTextBox.Refresh();
 
@@ -27579,7 +27584,7 @@ public partial class MainForm : Form, ISubscriber
     private void UpdateNumberKind(long value)
     {
         m_number_kind = Numbers.GetNumberKind(value);
-        int number_kind_index = -1;
+        int number_kind_index = 0;
         switch (m_number_kind)
         {
             case NumberKind.Deficient:
@@ -27602,7 +27607,7 @@ public partial class MainForm : Form, ISubscriber
                 break;
             default:
                 {
-                    number_kind_index = -1;
+                    number_kind_index = 0;
                     NumberKindIndexTextBox.BackColor = SystemColors.Control;
                 }
                 break;
@@ -27612,7 +27617,7 @@ public partial class MainForm : Form, ISubscriber
         ToolTip.SetToolTip(NumberKindIndexTextBox, m_number_kind.ToString() + " number index");
         NumberKindIndexTextBox.Refresh();
     }
-    private void DisplayDeficientNumbersLable_Click(object sender, EventArgs e)
+    private void DisplayDeficientNumbersLabel_Click(object sender, EventArgs e)
     {
         try
         {
@@ -27649,7 +27654,7 @@ public partial class MainForm : Form, ISubscriber
             // silence IO error in case running from read-only media (CD/DVD)
         }
     }
-    private void DisplayPerfectNumbersLable_Click(object sender, EventArgs e)
+    private void DisplayPerfectNumbersLabel_Click(object sender, EventArgs e)
     {
         try
         {
@@ -27666,7 +27671,7 @@ public partial class MainForm : Form, ISubscriber
             // silence IO error in case running from read-only media (CD/DVD)
         }
     }
-    private void DisplayAbundantNumbersLable_Click(object sender, EventArgs e)
+    private void DisplayAbundantNumbersLabel_Click(object sender, EventArgs e)
     {
         try
         {
@@ -27722,6 +27727,7 @@ public partial class MainForm : Form, ISubscriber
         DisplayLetterFrequenciesTotals();
     }
 
+
     private long DecimalPCIndexChainL2R(long number)
     {
         if (number < 0L) number = -1L * number;
@@ -27730,12 +27736,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
@@ -27755,12 +27761,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
@@ -27780,12 +27786,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
@@ -27805,12 +27811,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
@@ -27829,12 +27835,12 @@ public partial class MainForm : Form, ISubscriber
         int length = 0;
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 length++;
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 length++;
             }
@@ -27854,12 +27860,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
@@ -27879,12 +27885,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
@@ -27904,12 +27910,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
@@ -27929,12 +27935,12 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
@@ -27959,12 +27965,12 @@ public partial class MainForm : Form, ISubscriber
                 str.Append("-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("C" + index.ToString());
             }
@@ -27989,12 +27995,12 @@ public partial class MainForm : Form, ISubscriber
                 str.Insert(0, "-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "C" + index.ToString());
             }
@@ -28019,12 +28025,12 @@ public partial class MainForm : Form, ISubscriber
                 str.Append("-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("C" + index.ToString());
             }
@@ -28049,12 +28055,12 @@ public partial class MainForm : Form, ISubscriber
                 str.Insert(0, "-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "C" + index.ToString());
             }
@@ -30449,28 +30455,28 @@ public partial class MainForm : Form, ISubscriber
 
                     str.AppendLine();
                     str.AppendLine("Prime Factors\t=\t" + Numbers.FactorizeToString(value));
-                    int nth_number_index = -1;
-                    int nth_additive_number_index = -1;
-                    int nth_non_additive_number_index = -1;
+                    int nth_number_index = 0;
+                    int nth_additive_number_index = 0;
+                    int nth_non_additive_number_index = 0;
                     if (Numbers.IsPrime(value))
                     {
                         m_index_type = IndexType.Prime;
-                        nth_number_index = Numbers.PrimeIndexOf(value);
-                        nth_additive_number_index = Numbers.AdditivePrimeIndexOf(value);
-                        nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(value);
-                        str.AppendLine("P  Index\t=\t" + nth_number_index);
-                        str.AppendLine("AP Index\t=\t" + nth_additive_number_index);
-                        str.AppendLine("XP Index\t=\t" + nth_non_additive_number_index);
+                        nth_number_index = Numbers.PrimeIndexOf(value) + 1;
+                        nth_additive_number_index = Numbers.AdditivePrimeIndexOf(value) + 1;
+                        nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(value) + 1;
+                        str.AppendLine("P  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
+                        str.AppendLine("AP Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
+                        str.AppendLine("XP Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
                     }
                     else // any other index type will be treated as IndexNumberType.Composite
                     {
                         m_index_type = IndexType.Composite;
-                        nth_number_index = Numbers.CompositeIndexOf(value);
-                        nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(value);
-                        nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(value);
-                        str.AppendLine("C  Index\t=\t" + nth_number_index);
-                        str.AppendLine("AC Index\t=\t" + nth_additive_number_index);
-                        str.AppendLine("XC Index\t=\t" + nth_non_additive_number_index);
+                        nth_number_index = Numbers.CompositeIndexOf(value) + 1;
+                        nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(value) + 1;
+                        nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
+                        str.AppendLine("C  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
+                        str.AppendLine("AC Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
+                        str.AppendLine("XC Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
                     }
 
                     str.AppendLine();
@@ -30483,7 +30489,7 @@ public partial class MainForm : Form, ISubscriber
                     str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
 
                     m_number_kind = Numbers.GetNumberKind(value);
-                    int number_kind_index = -1;
+                    int number_kind_index = 0;
                     switch (m_number_kind)
                     {
                         case NumberKind.Deficient:
@@ -30503,7 +30509,7 @@ public partial class MainForm : Form, ISubscriber
                             break;
                         default:
                             {
-                                number_kind_index = -1;
+                                number_kind_index = 0;
                             }
                             break;
                     }

@@ -97,6 +97,105 @@ public enum ArithmeticOperator { Plus, Minus, Multiply, Divide, Modulus };
 
 public static class Numbers
 {
+    public static Color[] NUMBER_TYPE_COLORS =
+    { 
+        /* NumberType.None */                   Color.Black,
+        /* NumberType.Unit */                   Color.DarkViolet,
+        /* NumberType.Prime */                  Color.Green,
+        /* NumberType.AdditivePrime */          Color.Blue,
+        /* NumberType.NonAdditivePrime */       Color.Green,
+        /* NumberType.Composite */              Color.Black,
+        /* NumberType.AdditiveComposite */      Color.Brown,
+        /* NumberType.NonAdditiveComposite */   Color.Black,
+        /* NumberType.Odd */                    Color.Black,
+        /* NumberType.Even */                   Color.Black,
+        /* NumberType.Square */                 Color.Black,
+        /* NumberType.Cubic */                  Color.Black,
+        /* NumberType.Quartic */                Color.Black,
+        /* NumberType.Quintic */                Color.Black,
+        /* NumberType.Sextic */                 Color.Black,
+        /* NumberType.Septic */                 Color.Black,
+        /* NumberType.Octic */                  Color.Black,
+        /* NumberType.Nonic */                  Color.Black,
+        /* NumberType.Decic */                  Color.Black,
+        /* NumberType.Natural */                Color.Black
+    };
+    public static Color[] NUMBER_TYPE_BACKCOLORS =
+    { 
+        /* NumberType.None */                   Color.Black,
+        /* NumberType.Unit */                   Color.DarkViolet,
+        /* NumberType.Prime */                  Color.Green,
+        /* NumberType.AdditivePrime */          Color.FromArgb(224, 224, 255),
+        /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
+        /* NumberType.Composite */              Color.Black,
+        /* NumberType.AdditiveComposite */      Color.FromArgb(224, 192, 192),
+        /* NumberType.NonAdditiveComposite */   Color.FromArgb(208, 208, 208),
+        /* NumberType.Odd */                    Color.Black,
+        /* NumberType.Even */                   Color.Black,
+        /* NumberType.Square */                 Color.Black,
+        /* NumberType.Cubic */                  Color.Black,
+        /* NumberType.Quartic */                Color.Black,
+        /* NumberType.Quintic */                Color.Black,
+        /* NumberType.Sextic */                 Color.Black,
+        /* NumberType.Septic */                 Color.Black,
+        /* NumberType.Octic */                  Color.Black,
+        /* NumberType.Nonic */                  Color.Black,
+        /* NumberType.Decic */                  Color.Black,
+        /* NumberType.Natural */                Color.Black
+    };
+
+    public static Color[] NUMBER_KIND_COLORS =
+    { 
+        /* NumberKind.Deficient */          Color.FromArgb(255, 240, 240),
+        /* NumberKind.Perfect */            Color.FromArgb(255, 128, 128),
+        /* NumberKind.Abundant */           Color.FromArgb(255, 192, 192)
+    };
+    public static Color GetNumberTypeColor(long number)
+    {
+        return GetNumberTypeColor(number.ToString(), 10L);
+    }
+    public static Color GetNumberTypeColor(string value, long radix)
+    {
+        // if negative number, remove -ve sign
+        if (value.StartsWith("-")) value = value.Remove(0, 1);
+
+        if (IsUnit(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.Unit];
+        }
+
+        else if (IsNonAdditivePrime(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditivePrime];
+        }
+        else if (IsAdditivePrime(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.AdditivePrime];
+        }
+        else if (IsPrime(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.Prime];
+        }
+
+        else if (IsNonAdditiveComposite(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditiveComposite];
+        }
+        else if (IsAdditiveComposite(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.AdditiveComposite];
+        }
+        else if (IsComposite(value, radix))
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.Composite];
+        }
+
+        else
+        {
+            return NUMBER_TYPE_COLORS[(int)NumberType.None];
+        }
+    }
+
     public static int s_max_number_limit = int.MaxValue / ((Globals.EDITION == Edition.Ultimate) ? 16 : 1024);
 
     // pi = circumference / diameter ~= 355/113
@@ -211,20 +310,6 @@ public static class Numbers
         {
             // silence error
         }
-    }
-
-    // perfect numbers
-    public static List<long> PERFECT_NUMBERS = new List<long> { 6, 28, 496, 8128, 33550336, 8589869056, 137438691328, 2305843008139952128 }; //2658455991569831744654692615953842176, 191561942608236107294793378084303638130997321548169216
-    //public static bool IsPerfect(this long source)
-    //{
-    //    return PERFECT_NUMBERS.Contains(source);
-    //}
-
-    // prime repunit numbers
-    public static List<long> PRIME_REPUNITS = new List<long> { 2, 19, 23, 317, 1031, 49081, 86453, 109297, 270343 }; // http://oeis.org/A004023
-    public static bool IsRepunit(this long source)
-    {
-        return PRIME_REPUNITS.Contains(source);
     }
 
     static Numbers()
@@ -1252,7 +1337,7 @@ public static class Numbers
             {
                 GeneratePrimes(s_max_number_limit);
             }
-            return BinarySearch(s_primes, number) + 1;
+            return BinarySearch(s_primes, number);
 
             //int index = -1;
             //int max = s_max_number_limit;
@@ -1276,7 +1361,7 @@ public static class Numbers
             {
                 GenerateAdditivePrimes(s_max_number_limit);
             }
-            return BinarySearch(s_additive_primes, number) + 1;
+            return BinarySearch(s_additive_primes, number);
 
             //int index = -1;
             //int max = s_max_number_limit;
@@ -1300,7 +1385,7 @@ public static class Numbers
             {
                 GenerateNonAdditivePrimes(s_max_number_limit);
             }
-            return BinarySearch(s_non_additive_primes, number) + 1;
+            return BinarySearch(s_non_additive_primes, number);
 
             //int index = -1;
             //int max = s_max_number_limit;
@@ -1603,7 +1688,7 @@ public static class Numbers
             {
                 GenerateComposites(max);
             }
-            return BinarySearch(s_composites, number) + 1;
+            return BinarySearch(s_composites, number);
 
             //int index = -1;
             //while ((index = BinarySearch(s_composites, number)) == -1)
@@ -1627,7 +1712,7 @@ public static class Numbers
             {
                 GenerateAdditiveComposites(max);
             }
-            return BinarySearch(s_additive_composites, number) + 1;
+            return BinarySearch(s_additive_composites, number);
 
             //int index = -1;
             //while ((index = BinarySearch(s_additive_composites, number)) == -1)
@@ -1651,7 +1736,7 @@ public static class Numbers
             {
                 GenerateNonAdditiveComposites(max);
             }
-            return BinarySearch(s_non_additive_composites, number) + 1;
+            return BinarySearch(s_non_additive_composites, number);
 
             //int index = -1;
             //while ((index = BinarySearch(s_non_additive_composites, number)) == -1)
@@ -3165,7 +3250,6 @@ public static class Numbers
     public static long SumOfDivisors(long number)
     {
         long result = 1L;
-        //if (s_factor_powers == null) 
         s_factor_powers = FactorizeByPowers(number);
         foreach (long key in s_factor_powers.Keys)
         {
@@ -3238,8 +3322,17 @@ public static class Numbers
         return str.ToString();
     }
 
+    // prime repeated units 1111111.....1111111 numbers
+    public static List<long> PRIME_REPUNITS = new List<long> { 2, 19, 23, 317, 1031, 49081, 86453, 109297, 270343 }; // http://oeis.org/A004023
+    public static bool IsRepunit(this long source)
+    {
+        return PRIME_REPUNITS.Contains(source);
+    }
+
     public static NumberKind GetNumberKind(long number)
     {
+        if (number == 1L) return NumberKind.Deficient;
+
         long sum_of_proper_divisors = SumOfProperDivisors(number);
         if (sum_of_proper_divisors < number)
         {
@@ -3254,7 +3347,8 @@ public static class Numbers
             return NumberKind.Abundant;
         }
     }
-    private static int s_deficients_limit = 1024 * 1024;
+
+    private static int s_deficients_limit = s_max_number_limit;
     private static List<long> s_deficients;
     public static List<long> Deficients
     {
@@ -3278,8 +3372,7 @@ public static class Numbers
     private static void GenerateDeficients()
     {
         int max = s_deficients_limit;
-        s_deficients = new List<long>(max);
-        // skip 1 ???
+        s_deficients = new List<long>(max) { 1 }; // 1 is 1st deficient number
         for (int i = 2; i < max; i++)
         {
             long sum_of_proper_divisors = SumOfProperDivisors(i);
@@ -3298,6 +3391,8 @@ public static class Numbers
     {
         return Deficients.Contains(number);
     }
+
+    public static List<long> PERFECT_NUMBERS = new List<long> { 6, 28, 496, 8128, 33550336, 8589869056, 137438691328, 2305843008139952128 }; //2658455991569831744654692615953842176, 191561942608236107294793378084303638130997321548169216
     public static List<long> Perfects
     {
         get { return PERFECT_NUMBERS; }
@@ -3315,7 +3410,8 @@ public static class Numbers
     {
         return Perfects.Contains(number);
     }
-    private static int s_abundants_limit = 1024 * 1024;
+
+    private static int s_abundants_limit = s_max_number_limit;
     private static List<long> s_abundants;
     public static List<long> Abundants
     {
@@ -3642,107 +3738,6 @@ public static class Numbers
         using (publicPrivateRsa)
         {
             publicRsa.Clear();
-        }
-    }
-
-
-
-    public static Color[] NUMBER_TYPE_COLORS =
-    { 
-        /* NumberType.None */                   Color.Black,
-        /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
-        /* NumberType.AdditivePrime */          Color.Blue,
-        /* NumberType.NonAdditivePrime */       Color.Green,
-        /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.Brown,
-        /* NumberType.NonAdditiveComposite */   Color.Black,
-        /* NumberType.Odd */                    Color.Black,
-        /* NumberType.Even */                   Color.Black,
-        /* NumberType.Square */                 Color.Black,
-        /* NumberType.Cubic */                  Color.Black,
-        /* NumberType.Quartic */                Color.Black,
-        /* NumberType.Quintic */                Color.Black,
-        /* NumberType.Sextic */                 Color.Black,
-        /* NumberType.Septic */                 Color.Black,
-        /* NumberType.Octic */                  Color.Black,
-        /* NumberType.Nonic */                  Color.Black,
-        /* NumberType.Decic */                  Color.Black,
-        /* NumberType.Natural */                Color.Black
-    };
-    public static Color[] NUMBER_TYPE_BACKCOLORS =
-    { 
-        /* NumberType.None */                   Color.Black,
-        /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
-        /* NumberType.AdditivePrime */          Color.FromArgb(224, 224, 255),
-        /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
-        /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.FromArgb(224, 192, 192),
-        /* NumberType.NonAdditiveComposite */   Color.FromArgb(208, 208, 208),
-        /* NumberType.Odd */                    Color.Black,
-        /* NumberType.Even */                   Color.Black,
-        /* NumberType.Square */                 Color.Black,
-        /* NumberType.Cubic */                  Color.Black,
-        /* NumberType.Quartic */                Color.Black,
-        /* NumberType.Quintic */                Color.Black,
-        /* NumberType.Sextic */                 Color.Black,
-        /* NumberType.Septic */                 Color.Black,
-        /* NumberType.Octic */                  Color.Black,
-        /* NumberType.Nonic */                  Color.Black,
-        /* NumberType.Decic */                  Color.Black,
-        /* NumberType.Natural */                Color.Black
-    };
-
-    public static Color[] NUMBER_KIND_COLORS =
-    { 
-        /* NumberKind.Deficient */          Color.FromArgb(255, 240, 240),
-        /* NumberKind.Perfect */            Color.FromArgb(255, 204, 204),
-        /* NumberKind.Abundant */           Color.FromArgb(255, 224, 224)
-    };
-    public static Color GetNumberTypeColor(long number)
-    {
-        return GetNumberTypeColor(number.ToString(), 10L);
-    }
-    public static Color GetNumberTypeColor(string value, long radix)
-    {
-        // if negative number, remove -ve sign
-        if (value.StartsWith("-")) value = value.Remove(0, 1);
-
-        if (IsUnit(value, radix))
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.Unit];
-        }
-
-        else if (IsNonAdditivePrime(value, radix))
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditivePrime];
-        }
-        else if (IsAdditivePrime(value, radix))
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.AdditivePrime];
-        }
-        else if (IsPrime(value, radix))
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.Prime];
-        }
-
-        else if (IsNonAdditiveComposite(value, radix))
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.NonAdditiveComposite];
-        }
-        else if (IsAdditiveComposite(value, radix))
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.AdditiveComposite];
-        }
-        else if (IsComposite(value, radix))
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.Composite];
-        }
-
-        else
-        {
-            return NUMBER_TYPE_COLORS[(int)NumberType.None];
         }
     }
 }

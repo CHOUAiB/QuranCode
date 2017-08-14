@@ -1545,7 +1545,7 @@ public partial class MainForm : Form
                         str.Remove(str.Length - m_chapter_seperator.Length, m_chapter_seperator.Length);
                     }
                 }
-                m_matches_str.AppendLine(str.ToString());
+                m_matches_str.Insert(0, str.ToString() + "\r\n");
             }
         }
     }

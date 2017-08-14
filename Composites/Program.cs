@@ -150,23 +150,23 @@ namespace Composites
                                 str.Remove(str.Length - 1, 1);
 
 
-                                int C = Numbers.CompositeIndexOf(i);
-                                int AC = Numbers.AdditiveCompositeIndexOf(i);
-                                int XC = Numbers.NonAdditiveCompositeIndexOf(i);
+                                int C = Numbers.CompositeIndexOf(i) + 1;
+                                int AC = Numbers.AdditiveCompositeIndexOf(i) + 1;
+                                int XC = Numbers.NonAdditiveCompositeIndexOf(i) + 1;
 
-                                Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (C == -1) ? "" : C.ToString(), (AC == -1) ? "" : AC.ToString(), (XC == -1) ? "" : XC.ToString(), str.ToString());
-                                writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (C == -1) ? "" : C.ToString(), (AC == -1) ? "" : AC.ToString(), (XC == -1) ? "" : XC.ToString(), str.ToString());
+                                Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (C <= 0) ? "" : C.ToString(), (AC <= 0) ? "" : AC.ToString(), (XC <= 0) ? "" : XC.ToString(), str.ToString());
+                                writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (C <= 0) ? "" : C.ToString(), (AC <= 0) ? "" : AC.ToString(), (XC <= 0) ? "" : XC.ToString(), str.ToString());
                             }
                         }
                         else if ((n == 1) && (factors.Count == n)) // PRIMES
                         {
                             matches++;
-                            int P = Numbers.PrimeIndexOf(i);
-                            int AP = Numbers.AdditivePrimeIndexOf(i);
-                            int XP = Numbers.NonAdditivePrimeIndexOf(i);
+                            int P = Numbers.PrimeIndexOf(i) + 1;
+                            int AP = Numbers.AdditivePrimeIndexOf(i) + 1;
+                            int XP = Numbers.NonAdditivePrimeIndexOf(i) + 1;
 
-                            Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (P == -1) ? "" : P.ToString(), (AP == -1) ? "" : AP.ToString(), (XP == -1) ? "" : XP.ToString(), factors[0].ToString());
-                            writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (P == -1) ? "" : P.ToString(), (AP == -1) ? "" : AP.ToString(), (XP == -1) ? "" : XP.ToString(), factors[0].ToString());
+                            Console.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (P <= 0) ? "" : P.ToString(), (AP <= 0) ? "" : AP.ToString(), (XP <= 0) ? "" : XP.ToString(), factors[0].ToString());
+                            writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", matches, i, (P <= 0) ? "" : P.ToString(), (AP <= 0) ? "" : AP.ToString(), (XP <= 0) ? "" : XP.ToString(), factors[0].ToString());
                         }
                     } // for
                 }

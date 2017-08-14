@@ -550,9 +550,9 @@ partial class MainForm
         this.SquareSumTextBox = new System.Windows.Forms.TextBox();
         this.ValueInspectLabel = new System.Windows.Forms.Label();
         this.NthNonAdditiveNumberTextBox = new System.Windows.Forms.TextBox();
-        this.DisplayAbundantNumbersLable = new System.Windows.Forms.Label();
-        this.DisplayPerfectNumbersLable = new System.Windows.Forms.Label();
-        this.DisplayDeficientNumbersLable = new System.Windows.Forms.Label();
+        this.DisplayAbundantNumbersLabel = new System.Windows.Forms.Label();
+        this.DisplayPerfectNumbersLabel = new System.Windows.Forms.Label();
+        this.DisplayDeficientNumbersLabel = new System.Windows.Forms.Label();
         this.DecimalValueTextBox = new System.Windows.Forms.TextBox();
         this.EditNumerologySystemLabel = new System.Windows.Forms.Label();
         this.NumberKindIndexTextBox = new System.Windows.Forms.TextBox();
@@ -8858,9 +8858,9 @@ partial class MainForm
         this.ValuePanel.Controls.Add(this.SquareSumTextBox);
         this.ValuePanel.Controls.Add(this.ValueInspectLabel);
         this.ValuePanel.Controls.Add(this.NthNonAdditiveNumberTextBox);
-        this.ValuePanel.Controls.Add(this.DisplayAbundantNumbersLable);
-        this.ValuePanel.Controls.Add(this.DisplayPerfectNumbersLable);
-        this.ValuePanel.Controls.Add(this.DisplayDeficientNumbersLable);
+        this.ValuePanel.Controls.Add(this.DisplayAbundantNumbersLabel);
+        this.ValuePanel.Controls.Add(this.DisplayPerfectNumbersLabel);
+        this.ValuePanel.Controls.Add(this.DisplayDeficientNumbersLabel);
         this.ValuePanel.Controls.Add(this.DecimalValueTextBox);
         this.ValuePanel.Controls.Add(this.ValueTextBox);
         this.ValuePanel.Controls.Add(this.EditNumerologySystemLabel);
@@ -8984,50 +8984,50 @@ partial class MainForm
         this.NthNonAdditiveNumberTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NthNonAdditiveNumberTextBox_KeyDown);
         this.NthNonAdditiveNumberTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
-        // DisplayAbundantNumbersLable
+        // DisplayAbundantNumbersLabel
         // 
-        this.DisplayAbundantNumbersLable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-        this.DisplayAbundantNumbersLable.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.DisplayAbundantNumbersLable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.DisplayAbundantNumbersLable.ForeColor = System.Drawing.SystemColors.Window;
-        this.DisplayAbundantNumbersLable.Location = new System.Drawing.Point(2, 150);
-        this.DisplayAbundantNumbersLable.Name = "DisplayAbundantNumbersLable";
-        this.DisplayAbundantNumbersLable.Size = new System.Drawing.Size(5, 6);
-        this.DisplayAbundantNumbersLable.TabIndex = 257;
-        this.DisplayAbundantNumbersLable.Tag = "";
-        this.DisplayAbundantNumbersLable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.DisplayAbundantNumbersLable, "Display abundant numbers");
-        this.DisplayAbundantNumbersLable.Click += new System.EventHandler(this.DisplayAbundantNumbersLable_Click);
+        this.DisplayAbundantNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+        this.DisplayAbundantNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.DisplayAbundantNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.DisplayAbundantNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
+        this.DisplayAbundantNumbersLabel.Location = new System.Drawing.Point(2, 150);
+        this.DisplayAbundantNumbersLabel.Name = "DisplayAbundantNumbersLabel";
+        this.DisplayAbundantNumbersLabel.Size = new System.Drawing.Size(5, 6);
+        this.DisplayAbundantNumbersLabel.TabIndex = 257;
+        this.DisplayAbundantNumbersLabel.Tag = "";
+        this.DisplayAbundantNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        this.ToolTip.SetToolTip(this.DisplayAbundantNumbersLabel, "Display abundant numbers");
+        this.DisplayAbundantNumbersLabel.Click += new System.EventHandler(this.DisplayAbundantNumbersLabel_Click);
         // 
-        // DisplayPerfectNumbersLable
+        // DisplayPerfectNumbersLabel
         // 
-        this.DisplayPerfectNumbersLable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-        this.DisplayPerfectNumbersLable.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.DisplayPerfectNumbersLable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.DisplayPerfectNumbersLable.ForeColor = System.Drawing.SystemColors.Window;
-        this.DisplayPerfectNumbersLable.Location = new System.Drawing.Point(2, 144);
-        this.DisplayPerfectNumbersLable.Name = "DisplayPerfectNumbersLable";
-        this.DisplayPerfectNumbersLable.Size = new System.Drawing.Size(5, 6);
-        this.DisplayPerfectNumbersLable.TabIndex = 256;
-        this.DisplayPerfectNumbersLable.Tag = "";
-        this.DisplayPerfectNumbersLable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.DisplayPerfectNumbersLable, "Display perfect numbers");
-        this.DisplayPerfectNumbersLable.Click += new System.EventHandler(this.DisplayPerfectNumbersLable_Click);
+        this.DisplayPerfectNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+        this.DisplayPerfectNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.DisplayPerfectNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.DisplayPerfectNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
+        this.DisplayPerfectNumbersLabel.Location = new System.Drawing.Point(2, 144);
+        this.DisplayPerfectNumbersLabel.Name = "DisplayPerfectNumbersLabel";
+        this.DisplayPerfectNumbersLabel.Size = new System.Drawing.Size(5, 6);
+        this.DisplayPerfectNumbersLabel.TabIndex = 256;
+        this.DisplayPerfectNumbersLabel.Tag = "";
+        this.DisplayPerfectNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        this.ToolTip.SetToolTip(this.DisplayPerfectNumbersLabel, "Display perfect numbers");
+        this.DisplayPerfectNumbersLabel.Click += new System.EventHandler(this.DisplayPerfectNumbersLabel_Click);
         // 
-        // DisplayDeficientNumbersLable
+        // DisplayDeficientNumbersLabel
         // 
-        this.DisplayDeficientNumbersLable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-        this.DisplayDeficientNumbersLable.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.DisplayDeficientNumbersLable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.DisplayDeficientNumbersLable.ForeColor = System.Drawing.SystemColors.Window;
-        this.DisplayDeficientNumbersLable.Location = new System.Drawing.Point(2, 138);
-        this.DisplayDeficientNumbersLable.Name = "DisplayDeficientNumbersLable";
-        this.DisplayDeficientNumbersLable.Size = new System.Drawing.Size(5, 6);
-        this.DisplayDeficientNumbersLable.TabIndex = 255;
-        this.DisplayDeficientNumbersLable.Tag = "";
-        this.DisplayDeficientNumbersLable.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.DisplayDeficientNumbersLable, "Display deficient numbers");
-        this.DisplayDeficientNumbersLable.Click += new System.EventHandler(this.DisplayDeficientNumbersLable_Click);
+        this.DisplayDeficientNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+        this.DisplayDeficientNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.DisplayDeficientNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.DisplayDeficientNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
+        this.DisplayDeficientNumbersLabel.Location = new System.Drawing.Point(2, 138);
+        this.DisplayDeficientNumbersLabel.Name = "DisplayDeficientNumbersLabel";
+        this.DisplayDeficientNumbersLabel.Size = new System.Drawing.Size(5, 6);
+        this.DisplayDeficientNumbersLabel.TabIndex = 255;
+        this.DisplayDeficientNumbersLabel.Tag = "";
+        this.DisplayDeficientNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        this.ToolTip.SetToolTip(this.DisplayDeficientNumbersLabel, "Display deficient numbers");
+        this.DisplayDeficientNumbersLabel.Click += new System.EventHandler(this.DisplayDeficientNumbersLabel_Click);
         // 
         // DecimalValueTextBox
         // 
@@ -10835,9 +10835,9 @@ partial class MainForm
     private System.Windows.Forms.TextBox SumOfProperDivisorsTextBox;
     private System.Windows.Forms.TextBox NumberKindIndexTextBox;
     private System.Windows.Forms.Label EditNumerologySystemLabel;
-    private System.Windows.Forms.Label DisplayAbundantNumbersLable;
-    private System.Windows.Forms.Label DisplayPerfectNumbersLable;
-    private System.Windows.Forms.Label DisplayDeficientNumbersLable;
+    private System.Windows.Forms.Label DisplayAbundantNumbersLabel;
+    private System.Windows.Forms.Label DisplayPerfectNumbersLabel;
+    private System.Windows.Forms.Label DisplayDeficientNumbersLabel;
     private System.Windows.Forms.Panel TextLocationWithinChapterPanel;
     private System.Windows.Forms.RadioButton FindByTextAtChapterStartRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAtChapterMiddleRadioButton;

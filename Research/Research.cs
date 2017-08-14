@@ -1614,18 +1614,18 @@ public static partial class Research
         str.AppendLine("\t" + "Factors" + "\t" + Numbers.FactorizeToString(chapter_sum) + "\t" + Numbers.FactorizeToString(verse_sum));
         str.AppendLine("\t" + "----------------------");
 
-        int chapter_sum_p_index = Numbers.PrimeIndexOf(chapter_sum);
-        int chapter_sum_ap_index = Numbers.AdditivePrimeIndexOf(chapter_sum);
-        int chapter_sum_xp_index = Numbers.NonAdditivePrimeIndexOf(chapter_sum);
-        int chapter_sum_c_index = Numbers.CompositeIndexOf(chapter_sum);
-        int chapter_sum_ac_index = Numbers.AdditiveCompositeIndexOf(chapter_sum);
-        int chapter_sum_xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter_sum);
-        int verse_sum_p_index = Numbers.PrimeIndexOf(verse_sum);
-        int verse_sum_ap_index = Numbers.AdditivePrimeIndexOf(verse_sum);
-        int verse_sum_xp_index = Numbers.NonAdditivePrimeIndexOf(verse_sum);
-        int verse_sum_c_index = Numbers.CompositeIndexOf(verse_sum);
-        int verse_sum_ac_index = Numbers.AdditiveCompositeIndexOf(verse_sum);
-        int verse_sum_xc_index = Numbers.NonAdditiveCompositeIndexOf(verse_sum);
+        int chapter_sum_p_index = Numbers.PrimeIndexOf(chapter_sum) + 1;
+        int chapter_sum_ap_index = Numbers.AdditivePrimeIndexOf(chapter_sum) + 1;
+        int chapter_sum_xp_index = Numbers.NonAdditivePrimeIndexOf(chapter_sum) + 1;
+        int chapter_sum_c_index = Numbers.CompositeIndexOf(chapter_sum) + 1;
+        int chapter_sum_ac_index = Numbers.AdditiveCompositeIndexOf(chapter_sum) + 1;
+        int chapter_sum_xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter_sum) + 1;
+        int verse_sum_p_index = Numbers.PrimeIndexOf(verse_sum) + 1;
+        int verse_sum_ap_index = Numbers.AdditivePrimeIndexOf(verse_sum) + 1;
+        int verse_sum_xp_index = Numbers.NonAdditivePrimeIndexOf(verse_sum) + 1;
+        int verse_sum_c_index = Numbers.CompositeIndexOf(verse_sum) + 1;
+        int verse_sum_ac_index = Numbers.AdditiveCompositeIndexOf(verse_sum) + 1;
+        int verse_sum_xc_index = Numbers.NonAdditiveCompositeIndexOf(verse_sum) + 1;
 
         str.Append("\t" + "\t");
         if (Numbers.IsUnit(chapter_sum)) str.Append("U1");
@@ -2997,19 +2997,19 @@ public static partial class Research
                 str.Append(value.ToString() + "\t");
                 str.Append(Numbers.FactorizeToString(value) + "\t");
 
-                int p = Numbers.PrimeIndexOf(value);
-                int ap = Numbers.AdditivePrimeIndexOf(value);
-                int xp = Numbers.NonAdditivePrimeIndexOf(value);
-                int c = Numbers.CompositeIndexOf(value);
-                int ac = Numbers.AdditiveCompositeIndexOf(value);
-                int xc = Numbers.NonAdditiveCompositeIndexOf(value);
-                str.Append((p == -1 ? "-" : p.ToString()) + "\t"
-                               + (ap == -1 ? "-" : ap.ToString()) + "\t"
-                               + (xp == -1 ? "-" : xp.ToString()) + "\t"
-                               + (c == -1 ? "-" : c.ToString()) + "\t"
-                               + (ac == -1 ? "-" : ac.ToString()) + "\t"
-                               + (xc == -1 ? "-" : xc.ToString())
-                             );
+                int p = Numbers.PrimeIndexOf(value) + 1;
+                int ap = Numbers.AdditivePrimeIndexOf(value) + 1;
+                int xp = Numbers.NonAdditivePrimeIndexOf(value) + 1;
+                int c = Numbers.CompositeIndexOf(value) + 1;
+                int ac = Numbers.AdditiveCompositeIndexOf(value) + 1;
+                int xc = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
+                str.Append((p == 0 ? "-" : p.ToString()) + "\t"
+                        + (ap == 0 ? "-" : ap.ToString()) + "\t"
+                        + (xp == 0 ? "-" : xp.ToString()) + "\t"
+                        + (c == 0 ? "-" : c.ToString()) + "\t"
+                        + (ac == 0 ? "-" : ac.ToString()) + "\t"
+                        + (xc == 0 ? "-" : xc.ToString())
+                        );
                 str.Append("\t");
 
                 if (numerology_system.LetterValues.Keys.Count > 0)
@@ -3068,18 +3068,18 @@ public static partial class Research
                 str.Append(value.ToString() + "\t");
                 str.Append(Numbers.FactorizeToString(value) + "\t");
 
-                int p = Numbers.PrimeIndexOf(value);
-                int ap = Numbers.AdditivePrimeIndexOf(value);
-                int xp = Numbers.NonAdditivePrimeIndexOf(value);
-                int c = Numbers.CompositeIndexOf(value);
-                int ac = Numbers.AdditiveCompositeIndexOf(value);
-                int xc = Numbers.NonAdditiveCompositeIndexOf(value);
-                str.Append((p == -1 ? "-" : p.ToString()) + "\t"
-                               + (ap == -1 ? "-" : ap.ToString()) + "\t"
-                               + (xp == -1 ? "-" : xp.ToString()) + "\t"
-                               + (c == -1 ? "-" : c.ToString()) + "\t"
-                               + (ac == -1 ? "-" : ac.ToString()) + "\t"
-                               + (xc == -1 ? "-" : xc.ToString())
+                int p = Numbers.PrimeIndexOf(value) + 1;
+                int ap = Numbers.AdditivePrimeIndexOf(value) + 1;
+                int xp = Numbers.NonAdditivePrimeIndexOf(value) + 1;
+                int c = Numbers.CompositeIndexOf(value) + 1;
+                int ac = Numbers.AdditiveCompositeIndexOf(value) + 1;
+                int xc = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
+                str.Append((p == 0 ? "-" : p.ToString()) + "\t"
+                        + (ap == 0 ? "-" : ap.ToString()) + "\t"
+                        + (xp == 0 ? "-" : xp.ToString()) + "\t"
+                        + (c == 0 ? "-" : c.ToString()) + "\t"
+                        + (ac == 0 ? "-" : ac.ToString()) + "\t"
+                        + (xc == 0 ? "-" : xc.ToString())
                              );
                 str.Append("\t");
 
@@ -3202,18 +3202,18 @@ public static partial class Research
                 str.Append(value.ToString() + "\t");
                 str.Append(Numbers.FactorizeToString(value) + "\t");
 
-                int p = Numbers.PrimeIndexOf(value);
-                int ap = Numbers.AdditivePrimeIndexOf(value);
-                int xp = Numbers.NonAdditivePrimeIndexOf(value);
-                int c = Numbers.CompositeIndexOf(value);
-                int ac = Numbers.AdditiveCompositeIndexOf(value);
-                int xc = Numbers.NonAdditiveCompositeIndexOf(value);
-                str.Append((p == -1 ? "-" : p.ToString()) + "\t"
-                               + (ap == -1 ? "-" : ap.ToString()) + "\t"
-                               + (xp == -1 ? "-" : xp.ToString()) + "\t"
-                               + (c == -1 ? "-" : c.ToString()) + "\t"
-                               + (ac == -1 ? "-" : ac.ToString()) + "\t"
-                               + (xc == -1 ? "-" : xc.ToString())
+                int p = Numbers.PrimeIndexOf(value) + 1;
+                int ap = Numbers.AdditivePrimeIndexOf(value) + 1;
+                int xp = Numbers.NonAdditivePrimeIndexOf(value) + 1;
+                int c = Numbers.CompositeIndexOf(value) + 1;
+                int ac = Numbers.AdditiveCompositeIndexOf(value) + 1;
+                int xc = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
+                str.Append((p == 0 ? "-" : p.ToString()) + "\t"
+                        + (ap == 0 ? "-" : ap.ToString()) + "\t"
+                        + (xp == 0 ? "-" : xp.ToString()) + "\t"
+                        + (c == 0 ? "-" : c.ToString()) + "\t"
+                        + (ac == 0 ? "-" : ac.ToString()) + "\t"
+                        + (xc == 0 ? "-" : xc.ToString())
                              );
                 str.Append("\r\n");
             }
@@ -3457,12 +3457,12 @@ public static partial class Research
             str.Append(Numbers.FactorizeToString(chapter.WordCount) + "\t");
             str.Append(Numbers.FactorizeToString(chapter.LetterCount) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number);
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number);
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number);
-            int c_index = Numbers.CompositeIndexOf(chapter.Number);
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number);
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number);
+            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
             if (Numbers.IsUnit(chapter.Number))
             {
                 str.Append("U1" + "\t");
@@ -3476,12 +3476,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count);
-            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count);
-            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count);
-            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count);
+            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
             if (Numbers.IsPrime(chapter.Verses.Count))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3491,12 +3491,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(chapter.WordCount);
-            ap_index = Numbers.AdditivePrimeIndexOf(chapter.WordCount);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.WordCount);
-            c_index = Numbers.CompositeIndexOf(chapter.WordCount);
-            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.WordCount);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.WordCount);
+            p_index = Numbers.PrimeIndexOf(chapter.WordCount) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(chapter.WordCount) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.WordCount) + 1;
+            c_index = Numbers.CompositeIndexOf(chapter.WordCount) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.WordCount) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.WordCount) + 1;
             if (Numbers.IsPrime(chapter.WordCount))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3506,12 +3506,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(chapter.LetterCount);
-            ap_index = Numbers.AdditivePrimeIndexOf(chapter.LetterCount);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.LetterCount);
-            c_index = Numbers.CompositeIndexOf(chapter.LetterCount);
-            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.LetterCount);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.LetterCount);
+            p_index = Numbers.PrimeIndexOf(chapter.LetterCount) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(chapter.LetterCount) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.LetterCount) + 1;
+            c_index = Numbers.CompositeIndexOf(chapter.LetterCount) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.LetterCount) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.LetterCount) + 1;
             if (Numbers.IsPrime(chapter.LetterCount))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3542,12 +3542,12 @@ public static partial class Research
             str.Append(sum.ToString() + "\t");
             str.Append(Numbers.FactorizeToString(sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number);
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number);
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number);
-            int c_index = Numbers.CompositeIndexOf(chapter.Number);
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number);
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number);
+            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
             if (Numbers.IsUnit(chapter.Number))
             {
                 str.Append("U1" + "\t");
@@ -3561,12 +3561,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count);
-            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count);
-            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count);
-            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count);
+            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
             if (Numbers.IsPrime(chapter.Verses.Count))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3576,12 +3576,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(sum);
-            c_index = Numbers.CompositeIndexOf(sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(sum);
+            p_index = Numbers.PrimeIndexOf(sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(sum) + 1;
+            c_index = Numbers.CompositeIndexOf(sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(sum) + 1;
             if (Numbers.IsPrime(sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3612,12 +3612,12 @@ public static partial class Research
             str.Append(sum.ToString() + "\t");
             str.Append(Numbers.FactorizeToString(sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number);
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number);
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number);
-            int c_index = Numbers.CompositeIndexOf(chapter.Number);
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number);
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number);
+            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
             if (Numbers.IsUnit(chapter.Number))
             {
                 str.Append("U1" + "\t");
@@ -3631,12 +3631,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count);
-            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count);
-            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count);
-            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count);
+            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
             if (Numbers.IsPrime(chapter.Verses.Count))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3646,12 +3646,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(sum);
-            c_index = Numbers.CompositeIndexOf(sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(sum);
+            p_index = Numbers.PrimeIndexOf(sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(sum) + 1;
+            c_index = Numbers.CompositeIndexOf(sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(sum) + 1;
             if (Numbers.IsPrime(sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3682,12 +3682,12 @@ public static partial class Research
             str.Append(sum.ToString() + "\t");
             str.Append(Numbers.FactorizeToString(sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number);
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number);
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number);
-            int c_index = Numbers.CompositeIndexOf(chapter.Number);
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number);
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number);
+            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
             if (Numbers.IsUnit(chapter.Number))
             {
                 str.Append("U1" + "\t");
@@ -3701,12 +3701,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count);
-            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count);
-            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count);
-            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count);
+            p_index = Numbers.PrimeIndexOf(chapter.Verses.Count) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Verses.Count) + 1;
+            c_index = Numbers.CompositeIndexOf(chapter.Verses.Count) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Verses.Count) + 1;
             if (Numbers.IsPrime(chapter.Verses.Count))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3716,12 +3716,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(sum);
-            c_index = Numbers.CompositeIndexOf(sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(sum);
+            p_index = Numbers.PrimeIndexOf(sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(sum) + 1;
+            c_index = Numbers.CompositeIndexOf(sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(sum) + 1;
             if (Numbers.IsPrime(sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3768,12 +3768,12 @@ public static partial class Research
             str.Append(Numbers.FactorizeToString(w_sum) + "\t");
             str.Append(Numbers.FactorizeToString(l_sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(c_sum);
-            int ap_index = Numbers.AdditivePrimeIndexOf(c_sum);
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(c_sum);
-            int c_index = Numbers.CompositeIndexOf(c_sum);
-            int ac_index = Numbers.AdditiveCompositeIndexOf(c_sum);
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(c_sum);
+            int p_index = Numbers.PrimeIndexOf(c_sum) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(c_sum) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(c_sum) + 1;
+            int c_index = Numbers.CompositeIndexOf(c_sum) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(c_sum) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(c_sum) + 1;
             if (Numbers.IsUnit(c_sum))
             {
                 str.Append("U1" + "\t");
@@ -3787,12 +3787,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(v_sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(v_sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(v_sum);
-            c_index = Numbers.CompositeIndexOf(v_sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(v_sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(v_sum);
+            p_index = Numbers.PrimeIndexOf(v_sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(v_sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(v_sum) + 1;
+            c_index = Numbers.CompositeIndexOf(v_sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(v_sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(v_sum) + 1;
             if (Numbers.IsPrime(v_sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3802,12 +3802,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(w_sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(w_sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(w_sum);
-            c_index = Numbers.CompositeIndexOf(w_sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(w_sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(w_sum);
+            p_index = Numbers.PrimeIndexOf(w_sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(w_sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(w_sum) + 1;
+            c_index = Numbers.CompositeIndexOf(w_sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(w_sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(w_sum) + 1;
             if (Numbers.IsPrime(w_sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3817,12 +3817,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(l_sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(l_sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(l_sum);
-            c_index = Numbers.CompositeIndexOf(l_sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(l_sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(l_sum);
+            p_index = Numbers.PrimeIndexOf(l_sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(l_sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(l_sum) + 1;
+            c_index = Numbers.CompositeIndexOf(l_sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(l_sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(l_sum) + 1;
             if (Numbers.IsPrime(l_sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3869,12 +3869,12 @@ public static partial class Research
             str.Append(Numbers.FactorizeToString(w_sum) + "\t");
             str.Append(Numbers.FactorizeToString(l_sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(c_sum);
-            int ap_index = Numbers.AdditivePrimeIndexOf(c_sum);
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(c_sum);
-            int c_index = Numbers.CompositeIndexOf(c_sum);
-            int ac_index = Numbers.AdditiveCompositeIndexOf(c_sum);
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(c_sum);
+            int p_index = Numbers.PrimeIndexOf(c_sum) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(c_sum) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(c_sum) + 1;
+            int c_index = Numbers.CompositeIndexOf(c_sum) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(c_sum) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(c_sum) + 1;
             if (Numbers.IsUnit(c_sum))
             {
                 str.Append("U1" + "\t");
@@ -3888,12 +3888,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(v_sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(v_sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(v_sum);
-            c_index = Numbers.CompositeIndexOf(v_sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(v_sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(v_sum);
+            p_index = Numbers.PrimeIndexOf(v_sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(v_sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(v_sum) + 1;
+            c_index = Numbers.CompositeIndexOf(v_sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(v_sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(v_sum) + 1;
             if (Numbers.IsPrime(v_sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3903,12 +3903,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(w_sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(w_sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(w_sum);
-            c_index = Numbers.CompositeIndexOf(w_sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(w_sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(w_sum);
+            p_index = Numbers.PrimeIndexOf(w_sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(w_sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(w_sum) + 1;
+            c_index = Numbers.CompositeIndexOf(w_sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(w_sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(w_sum) + 1;
             if (Numbers.IsPrime(w_sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -3918,12 +3918,12 @@ public static partial class Research
                 str.Append("C" + c_index + " " + ((ac_index > 0) ? ("AC" + ac_index) : "") + "\t" + ((xc_index > 0) ? ("XC" + xc_index) : "") + "\t");
             }
 
-            p_index = Numbers.PrimeIndexOf(l_sum);
-            ap_index = Numbers.AdditivePrimeIndexOf(l_sum);
-            xp_index = Numbers.NonAdditivePrimeIndexOf(l_sum);
-            c_index = Numbers.CompositeIndexOf(l_sum);
-            ac_index = Numbers.AdditiveCompositeIndexOf(l_sum);
-            xc_index = Numbers.NonAdditiveCompositeIndexOf(l_sum);
+            p_index = Numbers.PrimeIndexOf(l_sum) + 1;
+            ap_index = Numbers.AdditivePrimeIndexOf(l_sum) + 1;
+            xp_index = Numbers.NonAdditivePrimeIndexOf(l_sum) + 1;
+            c_index = Numbers.CompositeIndexOf(l_sum) + 1;
+            ac_index = Numbers.AdditiveCompositeIndexOf(l_sum) + 1;
+            xc_index = Numbers.NonAdditiveCompositeIndexOf(l_sum) + 1;
             if (Numbers.IsPrime(l_sum))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
@@ -4632,44 +4632,44 @@ public static partial class Research
                         client.NumerologySystem.AddToChapterCNumber = ((i & 1) != 0);
 
                         long alfatiha_value = client.CalculateValue(client.Book.Chapters[0]);
-                        int alfatiha_value_index = -1;
+                        int alfatiha_value_index = 0;
                         switch (number_type)
                         {
                             case NumberType.Prime:
                                 {
-                                    alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.AdditivePrime:
                                 {
-                                    alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.NonAdditivePrime:
                                 {
-                                    alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.Composite:
                                 {
-                                    alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.AdditiveComposite:
                                 {
-                                    alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.NonAdditiveComposite:
                                 {
-                                    alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             default:
                                 break;
                         }
 
-                        if (alfatiha_value_index != -1)
+                        if (alfatiha_value_index > 0)
                         {
                             long bismAllah_value = client.CalculateValue(client.Book.Chapters[0].Verses[0]);
 
@@ -4831,44 +4831,44 @@ public static partial class Research
                         client.NumerologySystem.AddToChapterCNumber = ((i & 1) != 0);
 
                         long alfatiha_value = client.CalculateValue(client.Book.Chapters[0]);
-                        int alfatiha_value_index = -1;
+                        int alfatiha_value_index = 0;
                         switch (number_type)
                         {
                             case NumberType.Prime:
                                 {
-                                    alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.AdditivePrime:
                                 {
-                                    alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.NonAdditivePrime:
                                 {
-                                    alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.Composite:
                                 {
-                                    alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.AdditiveComposite:
                                 {
-                                    alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             case NumberType.NonAdditiveComposite:
                                 {
-                                    alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value);
+                                    alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value) + 1;
                                 }
                                 break;
                             default:
                                 break;
                         }
 
-                        if (alfatiha_value_index != -1)
+                        if (alfatiha_value_index > 0)
                         {
                             long bismAllah_value = client.CalculateValue(client.Book.Chapters[0].Verses[0]);
 
@@ -4885,44 +4885,44 @@ public static partial class Research
 
                                 // is  Value(Book) == ValueIndex(Al-Faiha)
                                 long book_value = client.CalculateValue(client.Book);
-                                int book_value_index = -1;
+                                int book_value_index = 0;
                                 switch (good_numerology_system.NumberType)
                                 {
                                     case NumberType.Prime:
                                         {
-                                            book_value_index = Numbers.PrimeIndexOf(book_value);
+                                            book_value_index = Numbers.PrimeIndexOf(book_value) + 1;
                                         }
                                         break;
                                     case NumberType.AdditivePrime:
                                         {
-                                            book_value_index = Numbers.AdditivePrimeIndexOf(book_value);
+                                            book_value_index = Numbers.AdditivePrimeIndexOf(book_value) + 1;
                                         }
                                         break;
                                     case NumberType.NonAdditivePrime:
                                         {
-                                            book_value_index = Numbers.NonAdditivePrimeIndexOf(book_value);
+                                            book_value_index = Numbers.NonAdditivePrimeIndexOf(book_value) + 1;
                                         }
                                         break;
                                     case NumberType.Composite:
                                         {
-                                            book_value_index = Numbers.CompositeIndexOf(book_value);
+                                            book_value_index = Numbers.CompositeIndexOf(book_value) + 1;
                                         }
                                         break;
                                     case NumberType.AdditiveComposite:
                                         {
-                                            book_value_index = Numbers.AdditiveCompositeIndexOf(book_value);
+                                            book_value_index = Numbers.AdditiveCompositeIndexOf(book_value) + 1;
                                         }
                                         break;
                                     case NumberType.NonAdditiveComposite:
                                         {
-                                            book_value_index = Numbers.NonAdditiveCompositeIndexOf(book_value);
+                                            book_value_index = Numbers.NonAdditiveCompositeIndexOf(book_value) + 1;
                                         }
                                         break;
                                     default:
                                         break;
                                 }
 
-                                if (book_value_index != -1)
+                                if (book_value_index > 0)
                                 {
                                     difference = alfatiha_value - (long)book_value_index;
                                     if (Math.Abs(difference) <= target_difference)

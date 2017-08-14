@@ -172,6 +172,12 @@ public partial class MainForm : Form
         {
             RestoreLocation();
         }
+
+        DisplayDeficientNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[0];
+        DisplayPerfectNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[1];
+        DisplayAbundantNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[2];
+        DFTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[0];
+        ABTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[2];
     }
     private void MainForm_Shown(object sender, EventArgs e)
     {
@@ -611,21 +617,24 @@ public partial class MainForm : Form
                 }
                 else
                 {
+                    int nth_number_index = 0;
+                    int nth_additive_number_index = 0;
+                    int nth_non_additive_number_index = 0;
                     if (m_factorizer.IsPrime)
                     {
                         m_index_type = IndexType.Prime;
-                        int prime_index = Numbers.PrimeIndexOf(number);
-                        int additive_prime_index = Numbers.AdditivePrimeIndexOf(number);
-                        int non_additive_prime_index = Numbers.NonAdditivePrimeIndexOf(number);
-                        NthNumberTextBox.ForeColor = GetNumberTypeColor(prime_index);
-                        NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(additive_prime_index);
-                        NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(non_additive_prime_index);
-                        NthNumberTextBox.BackColor = (non_additive_prime_index == -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
+                        nth_number_index = Numbers.PrimeIndexOf(number) + 1;
+                        nth_additive_number_index = Numbers.AdditivePrimeIndexOf(number) + 1;
+                        nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(number) + 1;
+                        NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_number_index);
+                        NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_additive_number_index);
+                        NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_non_additive_number_index);
+                        NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
                         NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
                         NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
-                        NthNumberTextBox.Text = prime_index.ToString();
-                        NthAdditiveNumberTextBox.Text = additive_prime_index.ToString();
-                        NthNonAdditiveNumberTextBox.Text = non_additive_prime_index.ToString();
+                        NthNumberTextBox.Text = (nth_number_index > 0) ? nth_number_index.ToString() : "";
+                        NthAdditiveNumberTextBox.Text = (nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : "";
+                        NthNonAdditiveNumberTextBox.Text = (nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : "";
                         ToolTip.SetToolTip(NthNumberTextBox, "Prime index");
                         ToolTip.SetToolTip(NthAdditiveNumberTextBox, "Additive prime index");
                         ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive prime index");
@@ -633,18 +642,18 @@ public partial class MainForm : Form
                     else // Composite
                     {
                         m_index_type = IndexType.Composite;
-                        int composite_index = Numbers.CompositeIndexOf(number);
-                        int additive_composite_index = Numbers.AdditiveCompositeIndexOf(number);
-                        int non_additive_composite_index = Numbers.NonAdditiveCompositeIndexOf(number);
-                        NthNumberTextBox.ForeColor = GetNumberTypeColor(composite_index);
-                        NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(additive_composite_index);
-                        NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(non_additive_composite_index);
-                        NthNumberTextBox.BackColor = (non_additive_composite_index == -1) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
+                        nth_number_index = Numbers.CompositeIndexOf(number) + 1;
+                        nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(number) + 1;
+                        nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(number) + 1;
+                        NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_number_index);
+                        NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_additive_number_index);
+                        NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_non_additive_number_index);
+                        NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
                         NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
                         NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
-                        NthNumberTextBox.Text = composite_index.ToString();
-                        NthAdditiveNumberTextBox.Text = additive_composite_index.ToString();
-                        NthNonAdditiveNumberTextBox.Text = non_additive_composite_index.ToString();
+                        NthNumberTextBox.Text = (nth_number_index > 0) ? nth_number_index.ToString() : "";
+                        NthAdditiveNumberTextBox.Text = (nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : "";
+                        NthNonAdditiveNumberTextBox.Text = (nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : "";
                         ToolTip.SetToolTip(NthNumberTextBox, "Composite index");
                         ToolTip.SetToolTip(NthAdditiveNumberTextBox, "Additive composite index");
                         ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive composite index");
@@ -718,7 +727,7 @@ public partial class MainForm : Form
     private void UpdateNumberKind(long number)
     {
         m_number_kind = Numbers.GetNumberKind(number);
-        int number_kind_index = -1;
+        int number_kind_index = 0;
         switch (m_number_kind)
         {
             case NumberKind.Deficient:
@@ -741,7 +750,7 @@ public partial class MainForm : Form
                 break;
             default:
                 {
-                    number_kind_index = -1;
+                    number_kind_index = 0;
                     NumberKindIndexTextBox.BackColor = SystemColors.Control;
                 }
                 break;
@@ -751,7 +760,7 @@ public partial class MainForm : Form
         ToolTip.SetToolTip(NumberKindIndexTextBox, m_number_kind.ToString() + " number index");
         NumberKindIndexTextBox.Refresh();
     }
-    private void DisplayDeficientNumbersLable_Click(object sender, EventArgs e)
+    private void DisplayDeficientNumbersLabel_Click(object sender, EventArgs e)
     {
         if (Directory.Exists(Globals.NUMBERS_FOLDER))
         {
@@ -796,7 +805,7 @@ public partial class MainForm : Form
             }
         }
     }
-    private void DisplayPerfectNumbersLable_Click(object sender, EventArgs e)
+    private void DisplayPerfectNumbersLabel_Click(object sender, EventArgs e)
     {
         if (Directory.Exists(Globals.NUMBERS_FOLDER))
         {
@@ -821,7 +830,7 @@ public partial class MainForm : Form
             }
         }
     }
-    private void DisplayAbundantNumbersLable_Click(object sender, EventArgs e)
+    private void DisplayAbundantNumbersLabel_Click(object sender, EventArgs e)
     {
         if (Directory.Exists(Globals.NUMBERS_FOLDER))
         {
@@ -905,28 +914,28 @@ public partial class MainForm : Form
 
             str.AppendLine();
             str.AppendLine("Prime Factors\t=\t" + Numbers.FactorizeToString(number));
-            int nth_number_index = -1;
-            int nth_additive_number_index = -1;
-            int nth_non_additive_number_index = -1;
+            int nth_number_index = 0;
+            int nth_additive_number_index = 0;
+            int nth_non_additive_number_index = 0;
             if (Numbers.IsPrime(number))
             {
                 m_index_type = IndexType.Prime;
-                nth_number_index = Numbers.PrimeIndexOf(number);
-                nth_additive_number_index = Numbers.AdditivePrimeIndexOf(number);
-                nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(number);
-                str.AppendLine("P  Index\t=\t" + nth_number_index);
-                str.AppendLine("AP Index\t=\t" + nth_additive_number_index);
-                str.AppendLine("XP Index\t=\t" + nth_non_additive_number_index);
+                nth_number_index = Numbers.PrimeIndexOf(number) + 1;
+                nth_additive_number_index = Numbers.AdditivePrimeIndexOf(number) + 1;
+                nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(number) + 1;
+                str.AppendLine("P  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
+                str.AppendLine("AP Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
+                str.AppendLine("XP Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
             }
             else // any other index type will be treated as IndexNumberType.Composite
             {
                 m_index_type = IndexType.Composite;
-                nth_number_index = Numbers.CompositeIndexOf(number);
-                nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(number);
-                nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(number);
-                str.AppendLine("C  Index\t=\t" + nth_number_index);
-                str.AppendLine("AC Index\t=\t" + nth_additive_number_index);
-                str.AppendLine("XC Index\t=\t" + nth_non_additive_number_index);
+                nth_number_index = Numbers.CompositeIndexOf(number) + 1;
+                nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(number) + 1;
+                nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(number) + 1;
+                str.AppendLine("C  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
+                str.AppendLine("AC Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
+                str.AppendLine("XC Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
             }
 
             str.AppendLine();
@@ -939,7 +948,7 @@ public partial class MainForm : Form
             str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
 
             m_number_kind = Numbers.GetNumberKind(number);
-            int number_kind_index = -1;
+            int number_kind_index = 0;
             switch (m_number_kind)
             {
                 case NumberKind.Deficient:
@@ -959,7 +968,7 @@ public partial class MainForm : Form
                     break;
                 default:
                     {
-                        number_kind_index = -1;
+                        number_kind_index = 0;
                     }
                     break;
             }
@@ -1015,12 +1024,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
@@ -1040,12 +1049,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
@@ -1065,12 +1074,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
@@ -1090,12 +1099,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
@@ -1114,12 +1123,12 @@ public partial class MainForm : Form
         int length = 0;
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 length++;
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 length++;
             }
@@ -1139,12 +1148,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
@@ -1164,12 +1173,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
@@ -1189,12 +1198,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("0");
             }
@@ -1214,12 +1223,12 @@ public partial class MainForm : Form
         StringBuilder str = new StringBuilder();
         while (number > 1L)
         {
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "1");
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "0");
             }
@@ -1244,12 +1253,12 @@ public partial class MainForm : Form
                 str.Append("-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("C" + index.ToString());
             }
@@ -1274,12 +1283,12 @@ public partial class MainForm : Form
                 str.Insert(0, "-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "C" + index.ToString());
             }
@@ -1304,12 +1313,12 @@ public partial class MainForm : Form
                 str.Append("-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Append("P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Append("C" + index.ToString());
             }
@@ -1334,12 +1343,12 @@ public partial class MainForm : Form
                 str.Insert(0, "-");
             }
 
-            int index = -1;
-            if ((index = Numbers.PrimeIndexOf(number)) > -1)
+            int index = 0;
+            if ((index = (Numbers.PrimeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "P" + index.ToString());
             }
-            else if ((index = Numbers.CompositeIndexOf(number)) > -1)
+            else if ((index = (Numbers.CompositeIndexOf(number) + 1)) > 0)
             {
                 str.Insert(0, "C" + index.ToString());
             }
@@ -1538,7 +1547,7 @@ public partial class MainForm : Form
         {
             try
             {
-                long number = -1L;
+                long number = 0L;
                 int nth_index = int.Parse(NthNumberTextBox.Text) - 1;
                 NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
@@ -1546,7 +1555,7 @@ public partial class MainForm : Form
                     number = Numbers.Primes[nth_index];
                     FactorizeValue(number);
                 }
-                else // any other index type will be treated as IndexNumberType.Composite
+                else // any other index type will be treated as Composite
                 {
                     number = Numbers.Composites[nth_index];
                     FactorizeValue(number);
@@ -1564,7 +1573,7 @@ public partial class MainForm : Form
         {
             try
             {
-                long number = -1L;
+                long number = 0L;
                 int nth_index = int.Parse(NthAdditiveNumberTextBox.Text) - 1;
                 NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
@@ -1572,7 +1581,7 @@ public partial class MainForm : Form
                     number = Numbers.AdditivePrimes[nth_index];
                     FactorizeValue(number);
                 }
-                else // any other index type will be treated as IndexNumberType.Composite
+                else // any other index type will be treated as Composite
                 {
                     number = Numbers.AdditiveComposites[nth_index];
                     FactorizeValue(number);
@@ -1590,7 +1599,7 @@ public partial class MainForm : Form
         {
             try
             {
-                long number = -1L;
+                long number = 0L;
                 int nth_index = int.Parse(NthNonAdditiveNumberTextBox.Text) - 1;
                 NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
@@ -1598,7 +1607,7 @@ public partial class MainForm : Form
                     number = Numbers.NonAdditivePrimes[nth_index];
                     FactorizeValue(number);
                 }
-                else // any other index type will be treated as IndexNumberType.Composite
+                else // any other index type will be treated as Composite
                 {
                     number = Numbers.NonAdditiveComposites[nth_index];
                     FactorizeValue(number);
@@ -1618,7 +1627,7 @@ public partial class MainForm : Form
         {
             try
             {
-                long number = -1L;
+                long number = 0L;
                 int nth_index = int.Parse(NumberKindIndexTextBox.Text) - 1;
                 switch (m_number_kind)
                 {
@@ -1701,7 +1710,7 @@ public partial class MainForm : Form
     }
     private void PCIndexChainL2RTextBox_TextChanged(object sender, EventArgs e)
     {
-        long number = 0;
+        long number = 0L;
         if (long.TryParse(ValueTextBox.Text, out number))
         {
             this.ToolTip.SetToolTip(this.PCIndexChainL2RTextBox, "Left-to-right prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainL2R(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryPCIndexChainL2R(number) + "  =  " + DecimalPCIndexChainL2R(number));
@@ -1709,7 +1718,7 @@ public partial class MainForm : Form
     }
     private void PCIndexChainR2LTextBox_TextChanged(object sender, EventArgs e)
     {
-        long number = 0;
+        long number = 0L;
         if (long.TryParse(ValueTextBox.Text, out number))
         {
             this.ToolTip.SetToolTip(this.PCIndexChainR2LTextBox, "Right-to-left prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainR2L(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryPCIndexChainR2L(number) + "  =  " + DecimalPCIndexChainR2L(number));
@@ -1717,7 +1726,7 @@ public partial class MainForm : Form
     }
     private void CPIndexChainL2RTextBox_TextChanged(object sender, EventArgs e)
     {
-        long number = 0;
+        long number = 0L;
         if (long.TryParse(ValueTextBox.Text, out number))
         {
             this.ToolTip.SetToolTip(this.CPIndexChainL2RTextBox, "Left-to-right composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainL2R(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryCPIndexChainL2R(number) + "  =  " + DecimalCPIndexChainL2R(number));
@@ -1725,7 +1734,7 @@ public partial class MainForm : Form
     }
     private void CPIndexChainR2LTextBox_TextChanged(object sender, EventArgs e)
     {
-        long number = 0;
+        long number = 0L;
         if (long.TryParse(ValueTextBox.Text, out number))
         {
             this.ToolTip.SetToolTip(this.CPIndexChainR2LTextBox, "Right-to-left composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainR2L(number) + "\r\n" + "Chain length = " + IndexChainLength(number) + "\t\t" + BinaryCPIndexChainR2L(number) + "  =  " + DecimalCPIndexChainR2L(number));
@@ -1816,10 +1825,6 @@ public partial class MainForm : Form
                 }
             }
         }
-    }
-    private void Control_MouseHover(object sender, EventArgs e)
-    {
-
     }
 
     private void EnableEntryControls()
@@ -2321,9 +2326,6 @@ public partial class MainForm : Form
 
                     DFTextBox.ForeColor = Numbers.GetNumberTypeColor(df);
                     ABTextBox.ForeColor = Numbers.GetNumberTypeColor(ab);
-
-                    DFTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[0];
-                    ABTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[2];
                 }
                 catch
                 {
@@ -2403,7 +2405,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.PrimeIndexOf(value);
+                int index = Numbers.PrimeIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
@@ -2423,7 +2425,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.AdditivePrimeIndexOf(value);
+                int index = Numbers.AdditivePrimeIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
@@ -2443,7 +2445,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.NonAdditivePrimeIndexOf(value);
+                int index = Numbers.NonAdditivePrimeIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
@@ -2463,7 +2465,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.CompositeIndexOf(value);
+                int index = Numbers.CompositeIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
@@ -2483,7 +2485,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.AdditiveCompositeIndexOf(value);
+                int index = Numbers.AdditiveCompositeIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
@@ -2503,7 +2505,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.NonAdditiveCompositeIndexOf(value);
+                int index = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
@@ -2523,7 +2525,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.DeficientIndexOf(value);
+                int index = Numbers.DeficientIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
@@ -2543,7 +2545,7 @@ public partial class MainForm : Form
             long value = 0L;
             if (long.TryParse((sender as TextBox).Text, out value))
             {
-                int index = Numbers.AbundantIndexOf(value);
+                int index = Numbers.AbundantIndexOf(value) + 1;
                 IndexTextBox.Text = index.ToString();
             }
         }
