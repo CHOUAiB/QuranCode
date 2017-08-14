@@ -573,7 +573,7 @@
             this.PLabel.BackColor = System.Drawing.SystemColors.Control;
             this.PLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.PLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.PLabel.Location = new System.Drawing.Point(6, 49);
+            this.PLabel.Location = new System.Drawing.Point(6, 13);
             this.PLabel.Name = "PLabel";
             this.PLabel.Size = new System.Drawing.Size(24, 19);
             this.PLabel.TabIndex = 15;
@@ -586,7 +586,7 @@
             this.APLabel.BackColor = System.Drawing.SystemColors.Control;
             this.APLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.APLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.APLabel.Location = new System.Drawing.Point(6, 75);
+            this.APLabel.Location = new System.Drawing.Point(6, 40);
             this.APLabel.Name = "APLabel";
             this.APLabel.Size = new System.Drawing.Size(24, 19);
             this.APLabel.TabIndex = 17;
@@ -599,7 +599,7 @@
             this.XPLabel.BackColor = System.Drawing.SystemColors.Control;
             this.XPLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.XPLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.XPLabel.Location = new System.Drawing.Point(6, 102);
+            this.XPLabel.Location = new System.Drawing.Point(6, 66);
             this.XPLabel.Name = "XPLabel";
             this.XPLabel.Size = new System.Drawing.Size(24, 19);
             this.XPLabel.TabIndex = 19;
@@ -612,7 +612,7 @@
             this.XCLabel.BackColor = System.Drawing.SystemColors.Control;
             this.XCLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.XCLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.XCLabel.Location = new System.Drawing.Point(199, 103);
+            this.XCLabel.Location = new System.Drawing.Point(199, 66);
             this.XCLabel.Name = "XCLabel";
             this.XCLabel.Size = new System.Drawing.Size(24, 19);
             this.XCLabel.TabIndex = 25;
@@ -625,7 +625,7 @@
             this.ACLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ACLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.ACLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ACLabel.Location = new System.Drawing.Point(199, 76);
+            this.ACLabel.Location = new System.Drawing.Point(199, 40);
             this.ACLabel.Name = "ACLabel";
             this.ACLabel.Size = new System.Drawing.Size(24, 19);
             this.ACLabel.TabIndex = 23;
@@ -638,7 +638,7 @@
             this.CLabel.BackColor = System.Drawing.SystemColors.Control;
             this.CLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.CLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CLabel.Location = new System.Drawing.Point(206, 49);
+            this.CLabel.Location = new System.Drawing.Point(206, 13);
             this.CLabel.Name = "CLabel";
             this.CLabel.Size = new System.Drawing.Size(11, 19);
             this.CLabel.TabIndex = 21;
@@ -651,12 +651,12 @@
             this.ABLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ABLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.ABLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ABLabel.Location = new System.Drawing.Point(6, 134);
+            this.ABLabel.Location = new System.Drawing.Point(199, 98);
             this.ABLabel.Name = "ABLabel";
             this.ABLabel.Size = new System.Drawing.Size(24, 19);
             this.ABLabel.TabIndex = 31;
             this.ABLabel.Text = "AB";
-            this.ABLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ABLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.ABLabel, "Abundant Number");
             // 
             // DFLabel
@@ -664,12 +664,12 @@
             this.DFLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DFLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.DFLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DFLabel.Location = new System.Drawing.Point(199, 135);
+            this.DFLabel.Location = new System.Drawing.Point(6, 98);
             this.DFLabel.Name = "DFLabel";
             this.DFLabel.Size = new System.Drawing.Size(24, 19);
             this.DFLabel.TabIndex = 30;
             this.DFLabel.Text = "DF";
-            this.DFLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DFLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ToolTip.SetToolTip(this.DFLabel, "Deficient Number");
             // 
             // aTriangleLabel
@@ -1131,7 +1131,7 @@
             this.NthLabel.BackColor = System.Drawing.SystemColors.Control;
             this.NthLabel.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.NthLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.NthLabel.Location = new System.Drawing.Point(162, 8);
+            this.NthLabel.Location = new System.Drawing.Point(162, 131);
             this.NthLabel.Name = "NthLabel";
             this.NthLabel.Size = new System.Drawing.Size(24, 19);
             this.NthLabel.TabIndex = 26;
@@ -1143,7 +1143,7 @@
             this.IndexLabel.BackColor = System.Drawing.SystemColors.Control;
             this.IndexLabel.Font = new System.Drawing.Font("Tahoma", 9F);
             this.IndexLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.IndexLabel.Location = new System.Drawing.Point(23, 12);
+            this.IndexLabel.Location = new System.Drawing.Point(23, 135);
             this.IndexLabel.Name = "IndexLabel";
             this.IndexLabel.Size = new System.Drawing.Size(53, 19);
             this.IndexLabel.TabIndex = 27;
@@ -1154,7 +1154,7 @@
             // 
             this.IndexTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.IndexTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IndexTextBox.Location = new System.Drawing.Point(71, 9);
+            this.IndexTextBox.Location = new System.Drawing.Point(71, 132);
             this.IndexTextBox.MaxLength = 7;
             this.IndexTextBox.Name = "IndexTextBox";
             this.IndexTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1482,102 +1482,104 @@
             // 
             this.ABTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ABTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ABTextBox.Location = new System.Drawing.Point(31, 132);
+            this.ABTextBox.Location = new System.Drawing.Point(114, 95);
             this.ABTextBox.Name = "ABTextBox";
-            this.ABTextBox.ReadOnly = true;
             this.ABTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ABTextBox.Size = new System.Drawing.Size(82, 26);
-            this.ABTextBox.TabIndex = 15;
+            this.ABTextBox.TabIndex = 16;
             this.ABTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ABTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ABTextBox_KeyDown);
+            this.ABTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // DFTextBox
             // 
             this.DFTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
             this.DFTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DFTextBox.Location = new System.Drawing.Point(114, 132);
+            this.DFTextBox.Location = new System.Drawing.Point(31, 95);
             this.DFTextBox.Name = "DFTextBox";
-            this.DFTextBox.ReadOnly = true;
             this.DFTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.DFTextBox.Size = new System.Drawing.Size(82, 26);
-            this.DFTextBox.TabIndex = 16;
+            this.DFTextBox.TabIndex = 15;
             this.DFTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DFTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DFTextBox_KeyDown);
+            this.DFTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // XCTextBox
             // 
             this.XCTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.XCTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.XCTextBox.Location = new System.Drawing.Point(114, 99);
+            this.XCTextBox.Location = new System.Drawing.Point(114, 63);
             this.XCTextBox.Name = "XCTextBox";
-            this.XCTextBox.ReadOnly = true;
             this.XCTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.XCTextBox.Size = new System.Drawing.Size(82, 26);
             this.XCTextBox.TabIndex = 14;
             this.XCTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.XCTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XCTextBox_KeyDown);
             this.XCTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // ACTextBox
             // 
             this.ACTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.ACTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ACTextBox.Location = new System.Drawing.Point(114, 72);
+            this.ACTextBox.Location = new System.Drawing.Point(114, 36);
             this.ACTextBox.Name = "ACTextBox";
-            this.ACTextBox.ReadOnly = true;
             this.ACTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ACTextBox.Size = new System.Drawing.Size(82, 26);
             this.ACTextBox.TabIndex = 13;
             this.ACTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ACTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ACTextBox_KeyDown);
             this.ACTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // CTextBox
             // 
             this.CTextBox.BackColor = System.Drawing.Color.SeaShell;
             this.CTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CTextBox.Location = new System.Drawing.Point(114, 45);
+            this.CTextBox.Location = new System.Drawing.Point(114, 9);
             this.CTextBox.Name = "CTextBox";
-            this.CTextBox.ReadOnly = true;
             this.CTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.CTextBox.Size = new System.Drawing.Size(82, 26);
             this.CTextBox.TabIndex = 12;
             this.CTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.CTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CTextBox_KeyDown);
             this.CTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // XPTextBox
             // 
             this.XPTextBox.BackColor = System.Drawing.Color.Lavender;
             this.XPTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.XPTextBox.Location = new System.Drawing.Point(31, 99);
+            this.XPTextBox.Location = new System.Drawing.Point(31, 63);
             this.XPTextBox.Name = "XPTextBox";
-            this.XPTextBox.ReadOnly = true;
             this.XPTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.XPTextBox.Size = new System.Drawing.Size(82, 26);
             this.XPTextBox.TabIndex = 11;
             this.XPTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.XPTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.XPTextBox_KeyDown);
             this.XPTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // APTextBox
             // 
             this.APTextBox.BackColor = System.Drawing.Color.Lavender;
             this.APTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.APTextBox.Location = new System.Drawing.Point(31, 72);
+            this.APTextBox.Location = new System.Drawing.Point(31, 36);
             this.APTextBox.Name = "APTextBox";
-            this.APTextBox.ReadOnly = true;
             this.APTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.APTextBox.Size = new System.Drawing.Size(82, 26);
             this.APTextBox.TabIndex = 10;
             this.APTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.APTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.APTextBox_KeyDown);
             this.APTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // PTextBox
             // 
             this.PTextBox.BackColor = System.Drawing.Color.Lavender;
             this.PTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PTextBox.Location = new System.Drawing.Point(31, 45);
+            this.PTextBox.Location = new System.Drawing.Point(31, 9);
             this.PTextBox.Name = "PTextBox";
-            this.PTextBox.ReadOnly = true;
             this.PTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.PTextBox.Size = new System.Drawing.Size(82, 26);
             this.PTextBox.TabIndex = 9;
             this.PTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PTextBox_KeyDown);
             this.PTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
             // MainTabControl

@@ -19297,7 +19297,7 @@ public partial class MainForm : Form, ISubscriber
     }
     ///////////////////////////////////////////////////////////////////////////////
     #endregion
-    #region WordFrequency/Autocomplete
+    #region Autocomplete/WordFrequency
     ///////////////////////////////////////////////////////////////////////////////
     private bool m_auto_complete_mode = false;
     private bool m_word_double_click = false;

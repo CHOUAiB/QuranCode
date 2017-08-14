@@ -2313,22 +2313,22 @@ public partial class MainForm : Form
                 this.Cursor = Cursors.WaitCursor;
                 try
                 {
-                    long ab = Numbers.Abundants[index];
                     long df = Numbers.Deficients[index];
+                    long ab = Numbers.Abundants[index];
 
-                    ABTextBox.Text = ab.ToString();
                     DFTextBox.Text = df.ToString();
+                    ABTextBox.Text = ab.ToString();
 
-                    ABTextBox.ForeColor = Numbers.GetNumberTypeColor(ab);
                     DFTextBox.ForeColor = Numbers.GetNumberTypeColor(df);
+                    ABTextBox.ForeColor = Numbers.GetNumberTypeColor(ab);
 
-                    ABTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[2];
                     DFTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[0];
+                    ABTextBox.BackColor = Numbers.NUMBER_KIND_COLORS[2];
                 }
                 catch
                 {
-                    ABTextBox.Text = "";
                     DFTextBox.Text = "";
+                    ABTextBox.Text = "";
                 }
                 finally
                 {
@@ -2343,8 +2343,8 @@ public partial class MainForm : Form
                 CTextBox.Text = "";
                 ACTextBox.Text = "";
                 XCTextBox.Text = "";
-                ABTextBox.Text = "";
                 DFTextBox.Text = "";
+                ABTextBox.Text = "";
             }
         }
         else
@@ -2355,8 +2355,8 @@ public partial class MainForm : Form
             CTextBox.Text = "";
             ACTextBox.Text = "";
             XCTextBox.Text = "";
-            ABTextBox.Text = "";
             DFTextBox.Text = "";
+            ABTextBox.Text = "";
         }
     }
     private void IndexTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -2386,6 +2386,166 @@ public partial class MainForm : Form
         {
             if (index > 0) index--;
             IndexTextBox.Text = index.ToString();
+        }
+    }
+    private void PTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.PrimeIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
+        }
+    }
+    private void APTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.AdditivePrimeIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
+        }
+    }
+    private void XPTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.NonAdditivePrimeIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
+        }
+    }
+    private void CTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.CompositeIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
+        }
+    }
+    private void ACTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.AdditiveCompositeIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
+        }
+    }
+    private void XCTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.NonAdditiveCompositeIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
+        }
+    }
+    private void DFTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.DeficientIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
+        }
+    }
+    private void ABTextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Up)
+        {
+            IncrementIndex();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementIndex();
+        }
+        else if (e.KeyCode == Keys.Enter)
+        {
+            long value = 0L;
+            if (long.TryParse((sender as TextBox).Text, out value))
+            {
+                int index = Numbers.AbundantIndexOf(value);
+                IndexTextBox.Text = index.ToString();
+            }
         }
     }
 

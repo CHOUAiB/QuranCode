@@ -4014,6 +4014,15 @@ public class Server : IPublisher
     private static string BuildPattern(string text, TextLocationInVerse text_location_in_verse, TextLocationInWord text_location_in_word, TextWordness text_wordness)
     {
         if (String.IsNullOrEmpty(text)) return text;
+        if (Constants.INDIAN_DIGITS.Contains(text[0])) return text;
+        if (Constants.ARABIC_DIGITS.Contains(text[0])) return text;
+        if (text == Constants.OPEN_BRACKET) return text;
+        if (text == Constants.CLOSE_BRACKET) return text;
+        if (Constants.DIACRITICS.Contains(text[0])) return text;
+        if (Constants.QURANMARKS.Contains(text[0])) return text;
+        if (Constants.STOPMARKS.Contains(text[0])) return text;
+        if (Constants.SYMBOLS.Contains(text[0])) return text;
+
         text = Regex.Replace(text, @"\s+", " "); // remove double space or higher if any
 
         /*
