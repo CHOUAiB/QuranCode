@@ -146,9 +146,9 @@ public static class Numbers
 
     public static Color[] NUMBER_KIND_COLORS =
     { 
-        /* NumberKind.Deficient */          Color.FromArgb(255, 240, 240),
-        /* NumberKind.Perfect */            Color.FromArgb(255, 128, 128),
-        /* NumberKind.Abundant */           Color.FromArgb(255, 192, 192)
+        /* NumberKind.Deficient */          Color.FromArgb(240, 204, 240),
+        /* NumberKind.Perfect */            Color.FromArgb(240, 128, 240),
+        /* NumberKind.Abundant */           Color.FromArgb(240, 192, 240)
     };
     public static Color GetNumberTypeColor(long number)
     {
@@ -196,7 +196,7 @@ public static class Numbers
         }
     }
 
-    public static int s_max_number_limit = int.MaxValue / ((Globals.EDITION == Edition.Ultimate) ? 16 : 1024);
+    public static int MAX_NUMBER = int.MaxValue / ((Globals.EDITION == Edition.Ultimate) ? 16 : 1024);
 
     // pi = circumference / diameter ~= 355/113
     public const double PI = 3.141592653589793238462643383279D;
@@ -1300,7 +1300,7 @@ public static class Numbers
         {
             if (s_primes == null)
             {
-                GeneratePrimes(s_max_number_limit);
+                GeneratePrimes(MAX_NUMBER);
             }
             return s_primes;
         }
@@ -1311,7 +1311,7 @@ public static class Numbers
         {
             if (s_additive_primes == null)
             {
-                GenerateAdditivePrimes(s_max_number_limit);
+                GenerateAdditivePrimes(MAX_NUMBER);
             }
             return s_additive_primes;
         }
@@ -1322,7 +1322,7 @@ public static class Numbers
         {
             if (s_non_additive_primes == null)
             {
-                GenerateNonAdditivePrimes(s_max_number_limit);
+                GenerateNonAdditivePrimes(MAX_NUMBER);
             }
             return s_non_additive_primes;
         }
@@ -1335,7 +1335,7 @@ public static class Numbers
         {
             if (s_primes == null)
             {
-                GeneratePrimes(s_max_number_limit);
+                GeneratePrimes(MAX_NUMBER);
             }
             return BinarySearch(s_primes, number);
 
@@ -1359,7 +1359,7 @@ public static class Numbers
         {
             if (s_additive_primes == null)
             {
-                GenerateAdditivePrimes(s_max_number_limit);
+                GenerateAdditivePrimes(MAX_NUMBER);
             }
             return BinarySearch(s_additive_primes, number);
 
@@ -1383,7 +1383,7 @@ public static class Numbers
         {
             if (s_non_additive_primes == null)
             {
-                GenerateNonAdditivePrimes(s_max_number_limit);
+                GenerateNonAdditivePrimes(MAX_NUMBER);
             }
             return BinarySearch(s_non_additive_primes, number);
 
@@ -1650,7 +1650,7 @@ public static class Numbers
         {
             if (s_composites == null)
             {
-                GenerateComposites(s_max_number_limit);
+                GenerateComposites(MAX_NUMBER);
             }
             return s_composites;
         }
@@ -1661,7 +1661,7 @@ public static class Numbers
         {
             if (s_additive_composites == null)
             {
-                GenerateAdditiveComposites(s_max_number_limit);
+                GenerateAdditiveComposites(MAX_NUMBER);
             }
             return s_additive_composites;
         }
@@ -1672,7 +1672,7 @@ public static class Numbers
         {
             if (s_non_additive_composites == null)
             {
-                GenerateNonAdditiveComposites(s_max_number_limit);
+                GenerateNonAdditiveComposites(MAX_NUMBER);
             }
             return s_non_additive_composites;
         }
@@ -1683,7 +1683,7 @@ public static class Numbers
 
         if (IsComposite(number))
         {
-            int max = s_max_number_limit;
+            int max = MAX_NUMBER;
             if (s_composites == null)
             {
                 GenerateComposites(max);
@@ -1707,7 +1707,7 @@ public static class Numbers
 
         if (IsAdditiveComposite(number))
         {
-            int max = s_max_number_limit;
+            int max = MAX_NUMBER;
             if (s_additive_composites == null)
             {
                 GenerateAdditiveComposites(max);
@@ -1731,7 +1731,7 @@ public static class Numbers
 
         if (IsNonAdditiveComposite(number))
         {
-            int max = s_max_number_limit;
+            int max = MAX_NUMBER;
             if (s_non_additive_composites == null)
             {
                 GenerateNonAdditiveComposites(max);
@@ -3348,7 +3348,7 @@ public static class Numbers
         }
     }
 
-    private static int s_deficients_limit = s_max_number_limit;
+    private static int s_deficients_limit = MAX_NUMBER;
     private static List<long> s_deficients;
     public static List<long> Deficients
     {
@@ -3411,7 +3411,7 @@ public static class Numbers
         return Perfects.Contains(number);
     }
 
-    private static int s_abundants_limit = s_max_number_limit;
+    private static int s_abundants_limit = MAX_NUMBER;
     private static List<long> s_abundants;
     public static List<long> Abundants
     {

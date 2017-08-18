@@ -13,6 +13,8 @@ XCOPY /E /EXCLUDE:exclude.txt PrimeCalculator\*.* NET2\PrimeCalculator\
 XCOPY /E /EXCLUDE:exclude.txt QuranLab\*.* NET2\QuranLab\
 XCOPY /E /EXCLUDE:exclude.txt InitialLetters\*.* NET2\InitialLetters\
 XCOPY /E /EXCLUDE:exclude.txt Composites\*.* NET2\Composites\
+XCOPY /E /EXCLUDE:exclude.txt Numbers\*.* NET2\Numbers\
+
 DEL exclude.txt
 Tools\Replace\bin\Release\Replace.exe NET2 *.Designer.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)
 CALL Version.bat

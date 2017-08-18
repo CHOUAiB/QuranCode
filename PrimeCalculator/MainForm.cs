@@ -2197,27 +2197,27 @@ public partial class MainForm : Form
             {
                 case Edition.Standard:
                     {
-                        Numbers.s_max_number_limit = int.MaxValue / 512;
+                        Numbers.MAX_NUMBER = int.MaxValue / 512;
                     }
                     break;
                 case Edition.Grammar:
                     {
-                        Numbers.s_max_number_limit = int.MaxValue / 128;
+                        Numbers.MAX_NUMBER = int.MaxValue / 128;
                     }
                     break;
                 case Edition.Research:
                     {
-                        Numbers.s_max_number_limit = int.MaxValue / 64;
+                        Numbers.MAX_NUMBER = int.MaxValue / 64;
                     }
                     break;
                 case Edition.Ultimate:
                     {
-                        Numbers.s_max_number_limit = int.MaxValue / 32;
+                        Numbers.MAX_NUMBER = int.MaxValue / 32;
                     }
                     break;
                 default:
                     {
-                        Numbers.s_max_number_limit = int.MaxValue / 512;
+                        Numbers.MAX_NUMBER = int.MaxValue / 512;
                     }
                     break;
             }

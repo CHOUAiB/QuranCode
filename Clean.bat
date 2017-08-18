@@ -39,5 +39,6 @@ rd /S /Q PrimeCalculator\obj
 rd /S /Q QuranLab\obj
 rd /S /Q InitialLetters\obj
 rd /S /Q Composites\obj
+rd /S /Q Numbers\obj
 
 :END
