@@ -243,7 +243,7 @@ public static class DataAccess
                                                     // add bismAllah translation to the first verse of each chapter except chapters 1 and 9
                                                     foreach (Chapter chapter in book.Chapters)
                                                     {
-                                                        if ((chapter.CompilationOrder != 1) && (chapter.CompilationOrder != 9))
+                                                        if ((chapter.Number != 1) && (chapter.Number != 9))
                                                         {
                                                             if ((translation != "ar.emlaaei") && (translation != "en.transliteration") && (translation != "en.wordbyword"))
                                                             {
@@ -363,7 +363,7 @@ public static class DataAccess
                                         {
                                             if (verse.NumberInChapter == 1)
                                             {
-                                                if ((verse.Chapter.CompilationOrder != 1) && (verse.Chapter.CompilationOrder != 9))
+                                                if ((verse.Chapter.Number != 1) && (verse.Chapter.Number != 9))
                                                 {
                                                     i += 4;
                                                 }
@@ -424,7 +424,7 @@ public static class DataAccess
                                     {
                                         if (verse.NumberInChapter == 1)
                                         {
-                                            if ((verse.Chapter.CompilationOrder != 1) && (verse.Chapter.CompilationOrder != 9))
+                                            if ((verse.Chapter.Number != 1) && (verse.Chapter.Number != 9))
                                             {
                                                 reader.ReadLine();
                                                 reader.ReadLine();

@@ -42,7 +42,7 @@ namespace Model
             {
                 if (chapter != null)
                 {
-                    return (this.chapter.Number.ToString() + ":" + NumberInChapter.ToString());
+                    return (this.chapter.SortedNumber.ToString() + ":" + NumberInChapter.ToString());
                 }
                 return "0:0";
             }
@@ -53,7 +53,7 @@ namespace Model
             {
                 if (chapter != null)
                 {
-                    return (this.chapter.Number.ToString("000") + ":" + NumberInChapter.ToString("000"));
+                    return (this.chapter.SortedNumber.ToString("000") + ":" + NumberInChapter.ToString("000"));
                 }
                 return "000:000";
             }
@@ -64,7 +64,7 @@ namespace Model
             {
                 if (chapter != null)
                 {
-                    return (this.chapter.Number.ToArabic() + "_" + NumberInChapter.ToArabic());
+                    return (this.chapter.SortedNumber.ToArabic() + "_" + NumberInChapter.ToArabic());
                 }
                 return "٠_٠";
             }

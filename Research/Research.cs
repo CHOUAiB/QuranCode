@@ -206,7 +206,7 @@ public static partial class Research
                                     count + "\t" +
                                     word.Number + "\t" +
                                     word.NumberInChapter + "\t" +
-                                    word.Verse.Chapter.Number + "\t" +
+                                    word.Verse.Chapter.SortedNumber + "\t" +
                                     word.Verse.NumberInChapter + "\t" +
                                     word.NumberInVerse + "\t" +
                                     word.Text + "\t" +
@@ -278,7 +278,7 @@ public static partial class Research
                                     count + "\t" +
                                     word.Number + "\t" +
                                     word.NumberInChapter + "\t" +
-                                    word.Verse.Chapter.Number + "\t" +
+                                    word.Verse.Chapter.SortedNumber + "\t" +
                                     word.Verse.NumberInChapter + "\t" +
                                     word.NumberInVerse + "\t" +
                                     word.Text + "\t" +
@@ -338,7 +338,7 @@ public static partial class Research
                             count + "\t" +
                             words[i].Number + "\t" +
                             words[i].NumberInChapter + "\t" +
-                            words[i].Verse.Chapter.Number + "\t" +
+                            words[i].Verse.Chapter.SortedNumber + "\t" +
                             words[i].Verse.NumberInChapter + "\t" +
                             words[i].NumberInVerse + "\t" +
                             words[i].Text + "\t" +
@@ -351,7 +351,7 @@ public static partial class Research
                             count + "\t" +
                             words[i + 1].Number + "\t" +
                             words[i + 1].NumberInChapter + "\t" +
-                            words[i + 1].Verse.Chapter.Number + "\t" +
+                            words[i + 1].Verse.Chapter.SortedNumber + "\t" +
                             words[i + 1].Verse.NumberInChapter + "\t" +
                             words[i + 1].NumberInVerse + "\t" +
                             words[i + 1].Text + "\t" +
@@ -399,7 +399,7 @@ public static partial class Research
                                 count + "\t" +
                                 word.Number + "\t" +
                                 word.NumberInChapter + "\t" +
-                                word.Verse.Chapter.Number + "\t" +
+                                word.Verse.Chapter.SortedNumber + "\t" +
                                 word.Verse.NumberInChapter + "\t" +
                                 word.NumberInVerse + "\t" +
                                 word.Text + "\t" +
@@ -683,14 +683,14 @@ public static partial class Research
                                 }
 
                                 // 36:52 has MustPause then ShouldStop
-                                if (word.Verse.Chapter.CompilationOrder == 36)
+                                if (word.Verse.Chapter.Number == 36)
                                 {
                                     if (word.Verse.NumberInChapter == 52)
                                     {
                                         count++;
                                         str.AppendLine(
                                             count + "\t" +
-                                            word.Verse.Chapter.Number + "\t" +
+                                            word.Verse.Chapter.SortedNumber + "\t" +
                                             word.Verse.NumberInChapter + "\t" +
                                             word.NumberInVerse + "\t" +
                                             StopmarkHelper.GetStopmarkText(Stopmark.MustPause)
@@ -701,7 +701,7 @@ public static partial class Research
                                 count++;
                                 str.AppendLine(
                                     count + "\t" +
-                                    word.Verse.Chapter.Number + "\t" +
+                                    word.Verse.Chapter.SortedNumber + "\t" +
                                     word.Verse.NumberInChapter + "\t" +
                                     word.NumberInVerse + "\t" +
                                     StopmarkHelper.GetStopmarkText(word.Stopmark)
@@ -1192,7 +1192,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if (Numbers.IsOddDigits(chapter.Number))
+            if (Numbers.IsOddDigits(chapter.SortedNumber))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1209,7 +1209,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if (Numbers.IsEvenDigits(chapter.Number))
+            if (Numbers.IsEvenDigits(chapter.SortedNumber))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1226,7 +1226,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if (Numbers.IsPrimeDigits(chapter.Number))
+            if (Numbers.IsPrimeDigits(chapter.SortedNumber))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1243,7 +1243,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if (Numbers.IsCompositeDigits(chapter.Number))
+            if (Numbers.IsCompositeDigits(chapter.SortedNumber))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1260,7 +1260,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if (Numbers.IsPrimeOr1Digits(chapter.Number))
+            if (Numbers.IsPrimeOr1Digits(chapter.SortedNumber))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1277,7 +1277,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if (Numbers.IsCompositeOr0Digits(chapter.Number))
+            if (Numbers.IsCompositeOr0Digits(chapter.SortedNumber))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1396,7 +1396,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsOddDigits(chapter.Number)) && (Numbers.IsOddDigits(chapter.Verses.Count)))
+            if ((Numbers.IsOddDigits(chapter.SortedNumber)) && (Numbers.IsOddDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1413,7 +1413,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsEvenDigits(chapter.Number)) && (Numbers.IsEvenDigits(chapter.Verses.Count)))
+            if ((Numbers.IsEvenDigits(chapter.SortedNumber)) && (Numbers.IsEvenDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1430,7 +1430,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsPrimeDigits(chapter.Number)) && (Numbers.IsPrimeDigits(chapter.Verses.Count)))
+            if ((Numbers.IsPrimeDigits(chapter.SortedNumber)) && (Numbers.IsPrimeDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1447,7 +1447,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsCompositeDigits(chapter.Number)) && (Numbers.IsCompositeDigits(chapter.Verses.Count)))
+            if ((Numbers.IsCompositeDigits(chapter.SortedNumber)) && (Numbers.IsCompositeDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1464,7 +1464,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsPrimeOr1Digits(chapter.Number)) && (Numbers.IsPrimeOr1Digits(chapter.Verses.Count)))
+            if ((Numbers.IsPrimeOr1Digits(chapter.SortedNumber)) && (Numbers.IsPrimeOr1Digits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1481,7 +1481,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsCompositeOr0Digits(chapter.Number)) && (Numbers.IsCompositeOr0Digits(chapter.Verses.Count)))
+            if ((Numbers.IsCompositeOr0Digits(chapter.SortedNumber)) && (Numbers.IsCompositeOr0Digits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1498,7 +1498,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsOddDigits(chapter.Number)) && (Numbers.IsEvenDigits(chapter.Verses.Count)))
+            if ((Numbers.IsOddDigits(chapter.SortedNumber)) && (Numbers.IsEvenDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1515,7 +1515,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsEvenDigits(chapter.Number)) && (Numbers.IsOddDigits(chapter.Verses.Count)))
+            if ((Numbers.IsEvenDigits(chapter.SortedNumber)) && (Numbers.IsOddDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1532,7 +1532,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsPrimeDigits(chapter.Number)) && (Numbers.IsCompositeDigits(chapter.Verses.Count)))
+            if ((Numbers.IsPrimeDigits(chapter.SortedNumber)) && (Numbers.IsCompositeDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1549,7 +1549,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsCompositeDigits(chapter.Number)) && (Numbers.IsPrimeDigits(chapter.Verses.Count)))
+            if ((Numbers.IsCompositeDigits(chapter.SortedNumber)) && (Numbers.IsPrimeDigits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1566,7 +1566,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsPrimeOr1Digits(chapter.Number)) && (Numbers.IsCompositeOr0Digits(chapter.Verses.Count)))
+            if ((Numbers.IsPrimeOr1Digits(chapter.SortedNumber)) && (Numbers.IsCompositeOr0Digits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1583,7 +1583,7 @@ public static partial class Research
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
         {
-            if ((Numbers.IsCompositeOr0Digits(chapter.Number)) && (Numbers.IsPrimeOr1Digits(chapter.Verses.Count)))
+            if ((Numbers.IsCompositeOr0Digits(chapter.SortedNumber)) && (Numbers.IsPrimeOr1Digits(chapter.Verses.Count)))
             {
                 matching_chapters.Add(chapter);
             }
@@ -1603,10 +1603,10 @@ public static partial class Research
         foreach (Chapter chapter in chapters)
         {
             count++;
-            chapter_sum += chapter.Number;
+            chapter_sum += chapter.SortedNumber;
             verse_sum += chapter.Verses.Count;
 
-            str.AppendLine("\t" + count + "\t" + chapter.Number + "\t" + chapter.Verses.Count);
+            str.AppendLine("\t" + count + "\t" + chapter.SortedNumber + "\t" + chapter.Verses.Count);
         }
         str.AppendLine("\t" + "----------------------");
         str.AppendLine("\t" + "Sum" + "\t" + chapter_sum + "\t" + verse_sum);
@@ -2853,7 +2853,7 @@ public static partial class Research
         int i = 0;
         foreach (List<Word> words in unique_chapter_words.Values)
         {
-            str.Append("Chapter " + chapters[i++].Number.ToString() + "\t");
+            str.Append("Chapter " + chapters[i++].SortedNumber.ToString() + "\t");
             str.Append(words.Count + "\t");
             foreach (Word word in words)
             {
@@ -2930,7 +2930,7 @@ public static partial class Research
         int i = 0;
         foreach (List<string> roots in unique_chapter_roots.Values)
         {
-            str.Append("Chapter " + chapters[i++].Number.ToString() + "\t");
+            str.Append("Chapter " + chapters[i++].SortedNumber.ToString() + "\t");
             str.Append(roots.Count + "\t");
             foreach (string root in roots)
             {
@@ -2987,7 +2987,7 @@ public static partial class Research
                 str.Append(chapter.RevelationPlace.ToString() + "\t");
                 str.Append(chapter.RevelationOrder.ToString() + "\t");
                 str.Append(chapter.Verses[0].Page.Number.ToString() + "\t");
-                str.Append(chapter.Number.ToString() + "\t");
+                str.Append(chapter.SortedNumber.ToString() + "\t");
                 str.Append(chapter.Verses.Count.ToString() + "\t");
                 str.Append(chapter.WordCount.ToString() + "\t");
                 str.Append(chapter.LetterCount.ToString() + "\t");
@@ -3058,7 +3058,7 @@ public static partial class Research
                 str.Append(count.ToString() + "\t");
                 str.Append(verse.Number.ToString() + "\t");
                 str.Append(verse.Page.Number.ToString() + "\t");
-                str.Append(verse.Chapter.Number.ToString() + "\t");
+                str.Append(verse.Chapter.SortedNumber.ToString() + "\t");
                 str.Append(verse.NumberInChapter.ToString() + "\t");
                 str.Append(verse.Words.Count.ToString() + "\t");
                 str.Append(verse.LetterCount.ToString() + "\t");
@@ -3183,7 +3183,7 @@ public static partial class Research
                 str.Append
                 (
                     word.Address + "\t" +
-                    word.Verse.Chapter.Number + "\t" +
+                    word.Verse.Chapter.SortedNumber + "\t" +
                     word.Verse.NumberInChapter + "\t" +
                     word.NumberInVerse + "\t" +
                     word.Text + "\t" +
@@ -3265,7 +3265,7 @@ public static partial class Research
                             str.AppendLine
                             (
                                 part.Address + "\t" +
-                                part.Word.Verse.Chapter.Number + "\t" +
+                                part.Word.Verse.Chapter.SortedNumber + "\t" +
                                 part.Word.Verse.NumberInChapter + "\t" +
                                 part.Word.NumberInVerse + "\t" +
                                 part.NumberInWord + "\t" +
@@ -3447,27 +3447,27 @@ public static partial class Research
         foreach (Chapter chapter in chapters)
         {
             str.Append(chapter.Name + "\t");
-            str.Append(chapter.Number.ToString() + "\t");
+            str.Append(chapter.SortedNumber.ToString() + "\t");
             str.Append(chapter.Verses.Count.ToString() + "\t");
             str.Append(chapter.WordCount.ToString() + "\t");
             str.Append(chapter.LetterCount.ToString() + "\t");
 
-            str.Append(Numbers.FactorizeToString(chapter.Number) + "\t");
+            str.Append(Numbers.FactorizeToString(chapter.SortedNumber) + "\t");
             str.Append(Numbers.FactorizeToString(chapter.Verses.Count) + "\t");
             str.Append(Numbers.FactorizeToString(chapter.WordCount) + "\t");
             str.Append(Numbers.FactorizeToString(chapter.LetterCount) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
-            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
-            if (Numbers.IsUnit(chapter.Number))
+            int p_index = Numbers.PrimeIndexOf(chapter.SortedNumber) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.SortedNumber) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            if (Numbers.IsUnit(chapter.SortedNumber))
             {
                 str.Append("U1" + "\t");
             }
-            else if (Numbers.IsPrime(chapter.Number))
+            else if (Numbers.IsPrime(chapter.SortedNumber))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
             }
@@ -3534,25 +3534,25 @@ public static partial class Research
 
         foreach (Chapter chapter in chapters)
         {
-            int sum = chapter.Number + chapter.Verses.Count;
+            int sum = chapter.SortedNumber + chapter.Verses.Count;
 
             str.Append(chapter.Name + "\t");
-            str.Append(chapter.Number.ToString() + "\t");
+            str.Append(chapter.SortedNumber.ToString() + "\t");
             str.Append(chapter.Verses.Count.ToString() + "\t");
             str.Append(sum.ToString() + "\t");
             str.Append(Numbers.FactorizeToString(sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
-            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
-            if (Numbers.IsUnit(chapter.Number))
+            int p_index = Numbers.PrimeIndexOf(chapter.SortedNumber) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.SortedNumber) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            if (Numbers.IsUnit(chapter.SortedNumber))
             {
                 str.Append("U1" + "\t");
             }
-            else if (Numbers.IsPrime(chapter.Number))
+            else if (Numbers.IsPrime(chapter.SortedNumber))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
             }
@@ -3604,25 +3604,25 @@ public static partial class Research
 
         foreach (Chapter chapter in chapters)
         {
-            int sum = (chapter.Number * chapter.Number) + (chapter.Verses.Count * chapter.Verses.Count);
+            int sum = (chapter.SortedNumber * chapter.SortedNumber) + (chapter.Verses.Count * chapter.Verses.Count);
 
             str.Append(chapter.Name + "\t");
-            str.Append(chapter.Number.ToString() + "\t");
+            str.Append(chapter.SortedNumber.ToString() + "\t");
             str.Append(chapter.Verses.Count.ToString() + "\t");
             str.Append(sum.ToString() + "\t");
             str.Append(Numbers.FactorizeToString(sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
-            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
-            if (Numbers.IsUnit(chapter.Number))
+            int p_index = Numbers.PrimeIndexOf(chapter.SortedNumber) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.SortedNumber) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            if (Numbers.IsUnit(chapter.SortedNumber))
             {
                 str.Append("U1" + "\t");
             }
-            else if (Numbers.IsPrime(chapter.Number))
+            else if (Numbers.IsPrime(chapter.SortedNumber))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
             }
@@ -3674,25 +3674,25 @@ public static partial class Research
 
         foreach (Chapter chapter in chapters)
         {
-            int sum = (chapter.Number * chapter.Number * chapter.Number) + (chapter.Verses.Count * chapter.Verses.Count * chapter.Verses.Count);
+            int sum = (chapter.SortedNumber * chapter.SortedNumber * chapter.SortedNumber) + (chapter.Verses.Count * chapter.Verses.Count * chapter.Verses.Count);
 
             str.Append(chapter.Name + "\t");
-            str.Append(chapter.Number.ToString() + "\t");
+            str.Append(chapter.SortedNumber.ToString() + "\t");
             str.Append(chapter.Verses.Count.ToString() + "\t");
             str.Append(sum.ToString() + "\t");
             str.Append(Numbers.FactorizeToString(sum) + "\t");
 
-            int p_index = Numbers.PrimeIndexOf(chapter.Number) + 1;
-            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.Number) + 1;
-            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.Number) + 1;
-            int c_index = Numbers.CompositeIndexOf(chapter.Number) + 1;
-            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.Number) + 1;
-            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.Number) + 1;
-            if (Numbers.IsUnit(chapter.Number))
+            int p_index = Numbers.PrimeIndexOf(chapter.SortedNumber) + 1;
+            int ap_index = Numbers.AdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int xp_index = Numbers.NonAdditivePrimeIndexOf(chapter.SortedNumber) + 1;
+            int c_index = Numbers.CompositeIndexOf(chapter.SortedNumber) + 1;
+            int ac_index = Numbers.AdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            int xc_index = Numbers.NonAdditiveCompositeIndexOf(chapter.SortedNumber) + 1;
+            if (Numbers.IsUnit(chapter.SortedNumber))
             {
                 str.Append("U1" + "\t");
             }
-            else if (Numbers.IsPrime(chapter.Number))
+            else if (Numbers.IsPrime(chapter.SortedNumber))
             {
                 str.Append("P" + p_index + " " + ((ap_index > 0) ? ("AP" + ap_index) : "") + "\t" + ((xp_index > 0) ? ("XP" + xp_index) : "") + "\t");
             }
@@ -3753,7 +3753,7 @@ public static partial class Research
         {
             str.Append(chapter.Name + "\t");
 
-            c_sum += chapter.Number;
+            c_sum += chapter.SortedNumber;
             v_sum += chapter.Verses.Count;
             w_sum += chapter.WordCount;
             l_sum += chapter.LetterCount;
@@ -3854,7 +3854,7 @@ public static partial class Research
         {
             str.Append(chapters[i].Name + "\t");
 
-            c_sum += chapters[i].Number;
+            c_sum += chapters[i].SortedNumber;
             v_sum += chapters[i].Verses.Count;
             w_sum += chapters[i].WordCount;
             l_sum += chapters[i].LetterCount;

@@ -285,7 +285,7 @@ namespace Model
             {
                 foreach (Chapter chapter in this.chapters)
                 {
-                    if (chapter.Number == chapter_number)
+                    if (chapter.SortedNumber == chapter_number)
                     {
                         if (chapter.Verses != null)
                         {
@@ -891,11 +891,11 @@ namespace Model
                             Verse verse = this.verses[index];
                             verse.InitializationType = type;
 
-                            if (verse.Chapter.CompilationOrder == 1)
+                            if (verse.Chapter.Number == 1)
                             {
                                 this.chapters[chapter - 1].InitializationType = InitializationType.Key;
                             }
-                            else if (verse.Chapter.CompilationOrder == 42)
+                            else if (verse.Chapter.Number == 42)
                             {
                                 this.chapters[chapter - 1].InitializationType = InitializationType.DoublyInitialized;
                             }
@@ -926,7 +926,7 @@ namespace Model
             {
                 foreach (Chapter chapter in this.chapters)
                 {
-                    chapter.Number = chapter_number++;
+                    chapter.SortedNumber = chapter_number++;
 
                     int verse_number_in_chapter = 1;
                     int word_number_in_chapter = 1;
@@ -1011,18 +1011,18 @@ namespace Model
                             verse.DistanceToPrevious.dC = 0;
 
                             verse_previous_verse_numbers.Add(verse_text, verse.Number);
-                            verse_previous_chapter_numbers.Add(verse_text, verse.Chapter.Number);
+                            verse_previous_chapter_numbers.Add(verse_text, verse.Chapter.SortedNumber);
                         }
                         else
                         {
                             verse.DistanceToPrevious.dL = -1; // non-applicable
                             verse.DistanceToPrevious.dW = -1; // non-applicable
                             verse.DistanceToPrevious.dV = verse.Number - verse_previous_verse_numbers[verse_text];
-                            verse.DistanceToPrevious.dC = verse.Chapter.Number - verse_previous_chapter_numbers[verse_text];
+                            verse.DistanceToPrevious.dC = verse.Chapter.SortedNumber - verse_previous_chapter_numbers[verse_text];
 
                             // save latest chapter and verse numbers for next iteration
                             verse_previous_verse_numbers[verse_text] = verse.Number;
-                            verse_previous_chapter_numbers[verse_text] = verse.Chapter.Number;
+                            verse_previous_chapter_numbers[verse_text] = verse.Chapter.SortedNumber;
                         }
 
                         if (verse.Words != null)
@@ -1044,19 +1044,19 @@ namespace Model
 
                                     word_previous_word_numbers.Add(word_text, word.Number);
                                     word_previous_verse_numbers.Add(word_text, word.Verse.Number);
-                                    word_previous_chapter_numbers.Add(word_text, word.Verse.Chapter.Number);
+                                    word_previous_chapter_numbers.Add(word_text, word.Verse.Chapter.SortedNumber);
                                 }
                                 else
                                 {
                                     word.DistanceToPrevious.dL = -1; // non-applicable
                                     word.DistanceToPrevious.dW = word.Number - word_previous_word_numbers[word_text];
                                     word.DistanceToPrevious.dV = word.Verse.Number - word_previous_verse_numbers[word_text];
-                                    word.DistanceToPrevious.dC = word.Verse.Chapter.Number - word_previous_chapter_numbers[word_text];
+                                    word.DistanceToPrevious.dC = word.Verse.Chapter.SortedNumber - word_previous_chapter_numbers[word_text];
 
                                     // save latest chapter, verse and word numbers for next iteration
                                     word_previous_word_numbers[word_text] = word.Number;
                                     word_previous_verse_numbers[word_text] = word.Verse.Number;
-                                    word_previous_chapter_numbers[word_text] = word.Verse.Chapter.Number;
+                                    word_previous_chapter_numbers[word_text] = word.Verse.Chapter.SortedNumber;
                                 }
 
                                 foreach (Letter letter in word.Letters)
@@ -1071,20 +1071,20 @@ namespace Model
                                         letter_previous_letter_numbers.Add(letter.Character, letter.Number);
                                         letter_previous_word_numbers.Add(letter.Character, letter.Word.Number);
                                         letter_previous_verse_numbers.Add(letter.Character, letter.Word.Verse.Number);
-                                        letter_previous_chapter_numbers.Add(letter.Character, letter.Word.Verse.Chapter.Number);
+                                        letter_previous_chapter_numbers.Add(letter.Character, letter.Word.Verse.Chapter.SortedNumber);
                                     }
                                     else
                                     {
                                         letter.DistanceToPrevious.dL = letter.Number - letter_previous_letter_numbers[letter.Character];
                                         letter.DistanceToPrevious.dW = letter.Word.Number - letter_previous_word_numbers[letter.Character];
                                         letter.DistanceToPrevious.dV = letter.Word.Verse.Number - letter_previous_verse_numbers[letter.Character];
-                                        letter.DistanceToPrevious.dC = letter.Word.Verse.Chapter.Number - letter_previous_chapter_numbers[letter.Character];
+                                        letter.DistanceToPrevious.dC = letter.Word.Verse.Chapter.SortedNumber - letter_previous_chapter_numbers[letter.Character];
 
                                         // save latest chapter, verse, word and letter numbers for next iteration
                                         letter_previous_letter_numbers[letter.Character] = letter.Number;
                                         letter_previous_word_numbers[letter.Character] = letter.Word.Number;
                                         letter_previous_verse_numbers[letter.Character] = letter.Word.Verse.Number;
-                                        letter_previous_chapter_numbers[letter.Character] = letter.Word.Verse.Chapter.Number;
+                                        letter_previous_chapter_numbers[letter.Character] = letter.Word.Verse.Chapter.SortedNumber;
                                     }
                                 }
                             }
@@ -1525,7 +1525,7 @@ namespace Model
                 // update chapter numbers in new sort order
                 for (int i = 0; i < this.chapters.Count; i++)
                 {
-                    this.chapters[i].Number = i + 1;
+                    this.chapters[i].SortedNumber = i + 1;
                 }
 
                 // update verse order in new sort order

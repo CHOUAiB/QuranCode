@@ -138,7 +138,7 @@ namespace Model
                                         {
                                             foreach (Chapter chapter in book.Chapters)
                                             {
-                                                if ((chapter.CompilationOrder - 1) == index)
+                                                if ((chapter.Number - 1) == index)
                                                 {
                                                     verses.AddRange(chapter.Verses);
                                                     break;
@@ -315,7 +315,7 @@ namespace Model
                                         {
                                             foreach (Chapter chapter in book.Chapters)
                                             {
-                                                if ((chapter.CompilationOrder - 1) == index)
+                                                if ((chapter.Number - 1) == index)
                                                 {
                                                     chapters.Add(chapter);
                                                     break;

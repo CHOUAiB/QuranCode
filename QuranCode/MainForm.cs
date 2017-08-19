@@ -486,7 +486,7 @@ public partial class MainForm : Form, ISubscriber
         {
             if (verse.Chapter != null)
             {
-                m_clicked_chapter_number = verse.Chapter.Number;
+                m_clicked_chapter_number = verse.Chapter.SortedNumber;
             }
 
             m_clicked_verse_number = verse.Number;
@@ -3685,9 +3685,9 @@ public partial class MainForm : Form, ISubscriber
                                         {
                                             string result = str.ToString();
                                             string filename = "Distance_" +
-                                                            verse1.Chapter.Number.ToString("000") + verse1.NumberInChapter.ToString("000") +
+                                                            verse1.Chapter.SortedNumber.ToString("000") + verse1.NumberInChapter.ToString("000") +
                                                             "-" +
-                                                            verse2.Chapter.Number.ToString("000") + verse2.NumberInChapter.ToString("000") +
+                                                            verse2.Chapter.SortedNumber.ToString("000") + verse2.NumberInChapter.ToString("000") +
                                                             Globals.OUTPUT_FILE_EXT;
                                             if (Directory.Exists(Globals.STATISTICS_FOLDER))
                                             {
@@ -4334,7 +4334,7 @@ public partial class MainForm : Form, ISubscriber
                             if (m_client != null)
                             {
                                 // select chapter and display it and colorize target verse
-                                m_client.Selection = new Selection(m_client.Book, SelectionScope.Chapter, new List<int>() { verse.Chapter.CompilationOrder - 1 });
+                                m_client.Selection = new Selection(m_client.Book, SelectionScope.Chapter, new List<int>() { verse.Chapter.Number - 1 });
                                 if (m_client.Selection != null)
                                 {
                                     SwitchToMainTextBox();
@@ -5864,7 +5864,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         foreach (Chapter chapter in m_client.Book.Chapters)
                         {
-                            ChapterComboBox.Items.Add(chapter.Number + " - " + chapter.Name);
+                            ChapterComboBox.Items.Add(chapter.SortedNumber + " - " + chapter.Name);
                         }
                     }
                 }
@@ -5895,12 +5895,12 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                ChaptersListBox.Items.Add(String.Format("{0,-3} {2,-3}  {1}", chapter.Number, chapter.Name, chapter.Verses.Count));
+                                ChaptersListBox.Items.Add(String.Format("{0,-3} {2,-3}  {1}", chapter.SortedNumber, chapter.Name, chapter.Verses.Count));
 
                                 int match_count = 0;
                                 if (m_matches_per_chapter != null)
                                 {
-                                    match_count = m_matches_per_chapter[chapter.Number - 1];
+                                    match_count = m_matches_per_chapter[chapter.SortedNumber - 1];
                                 }
 
                                 // use color shading to represent match_count visually
@@ -5927,7 +5927,7 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                     color = Color.FromArgb(red, green, blue);
                                 }
-                                ChaptersListBox.SetItemColor(chapter.Number - 1, color);
+                                ChaptersListBox.SetItemColor(chapter.SortedNumber - 1, color);
 
                                 int matching_chapters = 0;
                                 if (m_matches_per_chapter != null)
@@ -5949,8 +5949,8 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                ChaptersListBox.Items.Add(String.Format("{0,-3} {2,-3}  {1}", chapter.Number, chapter.Name, chapter.Verses.Count));
-                                ChaptersListBox.SetItemColor(chapter.Number - 1, CHAPTER_INITIALIZATION_COLORS[(int)chapter.InitializationType]);
+                                ChaptersListBox.Items.Add(String.Format("{0,-3} {2,-3}  {1}", chapter.SortedNumber, chapter.Name, chapter.Verses.Count));
+                                ChaptersListBox.SetItemColor(chapter.SortedNumber - 1, CHAPTER_INITIALIZATION_COLORS[(int)chapter.InitializationType]);
                             }
                         }
                     }
@@ -6053,7 +6053,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (chapter.RevelationPlace == RevelationPlace.Makkah)
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6064,7 +6064,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (chapter.RevelationPlace == RevelationPlace.Medina)
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6077,7 +6077,7 @@ public partial class MainForm : Form, ISubscriber
                                     (chapter.InitializationType == InitializationType.FullyInitialized) ||
                                     (chapter.InitializationType == InitializationType.DoublyInitialized))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6089,7 +6089,7 @@ public partial class MainForm : Form, ISubscriber
                                 if ((chapter.InitializationType == InitializationType.NonInitialized) ||
                                     (chapter.InitializationType == InitializationType.Key))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6098,9 +6098,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsEven(chapter.Number))
+                                if (Numbers.IsEven(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6109,9 +6109,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsOdd(chapter.Number))
+                                if (Numbers.IsOdd(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6122,7 +6122,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsEven(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6133,7 +6133,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsOdd(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6142,9 +6142,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsEven(chapter.Number) && Numbers.IsEven(chapter.Verses.Count))
+                                if (Numbers.IsEven(chapter.SortedNumber) && Numbers.IsEven(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6153,9 +6153,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsEven(chapter.Number) && Numbers.IsOdd(chapter.Verses.Count))
+                                if (Numbers.IsEven(chapter.SortedNumber) && Numbers.IsOdd(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6164,9 +6164,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsOdd(chapter.Number) && Numbers.IsOdd(chapter.Verses.Count))
+                                if (Numbers.IsOdd(chapter.SortedNumber) && Numbers.IsOdd(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6175,9 +6175,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsOdd(chapter.Number) && Numbers.IsEven(chapter.Verses.Count))
+                                if (Numbers.IsOdd(chapter.SortedNumber) && Numbers.IsEven(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6187,12 +6187,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsEven(chapter.Number) && Numbers.IsEven(chapter.Verses.Count))
+                                    (Numbers.IsEven(chapter.SortedNumber) && Numbers.IsEven(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsOdd(chapter.Number) && Numbers.IsOdd(chapter.Verses.Count))
+                                    (Numbers.IsOdd(chapter.SortedNumber) && Numbers.IsOdd(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6202,12 +6202,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsEven(chapter.Number) && Numbers.IsOdd(chapter.Verses.Count))
+                                    (Numbers.IsEven(chapter.SortedNumber) && Numbers.IsOdd(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsOdd(chapter.Number) && Numbers.IsEven(chapter.Verses.Count))
+                                    (Numbers.IsOdd(chapter.SortedNumber) && Numbers.IsEven(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6216,9 +6216,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsComposite(chapter.Number))
+                                if (Numbers.IsComposite(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6227,9 +6227,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsPrime(chapter.Number))
+                                if (Numbers.IsPrime(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6240,7 +6240,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6251,7 +6251,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsPrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6260,9 +6260,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsComposite(chapter.Number) && Numbers.IsComposite(chapter.Verses.Count))
+                                if (Numbers.IsComposite(chapter.SortedNumber) && Numbers.IsComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6271,9 +6271,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsComposite(chapter.Number) && Numbers.IsPrime(chapter.Verses.Count))
+                                if (Numbers.IsComposite(chapter.SortedNumber) && Numbers.IsPrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6282,9 +6282,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsPrime(chapter.Number) && Numbers.IsPrime(chapter.Verses.Count))
+                                if (Numbers.IsPrime(chapter.SortedNumber) && Numbers.IsPrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6293,9 +6293,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsPrime(chapter.Number) && Numbers.IsComposite(chapter.Verses.Count))
+                                if (Numbers.IsPrime(chapter.SortedNumber) && Numbers.IsComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6305,12 +6305,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsComposite(chapter.Number) && Numbers.IsComposite(chapter.Verses.Count))
+                                    (Numbers.IsComposite(chapter.SortedNumber) && Numbers.IsComposite(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsPrime(chapter.Number) && Numbers.IsPrime(chapter.Verses.Count))
+                                    (Numbers.IsPrime(chapter.SortedNumber) && Numbers.IsPrime(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6320,12 +6320,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsComposite(chapter.Number) && Numbers.IsPrime(chapter.Verses.Count))
+                                    (Numbers.IsComposite(chapter.SortedNumber) && Numbers.IsPrime(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsPrime(chapter.Number) && Numbers.IsComposite(chapter.Verses.Count))
+                                    (Numbers.IsPrime(chapter.SortedNumber) && Numbers.IsComposite(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6334,9 +6334,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsAdditiveComposite(chapter.Number))
+                                if (Numbers.IsAdditiveComposite(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6345,9 +6345,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsAdditivePrime(chapter.Number))
+                                if (Numbers.IsAdditivePrime(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6358,7 +6358,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsAdditiveComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6369,7 +6369,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsAdditivePrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6378,9 +6378,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsAdditiveComposite(chapter.Number) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
+                                if (Numbers.IsAdditiveComposite(chapter.SortedNumber) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6389,9 +6389,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsAdditiveComposite(chapter.Number) && Numbers.IsAdditivePrime(chapter.Verses.Count))
+                                if (Numbers.IsAdditiveComposite(chapter.SortedNumber) && Numbers.IsAdditivePrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6400,9 +6400,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsAdditivePrime(chapter.Number) && Numbers.IsAdditivePrime(chapter.Verses.Count))
+                                if (Numbers.IsAdditivePrime(chapter.SortedNumber) && Numbers.IsAdditivePrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6411,9 +6411,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsAdditivePrime(chapter.Number) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
+                                if (Numbers.IsAdditivePrime(chapter.SortedNumber) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6423,12 +6423,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsAdditiveComposite(chapter.Number) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
+                                    (Numbers.IsAdditiveComposite(chapter.SortedNumber) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsAdditivePrime(chapter.Number) && Numbers.IsAdditivePrime(chapter.Verses.Count))
+                                    (Numbers.IsAdditivePrime(chapter.SortedNumber) && Numbers.IsAdditivePrime(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6438,12 +6438,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsAdditiveComposite(chapter.Number) && Numbers.IsAdditivePrime(chapter.Verses.Count))
+                                    (Numbers.IsAdditiveComposite(chapter.SortedNumber) && Numbers.IsAdditivePrime(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsAdditivePrime(chapter.Number) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
+                                    (Numbers.IsAdditivePrime(chapter.SortedNumber) && Numbers.IsAdditiveComposite(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6452,9 +6452,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsNonAdditiveComposite(chapter.Number))
+                                if (Numbers.IsNonAdditiveComposite(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6463,9 +6463,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsNonAdditivePrime(chapter.Number))
+                                if (Numbers.IsNonAdditivePrime(chapter.SortedNumber))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6476,7 +6476,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6487,7 +6487,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (Numbers.IsNonAdditivePrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6496,9 +6496,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsNonAdditiveComposite(chapter.Number) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
+                                if (Numbers.IsNonAdditiveComposite(chapter.SortedNumber) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6507,9 +6507,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsNonAdditiveComposite(chapter.Number) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
+                                if (Numbers.IsNonAdditiveComposite(chapter.SortedNumber) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6518,9 +6518,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsNonAdditivePrime(chapter.Number) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
+                                if (Numbers.IsNonAdditivePrime(chapter.SortedNumber) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6529,9 +6529,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (Numbers.IsNonAdditivePrime(chapter.Number) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
+                                if (Numbers.IsNonAdditivePrime(chapter.SortedNumber) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6541,12 +6541,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsNonAdditiveComposite(chapter.Number) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
+                                    (Numbers.IsNonAdditiveComposite(chapter.SortedNumber) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsNonAdditivePrime(chapter.Number) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
+                                    (Numbers.IsNonAdditivePrime(chapter.SortedNumber) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6556,12 +6556,12 @@ public partial class MainForm : Form, ISubscriber
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
                                 if (
-                                    (Numbers.IsNonAdditiveComposite(chapter.Number) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
+                                    (Numbers.IsNonAdditiveComposite(chapter.SortedNumber) && Numbers.IsNonAdditivePrime(chapter.Verses.Count))
                                     ||
-                                    (Numbers.IsNonAdditivePrime(chapter.Number) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
+                                    (Numbers.IsNonAdditivePrime(chapter.SortedNumber) && Numbers.IsNonAdditiveComposite(chapter.Verses.Count))
                                    )
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6570,9 +6570,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (chapter.Number <= chapter.Verses.Count)
+                                if (chapter.SortedNumber <= chapter.Verses.Count)
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6581,9 +6581,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                if (chapter.Number > chapter.Verses.Count)
+                                if (chapter.SortedNumber > chapter.Verses.Count)
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6592,7 +6592,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in m_client.Book.Chapters)
                             {
-                                indexes.Add(chapter.CompilationOrder - 1);
+                                indexes.Add(chapter.Number - 1);
                             }
                         }
                         break;
@@ -6673,7 +6673,7 @@ public partial class MainForm : Form, ISubscriber
                                 Chapter chapter = m_client.Book.Chapters[selected_index];
                                 if (chapter != null)
                                 {
-                                    indexes.Add(chapter.CompilationOrder - 1);
+                                    indexes.Add(chapter.Number - 1);
                                 }
                             }
                         }
@@ -6715,7 +6715,7 @@ public partial class MainForm : Form, ISubscriber
                                 ChaptersListBox.SelectedIndices.Clear();
                                 foreach (Chapter chapter in m_client.Selection.Chapters)
                                 {
-                                    ChaptersListBox.SelectedIndices.Add(chapter.Number - 1);
+                                    ChaptersListBox.SelectedIndices.Add(chapter.SortedNumber - 1);
                                 }
                             }
                         }
@@ -6841,7 +6841,7 @@ public partial class MainForm : Form, ISubscriber
                                             {
                                                 foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                 {
-                                                    if (book_chapter.Number == chapter_number)
+                                                    if (book_chapter.SortedNumber == chapter_number)
                                                     {
                                                         chapter = book_chapter;
                                                         break;
@@ -6874,7 +6874,7 @@ public partial class MainForm : Form, ISubscriber
                                                 {
                                                     foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                     {
-                                                        if (book_chapter.Number == chapter_number)
+                                                        if (book_chapter.SortedNumber == chapter_number)
                                                         {
                                                             chapter = book_chapter;
                                                             break;
@@ -6914,7 +6914,7 @@ public partial class MainForm : Form, ISubscriber
                                                     {
                                                         foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                         {
-                                                            if (book_chapter.Number == number)
+                                                            if (book_chapter.SortedNumber == number)
                                                             {
                                                                 chapter = book_chapter;
                                                                 break;
@@ -6943,7 +6943,7 @@ public partial class MainForm : Form, ISubscriber
                                                     {
                                                         foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                         {
-                                                            if (book_chapter.Number == number)
+                                                            if (book_chapter.SortedNumber == number)
                                                             {
                                                                 chapter = book_chapter;
                                                                 break;
@@ -6982,7 +6982,7 @@ public partial class MainForm : Form, ISubscriber
                                                         {
                                                             foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                             {
-                                                                if (book_chapter.Number == from_chapter_number)
+                                                                if (book_chapter.SortedNumber == from_chapter_number)
                                                                 {
                                                                     from_chapter = book_chapter;
                                                                     break;
@@ -7007,7 +7007,7 @@ public partial class MainForm : Form, ISubscriber
                                                                     Chapter to_chapter = null;
                                                                     foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                                     {
-                                                                        if (book_chapter.Number == to_chapter_number)
+                                                                        if (book_chapter.SortedNumber == to_chapter_number)
                                                                         {
                                                                             to_chapter = book_chapter;
                                                                             break;
@@ -7074,7 +7074,7 @@ public partial class MainForm : Form, ISubscriber
                                                                 {
                                                                     foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                                     {
-                                                                        if (book_chapter.Number == from_chapter_number)
+                                                                        if (book_chapter.SortedNumber == from_chapter_number)
                                                                         {
                                                                             from_chapter = book_chapter;
                                                                             break;
@@ -7108,7 +7108,7 @@ public partial class MainForm : Form, ISubscriber
                                                                 {
                                                                     foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                                     {
-                                                                        if (book_chapter.Number == from_chapter_number)
+                                                                        if (book_chapter.SortedNumber == from_chapter_number)
                                                                         {
                                                                             from_chapter = book_chapter;
                                                                             break;
@@ -7151,7 +7151,7 @@ public partial class MainForm : Form, ISubscriber
                                                                     {
                                                                         foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                                         {
-                                                                            if (book_chapter.Number == from_chapter_number)
+                                                                            if (book_chapter.SortedNumber == from_chapter_number)
                                                                             {
                                                                                 from_chapter = book_chapter;
                                                                                 break;
@@ -7166,7 +7166,7 @@ public partial class MainForm : Form, ISubscriber
                                                                                 Chapter to_chapter = null;
                                                                                 foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                                                 {
-                                                                                    if (book_chapter.Number == to_chapter_number)
+                                                                                    if (book_chapter.SortedNumber == to_chapter_number)
                                                                                     {
                                                                                         to_chapter = book_chapter;
                                                                                         break;
@@ -7197,7 +7197,7 @@ public partial class MainForm : Form, ISubscriber
                                                                     {
                                                                         foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                                         {
-                                                                            if (book_chapter.Number == from_chapter_number)
+                                                                            if (book_chapter.SortedNumber == from_chapter_number)
                                                                             {
                                                                                 from_chapter = book_chapter;
                                                                                 break;
@@ -7212,7 +7212,7 @@ public partial class MainForm : Form, ISubscriber
                                                                                 Chapter to_chapter = null;
                                                                                 foreach (Chapter book_chapter in m_client.Book.Chapters)
                                                                                 {
-                                                                                    if (book_chapter.Number == to_chapter_number)
+                                                                                    if (book_chapter.SortedNumber == to_chapter_number)
                                                                                     {
                                                                                         to_chapter = book_chapter;
                                                                                         break;
@@ -7285,7 +7285,7 @@ public partial class MainForm : Form, ISubscriber
                 int index = ChapterComboBox.SelectedIndex;
                 if ((index >= 0) && (index < chapters.Count))
                 {
-                    int chapter_index = chapters[index].CompilationOrder - 1;
+                    int chapter_index = chapters[index].Number - 1;
 
                     if (
                          ChapterComboBox.Focused ||
@@ -7354,8 +7354,8 @@ public partial class MainForm : Form, ISubscriber
                                 if (chapter.Verses.Count > 2)
                                 {
                                     ToolTip.SetToolTip(ChaptersListBox,
-                                        chapter.Number.ToString() + " - " + chapter.TransliteratedName + " - " + chapter.EnglishName + "\r\n" +
-                                        chapter.RevelationPlace.ToString() + " - " + chapter.RevelationOrder.ToString() + " \t " + chapter.CompilationOrder.ToString() + "\r\n" +
+                                        chapter.SortedNumber.ToString() + " - " + chapter.TransliteratedName + " - " + chapter.EnglishName + "\r\n" +
+                                        chapter.RevelationPlace.ToString() + " - " + chapter.RevelationOrder.ToString() + " \t " + chapter.Number.ToString() + "\r\n" +
                                         "Verses  \t\t " + chapter.Verses.Count.ToString() + "\r\n" +
                                         "Words   \t\t " + chapter.WordCount.ToString() + "\r\n" +
                                         "Letters \t\t " + chapter.LetterCount.ToString() + "\r\n" +
@@ -7780,7 +7780,7 @@ public partial class MainForm : Form, ISubscriber
         StringBuilder str = new StringBuilder();
         foreach (Chapter chapter in chapters)
         {
-            str.Append("." + chapter.Number);
+            str.Append("." + chapter.SortedNumber);
         }
         if (str.Length > 100)
         {
@@ -8616,7 +8616,7 @@ public partial class MainForm : Form, ISubscriber
                                 {
                                     foreach (Chapter chapter in m_client.Selection.Chapters)
                                     {
-                                        selection_indexes.Add(chapter.Number - 1);
+                                        selection_indexes.Add(chapter.SortedNumber - 1);
                                     }
                                 }
                                 else
@@ -8638,30 +8638,30 @@ public partial class MainForm : Form, ISubscriber
                                         }
                                         else if (m_client.Selection.Scope == SelectionScope.Chapter)
                                         {
-                                            int from_chapter_number = -1;
-                                            int to_chapter_number = -1;
-                                            int from_compilation_order = first_index + 1;
-                                            int to_compilation_order = last_index + 1;
+                                            int from_chapter_sorted_number = -1;
+                                            int to_chapter_sorted_number = -1;
+                                            int from_chapter_number = first_index + 1;
+                                            int to_chapter_number = last_index + 1;
                                             if (m_client.Book.Chapters != null)
                                             {
                                                 foreach (Chapter chapter in m_client.Book.Chapters)
                                                 {
-                                                    if (chapter.CompilationOrder == from_compilation_order)
+                                                    if (chapter.Number == from_chapter_number)
                                                     {
-                                                        from_chapter_number = chapter.Number;
+                                                        from_chapter_sorted_number = chapter.SortedNumber;
                                                         break;
                                                     }
                                                 }
                                                 foreach (Chapter chapter in m_client.Book.Chapters)
                                                 {
-                                                    if (chapter.CompilationOrder == to_compilation_order)
+                                                    if (chapter.Number == to_chapter_number)
                                                     {
-                                                        to_chapter_number = chapter.Number;
+                                                        to_chapter_sorted_number = chapter.SortedNumber;
                                                         break;
                                                     }
                                                 }
-                                                str.Append(from_chapter_number.ToString() + " - ");
-                                                str.Append(to_chapter_number.ToString());
+                                                str.Append(from_chapter_sorted_number.ToString() + " - ");
+                                                str.Append(to_chapter_sorted_number.ToString());
                                             }
                                         }
                                         else
@@ -8679,19 +8679,19 @@ public partial class MainForm : Form, ISubscriber
                                         }
                                         else if (m_client.Selection.Scope == SelectionScope.Chapter)
                                         {
-                                            int chapter_number = 0;
-                                            int compilation_order = index + 1;
+                                            int chapter_sorted_number = 0;
+                                            int chapter_number = index + 1;
                                             if (m_client.Book.Chapters != null)
                                             {
                                                 foreach (Chapter chapter in m_client.Book.Chapters)
                                                 {
-                                                    if (chapter.CompilationOrder == compilation_order)
+                                                    if (chapter.Number == chapter_number)
                                                     {
-                                                        chapter_number = chapter.Number;
+                                                        chapter_sorted_number = chapter.SortedNumber;
                                                         break;
                                                     }
                                                 }
-                                                str.Append(chapter_number.ToString());
+                                                str.Append(chapter_sorted_number.ToString());
                                             }
                                         }
                                         else
@@ -8716,19 +8716,19 @@ public partial class MainForm : Form, ISubscriber
                                             }
                                             else if (m_client.Selection.Scope == SelectionScope.Chapter)
                                             {
-                                                int chapter_number = 0;
-                                                int compilation_order = index + 1;
+                                                int chapter_sorted_number = 0;
+                                                int chapter_number = index + 1;
                                                 if (m_client.Book.Chapters != null)
                                                 {
                                                     foreach (Chapter chapter in m_client.Book.Chapters)
                                                     {
-                                                        if (chapter.CompilationOrder == compilation_order)
+                                                        if (chapter.Number == chapter_number)
                                                         {
-                                                            chapter_number = chapter.Number;
+                                                            chapter_sorted_number = chapter.SortedNumber;
                                                             break;
                                                         }
                                                     }
-                                                    str.Append(chapter_number.ToString() + " ");
+                                                    str.Append(chapter_sorted_number.ToString() + " ");
                                                 }
                                             }
                                             else
@@ -8889,7 +8889,7 @@ public partial class MainForm : Form, ISubscriber
 
                             if (verse.Chapter != null)
                             {
-                                UpdateMinMaxChapterVerseWordLetter(verse.Chapter.Number - 1);
+                                UpdateMinMaxChapterVerseWordLetter(verse.Chapter.SortedNumber - 1);
                             }
 
                             if (ChapterComboBox.Items.Count > 0)
@@ -8951,7 +8951,7 @@ public partial class MainForm : Form, ISubscriber
                                 if (m_old_chapter != verse.Chapter)
                                 {
                                     m_old_chapter = verse.Chapter;
-                                    UpdateMinMaxChapterVerseWordLetter(verse.Chapter.Number - 1);
+                                    UpdateMinMaxChapterVerseWordLetter(verse.Chapter.SortedNumber - 1);
                                 }
                             }
 
@@ -8996,9 +8996,9 @@ public partial class MainForm : Form, ISubscriber
 
                     if (verse.Chapter != null)
                     {
-                        if (ChapterComboBox.SelectedIndex != verse.Chapter.Number - 1)
+                        if (ChapterComboBox.SelectedIndex != verse.Chapter.SortedNumber - 1)
                         {
-                            ChapterComboBox.SelectedIndex = verse.Chapter.Number - 1;
+                            ChapterComboBox.SelectedIndex = verse.Chapter.SortedNumber - 1;
                             DisplayChapterRevelationInfo();
                         }
                     }
@@ -9213,7 +9213,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 if ((ChapterComboBox.SelectedIndex >= 0) && (ChapterComboBox.SelectedIndex < m_client.Book.Chapters.Count))
                 {
-                    int chapter_number = m_client.Book.Chapters[ChapterComboBox.SelectedIndex].Number;
+                    int chapter_number = m_client.Book.Chapters[ChapterComboBox.SelectedIndex].SortedNumber;
                     //ChapterComboBox.ForeColor = ChaptersListBox.GetItemColor(chapter_number - 1);
                     ChapterComboBox.ForeColor = GetNumberTypeColor(chapter_number);
                     ChapterComboBox.BackColor = (Numbers.Compare(chapter_number, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
@@ -9926,7 +9926,7 @@ public partial class MainForm : Form, ISubscriber
                         Chapter chapter1 = null;
                         foreach (Chapter chapter in m_client.Book.Chapters)
                         {
-                            if (chapter.CompilationOrder == 1)
+                            if (chapter.Number == 1)
                             {
                                 chapter1 = chapter;
                                 break;
@@ -9991,20 +9991,20 @@ public partial class MainForm : Form, ISubscriber
                     // play BismAllah for any Quran verse except 1:1 and chapter 9
                     if (verse.Chapter != null)
                     {
-                        if ((verse.Chapter.CompilationOrder != 1) && (verse.Chapter.CompilationOrder != 9))
+                        if ((verse.Chapter.Number != 1) && (verse.Chapter.Number != 9))
                         {
                             PlayerPlayBismAllah();
                         }
                         else // either chapter 1 or 9
                         {
-                            if (verse.Chapter.CompilationOrder == 1)
+                            if (verse.Chapter.Number == 1)
                             {
                                 if (verse.NumberInChapter > 1) // not 1:1
                                 {
                                     PlayerPlayBismAllah();
                                 }
                             }
-                            else if (verse.Chapter.CompilationOrder == 9)
+                            else if (verse.Chapter.Number == 9)
                             {
                                 // do nothing
                             }
@@ -10021,11 +10021,11 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (verse.Chapter != null)
                         {
-                            if ((verse.Chapter.CompilationOrder != 1) && (verse.Chapter.CompilationOrder != 9))
+                            if ((verse.Chapter.Number != 1) && (verse.Chapter.Number != 9))
                             {
                                 PlayerPlayBismAllah();
                             }
-                            else if (verse.Chapter.CompilationOrder == 9)
+                            else if (verse.Chapter.Number == 9)
                             {
                                 PlayerPlayAudhuBillah();
                             }
@@ -10632,8 +10632,8 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (verse.Chapter != null)
                 {
-                    audio_filename = verse.Chapter.CompilationOrder.ToString("000") + verse.NumberInChapter.ToString("000") + "." + RecitationInfo.FileType;
-                    full_audio_folder = audio_folder + "/" + verse.Chapter.CompilationOrder.ToString("000");
+                    audio_filename = verse.Chapter.Number.ToString("000") + verse.NumberInChapter.ToString("000") + "." + RecitationInfo.FileType;
+                    full_audio_folder = audio_folder + "/" + verse.Chapter.Number.ToString("000");
                 }
             }
 
@@ -10705,7 +10705,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             if (verse.Chapter != null)
                             {
-                                return (verse.Chapter.CompilationOrder.ToString("000") + verse.NumberInChapter.ToString("000") + "." + RecitationInfo.FileType);
+                                return (verse.Chapter.Number.ToString("000") + verse.NumberInChapter.ToString("000") + "." + RecitationInfo.FileType);
                             }
                         }
                     }
@@ -10729,7 +10729,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             if (verse.Chapter != null)
                             {
-                                return (verse.Chapter.CompilationOrder.ToString("000") + "/" + verse.Chapter.CompilationOrder.ToString("000") + verse.NumberInChapter.ToString("000") + "." + RecitationInfo.FileType);
+                                return (verse.Chapter.Number.ToString("000") + "/" + verse.Chapter.Number.ToString("000") + verse.NumberInChapter.ToString("000") + "." + RecitationInfo.FileType);
                             }
                         }
                     }
@@ -12128,7 +12128,7 @@ public partial class MainForm : Form, ISubscriber
                     if (m_tafseer_verses != null)
                     {
                         string tafseers_folder = Application.StartupPath + "/" + Globals.TAFSEERS_FOLDER;
-                        string filename = (verse.Chapter.CompilationOrder.ToString("000") + verse.NumberInChapter.ToString("000") + ".htm");
+                        string filename = (verse.Chapter.Number.ToString("000") + verse.NumberInChapter.ToString("000") + ".htm");
                         string tafseer_langauge = m_tafseer.Substring(0, m_tafseer.IndexOf(" - "));
                         string tafseer_folder = m_tafseer.Substring(m_tafseer.IndexOf(" - ") + 3);
                         string path = tafseers_folder + "/" + tafseer_langauge + "/" + tafseer_folder + "/" + filename;
@@ -12234,7 +12234,7 @@ public partial class MainForm : Form, ISubscriber
                                         if (m_tafseer_verses != null)
                                         {
                                             string tafseers_folder = Application.StartupPath + "/" + Globals.TAFSEERS_FOLDER;
-                                            string filename = (chapters[0].CompilationOrder.ToString("000") + "000" + ".htm");
+                                            string filename = (chapters[0].Number.ToString("000") + "000" + ".htm");
                                             string tafseer_langauge = m_tafseer.Substring(0, m_tafseer.IndexOf(" - "));
                                             string tafseer_folder = m_tafseer.Substring(m_tafseer.IndexOf(" - ") + 3);
                                             string path = tafseers_folder + "/" + tafseer_langauge + "/" + tafseer_folder + "/" + filename;
@@ -12326,7 +12326,7 @@ public partial class MainForm : Form, ISubscriber
                 word.Transliteration + SPACE_GAP +
                 word.Text + SPACE_GAP +
                 word.Meaning + "\r\n" +
-                word.Verse.Chapter.Number + ". " + word.Verse.Chapter.Name + SPACE_GAP +
+                word.Verse.Chapter.SortedNumber + ". " + word.Verse.Chapter.Name + SPACE_GAP +
                 "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
                 "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
                 "occurrence " + word.Occurrence.ToString() + "/" + word.Frequency.ToString() + SPACE_GAP + SPACE_GAP +
@@ -13016,7 +13016,7 @@ public partial class MainForm : Form, ISubscriber
                             double cCDivideV = 0;
                             foreach (Chapter chapter in chapters)
                             {
-                                long chapter_number = chapter.Number;
+                                long chapter_number = chapter.SortedNumber;
                                 long verse_count = chapter.Verses.Count;
                                 long cplusv = chapter_number + verse_count;
                                 long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_count) : (chapter_number - verse_count);
@@ -13300,7 +13300,7 @@ public partial class MainForm : Form, ISubscriber
                                 frequencies.Clear();
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = chapter.Number;
+                                    long n = chapter.SortedNumber;
                                     if (frequencies.ContainsKey(n))
                                     {
                                         frequencies[n]++;
@@ -13367,7 +13367,7 @@ public partial class MainForm : Form, ISubscriber
                                 frequencies.Clear();
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = chapter.Number + chapter.Verses.Count;
+                                    long n = chapter.SortedNumber + chapter.Verses.Count;
                                     if (frequencies.ContainsKey(n))
                                     {
                                         frequencies[n]++;
@@ -13400,7 +13400,7 @@ public partial class MainForm : Form, ISubscriber
                                 frequencies.Clear();
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = m_maths_abs_cminusv ? Math.Abs(chapter.Number - chapter.Verses.Count) : (chapter.Number - chapter.Verses.Count);
+                                    long n = m_maths_abs_cminusv ? Math.Abs(chapter.SortedNumber - chapter.Verses.Count) : (chapter.SortedNumber - chapter.Verses.Count);
                                     if (frequencies.ContainsKey(n))
                                     {
                                         frequencies[n]++;
@@ -13433,7 +13433,7 @@ public partial class MainForm : Form, ISubscriber
                                 frequencies.Clear();
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = chapter.Number * chapter.Verses.Count;
+                                    long n = chapter.SortedNumber * chapter.Verses.Count;
                                     if (frequencies.ContainsKey(n))
                                     {
                                         frequencies[n]++;
@@ -13466,7 +13466,7 @@ public partial class MainForm : Form, ISubscriber
                                 frequencies.Clear();
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = m_maths_vdividec ? ((long)((double)chapter.Verses.Count / (double)chapter.Number)) : ((long)((double)chapter.Number / (double)chapter.Verses.Count));
+                                    long n = m_maths_vdividec ? ((long)((double)chapter.Verses.Count / (double)chapter.SortedNumber)) : ((long)((double)chapter.SortedNumber / (double)chapter.Verses.Count));
                                     if (frequencies.ContainsKey(n))
                                     {
                                         frequencies[n]++;
@@ -13542,7 +13542,7 @@ public partial class MainForm : Form, ISubscriber
                 double cCDivideV = 0;
                 foreach (Verse verse in m_maths_verses)
                 {
-                    long chapter_number = verse.Chapter.Number;
+                    long chapter_number = verse.Chapter.SortedNumber;
                     long verse_number = verse.NumberInChapter;
                     long cplusv = chapter_number + verse_number;
                     long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_number) : (chapter_number - verse_number);
@@ -13816,7 +13816,7 @@ public partial class MainForm : Form, ISubscriber
                     frequencies.Clear();
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = verse.Chapter.Number;
+                        long n = verse.Chapter.SortedNumber;
                         if (frequencies.ContainsKey(n))
                         {
                             frequencies[n]++;
@@ -13882,7 +13882,7 @@ public partial class MainForm : Form, ISubscriber
                     frequencies.Clear();
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = verse.Chapter.Number + verse.NumberInChapter;
+                        long n = verse.Chapter.SortedNumber + verse.NumberInChapter;
                         if (frequencies.ContainsKey(n))
                         {
                             frequencies[n]++;
@@ -13915,7 +13915,7 @@ public partial class MainForm : Form, ISubscriber
                     frequencies.Clear();
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = m_maths_abs_cminusv ? Math.Abs(verse.Chapter.Number - verse.NumberInChapter) : (verse.Chapter.Number - verse.NumberInChapter);
+                        long n = m_maths_abs_cminusv ? Math.Abs(verse.Chapter.SortedNumber - verse.NumberInChapter) : (verse.Chapter.SortedNumber - verse.NumberInChapter);
                         if (frequencies.ContainsKey(n))
                         {
                             frequencies[n]++;
@@ -13948,7 +13948,7 @@ public partial class MainForm : Form, ISubscriber
                     frequencies.Clear();
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = verse.Chapter.Number * verse.NumberInChapter;
+                        long n = verse.Chapter.SortedNumber * verse.NumberInChapter;
                         if (frequencies.ContainsKey(n))
                         {
                             frequencies[n]++;
@@ -13981,7 +13981,7 @@ public partial class MainForm : Form, ISubscriber
                     frequencies.Clear();
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = m_maths_vdividec ? ((long)((double)verse.NumberInChapter / (double)verse.Chapter.Number)) : ((long)((double)verse.Chapter.Number / (double)verse.NumberInChapter));
+                        long n = m_maths_vdividec ? ((long)((double)verse.NumberInChapter / (double)verse.Chapter.SortedNumber)) : ((long)((double)verse.Chapter.SortedNumber / (double)verse.NumberInChapter));
                         if (frequencies.ContainsKey(n))
                         {
                             frequencies[n]++;
@@ -14071,7 +14071,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = chapter.Number;
+                                    long n = chapter.SortedNumber;
                                     if (c_frequencies.ContainsKey(n))
                                     {
                                         c_frequencies[n]++;
@@ -14135,7 +14135,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = chapter.Number + chapter.Verses.Count;
+                                    long n = chapter.SortedNumber + chapter.Verses.Count;
                                     if (cplusv_frequencies.ContainsKey(n))
                                     {
                                         cplusv_frequencies[n]++;
@@ -14167,7 +14167,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = m_maths_abs_cminusv ? Math.Abs(chapter.Number - chapter.Verses.Count) : (chapter.Number - chapter.Verses.Count);
+                                    long n = m_maths_abs_cminusv ? Math.Abs(chapter.SortedNumber - chapter.Verses.Count) : (chapter.SortedNumber - chapter.Verses.Count);
                                     if (cminusv_frequencies.ContainsKey(n))
                                     {
                                         cminusv_frequencies[n]++;
@@ -14199,7 +14199,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = chapter.Number * chapter.Verses.Count;
+                                    long n = chapter.SortedNumber * chapter.Verses.Count;
                                     if (cmultiplyv_frequencies.ContainsKey(n))
                                     {
                                         cmultiplyv_frequencies[n]++;
@@ -14231,7 +14231,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 foreach (Chapter chapter in chapters)
                                 {
-                                    long n = m_maths_vdividec ? ((long)((double)chapter.Verses.Count / (double)chapter.Number)) : ((long)((double)chapter.Number / (double)chapter.Verses.Count));
+                                    long n = m_maths_vdividec ? ((long)((double)chapter.Verses.Count / (double)chapter.SortedNumber)) : ((long)((double)chapter.SortedNumber / (double)chapter.Verses.Count));
                                     if (cdividev_frequencies.ContainsKey(n))
                                     {
                                         cdividev_frequencies[n]++;
@@ -14287,7 +14287,7 @@ public partial class MainForm : Form, ISubscriber
                             double cCDivideV = 0;
                             foreach (Chapter chapter in chapters)
                             {
-                                long chapter_number = chapter.Number;
+                                long chapter_number = chapter.SortedNumber;
                                 long verse_count = chapter.Verses.Count;
                                 long cplusv = chapter_number + verse_count;
                                 long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_count) : (chapter_number - verse_count);
@@ -14635,7 +14635,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = verse.Chapter.Number;
+                        long n = verse.Chapter.SortedNumber;
                         if (c_frequencies.ContainsKey(n))
                         {
                             c_frequencies[n]++;
@@ -14699,7 +14699,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = verse.Chapter.Number + verse.NumberInChapter;
+                        long n = verse.Chapter.SortedNumber + verse.NumberInChapter;
                         if (cplusv_frequencies.ContainsKey(n))
                         {
                             cplusv_frequencies[n]++;
@@ -14731,7 +14731,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = m_maths_abs_cminusv ? Math.Abs(verse.Chapter.Number - verse.NumberInChapter) : (verse.Chapter.Number - verse.NumberInChapter);
+                        long n = m_maths_abs_cminusv ? Math.Abs(verse.Chapter.SortedNumber - verse.NumberInChapter) : (verse.Chapter.SortedNumber - verse.NumberInChapter);
                         if (cminusv_frequencies.ContainsKey(n))
                         {
                             cminusv_frequencies[n]++;
@@ -14763,7 +14763,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = verse.Chapter.Number * verse.NumberInChapter;
+                        long n = verse.Chapter.SortedNumber * verse.NumberInChapter;
                         if (cmultiplyv_frequencies.ContainsKey(n))
                         {
                             cmultiplyv_frequencies[n]++;
@@ -14795,7 +14795,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     foreach (Verse verse in m_maths_verses)
                     {
-                        long n = m_maths_vdividec ? ((long)((double)verse.NumberInChapter / (double)verse.Chapter.Number)) : ((long)((double)verse.Chapter.Number / (double)verse.NumberInChapter));
+                        long n = m_maths_vdividec ? ((long)((double)verse.NumberInChapter / (double)verse.Chapter.SortedNumber)) : ((long)((double)verse.Chapter.SortedNumber / (double)verse.NumberInChapter));
                         if (cdividev_frequencies.ContainsKey(n))
                         {
                             cdividev_frequencies[n]++;
@@ -14851,7 +14851,7 @@ public partial class MainForm : Form, ISubscriber
                 double cCDivideV = 0;
                 foreach (Verse verse in m_maths_verses)
                 {
-                    long chapter_number = verse.Chapter.Number;
+                    long chapter_number = verse.Chapter.SortedNumber;
                     long verse_number = verse.NumberInChapter;
                     long cplusv = chapter_number + verse_number;
                     long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_number) : (chapter_number - verse_number);
@@ -15361,7 +15361,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (chapter.Book.Chapters != null)
                 {
-                    for (int i = 0; i < chapter.Number - 1; i++)
+                    for (int i = 0; i < chapter.SortedNumber - 1; i++)
                     {
                         result += chapter.Book.Chapters[i].Verses.Count;
                     }
@@ -15379,7 +15379,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (chapter.Book.Chapters != null)
                 {
-                    for (int i = chapter.Number; i < chapter.Book.Chapters.Count; i++)
+                    for (int i = chapter.SortedNumber; i < chapter.Book.Chapters.Count; i++)
                     {
                         result += chapter.Book.Chapters[i].Verses.Count;
                     }
@@ -15397,7 +15397,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (chapter.Book.Chapters != null)
                 {
-                    for (int i = 0; i < chapter.Number - 1; i++)
+                    for (int i = 0; i < chapter.SortedNumber - 1; i++)
                     {
                         result += chapter.Book.Chapters[i].WordCount;
                     }
@@ -15415,7 +15415,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (chapter.Book.Chapters != null)
                 {
-                    for (int i = chapter.Number; i < chapter.Book.Chapters.Count; i++)
+                    for (int i = chapter.SortedNumber; i < chapter.Book.Chapters.Count; i++)
                     {
                         result += chapter.Book.Chapters[i].WordCount;
                     }
@@ -15479,7 +15479,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         case NumberScope.Number:
                             {
-                                for (int i = chapter.Number; i < chapter.Book.Chapters.Count; i++)
+                                for (int i = chapter.SortedNumber; i < chapter.Book.Chapters.Count; i++)
                                 {
                                     foreach (Verse verse in chapter.Book.Chapters[i].Verses)
                                     {
@@ -15491,7 +15491,7 @@ public partial class MainForm : Form, ISubscriber
                         case NumberScope.NumberInChapter:
                         default:
                             {
-                                for (int i = chapter.Number; i < chapter.Book.Chapters.Count; i++)
+                                for (int i = chapter.SortedNumber; i < chapter.Book.Chapters.Count; i++)
                                 {
                                     foreach (Verse verse in chapter.Book.Chapters[i].Verses)
                                     {
@@ -15582,7 +15582,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         case NumberScope.Number:
                             {
-                                for (int i = chapter.Number; i < chapter.Book.Chapters.Count; i++)
+                                for (int i = chapter.SortedNumber; i < chapter.Book.Chapters.Count; i++)
                                 {
                                     foreach (Verse verse in chapter.Book.Chapters[i].Verses)
                                     {
@@ -15596,7 +15596,7 @@ public partial class MainForm : Form, ISubscriber
                             break;
                         case NumberScope.NumberInChapter:
                             {
-                                for (int i = chapter.Number; i < chapter.Book.Chapters.Count; i++)
+                                for (int i = chapter.SortedNumber; i < chapter.Book.Chapters.Count; i++)
                                 {
                                     foreach (Verse verse in chapter.Book.Chapters[i].Verses)
                                     {
@@ -15611,7 +15611,7 @@ public partial class MainForm : Form, ISubscriber
                         case NumberScope.NumberInVerse:
                         default:
                             {
-                                for (int i = chapter.Number; i < chapter.Book.Chapters.Count; i++)
+                                for (int i = chapter.SortedNumber; i < chapter.Book.Chapters.Count; i++)
                                 {
                                     foreach (Verse verse in chapter.Book.Chapters[i].Verses)
                                     {
@@ -15636,14 +15636,14 @@ public partial class MainForm : Form, ISubscriber
     {
         if (chapter == null) return 0;
 
-        long n = chapter.Number - 1;
+        long n = chapter.SortedNumber - 1;
         return ((n * (n + 1)) / 2);
     }
     private long GetDistancesChapterWithinBookRunningTotal(Chapter chapter)
     {
         if (chapter == null) return 0;
 
-        long n = chapter.Number;
+        long n = chapter.SortedNumber;
         return ((n * (n + 1)) / 2);
     }
     private long GetDistancesChapterAfterWithinBookRunningTotal(Chapter chapter)
@@ -15652,7 +15652,7 @@ public partial class MainForm : Form, ISubscriber
         if (chapter.Book == null) return 0;
         if (chapter.Book.Chapters == null) return 0;
 
-        long n = chapter.Number;
+        long n = chapter.SortedNumber;
         long z = chapter.Book.Chapters.Count;
         return (((z * (z + 1)) / 2) - ((n * (n + 1)) / 2));
     }
@@ -16305,9 +16305,9 @@ public partial class MainForm : Form, ISubscriber
                             if (word != null)
                             {
                                 // variables
-                                long DistancesChapterBeforeWithinBook = (verse.Chapter.Number - 1);
-                                long DistancesChapterWithinBook = (verse.Chapter.Number);
-                                long DistancesChapterAfterWithinBook = (chapter_count - verse.Chapter.Number);
+                                long DistancesChapterBeforeWithinBook = (verse.Chapter.SortedNumber - 1);
+                                long DistancesChapterWithinBook = (verse.Chapter.SortedNumber);
+                                long DistancesChapterAfterWithinBook = (chapter_count - verse.Chapter.SortedNumber);
                                 long DistancesChapterDifferenceWithinBook = DistancesChapterAfterWithinBook - DistancesChapterBeforeWithinBook;
                                 long DistancesVerseBeforeWithinBook = chapter_selection_mode ? GetDistancesVerseBeforeChapter(verse.Chapter) : (verse.Number - 1);
                                 long DistancesVerseWithinBook = chapter_selection_mode ? 0 : (verse.Number);
@@ -17053,7 +17053,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17077,7 +17077,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17102,7 +17102,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17130,7 +17130,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17343,7 +17343,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17363,7 +17363,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17384,7 +17384,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17411,7 +17411,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17439,7 +17439,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17459,7 +17459,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17480,7 +17480,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17504,7 +17504,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17610,7 +17610,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.LetterCount.ToString() + chapter.Number.ToString());
+                str.Insert(start, chapter.LetterCount.ToString() + chapter.SortedNumber.ToString());
                 if (!m_active_textbox.WordWrap) str.AppendLine();
                 if (!m_active_textbox.WordWrap) start = str.Length;
             }
@@ -17623,7 +17623,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.LetterCount.ToString() + chapter.Number.ToString());
+                    str.Insert(start, chapter.LetterCount.ToString() + chapter.SortedNumber.ToString());
                     if (!m_active_textbox.WordWrap) str.AppendLine();
                     if (!m_active_textbox.WordWrap) start = str.Length;
                 }
@@ -17637,7 +17637,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17663,7 +17663,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17690,7 +17690,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.WordCount.ToString() + chapter.Number.ToString());
+                str.Insert(start, chapter.WordCount.ToString() + chapter.SortedNumber.ToString());
                 if (!m_active_textbox.WordWrap) str.AppendLine();
                 if (!m_active_textbox.WordWrap) start = str.Length;
             }
@@ -17703,7 +17703,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.WordCount.ToString() + chapter.Number.ToString());
+                    str.Insert(start, chapter.WordCount.ToString() + chapter.SortedNumber.ToString());
                     if (!m_active_textbox.WordWrap) str.AppendLine();
                     if (!m_active_textbox.WordWrap) start = str.Length;
                 }
@@ -17717,7 +17717,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17740,7 +17740,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17764,7 +17764,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Verses.Count.ToString() + chapter.Number.ToString());
+                str.Insert(start, chapter.Verses.Count.ToString() + chapter.SortedNumber.ToString());
                 if (!m_active_textbox.WordWrap) str.AppendLine();
                 if (!m_active_textbox.WordWrap) start = str.Length;
             }
@@ -17777,7 +17777,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Verses.Count.ToString() + chapter.Number.ToString());
+                    str.Insert(start, chapter.Verses.Count.ToString() + chapter.SortedNumber.ToString());
                     if (!m_active_textbox.WordWrap) str.AppendLine();
                     if (!m_active_textbox.WordWrap) start = str.Length;
                 }
@@ -17791,7 +17791,7 @@ public partial class MainForm : Form, ISubscriber
             int start = 0;
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Insert(start, chapter.Number.ToString());
+                str.Insert(start, chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -17811,7 +17811,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Insert(start, chapter.Number.ToString());
+                    str.Insert(start, chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -17997,7 +17997,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18019,7 +18019,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18042,7 +18042,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18068,7 +18068,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18255,7 +18255,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18273,7 +18273,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18292,7 +18292,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18317,7 +18317,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18343,7 +18343,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18361,7 +18361,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18380,7 +18380,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18402,7 +18402,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18494,7 +18494,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString() + chapter.LetterCount.ToString());
+                str.Append(chapter.SortedNumber.ToString() + chapter.LetterCount.ToString());
                 if (!m_active_textbox.WordWrap) str.AppendLine();
             }
         }
@@ -18505,7 +18505,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString() + chapter.LetterCount.ToString());
+                    str.Append(chapter.SortedNumber.ToString() + chapter.LetterCount.ToString());
                     if (!m_active_textbox.WordWrap) str.AppendLine();
                 }
             }
@@ -18517,7 +18517,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18541,7 +18541,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18566,7 +18566,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString() + chapter.WordCount.ToString());
+                str.Append(chapter.SortedNumber.ToString() + chapter.WordCount.ToString());
                 if (!m_active_textbox.WordWrap) str.AppendLine();
             }
         }
@@ -18577,7 +18577,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString() + chapter.WordCount.ToString());
+                    str.Append(chapter.SortedNumber.ToString() + chapter.WordCount.ToString());
                     if (!m_active_textbox.WordWrap) str.AppendLine();
                 }
             }
@@ -18589,7 +18589,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18610,7 +18610,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -18632,7 +18632,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString() + chapter.Verses.Count.ToString());
+                str.Append(chapter.SortedNumber.ToString() + chapter.Verses.Count.ToString());
                 if (!m_active_textbox.WordWrap) str.AppendLine();
             }
         }
@@ -18643,7 +18643,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString() + chapter.Verses.Count.ToString());
+                    str.Append(chapter.SortedNumber.ToString() + chapter.Verses.Count.ToString());
                     if (!m_active_textbox.WordWrap) str.AppendLine();
                 }
             }
@@ -18655,7 +18655,7 @@ public partial class MainForm : Form, ISubscriber
         {
             foreach (Chapter chapter in m_client.Selection.Chapters)
             {
-                str.Append(chapter.Number.ToString());
+                str.Append(chapter.SortedNumber.ToString());
                 foreach (Verse verse in chapter.Verses)
                 {
                     if (m_client.Selection.Verses.Contains(verse))
@@ -18673,7 +18673,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    str.Append(chapter.Number.ToString());
+                    str.Append(chapter.SortedNumber.ToString());
                     foreach (Verse verse in chapter.Verses)
                     {
                         if (m_client.Selection.Verses.Contains(verse))
@@ -23741,7 +23741,7 @@ public partial class MainForm : Form, ISubscriber
                             str.Append(verse.Words[0].Number.ToString() + "\t");
                             str.Append(verse.Words[0].Letters[0].Number.ToString() + "\t");
                             str.Append(verse.Page.Number.ToString() + "\t");
-                            str.Append(verse.Chapter.Number.ToString() + "\t");
+                            str.Append(verse.Chapter.SortedNumber.ToString() + "\t");
                             str.Append(verse.NumberInChapter.ToString() + "\t");
                             str.Append(verse.Words.Count.ToString() + "\t");
                             str.Append(verse.LetterCount.ToString() + "\t");
@@ -24503,7 +24503,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (verse.Chapter != null)
                                 {
-                                    string chapter_name_text = " " + verse.Chapter.TransliteratedName + " / " + verse.Chapter.EnglishName + " " + verse.Chapter.Number;
+                                    string chapter_name_text = " " + verse.Chapter.TransliteratedName + " / " + verse.Chapter.EnglishName + " " + verse.Chapter.SortedNumber;
                                     HeaderLabel.Text = verse.Chapter.Name + " "
                                           + "   ءاية " + verse.NumberInChapter
                                         //+ "   منزل " + ((verse.Station != null) ? verse.Station.Number : -1)
@@ -24618,7 +24618,7 @@ public partial class MainForm : Form, ISubscriber
                                         {
                                             if (phrase.Verse.Chapter != null)
                                             {
-                                                m_matches_per_chapter[phrase.Verse.Chapter.Number - 1]++;
+                                                m_matches_per_chapter[phrase.Verse.Chapter.SortedNumber - 1]++;
                                             }
                                         }
                                     }
@@ -24632,7 +24632,7 @@ public partial class MainForm : Form, ISubscriber
                                     {
                                         if (verse.Chapter != null)
                                         {
-                                            m_matches_per_chapter[verse.Chapter.Number - 1]++;
+                                            m_matches_per_chapter[verse.Chapter.SortedNumber - 1]++;
                                         }
                                     }
                                 }
@@ -24737,7 +24737,7 @@ public partial class MainForm : Form, ISubscriber
                                     {
                                         if (verse.Chapter != null)
                                         {
-                                            m_matches_per_chapter[verse.Chapter.Number - 1]++;
+                                            m_matches_per_chapter[verse.Chapter.SortedNumber - 1]++;
                                         }
                                     }
                                 }
@@ -24887,7 +24887,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (chapter != null)
                                 {
-                                    m_matches_per_chapter[chapter.Number - 1]++;
+                                    m_matches_per_chapter[chapter.SortedNumber - 1]++;
                                 }
                             }
                         }
@@ -24901,9 +24901,9 @@ public partial class MainForm : Form, ISubscriber
                         ChaptersListBox.SelectedIndices.Clear();
                         foreach (Chapter chapter in m_client.FoundChapters)
                         {
-                            if (((chapter.Number - 1) >= 0) && ((chapter.Number - 1) < ChaptersListBox.Items.Count))
+                            if (((chapter.SortedNumber - 1) >= 0) && ((chapter.SortedNumber - 1) < ChaptersListBox.Items.Count))
                             {
-                                ChaptersListBox.SelectedIndices.Add(chapter.Number - 1);
+                                ChaptersListBox.SelectedIndices.Add(chapter.SortedNumber - 1);
                             }
                         }
                     }
@@ -25010,7 +25010,7 @@ public partial class MainForm : Form, ISubscriber
                                 {
                                     if (chapter != null)
                                     {
-                                        m_matches_per_chapter[chapter.Number - 1]++;
+                                        m_matches_per_chapter[chapter.SortedNumber - 1]++;
                                     }
                                 }
                             }
@@ -25027,9 +25027,9 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Chapter chapter in range)
                             {
-                                if (((chapter.Number - 1) >= 0) && ((chapter.Number - 1) < ChaptersListBox.Items.Count))
+                                if (((chapter.SortedNumber - 1) >= 0) && ((chapter.SortedNumber - 1) < ChaptersListBox.Items.Count))
                                 {
-                                    ChaptersListBox.SelectedIndices.Add(chapter.Number - 1);
+                                    ChaptersListBox.SelectedIndices.Add(chapter.SortedNumber - 1);
                                 }
                             }
                         }
@@ -25128,7 +25128,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (chapter != null)
                                 {
-                                    str.Append(chapter.Number + "." + chapter.Verses.Count + ", ");
+                                    str.Append(chapter.SortedNumber + "." + chapter.Verses.Count + ", ");
                                 }
                             }
                             if (set.Count > 0)
@@ -25541,7 +25541,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 foreach (Chapter chapter in m_client.Selection.Chapters)
                 {
-                    str.Append("." + chapter.Number);
+                    str.Append("." + chapter.SortedNumber);
                 }
                 if (str.Length > 100)
                 {
@@ -25614,14 +25614,14 @@ public partial class MainForm : Form, ISubscriber
             {
                 count++;
                 sum += count;
-                chapter_sum += chapter.Number;
+                chapter_sum += chapter.SortedNumber;
                 verse_sum += chapter.Verses.Count;
                 word_sum += chapter.WordCount;
                 letter_sum += chapter.LetterCount;
 
                 str.Append(count + "\t");
                 str.Append(chapter.Name + "\t");
-                str.Append(chapter.Number.ToString() + "\t");
+                str.Append(chapter.SortedNumber.ToString() + "\t");
                 str.Append(chapter.Verses.Count.ToString() + "\t");
                 str.Append(chapter.WordCount.ToString() + "\t");
                 str.Append(chapter.LetterCount.ToString() + "\t");
@@ -25680,14 +25680,14 @@ public partial class MainForm : Form, ISubscriber
                 count++;
                 sum += count;
                 verse_sum += verse.Number;
-                chapter_sum += verse.Chapter.Number;
+                chapter_sum += verse.Chapter.SortedNumber;
                 chapter_verse_sum += verse.NumberInChapter;
                 word_sum += verse.Words.Count;
                 letter_sum += verse.LetterCount;
 
                 str.Append(count.ToString() + "\t");
                 str.Append(verse.Number.ToString() + "\t");
-                str.Append(verse.Chapter.Number.ToString() + "\t");
+                str.Append(verse.Chapter.SortedNumber.ToString() + "\t");
                 str.Append(verse.NumberInChapter.ToString() + "\t");
                 str.Append(verse.Words.Count.ToString() + "\t");
                 str.Append(verse.LetterCount.ToString() + "\t");
@@ -25754,7 +25754,7 @@ public partial class MainForm : Form, ISubscriber
                 str.Append
                 (
                     word.Address + "\t" +
-                    word.Verse.Chapter.Number.ToString() + "\t" +
+                    word.Verse.Chapter.SortedNumber.ToString() + "\t" +
                     word.Verse.NumberInChapter.ToString() + "\t" +
                     word.NumberInVerse.ToString() + "\t" +
                     word.Text + "\t" +
@@ -25843,7 +25843,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 if (verse.Chapter != null)
                                 {
-                                    start = verse.Chapter.Number.ToString().Length;
+                                    start = verse.Chapter.SortedNumber.ToString().Length;
                                 }
                             }
                         }
@@ -28760,7 +28760,7 @@ public partial class MainForm : Form, ISubscriber
             int verse_count = 1;
             int word_count = verse.Words.Count;
             int letter_count = verse.LetterCount;
-            int chapter_number_sum = verse.Chapter.Number;
+            int chapter_number_sum = verse.Chapter.SortedNumber;
             int verse_number_sum = verse.NumberInChapter;
             int word_number_sum = 0;
             int letter_number_sum = 0;
@@ -28799,7 +28799,7 @@ public partial class MainForm : Form, ISubscriber
             Chapter chapter = verse.Chapter;
             if (chapter != null)
             {
-                chapter_number_sum += chapter.Number;
+                chapter_number_sum += chapter.SortedNumber;
                 verse_count += chapter.Verses.Count;
 
                 foreach (Verse v in chapter.Verses)
@@ -28866,7 +28866,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             if (chapter != null)
                             {
-                                chapter_number_sum += chapter.Number;
+                                chapter_number_sum += chapter.SortedNumber;
                             }
                         }
 
@@ -28928,7 +28928,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             if (chapter != null)
                             {
-                                chapter_number_sum += chapter.Number;
+                                chapter_number_sum += chapter.SortedNumber;
                                 verse_count += chapter.Verses.Count;
 
                                 foreach (Verse verse in chapter.Verses)
@@ -28996,7 +28996,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             if (chapter != null)
                             {
-                                chapter_number_sum += chapter.Number;
+                                chapter_number_sum += chapter.SortedNumber;
                             }
                         }
 
@@ -29354,7 +29354,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     if (verse.Chapter != null)
                     {
-                        int chapter_number = verse.Chapter.Number;
+                        int chapter_number = verse.Chapter.SortedNumber;
                         int verse_number_in_chapter = verse.NumberInChapter;
                         int verse_number = m_client.Book.GetVerseNumber(chapter_number, verse_number_in_chapter);
                         if ((verse_number >= VerseNumericUpDown.Minimum) && (verse_number <= VerseNumericUpDown.Maximum))

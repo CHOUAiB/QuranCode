@@ -2346,7 +2346,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(chapter.Number, words, include_boundary_cases);
+                        AppendWordSymmetry(chapter.SortedNumber, words, include_boundary_cases);
                     }
                 }
                 break;

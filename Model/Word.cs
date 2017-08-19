@@ -43,7 +43,7 @@ namespace Model
                 {
                     if (verse.Chapter != null)
                     {
-                        return (this.verse.Chapter.Number.ToString() + ":" + verse.NumberInChapter.ToString() + ":" + number_in_verse.ToString());
+                        return (this.verse.Chapter.SortedNumber.ToString() + ":" + verse.NumberInChapter.ToString() + ":" + number_in_verse.ToString());
                     }
                 }
                 return "XXX:XXX:XXX";
@@ -76,7 +76,7 @@ namespace Model
                                 {
                                     if (this.verse.NumberInChapter == 1)
                                     {
-                                        if ((this.verse.Chapter.CompilationOrder != 1) && (this.verse.Chapter.CompilationOrder != 9))
+                                        if ((this.verse.Chapter.Number != 1) && (this.verse.Chapter.Number != 9))
                                         {
                                             index += 4;
                                         }

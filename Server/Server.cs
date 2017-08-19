@@ -1866,7 +1866,7 @@ public class Server : IPublisher
                 }
                 if (s_numerology_system.AddToLetterCNumber)
                 {
-                    result += letter.Word.Verse.Chapter.Number;
+                    result += letter.Word.Verse.Chapter.SortedNumber;
                 }
                 if (s_numerology_system.AddToLetterLDistance)
                 {
@@ -1905,7 +1905,7 @@ public class Server : IPublisher
                 }
                 if (s_numerology_system.AddToWordCNumber)
                 {
-                    result += word.Verse.Chapter.Number;
+                    result += word.Verse.Chapter.SortedNumber;
                 }
                 if (s_numerology_system.AddToWordWDistance)
                 {
@@ -1936,7 +1936,7 @@ public class Server : IPublisher
                 }
                 if (s_numerology_system.AddToVerseCNumber)
                 {
-                    result += verse.Chapter.Number;
+                    result += verse.Chapter.SortedNumber;
                 }
                 if (s_numerology_system.AddToVerseVDistance)
                 {
@@ -1959,7 +1959,7 @@ public class Server : IPublisher
             {
                 if (s_numerology_system.AddToChapterCNumber)
                 {
-                    result += chapter.Number;
+                    result += chapter.SortedNumber;
                 }
             }
         }
@@ -2167,9 +2167,9 @@ public class Server : IPublisher
                             (
                                 (character == 'ۜ') &&  // superscript Seen
                                 (
-                                    ((verse.Chapter.CompilationOrder == 2) && (verse.NumberInChapter == 245))
+                                    ((verse.Chapter.Number == 2) && (verse.NumberInChapter == 245))
                                     ||
-                                    ((verse.Chapter.CompilationOrder == 7) && (verse.NumberInChapter == 69))
+                                    ((verse.Chapter.Number == 7) && (verse.NumberInChapter == 69))
                                 )
                             )
                         {
@@ -8772,7 +8772,7 @@ public class Server : IPublisher
                     {
                         if (chapter != null)
                         {
-                            chapter_sum += chapter.Number;
+                            chapter_sum += chapter.SortedNumber;
                         }
                     }
 
@@ -8839,7 +8839,7 @@ public class Server : IPublisher
             {
                 if (chapter != null)
                 {
-                    chapter_sum += chapter.Number;
+                    chapter_sum += chapter.SortedNumber;
 
                     foreach (Verse verse in chapter.Verses)
                     {
@@ -10105,7 +10105,7 @@ public class Server : IPublisher
         {
             long value = 0L;
 
-            int number = chapter.Number;
+            int number = chapter.SortedNumber;
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
                 if (query.Number > 0)
@@ -10390,7 +10390,7 @@ public class Server : IPublisher
             int sum = 0;
             foreach (Chapter chapter in chapters)
             {
-                sum += chapter.Number;
+                sum += chapter.SortedNumber;
             }
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
@@ -10644,7 +10644,7 @@ public class Server : IPublisher
                 sum = 0;
                 foreach (Chapter chapter in chapters)
                 {
-                    sum += chapter.Number;
+                    sum += chapter.SortedNumber;
                 }
                 if (Numbers.DigitSum(sum) != query.NumberDigitSum)
                 {
@@ -10726,7 +10726,7 @@ public class Server : IPublisher
                 sum = 0;
                 foreach (Chapter chapter in chapters)
                 {
-                    sum += chapter.Number;
+                    sum += chapter.SortedNumber;
                 }
                 if (Numbers.DigitalRoot(sum) != query.NumberDigitalRoot)
                 {
@@ -11892,9 +11892,9 @@ public class Server : IPublisher
         {
             if (verse.Chapter != null)
             {
-                if (current_chapter_number != verse.Chapter.Number)
+                if (current_chapter_number != verse.Chapter.SortedNumber)
                 {
-                    current_chapter_number = verse.Chapter.Number;
+                    current_chapter_number = verse.Chapter.SortedNumber;
                     result.Add(verse.Chapter);
                 }
             }

@@ -120,7 +120,7 @@ namespace Model
             this.end_position = end_position;
             this.text = text;
 
-            this.chapter_count = last_verse.Chapter.Number - first_verse.Chapter.Number + 1;
+            this.chapter_count = last_verse.Chapter.SortedNumber - first_verse.Chapter.SortedNumber + 1;
 
             this.verse_count = last_verse.Number - first_verse.Number + 1;
 

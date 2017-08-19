@@ -33,8 +33,8 @@ namespace Model
             // don't pin chapter1 in compilation and revelation orders
             if ((s_sort_method != ChapterSortMethod.ByCompilation) && (s_sort_method != ChapterSortMethod.ByRevelation))
             {
-                if ((Chapter.PinChapter1) && (this.CompilationOrder == 1)) return -1;
-                if ((Chapter.PinChapter1) && (obj.CompilationOrder == 1)) return 1;
+                if ((Chapter.PinChapter1) && (this.Number == 1)) return -1;
+                if ((Chapter.PinChapter1) && (obj.Number == 1)) return 1;
             }
 
             if (s_sort_order == ChapterSortOrder.Ascending)
@@ -43,17 +43,17 @@ namespace Model
                 {
                     case ChapterSortMethod.ByCompilation:
                         {
-                            if (this.CompilationOrder.CompareTo(obj.CompilationOrder) == 0)
+                            if (this.Number.CompareTo(obj.Number) == 0)
                             {
-                                return this.Number.CompareTo(obj.Number);
+                                return this.SortedNumber.CompareTo(obj.SortedNumber);
                             }
-                            return this.CompilationOrder.CompareTo(obj.CompilationOrder);
+                            return this.Number.CompareTo(obj.Number);
                         }
                     case ChapterSortMethod.ByRevelation:
                         {
                             if (this.RevelationOrder.CompareTo(obj.RevelationOrder) == 0)
                             {
-                                return this.Number.CompareTo(obj.Number);
+                                return this.SortedNumber.CompareTo(obj.SortedNumber);
                             }
                             return this.RevelationOrder.CompareTo(obj.RevelationOrder);
                         }
@@ -61,7 +61,7 @@ namespace Model
                         {
                             if (this.verses.Count.CompareTo(obj.Verses.Count) == 0)
                             {
-                                return this.Number.CompareTo(obj.Number);
+                                return this.SortedNumber.CompareTo(obj.SortedNumber);
                             }
                             return this.verses.Count.CompareTo(obj.Verses.Count);
                         }
@@ -69,7 +69,7 @@ namespace Model
                         {
                             if (this.WordCount.CompareTo(obj.WordCount) == 0)
                             {
-                                return this.Number.CompareTo(obj.Number);
+                                return this.SortedNumber.CompareTo(obj.SortedNumber);
                             }
                             return this.WordCount.CompareTo(obj.WordCount);
                         }
@@ -77,7 +77,7 @@ namespace Model
                         {
                             if (this.LetterCount.CompareTo(obj.LetterCount) == 0)
                             {
-                                return this.Number.CompareTo(obj.Number);
+                                return this.SortedNumber.CompareTo(obj.SortedNumber);
                             }
                             return this.LetterCount.CompareTo(obj.LetterCount);
                         }
@@ -85,13 +85,13 @@ namespace Model
                         {
                             if (this.Value.CompareTo(obj.Value) == 0)
                             {
-                                return this.Number.CompareTo(obj.Number);
+                                return this.SortedNumber.CompareTo(obj.SortedNumber);
                             }
                             return this.Value.CompareTo(obj.Value);
                         }
                     default:
                         {
-                            return this.Number.CompareTo(obj.Number);
+                            return this.SortedNumber.CompareTo(obj.SortedNumber);
                         }
                 }
             }
@@ -101,17 +101,17 @@ namespace Model
                 {
                     case ChapterSortMethod.ByCompilation:
                         {
-                            if (obj.CompilationOrder.CompareTo(this.CompilationOrder) == 0)
+                            if (obj.Number.CompareTo(this.Number) == 0)
                             {
-                                return obj.Number.CompareTo(this.Number);
+                                return obj.SortedNumber.CompareTo(this.SortedNumber);
                             }
-                            return obj.CompilationOrder.CompareTo(this.CompilationOrder);
+                            return obj.Number.CompareTo(this.Number);
                         }
                     case ChapterSortMethod.ByRevelation:
                         {
                             if (obj.RevelationOrder.CompareTo(this.RevelationOrder) == 0)
                             {
-                                return obj.Number.CompareTo(this.Number);
+                                return obj.SortedNumber.CompareTo(this.SortedNumber);
                             }
                             return obj.RevelationOrder.CompareTo(this.RevelationOrder);
                         }
@@ -119,7 +119,7 @@ namespace Model
                         {
                             if (obj.Verses.Count.CompareTo(this.verses.Count) == 0)
                             {
-                                return obj.Number.CompareTo(this.Number);
+                                return obj.SortedNumber.CompareTo(this.SortedNumber);
                             }
                             return obj.Verses.Count.CompareTo(this.verses.Count);
                         }
@@ -127,7 +127,7 @@ namespace Model
                         {
                             if (obj.WordCount.CompareTo(this.WordCount) == 0)
                             {
-                                return obj.Number.CompareTo(this.Number);
+                                return obj.SortedNumber.CompareTo(this.SortedNumber);
                             }
                             return obj.WordCount.CompareTo(this.WordCount);
                         }
@@ -135,7 +135,7 @@ namespace Model
                         {
                             if (obj.LetterCount.CompareTo(this.LetterCount) == 0)
                             {
-                                return obj.Number.CompareTo(this.Number);
+                                return obj.SortedNumber.CompareTo(this.SortedNumber);
                             }
                             return obj.LetterCount.CompareTo(this.LetterCount);
                         }
@@ -143,13 +143,13 @@ namespace Model
                         {
                             if (obj.Value.CompareTo(this.Value) == 0)
                             {
-                                return obj.Number.CompareTo(this.Number);
+                                return obj.SortedNumber.CompareTo(this.SortedNumber);
                             }
                             return obj.Value.CompareTo(this.Value);
                         }
                     default:
                         {
-                            return obj.Number.CompareTo(this.Number);
+                            return obj.SortedNumber.CompareTo(this.SortedNumber);
                         }
                 }
             }
@@ -168,17 +168,17 @@ namespace Model
             get { return verses; }
         }
 
-        private int compilation_order = 0;
-        public int CompilationOrder
-        {
-            get { return compilation_order; }
-        }
-
         private int number = 0;
         public int Number
         {
             get { return number; }
-            set { number = value; }
+        }
+
+        private int sorted_number = 0;
+        public int SortedNumber
+        {
+            get { return sorted_number; }
+            set { sorted_number = value; }
         }
 
         private string name = null;
@@ -353,8 +353,8 @@ namespace Model
                        List<Verse> verses)
         {
             this.book = book;
-            this.compilation_order = number;
             this.number = number;
+            this.sorted_number = number;
             this.name = name;
             this.transliterated_name = transliterated_name;
             this.english_name = english_name;
