@@ -3481,7 +3481,7 @@ public static class Numbers
         }
         return str.ToString();
     }
-    private static void GetTwoSquaresInSum(long number, out long square1, out long square2)
+    public static void GetTwoSquaresInSum(long number, out long square1, out long square2)
     {
         square1 = 0L;
         square2 = 0L;
@@ -3497,7 +3497,7 @@ public static class Numbers
             if (j * j == square2) return;
         }
     }
-    private static void GetTwoSquaresInDiff(long number, out long square1, out long square2)
+    public static void GetTwoSquaresInDiff(long number, out long square1, out long square2)
     {
         square1 = 0L;
         square2 = 0L;

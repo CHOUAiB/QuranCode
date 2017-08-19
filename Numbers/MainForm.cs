@@ -27,14 +27,107 @@ public partial class MainForm : Form
         }
     }
 
-    private static int ROWS = 57;
-    private static int COLS = 10;
+    private static int ROWS = 30;
+    private static int COLS = 17;
     private TextBox[,] controls = new TextBox[ROWS, COLS];
 
     public MainForm()
     {
         InitializeComponent();
 
+        // build clear all label
+        {
+            Label control = new Label();
+            if (control != null)
+            {
+                control.Width = 12;
+                control.Height = 20;
+                control.Top = 0;
+                control.Left = 0;
+                control.TextAlign = ContentAlignment.TopLeft;
+                control.Font = new Font("Arial", 10);
+                control.Text = "◊";
+                ToolTip.SetToolTip(control, "Clear All");
+                control.Cursor = Cursors.Hand;
+                control.Click += ClearAllLabel_Click;
+                MainPanel.Controls.Add(control);
+            }
+        }
+
+        // build fill all label
+        {
+            Label control = new Label();
+            if (control != null)
+            {
+                control.Width = 12;
+                control.Height = 20;
+                control.Top = 6;
+                control.Left = 12;
+                control.TextAlign = ContentAlignment.BottomLeft;
+                control.Font = new Font("Arial", 10);
+                control.Text = "ⁿ";
+                ToolTip.SetToolTip(control, "Fill All");
+                control.Cursor = Cursors.Hand;
+                control.Click += FillAllLabel_Click;
+                MainPanel.Controls.Add(control);
+            }
+        }
+
+        // build row numbers
+        for (int i = 0; i < ROWS; i++)
+        {
+            Label control = new Label();
+            if (control != null)
+            {
+                control.Width = 20;
+                control.Height = 23;
+                control.Top = 20 + i * 23;
+                control.Left = 2;
+                control.TextAlign = ContentAlignment.MiddleRight;
+                control.Font = new Font("Arial", 8);
+                control.Text = (i + 1).ToString();
+                ToolTip.SetToolTip(control, "Delete Row");
+                control.Cursor = Cursors.Hand;
+                control.Click += DeleteRowLabel_Click;
+                MainPanel.Controls.Add(control);
+            }
+        }
+
+        // build column headings
+        for (int j = 0; j < COLS; j++)
+        {
+            Label control = new Label();
+            if (control != null)
+            {
+                control.Width = 60;
+                control.Height = 19;
+                control.Top = 0;
+                control.Left = 25 + j * 62;
+                control.TextAlign = ContentAlignment.MiddleCenter;
+                control.Font = new Font("Arial", 8);
+                MainPanel.Controls.Add(control);
+
+                if (j == 0) { control.Text = "#"; ToolTip.SetToolTip(control, "Index"); }
+                if (j == 1) { control.Text = "P"; ToolTip.SetToolTip(control, "Prime"); }
+                if (j == 2) { control.Text = "AP"; ToolTip.SetToolTip(control, "Additive Prime"); }
+                if (j == 3) { control.Text = "XP"; ToolTip.SetToolTip(control, "Non-additive Prime"); }
+                if (j == 4) { control.Text = "C"; ToolTip.SetToolTip(control, "Composite"); }
+                if (j == 5) { control.Text = "AC"; ToolTip.SetToolTip(control, "Additive Composite"); }
+                if (j == 6) { control.Text = "XC"; ToolTip.SetToolTip(control, "Non-additive Composite"); }
+                if (j == 7) { control.Text = "DF"; ToolTip.SetToolTip(control, "Deficient Number"); }
+                if (j == 8) { control.Text = "AB"; ToolTip.SetToolTip(control, "Abundant Number"); }
+                if (j == 9) { control.Text = "Diff"; ToolTip.SetToolTip(control, "AB - DF"); }
+                if (j == 10) { control.Text = "Sum"; ToolTip.SetToolTip(control, "AB + DF"); }
+                if (j == 11) { control.Text = "P = 4n+1"; ToolTip.SetToolTip(control, "n of Fermat's 4n+1 Prime = a^2 + b^2"); }
+                if (j == 12) { control.Text = "a^2"; ToolTip.SetToolTip(control, "a of 4n+1 Prime = a^2 + b^2"); }
+                if (j == 13) { control.Text = "b^2"; ToolTip.SetToolTip(control, "b of 4n+1 Prime = a^2 + b^2"); }
+                if (j == 14) { control.Text = "C = 4n+1"; ToolTip.SetToolTip(control, "n of Ali Adams' 4n+1 Composite = a^2 - b^2"); }
+                if (j == 15) { control.Text = "a^2"; ToolTip.SetToolTip(control, "a of 4n+1 Composite = a^2 - b^2"); }
+                if (j == 16) { control.Text = "b^2"; ToolTip.SetToolTip(control, "b of 4n+1 Composite = a^2 - b^2"); }
+            }
+        }
+
+        // build table cells
         for (int i = 0; i < ROWS; i++)
         {
             for (int j = 0; j < COLS; j++)
@@ -44,22 +137,23 @@ public partial class MainForm : Form
                 {
                     control.Width = 60;
                     control.Height = 23;
-                    control.Top = 20 + i * 23;
-                    control.Left = 8 + j * 62;
+                    control.Top = 19 + i * 23;
+                    control.Left = 25 + j * 62;
                     control.TextAlign = HorizontalAlignment.Center;
                     control.Font = new Font("Arial", 12);
                     control.MaxLength = 7;
+                    if (j >= 9) control.ReadOnly = true;
                     MainPanel.Controls.Add(control);
 
                     control.KeyPress += FixMicrosoft;
-                    if (j < (COLS - 1)) control.KeyDown += TextBox_KeyDown;
                     if (j == 0) control.TextChanged += TextBox_TextChanged;
+                    control.KeyDown += TextBox_KeyDown;
 
                     switch (j)
                     {
                         case 0:
                             {
-                                control.BackColor = SystemColors.Info;
+                                control.BackColor = Color.Ivory;
                             }
                             break;
                         case 1:
@@ -91,13 +185,28 @@ public partial class MainForm : Form
                             }
                             break;
                         case 9:
+                        case 10:
                             {
-                                control.BackColor = Color.Silver;
+                                control.BackColor = Color.LightGray;
+                            }
+                            break;
+                        case 11:
+                        case 12:
+                        case 13:
+                            {
+                                control.BackColor = Color.Lavender;
+                            }
+                            break;
+                        case 14:
+                        case 15:
+                        case 16:
+                            {
+                                control.BackColor = Color.SeaShell;
                             }
                             break;
                         default:
                             {
-                                control.BackColor = Color.Black;
+                                control.BackColor = SystemColors.Window;
                             }
                             break;
                     }
@@ -111,6 +220,45 @@ public partial class MainForm : Form
 
         m_filename = AppDomain.CurrentDomain.FriendlyName.Replace(".exe", ".ini");
         LoadSettings();
+    }
+    private void DeleteRowLabel_Click(object sender, EventArgs e)
+    {
+        Control control = (sender as Label);
+        if (control != null)
+        {
+            int i = int.Parse(control.Text) - 1;
+            if (controls != null)
+            {
+                for (int j = 0; j < COLS; j++)
+                {
+                    controls[i, j].Text = "";
+                }
+                controls[i, 0].Focus();
+            }
+        }
+    }
+    private void ClearAllLabel_Click(object sender, EventArgs e)
+    {
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                controls[i, j].Text = "";
+            }
+        }
+        controls[0, 0].Focus();
+    }
+    private void FillAllLabel_Click(object sender, EventArgs e)
+    {
+        Control control = (sender as Label);
+        if (control != null)
+        {
+            for (int i = 0; i < ROWS; i++)
+            {
+                controls[i, 0].Text = (i + 1).ToString();
+            }
+            controls[0, 0].Focus();
+        }
     }
 
     private string m_filename = null;
@@ -239,11 +387,19 @@ public partial class MainForm : Form
         TextBox index_control = controls[point.X, 0];
         if (index_control != null)
         {
+            index_control.Text = index_control.Text.Replace(" ", "");
+            if (index_control.Text.Length == 0)
+            {
+                index_control.Text = "0";
+                index_control.Refresh();
+            }
+
             int index = 0;
             if (int.TryParse(index_control.Text, out index))
             {
                 if (index < int.MaxValue) index++;
                 index_control.Text = index.ToString();
+                index_control.Refresh();
             }
         }
     }
@@ -253,11 +409,19 @@ public partial class MainForm : Form
         TextBox index_control = controls[point.X, 0];
         if (index_control != null)
         {
+            index_control.Text = index_control.Text.Replace(" ", "");
+            if (index_control.Text.Length == 0)
+            {
+                index_control.Text = "0";
+                index_control.Refresh();
+            }
+
             int index = 0;
             if (int.TryParse(index_control.Text, out index))
             {
-                if (index > 0) index--;
+                if (index > 1) index--;
                 index_control.Text = index.ToString();
+                index_control.Refresh();
             }
         }
     }
@@ -278,80 +442,85 @@ public partial class MainForm : Form
     private void TextBox_TextChanged(object sender, EventArgs e)
     {
         Point point = GetControlLocation(sender);
-        if (point.Y == 0)
+        TextBox index_control = controls[point.X, 0];
+        if (index_control != null)
         {
-            Control control = (sender as TextBox);
-            if (control != null)
+            index_control.Text = index_control.Text.Replace(" ", "");
+
+            int index = 0;
+            if (int.TryParse(index_control.Text, out index))
             {
-                control.Text = control.Text.Replace(" ", "");
+                index_control.ForeColor = Numbers.GetNumberTypeColor(index);
 
-                int index = 0;
-                if (int.TryParse(control.Text, out index))
+                if (index >= 0)
                 {
-                    index--;
-                    if (index >= 0)
+                    this.Cursor = Cursors.WaitCursor;
+                    try
                     {
-                        this.Cursor = Cursors.WaitCursor;
-                        try
+                        long p = Numbers.Primes[index - 1];
+                        long ap = Numbers.AdditivePrimes[index - 1];
+                        long xp = Numbers.NonAdditivePrimes[index - 1];
+                        long c = Numbers.Composites[index - 1];
+                        long ac = Numbers.AdditiveComposites[index - 1];
+                        long xc = Numbers.NonAdditiveComposites[index - 1];
+                        controls[point.X, 1].Text = p.ToString();
+                        controls[point.X, 2].Text = ap.ToString();
+                        controls[point.X, 3].Text = xp.ToString();
+                        controls[point.X, 4].Text = c.ToString();
+                        controls[point.X, 5].Text = ac.ToString();
+                        controls[point.X, 6].Text = xc.ToString();
+                        controls[point.X, 1].ForeColor = Numbers.GetNumberTypeColor(p);
+                        controls[point.X, 2].ForeColor = Numbers.GetNumberTypeColor(ap);
+                        controls[point.X, 3].ForeColor = Numbers.GetNumberTypeColor(xp);
+                        controls[point.X, 4].ForeColor = Numbers.GetNumberTypeColor(c);
+                        controls[point.X, 5].ForeColor = Numbers.GetNumberTypeColor(ac);
+                        controls[point.X, 6].ForeColor = Numbers.GetNumberTypeColor(xc);
+
+                        if (((p - 1) % 4) == 0)  // 4n+1 Prime
                         {
-                            long p = Numbers.Primes[index];
-                            long ap = Numbers.AdditivePrimes[index];
-                            long xp = Numbers.NonAdditivePrimes[index];
-                            long c = Numbers.Composites[index];
-                            long ac = Numbers.AdditiveComposites[index];
-                            long xc = Numbers.NonAdditiveComposites[index];
-                            controls[point.X, 1].Text = p.ToString();
-                            controls[point.X, 2].Text = ap.ToString();
-                            controls[point.X, 3].Text = xp.ToString();
-                            controls[point.X, 4].Text = c.ToString();
-                            controls[point.X, 5].Text = ac.ToString();
-                            controls[point.X, 6].Text = xc.ToString();
-                            controls[point.X, 1].ForeColor = Numbers.GetNumberTypeColor(p);
-                            controls[point.X, 2].ForeColor = Numbers.GetNumberTypeColor(ap);
-                            controls[point.X, 3].ForeColor = Numbers.GetNumberTypeColor(xp);
-                            controls[point.X, 4].ForeColor = Numbers.GetNumberTypeColor(c);
-                            controls[point.X, 5].ForeColor = Numbers.GetNumberTypeColor(ac);
-                            controls[point.X, 6].ForeColor = Numbers.GetNumberTypeColor(xc);
+                            long n = (p - 1) / 4;
+                            long a;
+                            long b;
+                            Numbers.GetTwoSquaresInSum(p, out a, out b);
+                            a = (long)Math.Sqrt(a);
+                            b = (long)Math.Sqrt(b);
+                            controls[point.X, 11].Text = n.ToString();
+                            controls[point.X, 12].Text = a.ToString();
+                            controls[point.X, 13].Text = b.ToString();
+                            controls[point.X, 11].ForeColor = Numbers.GetNumberTypeColor(n);
+                            controls[point.X, 12].ForeColor = Numbers.GetNumberTypeColor(a);
+                            controls[point.X, 13].ForeColor = Numbers.GetNumberTypeColor(b);
                         }
-                        catch
+                        else
                         {
-                            controls[point.X, 1].Text = "";
-                            controls[point.X, 2].Text = "";
-                            controls[point.X, 3].Text = "";
-                            controls[point.X, 4].Text = "";
-                            controls[point.X, 5].Text = "";
-                            controls[point.X, 6].Text = "";
-                        }
-                        finally
-                        {
-                            this.Cursor = Cursors.Default;
+                            controls[point.X, 11].Text = "";
+                            controls[point.X, 12].Text = "";
+                            controls[point.X, 13].Text = "";
                         }
 
-                        this.Cursor = Cursors.WaitCursor;
-                        try
+                        if (((c - 1) % 4) == 0)  // 4n+1 Composite
                         {
-                            long df = Numbers.Deficients[index];
-                            long ab = Numbers.Abundants[index];
-                            long diff = ab - df;
-                            controls[point.X, 7].Text = df.ToString();
-                            controls[point.X, 8].Text = ab.ToString();
-                            controls[point.X, 9].Text = diff.ToString();
-                            controls[point.X, 7].ForeColor = Numbers.GetNumberTypeColor(df);
-                            controls[point.X, 8].ForeColor = Numbers.GetNumberTypeColor(ab);
-                            controls[point.X, 9].ForeColor = Numbers.GetNumberTypeColor(diff);
+                            long n = (c - 1) / 4;
+                            long a;
+                            long b;
+                            Numbers.GetTwoSquaresInDiff(c, out a, out b);
+                            a = (long)Math.Sqrt(a);
+                            b = (long)Math.Sqrt(b);
+                            controls[point.X, 14].Text = n.ToString();
+                            controls[point.X, 15].Text = a.ToString();
+                            controls[point.X, 16].Text = b.ToString();
+                            controls[point.X, 14].ForeColor = Numbers.GetNumberTypeColor(n);
+                            controls[point.X, 15].ForeColor = Numbers.GetNumberTypeColor(a);
+                            controls[point.X, 16].ForeColor = Numbers.GetNumberTypeColor(b);
                         }
-                        catch
+                        else
                         {
-                            controls[point.X, 7].Text = "";
-                            controls[point.X, 8].Text = "";
-                            controls[point.X, 9].Text = "";
-                        }
-                        finally
-                        {
-                            this.Cursor = Cursors.Default;
+                            controls[point.X, 14].Text = "";
+                            controls[point.X, 15].Text = "";
+                            controls[point.X, 16].Text = "";
                         }
                     }
-                    else
+                    catch
                     {
                         controls[point.X, 1].Text = "";
                         controls[point.X, 2].Text = "";
@@ -359,9 +528,44 @@ public partial class MainForm : Form
                         controls[point.X, 4].Text = "";
                         controls[point.X, 5].Text = "";
                         controls[point.X, 6].Text = "";
+                        controls[point.X, 11].Text = "";
+                        controls[point.X, 12].Text = "";
+                        controls[point.X, 13].Text = "";
+                        controls[point.X, 14].Text = "";
+                        controls[point.X, 15].Text = "";
+                        controls[point.X, 16].Text = "";
+                    }
+                    finally
+                    {
+                        this.Cursor = Cursors.Default;
+                    }
+
+                    this.Cursor = Cursors.WaitCursor;
+                    try
+                    {
+                        long df = Numbers.Deficients[index - 1];
+                        long ab = Numbers.Abundants[index - 1];
+                        long diff = ab - df;
+                        long sum = ab + df;
+                        controls[point.X, 7].Text = df.ToString();
+                        controls[point.X, 8].Text = ab.ToString();
+                        controls[point.X, 9].Text = diff.ToString();
+                        controls[point.X, 10].Text = sum.ToString();
+                        controls[point.X, 7].ForeColor = Numbers.GetNumberTypeColor(df);
+                        controls[point.X, 8].ForeColor = Numbers.GetNumberTypeColor(ab);
+                        controls[point.X, 9].ForeColor = Numbers.GetNumberTypeColor(diff);
+                        controls[point.X, 10].ForeColor = Numbers.GetNumberTypeColor(sum);
+                    }
+                    catch
+                    {
                         controls[point.X, 7].Text = "";
                         controls[point.X, 8].Text = "";
                         controls[point.X, 9].Text = "";
+                        controls[point.X, 10].Text = "";
+                    }
+                    finally
+                    {
+                        this.Cursor = Cursors.Default;
                     }
                 }
                 else
@@ -375,7 +579,33 @@ public partial class MainForm : Form
                     controls[point.X, 7].Text = "";
                     controls[point.X, 8].Text = "";
                     controls[point.X, 9].Text = "";
+                    controls[point.X, 10].Text = "";
+                    controls[point.X, 11].Text = "";
+                    controls[point.X, 12].Text = "";
+                    controls[point.X, 13].Text = "";
+                    controls[point.X, 14].Text = "";
+                    controls[point.X, 15].Text = "";
+                    controls[point.X, 16].Text = "";
                 }
+            }
+            else
+            {
+                controls[point.X, 1].Text = "";
+                controls[point.X, 2].Text = "";
+                controls[point.X, 3].Text = "";
+                controls[point.X, 4].Text = "";
+                controls[point.X, 5].Text = "";
+                controls[point.X, 6].Text = "";
+                controls[point.X, 7].Text = "";
+                controls[point.X, 8].Text = "";
+                controls[point.X, 9].Text = "";
+                controls[point.X, 10].Text = "";
+                controls[point.X, 11].Text = "";
+                controls[point.X, 12].Text = "";
+                controls[point.X, 13].Text = "";
+                controls[point.X, 14].Text = "";
+                controls[point.X, 15].Text = "";
+                controls[point.X, 16].Text = "";
             }
         }
     }
@@ -427,11 +657,17 @@ public partial class MainForm : Form
                             case 8:
                                 index = Numbers.AbundantIndexOf(value) + 1;
                                 break;
-                            case 9:
-                                index = -1;
+                            default:
+                                index = 0;
                                 break;
                         }
                         index_control.Text = index.ToString();
+
+                        if (index == 0)
+                        {
+                            (sender as TextBox).Text = "";
+                            index_control.Text = "";
+                        }
                     }
                 }
             }
