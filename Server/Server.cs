@@ -2161,11 +2161,28 @@ public class Server : IPublisher
                     }
                     else if ((Constants.STOPMARKS.Contains(character)) || (Constants.QURANMARKS.Contains(character)))
                     {
-                        start--; // ignore space after stopmark
+                        // ٢_٢٤٥	مَّن ذَا ٱلَّذِى يُقْرِضُ ٱللَّهَ قَرْضًا حَسَنًۭا فَيُضَٰعِفَهُۥ لَهُۥٓ أَضْعَافًۭا كَثِيرَةًۭ ۚ وَٱللَّهُ يَقْبِضُ وَيَبْصُۜطُ وَإِلَيْهِ تُرْجَعُونَ
+                        // ٧_٦٩	أَوَعَجِبْتُمْ أَن جَآءَكُمْ ذِكْرٌۭ مِّن رَّبِّكُمْ عَلَىٰ رَجُلٍۢ مِّنكُمْ لِيُنذِرَكُمْ ۚ وَٱذْكُرُوٓا۟ إِذْ جَعَلَكُمْ خُلَفَآءَ مِنۢ بَعْدِ قَوْمِ نُوحٍۢ وَزَادَكُمْ فِى ٱلْخَلْقِ بَصْۜطَةًۭ ۖ فَٱذْكُرُوٓا۟ ءَالَآءَ ٱللَّهِ لَعَلَّكُمْ تُفْلِحُونَ                        if
+                        if
+                            (
+                                (character == 'ۜ') &&  // superscript Seen
+                                (
+                                    ((verse.Chapter.CompilationOrder == 2) && (verse.NumberInChapter == 245))
+                                    ||
+                                    ((verse.Chapter.CompilationOrder == 7) && (verse.NumberInChapter == 69))
+                                )
+                            )
+                        {
+                            // not a stopmark but a Seen above Ssad so treat as part in its word
+                        }
+                        else
+                        {
+                            start--; // skip the space after stopmark
+                        }
                     }
                     else
                     {
-                        // do nothing
+                        // treat character as part of its word
                     }
 
                     // i has reached phrase start
@@ -2203,7 +2220,7 @@ public class Server : IPublisher
                 }
             }
         }
-        return simple_phrase;
+        return null;
     }
     public static Phrase SwitchTextMode(Phrase phrase, string to_text_mode)
     {
@@ -2633,7 +2650,9 @@ public class Server : IPublisher
                                 } // end for
                             }
                         }
-                        else // if without diacritics
+
+                        // if without diacritics or nothing found
+                        if ((multiplicity != 0) && (result.Count == 0))
                         {
                             if (s_numerology_system != null)
                             {
