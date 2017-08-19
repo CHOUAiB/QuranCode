@@ -2129,6 +2129,7 @@ public class Server : IPublisher
                         {
                             phrase = OriginifyPhrase(phrase);
                         }
+
                         if (phrase != null)
                         {
                             result.Add(phrase);
@@ -2139,18 +2140,16 @@ public class Server : IPublisher
         }
         return result;
     }
-    private static Phrase OriginifyPhrase(Phrase phrase)
+    private static Phrase OriginifyPhrase(Phrase simple_phrase)
     {
-        if (phrase != null)
+        if (simple_phrase != null)
         {
-            // simple phrase
-            Verse verse = phrase.Verse;
-            string text = phrase.Text;
-            int position = phrase.Position;
-
-            // convert to original
+            Verse verse = simple_phrase.Verse;
             if (verse != null)
             {
+                string text = simple_phrase.Text;
+                int position = simple_phrase.Position;
+
                 int start = 0;
                 for (int i = 0; i < verse.Text.Length; i++)
                 {
@@ -2163,6 +2162,10 @@ public class Server : IPublisher
                     else if ((Constants.STOPMARKS.Contains(character)) || (Constants.QURANMARKS.Contains(character)))
                     {
                         start--; // ignore space after stopmark
+                    }
+                    else
+                    {
+                        // do nothing
                     }
 
                     // i has reached phrase start
@@ -2200,7 +2203,7 @@ public class Server : IPublisher
                 }
             }
         }
-        return null;
+        return simple_phrase;
     }
     public static Phrase SwitchTextMode(Phrase phrase, string to_text_mode)
     {
@@ -2630,9 +2633,7 @@ public class Server : IPublisher
                                 } // end for
                             }
                         }
-
-                        // if without diacritics or nothing found
-                        if ((multiplicity != 0) && (result.Count == 0))
+                        else // if without diacritics
                         {
                             if (s_numerology_system != null)
                             {
@@ -4014,16 +4015,8 @@ public class Server : IPublisher
     private static string BuildPattern(string text, TextLocationInVerse text_location_in_verse, TextLocationInWord text_location_in_word, TextWordness text_wordness)
     {
         if (String.IsNullOrEmpty(text)) return text;
-        if (Constants.INDIAN_DIGITS.Contains(text[0])) return text;
-        if (Constants.ARABIC_DIGITS.Contains(text[0])) return text;
-        if (text == Constants.OPEN_BRACKET) return text;
-        if (text == Constants.CLOSE_BRACKET) return text;
-        if (Constants.DIACRITICS.Contains(text[0])) return text;
-        if (Constants.QURANMARKS.Contains(text[0])) return text;
-        if (Constants.STOPMARKS.Contains(text[0])) return text;
-        if (Constants.SYMBOLS.Contains(text[0])) return text;
-
         text = Regex.Replace(text, @"\s+", " "); // remove double space or higher if any
+        if (text.Length == 1) return text; // to search for numbers, Quran markers, stop marks, etc.
 
         /*
         =====================================================================
