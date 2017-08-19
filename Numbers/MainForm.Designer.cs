@@ -28,8 +28,6 @@
     {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.ProgressLabel = new System.Windows.Forms.Label();
-            this.ProgressValueLabel = new System.Windows.Forms.Label();
             this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.WebsiteLabel = new System.Windows.Forms.Label();
@@ -49,62 +47,31 @@
             this.DFLabel = new System.Windows.Forms.Label();
             this.IndexLabel = new System.Windows.Forms.Label();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.MainTabControl = new System.Windows.Forms.TabControl();
-            this.MainTabPage = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.NotifyIconContextMenuStrip.SuspendLayout();
             this.MainPanel.SuspendLayout();
-            this.MainTabControl.SuspendLayout();
-            this.MainTabPage.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // ProgressLabel
-            // 
-            this.ProgressLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ProgressLabel.BackColor = System.Drawing.SystemColors.Info;
-            this.ProgressLabel.Font = new System.Drawing.Font("Tahoma", 8F);
-            this.ProgressLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.ProgressLabel.Location = new System.Drawing.Point(0, 314);
-            this.ProgressLabel.Name = "ProgressLabel";
-            this.ProgressLabel.Size = new System.Drawing.Size(56, 16);
-            this.ProgressLabel.TabIndex = 25;
-            this.ProgressLabel.Text = "Progress";
-            this.ProgressLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ProgressLabel.Visible = false;
-            // 
-            // ProgressValueLabel
-            // 
-            this.ProgressValueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ProgressValueLabel.BackColor = System.Drawing.SystemColors.ControlText;
-            this.ProgressValueLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
-            this.ProgressValueLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.ProgressValueLabel.Location = new System.Drawing.Point(0, 328);
-            this.ProgressValueLabel.Name = "ProgressValueLabel";
-            this.ProgressValueLabel.Size = new System.Drawing.Size(56, 17);
-            this.ProgressValueLabel.TabIndex = 27;
-            this.ProgressValueLabel.Text = "0%";
-            this.ProgressValueLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ProgressValueLabel.Visible = false;
             // 
             // ProgressBar
             // 
             this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar.Location = new System.Drawing.Point(0, 349);
+            this.ProgressBar.Location = new System.Drawing.Point(0, 719);
             this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(504, 6);
+            this.ProgressBar.Size = new System.Drawing.Size(554, 6);
             this.ProgressBar.TabIndex = 0;
             this.ProgressBar.Visible = false;
             // 
             // WebsiteLabel
             // 
-            this.WebsiteLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.WebsiteLabel.BackColor = System.Drawing.Color.DarkGray;
             this.WebsiteLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.WebsiteLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WebsiteLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.WebsiteLabel.ForeColor = System.Drawing.Color.Purple;
-            this.WebsiteLabel.Location = new System.Drawing.Point(0, 356);
+            this.WebsiteLabel.Location = new System.Drawing.Point(0, 728);
             this.WebsiteLabel.Name = "WebsiteLabel";
-            this.WebsiteLabel.Size = new System.Drawing.Size(584, 16);
+            this.WebsiteLabel.Size = new System.Drawing.Size(634, 14);
             this.WebsiteLabel.TabIndex = 999;
             this.WebsiteLabel.Tag = "http://qurancode.com";
             this.WebsiteLabel.Text = "©2017  Ali Adams                         www.heliwave.com                        " +
@@ -146,17 +113,17 @@
             // VersionLabel
             // 
             this.VersionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.VersionLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.VersionLabel.BackColor = System.Drawing.Color.DarkGray;
             this.VersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VersionLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VersionLabel.ForeColor = System.Drawing.Color.Purple;
-            this.VersionLabel.Location = new System.Drawing.Point(521, 354);
+            this.VersionLabel.Location = new System.Drawing.Point(568, 728);
             this.VersionLabel.Name = "VersionLabel";
-            this.VersionLabel.Size = new System.Drawing.Size(63, 17);
+            this.VersionLabel.Size = new System.Drawing.Size(63, 14);
             this.VersionLabel.TabIndex = 32;
             this.VersionLabel.Tag = "http://heliwave.com/114.txt";
             this.VersionLabel.Text = "v6.19.114";
-            this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ToolTip.SetToolTip(this.VersionLabel, "114 Amazing Numbers");
             this.VersionLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 
@@ -287,6 +254,8 @@
             // MainPanel
             // 
             this.MainPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.MainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MainPanel.Controls.Add(this.label1);
             this.MainPanel.Controls.Add(this.ABLabel);
             this.MainPanel.Controls.Add(this.DFLabel);
             this.MainPanel.Controls.Add(this.XCLabel);
@@ -297,51 +266,36 @@
             this.MainPanel.Controls.Add(this.PLabel);
             this.MainPanel.Controls.Add(this.IndexLabel);
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(3, 3);
+            this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(570, 324);
+            this.MainPanel.Size = new System.Drawing.Size(634, 728);
             this.MainPanel.TabIndex = 33;
             // 
-            // MainTabControl
+            // label1
             // 
-            this.MainTabControl.Controls.Add(this.MainTabPage);
-            this.MainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainTabControl.Location = new System.Drawing.Point(0, 0);
-            this.MainTabControl.Name = "MainTabControl";
-            this.MainTabControl.SelectedIndex = 0;
-            this.MainTabControl.Size = new System.Drawing.Size(584, 356);
-            this.MainTabControl.TabIndex = 1;
-            // 
-            // MainTabPage
-            // 
-            this.MainTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.MainTabPage.Controls.Add(this.MainPanel);
-            this.MainTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MainTabPage.Location = new System.Drawing.Point(4, 22);
-            this.MainTabPage.Name = "MainTabPage";
-            this.MainTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MainTabPage.Size = new System.Drawing.Size(576, 330);
-            this.MainTabPage.TabIndex = 1;
-            this.MainTabPage.Text = "D i s c o v e r   h i d d e n   c o n n e c t i o n s   b e t w e e n   p r i m e" +
-    " s ,  c o m p o s i t e s  a n d   t h e i r   i n d i c e s .";
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 8F);
+            this.label1.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label1.Location = new System.Drawing.Point(573, 1);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 16);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "AB - DF";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.label1, "Abundant Number - Deficient Number");
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 372);
-            this.Controls.Add(this.MainTabControl);
+            this.ClientSize = new System.Drawing.Size(634, 742);
+            this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.WebsiteLabel);
             this.Controls.Add(this.ProgressBar);
-            this.Controls.Add(this.ProgressValueLabel);
-            this.Controls.Add(this.ProgressLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(600, 410);
             this.Menu = this.MainMenu;
-            this.MinimumSize = new System.Drawing.Size(600, 410);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Numbers are the DNA that controls the materialization of light to form our Univer" +
@@ -352,16 +306,12 @@
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.NotifyIconContextMenuStrip.ResumeLayout(false);
             this.MainPanel.ResumeLayout(false);
-            this.MainTabControl.ResumeLayout(false);
-            this.MainTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private System.Windows.Forms.Label ProgressLabel;
-    private System.Windows.Forms.Label ProgressValueLabel;
     private System.Windows.Forms.MainMenu MainMenu;
     private System.Windows.Forms.ProgressBar ProgressBar;
     private System.Windows.Forms.Label WebsiteLabel;
@@ -381,6 +331,5 @@
     private System.Windows.Forms.Label IndexLabel;
     private System.Windows.Forms.Label ABLabel;
     private System.Windows.Forms.Label DFLabel;
-    private System.Windows.Forms.TabControl MainTabControl;
-    private System.Windows.Forms.TabPage MainTabPage;
+    private System.Windows.Forms.Label label1;
 }

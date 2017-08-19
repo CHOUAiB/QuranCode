@@ -27,8 +27,8 @@ public partial class MainForm : Form
         }
     }
 
-    private static int ROWS = 12;
-    private static int COLS = 9;
+    private static int ROWS = 57;
+    private static int COLS = 10;
     private TextBox[,] controls = new TextBox[ROWS, COLS];
 
     public MainForm()
@@ -43,8 +43,8 @@ public partial class MainForm : Form
                 if (control != null)
                 {
                     control.Width = 60;
-                    control.Height = 25;
-                    control.Top = 20 + i * 25;
+                    control.Height = 23;
+                    control.Top = 20 + i * 23;
                     control.Left = 8 + j * 62;
                     control.TextAlign = HorizontalAlignment.Center;
                     control.Font = new Font("Arial", 12);
@@ -52,7 +52,7 @@ public partial class MainForm : Form
                     MainPanel.Controls.Add(control);
 
                     control.KeyPress += FixMicrosoft;
-                    control.KeyDown += TextBox_KeyDown;
+                    if (j < (COLS - 1)) control.KeyDown += TextBox_KeyDown;
                     if (j == 0) control.TextChanged += TextBox_TextChanged;
 
                     switch (j)
@@ -88,6 +88,16 @@ public partial class MainForm : Form
                         case 8:
                             {
                                 control.BackColor = Numbers.NUMBER_KIND_COLORS[2];
+                            }
+                            break;
+                        case 9:
+                            {
+                                control.BackColor = Color.Silver;
+                            }
+                            break;
+                        default:
+                            {
+                                control.BackColor = Color.Black;
                             }
                             break;
                     }
@@ -322,15 +332,19 @@ public partial class MainForm : Form
                         {
                             long df = Numbers.Deficients[index];
                             long ab = Numbers.Abundants[index];
+                            long diff = ab - df;
                             controls[point.X, 7].Text = df.ToString();
                             controls[point.X, 8].Text = ab.ToString();
+                            controls[point.X, 9].Text = diff.ToString();
                             controls[point.X, 7].ForeColor = Numbers.GetNumberTypeColor(df);
                             controls[point.X, 8].ForeColor = Numbers.GetNumberTypeColor(ab);
+                            controls[point.X, 9].ForeColor = Numbers.GetNumberTypeColor(diff);
                         }
                         catch
                         {
                             controls[point.X, 7].Text = "";
                             controls[point.X, 8].Text = "";
+                            controls[point.X, 9].Text = "";
                         }
                         finally
                         {
@@ -347,6 +361,7 @@ public partial class MainForm : Form
                         controls[point.X, 6].Text = "";
                         controls[point.X, 7].Text = "";
                         controls[point.X, 8].Text = "";
+                        controls[point.X, 9].Text = "";
                     }
                 }
                 else
@@ -359,6 +374,7 @@ public partial class MainForm : Form
                     controls[point.X, 6].Text = "";
                     controls[point.X, 7].Text = "";
                     controls[point.X, 8].Text = "";
+                    controls[point.X, 9].Text = "";
                 }
             }
         }
@@ -410,6 +426,9 @@ public partial class MainForm : Form
                                 break;
                             case 8:
                                 index = Numbers.AbundantIndexOf(value) + 1;
+                                break;
+                            case 9:
+                                index = -1;
                                 break;
                         }
                         index_control.Text = index.ToString();
