@@ -26,17 +26,16 @@
     /// </summary>
     private void InitializeComponent()
     {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
+            this.MainMenu = new System.Windows.Forms.MainMenu();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.WebsiteLabel = new System.Windows.Forms.Label();
-            this.NotifyIconContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.NotifyIconContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.NotifyIcon = new System.Windows.Forms.NotifyIcon();
             this.VersionLabel = new System.Windows.Forms.Label();
-            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ToolTip = new System.Windows.Forms.ToolTip();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.NotifyIconContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -146,6 +145,7 @@
             this.KeyPreview = true;
             this.Menu = this.MainMenu;
             this.Name = "MainForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Numbers are the DNA that controls the materialization of light to form our Univer" +
     "se.";

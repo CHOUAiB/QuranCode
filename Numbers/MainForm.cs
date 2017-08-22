@@ -35,7 +35,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
 
-        // build clear all label
+        // build ClearAll label
         {
             Label control = new Label();
             if (control != null)
@@ -48,13 +48,13 @@ public partial class MainForm : Form
                 control.Font = new Font("Arial", 10);
                 control.Text = "◊";
                 ToolTip.SetToolTip(control, "Clear All");
-                control.Cursor = Cursors.Hand;
+                control.Cursor = Cursors.No;
                 control.Click += ClearAllLabel_Click;
                 MainPanel.Controls.Add(control);
             }
         }
 
-        // build fill all label
+        // build AutoFill label
         {
             Label control = new Label();
             if (control != null)
@@ -66,14 +66,14 @@ public partial class MainForm : Form
                 control.TextAlign = ContentAlignment.BottomLeft;
                 control.Font = new Font("Arial", 10);
                 control.Text = "ⁿ";
-                ToolTip.SetToolTip(control, "Fill All");
-                control.Cursor = Cursors.Hand;
-                control.Click += FillAllLabel_Click;
+                ToolTip.SetToolTip(control, "Auto Fill");
+                control.Cursor = Cursors.PanSouth;
+                control.Click += AutoFillLabel_Click;
                 MainPanel.Controls.Add(control);
             }
         }
 
-        // build row numbers
+        // build Row numbers (DeleteRow)
         for (int i = 0; i < ROWS; i++)
         {
             Label control = new Label();
@@ -86,14 +86,14 @@ public partial class MainForm : Form
                 control.TextAlign = ContentAlignment.MiddleRight;
                 control.Font = new Font("Arial", 8);
                 control.Text = (i + 1).ToString();
-                ToolTip.SetToolTip(control, "Delete Row");
-                control.Cursor = Cursors.Hand;
+                ToolTip.SetToolTip(control, "Delete");
+                control.Cursor = Cursors.PanEast;
                 control.Click += DeleteRowLabel_Click;
                 MainPanel.Controls.Add(control);
             }
         }
 
-        // build column headings
+        // build Column headings
         for (int j = 0; j < COLS; j++)
         {
             Label control = new Label();
@@ -127,7 +127,7 @@ public partial class MainForm : Form
             }
         }
 
-        // build table cells
+        // build TextBox cells
         for (int i = 0; i < ROWS; i++)
         {
             for (int j = 0; j < COLS; j++)
@@ -148,6 +148,11 @@ public partial class MainForm : Form
                     control.KeyPress += FixMicrosoft;
                     if (j == 0) control.TextChanged += TextBox_TextChanged;
                     control.KeyDown += TextBox_KeyDown;
+
+                    if (j == 0) control.AllowDrop = true;
+                    if (j == 0) control.MouseDown += Control_MouseDown;
+                    if (j == 0) control.DragEnter += Control_DragEnter;
+                    if (j == 0) control.DragDrop += Control_DragDrop;
 
                     switch (j)
                     {
@@ -221,6 +226,7 @@ public partial class MainForm : Form
         m_filename = AppDomain.CurrentDomain.FriendlyName.Replace(".exe", ".ini");
         LoadSettings();
     }
+
     private void DeleteRowLabel_Click(object sender, EventArgs e)
     {
         Control control = (sender as Label);
@@ -248,7 +254,7 @@ public partial class MainForm : Form
         }
         controls[0, 0].Focus();
     }
-    private void FillAllLabel_Click(object sender, EventArgs e)
+    private void AutoFillLabel_Click(object sender, EventArgs e)
     {
         Control control = (sender as Label);
         if (control != null)
@@ -258,6 +264,41 @@ public partial class MainForm : Form
                 controls[i, 0].Text = (i + 1).ToString();
             }
             controls[0, 0].Focus();
+        }
+    }
+
+    private string DataFormatName = Application.ProductName;
+    private void Control_MouseDown(object sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
+        {
+            Control source = (sender as Control);
+            if (source != null)
+            {
+                DataObject data = new DataObject(DataFormatName, source);
+                source.DoDragDrop(data, DragDropEffects.Move);
+            }
+        }
+    }
+    private void Control_DragEnter(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormatName))
+            e.Effect = e.AllowedEffect;
+        else
+            e.Effect = DragDropEffects.None;
+    }
+    private void Control_DragDrop(object sender, DragEventArgs e)
+    {
+        Control target = (sender as Control);
+        if (target != null)
+        {
+            Control source = (Control)e.Data.GetData(DataFormatName);
+            if (source != null)
+            {
+                string temp = target.Text;
+                target.Text = source.Text;
+                source.Text = temp;
+            }
         }
     }
 

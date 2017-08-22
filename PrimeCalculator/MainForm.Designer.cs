@@ -2043,6 +2043,7 @@
             this.KeyPreview = true;
             this.Menu = this.MainMenu;
             this.Name = "MainForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Prime Calculator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
