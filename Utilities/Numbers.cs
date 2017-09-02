@@ -2000,7 +2000,7 @@ public static class Numbers
         }
     }
 
-    private static int s_series_limit = 100;
+    private static int s_series_limit = 114;
     //http://en.wikipedia.org/wiki/Polygon_number
     //ith number of Polygon(sides=N) = ( (N - 2)*i*i - (N - 4)*i ) / 2
     //----------------------------------------------------------------------------------------
