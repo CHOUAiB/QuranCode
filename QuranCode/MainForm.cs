@@ -20046,14 +20046,18 @@ public partial class MainForm : Form, ISubscriber
             {
                 count--;
             }
+
             string startup_text = "";
-            for (int i = 0; i < count; i++)
+            if (m_auto_complete_mode)
             {
-                startup_text += startup_words[i] + " ";
-            }
-            if (startup_text.Length > 0)
-            {
-                startup_text = startup_text.Remove(startup_text.Length - 1, 1);
+                for (int i = 0; i < count; i++)
+                {
+                    startup_text += startup_words[i] + " ";
+                }
+                if (startup_text.Length > 0)
+                {
+                    startup_text = startup_text.Remove(startup_text.Length - 1, 1);
+                }
             }
 
             // get selected word texts
