@@ -4036,7 +4036,15 @@ public class Server : IPublisher
     {
         if (String.IsNullOrEmpty(text)) return text;
         text = Regex.Replace(text, @"\s+", " "); // remove double space or higher if any
-        if (text.Length == 1) return text; // to search for numbers, Quran markers, stop marks, etc.
+
+        // search for Quran markers, stopmarks, numbers, etc.
+        if (text.Length == 1)
+        {
+            if (!Constants.ARABIC_LETTERS.Contains(text[0]))
+            {
+                return text;
+            }
+        }
 
         /*
         =====================================================================
@@ -4122,11 +4130,11 @@ public class Server : IPublisher
         */
 
         // helper patterns
-        string whole_line = @"^" + text + @"$";
-        string whole_word = @"\b" + text + @"\b";
-        string word_with_prefix = @"\S+?" + text + @"\b";
-        string word_with_suffix = @"\b" + text + @"\S+?";
-        string word_with_prefix_and_suffix = @"\b" + @"\S+?" + text + @"\S+?" + @"\b";
+        string whole_line = @"(" + @"^" + text + @"$" + @")";
+        string whole_word = @"(" + @"\b" + text + @"\b" + @")";
+        string word_with_prefix = @"(" + @"\b" + @"\S+?" + text + @"\b" + @")";
+        string word_with_suffix = @"(" + @"\b" + text + @"\S+?" + @"\b" + @")";
+        string word_with_prefix_and_suffix = @"(" + @"\b" + @"\S+?" + text + @"\S+?" + @"\b" + @")";
         string word_with_fix_or_fixes = @"(" + word_with_prefix + "|" + word_with_suffix + "|" + word_with_prefix_and_suffix + @")";
 
         /////////////////////////////////////////////////
