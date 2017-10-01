@@ -2723,7 +2723,7 @@ public class Server : IPublisher
                                                         emlaaei_text = emlaaei_text.Replace("  ", " ");
                                                     }
 
-                                                    MatchCollection matches = Regex.Matches(emlaaei_text, text, regex_options);
+                                                    MatchCollection matches = Regex.Matches(emlaaei_text, pattern, regex_options);
                                                     if (multiplicity == -1) // without multiplicity
                                                     {
                                                         if (matches.Count > 0)
