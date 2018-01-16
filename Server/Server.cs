@@ -8897,12 +8897,35 @@ public class Server : IPublisher
             }
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
+                if (query.Number < 0)
+                {
+                    switch (query.NumberScope)
+                    {
+                        case NumberScope.Number:
+                            query.Number = word.Verse.Chapter.Book.WordCount + query.Number + 1;
+                            break;
+                        case NumberScope.NumberInChapter:
+                            query.Number = word.Verse.Chapter.WordCount + query.Number + 1;
+                            break;
+                        case NumberScope.NumberInVerse:
+                            query.Number = word.Verse.Words.Count + query.Number + 1;
+                            break;
+                        default:
+                            query.Number = word.Verse.Chapter.WordCount + query.Number + 1;
+                            break;
+                    }
+                }
+
                 if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
                     {
                         return false;
                     }
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
@@ -9523,12 +9546,29 @@ public class Server : IPublisher
             }
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
+                switch (query.NumberScope)
+                {
+                    case NumberScope.Number:
+                        query.Number = verse.Book.Verses.Count + query.Number + 1;
+                        break;
+                    case NumberScope.NumberInChapter:
+                        query.Number = verse.Chapter.Verses.Count + query.Number + 1;
+                        break;
+                    default:
+                        query.Number = verse.Chapter.Verses.Count + query.Number + 1;
+                        break;
+                }
+
                 if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
                     {
                         return false;
                     }
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
@@ -10119,6 +10159,10 @@ public class Server : IPublisher
             {
                 if (query.Number > 0)
                 {
+                    if (query.Number < 0)
+                    {
+                        query.Number = chapter.SortedNumber + query.Number + 1;
+                    }
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
                     {
                         return false;
