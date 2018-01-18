@@ -24608,8 +24608,8 @@ public partial class MainForm : Form, ISubscriber
                     ZoomOutLabel.Enabled = (m_text_zoom_factor >= (m_min_zoom_factor + m_zoom_factor_increment - m_error_margin));
 
                     // phrase statistics
-                    int words = 0;
-                    int letters = 0;
+                    int word_count = 0;
+                    int letter_count = 0;
                     long value = 0L;
 
                     if (colorize_chapters_by_matches)
@@ -24632,8 +24632,8 @@ public partial class MainForm : Form, ISubscriber
                                         }
 
                                         // phrase statistics
-                                        words += phrase.Text.Split(' ').Length;
-                                        letters += phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Length;
+                                        word_count += phrase.Text.Split(' ').Length;
+                                        letter_count += phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Length;
                                         value += m_client.CalculateValue(phrase.Text);
                                     }
                                 }
@@ -24702,9 +24702,37 @@ public partial class MainForm : Form, ISubscriber
                     DisplayDNASequence();
 
                     // phrase statistics
-                    WordsTextBox.Text = words.ToString();
-                    LettersTextBox.Text = letters.ToString();
-                    ValueTextBox.Text = value.ToString();
+                    WordsTextBox.Text = Radix.Encode(word_count, m_radix);
+                    WordsTextBox.ForeColor = GetNumberTypeColor(WordsTextBox.Text, m_radix);
+                    WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+                    WordsTextBox.Refresh();
+
+                    DecimalWordsTextBox.Text = word_count.ToString();
+                    DecimalWordsTextBox.ForeColor = GetNumberTypeColor(word_count);
+                    DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                    DecimalWordsTextBox.Refresh();
+
+                    LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
+                    LettersTextBox.ForeColor = GetNumberTypeColor(LettersTextBox.Text, m_radix);
+                    LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+                    LettersTextBox.Refresh();
+
+                    DecimalLettersTextBox.Text = letter_count.ToString();
+                    DecimalLettersTextBox.ForeColor = GetNumberTypeColor(letter_count);
+                    DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                    DecimalLettersTextBox.Refresh();
+
+                    ValueTextBox.Text = Radix.Encode(value, m_radix);
+                    ValueTextBox.ForeColor = GetNumberTypeColor(value);
+                    ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
+                    ValueTextBox.SelectionLength = 0;
+                    ValueTextBox.Refresh();
+
+                    DecimalValueTextBox.Text = value.ToString();
+                    DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                    DecimalValueTextBox.ForeColor = GetNumberTypeColor(value);
+                    DecimalValueTextBox.Refresh();
+
 
                     if (add_to_history)
                     {
