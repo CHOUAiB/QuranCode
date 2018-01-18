@@ -21806,7 +21806,7 @@ public partial class MainForm : Form, ISubscriber
     private void FindByNumbersResultTypeWordsLabel_Click(object sender, EventArgs e)
     {
         m_numbers_result_type = NumbersResultType.Words;
-        //                           num   Cs     Vs     Ws    Ls    uLs   value dsum  droot
+        //                          num   Cs     Vs     Ws    Ls    uLs   value dsum  droot
         EnableFindByNumbersControls(true, false, false, true, true, true, true, true, true);
 
         FindByNumbersControls_Enter(null, null);
@@ -24607,6 +24607,11 @@ public partial class MainForm : Form, ISubscriber
                     ZoomInLabel.Enabled = (m_text_zoom_factor <= (m_max_zoom_factor - m_zoom_factor_increment + m_error_margin));
                     ZoomOutLabel.Enabled = (m_text_zoom_factor >= (m_min_zoom_factor + m_zoom_factor_increment - m_error_margin));
 
+                    // phrase statistics
+                    int words = 0;
+                    int letters = 0;
+                    long value = 0L;
+
                     if (colorize_chapters_by_matches)
                     {
                         if (m_client.Book != null)
@@ -24625,6 +24630,11 @@ public partial class MainForm : Form, ISubscriber
                                                 m_matches_per_chapter[phrase.Verse.Chapter.SortedNumber - 1]++;
                                             }
                                         }
+
+                                        // phrase statistics
+                                        words += phrase.Text.Split(' ').Length;
+                                        letters += phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Length;
+                                        value += m_client.CalculateValue(phrase.Text);
                                     }
                                 }
                             }
@@ -24690,6 +24700,11 @@ public partial class MainForm : Form, ISubscriber
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
                     DisplayDNASequence();
+
+                    // phrase statistics
+                    WordsTextBox.Text = words.ToString();
+                    LettersTextBox.Text = letters.ToString();
+                    ValueTextBox.Text = value.ToString();
 
                     if (add_to_history)
                     {
@@ -27286,7 +27301,7 @@ public partial class MainForm : Form, ISubscriber
             }
             else
             {
-                m_double_value = CalculateValue(expression, m_radix);
+                m_double_value = DoCalculateExpression(expression, m_radix);
                 value = (long)Math.Round(m_double_value);
                 FactorizeValue(value, "Math", true);
             }
@@ -27333,7 +27348,18 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private double CalculateValue(string expression, long radix)
+    private string CalculateExpression(string expression, long radix)
+    {
+        try
+        {
+            return Evaluator.Evaluate(expression, radix);
+        }
+        catch
+        {
+            return expression;
+        }
+    }
+    private double DoCalculateExpression(string expression, long radix)
     {
         double result = 0D;
         if (m_client != null)
@@ -27366,17 +27392,6 @@ public partial class MainForm : Form, ISubscriber
             }
         }
         return result;
-    }
-    private string CalculateExpression(string expression, long radix)
-    {
-        try
-        {
-            return Evaluator.Evaluate(expression, radix);
-        }
-        catch
-        {
-            return expression;
-        }
     }
     private void FactorizeValue(long value, string caption, bool overwrite)
     {
