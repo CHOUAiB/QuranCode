@@ -8915,7 +8915,6 @@ public class Server : IPublisher
                             break;
                     }
                 }
-
                 if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
@@ -9546,19 +9545,21 @@ public class Server : IPublisher
             }
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
-                switch (query.NumberScope)
+                if (query.Number < 0)
                 {
-                    case NumberScope.Number:
-                        query.Number = verse.Book.Verses.Count + query.Number + 1;
-                        break;
-                    case NumberScope.NumberInChapter:
-                        query.Number = verse.Chapter.Verses.Count + query.Number + 1;
-                        break;
-                    default:
-                        query.Number = verse.Chapter.Verses.Count + query.Number + 1;
-                        break;
+                    switch (query.NumberScope)
+                    {
+                        case NumberScope.Number:
+                            query.Number = verse.Book.Verses.Count + query.Number + 1;
+                            break;
+                        case NumberScope.NumberInChapter:
+                            query.Number = verse.Chapter.Verses.Count + query.Number + 1;
+                            break;
+                        default:
+                            query.Number = verse.Chapter.Verses.Count + query.Number + 1;
+                            break;
+                    }
                 }
-
                 if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
@@ -10163,7 +10164,14 @@ public class Server : IPublisher
                     {
                         query.Number = chapter.SortedNumber + query.Number + 1;
                     }
-                    if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
+                    if (query.Number > 0)
+                    {
+                        if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
+                        {
+                            return false;
+                        }
+                    }
+                    else
                     {
                         return false;
                     }
