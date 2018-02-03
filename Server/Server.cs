@@ -8922,10 +8922,6 @@ public class Server : IPublisher
                         return false;
                     }
                 }
-                else
-                {
-                    return false;
-                }
             }
             else
             {
@@ -9567,10 +9563,6 @@ public class Server : IPublisher
                         return false;
                     }
                 }
-                else
-                {
-                    return false;
-                }
             }
             else
             {
@@ -10158,20 +10150,13 @@ public class Server : IPublisher
             int number = chapter.SortedNumber;
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
+                if (query.Number < 0)
+                {
+                    query.Number = chapter.SortedNumber + query.Number + 1;
+                }
                 if (query.Number > 0)
                 {
-                    if (query.Number < 0)
-                    {
-                        query.Number = chapter.SortedNumber + query.Number + 1;
-                    }
-                    if (query.Number > 0)
-                    {
-                        if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
-                        {
-                            return false;
-                        }
-                    }
-                    else
+                    if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
                     {
                         return false;
                     }
