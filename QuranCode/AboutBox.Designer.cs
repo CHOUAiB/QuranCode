@@ -28,11 +28,11 @@ partial class AboutBox
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.TableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.AboutPictureBox = new System.Windows.Forms.PictureBox();
             this.ProductNameLabel = new System.Windows.Forms.Label();
             this.CopyrightLabel = new System.Windows.Forms.Label();
             this.DescriptionTextBox = new System.Windows.Forms.TextBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.AboutPictureBox = new System.Windows.Forms.PictureBox();
             this.TableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AboutPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -57,21 +57,6 @@ partial class AboutBox
             this.TableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.TableLayoutPanel.Size = new System.Drawing.Size(549, 410);
             this.TableLayoutPanel.TabIndex = 0;
-            // 
-            // AboutPictureBox
-            // 
-            this.AboutPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AboutPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AboutPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("AboutPictureBox.Image")));
-            this.AboutPictureBox.Location = new System.Drawing.Point(3, 3);
-            this.AboutPictureBox.Name = "AboutPictureBox";
-            this.TableLayoutPanel.SetRowSpan(this.AboutPictureBox, 3);
-            this.AboutPictureBox.Size = new System.Drawing.Size(204, 406);
-            this.AboutPictureBox.TabIndex = 12;
-            this.AboutPictureBox.TabStop = false;
-            this.AboutPictureBox.Tag = "http://heliwave.com/Soul.and.Spirit.pdf";
-            this.ToolTip.SetToolTip(this.AboutPictureBox, "Open splash screen ...");
-            this.AboutPictureBox.Click += new System.EventHandler(this.AboutPictureBox_Click);
             // 
             // ProductNameLabel
             // 
@@ -102,7 +87,7 @@ partial class AboutBox
             this.CopyrightLabel.Tag = "http://qurancode.com/";
             this.CopyrightLabel.Text = "Copyright";
             this.CopyrightLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.CopyrightLabel, "©2017 Ali Adams");
+            this.ToolTip.SetToolTip(this.CopyrightLabel, "©2009-2018 Ali Adams");
             this.CopyrightLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 
             // DescriptionTextBox
@@ -119,6 +104,21 @@ partial class AboutBox
             this.DescriptionTextBox.TabStop = false;
             this.DescriptionTextBox.Tag = "";
             this.DescriptionTextBox.Text = "Description";
+            // 
+            // AboutPictureBox
+            // 
+            this.AboutPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.AboutPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AboutPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("AboutPictureBox.Image")));
+            this.AboutPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.AboutPictureBox.Name = "AboutPictureBox";
+            this.TableLayoutPanel.SetRowSpan(this.AboutPictureBox, 3);
+            this.AboutPictureBox.Size = new System.Drawing.Size(204, 406);
+            this.AboutPictureBox.TabIndex = 12;
+            this.AboutPictureBox.TabStop = false;
+            this.AboutPictureBox.Tag = "http://heliwave.com/Soul.and.Spirit.pdf";
+            this.ToolTip.SetToolTip(this.AboutPictureBox, "Open splash screen ...");
+            this.AboutPictureBox.Click += new System.EventHandler(this.AboutPictureBox_Click);
             // 
             // AboutBox
             // 
@@ -146,9 +146,9 @@ partial class AboutBox
     #endregion
 
     private System.Windows.Forms.TableLayoutPanel TableLayoutPanel;
-    private System.Windows.Forms.PictureBox AboutPictureBox;
     private System.Windows.Forms.Label ProductNameLabel;
     private System.Windows.Forms.Label CopyrightLabel;
     private System.Windows.Forms.TextBox DescriptionTextBox;
     private System.Windows.Forms.ToolTip ToolTip;
+    private System.Windows.Forms.PictureBox AboutPictureBox;
 }

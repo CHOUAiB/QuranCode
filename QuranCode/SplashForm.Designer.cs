@@ -131,7 +131,7 @@ partial class SplashForm
             this.VersionLabel.Size = new System.Drawing.Size(239, 17);
             this.VersionLabel.TabIndex = 3;
             this.VersionLabel.Tag = "http://heliwave.com";
-            this.VersionLabel.Text = "©2009-2017 Ali Adams";
+            this.VersionLabel.Text = "©2009-2018 Ali Adams";
             this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.VersionLabel, "©2009-2017 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي");
             this.VersionLabel.Click += new System.EventHandler(this.LinkLabel_Click);
@@ -142,7 +142,7 @@ partial class SplashForm
             this.WordFrequencyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.DarkMagenta;
             this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 108);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
             this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 19);

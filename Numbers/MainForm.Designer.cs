@@ -62,8 +62,7 @@
             this.WebsiteLabel.Size = new System.Drawing.Size(1084, 14);
             this.WebsiteLabel.TabIndex = 999;
             this.WebsiteLabel.Tag = "http://qurancode.com";
-            this.WebsiteLabel.Text = "©2017  Ali Adams                         www.heliwave.com                        " +
-    "     www.qurancode.com                                           ";
+            this.WebsiteLabel.Text = "©2009-2018   Ali Adams    www.heliwave.com    www.qurancode.com";
             this.WebsiteLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ToolTip.SetToolTip(this.WebsiteLabel, "Quran 89:3 \"By the composites and the primes\".");
             this.WebsiteLabel.Click += new System.EventHandler(this.LinkLabel_Click);
