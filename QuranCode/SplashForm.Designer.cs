@@ -142,7 +142,7 @@ partial class SplashForm
             this.WordFrequencyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.DarkMagenta;
+            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.DarkSlateBlue;
             this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 108);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
             this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 19);

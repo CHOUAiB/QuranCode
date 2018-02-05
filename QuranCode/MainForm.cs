@@ -10033,7 +10033,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
 
-                // load verse for playing (including verse 1 of chapter 1
+                // load verse for playing (including verse 1 of chapter 1)
                 try
                 {
                     // download file if not on disk
