@@ -42,7 +42,7 @@ partial class SplashForm
             // 
             // InformationLabel
             // 
-            this.InformationLabel.BackColor = System.Drawing.Color.MidnightBlue;
+            this.InformationLabel.BackColor = System.Drawing.Color.DarkSlateBlue;
             this.InformationLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.InformationLabel.Font = new System.Drawing.Font("Arial", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InformationLabel.ForeColor = System.Drawing.Color.Lavender;
@@ -109,7 +109,7 @@ partial class SplashForm
             this.ProductNameLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ProductNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ProductNameLabel.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.ProductNameLabel.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.ProductNameLabel.ForeColor = System.Drawing.Color.DarkSlateBlue;
             this.ProductNameLabel.Location = new System.Drawing.Point(0, 47);
             this.ProductNameLabel.Name = "ProductNameLabel";
             this.ProductNameLabel.Size = new System.Drawing.Size(239, 27);
@@ -125,7 +125,7 @@ partial class SplashForm
             this.VersionLabel.BackColor = System.Drawing.Color.Lavender;
             this.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.VersionLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VersionLabel.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.VersionLabel.ForeColor = System.Drawing.Color.DarkSlateBlue;
             this.VersionLabel.Location = new System.Drawing.Point(0, 74);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(239, 17);
@@ -175,7 +175,7 @@ partial class SplashForm
             this.CloseLabel.AutoSize = true;
             this.CloseLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CloseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CloseLabel.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.CloseLabel.ForeColor = System.Drawing.Color.DarkSlateBlue;
             this.CloseLabel.Location = new System.Drawing.Point(224, 0);
             this.CloseLabel.Name = "CloseLabel";
             this.CloseLabel.Size = new System.Drawing.Size(13, 13);

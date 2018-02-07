@@ -172,7 +172,7 @@ public partial class MainForm : Form, ISubscriber
     private const float DEFAULT_QURAN_FONT_SIZE = 14.0F;
     private const int DEFAULT_TRANSLATION_BOX_WIDTH = 409;
     private const string DEFAULT_TRANSALTION_FONT_NAME = "Microsoft Sans Serif";
-    private const float DEFAULT_TRANSALTION_FONT_SIZE = 10.0F;
+    private const float DEFAULT_TRANSALTION_FONT_SIZE = 11.0F;
     private static Color DEFAULT_TRANSALTION_FONT_COLOR = Color.Navy;
     private const float DEFAULT_TEXT_ZOOM_FACTOR = 1.0F;
     private const float DEFAULT_GRAPHICS_ZOOM_FACTOR = 1.0F;
@@ -19231,7 +19231,14 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
-        m_current_text = m_current_text.Trim();
+
+        if (!String.IsNullOrEmpty(m_current_text))
+        {
+            m_current_text = RemoveVerseAddresses(m_current_text);
+            m_current_text = RemoveVerseEndMarks(m_current_text);
+            m_current_text = m_current_text.Trim();
+            m_current_text = m_current_text.Replace("\n", "\r\n");
+        }
 
         // calculate Letters value
         CalculateValueAndDisplayFactors(m_current_text);
