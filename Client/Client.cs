@@ -2042,7 +2042,7 @@ public class Client : IPublisher, ISubscriber
     /// <param name="phrase"></param>
     /// <param name="frequency_search_type"></param>
     /// <returns>Result is stored in LetterStatistics.</returns>
-    public void BuildLetterStatistics(string text)
+    public void BuildLetterStatistics(string text, bool with_diacritics)
     {
         if (String.IsNullOrEmpty(text)) return;
 
@@ -2050,7 +2050,7 @@ public class Client : IPublisher, ISubscriber
         {
             if (m_letter_statistics != null)
             {
-                //text = text.SimplifyTo(NumerologySystem.TextMode);
+                if (!with_diacritics) text = text.SimplifyTo(NumerologySystem.TextMode);
                 text = text.Replace("\r", "");
                 text = text.Replace("\n", "");
                 text = text.Replace("\t", "");
@@ -2163,7 +2163,7 @@ public class Client : IPublisher, ISubscriber
     /// <param name="phrase"></param>
     /// <param name="frequency_search_type"></param>
     /// <returns>Letter frequency sum. Result is stored in LetterStatistics.</returns>
-    public void BuildLetterStatistics(string text, string phrase, FrequencySearchType frequency_search_type)
+    public void BuildLetterStatistics(string text, string phrase, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         if (String.IsNullOrEmpty(text)) return;
         if (String.IsNullOrEmpty(phrase)) return;
@@ -2172,7 +2172,7 @@ public class Client : IPublisher, ISubscriber
         {
             if (m_letter_statistics != null)
             {
-                //text = text.SimplifyTo(NumerologySystem.TextMode);
+                if (!with_diacritics) text = text.SimplifyTo(NumerologySystem.TextMode);
                 text = text.Replace("\r", "");
                 text = text.Replace("\n", "");
                 text = text.Replace("\t", "");

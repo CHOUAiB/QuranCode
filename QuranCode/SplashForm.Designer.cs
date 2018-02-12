@@ -141,14 +141,14 @@ partial class SplashForm
             this.WordFrequencyLabel.BackColor = System.Drawing.Color.Transparent;
             this.WordFrequencyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            this.WordFrequencyLabel.Font = new System.Drawing.Font("Simplified Arabic Fixed", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.Purple;
             this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 108);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
             this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 19);
             this.WordFrequencyLabel.TabIndex = 5;
             this.WordFrequencyLabel.Tag = "http://qurancode.com";
-            this.WordFrequencyLabel.Text = "من  الله  ان  في  ما  لا  الذين  الا  علي";
+            this.WordFrequencyLabel.Text = "من الله ان في ما لا الذين الا علي\r\nولا وما الي قال لهم ومن ثم لكم";
             this.WordFrequencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.WordFrequencyLabel, resources.GetString("WordFrequencyLabel.ToolTip"));
             this.WordFrequencyLabel.Click += new System.EventHandler(this.LinkLabel_Click);

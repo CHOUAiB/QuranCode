@@ -226,7 +226,6 @@ partial class MainForm
             this.FindByTextSearchBlockSizeStationLabel = new System.Windows.Forms.Label();
             this.FindByTextRootSearchTypeLabel = new System.Windows.Forms.Label();
             this.FindByTextMultiplicityNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.FindByTextWithDiacriticsCheckBox = new System.Windows.Forms.CheckBox();
             this.FindByTextLabel = new System.Windows.Forms.Label();
             this.PositionsGroupBox = new System.Windows.Forms.GroupBox();
             this.DifferenceStatisticsLabel = new System.Windows.Forms.Label();
@@ -267,7 +266,6 @@ partial class MainForm
             this.FontComboBox = new System.Windows.Forms.ComboBox();
             this.WordsListBoxLabel = new System.Windows.Forms.Label();
             this.ClientSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.HyperlinkWordsCheckBox = new System.Windows.Forms.CheckBox();
             this.MainTextBox = new RichTextBoxEx();
             this.SearchResultTextBox = new RichTextBoxEx();
             this.HeaderPanel = new System.Windows.Forms.Panel();
@@ -497,6 +495,7 @@ partial class MainForm
             this.DNASequenceTextBox = new System.Windows.Forms.TextBox();
             this.UserTextTabPage = new System.Windows.Forms.TabPage();
             this.UserTextTextBox = new System.Windows.Forms.TextBox();
+            this.FindByTextWithDiacriticsCheckBox = new System.Windows.Forms.CheckBox();
             this.GoldenRatioTypeLabel = new System.Windows.Forms.Label();
             this.GoldenRatioOrderLabel = new System.Windows.Forms.Label();
             this.GoldenRatioScopeLabel = new System.Windows.Forms.Label();
@@ -2813,7 +2812,6 @@ partial class MainForm
             this.FindByTextPanel.Controls.Add(this.FindByTextWordnessCheckBox);
             this.FindByTextPanel.Controls.Add(this.FindByTextMultiplicityNumericUpDown);
             this.FindByTextPanel.Controls.Add(this.FindByTextCaseSensitiveCheckBox);
-            this.FindByTextPanel.Controls.Add(this.FindByTextWithDiacriticsCheckBox);
             this.FindByTextPanel.Controls.Add(this.FindByTextLabel);
             this.FindByTextPanel.Location = new System.Drawing.Point(4, 36);
             this.FindByTextPanel.Name = "FindByTextPanel";
@@ -4072,22 +4070,6 @@ partial class MainForm
             this.FindByTextMultiplicityNumericUpDown.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             this.FindByTextMultiplicityNumericUpDown.Leave += new System.EventHandler(this.FindByTextControls_Leave);
             // 
-            // FindByTextWithDiacriticsCheckBox
-            // 
-            this.FindByTextWithDiacriticsCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.FindByTextWithDiacriticsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FindByTextWithDiacriticsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FindByTextWithDiacriticsCheckBox.ForeColor = System.Drawing.Color.Navy;
-            this.FindByTextWithDiacriticsCheckBox.Location = new System.Drawing.Point(71, 1);
-            this.FindByTextWithDiacriticsCheckBox.Name = "FindByTextWithDiacriticsCheckBox";
-            this.FindByTextWithDiacriticsCheckBox.Size = new System.Drawing.Size(36, 17);
-            this.FindByTextWithDiacriticsCheckBox.TabIndex = 21;
-            this.FindByTextWithDiacriticsCheckBox.Text = "ā";
-            this.ToolTip.SetToolTip(this.FindByTextWithDiacriticsCheckBox, "with diacritics  مع الحركات");
-            this.FindByTextWithDiacriticsCheckBox.UseVisualStyleBackColor = false;
-            this.FindByTextWithDiacriticsCheckBox.CheckedChanged += new System.EventHandler(this.FindByTextWithDiacriticsCheckBox_CheckedChanged);
-            this.FindByTextWithDiacriticsCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-            // 
             // FindByTextLabel
             // 
             this.FindByTextLabel.BackColor = System.Drawing.Color.Transparent;
@@ -4746,7 +4728,6 @@ partial class MainForm
             // ClientSplitContainer.Panel1
             // 
             this.ClientSplitContainer.Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.ClientSplitContainer.Panel1.Controls.Add(this.HyperlinkWordsCheckBox);
             this.ClientSplitContainer.Panel1.Controls.Add(this.MainTextBox);
             this.ClientSplitContainer.Panel1.Controls.Add(this.SearchResultTextBox);
             this.ClientSplitContainer.Panel1.Controls.Add(this.HeaderPanel);
@@ -4763,21 +4744,6 @@ partial class MainForm
             this.ClientSplitContainer.TabIndex = 6;
             this.ClientSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.ClientSplitContainer_SplitterMoved);
             this.ClientSplitContainer.Resize += new System.EventHandler(this.ClientSplitContainer_Resize);
-            // 
-            // HyperlinkWordsCheckBox
-            // 
-            this.HyperlinkWordsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.HyperlinkWordsCheckBox.AutoSize = true;
-            this.HyperlinkWordsCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.HyperlinkWordsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HyperlinkWordsCheckBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.HyperlinkWordsCheckBox.Location = new System.Drawing.Point(6, 430);
-            this.HyperlinkWordsCheckBox.Name = "HyperlinkWordsCheckBox";
-            this.HyperlinkWordsCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.HyperlinkWordsCheckBox.TabIndex = 70;
-            this.ToolTip.SetToolTip(this.HyperlinkWordsCheckBox, "Ctrl");
-            this.HyperlinkWordsCheckBox.UseVisualStyleBackColor = false;
-            this.HyperlinkWordsCheckBox.CheckedChanged += new System.EventHandler(this.HyperlinkWordsCheckBox_CheckedChanged);
             // 
             // MainTextBox
             // 
@@ -5008,7 +4974,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(821, 195);
+            this.TabControl.Size = new System.Drawing.Size(821, 197);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5021,7 +4987,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(813, 169);
+            this.TranslationTabPage.Size = new System.Drawing.Size(813, 171);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = " Translation ";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse";
@@ -5215,7 +5181,7 @@ partial class MainForm
             this.TafseerTabPage.Location = new System.Drawing.Point(4, 22);
             this.TafseerTabPage.Name = "TafseerTabPage";
             this.TafseerTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TafseerTabPage.Size = new System.Drawing.Size(813, 169);
+            this.TafseerTabPage.Size = new System.Drawing.Size(813, 171);
             this.TafseerTabPage.TabIndex = 191;
             this.TafseerTabPage.Text = " Tafseer ";
             this.TafseerTabPage.ToolTipText = "Exegesis/commentry of the current chapter/verse";
@@ -5240,7 +5206,7 @@ partial class MainForm
             this.TafseerWebBrowser.Location = new System.Drawing.Point(3, 3);
             this.TafseerWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.TafseerWebBrowser.Name = "TafseerWebBrowser";
-            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 163);
+            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 165);
             this.TafseerWebBrowser.TabIndex = 1;
             // 
             // GrammarTabPage
@@ -5249,7 +5215,7 @@ partial class MainForm
             this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
             this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
             this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(813, 169);
+            this.GrammarTabPage.Size = new System.Drawing.Size(813, 171);
             this.GrammarTabPage.TabIndex = 193;
             this.GrammarTabPage.Text = " Grammar";
             this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
@@ -5281,7 +5247,7 @@ partial class MainForm
             this.VerbFormsTabPage.Controls.Add(this.VerbFormsTextBox);
             this.VerbFormsTabPage.Location = new System.Drawing.Point(4, 22);
             this.VerbFormsTabPage.Name = "VerbFormsTabPage";
-            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 169);
+            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 171);
             this.VerbFormsTabPage.TabIndex = 196;
             this.VerbFormsTabPage.Text = "Verb Forms";
             this.VerbFormsTabPage.ToolTipText = "Verb forms for the current word in Arabic";
@@ -5314,7 +5280,7 @@ partial class MainForm
             this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
             this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
             this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 169);
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 171);
             this.RelatedWordsTabPage.TabIndex = 192;
             this.RelatedWordsTabPage.Text = "Related Words ";
             this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
@@ -5368,7 +5334,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 169);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 171);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]";
@@ -5442,7 +5408,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(813, 169);
+            this.MathsTabPage.Size = new System.Drawing.Size(813, 171);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations";
@@ -5556,7 +5522,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(813, 169);
+            this.MathsPanel.Size = new System.Drawing.Size(813, 171);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -6844,7 +6810,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(813, 169);
+            this.DistancesTabPage.Size = new System.Drawing.Size(813, 171);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word.";
@@ -6920,7 +6886,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(813, 169);
+            this.DistancesPanel.Size = new System.Drawing.Size(813, 171);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -7763,7 +7729,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 169);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 171);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
@@ -7859,7 +7825,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 169);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 171);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
@@ -7978,7 +7944,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 169);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 171);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
@@ -8055,7 +8021,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(813, 169);
+            this.UserTextTabPage.Size = new System.Drawing.Size(813, 171);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any text using the current value-letter system and show it" +
@@ -8089,6 +8055,22 @@ partial class MainForm
             this.UserTextTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseDown);
             this.UserTextTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseMove);
             this.UserTextTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseUp);
+            // 
+            // FindByTextWithDiacriticsCheckBox
+            // 
+            this.FindByTextWithDiacriticsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.FindByTextWithDiacriticsCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.FindByTextWithDiacriticsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.FindByTextWithDiacriticsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindByTextWithDiacriticsCheckBox.ForeColor = System.Drawing.Color.Navy;
+            this.FindByTextWithDiacriticsCheckBox.Location = new System.Drawing.Point(140, 170);
+            this.FindByTextWithDiacriticsCheckBox.Name = "FindByTextWithDiacriticsCheckBox";
+            this.FindByTextWithDiacriticsCheckBox.Size = new System.Drawing.Size(15, 17);
+            this.FindByTextWithDiacriticsCheckBox.TabIndex = 21;
+            this.ToolTip.SetToolTip(this.FindByTextWithDiacriticsCheckBox, "with diacritics  مع الحركات");
+            this.FindByTextWithDiacriticsCheckBox.UseVisualStyleBackColor = false;
+            this.FindByTextWithDiacriticsCheckBox.CheckedChanged += new System.EventHandler(this.FindByTextWithDiacriticsCheckBox_CheckedChanged);
+            this.FindByTextWithDiacriticsCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
             // GoldenRatioTypeLabel
             // 
@@ -8389,6 +8371,7 @@ partial class MainForm
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LetterFrequencyPanel.BackColor = System.Drawing.Color.LightSteelBlue;
             this.LetterFrequencyPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.LetterFrequencyPanel.Controls.Add(this.FindByTextWithDiacriticsCheckBox);
             this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyListView);
             this.LetterFrequencyPanel.Controls.Add(this.FindByFrequncyPanel);
             this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencySumLabel);
@@ -10319,7 +10302,6 @@ partial class MainForm
             this.ChapterGroupBox.PerformLayout();
             this.WordsListBoxContextMenuStrip.ResumeLayout(false);
             this.ClientSplitContainer.Panel1.ResumeLayout(false);
-            this.ClientSplitContainer.Panel1.PerformLayout();
             this.ClientSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ClientSplitContainer)).EndInit();
             this.ClientSplitContainer.ResumeLayout(false);
@@ -10827,7 +10809,6 @@ partial class MainForm
     private System.Windows.Forms.ComboBox ValuesSequenceScopeComboBox;
     private System.Windows.Forms.TextBox ValuesSequenceTextBox;
     private System.Windows.Forms.Label ValuesSequenceInspectLabel;
-    private System.Windows.Forms.CheckBox HyperlinkWordsCheckBox;
     private System.Windows.Forms.Panel PCIndexChainPanel;
     private System.Windows.Forms.TextBox CPIndexChainR2LTextBox;
     private System.Windows.Forms.TextBox PCIndexChainL2RTextBox;

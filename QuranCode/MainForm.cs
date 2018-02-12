@@ -390,7 +390,6 @@ public partial class MainForm : Form, ISubscriber
 
                                 // must be before DisplaySelection for Verse.IncludeNumber to take effect
                                 ApplyWordWrapSettings();
-                                HyperlinkWordsCheckBox.Checked = m_is_hyperlink_words;
 
                                 m_player_looping = !m_player_looping;
                                 PlayerRepeatLabel_Click(null, null);
@@ -1997,7 +1996,7 @@ public partial class MainForm : Form, ISubscriber
                                                     }
                                                     catch
                                                     {
-                                                        m_word_number_scope = NumberScope.NumberInVerse;
+                                                        m_word_number_scope = NumberScope.Number;
                                                     }
                                                 }
                                                 break;
@@ -2009,7 +2008,7 @@ public partial class MainForm : Form, ISubscriber
                                                     }
                                                     catch
                                                     {
-                                                        m_verse_number_scope = NumberScope.NumberInChapter;
+                                                        m_verse_number_scope = NumberScope.Number;
                                                     }
                                                 }
                                                 break;
@@ -2146,18 +2145,6 @@ public partial class MainForm : Form, ISubscriber
                                                     catch
                                                     {
                                                         m_word_wrap_search_textbox = false;
-                                                    }
-                                                }
-                                                break;
-                                            case "HyperlinkWords":
-                                                {
-                                                    try
-                                                    {
-                                                        m_is_hyperlink_words = bool.Parse(parts[1].Trim());
-                                                    }
-                                                    catch
-                                                    {
-                                                        m_is_hyperlink_words = false;
                                                     }
                                                 }
                                                 break;
@@ -2599,7 +2586,6 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine("[Display]");
                     writer.WriteLine("MainTextWordWrap" + "=" + m_word_wrap_main_textbox);
                     writer.WriteLine("SearchResultWordWrap" + "=" + m_word_wrap_search_textbox);
-                    writer.WriteLine("HyperlinkWords" + "=" + m_is_hyperlink_words);
                     if (m_client != null)
                     {
                         if (m_client.Selection != null)
@@ -3184,7 +3170,7 @@ public partial class MainForm : Form, ISubscriber
         {
             ClearFindMatches();
 
-            m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Anywhere, TextLocationInVerse.Anywhere, TextLocationInWord.Anywhere, TextWordness.Any, false, false, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+            m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Anywhere, TextLocationInVerse.Anywhere, TextLocationInWord.Anywhere, TextWordness.WholeWord, false, false, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
             if (m_client.FoundPhrases != null)
             {
                 int phrase_count = GetPhraseCount(m_client.FoundPhrases);
@@ -4203,19 +4189,15 @@ public partial class MainForm : Form, ISubscriber
                 this.Text = Application.ProductName + " | " + GetSelectionSummary();
                 UpdateFindMatchCaption();
 
-                string word_info = null;
-                if ((ModifierKeys == Keys.Control) || m_is_hyperlink_words)
+                string word_info = GetWordInfo(m_clicked_word);
+                if (ModifierKeys == Keys.Control)
                 {
-                    word_info = GetWordInfo(m_clicked_word) + "\r\n\r\n";
+                    word_info += "\r\n\r\n";
                     if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
                     {
                         word_info += GetWordGrammar(m_clicked_word) + "\r\n\r\n";
                     }
                     word_info += GetWordRelatedWords(m_clicked_word);
-                }
-                else
-                {
-                    word_info = GetWordSummary(m_clicked_word);
                 }
                 ToolTip.SetToolTip(m_active_textbox, word_info);
 
@@ -4239,7 +4221,7 @@ public partial class MainForm : Form, ISubscriber
     }
     private void MainTextBox_MouseUp(object sender, MouseEventArgs e)
     {
-        if ((ModifierKeys == Keys.Control) || m_is_hyperlink_words)
+        if (ModifierKeys == Keys.Control)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -12294,17 +12276,6 @@ public partial class MainForm : Form, ISubscriber
     ///////////////////////////////////////////////////////////////////////////////
     private Word m_clicked_word = null;
     private Word m_info_word = null;
-    private bool m_is_hyperlink_words = false;
-    private string GetWordSummary(Word word)
-    {
-        if (word != null)
-        {
-            return
-                word.Transliteration + SPACE_GAP +
-                word.Meaning;
-        }
-        return null;
-    }
     private string GetWordInfo(Word word)
     {
         if (word != null)
@@ -12613,15 +12584,11 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void HyperlinkWordsCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-        m_is_hyperlink_words = HyperlinkWordsCheckBox.Checked;
-    }
     private void UpdateMouseCursor()
     {
         if (m_active_textbox != null)
         {
-            if ((ModifierKeys == Keys.Control) || m_is_hyperlink_words)
+            if (ModifierKeys == Keys.Control)
             {
                 // stop cursor flicker
                 if (m_active_textbox.Cursor != Cursors.Hand)
@@ -15225,6 +15192,8 @@ public partial class MainForm : Form, ISubscriber
     }
 
     private NumberScope m_distances_running_chapter_number_scope = NumberScope.Number;
+    private NumberScope m_distances_running_verse_number_scope = NumberScope.Number;
+    private NumberScope m_distances_running_word_number_scope = NumberScope.Number;
     private void DistancesRunningChapterNumberScopeLabel_Click(object sender, EventArgs e)
     {
         Verse verse = GetVerseAtCursor();
@@ -15244,7 +15213,6 @@ public partial class MainForm : Form, ISubscriber
             UpdateVerseDistances(verse);
         }
     }
-    private NumberScope m_distances_running_verse_number_scope = NumberScope.NumberInChapter;
     private void DistancesRunningVerseNumberScopeLabel_Click(object sender, EventArgs e)
     {
         Verse verse = GetVerseAtCursor();
@@ -15269,7 +15237,6 @@ public partial class MainForm : Form, ISubscriber
             UpdateVerseDistances(verse);
         }
     }
-    private NumberScope m_distances_running_word_number_scope = NumberScope.NumberInVerse;
     private void DistancesRunningWordNumberScopeLabel_Click(object sender, EventArgs e)
     {
         Verse verse = GetVerseAtCursor();
@@ -20479,6 +20446,9 @@ public partial class MainForm : Form, ISubscriber
                 m_client.Book.WithDiacritics = m_with_diacritics;
 
                 PopulateWordsListBox();
+
+                BuildLetterFrequencies();
+                DisplayLetterFrequencies();
             }
         }
     }
@@ -21659,8 +21629,8 @@ public partial class MainForm : Form, ISubscriber
     {
         FindByNumbersControls_Enter(null, null);
     }
-    private NumberScope m_word_number_scope = NumberScope.NumberInVerse;
-    private NumberScope m_verse_number_scope = NumberScope.NumberInChapter;
+    private NumberScope m_word_number_scope = NumberScope.Number;
+    private NumberScope m_verse_number_scope = NumberScope.Number;
     private NumberScope m_chapter_number_scope = NumberScope.Number;
     private void UpdateFindByNumbersNumberLabel()
     {
@@ -24319,12 +24289,12 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Display Search Results
     ///////////////////////////////////////////////////////////////////////////////
-    // F3 and Shift+F3 Goto next/previous matches
     private struct FindMatch
     {
         public int Start;
         public int Length;
     }
+    // F3 and Shift+F3 Goto next/previous matches
     private List<FindMatch> m_find_matches = null;
     private void BuildFindMatch(int start, int length)
     {
@@ -24551,7 +24521,6 @@ public partial class MainForm : Form, ISubscriber
             SearchResultTextBox.Visible = false;
             MainTextBox.Visible = true;
             m_active_textbox = MainTextBox;
-            HyperlinkWordsCheckBox.BringToFront();
 
             UpdateWordWrapLabel(m_active_textbox.WordWrap);
             ValuesSequenceTextBox.WordWrap = m_active_textbox.WordWrap;
@@ -24581,7 +24550,6 @@ public partial class MainForm : Form, ISubscriber
             MainTextBox.Visible = false;
             SearchResultTextBox.Visible = true;
             m_active_textbox = SearchResultTextBox;
-            HyperlinkWordsCheckBox.BringToFront();
             //m_active_textbox.Refresh();
 
             UpdateWordWrapLabel(m_active_textbox.WordWrap);
@@ -24614,11 +24582,6 @@ public partial class MainForm : Form, ISubscriber
                     ZoomInLabel.Enabled = (m_text_zoom_factor <= (m_max_zoom_factor - m_zoom_factor_increment + m_error_margin));
                     ZoomOutLabel.Enabled = (m_text_zoom_factor >= (m_min_zoom_factor + m_zoom_factor_increment - m_error_margin));
 
-                    // phrase statistics
-                    int word_count = 0;
-                    int letter_count = 0;
-                    long value = 0L;
-
                     if (colorize_chapters_by_matches)
                     {
                         if (m_client.Book != null)
@@ -24637,11 +24600,6 @@ public partial class MainForm : Form, ISubscriber
                                                 m_matches_per_chapter[phrase.Verse.Chapter.SortedNumber - 1]++;
                                             }
                                         }
-
-                                        // phrase statistics
-                                        word_count += phrase.Text.Split(' ').Length;
-                                        letter_count += phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Length;
-                                        value += m_client.CalculateValue(phrase.Text);
                                     }
                                 }
                             }
@@ -24691,6 +24649,50 @@ public partial class MainForm : Form, ISubscriber
                     BuildLetterFrequencies();
                     DisplayLetterFrequencies();
 
+                    // phrase statistics
+                    int word_count = 0;
+                    int letter_count = 0;
+                    long value = 0L;
+                    foreach (Phrase phrase in m_client.FoundPhrases)
+                    {
+                        if (phrase != null)
+                        {
+                            word_count += phrase.Text.Split(' ').Length;
+                            string phrase_nospaces = phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Replace(" ", "");
+                            letter_count += phrase_nospaces.Length;
+                            value += m_client.CalculateValue(phrase.Text);
+                        }
+                    }
+                    if (m_client.FoundPhrases.Count > 0)
+                    {
+                        WordsTextBox.Text = Radix.Encode(word_count, m_radix);
+                        WordsTextBox.ForeColor = GetNumberTypeColor(WordsTextBox.Text, m_radix);
+                        WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+                        WordsTextBox.Refresh();
+                        DecimalWordsTextBox.Text = word_count.ToString();
+                        DecimalWordsTextBox.ForeColor = GetNumberTypeColor(word_count);
+                        DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                        DecimalWordsTextBox.Refresh();
+                        LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
+                        LettersTextBox.ForeColor = GetNumberTypeColor(LettersTextBox.Text, m_radix);
+                        LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+                        LettersTextBox.Refresh();
+                        DecimalLettersTextBox.Text = letter_count.ToString();
+                        DecimalLettersTextBox.ForeColor = GetNumberTypeColor(letter_count);
+                        DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                        DecimalLettersTextBox.Refresh();
+                        ValueTextBox.Text = Radix.Encode(value, m_radix);
+                        ValueTextBox.ForeColor = GetNumberTypeColor(value);
+                        ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
+                        ValueTextBox.SelectionLength = 0;
+                        ValueTextBox.Refresh();
+                        DecimalValueTextBox.Text = value.ToString();
+                        DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                        DecimalValueTextBox.ForeColor = GetNumberTypeColor(value);
+                        DecimalValueTextBox.Refresh();
+                        FactorizeValue(value, "Phrases", true);
+                    }
+
                     if (m_client.FoundPhrases != null)
                     {
                         ColorizePhrases();
@@ -24707,38 +24709,6 @@ public partial class MainForm : Form, ISubscriber
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
                     DisplayDNASequence();
-
-                    // phrase statistics
-                    WordsTextBox.Text = Radix.Encode(word_count, m_radix);
-                    WordsTextBox.ForeColor = GetNumberTypeColor(WordsTextBox.Text, m_radix);
-                    WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
-                    WordsTextBox.Refresh();
-
-                    DecimalWordsTextBox.Text = word_count.ToString();
-                    DecimalWordsTextBox.ForeColor = GetNumberTypeColor(word_count);
-                    DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
-                    DecimalWordsTextBox.Refresh();
-
-                    LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
-                    LettersTextBox.ForeColor = GetNumberTypeColor(LettersTextBox.Text, m_radix);
-                    LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
-                    LettersTextBox.Refresh();
-
-                    DecimalLettersTextBox.Text = letter_count.ToString();
-                    DecimalLettersTextBox.ForeColor = GetNumberTypeColor(letter_count);
-                    DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
-                    DecimalLettersTextBox.Refresh();
-
-                    ValueTextBox.Text = Radix.Encode(value, m_radix);
-                    ValueTextBox.ForeColor = GetNumberTypeColor(value);
-                    ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
-                    ValueTextBox.SelectionLength = 0;
-                    ValueTextBox.Refresh();
-
-                    DecimalValueTextBox.Text = value.ToString();
-                    DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
-                    DecimalValueTextBox.ForeColor = GetNumberTypeColor(value);
-                    DecimalValueTextBox.Refresh();
 
 
                     if (add_to_history)
@@ -30329,11 +30299,11 @@ public partial class MainForm : Form, ISubscriber
 
                 if (m_current_phrase.Length > 0)
                 {
-                    m_client.BuildLetterStatistics(m_current_text, m_current_phrase, m_frequency_search_type);
+                    m_client.BuildLetterStatistics(m_current_text, m_current_phrase, m_frequency_search_type, m_with_diacritics);
                 }
                 else
                 {
-                    m_client.BuildLetterStatistics(m_current_text);
+                    m_client.BuildLetterStatistics(m_current_text, m_with_diacritics);
                 }
             }
             else
