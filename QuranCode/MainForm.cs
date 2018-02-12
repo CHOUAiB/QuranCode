@@ -4023,7 +4023,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                     else
                     {
-                        ChaptersInspectLabel.Visible = true;
+                        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
                         WordsListBoxLabel.Visible = false;
                         WordsListBox.Visible = false;
                         WordsListBox.SendToBack();
@@ -4328,7 +4328,7 @@ public partial class MainForm : Form, ISubscriber
                                     m_user_text_mode = false;
                                     m_selection_mode = false;
 
-                                    ChaptersInspectLabel.Visible = true;
+                                    ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
                                     WordsListBoxLabel.Visible = false;
                                     WordsListBox.Visible = false;
                                     WordsListBox.SendToBack();
@@ -7744,51 +7744,58 @@ public partial class MainForm : Form, ISubscriber
         if (m_client.Book == null) return;
         if (m_client.Selection == null) return;
 
-        List<Chapter> chapters = null;
-        if (m_found_verses_displayed)
+        if (WordsListBox.Visible)
         {
-            chapters = m_client.Book.GetChapters(m_client.FoundVerses);
+            SaveWordFrequenciesMenuItem_Click(sender, e);
         }
         else
         {
-            chapters = m_client.Selection.Chapters;
-        }
-        string result = null;
-        if (chapters != null)
-        {
-            result = DisplayChapterInformation(chapters);
-        }
-
-        StringBuilder str = new StringBuilder();
-        foreach (Chapter chapter in chapters)
-        {
-            str.Append("." + chapter.SortedNumber);
-        }
-        if (str.Length > 100)
-        {
-            str.Remove(100, str.Length - 100);
-            int pos = str.ToString().LastIndexOf('.');
-            if (pos > -1)
+            List<Chapter> chapters = null;
+            if (m_found_verses_displayed)
             {
-                str.Remove(pos, str.Length - pos);
-            }
-
-            if (str[str.Length - 1] == '.')
-            {
-                str.Append("..");
+                chapters = m_client.Book.GetChapters(m_client.FoundVerses);
             }
             else
             {
-                str.Append("...");
+                chapters = m_client.Selection.Chapters;
             }
-        }
+            string result = null;
+            if (chapters != null)
+            {
+                result = DisplayChapterInformation(chapters);
+            }
 
-        string filename = m_client.NumerologySystem.Name + "_" + "Chapters" + m_chapter_sort_method.ToString() + m_chapter_sort_order.ToString() + str.ToString() + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.STATISTICS_FOLDER))
-        {
-            string path = Globals.STATISTICS_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
+            StringBuilder str = new StringBuilder();
+            foreach (Chapter chapter in chapters)
+            {
+                str.Append("." + chapter.SortedNumber);
+            }
+            if (str.Length > 100)
+            {
+                str.Remove(100, str.Length - 100);
+                int pos = str.ToString().LastIndexOf('.');
+                if (pos > -1)
+                {
+                    str.Remove(pos, str.Length - pos);
+                }
+
+                if (str[str.Length - 1] == '.')
+                {
+                    str.Append("..");
+                }
+                else
+                {
+                    str.Append("...");
+                }
+            }
+
+            string filename = m_client.NumerologySystem.Name + "_" + "Chapters" + m_chapter_sort_method.ToString() + m_chapter_sort_order.ToString() + str.ToString() + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.STATISTICS_FOLDER))
+            {
+                string path = Globals.STATISTICS_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, result);
+                FileHelper.DisplayFile(path);
+            }
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -8490,7 +8497,7 @@ public partial class MainForm : Form, ISubscriber
             m_user_text_mode = false;
             m_selection_mode = true;
 
-            ChaptersInspectLabel.Visible = true;
+            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters"); 
             WordsListBoxLabel.Visible = false;
             WordsListBox.Visible = false;
             WordsListBox.SendToBack();
@@ -19223,7 +19230,6 @@ public partial class MainForm : Form, ISubscriber
         }
         else
         {
-            ChaptersInspectLabel.Visible = true;
             WordsListBoxLabel.Visible = false;
             WordsListBox.Visible = false;
             WordsListBox.SendToBack();
@@ -20116,7 +20122,6 @@ public partial class MainForm : Form, ISubscriber
                     m_find_result_header = phrase_count + " matches in " + verse_count + ((verse_count == 1) ? " verse" : " verses") + " with " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " in " + m_client.SearchScope.ToString();
                     DisplayFoundVerses(true, true);
 
-                    ChaptersInspectLabel.Visible = true;
                     WordsListBoxLabel.Visible = false;
                     WordsListBox.Visible = false;
 
@@ -20229,7 +20234,7 @@ public partial class MainForm : Form, ISubscriber
     {
         //if (!WordsListBox.Focused)
         //{
-        //    ChaptersInspectLabel.Visible = true;
+        //    ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
         //    WordsListBoxLabel.Visible = false;
         //    WordsListBox.Visible = false;
         //}
@@ -20549,7 +20554,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ChaptersInspectLabel.Visible = false;
+        ToolTip.SetToolTip(ChaptersInspectLabel, "Save Word Frequency");
         WordsListBoxLabel.Visible = true;
         WordsListBox.Visible = true;
         WordsListBoxLabel.BringToFront();
@@ -21497,7 +21502,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ChaptersInspectLabel.Visible = true;
+        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -22842,7 +22847,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ChaptersInspectLabel.Visible = true;
+        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -23552,7 +23557,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = true;
         FindByFrequencyButton.Enabled = false;
 
-        ChaptersInspectLabel.Visible = true;
+        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -23981,7 +23986,7 @@ public partial class MainForm : Form, ISubscriber
                                         ||
                                         ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
 
-        ChaptersInspectLabel.Visible = true;
+        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -26035,7 +26040,7 @@ public partial class MainForm : Form, ISubscriber
 
                 FindByTextTextBox.Text = null;
 
-                ChaptersInspectLabel.Visible = true;
+                ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
                 WordsListBoxLabel.Visible = false;
                 WordsListBox.Visible = false;
 
