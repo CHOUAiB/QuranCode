@@ -259,7 +259,6 @@ partial class MainForm
             this.WordsListBox = new System.Windows.Forms.ListBox();
             this.WordsListBoxContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.FindSelectedWordsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SaveWordFrequenciesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PinChapter1CheckBox = new System.Windows.Forms.CheckBox();
             this.ChaptersListBox = new ListBoxEx();
             this.ChaptersInspectLabel = new System.Windows.Forms.Label();
@@ -4621,24 +4620,16 @@ partial class MainForm
             // WordsListBoxContextMenuStrip
             // 
             this.WordsListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FindSelectedWordsMenuItem,
-            this.SaveWordFrequenciesMenuItem});
+            this.FindSelectedWordsMenuItem});
             this.WordsListBoxContextMenuStrip.Name = "WordsListBoxContextMenuStrip";
-            this.WordsListBoxContextMenuStrip.Size = new System.Drawing.Size(99, 48);
+            this.WordsListBoxContextMenuStrip.Size = new System.Drawing.Size(153, 48);
             // 
             // FindSelectedWordsMenuItem
             // 
             this.FindSelectedWordsMenuItem.Name = "FindSelectedWordsMenuItem";
-            this.FindSelectedWordsMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.FindSelectedWordsMenuItem.Size = new System.Drawing.Size(152, 22);
             this.FindSelectedWordsMenuItem.Text = "Find";
             this.FindSelectedWordsMenuItem.Click += new System.EventHandler(this.FindSelectedWordsMenuItem_Click);
-            // 
-            // SaveWordFrequenciesMenuItem
-            // 
-            this.SaveWordFrequenciesMenuItem.Name = "SaveWordFrequenciesMenuItem";
-            this.SaveWordFrequenciesMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.SaveWordFrequenciesMenuItem.Text = "Save";
-            this.SaveWordFrequenciesMenuItem.Click += new System.EventHandler(this.SaveWordFrequenciesMenuItem_Click);
             // 
             // PinChapter1CheckBox
             // 
@@ -4974,7 +4965,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(821, 194);
+            this.TabControl.Size = new System.Drawing.Size(821, 195);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -10481,7 +10472,6 @@ partial class MainForm
     private System.Windows.Forms.NumericUpDown BowingNumericUpDown;
     private System.Windows.Forms.NumericUpDown StationNumericUpDown;
     private System.Windows.Forms.ContextMenuStrip WordsListBoxContextMenuStrip;
-    private System.Windows.Forms.ToolStripMenuItem SaveWordFrequenciesMenuItem;
     private System.Windows.Forms.Label LetterFrequencyCountLabel;
     private System.Windows.Forms.CheckedListBox TranslatorsCheckedListBox;
     private System.Windows.Forms.Panel ValuePanel;

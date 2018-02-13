@@ -2778,9 +2778,9 @@ public partial class MainForm : Form, ISubscriber
         this.ToolTip.SetToolTip(this.VerseNumericUpDown, "ءاية" + "\r\n" + "V, V-V, ...");
         this.ToolTip.SetToolTip(this.WordNumericUpDown, "كلمة" + "\r\n" + "W, W-W, ...");
         this.ToolTip.SetToolTip(this.LetterNumericUpDown, "حرف" + "\r\n" + "L, L-L, ...");
-        this.ToolTip.SetToolTip(this.SearchScopeBookLabel, "Search in entire book");
-        this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, "Search in current selection");
-        this.ToolTip.SetToolTip(this.SearchScopeResultLabel, "Search in current search result");
+        this.ToolTip.SetToolTip(this.SearchScopeBookLabel, "Search in entire book  إبحث في الكتاب");
+        this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, "Search in current selection  إبحث في النص المعروض");
+        this.ToolTip.SetToolTip(this.SearchScopeResultLabel, "Search in current search result  إبحث في النتائج");
         this.ToolTip.SetToolTip(this.FindByTextTextBox, "text to search for in Arabic or any installed language");
         this.ToolTip.SetToolTip(this.FindByTextWordnessCheckBox, "find verses with whole word only");
         this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, "case sensitive for non-Arabic languages");
@@ -7746,7 +7746,7 @@ public partial class MainForm : Form, ISubscriber
 
         if (WordsListBox.Visible)
         {
-            SaveWordFrequenciesMenuItem_Click(sender, e);
+            InspectWordFrequencies();
         }
         else
         {
@@ -8497,7 +8497,7 @@ public partial class MainForm : Form, ISubscriber
             m_user_text_mode = false;
             m_selection_mode = true;
 
-            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters"); 
+            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
             WordsListBoxLabel.Visible = false;
             WordsListBox.Visible = false;
             WordsListBox.SendToBack();
@@ -20129,7 +20129,7 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void SaveWordFrequenciesMenuItem_Click(object sender, EventArgs e)
+    private void InspectWordFrequencies()
     {
         this.Cursor = Cursors.WaitCursor;
         try
@@ -20554,7 +20554,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(ChaptersInspectLabel, "Save Word Frequency");
+        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect word frequencies");
         WordsListBoxLabel.Visible = true;
         WordsListBox.Visible = true;
         WordsListBoxLabel.BringToFront();
@@ -24651,52 +24651,17 @@ public partial class MainForm : Form, ISubscriber
 
                     CalculateCurrentValue();
 
-                    BuildLetterFrequencies();
-                    DisplayLetterFrequencies();
-
                     // phrase statistics
-                    int word_count = 0;
-                    int letter_count = 0;
-                    long value = 0L;
-                    foreach (Phrase phrase in m_client.FoundPhrases)
+                    if (m_client.FoundPhrases != null)
                     {
-                        if (phrase != null)
+                        if (m_client.FoundPhrases.Count > 0)
                         {
-                            word_count += phrase.Text.Split(' ').Length;
-                            string phrase_nospaces = phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Replace(" ", "");
-                            letter_count += phrase_nospaces.Length;
-                            value += m_client.CalculateValue(phrase.Text);
+                            CalcuaatePhraseStatistics();
                         }
                     }
-                    if (m_client.FoundPhrases.Count > 0)
-                    {
-                        WordsTextBox.Text = Radix.Encode(word_count, m_radix);
-                        WordsTextBox.ForeColor = GetNumberTypeColor(WordsTextBox.Text, m_radix);
-                        WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
-                        WordsTextBox.Refresh();
-                        DecimalWordsTextBox.Text = word_count.ToString();
-                        DecimalWordsTextBox.ForeColor = GetNumberTypeColor(word_count);
-                        DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
-                        DecimalWordsTextBox.Refresh();
-                        LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
-                        LettersTextBox.ForeColor = GetNumberTypeColor(LettersTextBox.Text, m_radix);
-                        LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
-                        LettersTextBox.Refresh();
-                        DecimalLettersTextBox.Text = letter_count.ToString();
-                        DecimalLettersTextBox.ForeColor = GetNumberTypeColor(letter_count);
-                        DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
-                        DecimalLettersTextBox.Refresh();
-                        ValueTextBox.Text = Radix.Encode(value, m_radix);
-                        ValueTextBox.ForeColor = GetNumberTypeColor(value);
-                        ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
-                        ValueTextBox.SelectionLength = 0;
-                        ValueTextBox.Refresh();
-                        DecimalValueTextBox.Text = value.ToString();
-                        DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
-                        DecimalValueTextBox.ForeColor = GetNumberTypeColor(value);
-                        DecimalValueTextBox.Refresh();
-                        FactorizeValue(value, "Phrases", true);
-                    }
+
+                    BuildLetterFrequencies();
+                    DisplayLetterFrequencies();
 
                     if (m_client.FoundPhrases != null)
                     {
@@ -24739,6 +24704,54 @@ public partial class MainForm : Form, ISubscriber
             SearchResultTextBox.TextChanged += new EventHandler(MainTextBox_TextChanged);
             this.Cursor = Cursors.Default;
         }
+    }
+    private void CalcuaatePhraseStatistics()
+    {
+        StringBuilder phrase_str = new StringBuilder();
+        int word_count = 0;
+        int letter_count = 0;
+        long value = 0L;
+        foreach (Phrase phrase in m_client.FoundPhrases)
+        {
+            if (phrase != null)
+            {
+                phrase_str.AppendLine(phrase.Text);
+                word_count += phrase.Text.Split(' ').Length;
+                string phrase_nospaces = phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Replace(" ", "");
+                letter_count += phrase_nospaces.Length;
+                value += m_client.CalculateValue(phrase.Text);
+            }
+        }
+
+        WordsTextBox.Text = Radix.Encode(word_count, m_radix);
+        WordsTextBox.ForeColor = GetNumberTypeColor(WordsTextBox.Text, m_radix);
+        WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+        WordsTextBox.Refresh();
+        DecimalWordsTextBox.Text = word_count.ToString();
+        DecimalWordsTextBox.ForeColor = GetNumberTypeColor(word_count);
+        DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
+        DecimalWordsTextBox.Refresh();
+        LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
+        LettersTextBox.ForeColor = GetNumberTypeColor(LettersTextBox.Text, m_radix);
+        LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+        LettersTextBox.Refresh();
+        DecimalLettersTextBox.Text = letter_count.ToString();
+        DecimalLettersTextBox.ForeColor = GetNumberTypeColor(letter_count);
+        DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
+        DecimalLettersTextBox.Refresh();
+        ValueTextBox.Text = Radix.Encode(value, m_radix);
+        ValueTextBox.ForeColor = GetNumberTypeColor(value);
+        ValueTextBox.BackColor = (Numbers.Compare(value, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
+        ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
+        ValueTextBox.SelectionLength = 0;
+        ValueTextBox.Refresh();
+        DecimalValueTextBox.Text = value.ToString();
+        DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
+        DecimalValueTextBox.ForeColor = GetNumberTypeColor(value);
+        DecimalValueTextBox.Refresh();
+        FactorizeValue(value, "Phrases", true);
+
+        m_current_text = phrase_str.ToString();
     }
     private void DisplayFoundVerseRanges(bool add_to_history, bool colorize_chapters_by_matches)
     {
@@ -27498,6 +27511,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 ValueTextBox.Text = Radix.Encode(value, m_radix);
                 ValueTextBox.ForeColor = GetNumberTypeColor(value);
+                ValueTextBox.BackColor = (Numbers.Compare(value, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
                 ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
                 ValueTextBox.SelectionLength = 0;
                 ValueTextBox.Refresh();
