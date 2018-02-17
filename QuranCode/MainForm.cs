@@ -4790,15 +4790,22 @@ public partial class MainForm : Form, ISubscriber
                 {
                     int start = GetVerseDisplayStart(m_previous_highlighted_verse);
                     int length = GetVerseDisplayLength(m_previous_highlighted_verse);
-                    m_active_textbox.ClearHighlight(start, length);
+                    if (m_found_verses_displayed)
+                    {
+                        m_active_textbox.Highlight(start, length, m_found_verse_backcolors[m_previous_highlighted_verse]);
+                    }
+                    else
+                    {
+                        m_active_textbox.ClearHighlight(start, length);
+                    }
                 }
-
+                
                 // highlight this verse
                 if (verse != null)
                 {
                     int start = GetVerseDisplayStart(verse);
                     int length = GetVerseDisplayLength(verse);
-                    m_active_textbox.Highlight(start, length - 1, Color.Lavender); // -1 so de-highlighting can clean the last \n at the end of all text
+                    m_active_textbox.Highlight(start, length, Color.Lavender);
 
                     // ####### re-wire MainTextBox_SelectionChanged event
                     m_active_textbox.EndUpdate();
@@ -4854,7 +4861,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 int start = GetWordDisplayStart(word);
                 int length = GetWordDisplayLength(word);
-                m_active_textbox.Highlight(start, length - 1, Color.Lavender); // -1 so de-highlighting can clean the last \n at the end of all text
+                m_active_textbox.Highlight(start, length, Color.Lavender);
 
                 // backup highlighted word
                 m_previous_highlighted_word = word;
@@ -25259,6 +25266,7 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
+    private Dictionary<Verse, Color> m_found_verse_backcolors = new Dictionary<Verse, Color>();
     private void HighlightVerses()
     {
         try
@@ -25270,6 +25278,8 @@ public partial class MainForm : Form, ISubscriber
 
             if (m_client != null)
             {
+                m_found_verse_backcolors.Clear();
+
                 Dictionary<Verse, int> phrases_per_verse_dictionary = new Dictionary<Verse, int>();
                 if (m_client.FoundPhrases != null)
                 {
@@ -25317,7 +25327,12 @@ public partial class MainForm : Form, ISubscriber
                                         blue = 0;
                                     }
 
-                                    SearchResultTextBox.Highlight(start, length, Color.FromArgb(red, green, blue));
+                                    m_found_verse_backcolors.Add(verse, Color.FromArgb(red, green, blue));
+                                    SearchResultTextBox.Highlight(start, length, m_found_verse_backcolors[verse]);
+                                }
+                                else
+                                {
+                                    m_found_verse_backcolors.Add(verse, SearchResultTextBox.BackColor);
                                 }
                             }
                         }
