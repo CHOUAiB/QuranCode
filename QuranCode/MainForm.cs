@@ -4799,7 +4799,7 @@ public partial class MainForm : Form, ISubscriber
                         m_active_textbox.ClearHighlight(start, length);
                     }
                 }
-                
+
                 // highlight this verse
                 if (verse != null)
                 {
@@ -25643,7 +25643,7 @@ public partial class MainForm : Form, ISubscriber
 
         StringBuilder str = new StringBuilder();
 
-        str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t" + "Verses" + "\t" + "Words" + "\t" + "Letters" + "\t");
+        str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t" + "Verses" + "\t" + "Words" + "\t" + "Letters" + "\t" + "Value" + "\t");
 
         NumerologySystem numerology_system = m_client.NumerologySystem;
         if (numerology_system != null)
@@ -25667,6 +25667,7 @@ public partial class MainForm : Form, ISubscriber
             int verse_sum = 0;
             int word_sum = 0;
             int letter_sum = 0;
+            long value_sum = 0L;
             foreach (Chapter chapter in chapters)
             {
                 count++;
@@ -25675,6 +25676,8 @@ public partial class MainForm : Form, ISubscriber
                 verse_sum += chapter.Verses.Count;
                 word_sum += chapter.WordCount;
                 letter_sum += chapter.LetterCount;
+                long value = m_client.CalculateValue(chapter);
+                value_sum += value;
 
                 str.Append(count + "\t");
                 str.Append(chapter.Name + "\t");
@@ -25682,6 +25685,7 @@ public partial class MainForm : Form, ISubscriber
                 str.Append(chapter.Verses.Count.ToString() + "\t");
                 str.Append(chapter.WordCount.ToString() + "\t");
                 str.Append(chapter.LetterCount.ToString() + "\t");
+                str.Append(value.ToString() + "\t");
 
                 if (numerology_system.LetterValues.Keys.Count > 0)
                 {
@@ -25702,7 +25706,7 @@ public partial class MainForm : Form, ISubscriber
             }
 
             str.Append("\r\n");
-            str.AppendLine(sum + "\t" + "Sum" + "\t" + chapter_sum + "\t" + verse_sum + "\t" + word_sum + "\t" + letter_sum);
+            str.AppendLine(sum + "\t" + "Sum" + "\t" + chapter_sum + "\t" + verse_sum + "\t" + word_sum + "\t" + letter_sum + "\t" + value_sum);
         }
         return str.ToString();
     }
@@ -25713,7 +25717,7 @@ public partial class MainForm : Form, ISubscriber
 
         StringBuilder str = new StringBuilder();
 
-        str.Append("#" + "\t" + "Number" + "\t" + "Chapter" + "\t" + "Verse" + "\t" + "Words" + "\t" + "Letters" + "\t");
+        str.Append("#" + "\t" + "Number" + "\t" + "Chapter" + "\t" + "Verse" + "\t" + "Words" + "\t" + "Letters" + "\t" + "Value" + "\t");
 
         NumerologySystem numerology_system = m_client.NumerologySystem;
         if (numerology_system != null)
@@ -25732,6 +25736,7 @@ public partial class MainForm : Form, ISubscriber
             int chapter_verse_sum = 0;
             int word_sum = 0;
             int letter_sum = 0;
+            long value_sum = 0L;
             foreach (Verse verse in verses)
             {
                 count++;
@@ -25741,6 +25746,8 @@ public partial class MainForm : Form, ISubscriber
                 chapter_verse_sum += verse.NumberInChapter;
                 word_sum += verse.Words.Count;
                 letter_sum += verse.LetterCount;
+                long value = m_client.CalculateValue(verse);
+                value_sum += value;
 
                 str.Append(count.ToString() + "\t");
                 str.Append(verse.Number.ToString() + "\t");
@@ -25748,6 +25755,7 @@ public partial class MainForm : Form, ISubscriber
                 str.Append(verse.NumberInChapter.ToString() + "\t");
                 str.Append(verse.Words.Count.ToString() + "\t");
                 str.Append(verse.LetterCount.ToString() + "\t");
+                str.Append(value.ToString() + "\t");
 
                 foreach (char character in numerology_system.LetterValues.Keys)
                 {
@@ -25769,7 +25777,7 @@ public partial class MainForm : Form, ISubscriber
             }
 
             str.Append("\r\n");
-            str.AppendLine(sum + "\t" + verse_sum + "\t" + chapter_sum + "\t" + chapter_verse_sum + "\t" + word_sum + "\t" + letter_sum);
+            str.AppendLine(sum + "\t" + verse_sum + "\t" + chapter_sum + "\t" + chapter_verse_sum + "\t" + word_sum + "\t" + letter_sum + "\t" + value_sum);
         }
         return str.ToString();
     }
