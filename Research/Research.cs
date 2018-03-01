@@ -10,6 +10,7 @@
 // Book.Bowings.Verses
 // Book.Pages.Verses
 // Verse.Words
+// Word.WordParts
 // Word.Letters
 // Client.Bookmarks
 // Client.Selection         // readonly, current selection (chapter, station, part, ... , verse, word, letter)
@@ -2951,6 +2952,41 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
+    public static void ChapterValues(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+
+        string result = DoChapterValues(client, chapters);
+
+        string filename = "ChapterValues" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void VerseValues(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoVerseValues(client, verses);
+
+        string filename = "VerseValues" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
     private static string DoChapterInformation(Client client, List<Chapter> chapters)
     {
         if (client == null) return null;
@@ -3310,6 +3346,132 @@ public static partial class Research
         }
         return str.ToString();
     }
+    private static string DoChapterValues(Client client, List<Chapter> chapters)
+    {
+        if (client == null) return null;
+        if (chapters == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t");
+        foreach (string key in client.LoadedNumerologySystems.Keys)
+        {
+            if (key.Contains("English")) continue;
+
+            if (key.StartsWith(client.NumerologySystem.TextMode))
+            {
+                str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
+            }
+        }
+        if (str.Length > 1)
+        {
+            str.Remove(str.Length - 1, 1); // \t
+        }
+        str.Append("\r\n");
+
+        int count = 0;
+        foreach (Chapter chapter in chapters)
+        {
+            count++;
+            str.Append(count.ToString() + "\t");
+            str.Append(chapter.Name + "\t");
+            str.Append(chapter.SortedNumber + "\t");
+            foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
+            {
+                if (numerology_system.Name.Contains("English")) continue;
+
+                if (numerology_system.TextMode == client.NumerologySystem.TextMode)
+                {
+                    long value = numerology_system.CalculateValue(chapter.Text);
+                    str.Append(value.ToString() + "\t");
+                }
+            }
+            if (str.Length > 1)
+            {
+                str.Remove(str.Length - 1, 1);
+            }
+            str.Append("\r\n");
+        }
+
+        string duplicates = GetDuplicateChapterValues(client, chapters);
+        if (duplicates.Length > 0)
+        {
+            str.AppendLine(duplicates);
+        }
+        else
+        {
+            str.AppendLine("No duplicate values.");
+        }
+
+        if (str.Length > 2)
+        {
+            str.Remove(str.Length - 2, 2);
+        }
+
+        return str.ToString();
+    }
+    private static string DoVerseValues(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("#" + "\t" + "Chapter" + "\t" + "Verse" + "\t");
+        foreach (string key in client.LoadedNumerologySystems.Keys)
+        {
+            if (key.Contains("English")) continue;
+
+            if (key.StartsWith(client.NumerologySystem.TextMode))
+            {
+                str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
+            }
+        }
+        if (str.Length > 1)
+        {
+            str.Remove(str.Length - 1, 1); // \t
+        }
+        str.Append("\r\n");
+
+        int count = 0;
+        foreach (Verse verse in verses)
+        {
+            count++;
+            str.Append(count.ToString() + "\t");
+            str.Append(verse.Chapter.SortedNumber + "\t");
+            str.Append(verse.NumberInChapter + "\t");
+            foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
+            {
+                if (numerology_system.Name.Contains("English")) continue;
+
+                if (numerology_system.TextMode == client.NumerologySystem.TextMode)
+                {
+                    long value = numerology_system.CalculateValue(verse.Text);
+                    str.Append(value.ToString() + "\t");
+                }
+            }
+            if (str.Length > 1)
+            {
+                str.Remove(str.Length - 1, 1);
+            }
+            str.Append("\r\n");
+        }
+
+        string duplicates = GetDuplicateVerseValues(client, verses);
+        if (duplicates.Length > 0)
+        {
+            str.AppendLine(duplicates);
+        }
+        else
+        {
+            str.AppendLine("No duplicate values.");
+        }
+
+        if (str.Length > 2)
+        {
+            str.Remove(str.Length - 2, 2);
+        }
+
+        return str.ToString();
+    }
     private static void CalculateLetterFrequencySums(Client client, List<Verse> verses, ref Dictionary<Verse, int> letter_frequency_sums, string phrase)
     {
         if (client == null) return;
@@ -3325,6 +3487,545 @@ public static partial class Research
                 letter_frequency_sums.Add(verse, lfsum);
             }
         }
+    }
+    private static string GetDuplicateChapterValues(Client client, List<Chapter> chapters)
+    {
+        if (client == null) return null;
+        if (chapters == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        Dictionary<long, int> value_frequencies = new Dictionary<long, int>();
+        Dictionary<long, string> duplicate_values = new Dictionary<long, string>();
+        foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
+        {
+            if (numerology_system.Name.Contains("English")) continue;
+
+            if (numerology_system.TextMode == client.NumerologySystem.TextMode)
+            {
+                value_frequencies.Clear();
+                duplicate_values.Clear();
+                int duplicates = 0;
+                foreach (Chapter chapter in chapters)
+                {
+                    long value = numerology_system.CalculateValue(chapter.Text);
+                    if (!value_frequencies.ContainsKey(value))
+                    {
+                        value_frequencies.Add(value, 1);
+                    }
+                    else
+                    {
+                        value_frequencies[value]++;
+                        duplicates++;
+                    }
+
+                    if (!duplicate_values.ContainsKey(value))
+                    {
+                        duplicate_values.Add(value, chapter.Name);
+                    }
+                    else
+                    {
+                        duplicate_values[value] += "=" + chapter.Name;
+                    }
+                }
+                if (duplicates > 0)
+                {
+                    str.Append(duplicates + " duplicate value" + ((duplicates > 1) ? "s" : " ") + " in " + numerology_system.Name.Substring(numerology_system.TextMode.Length + 1) + "\t");
+                    foreach (long value in duplicate_values.Keys)
+                    {
+                        if (duplicate_values[value].Contains("="))
+                        {
+                            str.AppendLine(value.ToString() + "\t" + duplicate_values[value]);
+                        }
+                    }
+                }
+            }
+        }
+
+        return str.ToString();
+    }
+    private static string GetDuplicateVerseValues(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        Dictionary<long, int> value_frequencies = new Dictionary<long, int>();
+        Dictionary<long, string> duplicate_values = new Dictionary<long, string>();
+        foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
+        {
+            if (numerology_system.Name.Contains("English")) continue;
+
+            if (numerology_system.TextMode == client.NumerologySystem.TextMode)
+            {
+                value_frequencies.Clear();
+                duplicate_values.Clear();
+                int duplicates = 0;
+                foreach (Verse verse in verses)
+                {
+                    long value = numerology_system.CalculateValue(verse.Text);
+                    if (!value_frequencies.ContainsKey(value))
+                    {
+                        value_frequencies.Add(value, 1);
+                    }
+                    else
+                    {
+                        value_frequencies[value]++;
+                        duplicates++;
+                    }
+
+                    if (!duplicate_values.ContainsKey(value))
+                    {
+                        duplicate_values.Add(value, verse.Address);
+                    }
+                    else
+                    {
+                        duplicate_values[value] += "=" + verse.Address;
+                    }
+                }
+                if (duplicates > 0)
+                {
+                    str.Append(duplicates + " duplicate value" + ((duplicates > 1) ? "s" : " ") + " in " + numerology_system.Name.Substring(numerology_system.TextMode.Length + 1) + "\r\n");
+                    foreach (long value in duplicate_values.Keys)
+                    {
+                        if (duplicate_values[value].Contains("="))
+                        {
+                            str.AppendLine(value.ToString() + "\t" + duplicate_values[value]);
+                        }
+                    }
+                }
+            }
+        }
+
+        return str.ToString();
+    }
+
+    public static void _____________________________________(Client client, string param, bool in_search_result)
+    {
+    }
+    public static void RelatedWords(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoRelatedWords(client, verses);
+
+        string filename = "RelatedWords" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void RelatedWordsMeanings(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoRelatedWordsMeanings(client, verses);
+
+        string filename = "RelatedWordsMeanings" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void RelatedWordAddresses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoRelatedWordAddresses(client, verses);
+
+        string filename = "RelatedWordAddresses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void RelatedWordVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoRelatedWordVerses(client, verses);
+
+        string filename = "RelatedWordVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void RelatedWordsVerseMeanings(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoRelatedWordsVerseMeanings(client, verses);
+
+        string filename = "RelatedWordsVerseMeanings" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void RelatedWordVerseAddresses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoRelatedWordVerseAddresses(client, verses);
+
+        string filename = "RelatedWordVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static string DoRelatedWords(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                str.AppendLine
+                (
+                    "Address" + "\t" +
+                    "Text" + "\t" +
+                    "Transliteration" + "\t" +
+                    "Meaning" + "\t" +
+                    "RelatedWords"
+                );
+
+                foreach (Verse verse in verses)
+                {
+                    foreach (Word word in verse.Words)
+                    {
+                        bool backup_with_diacritics = client.Book.WithDiacritics;
+                        client.Book.WithDiacritics = false;
+                        List<Word> related_words = client.Book.GetRelatedWords(word);
+                        client.Book.WithDiacritics = backup_with_diacritics;
+                        related_words = related_words.RemoveDuplicates();
+
+                        StringBuilder related_words_str = new StringBuilder();
+                        if (related_words.Count > 0)
+                        {
+                            foreach (Word related_word in related_words)
+                            {
+                                related_words_str.Append(related_word.Text + "|");
+                            }
+                            related_words_str.Remove(related_words_str.Length - 1, 1);
+                        }
+
+                        str.AppendLine
+                        (
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            word.Transliteration + "\t" +
+                            word.Meaning + "\t" +
+                            related_words_str
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoRelatedWordsMeanings(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                str.AppendLine
+                (
+                    "Address" + "\t" +
+                    "Text" + "\t" +
+                    "Transliteration" + "\t" +
+                    "RelatedWordsMeanings"
+                );
+
+                foreach (Verse verse in verses)
+                {
+                    foreach (Word word in verse.Words)
+                    {
+                        bool backup_with_diacritics = client.Book.WithDiacritics;
+                        client.Book.WithDiacritics = false;
+                        List<Word> related_words = client.Book.GetRelatedWords(word);
+                        client.Book.WithDiacritics = backup_with_diacritics;
+                        List<string> related_word_meanings = new List<string>();
+                        foreach (Word related_word in related_words)
+                        {
+                            related_word_meanings.Add(related_word.Meaning);
+                        }
+                        related_word_meanings = related_word_meanings.RemoveDuplicates();
+
+                        StringBuilder related_word_meanings_str = new StringBuilder();
+                        if (related_word_meanings.Count > 0)
+                        {
+                            foreach (string related_word_meaning in related_word_meanings)
+                            {
+                                related_word_meanings_str.Append(related_word_meaning + "|");
+                            }
+                            related_word_meanings_str.Remove(related_word_meanings_str.Length - 1, 1);
+                        }
+
+                        str.AppendLine
+                        (
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            word.Transliteration + "\t" +
+                            related_word_meanings_str
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoRelatedWordAddresses(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                str.AppendLine
+                (
+                    "Address" + "\t" +
+                    "Text" + "\t" +
+                    "Transliteration" + "\t" +
+                    "Meaning" + "\t" +
+                    "RelatedWords"
+                );
+
+                foreach (Verse verse in verses)
+                {
+                    foreach (Word word in verse.Words)
+                    {
+                        bool backup_with_diacritics = client.Book.WithDiacritics;
+                        client.Book.WithDiacritics = false;
+                        List<Word> related_words = client.Book.GetRelatedWords(word);
+                        client.Book.WithDiacritics = backup_with_diacritics;
+                        related_words = related_words.RemoveDuplicates();
+
+                        StringBuilder related_words_str = new StringBuilder();
+                        if (related_words.Count > 0)
+                        {
+                            foreach (Word related_word in related_words)
+                            {
+                                related_words_str.Append(related_word.Address + "|");
+                            }
+                            related_words_str.Remove(related_words_str.Length - 1, 1);
+                        }
+
+                        str.AppendLine
+                        (
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            word.Transliteration + "\t" +
+                            word.Meaning + "\t" +
+                            related_words_str
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoRelatedWordVerses(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                str.AppendLine
+                (
+                    "Address" + "\t" +
+                    "Text" + "\t" +
+                    "Transliteration" + "\t" +
+                    "Meaning" + "\t" +
+                    "RelatedWordVerses"
+                );
+
+                foreach (Verse verse in verses)
+                {
+                    foreach (Word word in verse.Words)
+                    {
+                        bool backup_with_diacritics = client.Book.WithDiacritics;
+                        client.Book.WithDiacritics = false;
+                        List<Verse> related_verses = client.Book.GetRelatedWordVerses(word);
+                        client.Book.WithDiacritics = backup_with_diacritics;
+                        related_verses = related_verses.RemoveDuplicates();
+
+                        StringBuilder related_verses_str = new StringBuilder();
+                        if (related_verses.Count > 0)
+                        {
+                            foreach (Verse related_verse in related_verses)
+                            {
+                                related_verses_str.Append(related_verse.Text + "\r\n\t\t\t\t");
+                            }
+                            related_verses_str.Remove(related_verses_str.Length - "\r\n\t\t\t\t".Length, "\r\n\t\t\t\t".Length);
+                        }
+
+                        str.AppendLine
+                        (
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            word.Transliteration + "\t" +
+                            word.Meaning + "\t" +
+                            related_verses_str
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoRelatedWordsVerseMeanings(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                str.AppendLine
+                (
+                    "Address" + "\t" +
+                    "Text" + "\t" +
+                    "Transliteration" + "\t" +
+                    "Meaning" + "\t" +
+                    "RelatedWordsVerseMeanings"
+                );
+
+                foreach (Verse verse in verses)
+                {
+                    foreach (Word word in verse.Words)
+                    {
+                        bool backup_with_diacritics = client.Book.WithDiacritics;
+                        client.Book.WithDiacritics = false;
+                        List<Verse> related_verses = client.Book.GetRelatedWordVerses(word);
+                        client.Book.WithDiacritics = backup_with_diacritics;
+                        related_verses = related_verses.RemoveDuplicates();
+
+                        StringBuilder related_verse_meanings_str = new StringBuilder();
+                        if (related_verses.Count > 0)
+                        {
+                            foreach (Verse related_verse in related_verses)
+                            {
+                                if (related_verse.Words.Count > 0)
+                                {
+                                    foreach (Word related_verse_word in related_verse.Words)
+                                    {
+                                        related_verse_meanings_str.Append(related_verse_word.Meaning + " ");
+                                    }
+                                    related_verse_meanings_str.Remove(related_verse_meanings_str.Length - 1, 1);
+                                }
+                                related_verse_meanings_str.Append("\r\n\t\t\t\t");
+                            }
+                            related_verse_meanings_str.Remove(related_verse_meanings_str.Length - "\r\n\t\t\t\t".Length, "\r\n\t\t\t\t".Length);
+                        }
+
+                        str.AppendLine
+                        (
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            word.Transliteration + "\t" +
+                            word.Meaning + "\t" +
+                            related_verse_meanings_str
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoRelatedWordVerseAddresses(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                str.AppendLine
+                (
+                    "Address" + "\t" +
+                    "Text" + "\t" +
+                    "Transliteration" + "\t" +
+                    "Meaning" + "\t" +
+                    "RelatedWordVerses"
+                );
+
+                foreach (Verse verse in verses)
+                {
+                    foreach (Word word in verse.Words)
+                    {
+                        bool backup_with_diacritics = client.Book.WithDiacritics;
+                        client.Book.WithDiacritics = false;
+                        List<Verse> related_verses = client.Book.GetRelatedWordVerses(word);
+                        client.Book.WithDiacritics = backup_with_diacritics;
+                        related_verses = related_verses.RemoveDuplicates();
+
+                        StringBuilder related_verses_str = new StringBuilder();
+                        if (related_verses.Count > 0)
+                        {
+                            foreach (Verse related_verse in related_verses)
+                            {
+                                related_verses_str.Append(related_verse.Address + "|");
+                            }
+                            related_verses_str.Remove(related_verses_str.Length - 1, 1);
+                        }
+
+                        str.AppendLine
+                        (
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            word.Transliteration + "\t" +
+                            word.Meaning + "\t" +
+                            related_verses_str
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
     }
 
     private static void ____________________________________(Client client, string param, bool in_search_result)
@@ -3936,436 +4637,7 @@ public static partial class Research
         return str.ToString();
     }
 
-    public static void _____________________________________(Client client, string param, bool in_search_result)
-    {
-    }
-    public static void RelatedWords(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-
-        string result = DoRelatedWords(client, verses);
-
-        string filename = "RelatedWords" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void RelatedWordsMeanings(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-
-        string result = DoRelatedWordsMeanings(client, verses);
-
-        string filename = "RelatedWordsMeanings" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void RelatedWordAddresses(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-
-        string result = DoRelatedWordAddresses(client, verses);
-
-        string filename = "RelatedWordAddresses" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void RelatedWordVerses(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-
-        string result = DoRelatedWordVerses(client, verses);
-
-        string filename = "RelatedWordVerses" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void RelatedWordsVerseMeanings(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-
-        string result = DoRelatedWordsVerseMeanings(client, verses);
-
-        string filename = "RelatedWordsVerseMeanings" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void RelatedWordVerseAddresses(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-
-        string result = DoRelatedWordVerseAddresses(client, verses);
-
-        string filename = "RelatedWordVerses" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    private static string DoRelatedWords(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                str.AppendLine
-                (
-                    "Address" + "\t" +
-                    "Text" + "\t" +
-                    "Transliteration" + "\t" +
-                    "Meaning" + "\t" +
-                    "RelatedWords"
-                );
-
-                foreach (Verse verse in verses)
-                {
-                    foreach (Word word in verse.Words)
-                    {
-                        bool backup_with_diacritics = client.Book.WithDiacritics;
-                        client.Book.WithDiacritics = false;
-                        List<Word> related_words = client.Book.GetRelatedWords(word);
-                        client.Book.WithDiacritics = backup_with_diacritics;
-                        related_words = related_words.RemoveDuplicates();
-
-                        StringBuilder related_words_str = new StringBuilder();
-                        if (related_words.Count > 0)
-                        {
-                            foreach (Word related_word in related_words)
-                            {
-                                related_words_str.Append(related_word.Text + "|");
-                            }
-                            related_words_str.Remove(related_words_str.Length - 1, 1);
-                        }
-
-                        str.AppendLine
-                        (
-                            word.Address + "\t" +
-                            word.Text + "\t" +
-                            word.Transliteration + "\t" +
-                            word.Meaning + "\t" +
-                            related_words_str
-                        );
-                    }
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoRelatedWordsMeanings(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                str.AppendLine
-                (
-                    "Address" + "\t" +
-                    "Text" + "\t" +
-                    "Transliteration" + "\t" +
-                    "RelatedWordsMeanings"
-                );
-
-                foreach (Verse verse in verses)
-                {
-                    foreach (Word word in verse.Words)
-                    {
-                        bool backup_with_diacritics = client.Book.WithDiacritics;
-                        client.Book.WithDiacritics = false;
-                        List<Word> related_words = client.Book.GetRelatedWords(word);
-                        client.Book.WithDiacritics = backup_with_diacritics;
-                        List<string> related_word_meanings = new List<string>();
-                        foreach (Word related_word in related_words)
-                        {
-                            related_word_meanings.Add(related_word.Meaning);
-                        }
-                        related_word_meanings = related_word_meanings.RemoveDuplicates();
-
-                        StringBuilder related_word_meanings_str = new StringBuilder();
-                        if (related_word_meanings.Count > 0)
-                        {
-                            foreach (string related_word_meaning in related_word_meanings)
-                            {
-                                related_word_meanings_str.Append(related_word_meaning + "|");
-                            }
-                            related_word_meanings_str.Remove(related_word_meanings_str.Length - 1, 1);
-                        }
-
-                        str.AppendLine
-                        (
-                            word.Address + "\t" +
-                            word.Text + "\t" +
-                            word.Transliteration + "\t" +
-                            related_word_meanings_str
-                        );
-                    }
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoRelatedWordAddresses(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                str.AppendLine
-                (
-                    "Address" + "\t" +
-                    "Text" + "\t" +
-                    "Transliteration" + "\t" +
-                    "Meaning" + "\t" +
-                    "RelatedWords"
-                );
-
-                foreach (Verse verse in verses)
-                {
-                    foreach (Word word in verse.Words)
-                    {
-                        bool backup_with_diacritics = client.Book.WithDiacritics;
-                        client.Book.WithDiacritics = false;
-                        List<Word> related_words = client.Book.GetRelatedWords(word);
-                        client.Book.WithDiacritics = backup_with_diacritics;
-                        related_words = related_words.RemoveDuplicates();
-
-                        StringBuilder related_words_str = new StringBuilder();
-                        if (related_words.Count > 0)
-                        {
-                            foreach (Word related_word in related_words)
-                            {
-                                related_words_str.Append(related_word.Address + "|");
-                            }
-                            related_words_str.Remove(related_words_str.Length - 1, 1);
-                        }
-
-                        str.AppendLine
-                        (
-                            word.Address + "\t" +
-                            word.Text + "\t" +
-                            word.Transliteration + "\t" +
-                            word.Meaning + "\t" +
-                            related_words_str
-                        );
-                    }
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoRelatedWordVerses(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                str.AppendLine
-                (
-                    "Address" + "\t" +
-                    "Text" + "\t" +
-                    "Transliteration" + "\t" +
-                    "Meaning" + "\t" +
-                    "RelatedWordVerses"
-                );
-
-                foreach (Verse verse in verses)
-                {
-                    foreach (Word word in verse.Words)
-                    {
-                        bool backup_with_diacritics = client.Book.WithDiacritics;
-                        client.Book.WithDiacritics = false;
-                        List<Verse> related_verses = client.Book.GetRelatedWordVerses(word);
-                        client.Book.WithDiacritics = backup_with_diacritics;
-                        related_verses = related_verses.RemoveDuplicates();
-
-                        StringBuilder related_verses_str = new StringBuilder();
-                        if (related_verses.Count > 0)
-                        {
-                            foreach (Verse related_verse in related_verses)
-                            {
-                                related_verses_str.Append(related_verse.Text + "\r\n\t\t\t\t");
-                            }
-                            related_verses_str.Remove(related_verses_str.Length - "\r\n\t\t\t\t".Length, "\r\n\t\t\t\t".Length);
-                        }
-
-                        str.AppendLine
-                        (
-                            word.Address + "\t" +
-                            word.Text + "\t" +
-                            word.Transliteration + "\t" +
-                            word.Meaning + "\t" +
-                            related_verses_str
-                        );
-                    }
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoRelatedWordsVerseMeanings(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                str.AppendLine
-                (
-                    "Address" + "\t" +
-                    "Text" + "\t" +
-                    "Transliteration" + "\t" +
-                    "Meaning" + "\t" +
-                    "RelatedWordsVerseMeanings"
-                );
-
-                foreach (Verse verse in verses)
-                {
-                    foreach (Word word in verse.Words)
-                    {
-                        bool backup_with_diacritics = client.Book.WithDiacritics;
-                        client.Book.WithDiacritics = false;
-                        List<Verse> related_verses = client.Book.GetRelatedWordVerses(word);
-                        client.Book.WithDiacritics = backup_with_diacritics;
-                        related_verses = related_verses.RemoveDuplicates();
-
-                        StringBuilder related_verse_meanings_str = new StringBuilder();
-                        if (related_verses.Count > 0)
-                        {
-                            foreach (Verse related_verse in related_verses)
-                            {
-                                if (related_verse.Words.Count > 0)
-                                {
-                                    foreach (Word related_verse_word in related_verse.Words)
-                                    {
-                                        related_verse_meanings_str.Append(related_verse_word.Meaning + " ");
-                                    }
-                                    related_verse_meanings_str.Remove(related_verse_meanings_str.Length - 1, 1);
-                                }
-                                related_verse_meanings_str.Append("\r\n\t\t\t\t");
-                            }
-                            related_verse_meanings_str.Remove(related_verse_meanings_str.Length - "\r\n\t\t\t\t".Length, "\r\n\t\t\t\t".Length);
-                        }
-
-                        str.AppendLine
-                        (
-                            word.Address + "\t" +
-                            word.Text + "\t" +
-                            word.Transliteration + "\t" +
-                            word.Meaning + "\t" +
-                            related_verse_meanings_str
-                        );
-                    }
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoRelatedWordVerseAddresses(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                str.AppendLine
-                (
-                    "Address" + "\t" +
-                    "Text" + "\t" +
-                    "Transliteration" + "\t" +
-                    "Meaning" + "\t" +
-                    "RelatedWordVerses"
-                );
-
-                foreach (Verse verse in verses)
-                {
-                    foreach (Word word in verse.Words)
-                    {
-                        bool backup_with_diacritics = client.Book.WithDiacritics;
-                        client.Book.WithDiacritics = false;
-                        List<Verse> related_verses = client.Book.GetRelatedWordVerses(word);
-                        client.Book.WithDiacritics = backup_with_diacritics;
-                        related_verses = related_verses.RemoveDuplicates();
-
-                        StringBuilder related_verses_str = new StringBuilder();
-                        if (related_verses.Count > 0)
-                        {
-                            foreach (Verse related_verse in related_verses)
-                            {
-                                related_verses_str.Append(related_verse.Address + "|");
-                            }
-                            related_verses_str.Remove(related_verses_str.Length - 1, 1);
-                        }
-
-                        str.AppendLine
-                        (
-                            word.Address + "\t" +
-                            word.Text + "\t" +
-                            word.Transliteration + "\t" +
-                            word.Meaning + "\t" +
-                            related_verses_str
-                        );
-                    }
-                }
-            }
-        }
-        return str.ToString();
-    }
-
-    private static void ______________________________________(Client client, string param, bool in_search_result)
+    private static void ________________________________________(Client client, string param, bool in_search_result)
     {
     }
     private static void FindVersesWithXValueDigitSum(Client client, string param, bool in_search_result)
@@ -4533,6 +4805,9 @@ public static partial class Research
         return str.ToString();
     }
 
+    private static void ___________________________________________(Client client, string param, bool in_search_result)
+    {
+    }
     private class ZeroDifferenceNumerologySystem
     {
         public NumberType NumberType;
@@ -5047,8 +5322,5 @@ public static partial class Research
         } // next NumberType
 
         client.NumerologySystem = backup_numerology_system;
-    }
-    private static void __________________________________________FindSystem(Client client, string param, bool in_search_result)
-    {
     }
 }

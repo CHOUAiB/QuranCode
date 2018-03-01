@@ -20094,7 +20094,14 @@ public partial class MainForm : Form, ISubscriber
                         {
                             case TextSearchType.Exact:
                                 {
-                                    m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_language_type, null, m_text_location_in_chapter, m_text_location_in_verse, m_text_location_in_word, TextWordness.WholeWord, m_case_sensitive, m_with_diacritics, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                                    if (FindByTextTextBox.Text.EndsWith(" "))
+                                    {
+                                        m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_language_type, null, m_text_location_in_chapter, m_text_location_in_verse, m_text_location_in_word, TextWordness.Any, m_case_sensitive, m_with_diacritics, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                                    }
+                                    else
+                                    {
+                                        m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_language_type, null, m_text_location_in_chapter, m_text_location_in_verse, m_text_location_in_word, TextWordness.WholeWord, m_case_sensitive, m_with_diacritics, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                                    }
                                 }
                                 break;
                             case TextSearchType.Root:
@@ -20104,7 +20111,7 @@ public partial class MainForm : Form, ISubscriber
                                 break;
                             case TextSearchType.Proximity:
                                 {
-                                    m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_language_type, null, m_text_proximity_type, TextWordness.WholeWord, m_case_sensitive, m_with_diacritics);
+                                    m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_language_type, null, m_text_proximity_type, TextWordness.Any, m_case_sensitive, m_with_diacritics);
                                 }
                                 break;
                         }
