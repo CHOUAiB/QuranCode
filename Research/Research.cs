@@ -2723,6 +2723,42 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
+    public static void ChapterValues(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+
+        string result = DoChapterValues(client, chapters);
+
+        string filename = "ChapterValues" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void ChapterLetterRatios(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+
+        string result = DoChapterLetterRatios(client, chapters);
+
+        string filename = client.NumerologySystem.Name + "_" + "ChapterLetterRatios" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
     public static void VerseInformation(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
@@ -2733,6 +2769,23 @@ public static partial class Research
         string result = DoVerseInformation(client, verses);
 
         string filename = client.NumerologySystem.Name + "_" + "VerseStatistics" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void VerseValues(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+
+        string result = DoVerseValues(client, verses);
+
+        string filename = "VerseValues" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;
@@ -2952,41 +3005,6 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    public static void ChapterValues(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
-
-        string result = DoChapterValues(client, chapters);
-
-        string filename = "ChapterValues" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void VerseValues(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Selection == null) return;
-        if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-
-        string result = DoVerseValues(client, verses);
-
-        string filename = "VerseValues" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
     private static string DoChapterInformation(Client client, List<Chapter> chapters)
     {
         if (client == null) return null;
@@ -3068,6 +3086,140 @@ public static partial class Research
         }
         return str.ToString();
     }
+    private static string DoChapterValues(Client client, List<Chapter> chapters)
+    {
+        if (client == null) return null;
+        if (chapters == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t");
+        foreach (string key in client.LoadedNumerologySystems.Keys)
+        {
+            if (key.Contains("English")) continue;
+
+            if (key.StartsWith(client.NumerologySystem.TextMode))
+            {
+                str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
+            }
+        }
+        if (str.Length > 1)
+        {
+            str.Remove(str.Length - 1, 1); // \t
+        }
+        str.Append("\r\n");
+
+        int count = 0;
+        foreach (Chapter chapter in chapters)
+        {
+            count++;
+            str.Append(count.ToString() + "\t");
+            str.Append(chapter.Name + "\t");
+            str.Append(chapter.SortedNumber + "\t");
+            foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
+            {
+                if (numerology_system.Name.Contains("English")) continue;
+
+                if (numerology_system.TextMode == client.NumerologySystem.TextMode)
+                {
+                    long value = numerology_system.CalculateValue(chapter.Text);
+                    str.Append(value.ToString() + "\t");
+                }
+            }
+            if (str.Length > 1)
+            {
+                str.Remove(str.Length - 1, 1);
+            }
+            str.Append("\r\n");
+        }
+
+        string duplicates = GetDuplicateChapterValues(client, chapters);
+        if (duplicates.Length > 0)
+        {
+            str.AppendLine(duplicates);
+        }
+        else
+        {
+            str.AppendLine("No duplicate values.");
+        }
+
+        if (str.Length > 2)
+        {
+            str.Remove(str.Length - 2, 2);
+        }
+
+        return str.ToString();
+    }
+    private static string DoChapterLetterRatios(Client client, List<Chapter> chapters)
+    {
+        if (client == null) return null;
+        if (chapters == null) return null;
+
+        StringBuilder str = new StringBuilder();
+
+        str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t" + "Verses" + "\t" + "Words" + "\t" + "Letters" + "\t");
+
+        NumerologySystem numerology_system = client.NumerologySystem;
+        if (numerology_system != null)
+        {
+            if (numerology_system.LetterValues.Keys.Count > 0)
+            {
+                foreach (char key in numerology_system.LetterValues.Keys)
+                {
+                    str.Append(key.ToString() + "\t");
+                }
+                if (str.Length > 1)
+                {
+                    str.Remove(str.Length - 1, 1); // \t
+                }
+                str.Append("\r\n");
+            }
+
+            int count = 0;
+            int sum = 0;
+            int chapter_sum = 0;
+            int verse_sum = 0;
+            int word_sum = 0;
+            int letter_sum = 0;
+            foreach (Chapter chapter in chapters)
+            {
+                count++;
+                sum += count;
+                chapter_sum += chapter.SortedNumber;
+                verse_sum += chapter.Verses.Count;
+                word_sum += chapter.WordCount;
+                letter_sum += chapter.LetterCount;
+
+                str.Append(count + "\t");
+                str.Append(chapter.Name + "\t");
+                str.Append(chapter.SortedNumber.ToString() + "\t");
+                str.Append(chapter.Verses.Count.ToString() + "\t");
+                str.Append(chapter.WordCount.ToString() + "\t");
+                str.Append(chapter.LetterCount.ToString() + "\t");
+
+                if (numerology_system.LetterValues.Keys.Count > 0)
+                {
+                    foreach (char key in numerology_system.LetterValues.Keys)
+                    {
+                        str.Append((((double)chapter.GetLetterFrequency(key) * 100.0D) / chapter.LetterCount) + "%" + "\t");
+                    }
+                    if (str.Length > 1)
+                    {
+                        str.Remove(str.Length - 1, 1); // \t
+                    }
+                    str.Append("\r\n");
+                }
+            }
+            if (str.Length > 2)
+            {
+                str.Remove(str.Length - 2, 2);
+            }
+
+            str.Append("\r\n");
+            str.AppendLine(sum + "\t" + "Sum" + "\t" + chapter_sum + "\t" + verse_sum + "\t" + word_sum + "\t" + letter_sum);
+        }
+
+        return str.ToString();
+    }
     private static string DoVerseInformation(Client client, List<Verse> verses)
     {
         if (client == null) return null;
@@ -3138,6 +3290,69 @@ public static partial class Research
                 str.Remove(str.Length - 2, 2);
             }
         }
+        return str.ToString();
+    }
+    private static string DoVerseValues(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("#" + "\t" + "Chapter" + "\t" + "Verse" + "\t");
+        foreach (string key in client.LoadedNumerologySystems.Keys)
+        {
+            if (key.Contains("English")) continue;
+
+            if (key.StartsWith(client.NumerologySystem.TextMode))
+            {
+                str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
+            }
+        }
+        if (str.Length > 1)
+        {
+            str.Remove(str.Length - 1, 1); // \t
+        }
+        str.Append("\r\n");
+
+        int count = 0;
+        foreach (Verse verse in verses)
+        {
+            count++;
+            str.Append(count.ToString() + "\t");
+            str.Append(verse.Chapter.SortedNumber + "\t");
+            str.Append(verse.NumberInChapter + "\t");
+            foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
+            {
+                if (numerology_system.Name.Contains("English")) continue;
+
+                if (numerology_system.TextMode == client.NumerologySystem.TextMode)
+                {
+                    long value = numerology_system.CalculateValue(verse.Text);
+                    str.Append(value.ToString() + "\t");
+                }
+            }
+            if (str.Length > 1)
+            {
+                str.Remove(str.Length - 1, 1);
+            }
+            str.Append("\r\n");
+        }
+
+        string duplicates = GetDuplicateVerseValues(client, verses);
+        if (duplicates.Length > 0)
+        {
+            str.AppendLine(duplicates);
+        }
+        else
+        {
+            str.AppendLine("No duplicate values.");
+        }
+
+        if (str.Length > 2)
+        {
+            str.Remove(str.Length - 2, 2);
+        }
+
         return str.ToString();
     }
     private static string DoWordInformation(Client client, List<Word> words)
@@ -3344,132 +3559,6 @@ public static partial class Research
                 );
             }
         }
-        return str.ToString();
-    }
-    private static string DoChapterValues(Client client, List<Chapter> chapters)
-    {
-        if (client == null) return null;
-        if (chapters == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t");
-        foreach (string key in client.LoadedNumerologySystems.Keys)
-        {
-            if (key.Contains("English")) continue;
-
-            if (key.StartsWith(client.NumerologySystem.TextMode))
-            {
-                str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
-            }
-        }
-        if (str.Length > 1)
-        {
-            str.Remove(str.Length - 1, 1); // \t
-        }
-        str.Append("\r\n");
-
-        int count = 0;
-        foreach (Chapter chapter in chapters)
-        {
-            count++;
-            str.Append(count.ToString() + "\t");
-            str.Append(chapter.Name + "\t");
-            str.Append(chapter.SortedNumber + "\t");
-            foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
-            {
-                if (numerology_system.Name.Contains("English")) continue;
-
-                if (numerology_system.TextMode == client.NumerologySystem.TextMode)
-                {
-                    long value = numerology_system.CalculateValue(chapter.Text);
-                    str.Append(value.ToString() + "\t");
-                }
-            }
-            if (str.Length > 1)
-            {
-                str.Remove(str.Length - 1, 1);
-            }
-            str.Append("\r\n");
-        }
-
-        string duplicates = GetDuplicateChapterValues(client, chapters);
-        if (duplicates.Length > 0)
-        {
-            str.AppendLine(duplicates);
-        }
-        else
-        {
-            str.AppendLine("No duplicate values.");
-        }
-
-        if (str.Length > 2)
-        {
-            str.Remove(str.Length - 2, 2);
-        }
-
-        return str.ToString();
-    }
-    private static string DoVerseValues(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (verses == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        str.Append("#" + "\t" + "Chapter" + "\t" + "Verse" + "\t");
-        foreach (string key in client.LoadedNumerologySystems.Keys)
-        {
-            if (key.Contains("English")) continue;
-
-            if (key.StartsWith(client.NumerologySystem.TextMode))
-            {
-                str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
-            }
-        }
-        if (str.Length > 1)
-        {
-            str.Remove(str.Length - 1, 1); // \t
-        }
-        str.Append("\r\n");
-
-        int count = 0;
-        foreach (Verse verse in verses)
-        {
-            count++;
-            str.Append(count.ToString() + "\t");
-            str.Append(verse.Chapter.SortedNumber + "\t");
-            str.Append(verse.NumberInChapter + "\t");
-            foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
-            {
-                if (numerology_system.Name.Contains("English")) continue;
-
-                if (numerology_system.TextMode == client.NumerologySystem.TextMode)
-                {
-                    long value = numerology_system.CalculateValue(verse.Text);
-                    str.Append(value.ToString() + "\t");
-                }
-            }
-            if (str.Length > 1)
-            {
-                str.Remove(str.Length - 1, 1);
-            }
-            str.Append("\r\n");
-        }
-
-        string duplicates = GetDuplicateVerseValues(client, verses);
-        if (duplicates.Length > 0)
-        {
-            str.AppendLine(duplicates);
-        }
-        else
-        {
-            str.AppendLine("No duplicate values.");
-        }
-
-        if (str.Length > 2)
-        {
-            str.Remove(str.Length - 2, 2);
-        }
-
         return str.ToString();
     }
     private static void CalculateLetterFrequencySums(Client client, List<Verse> verses, ref Dictionary<Verse, int> letter_frequency_sums, string phrase)

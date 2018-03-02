@@ -2924,14 +2924,40 @@ public partial class MainForm : Form, ISubscriber
                 if (((sender as MenuItem).Parent as ContextMenu).SourceControl is TextBoxBase)
                 {
                     TextBoxBase control = (((sender as MenuItem).Parent as ContextMenu).SourceControl as TextBoxBase);
-                    bool nothing_selected = false;
+                    bool nothing_was_selected = false;
                     if (control.SelectionLength == 0)
                     {
-                        nothing_selected = true;
-                        control.SelectAll();
+                        nothing_was_selected = true;
+
+                        List<Verse> selected_verses = new List<Verse>();
+                        if (m_found_verses_displayed)
+                        {
+                            selected_verses = m_client.FoundVerses;
+                        }
+                        else
+                        {
+                            selected_verses = m_client.Selection.Verses;
+                        }
+
+                        StringBuilder str = new StringBuilder();
+                        foreach (Verse verse in selected_verses)
+                        {
+                            str.AppendLine(verse.Chapter.Name + "  " + verse.Address + "\t" + verse.Text + "\r\n");
+                        }
+                        Clipboard.SetText(str.ToString());
                     }
-                    (((sender as MenuItem).Parent as ContextMenu).SourceControl as TextBoxBase).Copy();
-                    if (nothing_selected)
+                    else
+                    {
+                        List<Verse> selected_verses = GetCurrentVerses();
+                        StringBuilder str = new StringBuilder();
+                        foreach (Verse verse in selected_verses)
+                        {
+                            str.AppendLine(verse.Chapter.Name + "  " + verse.Address + "\t" + verse.Text + "\r\n");
+                        }
+                        Clipboard.SetText(str.ToString());
+                    }
+
+                    if (nothing_was_selected)
                     {
                         control.DeselectAll();
                     }
@@ -4036,18 +4062,30 @@ public partial class MainForm : Form, ISubscriber
     {
         try
         {
-            if ((e.Control) && (e.KeyCode == Keys.V))
+            if ((e.Control) && (e.KeyCode == Keys.C))
             {
-                if ((e.Control) && (e.KeyCode == Keys.V))
+                if (m_active_textbox != null)
                 {
-                    if (m_active_textbox != null)
+                    List<Verse> selected_verses = GetCurrentVerses();
+                    StringBuilder str = new StringBuilder();
+                    foreach (Verse verse in selected_verses)
                     {
-                        SimplifyClipboardTextBeforePaste();
-                        Thread.Sleep(100); // must give chance for Clipboard to refresh its content before Paste
-                        m_active_textbox.Paste();
-                        RestoreClipboardTextAfterPaste();
-                        e.Handled = true;
+                        str.AppendLine(verse.Chapter.Name + "  " + verse.Address + "\t" + verse.Text + "\r\n");
                     }
+                    Clipboard.SetText(str.ToString());
+                    Thread.Sleep(100); // must give chance for Clipboard to refresh its content before Paste
+                    e.Handled = true;
+                }
+            }
+            else if ((e.Control) && (e.KeyCode == Keys.V))
+            {
+                if (m_active_textbox != null)
+                {
+                    SimplifyClipboardTextBeforePaste();
+                    Thread.Sleep(100); // must give chance for Clipboard to refresh its content before Paste
+                    m_active_textbox.Paste();
+                    RestoreClipboardTextAfterPaste();
+                    e.Handled = true;
                 }
             }
         }
