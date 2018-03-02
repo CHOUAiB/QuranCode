@@ -1231,9 +1231,6 @@ public static class StringExtensions
 
         if (source == target) return true;
 
-        source = source.Simplify29();
-        target = target.Simplify29();
-
         if (similarity_percentage == 1.0D) return (source == target);
 
         double similarity = 1.0D;
