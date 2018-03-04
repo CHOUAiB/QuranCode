@@ -189,7 +189,7 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region MainForm
     ///////////////////////////////////////////////////////////////////////////////
-    private float m_dpi_x = DEFAULT_DPI_X;
+    //private float m_dpi_x = DEFAULT_DPI_X;
     private string m_ini_filename = null;
     private Client m_client = null;
     private string m_current_text = null;
@@ -201,19 +201,19 @@ public partial class MainForm : Form, ISubscriber
         InstallFonts();
         AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
 
-        using (Graphics graphics = this.CreateGraphics())
-        {
-            m_dpi_x = graphics.DpiX;
-            if (m_dpi_x != DEFAULT_DPI_X)
-            {
-                if (m_dpi_x == 120.0F)
-                {
-                    // adjust GUI to fit into 125%
-                    MainSplitContainer.Height = (int)(MainSplitContainer.Height / (m_dpi_x / DEFAULT_DPI_X)) + 96;
-                    MainSplitContainer.SplitterDistance = 215;
-                }
-            }
-        }
+        //using (Graphics graphics = this.CreateGraphics())
+        //{
+        //    m_dpi_x = graphics.DpiX;
+        //    if (m_dpi_x != DEFAULT_DPI_X)
+        //    {
+        //        if (m_dpi_x == 120.0F)
+        //        {
+        //            // adjust GUI to fit into 125%
+        //            MainSplitContainer.Height = (int)(MainSplitContainer.Height / (m_dpi_x / DEFAULT_DPI_X)) + 96;
+        //            MainSplitContainer.SplitterDistance = 215;
+        //        }
+        //    }
+        //}
 
         FindByTextButton.Enabled = true;
         FindBySimilarityButton.Enabled = false;
@@ -3754,6 +3754,7 @@ public partial class MainForm : Form, ISubscriber
     //                try
     //                {
     //                    Stream font_stream = resources_assembly.GetManifestResourceStream(resource_name);
+    //                    Thread.Sleep(100); // time to refresh Windows resources
     //                    if (font_stream != null)
     //                    {
     //                        //string font_name = resource_name.Remove(resource_name.Length - 4, 4);
@@ -3799,6 +3800,7 @@ public partial class MainForm : Form, ISubscriber
                             if (!String.IsNullOrEmpty(file.FullName))
                             {
                                 Font font = FontBuilder.Build(file.FullName, DEFAULT_QURAN_FONT_SIZE * ((file.Name.Contains("Mushaf")) ? 1.33F : 1));
+                                Thread.Sleep(100); // time to refresh Windows resources
                                 if (font != null)
                                 {
                                     m_quran_fonts.Add(font);
