@@ -516,6 +516,9 @@ partial class MainForm
             this.LetterOrderColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LetterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PhraseFrequencyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.LetterFrequencyContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.PositionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DistancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FindByFrequncyPanel = new System.Windows.Forms.Panel();
             this.FindByFrequencyLinkLabel = new System.Windows.Forms.Label();
             this.FindByFrequencyPhraseCheckBox = new System.Windows.Forms.CheckBox();
@@ -630,9 +633,6 @@ partial class MainForm
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontDialog = new System.Windows.Forms.FontDialog();
-            this.LetterFrequencyContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.PositionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DistancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusPanel.SuspendLayout();
             this.ChapterSortPanel.SuspendLayout();
             this.DrawingsPanel.SuspendLayout();
@@ -709,6 +709,7 @@ partial class MainForm
             this.StatisticsGroupBox.SuspendLayout();
             this.ValueNavigatorPanel.SuspendLayout();
             this.LetterFrequencyPanel.SuspendLayout();
+            this.LetterFrequencyContextMenuStrip.SuspendLayout();
             this.FindByFrequncyPanel.SuspendLayout();
             this.ValuePanel.SuspendLayout();
             this.PCIndexChainPanel.SuspendLayout();
@@ -721,7 +722,6 @@ partial class MainForm
             ((System.ComponentModel.ISupportInitialize)(this.PlayerSelectionSilenceGapTrackBar)).BeginInit();
             this.RecitationsDownloadGroupBox.SuspendLayout();
             this.NotifyIconContextMenuStrip.SuspendLayout();
-            this.LetterFrequencyContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // WebsiteLinkLabel
@@ -4986,7 +4986,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(821, 200);
+            this.TabControl.Size = new System.Drawing.Size(821, 202);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -4999,7 +4999,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(813, 174);
+            this.TranslationTabPage.Size = new System.Drawing.Size(813, 176);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = " Translation ";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse";
@@ -5015,13 +5015,13 @@ partial class MainForm
             // 
             // TranslationSplitContainer.Panel1
             // 
+            this.TranslationSplitContainer.Panel1.Controls.Add(this.TranslationFontLabel);
             this.TranslationSplitContainer.Panel1.Controls.Add(this.EditSaveTranslationLabel);
             this.TranslationSplitContainer.Panel1.Controls.Add(this.TranslatorComboBox);
             this.TranslationSplitContainer.Panel1.Controls.Add(this.TranslationTextBox);
             // 
             // TranslationSplitContainer.Panel2
             // 
-            this.TranslationSplitContainer.Panel2.Controls.Add(this.TranslationFontLabel);
             this.TranslationSplitContainer.Panel2.Controls.Add(this.TranslatorsCheckedListBox);
             this.TranslationSplitContainer.Panel2.Controls.Add(this.TranslationsApplySettingsLabel);
             this.TranslationSplitContainer.Panel2.Controls.Add(this.TranslationsCancelSettingsLabel);
@@ -5088,7 +5088,7 @@ partial class MainForm
             this.TranslationFontLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TranslationFontLabel.ForeColor = System.Drawing.SystemColors.Window;
             this.TranslationFontLabel.Image = ((System.Drawing.Image)(resources.GetObject("TranslationFontLabel.Image")));
-            this.TranslationFontLabel.Location = new System.Drawing.Point(384, 3);
+            this.TranslationFontLabel.Location = new System.Drawing.Point(394, 4);
             this.TranslationFontLabel.Name = "TranslationFontLabel";
             this.TranslationFontLabel.Size = new System.Drawing.Size(14, 15);
             this.TranslationFontLabel.TabIndex = 103;
@@ -5194,7 +5194,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 174);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 176);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]";
@@ -5272,7 +5272,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 174);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 176);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
@@ -5368,7 +5368,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 174);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 176);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
@@ -5487,7 +5487,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 174);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 176);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
@@ -5564,7 +5564,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(813, 174);
+            this.MathsTabPage.Size = new System.Drawing.Size(813, 176);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations";
@@ -5678,7 +5678,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(813, 174);
+            this.MathsPanel.Size = new System.Drawing.Size(813, 176);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -6966,7 +6966,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(813, 174);
+            this.DistancesTabPage.Size = new System.Drawing.Size(813, 176);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word.";
@@ -7042,7 +7042,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(813, 174);
+            this.DistancesPanel.Size = new System.Drawing.Size(813, 176);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -7882,7 +7882,7 @@ partial class MainForm
             this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
             this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
             this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 174);
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 176);
             this.RelatedWordsTabPage.TabIndex = 192;
             this.RelatedWordsTabPage.Text = "Related Words ";
             this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
@@ -7935,7 +7935,7 @@ partial class MainForm
             this.TafseerTabPage.Location = new System.Drawing.Point(4, 22);
             this.TafseerTabPage.Name = "TafseerTabPage";
             this.TafseerTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TafseerTabPage.Size = new System.Drawing.Size(813, 174);
+            this.TafseerTabPage.Size = new System.Drawing.Size(813, 176);
             this.TafseerTabPage.TabIndex = 191;
             this.TafseerTabPage.Text = " Tafseer ";
             this.TafseerTabPage.ToolTipText = "Exegesis/commentry of the current chapter/verse";
@@ -7960,7 +7960,7 @@ partial class MainForm
             this.TafseerWebBrowser.Location = new System.Drawing.Point(3, 3);
             this.TafseerWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.TafseerWebBrowser.Name = "TafseerWebBrowser";
-            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 168);
+            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 170);
             this.TafseerWebBrowser.TabIndex = 1;
             // 
             // GrammarTabPage
@@ -7969,7 +7969,7 @@ partial class MainForm
             this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
             this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
             this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(813, 174);
+            this.GrammarTabPage.Size = new System.Drawing.Size(813, 176);
             this.GrammarTabPage.TabIndex = 193;
             this.GrammarTabPage.Text = " Grammar";
             this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
@@ -8001,7 +8001,7 @@ partial class MainForm
             this.VerbFormsTabPage.Controls.Add(this.VerbFormsTextBox);
             this.VerbFormsTabPage.Location = new System.Drawing.Point(4, 22);
             this.VerbFormsTabPage.Name = "VerbFormsTabPage";
-            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 174);
+            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 176);
             this.VerbFormsTabPage.TabIndex = 196;
             this.VerbFormsTabPage.Text = "Verb Forms";
             this.VerbFormsTabPage.ToolTipText = "Verb forms for the current word in Arabic";
@@ -8033,7 +8033,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(813, 174);
+            this.UserTextTabPage.Size = new System.Drawing.Size(813, 176);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any text using the current value-letter system and show it" +
@@ -8421,6 +8421,29 @@ partial class MainForm
             this.PhraseFrequencyColumnHeader.Text = "Frequency  ";
             this.PhraseFrequencyColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.PhraseFrequencyColumnHeader.Width = 77;
+            // 
+            // LetterFrequencyContextMenuStrip
+            // 
+            this.LetterFrequencyContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PositionsToolStripMenuItem,
+            this.DistancesToolStripMenuItem});
+            this.LetterFrequencyContextMenuStrip.Name = "LetterFrequencyContextMenuStrip";
+            this.LetterFrequencyContextMenuStrip.Size = new System.Drawing.Size(125, 48);
+            this.LetterFrequencyContextMenuStrip.DoubleClick += new System.EventHandler(this.LetterFrequencyListView_DoubleClick);
+            // 
+            // PositionsToolStripMenuItem
+            // 
+            this.PositionsToolStripMenuItem.Name = "PositionsToolStripMenuItem";
+            this.PositionsToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.PositionsToolStripMenuItem.Text = "&Positions";
+            this.PositionsToolStripMenuItem.Click += new System.EventHandler(this.PositionsToolStripMenuItem_Click);
+            // 
+            // DistancesToolStripMenuItem
+            // 
+            this.DistancesToolStripMenuItem.Name = "DistancesToolStripMenuItem";
+            this.DistancesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.DistancesToolStripMenuItem.Text = "&Distances";
+            this.DistancesToolStripMenuItem.Click += new System.EventHandler(this.DistancesToolStripMenuItem_Click);
             // 
             // FindByFrequncyPanel
             // 
@@ -10221,28 +10244,6 @@ partial class MainForm
             // 
             this.FontDialog.Apply += new System.EventHandler(this.FontDialog_Apply);
             // 
-            // LetterFrequencyContextMenuStrip
-            // 
-            this.LetterFrequencyContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PositionsToolStripMenuItem,
-            this.DistancesToolStripMenuItem});
-            this.LetterFrequencyContextMenuStrip.Name = "LetterFrequencyContextMenuStrip";
-            this.LetterFrequencyContextMenuStrip.Size = new System.Drawing.Size(125, 48);
-            // 
-            // PositionsToolStripMenuItem
-            // 
-            this.PositionsToolStripMenuItem.Name = "PositionsToolStripMenuItem";
-            this.PositionsToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.PositionsToolStripMenuItem.Text = "&Positions";
-            this.PositionsToolStripMenuItem.Click += new System.EventHandler(this.PositionsToolStripMenuItem_Click);
-            // 
-            // DistancesToolStripMenuItem
-            // 
-            this.DistancesToolStripMenuItem.Name = "DistancesToolStripMenuItem";
-            this.DistancesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.DistancesToolStripMenuItem.Text = "&Distances";
-            this.DistancesToolStripMenuItem.Click += new System.EventHandler(this.DistancesToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.FindByTextButton;
@@ -10363,6 +10364,7 @@ partial class MainForm
             this.StatisticsGroupBox.PerformLayout();
             this.ValueNavigatorPanel.ResumeLayout(false);
             this.LetterFrequencyPanel.ResumeLayout(false);
+            this.LetterFrequencyContextMenuStrip.ResumeLayout(false);
             this.FindByFrequncyPanel.ResumeLayout(false);
             this.FindByFrequncyPanel.PerformLayout();
             this.ValuePanel.ResumeLayout(false);
@@ -10378,7 +10380,6 @@ partial class MainForm
             ((System.ComponentModel.ISupportInitialize)(this.PlayerSelectionSilenceGapTrackBar)).EndInit();
             this.RecitationsDownloadGroupBox.ResumeLayout(false);
             this.NotifyIconContextMenuStrip.ResumeLayout(false);
-            this.LetterFrequencyContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
     }

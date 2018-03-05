@@ -189,7 +189,7 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region MainForm
     ///////////////////////////////////////////////////////////////////////////////
-    //private float m_dpi_x = DEFAULT_DPI_X;
+    private float m_dpi_x = DEFAULT_DPI_X;
     private string m_ini_filename = null;
     private Client m_client = null;
     private string m_current_text = null;
@@ -201,19 +201,16 @@ public partial class MainForm : Form, ISubscriber
         InstallFonts();
         AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
 
-        //using (Graphics graphics = this.CreateGraphics())
-        //{
-        //    m_dpi_x = graphics.DpiX;
-        //    if (m_dpi_x != DEFAULT_DPI_X)
-        //    {
-        //        if (m_dpi_x == 120.0F)
-        //        {
-        //            // adjust GUI to fit into 125%
-        //            MainSplitContainer.Height = (int)(MainSplitContainer.Height / (m_dpi_x / DEFAULT_DPI_X)) + 96;
-        //            MainSplitContainer.SplitterDistance = 215;
-        //        }
-        //    }
-        //}
+        using (Graphics graphics = this.CreateGraphics())
+        {
+            m_dpi_x = graphics.DpiX;
+            //if (m_dpi_x == 120.0F)
+            //{
+            //    // adjust GUI to fit into 125%
+            //    MainSplitContainer.Height = (int)(MainSplitContainer.Height / (m_dpi_x / DEFAULT_DPI_X)) + 96;
+            //    MainSplitContainer.SplitterDistance = 215;
+            //}
+        }
 
         FindByTextButton.Enabled = true;
         FindBySimilarityButton.Enabled = false;
@@ -414,9 +411,18 @@ public partial class MainForm : Form, ISubscriber
                                 {
                                     ScopeBookRadioButton.Checked = true;
 
-                                    ValueNavigatorPanel.Top -= 115;
-                                    LetterFrequencyPanel.Top -= 115;
-                                    LetterFrequencyPanel.Height += 115;
+                                    if (m_dpi_x == 120.0F)
+                                    {
+                                        ValueNavigatorPanel.Top -= 145;
+                                        LetterFrequencyPanel.Top -= 145;
+                                        LetterFrequencyPanel.Height += 145;
+                                    }
+                                    else
+                                    {
+                                        ValueNavigatorPanel.Top -= 115;
+                                        LetterFrequencyPanel.Top -= 115;
+                                        LetterFrequencyPanel.Height += 115;
+                                    }
                                 }
 
                                 if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
@@ -23893,7 +23899,15 @@ public partial class MainForm : Form, ISubscriber
         m_frequency_result_type = (m_find_by_phrase) ? FrequencyResultType.Sentences : FrequencyResultType.Chapters;
         FindByFrequencyControls_Enter(null, null);
 
-        int shift = 46;
+        int shift;
+        if (m_dpi_x == 120.0F)
+        {
+            shift = 40;
+        }
+        else
+        {
+            shift = 46;
+        }
         if (m_find_by_phrase)
         {
             for (int i = 0; i < 3; i++) FindByFrequencyPhraseTextBox.TextChanged -= new EventHandler(FindByFrequencyPhraseTextBox_TextChanged);
@@ -30361,75 +30375,6 @@ public partial class MainForm : Form, ISubscriber
                                         ||
                                         ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
     }
-    //private void LetterFrequencyListView_DoubleClick(object sender, EventArgs e)
-    //{
-    //    char character = LetterFrequencyListView.SelectedItems[0].SubItems[1].Text[0];
-    //    List<int> letter_positions = new List<int>();
-    //    List<int> letter_distances = new List<int>();
-
-    //    if (!String.IsNullOrEmpty(m_current_text))
-    //    {
-    //        string text = m_current_text.SimplifyTo(m_client.NumerologySystem.TextMode);
-    //        text = text.Replace("\r", "");
-    //        text = text.Replace("\n", "");
-    //        text = text.Replace("\t", "");
-    //        text = text.Replace("_", "");
-    //        text = text.Replace(" ", "");
-    //        text = text.Replace(Constants.OPEN_BRACKET, "");
-    //        text = text.Replace(Constants.CLOSE_BRACKET, "");
-    //        foreach (char c in Constants.INDIAN_DIGITS)
-    //        {
-    //            text = text.Replace(c.ToString(), "");
-    //        }
-
-    //        int pos = text.IndexOf(character);
-    //        if (pos > -1)
-    //        {
-    //            letter_positions.Add(pos + 1);
-    //            for (int i = pos + 1; i < text.Length; i++)
-    //            {
-    //                if (text[i] == character)
-    //                {
-    //                    int letter_distance = i - pos;
-    //                    letter_distances.Add(letter_distance);
-    //                    pos = i;
-    //                    letter_positions.Add(pos + 1);
-    //                }
-    //            }
-    //        }
-
-    //        StringBuilder str = new StringBuilder();
-    //        str.Append(character.ToString() + " positions" + "\t");
-    //        foreach (int lp in letter_positions)
-    //        {
-    //            str.Append(lp.ToString() + ",");
-    //        }
-    //        if (str.Length > 0)
-    //        {
-    //            str.Remove(str.Length - 1, 1);
-    //        }
-    //        str.AppendLine();
-
-    //        str.Append(character.ToString() + " distances" + "\t");
-    //        foreach (int ld in letter_distances)
-    //        {
-    //            str.Append(ld.ToString() + ",");
-    //        }
-    //        if (str.Length > 0)
-    //        {
-    //            str.Remove(str.Length - 1, 1);
-    //        }
-    //        str.AppendLine();
-
-    //        string filename = character.ToString() + "_" + "LetterDistances" + Globals.OUTPUT_FILE_EXT;
-    //        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //        {
-    //            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //            FileHelper.SaveText(path, str.ToString());
-    //            FileHelper.DisplayFile(path);
-    //        }
-    //    }
-    //}
     private void LetterFrequencyListView_DoubleClick(object sender, EventArgs e)
     {
         char character = '\0';
