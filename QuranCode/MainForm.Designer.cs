@@ -290,21 +290,29 @@ partial class MainForm
             this.AllTranslatorsCheckBox = new System.Windows.Forms.CheckBox();
             this.TranslatorsComboBox = new System.Windows.Forms.ComboBox();
             this.TranslationsTextBox = new System.Windows.Forms.TextBox();
-            this.TafseerTabPage = new System.Windows.Forms.TabPage();
-            this.TafseerComboBox = new System.Windows.Forms.ComboBox();
-            this.TafseerWebBrowser = new System.Windows.Forms.WebBrowser();
-            this.GrammarTabPage = new System.Windows.Forms.TabPage();
-            this.GrammarTextBox = new System.Windows.Forms.TextBox();
-            this.VerbFormsTabPage = new System.Windows.Forms.TabPage();
-            this.VerbFormsTextBox = new System.Windows.Forms.TextBox();
-            this.RelatedWordsTabPage = new System.Windows.Forms.TabPage();
-            this.RelatedWordsButton = new System.Windows.Forms.Button();
-            this.RelatedWordsTextBox = new System.Windows.Forms.TextBox();
             this.SymmetryTabPage = new System.Windows.Forms.TabPage();
             this.SymmetryIncludeBoundaryCasesCheckBox = new System.Windows.Forms.CheckBox();
             this.SymmetryTypeComboBox = new System.Windows.Forms.ComboBox();
             this.SymmetryInspectLabel = new System.Windows.Forms.Label();
             this.SymmetryTextBox = new System.Windows.Forms.TextBox();
+            this.CVWLSequenceTabPage = new System.Windows.Forms.TabPage();
+            this.CVWLSequenceShowFactorsCheckBox = new System.Windows.Forms.CheckBox();
+            this.CVWLSequenceTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.CVWLSequenceInspectLabel = new System.Windows.Forms.Label();
+            this.CVWLSequenceDirectionLabel = new System.Windows.Forms.Label();
+            this.CVWLSequenceTextBox = new System.Windows.Forms.TextBox();
+            this.ValuesSequenceTabPage = new System.Windows.Forms.TabPage();
+            this.ValuesSequenceScopeComboBox = new System.Windows.Forms.ComboBox();
+            this.ValuesSequenceRadixNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.ValuesSequenceRadixLabel = new System.Windows.Forms.Label();
+            this.ValuesSequenceInspectLabel = new System.Windows.Forms.Label();
+            this.ValuesSequenceDirectionLabel = new System.Windows.Forms.Label();
+            this.ValuesSequenceTextBox = new System.Windows.Forms.TextBox();
+            this.DNASequenceTabPage = new System.Windows.Forms.TabPage();
+            this.DNASequenceDirectionLabel = new System.Windows.Forms.Label();
+            this.DNASequenceSystemEditLabel = new System.Windows.Forms.Label();
+            this.DNASequenceSystemComboBox = new System.Windows.Forms.ComboBox();
+            this.DNASequenceTextBox = new System.Windows.Forms.TextBox();
             this.MathsTabPage = new System.Windows.Forms.TabPage();
             this.MathsPanel = new System.Windows.Forms.Panel();
             this.MathsInterestingNumbersEditLabel = new System.Windows.Forms.Label();
@@ -475,24 +483,16 @@ partial class MainForm
             this.DistancesWithinVerseLabel = new System.Windows.Forms.Label();
             this.DistancesWithinChapterLabel = new System.Windows.Forms.Label();
             this.DistancesWithinBookLabel = new System.Windows.Forms.Label();
-            this.CVWLSequenceTabPage = new System.Windows.Forms.TabPage();
-            this.CVWLSequenceShowFactorsCheckBox = new System.Windows.Forms.CheckBox();
-            this.CVWLSequenceTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.CVWLSequenceInspectLabel = new System.Windows.Forms.Label();
-            this.CVWLSequenceDirectionLabel = new System.Windows.Forms.Label();
-            this.CVWLSequenceTextBox = new System.Windows.Forms.TextBox();
-            this.ValuesSequenceTabPage = new System.Windows.Forms.TabPage();
-            this.ValuesSequenceScopeComboBox = new System.Windows.Forms.ComboBox();
-            this.ValuesSequenceRadixNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.ValuesSequenceRadixLabel = new System.Windows.Forms.Label();
-            this.ValuesSequenceInspectLabel = new System.Windows.Forms.Label();
-            this.ValuesSequenceDirectionLabel = new System.Windows.Forms.Label();
-            this.ValuesSequenceTextBox = new System.Windows.Forms.TextBox();
-            this.DNASequenceTabPage = new System.Windows.Forms.TabPage();
-            this.DNASequenceDirectionLabel = new System.Windows.Forms.Label();
-            this.DNASequenceSystemEditLabel = new System.Windows.Forms.Label();
-            this.DNASequenceSystemComboBox = new System.Windows.Forms.ComboBox();
-            this.DNASequenceTextBox = new System.Windows.Forms.TextBox();
+            this.RelatedWordsTabPage = new System.Windows.Forms.TabPage();
+            this.RelatedWordsButton = new System.Windows.Forms.Button();
+            this.RelatedWordsTextBox = new System.Windows.Forms.TextBox();
+            this.TafseerTabPage = new System.Windows.Forms.TabPage();
+            this.TafseerComboBox = new System.Windows.Forms.ComboBox();
+            this.TafseerWebBrowser = new System.Windows.Forms.WebBrowser();
+            this.GrammarTabPage = new System.Windows.Forms.TabPage();
+            this.GrammarTextBox = new System.Windows.Forms.TextBox();
+            this.VerbFormsTabPage = new System.Windows.Forms.TabPage();
+            this.VerbFormsTextBox = new System.Windows.Forms.TextBox();
             this.UserTextTabPage = new System.Windows.Forms.TabPage();
             this.UserTextTextBox = new System.Windows.Forms.TextBox();
             this.GoldenRatioTypeLabel = new System.Windows.Forms.Label();
@@ -630,6 +630,9 @@ partial class MainForm
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontDialog = new System.Windows.Forms.FontDialog();
+            this.LetterFrequencyContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.PositionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DistancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusPanel.SuspendLayout();
             this.ChapterSortPanel.SuspendLayout();
             this.DrawingsPanel.SuspendLayout();
@@ -686,21 +689,21 @@ partial class MainForm
             this.TranslationSplitContainer.Panel1.SuspendLayout();
             this.TranslationSplitContainer.Panel2.SuspendLayout();
             this.TranslationSplitContainer.SuspendLayout();
-            this.TafseerTabPage.SuspendLayout();
-            this.GrammarTabPage.SuspendLayout();
-            this.VerbFormsTabPage.SuspendLayout();
-            this.RelatedWordsTabPage.SuspendLayout();
             this.SymmetryTabPage.SuspendLayout();
+            this.CVWLSequenceTabPage.SuspendLayout();
+            this.ValuesSequenceTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ValuesSequenceRadixNumericUpDown)).BeginInit();
+            this.DNASequenceTabPage.SuspendLayout();
             this.MathsTabPage.SuspendLayout();
             this.MathsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MathsDivisorNumericUpDown)).BeginInit();
             this.DistancesTabPage.SuspendLayout();
             this.DistancesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DistancesDivisorNumericUpDown)).BeginInit();
-            this.CVWLSequenceTabPage.SuspendLayout();
-            this.ValuesSequenceTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ValuesSequenceRadixNumericUpDown)).BeginInit();
-            this.DNASequenceTabPage.SuspendLayout();
+            this.RelatedWordsTabPage.SuspendLayout();
+            this.TafseerTabPage.SuspendLayout();
+            this.GrammarTabPage.SuspendLayout();
+            this.VerbFormsTabPage.SuspendLayout();
             this.UserTextTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FindByFrequencySumNumericUpDown)).BeginInit();
             this.StatisticsGroupBox.SuspendLayout();
@@ -718,6 +721,7 @@ partial class MainForm
             ((System.ComponentModel.ISupportInitialize)(this.PlayerSelectionSilenceGapTrackBar)).BeginInit();
             this.RecitationsDownloadGroupBox.SuspendLayout();
             this.NotifyIconContextMenuStrip.SuspendLayout();
+            this.LetterFrequencyContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // WebsiteLinkLabel
@@ -4982,7 +4986,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(821, 197);
+            this.TabControl.Size = new System.Drawing.Size(821, 200);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -4995,7 +4999,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(813, 171);
+            this.TranslationTabPage.Size = new System.Drawing.Size(813, 174);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = " Translation ";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse";
@@ -5181,158 +5185,6 @@ partial class MainForm
             this.TranslationsTextBox.WordWrap = false;
             this.TranslationsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
-            // TafseerTabPage
-            // 
-            this.TafseerTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.TafseerTabPage.Controls.Add(this.TafseerComboBox);
-            this.TafseerTabPage.Controls.Add(this.TafseerWebBrowser);
-            this.TafseerTabPage.Location = new System.Drawing.Point(4, 22);
-            this.TafseerTabPage.Name = "TafseerTabPage";
-            this.TafseerTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TafseerTabPage.Size = new System.Drawing.Size(813, 171);
-            this.TafseerTabPage.TabIndex = 191;
-            this.TafseerTabPage.Text = " Tafseer ";
-            this.TafseerTabPage.ToolTipText = "Exegesis/commentry of the current chapter/verse";
-            this.TafseerTabPage.UseVisualStyleBackColor = true;
-            // 
-            // TafseerComboBox
-            // 
-            this.TafseerComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.TafseerComboBox.BackColor = System.Drawing.SystemColors.Control;
-            this.TafseerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TafseerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TafseerComboBox.FormattingEnabled = true;
-            this.TafseerComboBox.Location = new System.Drawing.Point(612, 149);
-            this.TafseerComboBox.Name = "TafseerComboBox";
-            this.TafseerComboBox.Size = new System.Drawing.Size(183, 20);
-            this.TafseerComboBox.TabIndex = 2;
-            this.TafseerComboBox.SelectedIndexChanged += new System.EventHandler(this.TafseerComboBox_SelectedIndexChanged);
-            // 
-            // TafseerWebBrowser
-            // 
-            this.TafseerWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TafseerWebBrowser.Location = new System.Drawing.Point(3, 3);
-            this.TafseerWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.TafseerWebBrowser.Name = "TafseerWebBrowser";
-            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 165);
-            this.TafseerWebBrowser.TabIndex = 1;
-            // 
-            // GrammarTabPage
-            // 
-            this.GrammarTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
-            this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
-            this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(813, 171);
-            this.GrammarTabPage.TabIndex = 193;
-            this.GrammarTabPage.Text = " Grammar";
-            this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
-            this.GrammarTabPage.UseVisualStyleBackColor = true;
-            // 
-            // GrammarTextBox
-            // 
-            this.GrammarTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.GrammarTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.GrammarTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GrammarTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.GrammarTextBox.HideSelection = false;
-            this.GrammarTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.GrammarTextBox.Multiline = true;
-            this.GrammarTextBox.Name = "GrammarTextBox";
-            this.GrammarTextBox.ReadOnly = true;
-            this.GrammarTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.GrammarTextBox.Size = new System.Drawing.Size(817, 169);
-            this.GrammarTextBox.TabIndex = 1;
-            this.GrammarTextBox.Text = "Start QuranCode with Ctrl key for the Grammar Edition.";
-            this.GrammarTextBox.WordWrap = false;
-            this.GrammarTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
-            // 
-            // VerbFormsTabPage
-            // 
-            this.VerbFormsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.VerbFormsTabPage.Controls.Add(this.VerbFormsTextBox);
-            this.VerbFormsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.VerbFormsTabPage.Name = "VerbFormsTabPage";
-            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 171);
-            this.VerbFormsTabPage.TabIndex = 196;
-            this.VerbFormsTabPage.Text = "Verb Forms";
-            this.VerbFormsTabPage.ToolTipText = "Verb forms for the current word in Arabic";
-            this.VerbFormsTabPage.UseVisualStyleBackColor = true;
-            // 
-            // VerbFormsTextBox
-            // 
-            this.VerbFormsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.VerbFormsTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.VerbFormsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VerbFormsTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.VerbFormsTextBox.HideSelection = false;
-            this.VerbFormsTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.VerbFormsTextBox.Multiline = true;
-            this.VerbFormsTextBox.Name = "VerbFormsTextBox";
-            this.VerbFormsTextBox.ReadOnly = true;
-            this.VerbFormsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.VerbFormsTextBox.Size = new System.Drawing.Size(817, 169);
-            this.VerbFormsTextBox.TabIndex = 1;
-            this.VerbFormsTextBox.Text = "Click a word to display its verb forms in Arabic.";
-            this.VerbFormsTextBox.WordWrap = false;
-            this.VerbFormsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
-            // 
-            // RelatedWordsTabPage
-            // 
-            this.RelatedWordsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsButton);
-            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
-            this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 171);
-            this.RelatedWordsTabPage.TabIndex = 192;
-            this.RelatedWordsTabPage.Text = "Related Words ";
-            this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
-            this.RelatedWordsTabPage.UseVisualStyleBackColor = true;
-            // 
-            // RelatedWordsButton
-            // 
-            this.RelatedWordsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RelatedWordsButton.BackColor = System.Drawing.SystemColors.Control;
-            this.RelatedWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.RelatedWordsButton.Enabled = false;
-            this.RelatedWordsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RelatedWordsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RelatedWordsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.RelatedWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("RelatedWordsButton.Image")));
-            this.RelatedWordsButton.Location = new System.Drawing.Point(795, 149);
-            this.RelatedWordsButton.Name = "RelatedWordsButton";
-            this.RelatedWordsButton.Size = new System.Drawing.Size(18, 18);
-            this.RelatedWordsButton.TabIndex = 2;
-            this.ToolTip.SetToolTip(this.RelatedWordsButton, "Display all verses with related words");
-            this.RelatedWordsButton.UseVisualStyleBackColor = false;
-            this.RelatedWordsButton.Click += new System.EventHandler(this.RelatedWordsButton_Click);
-            // 
-            // RelatedWordsTextBox
-            // 
-            this.RelatedWordsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RelatedWordsTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.RelatedWordsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RelatedWordsTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.RelatedWordsTextBox.HideSelection = false;
-            this.RelatedWordsTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.RelatedWordsTextBox.Multiline = true;
-            this.RelatedWordsTextBox.Name = "RelatedWordsTextBox";
-            this.RelatedWordsTextBox.ReadOnly = true;
-            this.RelatedWordsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.RelatedWordsTextBox.Size = new System.Drawing.Size(817, 169);
-            this.RelatedWordsTextBox.TabIndex = 1;
-            this.RelatedWordsTextBox.Text = "Click a word to display words from the same root.";
-            this.RelatedWordsTextBox.WordWrap = false;
-            this.RelatedWordsTextBox.TextChanged += new System.EventHandler(this.RelatedWordsTextBox_TextChanged);
-            this.RelatedWordsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
-            // 
             // SymmetryTabPage
             // 
             this.SymmetryTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -5342,7 +5194,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 171);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(813, 174);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]";
@@ -5410,13 +5262,309 @@ partial class MainForm
             this.SymmetryTextBox.WordWrap = false;
             this.SymmetryTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
+            // CVWLSequenceTabPage
+            // 
+            this.CVWLSequenceTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceShowFactorsCheckBox);
+            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTypeComboBox);
+            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceInspectLabel);
+            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceDirectionLabel);
+            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
+            this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
+            this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 174);
+            this.CVWLSequenceTabPage.TabIndex = 200;
+            this.CVWLSequenceTabPage.Text = "CVWL";
+            this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
+            // 
+            // CVWLSequenceShowFactorsCheckBox
+            // 
+            this.CVWLSequenceShowFactorsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CVWLSequenceShowFactorsCheckBox.AutoSize = true;
+            this.CVWLSequenceShowFactorsCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.CVWLSequenceShowFactorsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CVWLSequenceShowFactorsCheckBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.CVWLSequenceShowFactorsCheckBox.Location = new System.Drawing.Point(595, 153);
+            this.CVWLSequenceShowFactorsCheckBox.Name = "CVWLSequenceShowFactorsCheckBox";
+            this.CVWLSequenceShowFactorsCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.CVWLSequenceShowFactorsCheckBox.TabIndex = 273;
+            this.ToolTip.SetToolTip(this.CVWLSequenceShowFactorsCheckBox, "Include boundary cases");
+            this.CVWLSequenceShowFactorsCheckBox.UseVisualStyleBackColor = false;
+            this.CVWLSequenceShowFactorsCheckBox.CheckedChanged += new System.EventHandler(this.CVWLSequenceShowFactorsCheckBox_CheckedChanged);
+            // 
+            // CVWLSequenceTypeComboBox
+            // 
+            this.CVWLSequenceTypeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CVWLSequenceTypeComboBox.BackColor = System.Drawing.SystemColors.Control;
+            this.CVWLSequenceTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CVWLSequenceTypeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CVWLSequenceTypeComboBox.FormattingEnabled = true;
+            this.CVWLSequenceTypeComboBox.Location = new System.Drawing.Point(612, 149);
+            this.CVWLSequenceTypeComboBox.Name = "CVWLSequenceTypeComboBox";
+            this.CVWLSequenceTypeComboBox.Size = new System.Drawing.Size(183, 20);
+            this.CVWLSequenceTypeComboBox.TabIndex = 5;
+            this.CVWLSequenceTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.CVWLSequenceTypeComboBox_SelectedIndexChanged);
+            // 
+            // CVWLSequenceInspectLabel
+            // 
+            this.CVWLSequenceInspectLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CVWLSequenceInspectLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.CVWLSequenceInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CVWLSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CVWLSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.CVWLSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceInspectLabel.Image")));
+            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(796, 149);
+            this.CVWLSequenceInspectLabel.Name = "CVWLSequenceInspectLabel";
+            this.CVWLSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
+            this.CVWLSequenceInspectLabel.TabIndex = 6;
+            this.ToolTip.SetToolTip(this.CVWLSequenceInspectLabel, "Open in Notepad");
+            this.CVWLSequenceInspectLabel.Click += new System.EventHandler(this.CVWLSequenceInspectLabel_Click);
+            // 
+            // CVWLSequenceDirectionLabel
+            // 
+            this.CVWLSequenceDirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CVWLSequenceDirectionLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.CVWLSequenceDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CVWLSequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CVWLSequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.CVWLSequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceDirectionLabel.Image")));
+            this.CVWLSequenceDirectionLabel.Location = new System.Drawing.Point(796, 0);
+            this.CVWLSequenceDirectionLabel.Name = "CVWLSequenceDirectionLabel";
+            this.CVWLSequenceDirectionLabel.Size = new System.Drawing.Size(18, 18);
+            this.CVWLSequenceDirectionLabel.TabIndex = 3;
+            this.CVWLSequenceDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.CVWLSequenceDirectionLabel, "Numbers sequence direction");
+            this.CVWLSequenceDirectionLabel.Click += new System.EventHandler(this.CVWLSequenceDirectionLabel_Click);
+            // 
+            // CVWLSequenceTextBox
+            // 
+            this.CVWLSequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CVWLSequenceTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.CVWLSequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CVWLSequenceTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.CVWLSequenceTextBox.HideSelection = false;
+            this.CVWLSequenceTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.CVWLSequenceTextBox.Multiline = true;
+            this.CVWLSequenceTextBox.Name = "CVWLSequenceTextBox";
+            this.CVWLSequenceTextBox.ReadOnly = true;
+            this.CVWLSequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.CVWLSequenceTextBox.Size = new System.Drawing.Size(817, 169);
+            this.CVWLSequenceTextBox.TabIndex = 1;
+            this.CVWLSequenceTextBox.Text = "Select text to display concatenated chapter/verse/word/letter numbers and counts." +
+    "";
+            this.CVWLSequenceTextBox.WordWrap = false;
+            this.CVWLSequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            // 
+            // ValuesSequenceTabPage
+            // 
+            this.ValuesSequenceTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceScopeComboBox);
+            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceRadixNumericUpDown);
+            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceRadixLabel);
+            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceInspectLabel);
+            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceDirectionLabel);
+            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
+            this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 174);
+            this.ValuesSequenceTabPage.TabIndex = 198;
+            this.ValuesSequenceTabPage.Text = "Values";
+            this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
+            // 
+            // ValuesSequenceScopeComboBox
+            // 
+            this.ValuesSequenceScopeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValuesSequenceScopeComboBox.BackColor = System.Drawing.SystemColors.Control;
+            this.ValuesSequenceScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ValuesSequenceScopeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValuesSequenceScopeComboBox.FormattingEnabled = true;
+            this.ValuesSequenceScopeComboBox.Location = new System.Drawing.Point(612, 149);
+            this.ValuesSequenceScopeComboBox.Name = "ValuesSequenceScopeComboBox";
+            this.ValuesSequenceScopeComboBox.Size = new System.Drawing.Size(183, 20);
+            this.ValuesSequenceScopeComboBox.TabIndex = 2;
+            this.ValuesSequenceScopeComboBox.SelectedIndexChanged += new System.EventHandler(this.ValuesSequenceScopeComboBox_SelectedIndexChanged);
+            // 
+            // ValuesSequenceRadixNumericUpDown
+            // 
+            this.ValuesSequenceRadixNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValuesSequenceRadixNumericUpDown.BackColor = System.Drawing.SystemColors.Window;
+            this.ValuesSequenceRadixNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValuesSequenceRadixNumericUpDown.Location = new System.Drawing.Point(572, 151);
+            this.ValuesSequenceRadixNumericUpDown.Maximum = new decimal(new int[] {
+            36,
+            0,
+            0,
+            0});
+            this.ValuesSequenceRadixNumericUpDown.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.ValuesSequenceRadixNumericUpDown.Name = "ValuesSequenceRadixNumericUpDown";
+            this.ValuesSequenceRadixNumericUpDown.Size = new System.Drawing.Size(39, 17);
+            this.ValuesSequenceRadixNumericUpDown.TabIndex = 273;
+            this.ValuesSequenceRadixNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ValuesSequenceRadixNumericUpDown.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.ValuesSequenceRadixNumericUpDown.ValueChanged += new System.EventHandler(this.ValuesSequenceRadixNumericUpDown_ValueChanged);
+            // 
+            // ValuesSequenceRadixLabel
+            // 
+            this.ValuesSequenceRadixLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValuesSequenceRadixLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ValuesSequenceRadixLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValuesSequenceRadixLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ValuesSequenceRadixLabel.Location = new System.Drawing.Point(544, 153);
+            this.ValuesSequenceRadixLabel.Name = "ValuesSequenceRadixLabel";
+            this.ValuesSequenceRadixLabel.Size = new System.Drawing.Size(27, 12);
+            this.ValuesSequenceRadixLabel.TabIndex = 272;
+            this.ValuesSequenceRadixLabel.Text = "Base";
+            this.ValuesSequenceRadixLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ValuesSequenceInspectLabel
+            // 
+            this.ValuesSequenceInspectLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValuesSequenceInspectLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ValuesSequenceInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ValuesSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValuesSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ValuesSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceInspectLabel.Image")));
+            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(796, 149);
+            this.ValuesSequenceInspectLabel.Name = "ValuesSequenceInspectLabel";
+            this.ValuesSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
+            this.ValuesSequenceInspectLabel.TabIndex = 4;
+            this.ToolTip.SetToolTip(this.ValuesSequenceInspectLabel, "Open in Notepad");
+            this.ValuesSequenceInspectLabel.Click += new System.EventHandler(this.ValuesSequenceInspectLabel_Click);
+            // 
+            // ValuesSequenceDirectionLabel
+            // 
+            this.ValuesSequenceDirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValuesSequenceDirectionLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ValuesSequenceDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ValuesSequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValuesSequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ValuesSequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceDirectionLabel.Image")));
+            this.ValuesSequenceDirectionLabel.Location = new System.Drawing.Point(796, 0);
+            this.ValuesSequenceDirectionLabel.Name = "ValuesSequenceDirectionLabel";
+            this.ValuesSequenceDirectionLabel.Size = new System.Drawing.Size(18, 18);
+            this.ValuesSequenceDirectionLabel.TabIndex = 3;
+            this.ValuesSequenceDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.ValuesSequenceDirectionLabel, "Value sequence direction");
+            this.ValuesSequenceDirectionLabel.Click += new System.EventHandler(this.ValuesSequenceDirectionLabel_Click);
+            // 
+            // ValuesSequenceTextBox
+            // 
+            this.ValuesSequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValuesSequenceTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.ValuesSequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValuesSequenceTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.ValuesSequenceTextBox.HideSelection = false;
+            this.ValuesSequenceTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.ValuesSequenceTextBox.Multiline = true;
+            this.ValuesSequenceTextBox.Name = "ValuesSequenceTextBox";
+            this.ValuesSequenceTextBox.ReadOnly = true;
+            this.ValuesSequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.ValuesSequenceTextBox.Size = new System.Drawing.Size(817, 169);
+            this.ValuesSequenceTextBox.TabIndex = 1;
+            this.ValuesSequenceTextBox.Text = "Select text to convert its letter/word/verse/chapter values into a number sequenc" +
+    "e in the specified base.";
+            this.ValuesSequenceTextBox.WordWrap = false;
+            this.ValuesSequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            // 
+            // DNASequenceTabPage
+            // 
+            this.DNASequenceTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.DNASequenceTabPage.Controls.Add(this.DNASequenceDirectionLabel);
+            this.DNASequenceTabPage.Controls.Add(this.DNASequenceSystemEditLabel);
+            this.DNASequenceTabPage.Controls.Add(this.DNASequenceSystemComboBox);
+            this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
+            this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
+            this.DNASequenceTabPage.Name = "DNASequenceTabPage";
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 174);
+            this.DNASequenceTabPage.TabIndex = 195;
+            this.DNASequenceTabPage.Text = "DNA";
+            this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
+    " Meghzouchene].";
+            this.DNASequenceTabPage.UseVisualStyleBackColor = true;
+            // 
+            // DNASequenceDirectionLabel
+            // 
+            this.DNASequenceDirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DNASequenceDirectionLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DNASequenceDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DNASequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DNASequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.DNASequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceDirectionLabel.Image")));
+            this.DNASequenceDirectionLabel.Location = new System.Drawing.Point(796, 0);
+            this.DNASequenceDirectionLabel.Name = "DNASequenceDirectionLabel";
+            this.DNASequenceDirectionLabel.Size = new System.Drawing.Size(18, 18);
+            this.DNASequenceDirectionLabel.TabIndex = 3;
+            this.DNASequenceDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.DNASequenceDirectionLabel, "DNA sequence direction");
+            this.DNASequenceDirectionLabel.Click += new System.EventHandler(this.DNASequenceDirectionLabel_Click);
+            // 
+            // DNASequenceSystemEditLabel
+            // 
+            this.DNASequenceSystemEditLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DNASequenceSystemEditLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DNASequenceSystemEditLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DNASequenceSystemEditLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DNASequenceSystemEditLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.DNASequenceSystemEditLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceSystemEditLabel.Image")));
+            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(795, 149);
+            this.DNASequenceSystemEditLabel.Name = "DNASequenceSystemEditLabel";
+            this.DNASequenceSystemEditLabel.Size = new System.Drawing.Size(18, 18);
+            this.DNASequenceSystemEditLabel.TabIndex = 4;
+            this.ToolTip.SetToolTip(this.DNASequenceSystemEditLabel, "Edit DNA sequence system");
+            this.DNASequenceSystemEditLabel.Click += new System.EventHandler(this.DNASequenceSystemEditLabel_Click);
+            // 
+            // DNASequenceSystemComboBox
+            // 
+            this.DNASequenceSystemComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DNASequenceSystemComboBox.BackColor = System.Drawing.SystemColors.Control;
+            this.DNASequenceSystemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DNASequenceSystemComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DNASequenceSystemComboBox.FormattingEnabled = true;
+            this.DNASequenceSystemComboBox.Location = new System.Drawing.Point(612, 149);
+            this.DNASequenceSystemComboBox.Name = "DNASequenceSystemComboBox";
+            this.DNASequenceSystemComboBox.Size = new System.Drawing.Size(183, 20);
+            this.DNASequenceSystemComboBox.TabIndex = 2;
+            this.DNASequenceSystemComboBox.SelectedIndexChanged += new System.EventHandler(this.DNASequenceSystemComboBox_SelectedIndexChanged);
+            // 
+            // DNASequenceTextBox
+            // 
+            this.DNASequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DNASequenceTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.DNASequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DNASequenceTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.DNASequenceTextBox.HideSelection = false;
+            this.DNASequenceTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.DNASequenceTextBox.Multiline = true;
+            this.DNASequenceTextBox.Name = "DNASequenceTextBox";
+            this.DNASequenceTextBox.ReadOnly = true;
+            this.DNASequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.DNASequenceTextBox.Size = new System.Drawing.Size(817, 169);
+            this.DNASequenceTextBox.TabIndex = 1;
+            this.DNASequenceTextBox.Text = "Select text to convert into a DNA sequence.";
+            this.DNASequenceTextBox.WordWrap = false;
+            this.DNASequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            // 
             // MathsTabPage
             // 
             this.MathsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(813, 171);
+            this.MathsTabPage.Size = new System.Drawing.Size(813, 174);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations";
@@ -5530,7 +5678,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(813, 171);
+            this.MathsPanel.Size = new System.Drawing.Size(813, 174);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -6818,7 +6966,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(813, 171);
+            this.DistancesTabPage.Size = new System.Drawing.Size(813, 174);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word.";
@@ -6894,7 +7042,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(813, 171);
+            this.DistancesPanel.Size = new System.Drawing.Size(813, 174);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -7727,301 +7875,157 @@ partial class MainForm
             this.DistancesWithinBookLabel.Text = "in Book";
             this.DistancesWithinBookLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // CVWLSequenceTabPage
+            // RelatedWordsTabPage
             // 
-            this.CVWLSequenceTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceShowFactorsCheckBox);
-            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTypeComboBox);
-            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceInspectLabel);
-            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceDirectionLabel);
-            this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
-            this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
-            this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(813, 171);
-            this.CVWLSequenceTabPage.TabIndex = 200;
-            this.CVWLSequenceTabPage.Text = "CVWL";
-            this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
+            this.RelatedWordsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsButton);
+            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
+            this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(813, 174);
+            this.RelatedWordsTabPage.TabIndex = 192;
+            this.RelatedWordsTabPage.Text = "Related Words ";
+            this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
+            this.RelatedWordsTabPage.UseVisualStyleBackColor = true;
             // 
-            // CVWLSequenceShowFactorsCheckBox
+            // RelatedWordsButton
             // 
-            this.CVWLSequenceShowFactorsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CVWLSequenceShowFactorsCheckBox.AutoSize = true;
-            this.CVWLSequenceShowFactorsCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.CVWLSequenceShowFactorsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CVWLSequenceShowFactorsCheckBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CVWLSequenceShowFactorsCheckBox.Location = new System.Drawing.Point(595, 153);
-            this.CVWLSequenceShowFactorsCheckBox.Name = "CVWLSequenceShowFactorsCheckBox";
-            this.CVWLSequenceShowFactorsCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.CVWLSequenceShowFactorsCheckBox.TabIndex = 273;
-            this.ToolTip.SetToolTip(this.CVWLSequenceShowFactorsCheckBox, "Include boundary cases");
-            this.CVWLSequenceShowFactorsCheckBox.UseVisualStyleBackColor = false;
-            this.CVWLSequenceShowFactorsCheckBox.CheckedChanged += new System.EventHandler(this.CVWLSequenceShowFactorsCheckBox_CheckedChanged);
+            this.RelatedWordsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RelatedWordsButton.BackColor = System.Drawing.SystemColors.Control;
+            this.RelatedWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.RelatedWordsButton.Enabled = false;
+            this.RelatedWordsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RelatedWordsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RelatedWordsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.RelatedWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("RelatedWordsButton.Image")));
+            this.RelatedWordsButton.Location = new System.Drawing.Point(795, 149);
+            this.RelatedWordsButton.Name = "RelatedWordsButton";
+            this.RelatedWordsButton.Size = new System.Drawing.Size(18, 18);
+            this.RelatedWordsButton.TabIndex = 2;
+            this.ToolTip.SetToolTip(this.RelatedWordsButton, "Display all verses with related words");
+            this.RelatedWordsButton.UseVisualStyleBackColor = false;
+            this.RelatedWordsButton.Click += new System.EventHandler(this.RelatedWordsButton_Click);
             // 
-            // CVWLSequenceTypeComboBox
+            // RelatedWordsTextBox
             // 
-            this.CVWLSequenceTypeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CVWLSequenceTypeComboBox.BackColor = System.Drawing.SystemColors.Control;
-            this.CVWLSequenceTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CVWLSequenceTypeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CVWLSequenceTypeComboBox.FormattingEnabled = true;
-            this.CVWLSequenceTypeComboBox.Location = new System.Drawing.Point(612, 149);
-            this.CVWLSequenceTypeComboBox.Name = "CVWLSequenceTypeComboBox";
-            this.CVWLSequenceTypeComboBox.Size = new System.Drawing.Size(183, 20);
-            this.CVWLSequenceTypeComboBox.TabIndex = 5;
-            this.CVWLSequenceTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.CVWLSequenceTypeComboBox_SelectedIndexChanged);
-            // 
-            // CVWLSequenceInspectLabel
-            // 
-            this.CVWLSequenceInspectLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CVWLSequenceInspectLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.CVWLSequenceInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CVWLSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CVWLSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CVWLSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceInspectLabel.Image")));
-            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(796, 149);
-            this.CVWLSequenceInspectLabel.Name = "CVWLSequenceInspectLabel";
-            this.CVWLSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
-            this.CVWLSequenceInspectLabel.TabIndex = 6;
-            this.ToolTip.SetToolTip(this.CVWLSequenceInspectLabel, "Open in Notepad");
-            this.CVWLSequenceInspectLabel.Click += new System.EventHandler(this.CVWLSequenceInspectLabel_Click);
-            // 
-            // CVWLSequenceDirectionLabel
-            // 
-            this.CVWLSequenceDirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CVWLSequenceDirectionLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.CVWLSequenceDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CVWLSequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CVWLSequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CVWLSequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceDirectionLabel.Image")));
-            this.CVWLSequenceDirectionLabel.Location = new System.Drawing.Point(796, 0);
-            this.CVWLSequenceDirectionLabel.Name = "CVWLSequenceDirectionLabel";
-            this.CVWLSequenceDirectionLabel.Size = new System.Drawing.Size(18, 18);
-            this.CVWLSequenceDirectionLabel.TabIndex = 3;
-            this.CVWLSequenceDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.CVWLSequenceDirectionLabel, "Numbers sequence direction");
-            this.CVWLSequenceDirectionLabel.Click += new System.EventHandler(this.CVWLSequenceDirectionLabel_Click);
-            // 
-            // CVWLSequenceTextBox
-            // 
-            this.CVWLSequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.RelatedWordsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CVWLSequenceTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.CVWLSequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CVWLSequenceTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.CVWLSequenceTextBox.HideSelection = false;
-            this.CVWLSequenceTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.CVWLSequenceTextBox.Multiline = true;
-            this.CVWLSequenceTextBox.Name = "CVWLSequenceTextBox";
-            this.CVWLSequenceTextBox.ReadOnly = true;
-            this.CVWLSequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.CVWLSequenceTextBox.Size = new System.Drawing.Size(817, 169);
-            this.CVWLSequenceTextBox.TabIndex = 1;
-            this.CVWLSequenceTextBox.Text = "Select text to display concatenated chapter/verse/word/letter numbers and counts." +
-    "";
-            this.CVWLSequenceTextBox.WordWrap = false;
-            this.CVWLSequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            this.RelatedWordsTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.RelatedWordsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RelatedWordsTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.RelatedWordsTextBox.HideSelection = false;
+            this.RelatedWordsTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.RelatedWordsTextBox.Multiline = true;
+            this.RelatedWordsTextBox.Name = "RelatedWordsTextBox";
+            this.RelatedWordsTextBox.ReadOnly = true;
+            this.RelatedWordsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.RelatedWordsTextBox.Size = new System.Drawing.Size(817, 169);
+            this.RelatedWordsTextBox.TabIndex = 1;
+            this.RelatedWordsTextBox.Text = "Click a word to display words from the same root.";
+            this.RelatedWordsTextBox.WordWrap = false;
+            this.RelatedWordsTextBox.TextChanged += new System.EventHandler(this.RelatedWordsTextBox_TextChanged);
+            this.RelatedWordsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
-            // ValuesSequenceTabPage
+            // TafseerTabPage
             // 
-            this.ValuesSequenceTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceScopeComboBox);
-            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceRadixNumericUpDown);
-            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceRadixLabel);
-            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceInspectLabel);
-            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceDirectionLabel);
-            this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
-            this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
-            this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(813, 171);
-            this.ValuesSequenceTabPage.TabIndex = 198;
-            this.ValuesSequenceTabPage.Text = "Values";
-            this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
+            this.TafseerTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.TafseerTabPage.Controls.Add(this.TafseerComboBox);
+            this.TafseerTabPage.Controls.Add(this.TafseerWebBrowser);
+            this.TafseerTabPage.Location = new System.Drawing.Point(4, 22);
+            this.TafseerTabPage.Name = "TafseerTabPage";
+            this.TafseerTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.TafseerTabPage.Size = new System.Drawing.Size(813, 174);
+            this.TafseerTabPage.TabIndex = 191;
+            this.TafseerTabPage.Text = " Tafseer ";
+            this.TafseerTabPage.ToolTipText = "Exegesis/commentry of the current chapter/verse";
+            this.TafseerTabPage.UseVisualStyleBackColor = true;
             // 
-            // ValuesSequenceScopeComboBox
+            // TafseerComboBox
             // 
-            this.ValuesSequenceScopeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ValuesSequenceScopeComboBox.BackColor = System.Drawing.SystemColors.Control;
-            this.ValuesSequenceScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ValuesSequenceScopeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ValuesSequenceScopeComboBox.FormattingEnabled = true;
-            this.ValuesSequenceScopeComboBox.Location = new System.Drawing.Point(612, 149);
-            this.ValuesSequenceScopeComboBox.Name = "ValuesSequenceScopeComboBox";
-            this.ValuesSequenceScopeComboBox.Size = new System.Drawing.Size(183, 20);
-            this.ValuesSequenceScopeComboBox.TabIndex = 2;
-            this.ValuesSequenceScopeComboBox.SelectedIndexChanged += new System.EventHandler(this.ValuesSequenceScopeComboBox_SelectedIndexChanged);
+            this.TafseerComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.TafseerComboBox.BackColor = System.Drawing.SystemColors.Control;
+            this.TafseerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TafseerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TafseerComboBox.FormattingEnabled = true;
+            this.TafseerComboBox.Location = new System.Drawing.Point(612, 149);
+            this.TafseerComboBox.Name = "TafseerComboBox";
+            this.TafseerComboBox.Size = new System.Drawing.Size(183, 20);
+            this.TafseerComboBox.TabIndex = 2;
+            this.TafseerComboBox.SelectedIndexChanged += new System.EventHandler(this.TafseerComboBox_SelectedIndexChanged);
             // 
-            // ValuesSequenceRadixNumericUpDown
+            // TafseerWebBrowser
             // 
-            this.ValuesSequenceRadixNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ValuesSequenceRadixNumericUpDown.BackColor = System.Drawing.SystemColors.Window;
-            this.ValuesSequenceRadixNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ValuesSequenceRadixNumericUpDown.Location = new System.Drawing.Point(572, 151);
-            this.ValuesSequenceRadixNumericUpDown.Maximum = new decimal(new int[] {
-            36,
-            0,
-            0,
-            0});
-            this.ValuesSequenceRadixNumericUpDown.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.ValuesSequenceRadixNumericUpDown.Name = "ValuesSequenceRadixNumericUpDown";
-            this.ValuesSequenceRadixNumericUpDown.Size = new System.Drawing.Size(39, 17);
-            this.ValuesSequenceRadixNumericUpDown.TabIndex = 273;
-            this.ValuesSequenceRadixNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.ValuesSequenceRadixNumericUpDown.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.ValuesSequenceRadixNumericUpDown.ValueChanged += new System.EventHandler(this.ValuesSequenceRadixNumericUpDown_ValueChanged);
+            this.TafseerWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TafseerWebBrowser.Location = new System.Drawing.Point(3, 3);
+            this.TafseerWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.TafseerWebBrowser.Name = "TafseerWebBrowser";
+            this.TafseerWebBrowser.Size = new System.Drawing.Size(807, 168);
+            this.TafseerWebBrowser.TabIndex = 1;
             // 
-            // ValuesSequenceRadixLabel
+            // GrammarTabPage
             // 
-            this.ValuesSequenceRadixLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ValuesSequenceRadixLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.ValuesSequenceRadixLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ValuesSequenceRadixLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValuesSequenceRadixLabel.Location = new System.Drawing.Point(544, 153);
-            this.ValuesSequenceRadixLabel.Name = "ValuesSequenceRadixLabel";
-            this.ValuesSequenceRadixLabel.Size = new System.Drawing.Size(27, 12);
-            this.ValuesSequenceRadixLabel.TabIndex = 272;
-            this.ValuesSequenceRadixLabel.Text = "Base";
-            this.ValuesSequenceRadixLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.GrammarTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
+            this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
+            this.GrammarTabPage.Name = "GrammarTabPage";
+            this.GrammarTabPage.Size = new System.Drawing.Size(813, 174);
+            this.GrammarTabPage.TabIndex = 193;
+            this.GrammarTabPage.Text = " Grammar";
+            this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
+            this.GrammarTabPage.UseVisualStyleBackColor = true;
             // 
-            // ValuesSequenceInspectLabel
+            // GrammarTextBox
             // 
-            this.ValuesSequenceInspectLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ValuesSequenceInspectLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.ValuesSequenceInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ValuesSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ValuesSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValuesSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceInspectLabel.Image")));
-            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(796, 149);
-            this.ValuesSequenceInspectLabel.Name = "ValuesSequenceInspectLabel";
-            this.ValuesSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
-            this.ValuesSequenceInspectLabel.TabIndex = 4;
-            this.ToolTip.SetToolTip(this.ValuesSequenceInspectLabel, "Open in Notepad");
-            this.ValuesSequenceInspectLabel.Click += new System.EventHandler(this.ValuesSequenceInspectLabel_Click);
-            // 
-            // ValuesSequenceDirectionLabel
-            // 
-            this.ValuesSequenceDirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ValuesSequenceDirectionLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.ValuesSequenceDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ValuesSequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ValuesSequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValuesSequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceDirectionLabel.Image")));
-            this.ValuesSequenceDirectionLabel.Location = new System.Drawing.Point(796, 0);
-            this.ValuesSequenceDirectionLabel.Name = "ValuesSequenceDirectionLabel";
-            this.ValuesSequenceDirectionLabel.Size = new System.Drawing.Size(18, 18);
-            this.ValuesSequenceDirectionLabel.TabIndex = 3;
-            this.ValuesSequenceDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.ValuesSequenceDirectionLabel, "Value sequence direction");
-            this.ValuesSequenceDirectionLabel.Click += new System.EventHandler(this.ValuesSequenceDirectionLabel_Click);
-            // 
-            // ValuesSequenceTextBox
-            // 
-            this.ValuesSequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.GrammarTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ValuesSequenceTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.ValuesSequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ValuesSequenceTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.ValuesSequenceTextBox.HideSelection = false;
-            this.ValuesSequenceTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.ValuesSequenceTextBox.Multiline = true;
-            this.ValuesSequenceTextBox.Name = "ValuesSequenceTextBox";
-            this.ValuesSequenceTextBox.ReadOnly = true;
-            this.ValuesSequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ValuesSequenceTextBox.Size = new System.Drawing.Size(817, 169);
-            this.ValuesSequenceTextBox.TabIndex = 1;
-            this.ValuesSequenceTextBox.Text = "Select text to convert its letter/word/verse/chapter values into a number sequenc" +
-    "e in the specified base.";
-            this.ValuesSequenceTextBox.WordWrap = false;
-            this.ValuesSequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            this.GrammarTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.GrammarTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GrammarTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.GrammarTextBox.HideSelection = false;
+            this.GrammarTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.GrammarTextBox.Multiline = true;
+            this.GrammarTextBox.Name = "GrammarTextBox";
+            this.GrammarTextBox.ReadOnly = true;
+            this.GrammarTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.GrammarTextBox.Size = new System.Drawing.Size(817, 169);
+            this.GrammarTextBox.TabIndex = 1;
+            this.GrammarTextBox.Text = "Start QuranCode with Ctrl key for the Grammar Edition.";
+            this.GrammarTextBox.WordWrap = false;
+            this.GrammarTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
-            // DNASequenceTabPage
+            // VerbFormsTabPage
             // 
-            this.DNASequenceTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.DNASequenceTabPage.Controls.Add(this.DNASequenceDirectionLabel);
-            this.DNASequenceTabPage.Controls.Add(this.DNASequenceSystemEditLabel);
-            this.DNASequenceTabPage.Controls.Add(this.DNASequenceSystemComboBox);
-            this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
-            this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
-            this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(813, 171);
-            this.DNASequenceTabPage.TabIndex = 195;
-            this.DNASequenceTabPage.Text = "DNA";
-            this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
-    " Meghzouchene].";
-            this.DNASequenceTabPage.UseVisualStyleBackColor = true;
+            this.VerbFormsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.VerbFormsTabPage.Controls.Add(this.VerbFormsTextBox);
+            this.VerbFormsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.VerbFormsTabPage.Name = "VerbFormsTabPage";
+            this.VerbFormsTabPage.Size = new System.Drawing.Size(813, 174);
+            this.VerbFormsTabPage.TabIndex = 196;
+            this.VerbFormsTabPage.Text = "Verb Forms";
+            this.VerbFormsTabPage.ToolTipText = "Verb forms for the current word in Arabic";
+            this.VerbFormsTabPage.UseVisualStyleBackColor = true;
             // 
-            // DNASequenceDirectionLabel
+            // VerbFormsTextBox
             // 
-            this.DNASequenceDirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DNASequenceDirectionLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.DNASequenceDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DNASequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DNASequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DNASequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceDirectionLabel.Image")));
-            this.DNASequenceDirectionLabel.Location = new System.Drawing.Point(796, 0);
-            this.DNASequenceDirectionLabel.Name = "DNASequenceDirectionLabel";
-            this.DNASequenceDirectionLabel.Size = new System.Drawing.Size(18, 18);
-            this.DNASequenceDirectionLabel.TabIndex = 3;
-            this.DNASequenceDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.DNASequenceDirectionLabel, "DNA sequence direction");
-            this.DNASequenceDirectionLabel.Click += new System.EventHandler(this.DNASequenceDirectionLabel_Click);
-            // 
-            // DNASequenceSystemEditLabel
-            // 
-            this.DNASequenceSystemEditLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DNASequenceSystemEditLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.DNASequenceSystemEditLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DNASequenceSystemEditLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DNASequenceSystemEditLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DNASequenceSystemEditLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceSystemEditLabel.Image")));
-            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(795, 149);
-            this.DNASequenceSystemEditLabel.Name = "DNASequenceSystemEditLabel";
-            this.DNASequenceSystemEditLabel.Size = new System.Drawing.Size(18, 18);
-            this.DNASequenceSystemEditLabel.TabIndex = 4;
-            this.ToolTip.SetToolTip(this.DNASequenceSystemEditLabel, "Edit DNA sequence system");
-            this.DNASequenceSystemEditLabel.Click += new System.EventHandler(this.DNASequenceSystemEditLabel_Click);
-            // 
-            // DNASequenceSystemComboBox
-            // 
-            this.DNASequenceSystemComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DNASequenceSystemComboBox.BackColor = System.Drawing.SystemColors.Control;
-            this.DNASequenceSystemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DNASequenceSystemComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DNASequenceSystemComboBox.FormattingEnabled = true;
-            this.DNASequenceSystemComboBox.Location = new System.Drawing.Point(612, 149);
-            this.DNASequenceSystemComboBox.Name = "DNASequenceSystemComboBox";
-            this.DNASequenceSystemComboBox.Size = new System.Drawing.Size(183, 20);
-            this.DNASequenceSystemComboBox.TabIndex = 2;
-            this.DNASequenceSystemComboBox.SelectedIndexChanged += new System.EventHandler(this.DNASequenceSystemComboBox_SelectedIndexChanged);
-            // 
-            // DNASequenceTextBox
-            // 
-            this.DNASequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.VerbFormsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DNASequenceTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.DNASequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DNASequenceTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.DNASequenceTextBox.HideSelection = false;
-            this.DNASequenceTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.DNASequenceTextBox.Multiline = true;
-            this.DNASequenceTextBox.Name = "DNASequenceTextBox";
-            this.DNASequenceTextBox.ReadOnly = true;
-            this.DNASequenceTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DNASequenceTextBox.Size = new System.Drawing.Size(817, 169);
-            this.DNASequenceTextBox.TabIndex = 1;
-            this.DNASequenceTextBox.Text = "Select text to convert into a DNA sequence.";
-            this.DNASequenceTextBox.WordWrap = false;
-            this.DNASequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            this.VerbFormsTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.VerbFormsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VerbFormsTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.VerbFormsTextBox.HideSelection = false;
+            this.VerbFormsTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.VerbFormsTextBox.Multiline = true;
+            this.VerbFormsTextBox.Name = "VerbFormsTextBox";
+            this.VerbFormsTextBox.ReadOnly = true;
+            this.VerbFormsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.VerbFormsTextBox.Size = new System.Drawing.Size(817, 169);
+            this.VerbFormsTextBox.TabIndex = 1;
+            this.VerbFormsTextBox.Text = "Click a word to display its verb forms in Arabic.";
+            this.VerbFormsTextBox.WordWrap = false;
+            this.VerbFormsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
             // UserTextTabPage
             // 
@@ -8029,7 +8033,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(813, 171);
+            this.UserTextTabPage.Size = new System.Drawing.Size(813, 174);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any text using the current value-letter system and show it" +
@@ -8384,6 +8388,7 @@ partial class MainForm
             this.LetterOrderColumnHeader,
             this.LetterColumnHeader,
             this.PhraseFrequencyColumnHeader});
+            this.LetterFrequencyListView.ContextMenuStrip = this.LetterFrequencyContextMenuStrip;
             this.LetterFrequencyListView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LetterFrequencyListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LetterFrequencyListView.FullRowSelect = true;
@@ -8397,6 +8402,7 @@ partial class MainForm
             this.LetterFrequencyListView.View = System.Windows.Forms.View.Details;
             this.LetterFrequencyListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LetterFrequencyListView_ColumnClick);
             this.LetterFrequencyListView.SelectedIndexChanged += new System.EventHandler(this.LetterFrequencyListView_SelectedIndexChanged);
+            this.LetterFrequencyListView.DoubleClick += new System.EventHandler(this.LetterFrequencyListView_DoubleClick);
             this.LetterFrequencyListView.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
             // 
             // LetterOrderColumnHeader
@@ -10215,6 +10221,28 @@ partial class MainForm
             // 
             this.FontDialog.Apply += new System.EventHandler(this.FontDialog_Apply);
             // 
+            // LetterFrequencyContextMenuStrip
+            // 
+            this.LetterFrequencyContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.PositionsToolStripMenuItem,
+            this.DistancesToolStripMenuItem});
+            this.LetterFrequencyContextMenuStrip.Name = "LetterFrequencyContextMenuStrip";
+            this.LetterFrequencyContextMenuStrip.Size = new System.Drawing.Size(125, 48);
+            // 
+            // PositionsToolStripMenuItem
+            // 
+            this.PositionsToolStripMenuItem.Name = "PositionsToolStripMenuItem";
+            this.PositionsToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.PositionsToolStripMenuItem.Text = "&Positions";
+            this.PositionsToolStripMenuItem.Click += new System.EventHandler(this.PositionsToolStripMenuItem_Click);
+            // 
+            // DistancesToolStripMenuItem
+            // 
+            this.DistancesToolStripMenuItem.Name = "DistancesToolStripMenuItem";
+            this.DistancesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.DistancesToolStripMenuItem.Text = "&Distances";
+            this.DistancesToolStripMenuItem.Click += new System.EventHandler(this.DistancesToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.FindByTextButton;
@@ -10304,15 +10332,15 @@ partial class MainForm
             this.TranslationSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TranslationSplitContainer)).EndInit();
             this.TranslationSplitContainer.ResumeLayout(false);
-            this.TafseerTabPage.ResumeLayout(false);
-            this.GrammarTabPage.ResumeLayout(false);
-            this.GrammarTabPage.PerformLayout();
-            this.VerbFormsTabPage.ResumeLayout(false);
-            this.VerbFormsTabPage.PerformLayout();
-            this.RelatedWordsTabPage.ResumeLayout(false);
-            this.RelatedWordsTabPage.PerformLayout();
             this.SymmetryTabPage.ResumeLayout(false);
             this.SymmetryTabPage.PerformLayout();
+            this.CVWLSequenceTabPage.ResumeLayout(false);
+            this.CVWLSequenceTabPage.PerformLayout();
+            this.ValuesSequenceTabPage.ResumeLayout(false);
+            this.ValuesSequenceTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ValuesSequenceRadixNumericUpDown)).EndInit();
+            this.DNASequenceTabPage.ResumeLayout(false);
+            this.DNASequenceTabPage.PerformLayout();
             this.MathsTabPage.ResumeLayout(false);
             this.MathsPanel.ResumeLayout(false);
             this.MathsPanel.PerformLayout();
@@ -10321,13 +10349,13 @@ partial class MainForm
             this.DistancesPanel.ResumeLayout(false);
             this.DistancesPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DistancesDivisorNumericUpDown)).EndInit();
-            this.CVWLSequenceTabPage.ResumeLayout(false);
-            this.CVWLSequenceTabPage.PerformLayout();
-            this.ValuesSequenceTabPage.ResumeLayout(false);
-            this.ValuesSequenceTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ValuesSequenceRadixNumericUpDown)).EndInit();
-            this.DNASequenceTabPage.ResumeLayout(false);
-            this.DNASequenceTabPage.PerformLayout();
+            this.RelatedWordsTabPage.ResumeLayout(false);
+            this.RelatedWordsTabPage.PerformLayout();
+            this.TafseerTabPage.ResumeLayout(false);
+            this.GrammarTabPage.ResumeLayout(false);
+            this.GrammarTabPage.PerformLayout();
+            this.VerbFormsTabPage.ResumeLayout(false);
+            this.VerbFormsTabPage.PerformLayout();
             this.UserTextTabPage.ResumeLayout(false);
             this.UserTextTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FindByFrequencySumNumericUpDown)).EndInit();
@@ -10350,6 +10378,7 @@ partial class MainForm
             ((System.ComponentModel.ISupportInitialize)(this.PlayerSelectionSilenceGapTrackBar)).EndInit();
             this.RecitationsDownloadGroupBox.ResumeLayout(false);
             this.NotifyIconContextMenuStrip.ResumeLayout(false);
+            this.LetterFrequencyContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
     }
@@ -10957,4 +10986,7 @@ partial class MainForm
     private System.Windows.Forms.TextBox TranslationTextBox;
     private System.Windows.Forms.TextBox TranslationsTextBox;
     private System.Windows.Forms.CheckBox CVWLSequenceShowFactorsCheckBox;
+    private System.Windows.Forms.ContextMenuStrip LetterFrequencyContextMenuStrip;
+    private System.Windows.Forms.ToolStripMenuItem PositionsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem DistancesToolStripMenuItem;
 }

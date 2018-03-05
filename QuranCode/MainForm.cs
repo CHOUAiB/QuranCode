@@ -4229,17 +4229,21 @@ public partial class MainForm : Form, ISubscriber
                 this.Text = Application.ProductName + " | " + GetSelectionSummary();
                 UpdateFindMatchCaption();
 
-                string word_info = GetWordInfo(m_clicked_word);
                 if (ModifierKeys == Keys.Control)
                 {
+                    string word_info = GetWordInfo(m_clicked_word);
                     word_info += "\r\n\r\n";
                     if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
                     {
                         word_info += GetWordGrammar(m_clicked_word) + "\r\n\r\n";
                     }
                     word_info += GetWordRelatedWords(m_clicked_word);
+                    ToolTip.SetToolTip(m_active_textbox, word_info);
                 }
-                ToolTip.SetToolTip(m_active_textbox, word_info);
+                else
+                {
+                    ToolTip.SetToolTip(m_active_textbox, null);
+                }
 
                 // diplay word info at application caption
                 this.Text += SPACE_GAP +
@@ -30356,6 +30360,297 @@ public partial class MainForm : Form, ISubscriber
         FindByFrequencyButton.Enabled = ((m_find_by_phrase) && (m_phrase_text.Length > 0))
                                         ||
                                         ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+    }
+    //private void LetterFrequencyListView_DoubleClick(object sender, EventArgs e)
+    //{
+    //    char character = LetterFrequencyListView.SelectedItems[0].SubItems[1].Text[0];
+    //    List<int> letter_positions = new List<int>();
+    //    List<int> letter_distances = new List<int>();
+
+    //    if (!String.IsNullOrEmpty(m_current_text))
+    //    {
+    //        string text = m_current_text.SimplifyTo(m_client.NumerologySystem.TextMode);
+    //        text = text.Replace("\r", "");
+    //        text = text.Replace("\n", "");
+    //        text = text.Replace("\t", "");
+    //        text = text.Replace("_", "");
+    //        text = text.Replace(" ", "");
+    //        text = text.Replace(Constants.OPEN_BRACKET, "");
+    //        text = text.Replace(Constants.CLOSE_BRACKET, "");
+    //        foreach (char c in Constants.INDIAN_DIGITS)
+    //        {
+    //            text = text.Replace(c.ToString(), "");
+    //        }
+
+    //        int pos = text.IndexOf(character);
+    //        if (pos > -1)
+    //        {
+    //            letter_positions.Add(pos + 1);
+    //            for (int i = pos + 1; i < text.Length; i++)
+    //            {
+    //                if (text[i] == character)
+    //                {
+    //                    int letter_distance = i - pos;
+    //                    letter_distances.Add(letter_distance);
+    //                    pos = i;
+    //                    letter_positions.Add(pos + 1);
+    //                }
+    //            }
+    //        }
+
+    //        StringBuilder str = new StringBuilder();
+    //        str.Append(character.ToString() + " positions" + "\t");
+    //        foreach (int lp in letter_positions)
+    //        {
+    //            str.Append(lp.ToString() + ",");
+    //        }
+    //        if (str.Length > 0)
+    //        {
+    //            str.Remove(str.Length - 1, 1);
+    //        }
+    //        str.AppendLine();
+
+    //        str.Append(character.ToString() + " distances" + "\t");
+    //        foreach (int ld in letter_distances)
+    //        {
+    //            str.Append(ld.ToString() + ",");
+    //        }
+    //        if (str.Length > 0)
+    //        {
+    //            str.Remove(str.Length - 1, 1);
+    //        }
+    //        str.AppendLine();
+
+    //        string filename = character.ToString() + "_" + "LetterDistances" + Globals.OUTPUT_FILE_EXT;
+    //        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+    //        {
+    //            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+    //            FileHelper.SaveText(path, str.ToString());
+    //            FileHelper.DisplayFile(path);
+    //        }
+    //    }
+    //}
+    private void LetterFrequencyListView_DoubleClick(object sender, EventArgs e)
+    {
+        char character = '\0';
+        Dictionary<char, List<int>> letter_positions = new Dictionary<char, List<int>>();
+        Dictionary<char, List<int>> letter_distances = new Dictionary<char, List<int>>();
+        foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
+        {
+            character = item.SubItems[1].Text[0];
+            letter_positions.Add(character, new List<int>());
+            letter_distances.Add(character, new List<int>());
+        }
+
+        if (!String.IsNullOrEmpty(m_current_text))
+        {
+            string text = m_current_text.SimplifyTo(m_client.NumerologySystem.TextMode);
+            text = text.Replace("\r", "");
+            text = text.Replace("\n", "");
+            text = text.Replace("\t", "");
+            text = text.Replace("_", "");
+            text = text.Replace(" ", "");
+            text = text.Replace(Constants.OPEN_BRACKET, "");
+            text = text.Replace(Constants.CLOSE_BRACKET, "");
+            foreach (char c in Constants.INDIAN_DIGITS)
+            {
+                text = text.Replace(c.ToString(), "");
+            }
+
+            foreach (char c in letter_positions.Keys)
+            {
+                int pos = text.IndexOf(c);
+                if (pos > -1)
+                {
+                    letter_positions[c].Add(pos + 1);
+                    for (int i = pos + 1; i < text.Length; i++)
+                    {
+                        if (text[i] == c)
+                        {
+                            letter_positions[c].Add(i + 1);
+
+                            int letter_distance = i - pos;
+                            if (letter_distances.ContainsKey(c))
+                            {
+                                letter_distances[c].Add(letter_distance);
+                            }
+                            pos = i;
+                        }
+                    }
+                }
+            }
+
+            StringBuilder str = new StringBuilder();
+            foreach (char c in letter_positions.Keys)
+            {
+                str.Append(c.ToString() + " positions" + "\t");
+                foreach (int ld in letter_positions[c])
+                {
+                    str.Append(ld.ToString() + ",");
+                }
+                if (str.Length > 0)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
+            }
+
+            str.AppendLine();
+            foreach (char c in letter_distances.Keys)
+            {
+                str.Append(c.ToString() + " distances" + "\t");
+                foreach (int ld in letter_distances[c])
+                {
+                    str.Append(ld.ToString() + ",");
+                }
+                if (str.Length > 0)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
+            }
+
+            string filename = character.ToString() + "_" + "LetterPositionsAndDistances" + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.RESEARCH_FOLDER))
+            {
+                string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, str.ToString());
+                FileHelper.DisplayFile(path);
+            }
+        }
+
+    }
+    private void PositionsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        Dictionary<char, List<int>> letter_positions = new Dictionary<char, List<int>>();
+        foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
+        {
+            char character = item.SubItems[1].Text[0];
+            letter_positions.Add(character, new List<int>());
+        }
+
+        if (!String.IsNullOrEmpty(m_current_text))
+        {
+            string text = m_current_text.SimplifyTo(m_client.NumerologySystem.TextMode);
+            text = text.Replace("\r", "");
+            text = text.Replace("\n", "");
+            text = text.Replace("\t", "");
+            text = text.Replace("_", "");
+            text = text.Replace(" ", "");
+            text = text.Replace(Constants.OPEN_BRACKET, "");
+            text = text.Replace(Constants.CLOSE_BRACKET, "");
+            foreach (char c in Constants.INDIAN_DIGITS)
+            {
+                text = text.Replace(c.ToString(), "");
+            }
+
+            foreach (char character in letter_positions.Keys)
+            {
+                int pos = text.IndexOf(character);
+                if (pos > -1)
+                {
+                    letter_positions[character].Add(pos + 1);
+                    for (int i = pos + 1; i < text.Length; i++)
+                    {
+                        if (text[i] == character)
+                        {
+                            letter_positions[character].Add(i + 1);
+                        }
+                    }
+                }
+            }
+
+            StringBuilder str = new StringBuilder();
+            foreach (char character in letter_positions.Keys)
+            {
+                str.Append(character.ToString() + " positions" + "\t");
+                foreach (int ld in letter_positions[character])
+                {
+                    str.Append(ld.ToString() + ",");
+                }
+                if (str.Length > 0)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
+            }
+
+            string filename = "LetterPositions" + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.RESEARCH_FOLDER))
+            {
+                string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, str.ToString());
+                FileHelper.DisplayFile(path);
+            }
+        }
+    }
+    private void DistancesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        Dictionary<char, List<int>> letter_distances = new Dictionary<char, List<int>>();
+        foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
+        {
+            char character = item.SubItems[1].Text[0];
+            letter_distances.Add(character, new List<int>());
+        }
+
+        if (!String.IsNullOrEmpty(m_current_text))
+        {
+            string text = m_current_text.SimplifyTo(m_client.NumerologySystem.TextMode);
+            text = text.Replace("\r", "");
+            text = text.Replace("\n", "");
+            text = text.Replace("\t", "");
+            text = text.Replace("_", "");
+            text = text.Replace(" ", "");
+            text = text.Replace(Constants.OPEN_BRACKET, "");
+            text = text.Replace(Constants.CLOSE_BRACKET, "");
+            foreach (char c in Constants.INDIAN_DIGITS)
+            {
+                text = text.Replace(c.ToString(), "");
+            }
+
+            foreach (char character in letter_distances.Keys)
+            {
+                int pos = text.IndexOf(character);
+                if (pos > -1)
+                {
+                    for (int i = pos + 1; i < text.Length; i++)
+                    {
+                        if (text[i] == character)
+                        {
+                            int letter_distance = i - pos;
+                            if (letter_distances.ContainsKey(character))
+                            {
+                                letter_distances[character].Add(letter_distance);
+                            }
+                            pos = i;
+                        }
+                    }
+                }
+            }
+
+            StringBuilder str = new StringBuilder();
+            foreach (char character in letter_distances.Keys)
+            {
+                str.Append(character.ToString() + " distances" + "\t");
+                foreach (int ld in letter_distances[character])
+                {
+                    str.Append(ld.ToString() + ",");
+                }
+                if (str.Length > 0)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
+            }
+
+            string filename = "LetterDistances" + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.RESEARCH_FOLDER))
+            {
+                string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, str.ToString());
+                FileHelper.DisplayFile(path);
+            }
+        }
     }
     private void BuildLetterFrequencies()
     {
