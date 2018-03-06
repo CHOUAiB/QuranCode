@@ -339,100 +339,105 @@ public partial class MainForm : Form, ISubscriber
                             splash_form.Progress = 70;
                             Thread.Sleep(100);
 
-                            if (m_client.Selection != null)
+                            splash_form.Information = "Loading numerology systems ...";
+                            PopulateTextModeComboBox();
+                            splash_form.Information = "Updating numerology systems ...";
+                            UpdateNumerologySystemComboBoxs();
+                            splash_form.Progress = 80;
+                            Thread.Sleep(100);
+
+                            splash_form.Information = "Loading bookmarks and notes ...";
+                            m_client.LoadBookmarks();
+                            UpdateBookmarkButtons();
+                            splash_form.Progress = 90;
+                            Thread.Sleep(100);
+
+                            splash_form.Information = "Loading search history ...";
+                            m_client.LoadHistoryItems();
+                            UpdateSelectionHistoryButtons();
+                            splash_form.Progress = 95;
+                            Thread.Sleep(100);
+
+                            splash_form.Information = "Loading help messages ...";
+                            if (m_client.HelpMessages != null)
                             {
-                                splash_form.Information = "Loading numerology systems ...";
-                                PopulateTextModeComboBox();
-                                splash_form.Information = "Updating numerology systems ...";
-                                UpdateNumerologySystemComboBoxs();
-                                splash_form.Progress = 80;
-                                Thread.Sleep(100);
-
-                                splash_form.Information = "Loading bookmarks and notes ...";
-                                m_client.LoadBookmarks();
-                                UpdateBookmarkButtons();
-                                splash_form.Progress = 90;
-                                Thread.Sleep(100);
-
-                                splash_form.Information = "Loading search history ...";
-                                m_client.LoadHistoryItems();
-                                UpdateSelectionHistoryButtons();
-                                splash_form.Progress = 95;
-                                Thread.Sleep(100);
-
-                                splash_form.Information = "Loading help messages ...";
-                                if (m_client.HelpMessages != null)
+                                if (m_client.HelpMessages.Count > 0)
                                 {
-                                    if (m_client.HelpMessages.Count > 0)
-                                    {
-                                        HelpMessageLabel.Text = m_client.HelpMessages[0];
-                                    }
+                                    HelpMessageLabel.Text = m_client.HelpMessages[0];
                                 }
-                                splash_form.Progress = 98;
-                                Thread.Sleep(100);
+                            }
+                            splash_form.Progress = 98;
+                            Thread.Sleep(100);
 
-                                if (ReciterComboBox.SelectedItem != null)
+                            if (ReciterComboBox.SelectedItem != null)
+                            {
+                                RecitationGroupBox.Text = ReciterComboBox.SelectedItem.ToString() + "                                 ";
+                            }
+                            ToolTip.SetToolTip(PlayerVolumeTrackBar, "Volume " + (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
+
+                            PopulateChapterSortComboBox();
+
+                            // prepare before Shown
+                            this.ClientSplitContainer.SplitterDistance = m_information_box_top;
+                            this.TabControl.SelectedIndex = m_information_page_index;
+                            this.TranslationSplitContainer.SplitterDistance = m_translation_box_width;
+                            SymmetryIncludeBoundaryCasesCheckBox.Checked = m_symmetry_include_boundary_cases;
+
+                            // must be before DisplaySelection for Verse.IncludeNumber to take effect
+                            ApplyWordWrapSettings();
+
+                            m_player_looping = !m_player_looping;
+                            PlayerRepeatLabel_Click(null, null);
+                            m_player_looping_all = !m_player_looping_all;
+                            PlayerRepeatAllLabel_Click(null, null);
+
+                            UpdateTextModeOptions();
+
+                            if (Globals.EDITION == Edition.Ultimate)
+                            {
+                                splash_form.Information = "Preparing prime/composite indexes ...";
+                            }
+                            else
+                            {
+                                splash_form.Information = "Preparing text for display ...";
+                            }
+
+                            ScopeBookRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                            ScopeSelectionRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                            ScopeHighlightedTextRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                            if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                            {
+                                ScopeBookRadioButton.Checked = true;
+
+                                if (m_dpi_x == 120.0F)
                                 {
-                                    RecitationGroupBox.Text = ReciterComboBox.SelectedItem.ToString() + "                                 ";
-                                }
-                                ToolTip.SetToolTip(PlayerVolumeTrackBar, "Volume " + (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
-
-                                PopulateChapterSortComboBox();
-
-                                // prepare before Shown
-                                this.ClientSplitContainer.SplitterDistance = m_information_box_top;
-                                this.TabControl.SelectedIndex = m_information_page_index;
-                                this.TranslationSplitContainer.SplitterDistance = m_translation_box_width;
-                                SymmetryIncludeBoundaryCasesCheckBox.Checked = m_symmetry_include_boundary_cases;
-
-                                // must be before DisplaySelection for Verse.IncludeNumber to take effect
-                                ApplyWordWrapSettings();
-
-                                m_player_looping = !m_player_looping;
-                                PlayerRepeatLabel_Click(null, null);
-                                m_player_looping_all = !m_player_looping_all;
-                                PlayerRepeatAllLabel_Click(null, null);
-
-                                UpdateTextModeOptions();
-
-                                if (Globals.EDITION == Edition.Ultimate)
-                                {
-                                    splash_form.Information = "Preparing prime/composite indexes ...";
+                                    ValueNavigatorPanel.Top -= 145;
+                                    LetterFrequencyPanel.Top -= 145;
+                                    LetterFrequencyPanel.Height += 145;
                                 }
                                 else
                                 {
-                                    splash_form.Information = "Preparing text for display ...";
+                                    ValueNavigatorPanel.Top -= 115;
+                                    LetterFrequencyPanel.Top -= 115;
+                                    LetterFrequencyPanel.Height += 115;
                                 }
+                            }
 
-                                ScopeBookRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
-                                ScopeSelectionRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
-                                ScopeHighlightedTextRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
-                                if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
-                                {
-                                    ScopeBookRadioButton.Checked = true;
+                            if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
+                            {
+                                GrammarTextBox.Text = "Click a word to display its grammar information in Arabic and English.";
+                            }
 
-                                    if (m_dpi_x == 120.0F)
-                                    {
-                                        ValueNavigatorPanel.Top -= 145;
-                                        LetterFrequencyPanel.Top -= 145;
-                                        LetterFrequencyPanel.Height += 145;
-                                    }
-                                    else
-                                    {
-                                        ValueNavigatorPanel.Top -= 115;
-                                        LetterFrequencyPanel.Top -= 115;
-                                        LetterFrequencyPanel.Height += 115;
-                                    }
-                                }
+                            // refresh chapter sort method/order/pin_chapter1
+                            m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
+                            UpdateChapterSortControls();
 
-                                if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
-                                {
-                                    GrammarTextBox.Text = "Click a word to display its grammar information in Arabic and English.";
-                                }
-
-                                // refresh chapter sort method/order/pin_chapter1
-                                m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
-                                UpdateChapterSortControls();
+                            if (m_client.Selection == null)
+                            {
+                                m_client.Selection = new Selection(m_client.Book, SelectionScope.Chapter, new List<int>() { 0 });
+                            }
+                            if (m_client.Selection != null)
+                            {
                                 if ((Chapter.SortMethod == ChapterSortMethod.ByCompilation) && (Chapter.SortOrder == ChapterSortOrder.Ascending))
                                 {
                                     DisplaySelection(false);
@@ -444,7 +449,6 @@ public partial class MainForm : Form, ISubscriber
                                 splash_form.Progress = 100;
                                 Thread.Sleep(100);
                             }
-
                             UpdateSearchScope();
 
                             if (
@@ -2197,6 +2201,10 @@ public partial class MainForm : Form, ISubscriber
                                                             string quran_font_name = sub_parts[0].Trim();
                                                             float quran_font_size = float.Parse(sub_parts[1].Replace("pt", "").Trim());
                                                             ApplyFont(quran_font_name, quran_font_size);
+                                                        }
+                                                        else
+                                                        {
+                                                            ApplyFont(DEFAULT_QURAN_FONT_NAME, DEFAULT_QURAN_FONT_SIZE);
                                                         }
                                                     }
                                                     catch
@@ -5082,17 +5090,20 @@ public partial class MainForm : Form, ISubscriber
     }
     private void ColorizeGoldenRatios()
     {
-        if (m_selection_mode)
+        if (m_golden_ratio_scope != GoldenRatioScope.None)
         {
-            if (m_client != null)
+            if (m_selection_mode)
             {
-                if ((m_client.NumerologySystem != null) && (m_client.NumerologySystem.TextMode == "Original"))
+                if (m_client != null)
                 {
-                    ColorizeGoldenRatiosInOriginalText();
-                }
-                else
-                {
-                    ColorizeGoldenRatiosInSimplifiedText();
+                    if ((m_client.NumerologySystem != null) && (m_client.NumerologySystem.TextMode == "Original"))
+                    {
+                        ColorizeGoldenRatiosInOriginalText();
+                    }
+                    else
+                    {
+                        ColorizeGoldenRatiosInSimplifiedText();
+                    }
                 }
             }
         }
@@ -12746,6 +12757,8 @@ public partial class MainForm : Form, ISubscriber
                     {
                         text = text.Replace(character.ToString(), "");
                     }
+                    text = text.Replace("\n ", "\n"); // quran marks
+                    text = text.Replace(" \n", "\n"); // sijood marks
                     while (text.Contains("  "))
                     {
                         text = text.Replace("  ", " ");
@@ -12792,7 +12805,7 @@ public partial class MainForm : Form, ISubscriber
                                         w_sum += (i + 1);
                                         l_sum += a;
                                         //             WORDS                            #                         Words                       Letters               WSum                      LSum                      Symmetry%
-                                        str.AppendLine(words.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + w_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)count / (double)words.Length).ToString("00.0000"));
+                                        str.AppendLine(words.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + w_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)count / (double)words.Length).ToString("00.000000"));
                                     }
                                 }
                             }
@@ -12814,7 +12827,7 @@ public partial class MainForm : Form, ISubscriber
                                     v_sum += 0;
                                     w_sum += 0;
                                     //             VERSES                            #                         Verses        Words       VSum         WSum          Symmetry%
-                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)verses.Length).ToString("00.0000"));
+                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
 
                                     // all verses, all words
                                     max++;
@@ -12834,7 +12847,7 @@ public partial class MainForm : Form, ISubscriber
                                         v_sum += (i + 1);
                                         w_sum += a;
                                         //             VERSES                            #                         Verses                      Words                 VSum                      WSum                      Symmetry%
-                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + w_sum.ToString() + "\t" + ((double)count / (double)verses.Length).ToString("00.0000"));
+                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + w_sum.ToString() + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
                                     }
                                 }
                             }
@@ -12856,7 +12869,7 @@ public partial class MainForm : Form, ISubscriber
                                     v_sum += 0;
                                     l_sum += 0;
                                     //             VERSES                            #                         Verses       Letters      VSum         LSum          Symmetry%
-                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)verses.Length).ToString("00.0000"));
+                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
 
                                     // all verses, all letters
                                     max++;
@@ -12876,7 +12889,7 @@ public partial class MainForm : Form, ISubscriber
                                         v_sum += (i + 1);
                                         l_sum += a;
                                         //             VERSES                            #                         Verses                      Letters               VSum                      LSum                      Symmetry%
-                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)count / (double)verses.Length).ToString("00.0000"));
+                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
                                     }
                                 }
                             }

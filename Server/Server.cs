@@ -448,7 +448,6 @@ public class Server : IPublisher
 
                         // populate root-words dictionary
                         s_book.PopulateRootWords();
-
                     }
                 }
             }
