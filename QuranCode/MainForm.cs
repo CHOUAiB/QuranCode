@@ -12769,7 +12769,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         case SymmetryType.WordLetters:
                             {
-                                str.AppendLine("WORDS\t#\tWords\tLetters\tWSum\tLSum\tSymmetry%");
+                                str.AppendLine("WORDS\t#\tWords\tLetters\tWSum\tLSum");
 
                                 text = text.Replace("\n", " ");
                                 string[] words = text.Split(' ');
@@ -12784,8 +12784,8 @@ public partial class MainForm : Form, ISubscriber
                                     count++;
                                     w_sum += 0;
                                     l_sum += 0;
-                                    //             WORDS                            #                         Words        Letters      WSum         LSum          Symmetry%
-                                    str.AppendLine(words.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)words.Length).ToString("00.0000"));
+                                    //             WORDS                            #                         Words        Letters      WSum         LSum
+                                    str.AppendLine(words.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0");
 
                                     // all words, all letters
                                     max++;
@@ -12804,15 +12804,17 @@ public partial class MainForm : Form, ISubscriber
                                         count++;
                                         w_sum += (i + 1);
                                         l_sum += a;
-                                        //             WORDS                            #                         Words                       Letters               WSum                      LSum                      Symmetry%
-                                        str.AppendLine(words.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + w_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)count / (double)words.Length).ToString("00.000000"));
+                                        //             WORDS                            #                         Words                       Letters               WSum                      LSum
+                                        str.AppendLine(words.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + w_sum.ToString() + "\t" + l_sum.ToString());
                                     }
                                 }
+
+                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D * 2.0D) / (double)words.Length).ToString("0.000") + "%");
                             }
                             break;
                         case SymmetryType.VerseWords:
                             {
-                                str.AppendLine("VERSES\t#\tVerses\tWords\tVSum\tWSum\tSymmetry%");
+                                str.AppendLine("VERSES\t#\tVerses\tWords\tVSum\tWSum");
 
                                 string[] verses = text.Split('\n');
 
@@ -12826,8 +12828,8 @@ public partial class MainForm : Form, ISubscriber
                                     count++;
                                     v_sum += 0;
                                     w_sum += 0;
-                                    //             VERSES                            #                         Verses        Words       VSum         WSum          Symmetry%
-                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
+                                    //             VERSES                            #                         Verses        Words       VSum         WSum
+                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0");
 
                                     // all verses, all words
                                     max++;
@@ -12846,15 +12848,17 @@ public partial class MainForm : Form, ISubscriber
                                         count++;
                                         v_sum += (i + 1);
                                         w_sum += a;
-                                        //             VERSES                            #                         Verses                      Words                 VSum                      WSum                      Symmetry%
-                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + w_sum.ToString() + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
+                                        //             VERSES                            #                         Verses                      Words                 VSum                      WSum
+                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + w_sum.ToString());
                                     }
                                 }
+
+                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D) * 2.0D / (double)verses.Length).ToString("0.000") + "%");
                             }
                             break;
                         case SymmetryType.VerseLetters:
                             {
-                                str.AppendLine("VERSES\t#\tVerses\tLetters\tVSum\tLSum\tSymmetry%");
+                                str.AppendLine("VERSES\t#\tVerses\tLetters\tVSum\tLSum");
 
                                 string[] verses = text.Split('\n');
 
@@ -12868,8 +12872,8 @@ public partial class MainForm : Form, ISubscriber
                                     count++;
                                     v_sum += 0;
                                     l_sum += 0;
-                                    //             VERSES                            #                         Verses       Letters      VSum         LSum          Symmetry%
-                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
+                                    //             VERSES                            #                         Verses       Letters      VSum         LSum
+                                    str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0");
 
                                     // all verses, all letters
                                     max++;
@@ -12888,10 +12892,12 @@ public partial class MainForm : Form, ISubscriber
                                         count++;
                                         v_sum += (i + 1);
                                         l_sum += a;
-                                        //             VERSES                            #                         Verses                      Letters               VSum                      LSum                      Symmetry%
-                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)count / (double)verses.Length).ToString("00.000000"));
+                                        //             VERSES                            #                         Verses                      Letters               VSum                      LSum
+                                        str.AppendLine(verses.Length.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + v_sum.ToString() + "\t" + l_sum.ToString());
                                     }
                                 }
+
+                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D * 2.0D) / (double)verses.Length).ToString("0.000") + "%");
                             }
                             break;
                         default:
