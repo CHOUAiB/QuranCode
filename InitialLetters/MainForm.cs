@@ -14,7 +14,7 @@ namespace InitialLetters
         private const string DICTIONARY_FOLDER = "Data";
         private const string HELP_FOLDER = "Help";
 
-        List<bag_and_anagrams> m_dictionary;
+        List<BagAnagrams> m_dictionary;
         DateTime m_start_time;
         public MainForm()
         {
@@ -151,16 +151,16 @@ namespace InitialLetters
 
                     // Now convert the hash table, which isn't useful for
                     // actually generating anagrams, into a list, which is.
-                    m_dictionary = new List<bag_and_anagrams>();
+                    m_dictionary = new List<BagAnagrams>();
                     foreach (DictionaryEntry de in stringlists_by_bag)
                     {
-                        m_dictionary.Add(new bag_and_anagrams((Bag)de.Key, (strings)de.Value));
+                        m_dictionary.Add(new BagAnagrams((Bag)de.Key, (strings)de.Value));
                     }
                     m_dictionary.Sort();
 
                     // Now just for amusement, sort the list so that the biggest bags 
                     // come first.  This might make more interesting anagrams appear first.
-                    bag_and_anagrams[] sort_me = new bag_and_anagrams[m_dictionary.Count];
+                    BagAnagrams[] sort_me = new BagAnagrams[m_dictionary.Count];
                     m_dictionary.CopyTo(sort_me);
                     Array.Sort(sort_me);
                     m_dictionary.Clear();
@@ -426,7 +426,7 @@ namespace InitialLetters
                 },
 
                 // done pruning
-                delegate(uint recursion_level, List<bag_and_anagrams> pruned_dict)
+                delegate(uint recursion_level, List<BagAnagrams> pruned_dict)
                 {
                     if (recursion_level == 0)
                     {

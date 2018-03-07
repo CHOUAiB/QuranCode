@@ -19356,6 +19356,53 @@ public partial class MainForm : Form, ISubscriber
     private void UserTextTextBox_TextChanged(object sender, EventArgs e)
     {
     }
+    private void UserTextValueButton_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                long value = (long)UserTextValueNumericUpDown.Value;
+                List<string> matches = new List<string>();
+
+                string filename = Globals.DATA_FOLDER + "/" + "user-words.txt";
+                List<string> lines = FileHelper.LoadLines(filename);
+
+                foreach (string line in lines)
+                {
+                    if (m_client.CalculateValue(line) == value)
+                    {
+                        matches.Add(line);
+                    }
+                }
+                matches.Sort();
+
+                StringBuilder str = new StringBuilder();
+                foreach (string line in matches)
+                {
+                    str.AppendLine(line);
+                }
+                UserTextTextBox.Text = str.ToString();
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void UserTextValueNumericUpDown_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Enter)
+        {
+            UserTextValueButton_Click(null, null);
+            e.Handled = true; // stop annoying beep
+        }
+    }
+    private void UserTextValueNumericUpDown_ValueChanged(object sender, EventArgs e)
+    {
+        UserTextValueButton_Click(null, null);
+    }
     ///////////////////////////////////////////////////////////////////////////////
     #endregion
     #region Autocomplete/WordFrequency
