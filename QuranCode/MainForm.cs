@@ -12809,7 +12809,7 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                 }
 
-                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D * 2.0D) / (double)words.Length).ToString("0.000") + "%");
+                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D) / (double)words.Length).ToString("0.000") + "%");
                             }
                             break;
                         case SymmetryType.VerseWords:
@@ -12853,7 +12853,7 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                 }
 
-                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D) * 2.0D / (double)verses.Length).ToString("0.000") + "%");
+                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D) / (double)verses.Length).ToString("0.000") + "%");
                             }
                             break;
                         case SymmetryType.VerseLetters:
@@ -12897,7 +12897,7 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                 }
 
-                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D * 2.0D) / (double)verses.Length).ToString("0.000") + "%");
+                                str.AppendLine("Symmetry:" + "\t\t" + ((double)((count - (m_symmetry_include_boundary_cases ? 2 : 0)) * 100.0D) / (double)verses.Length).ToString("0.000") + "%");
                             }
                             break;
                         default:
@@ -12940,6 +12940,157 @@ public partial class MainForm : Form, ISubscriber
                     FileHelper.DisplayFile(path);
                 }
             }
+        }
+    }
+    // all symmetries: CalculateWordSymmetry
+    private void ChapterPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Chapter, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void ChapterVerseWordLetterPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Verse, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void PagePositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Page, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void StationPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Station, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void PartPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Part, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void GroupPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Group, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void HalfPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Half, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void QuarterPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Quarter, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void BowingPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Bowing, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void VerseWordLetterPositionLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                m_client.CalculateWordSymmetry(SelectionScope.Book, (ModifierKeys == Keys.Control));
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -31172,158 +31323,6 @@ public partial class MainForm : Form, ISubscriber
             {
                 ToolTip.SetToolTip(control, null);
             }
-        }
-    }
-
-    // word symmetry
-    private void ChapterPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Chapter, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void ChapterVerseWordLetterPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Verse, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void PagePositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Page, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void StationPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Station, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void PartPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Part, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void GroupPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Group, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void HalfPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Half, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void QuarterPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Quarter, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void BowingPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Bowing, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void VerseWordLetterPositionLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                m_client.CalculateWordSymmetry(SelectionScope.Book, (ModifierKeys == Keys.Control));
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     ///////////////////////////////////////////////////////////////////////////////

@@ -2321,7 +2321,7 @@ public class Client : IPublisher, ISubscriber
         //m_word_symmetry_str.AppendLine();
         //m_word_symmetry_str.AppendLine();
         //m_word_symmetry_str.AppendLine("----------------------------------------------------------");
-        m_word_symmetry_str.AppendLine(((selection_scope == SelectionScope.Book) ? "BOOK" : selection_scope.ToString().ToUpper()) + "\tWORDS\t#\tWords\tLetters\tWSum\tLSum\tSymmetry%");
+        m_word_symmetry_str.AppendLine(((selection_scope == SelectionScope.Book) ? "BOOK" : selection_scope.ToString().ToUpper()) + "\tWORDS\t#\tWords\tLetters\tWSum\tLSum\tSymmetry");
         //m_word_symmetry_str.AppendLine("----------------------------------------------------------");
 
         List<Word> words = new List<Word>();
@@ -2334,7 +2334,7 @@ public class Client : IPublisher, ISubscriber
                     {
                         words.AddRange(verse.Words);
                     }
-                    AppendWordSymmetry(1, words, include_boundary_cases);
+                    DoCalculateWordSymmetry(1, words, include_boundary_cases);
                 }
                 break;
             case SelectionScope.Chapter:
@@ -2346,7 +2346,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(chapter.SortedNumber, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(chapter.SortedNumber, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2359,7 +2359,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(page.Number, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(page.Number, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2372,7 +2372,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(station.Number, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(station.Number, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2385,7 +2385,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(part.Number, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(part.Number, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2398,7 +2398,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(group.Number, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(group.Number, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2411,7 +2411,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(half.Number, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(half.Number, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2424,7 +2424,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(quarter.Number, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(quarter.Number, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2437,7 +2437,7 @@ public class Client : IPublisher, ISubscriber
                         {
                             words.AddRange(verse.Words);
                         }
-                        AppendWordSymmetry(bowing.Number, words, include_boundary_cases);
+                        DoCalculateWordSymmetry(bowing.Number, words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2446,7 +2446,7 @@ public class Client : IPublisher, ISubscriber
                 {
                     foreach (Verse verse in Book.Verses)
                     {
-                        AppendWordSymmetry(verse.Number, verse.Words, include_boundary_cases);
+                        DoCalculateWordSymmetry(verse.Number, verse.Words, include_boundary_cases);
                     }
                 }
                 break;
@@ -2456,7 +2456,7 @@ public class Client : IPublisher, ISubscriber
 
         SaveWordSymmetry(selection_scope, m_word_symmetry_str.ToString(), include_boundary_cases);
     }
-    private void AppendWordSymmetry(int selection_number, List<Word> words, bool include_boundary_cases)
+    private void DoCalculateWordSymmetry(int selection_number, List<Word> words, bool include_boundary_cases)
     {
         if (m_word_symmetry_str == null) return;
 
@@ -2470,8 +2470,8 @@ public class Client : IPublisher, ISubscriber
             count++;
             w_sum += 0;
             l_sum += 0;
-            //                             selection_number                     WORDS                           #                         Words        Letters      WSum         LSum         Symmetry%
-            m_word_symmetry_str.AppendLine(selection_number.ToString() + "\t" + words.Count.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)count / (double)words.Count).ToString("00.0000"));
+            //                             selection_number                     WORDS                           #                         Words        Letters      WSum         LSum         Symmetry
+            m_word_symmetry_str.AppendLine(selection_number.ToString() + "\t" + words.Count.ToString() + "\t" + count.ToString() + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + "0" + "\t" + ((double)(count * 100.0D) / (double)words.Count).ToString("0.000") + "%");
 
             // all words, all letters
             max++;
@@ -2490,8 +2490,8 @@ public class Client : IPublisher, ISubscriber
                 count++;
                 w_sum += (i + 1);
                 l_sum += a;
-                //                             selection_number                     WORDS                           #                         Words                       Letters               WSum                      LSum                      Symmetry%
-                m_word_symmetry_str.AppendLine(selection_number.ToString() + "\t" + words.Count.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + w_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)count / (double)words.Count).ToString("00.0000"));
+                //                             selection_number                     WORDS                           #                         Words                       Letters               WSum                      LSum                      Symmetry
+                m_word_symmetry_str.AppendLine(selection_number.ToString() + "\t" + words.Count.ToString() + "\t" + count.ToString() + "\t" + (i + 1).ToString() + "\t" + a.ToString() + "\t" + w_sum.ToString() + "\t" + l_sum.ToString() + "\t" + ((double)((count - (include_boundary_cases ? 2 : 0)) * 100.0D) / (double)words.Count).ToString("0.000") + "%");
             }
         }
     }
