@@ -4243,21 +4243,18 @@ public partial class MainForm : Form, ISubscriber
                 this.Text = Application.ProductName + " | " + GetSelectionSummary();
                 UpdateFindMatchCaption();
 
+                string word_info = GetWordSummary(m_clicked_word) + "\r\n";
                 if (ModifierKeys == Keys.Control)
                 {
-                    string word_info = GetWordInfo(m_clicked_word);
+                    word_info += GetWordInfo(m_clicked_word);
                     word_info += "\r\n\r\n";
                     if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
                     {
                         word_info += GetWordGrammar(m_clicked_word) + "\r\n\r\n";
                     }
                     word_info += GetWordRelatedWords(m_clicked_word);
-                    ToolTip.SetToolTip(m_active_textbox, word_info);
                 }
-                else
-                {
-                    ToolTip.SetToolTip(m_active_textbox, null);
-                }
+                ToolTip.SetToolTip(m_active_textbox, word_info);
 
                 // diplay word info at application caption
                 this.Text += SPACE_GAP +
@@ -7814,7 +7811,14 @@ public partial class MainForm : Form, ISubscriber
 
         if (WordsListBox.Visible)
         {
-            InspectWordFrequencies();
+            if (m_text_search_type == TextSearchType.Root)
+            {
+                InspectRootFrequencies();
+            }
+            else
+            {
+                InspectWordFrequencies();
+            }
         }
         else
         {
@@ -12351,6 +12355,13 @@ public partial class MainForm : Form, ISubscriber
     ///////////////////////////////////////////////////////////////////////////////
     private Word m_clicked_word = null;
     private Word m_info_word = null;
+    private string GetWordSummary(Word word)
+    {
+        return
+            word.Transliteration + SPACE_GAP +
+            word.Text + SPACE_GAP +
+            word.Meaning;
+    }
     private string GetWordInfo(Word word)
     {
         if (word != null)
@@ -12369,14 +12380,11 @@ public partial class MainForm : Form, ISubscriber
             }
 
             return
-                word.Transliteration + SPACE_GAP +
-                word.Text + SPACE_GAP +
-                word.Meaning + "\r\n" +
                 word.Verse.Chapter.SortedNumber + ". " + word.Verse.Chapter.Name + SPACE_GAP +
                 "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
                 "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
                 "occurrence " + word.Occurrence.ToString() + "/" + word.Frequency.ToString() + SPACE_GAP + SPACE_GAP +
-                "roots  " + roots;
+                "root  " + roots;
         }
         return null;
     }
@@ -19699,22 +19707,24 @@ public partial class MainForm : Form, ISubscriber
     }
     private void WordsListBoxLabel_Click(object sender, EventArgs e)
     {
-        m_sort_by_word_frequency = !m_sort_by_word_frequency;
-        //ToolTip.SetToolTip(WordsListBoxLabel, (m_sort_by_word_frequency ? "sort by words" : "sort by frequency"));
-
-        if (m_auto_complete_mode)
-        {
-            PopulateWordsListBox();
-        }
-        else
-        {
-            PopulateWordsListBoxWithHighlightedWords();
-        }
-
         // Ctrl+Click factorizes number
         if (ModifierKeys == Keys.Control)
         {
             NumericUpDown_Enter(sender, e);
+        }
+        else
+        {
+            m_sort_by_word_frequency = !m_sort_by_word_frequency;
+            //ToolTip.SetToolTip(WordsListBoxLabel, (m_sort_by_word_frequency ? "sort by words" : "sort by frequency"));
+
+            if (m_auto_complete_mode)
+            {
+                PopulateWordsListBox();
+            }
+            else
+            {
+                PopulateWordsListBoxWithHighlightedWords();
+            }
         }
     }
     private void AddNextWordToFindText()
@@ -20013,7 +20023,15 @@ public partial class MainForm : Form, ISubscriber
                                 }
                                 break;
                             case TextLocationInWord.AtMiddle:
+                                {
+                                    found_roots = m_client.Book.GetRootsContainingInside(text);
+                                }
+                                break;
                             case TextLocationInWord.AtEnd:
+                                {
+                                    found_roots = m_client.Book.GetRootsEndingWith(text);
+                                }
+                                break;
                             case TextLocationInWord.Anywhere:
                                 {
                                     found_roots = m_client.Book.GetRootsContaining(text);
@@ -20024,7 +20042,7 @@ public partial class MainForm : Form, ISubscriber
 
                     if (found_roots != null)
                     {
-                        //found_roots.Sort();
+                        found_roots.Sort();
 
                         int count = 0;
                         foreach (string root in found_roots)
@@ -20436,12 +20454,7 @@ public partial class MainForm : Form, ISubscriber
                         foreach (object item in WordsListBox.SelectedItems)
                         {
                             string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                            if (parts.Length == 1)  // root
-                            {
-                                str.AppendLine(parts[0] + "\t" + "1");
-                                total += 1;
-                            }
-                            else if (parts.Length == 2) // exact or proximity
+                            if (parts.Length == 2) // exact or proximity
                             {
                                 str.AppendLine(parts[1] + "\t" + parts[0]);
                                 total += int.Parse(parts[0]);
@@ -20454,15 +20467,77 @@ public partial class MainForm : Form, ISubscriber
                         foreach (object item in WordsListBox.Items)
                         {
                             string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                            if (parts.Length == 1)  // root
-                            {
-                                str.AppendLine(parts[0] + "\t" + "1");
-                                total += 1;
-                            }
-                            else if (parts.Length == 2) // exact or proximity
+                            if (parts.Length == 2) // exact or proximity
                             {
                                 str.AppendLine(parts[1] + "\t" + parts[0]);
                                 total += int.Parse(parts[0]);
+                            }
+                        }
+                    }
+                    str.AppendLine("-----------------");
+                    str.AppendLine("Count = " + count.ToString());
+                    str.AppendLine("Total = " + total.ToString());
+
+                    writer.Write(str.ToString());
+                }
+
+                // show file content after save
+                if (File.Exists(filename))
+                {
+                    FileHelper.WaitForReady(filename);
+
+                    System.Diagnostics.Process.Start("Notepad.exe", filename);
+                }
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void InspectRootFrequencies()
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            string text = FindByTextTextBox.Text;
+
+            if (Directory.Exists(Globals.STATISTICS_FOLDER))
+            {
+                string filename = Globals.STATISTICS_FOLDER + "/" + "root_" + text + ".txt";
+                using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
+                {
+                    StringBuilder str = new StringBuilder();
+                    str.AppendLine("-----------------");
+                    str.AppendLine("Root" + "\t" + "Frequency");
+                    str.AppendLine("-----------------");
+
+                    int count = 0;
+                    int total = 0;
+                    char[] separators = { ' ' };
+                    if (WordsListBox.SelectedIndices.Count > 1)
+                    {
+                        count = WordsListBox.SelectedIndices.Count;
+                        foreach (object item in WordsListBox.SelectedItems)
+                        {
+                            string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                            if (parts.Length == 1) // root
+                            {
+                                str.AppendLine(parts[0] + "\t" + m_client.Book.RootWords[parts[0]].Count);
+                                total += 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        count = WordsListBox.Items.Count;
+                        foreach (object item in WordsListBox.Items)
+                        {
+                            string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                            if (parts.Length == 1) // root
+                            {
+                                str.AppendLine(parts[0] + "\t" + m_client.Book.RootWords[parts[0]].Count);
+                                total += 1;
                             }
                         }
                     }
@@ -20835,7 +20910,14 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect word frequencies");
+        if (m_text_search_type == TextSearchType.Root)
+        {
+            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect root frequencies");
+        }
+        else
+        {
+            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect word frequencies");
+        }
         WordsListBoxLabel.Visible = true;
         WordsListBox.Visible = true;
         WordsListBoxLabel.BringToFront();
@@ -21728,10 +21810,10 @@ public partial class MainForm : Form, ISubscriber
 
         FindByTextWordnessCheckBox.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Proximity));
 
-        FindByTextAtWordStartRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
-        FindByTextAtWordMiddleRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
-        FindByTextAtWordEndRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
-        FindByTextAtWordAnywhereRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
+        FindByTextAtWordStartRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
+        FindByTextAtWordMiddleRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
+        FindByTextAtWordEndRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
+        FindByTextAtWordAnywhereRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
 
         FindByTextMultiplicityCheckBox.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextMultiplicityComparisonOperatorLabel.Enabled = (FindByTextMultiplicityCheckBox.Enabled) && (FindByTextMultiplicityCheckBox.Checked);

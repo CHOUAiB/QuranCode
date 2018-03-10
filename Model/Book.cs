@@ -2417,6 +2417,64 @@ namespace Model
             }
             return result;
         }
+        public List<string> GetRootsContainingInside(string text)
+        {
+            List<string> result = new List<string>();
+            if (!String.IsNullOrEmpty(text))
+            {
+                SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
+                if (root_words_dictionary != null)
+                {
+                    foreach (string key in root_words_dictionary.Keys)
+                    {
+                        if ((this.text_mode == "Original") && (!with_diacritics))
+                        {
+                            if (key.ContainsInside(text.Simplify36()))
+                            {
+                                result.Add(key);
+                            }
+                        }
+                        else
+                        {
+                            if (key.ContainsInside(text))
+                            {
+                                result.Add(key);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+        public List<string> GetRootsEndingWith(string text)
+        {
+            List<string> result = new List<string>();
+            if (!String.IsNullOrEmpty(text))
+            {
+                SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
+                if (root_words_dictionary != null)
+                {
+                    foreach (string key in root_words_dictionary.Keys)
+                    {
+                        if ((this.text_mode == "Original") && (!with_diacritics))
+                        {
+                            if (key.EndsWith(text.Simplify36()))
+                            {
+                                result.Add(key);
+                            }
+                        }
+                        else
+                        {
+                            if (key.EndsWith(text))
+                            {
+                                result.Add(key);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
         public List<string> GetRootsContaining(string text)
         {
             List<string> result = new List<string>();
@@ -2429,7 +2487,7 @@ namespace Model
                     {
                         if ((this.text_mode == "Original") && (!with_diacritics))
                         {
-                            if (key.StartsWith(text.Simplify36()))
+                            if (key.Contains(text.Simplify36()))
                             {
                                 result.Add(key);
                             }
