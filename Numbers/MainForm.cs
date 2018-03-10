@@ -28,7 +28,7 @@ public partial class MainForm : Form
     }
 
     private static int ROWS = 30;
-    private static int COLS = 17;
+    private static int COLS = 19;
     private TextBox[,] controls = new TextBox[ROWS, COLS];
 
     public MainForm()
@@ -41,7 +41,7 @@ public partial class MainForm : Form
             if (control != null)
             {
                 control.Width = 12;
-                control.Height = 20;
+                control.Height = 18;
                 control.Top = 0;
                 control.Left = 0;
                 control.TextAlign = ContentAlignment.TopLeft;
@@ -60,7 +60,7 @@ public partial class MainForm : Form
             if (control != null)
             {
                 control.Width = 12;
-                control.Height = 20;
+                control.Height = 18;
                 control.Top = 6;
                 control.Left = 12;
                 control.TextAlign = ContentAlignment.BottomLeft;
@@ -81,7 +81,7 @@ public partial class MainForm : Form
             {
                 control.Width = 20;
                 control.Height = 23;
-                control.Top = 20 + i * 23;
+                control.Top = 20 + i * 21;
                 control.Left = 2;
                 control.TextAlign = ContentAlignment.MiddleRight;
                 control.Font = new Font("Arial", 8);
@@ -99,31 +99,37 @@ public partial class MainForm : Form
             Label control = new Label();
             if (control != null)
             {
-                control.Width = 60;
+                control.Width = 53;
                 control.Height = 19;
                 control.Top = 0;
-                control.Left = 25 + j * 62;
+                control.Left = 23 + j * 55;
                 control.TextAlign = ContentAlignment.MiddleCenter;
                 control.Font = new Font("Arial", 8);
                 MainPanel.Controls.Add(control);
 
-                if (j == 0) { control.Text = "#"; ToolTip.SetToolTip(control, "Index"); }
-                if (j == 1) { control.Text = "P"; ToolTip.SetToolTip(control, "Prime"); }
-                if (j == 2) { control.Text = "AP"; ToolTip.SetToolTip(control, "Additive Prime"); }
-                if (j == 3) { control.Text = "XP"; ToolTip.SetToolTip(control, "Non-additive Prime"); }
-                if (j == 4) { control.Text = "C"; ToolTip.SetToolTip(control, "Composite"); }
-                if (j == 5) { control.Text = "AC"; ToolTip.SetToolTip(control, "Additive Composite"); }
-                if (j == 6) { control.Text = "XC"; ToolTip.SetToolTip(control, "Non-additive Composite"); }
-                if (j == 7) { control.Text = "DF"; ToolTip.SetToolTip(control, "Deficient Number"); }
-                if (j == 8) { control.Text = "AB"; ToolTip.SetToolTip(control, "Abundant Number"); }
-                if (j == 9) { control.Text = "Diff"; ToolTip.SetToolTip(control, "AB - DF"); }
-                if (j == 10) { control.Text = "Sum"; ToolTip.SetToolTip(control, "AB + DF"); }
-                if (j == 11) { control.Text = "P = 4n+1"; ToolTip.SetToolTip(control, "n of Fermat's 4n+1 Prime = a^2 + b^2"); }
-                if (j == 12) { control.Text = "a^2"; ToolTip.SetToolTip(control, "a of 4n+1 Prime = a^2 + b^2"); }
-                if (j == 13) { control.Text = "b^2"; ToolTip.SetToolTip(control, "b of 4n+1 Prime = a^2 + b^2"); }
-                if (j == 14) { control.Text = "C = 4n+1"; ToolTip.SetToolTip(control, "n of Ali Adams' 4n+1 Composite = a^2 - b^2"); }
-                if (j == 15) { control.Text = "a^2"; ToolTip.SetToolTip(control, "a of 4n+1 Composite = a^2 - b^2"); }
-                if (j == 16) { control.Text = "b^2"; ToolTip.SetToolTip(control, "b of 4n+1 Composite = a^2 - b^2"); }
+                switch (j)
+                {
+                    case 0: { control.Text = "i"; ToolTip.SetToolTip(control, "Index"); break; }
+                    case 1: { control.Text = "P"; ToolTip.SetToolTip(control, "Prime"); break; }
+                    case 2: { control.Text = "AP"; ToolTip.SetToolTip(control, "Additive Prime"); break; }
+                    case 3: { control.Text = "XP"; ToolTip.SetToolTip(control, "Non-additive Prime"); break; }
+                    case 4: { control.Text = "C"; ToolTip.SetToolTip(control, "Composite"); break; }
+                    case 5: { control.Text = "AC"; ToolTip.SetToolTip(control, "Additive Composite"); break; }
+                    case 6: { control.Text = "XC"; ToolTip.SetToolTip(control, "Non-additive Composite"); break; }
+                    case 7: { control.Text = "DF"; ToolTip.SetToolTip(control, "Deficient Number"); break; }
+                    case 8: { control.Text = "AB"; ToolTip.SetToolTip(control, "Abundant Number"); break; }
+                    case 9: { control.Text = "Diff"; ToolTip.SetToolTip(control, "AB - DF"); break; }
+                    case 10: { control.Text = "Sum"; ToolTip.SetToolTip(control, "AB + DF"); break; }
+                    case 11: { control.Text = "P=4n+1"; ToolTip.SetToolTip(control, "n of Fermat's 4n+1 Prime = a^2 + b^2"); break; }
+                    case 12: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Prime = a^2 + b^2"); break; }
+                    case 13: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Prime = a^2 + b^2"); break; }
+                    case 14: { control.Text = "C=4n+1"; ToolTip.SetToolTip(control, "n of Ali Adams' 4n+1 Composite = a^2 - b^2"); break; }
+                    case 15: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Composite = a^2 - b^2"); break; }
+                    case 16: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Composite = a^2 - b^2"); break; }
+                    case 17: { control.Text = "Med(1..i)"; ToolTip.SetToolTip(control, "Median(1..i) = (i+1)/2"); break; }
+                    case 18: { control.Text = "Sum(1..i)"; ToolTip.SetToolTip(control, "Sum(1..i) = (i*(i+1))/2"); break; }
+                    default: break;
+                }
             }
         }
 
@@ -135,10 +141,10 @@ public partial class MainForm : Form
                 TextBox control = new TextBox();
                 if (control != null)
                 {
-                    control.Width = 60;
-                    control.Height = 23;
-                    control.Top = 19 + i * 23;
-                    control.Left = 25 + j * 62;
+                    control.Width = 53;
+                    control.Height = 21;
+                    control.Top = 19 + i * 21;
+                    control.Left = 23 + j * 55;
                     control.TextAlign = HorizontalAlignment.Center;
                     control.Font = new Font("Arial", 12);
                     control.MaxLength = 7;
@@ -207,6 +213,12 @@ public partial class MainForm : Form
                         case 16:
                             {
                                 control.BackColor = Color.SeaShell;
+                            }
+                            break;
+                        case 17:
+                        case 18:
+                            {
+                                control.BackColor = Color.AliceBlue;
                             }
                             break;
                         default:
@@ -560,6 +572,13 @@ public partial class MainForm : Form
                             controls[point.X, 15].Text = "";
                             controls[point.X, 16].Text = "";
                         }
+
+                        int mid = (index + 1) / 2;
+                        int sum = (index * (index + 1)) / 2;
+                        controls[point.X, 17].Text = mid.ToString();
+                        controls[point.X, 18].Text = sum.ToString();
+                        controls[point.X, 17].ForeColor = Numbers.GetNumberTypeColor(mid);
+                        controls[point.X, 18].ForeColor = Numbers.GetNumberTypeColor(sum);
                     }
                     catch
                     {
@@ -575,6 +594,8 @@ public partial class MainForm : Form
                         controls[point.X, 14].Text = "";
                         controls[point.X, 15].Text = "";
                         controls[point.X, 16].Text = "";
+                        controls[point.X, 17].Text = "";
+                        controls[point.X, 18].Text = "";
                     }
                     finally
                     {
@@ -627,6 +648,8 @@ public partial class MainForm : Form
                     controls[point.X, 14].Text = "";
                     controls[point.X, 15].Text = "";
                     controls[point.X, 16].Text = "";
+                    controls[point.X, 17].Text = "";
+                    controls[point.X, 18].Text = "";
                 }
             }
             else

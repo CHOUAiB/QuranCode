@@ -2956,7 +2956,7 @@ public partial class MainForm : Form, ISubscriber
                         StringBuilder str = new StringBuilder();
                         foreach (Verse verse in selected_verses)
                         {
-                            str.AppendLine(verse.Chapter.Name + "  " + verse.Address + "\t" + verse.Text + "\r\n");
+                            str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
                         }
                         Clipboard.SetText(str.ToString());
                     }
@@ -2966,7 +2966,7 @@ public partial class MainForm : Form, ISubscriber
                         StringBuilder str = new StringBuilder();
                         foreach (Verse verse in selected_verses)
                         {
-                            str.AppendLine(verse.Chapter.Name + "  " + verse.Address + "\t" + verse.Text + "\r\n");
+                            str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
                         }
                         Clipboard.SetText(str.ToString());
                     }
@@ -4086,7 +4086,7 @@ public partial class MainForm : Form, ISubscriber
                     StringBuilder str = new StringBuilder();
                     foreach (Verse verse in selected_verses)
                     {
-                        str.AppendLine(verse.Chapter.Name + "  " + verse.Address + "\t" + verse.Text + "\r\n");
+                        str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
                     }
                     Clipboard.SetText(str.ToString());
                     Thread.Sleep(100); // must give chance for Clipboard to refresh its content before Paste

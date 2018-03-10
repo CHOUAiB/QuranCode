@@ -26,16 +26,17 @@
     /// </summary>
     private void InitializeComponent()
     {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.MainMenu = new System.Windows.Forms.MainMenu();
+            this.MainMenu = new System.Windows.Forms.MainMenu(this.components);
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.WebsiteLabel = new System.Windows.Forms.Label();
-            this.NotifyIconContextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            this.NotifyIconContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.NotifyIcon = new System.Windows.Forms.NotifyIcon();
+            this.NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.VersionLabel = new System.Windows.Forms.Label();
-            this.ToolTip = new System.Windows.Forms.ToolTip();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.MainPanel = new System.Windows.Forms.Panel();
             this.NotifyIconContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -44,9 +45,9 @@
             // 
             this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar.Location = new System.Drawing.Point(0, 706);
+            this.ProgressBar.Location = new System.Drawing.Point(0, 668);
             this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(1004, 6);
+            this.ProgressBar.Size = new System.Drawing.Size(994, 6);
             this.ProgressBar.TabIndex = 0;
             this.ProgressBar.Visible = false;
             // 
@@ -57,9 +58,9 @@
             this.WebsiteLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WebsiteLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.WebsiteLabel.ForeColor = System.Drawing.Color.Purple;
-            this.WebsiteLabel.Location = new System.Drawing.Point(0, 715);
+            this.WebsiteLabel.Location = new System.Drawing.Point(0, 656);
             this.WebsiteLabel.Name = "WebsiteLabel";
-            this.WebsiteLabel.Size = new System.Drawing.Size(1084, 14);
+            this.WebsiteLabel.Size = new System.Drawing.Size(1074, 14);
             this.WebsiteLabel.TabIndex = 999;
             this.WebsiteLabel.Tag = "http://qurancode.com";
             this.WebsiteLabel.Text = "©2009-2018   Ali Adams    www.heliwave.com    www.qurancode.com";
@@ -104,7 +105,7 @@
             this.VersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VersionLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VersionLabel.ForeColor = System.Drawing.Color.Purple;
-            this.VersionLabel.Location = new System.Drawing.Point(1018, 715);
+            this.VersionLabel.Location = new System.Drawing.Point(1008, 677);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(63, 14);
             this.VersionLabel.TabIndex = 32;
@@ -128,14 +129,14 @@
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1084, 715);
+            this.MainPanel.Size = new System.Drawing.Size(1074, 656);
             this.MainPanel.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1084, 729);
+            this.ClientSize = new System.Drawing.Size(1074, 670);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.WebsiteLabel);
