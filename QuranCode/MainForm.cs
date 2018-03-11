@@ -19977,46 +19977,26 @@ public partial class MainForm : Form, ISubscriber
                         text = text_parts[text_parts.Length - 1];
                     }
 
-                    List<string> found_roots = null;
-                    if (text.Length == 0)
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    if (dictionary != null)
                     {
-                        found_roots = m_client.Book.GetRoots();
-                    }
-                    else if (!String.IsNullOrEmpty(text))
-                    {
-                        switch (m_text_location_in_word)
+                        switch (m_client.SearchScope)
                         {
-                            case TextLocationInWord.AtStart:
+                            case SearchScope.Book:
                                 {
-                                    found_roots = m_client.Book.GetRootsStartingWith(text);
+                                    dictionary = m_client.Book.GetWordRoots(m_client.Book.Verses, text, m_text_location_in_word);
                                 }
                                 break;
-                            case TextLocationInWord.AtMiddle:
+                            case SearchScope.Selection:
                                 {
-                                    found_roots = m_client.Book.GetRootsContainingInside(text);
+                                    dictionary = m_client.Book.GetWordRoots(m_client.Selection.Verses, text, m_text_location_in_word);
                                 }
                                 break;
-                            case TextLocationInWord.AtEnd:
+                            case SearchScope.Result:
                                 {
-                                    found_roots = m_client.Book.GetRootsEndingWith(text);
+                                    dictionary = m_client.Book.GetWordRoots(m_client.FoundVerses, text, m_text_location_in_word);
                                 }
                                 break;
-                            case TextLocationInWord.Anywhere:
-                                {
-                                    found_roots = m_client.Book.GetRootsContaining(text);
-                                }
-                                break;
-                        }
-                    }
-
-                    if (found_roots != null)
-                    {
-                        found_roots.Sort();
-
-                        Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                        foreach (string root in found_roots)
-                        {
-                            dictionary.Add(root, m_client.Book.RootWords[root].Count);
                         }
 
                         int count = 0;
@@ -20399,7 +20379,6 @@ public partial class MainForm : Form, ISubscriber
 
                     WordsListBoxLabel.Visible = false;
                     WordsListBox.Visible = false;
-
                 }
             }
         }
@@ -21221,8 +21200,98 @@ public partial class MainForm : Form, ISubscriber
 
         if (FindByTextTextBox.Text.Length > 0)
         {
-            string text = FindByTextTextBox.Text.Trim();
-            FindByRoot(text);
+            // get startup text from FindTextBox
+            string[] startup_words = FindByTextTextBox.Text.Split();
+            int count = startup_words.Length;
+            // ignore final incomplete word
+            if (!FindByTextTextBox.Text.EndsWith(" "))
+            {
+                count--;
+            }
+
+            string startup_text = "";
+            if (m_auto_complete_mode)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    startup_text += startup_words[i] + " ";
+                }
+                if (startup_text.Length > 0)
+                {
+                    startup_text = startup_text.Remove(startup_text.Length - 1, 1);
+                }
+            }
+
+            // get selected word texts
+            List<string> word_texts = new List<string>();
+            if (WordsListBox.SelectedIndices.Count > 0)
+            {
+                char[] separators = { ' ' };
+                foreach (object item in WordsListBox.Items)
+                {
+                    string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length == 1)  // root
+                    {
+                        word_texts.Add(parts[0]);
+                    }
+                    else if (parts.Length == 2) // exact or proximity
+                    {
+                        word_texts.Add(parts[1]);
+                    }
+                }
+            }
+
+            // setup search parameters
+            string text = "";
+            //string translation = Client.DEFAULT_TRANSLATION;
+
+            // update m_text_location_in_verse and m_text_location_in_word
+            UpdateFindByTextOptions();
+
+            List<Phrase> total_phrases = new List<Phrase>();
+            List<Verse> total_verses = new List<Verse>();
+            if (word_texts.Count > 0)
+            {
+                foreach (string word_text in word_texts)
+                {
+                    if (startup_text.Length > 0)
+                    {
+                        text = startup_text + " " + word_text;
+                    }
+                    else
+                    {
+                        text = word_text;
+                    }
+
+                    if (!String.IsNullOrEmpty(text))
+                    {
+                        m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+
+                        total_phrases = total_phrases.Union(m_client.FoundPhrases);
+                        total_verses = total_verses.Union(m_client.FoundVerses);
+                    }
+                }
+
+                // write final result to m_client
+                m_client.FoundPhrases = total_phrases;
+                m_client.FoundVerses = total_verses;
+            }
+
+            // display results
+            if (m_client.FoundPhrases != null)
+            {
+                int phrase_count = GetPhraseCount(m_client.FoundPhrases);
+                if (m_client.FoundVerses != null)
+                {
+                    int verse_count = m_client.FoundVerses.Count;
+                    m_find_result_header = phrase_count + " matches in " + verse_count + ((verse_count == 1) ? " verse" : " verses") + " with " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " in " + m_client.SearchScope.ToString();
+                    DisplayFoundVerses(true, true);
+
+                    WordsListBoxLabel.Visible = false;
+                    WordsListBox.Visible = false;
+
+                }
+            }
         }
     }
     private void FindByRoot(string text)

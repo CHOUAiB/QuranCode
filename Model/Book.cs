@@ -2328,6 +2328,7 @@ namespace Model
             }
             return result;
         }
+        // get roots
         public List<string> GetRoots()
         {
             List<string> result = new List<string>();
@@ -2337,9 +2338,13 @@ namespace Model
             }
             return result;
         }
-        public List<string> GetRoots(string text)
+        public Dictionary<string, int> GetWordRoots(List<Verse> verses, string text)
         {
-            List<string> result = new List<string>();
+            return GetWordRoots(verses, text, TextLocationInWord.Anywhere);
+        }
+        public Dictionary<string, int> GetWordRoots(List<Verse> verses, string text, TextLocationInWord text_location_in_word)
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
             if (!String.IsNullOrEmpty(text))
             {
                 SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
@@ -2351,152 +2356,133 @@ namespace Model
                         {
                             if (root_words_dictionary.ContainsKey(key))
                             {
+                                int count = 0;
                                 List<Word> root_words = root_words_dictionary[key];
-                                foreach (Word root_word in root_words)
+                                if (verses.Count == this.Verses.Count)
                                 {
-                                    int verse_index = root_word.Verse.Number - 1;
-                                    if ((verse_index >= 0) && (verse_index < this.verses.Count))
+                                    count = root_words.Count;
+                                }
+                                else
+                                {
+                                    foreach (Word root_word in root_words)
                                     {
-                                        Verse verse = this.verses[verse_index];
-                                        int word_index = root_word.NumberInVerse - 1;
-                                        if ((word_index >= 0) && (word_index < verse.Words.Count))
+                                        if (verses.Contains(root_word.Verse))
                                         {
-                                            Word verse_word = verse.Words[word_index];
-                                            if ((this.text_mode == "Original") && (!with_diacritics))
-                                            {
-                                                if (verse_word.Text.Simplify29() == text.Simplify29())
-                                                {
-                                                    result.Add(key);
-                                                    break;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (verse_word.Text == text)
-                                                {
-                                                    result.Add(key);
-                                                    break;
-                                                }
-                                            }
+                                            count++;
                                         }
                                     }
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-        public List<string> GetRootsStartingWith(string text)
-        {
-            List<string> result = new List<string>();
-            if (!String.IsNullOrEmpty(text))
-            {
-                SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
-                if (root_words_dictionary != null)
-                {
-                    foreach (string key in root_words_dictionary.Keys)
-                    {
-                        if ((this.text_mode == "Original") && (!with_diacritics))
-                        {
-                            if (key.StartsWith(text.Simplify36()))
-                            {
-                                result.Add(key);
-                            }
-                        }
-                        else
-                        {
-                            if (key.StartsWith(text))
-                            {
-                                result.Add(key);
-                            }
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-        public List<string> GetRootsContainingInside(string text)
-        {
-            List<string> result = new List<string>();
-            if (!String.IsNullOrEmpty(text))
-            {
-                SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
-                if (root_words_dictionary != null)
-                {
-                    foreach (string key in root_words_dictionary.Keys)
-                    {
-                        if ((this.text_mode == "Original") && (!with_diacritics))
-                        {
-                            if (key.ContainsInside(text.Simplify36()))
-                            {
-                                result.Add(key);
-                            }
-                        }
-                        else
-                        {
-                            if (key.ContainsInside(text))
-                            {
-                                result.Add(key);
-                            }
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-        public List<string> GetRootsEndingWith(string text)
-        {
-            List<string> result = new List<string>();
-            if (!String.IsNullOrEmpty(text))
-            {
-                SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
-                if (root_words_dictionary != null)
-                {
-                    foreach (string key in root_words_dictionary.Keys)
-                    {
-                        if ((this.text_mode == "Original") && (!with_diacritics))
-                        {
-                            if (key.EndsWith(text.Simplify36()))
-                            {
-                                result.Add(key);
-                            }
-                        }
-                        else
-                        {
-                            if (key.EndsWith(text))
-                            {
-                                result.Add(key);
-                            }
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-        public List<string> GetRootsContaining(string text)
-        {
-            List<string> result = new List<string>();
-            if (!String.IsNullOrEmpty(text))
-            {
-                SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
-                if (root_words_dictionary != null)
-                {
-                    foreach (string key in root_words_dictionary.Keys)
-                    {
-                        if ((this.text_mode == "Original") && (!with_diacritics))
-                        {
-                            if (key.Contains(text.Simplify36()))
-                            {
-                                result.Add(key);
-                            }
-                        }
-                        else
-                        {
-                            if (key.Contains(text))
-                            {
-                                result.Add(key);
+
+                                foreach (Word root_word in root_words)
+                                {
+                                    if (verses.Contains(root_word.Verse))
+                                    {
+                                        switch (text_location_in_word)
+                                        {
+                                            case TextLocationInWord.AtStart:
+                                                {
+                                                    if (text.Length == 0)
+                                                    {
+                                                        result.Add(key, count);
+                                                    }
+                                                    else
+                                                    {
+                                                        if ((this.text_mode == "Original") && (!with_diacritics))
+                                                        {
+                                                            if (key.StartsWith(text.Simplify36()))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (key.StartsWith(text))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case TextLocationInWord.AtMiddle:
+                                                {
+                                                    if (text.Length == 0)
+                                                    {
+                                                        result.Add(key, count);
+                                                    }
+                                                    else
+                                                    {
+                                                        if ((this.text_mode == "Original") && (!with_diacritics))
+                                                        {
+                                                            if (key.ContainsInside(text.Simplify36()))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (key.ContainsInside(text))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case TextLocationInWord.AtEnd:
+                                                {
+                                                    if (text.Length == 0)
+                                                    {
+                                                        result.Add(key, count);
+                                                    }
+                                                    else
+                                                    {
+                                                        if ((this.text_mode == "Original") && (!with_diacritics))
+                                                        {
+                                                            if (key.EndsWith(text.Simplify36()))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (key.EndsWith(text))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                            case TextLocationInWord.Anywhere:
+                                                {
+                                                    if (text.Length == 0)
+                                                    {
+                                                        result.Add(key, count);
+                                                    }
+                                                    else
+                                                    {
+                                                        if ((this.text_mode == "Original") && (!with_diacritics))
+                                                        {
+                                                            if (key.Contains(text.Simplify36()))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (key.Contains(text))
+                                                            {
+                                                                result.Add(key, count);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -2555,8 +2541,8 @@ namespace Model
                 // get most similar root to user_text
                 string best_root = null;
                 double max_similirity = double.MinValue;
-                List<string> roots = GetRoots(user_text);
-                foreach (string root in roots)
+                Dictionary<string, int> roots = GetWordRoots(this.Verses, user_text);
+                foreach (string root in roots.Keys)
                 {
                     double similirity = root.SimilarityTo(simplified_user_text);
                     if (similirity >= max_similirity)

@@ -976,6 +976,18 @@ public class Client : IPublisher, ISubscriber
         return result;
     }
 
+    // helper method with GetSourceVerses (not entire book verses)
+    public Dictionary<string, int> GetWordRoots(string text, TextLocationInWord text_location_in_word)
+    {
+        Dictionary<string, int> result = new Dictionary<string, int>();
+        List<Verse> source = Server.GetSourceVerses(m_search_scope, m_selection, m_found_verses, TextLocationInChapter.Anywhere);
+        if (Book != null)
+        {
+            result = Book.GetWordRoots(source, text, text_location_in_word);
+        }
+        return result;
+    }
+
     // find by text - Exact
     /// <summary>
     /// Find phrases for given exact text that meet all parameters.
