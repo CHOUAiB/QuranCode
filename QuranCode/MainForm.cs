@@ -7811,14 +7811,7 @@ public partial class MainForm : Form, ISubscriber
 
         if (WordsListBox.Visible)
         {
-            if (m_text_search_type == TextSearchType.Root)
-            {
-                InspectRootFrequencies();
-            }
-            else
-            {
-                InspectWordFrequencies();
-            }
+            InspectWordFrequencies();
         }
         else
         {
@@ -19656,52 +19649,28 @@ public partial class MainForm : Form, ISubscriber
             if (WordsListBox.SelectedIndices.Count > 1)
             {
                 // update total(unique) counts
-                if (m_text_search_type == TextSearchType.Root)
+                foreach (object item in WordsListBox.SelectedItems)
                 {
-                    count = WordsListBox.SelectedIndices.Count;
-                    total = count;
-                }
-                else
-                {
-                    foreach (object item in WordsListBox.SelectedItems)
+                    string[] parts = item.ToString().Split();
+                    if (parts.Length > 0)
                     {
-                        string[] parts = item.ToString().Split();
-                        if (parts.Length > 0)
-                        {
-                            total += int.Parse(parts[0]);
-                            count++;
-                        }
+                        total += int.Parse(parts[0]);
+                        count++;
                     }
                 }
             }
             else
             {
                 // restore total(unique) counts
-                if (m_text_search_type == TextSearchType.Root)
+                foreach (string key in m_word_frequency_dictionary.Keys)
                 {
-                    count = WordsListBox.Items.Count;
-                    total = count;
-                }
-                else
-                {
-                    foreach (string key in m_word_frequency_dictionary.Keys)
-                    {
-                        total += m_word_frequency_dictionary[key];
-                        count++;
-                    }
+                    total += m_word_frequency_dictionary[key];
+                    count++;
                 }
             }
 
-            if (m_text_search_type == TextSearchType.Root)
-            {
-                WordsListBoxLabel.Text = count.ToString() + " Root" + ((count == 1) ? "" : "s");
-                WordsListBoxLabel.ForeColor = GetNumberTypeColor(count);
-            }
-            else
-            {
-                WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
-                WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
-            }
+            WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
+            WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
             WordsListBoxLabel.Refresh();
         }
     }
@@ -20044,12 +20013,19 @@ public partial class MainForm : Form, ISubscriber
                     {
                         found_roots.Sort();
 
-                        int count = 0;
+                        Dictionary<string, int> dictionary = new Dictionary<string, int>();
                         foreach (string root in found_roots)
                         {
-                            string entry = root.PadLeft(14, ' ');
-                            //string entry = String.Format("{0,14}", root);
+                            dictionary.Add(root, m_client.Book.RootWords[root].Count);
+                        }
+
+                        int count = 0;
+                        int total = 0;
+                        foreach (string key in dictionary.Keys)
+                        {
+                            string entry = String.Format("{0,-3} {1,10}", dictionary[key], key);
                             WordsListBox.Items.Add(entry);
+                            total += dictionary[key];
                             count++;
                         }
 
@@ -20062,8 +20038,8 @@ public partial class MainForm : Form, ISubscriber
                             // if not a valid root, put word as is so we can find same rooted words
                             WordsListBox.Items.Add(text);
                         }
-                        WordsListBoxLabel.Text = count.ToString() + " Root" + ((count == 1) ? "" : "s");
-                        WordsListBoxLabel.ForeColor = GetNumberTypeColor(count);
+                        WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
+                        WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
                         WordsListBoxLabel.Refresh();
                     }
                 }
@@ -20437,12 +20413,12 @@ public partial class MainForm : Form, ISubscriber
 
             if (Directory.Exists(Globals.STATISTICS_FOLDER))
             {
-                string filename = Globals.STATISTICS_FOLDER + "/" + text + ".txt";
+                string filename = Globals.STATISTICS_FOLDER + "/" + ((m_text_search_type == TextSearchType.Root) ? "root_" : "") + text + ".txt";
                 using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
                 {
                     StringBuilder str = new StringBuilder();
                     str.AppendLine("-----------------");
-                    str.AppendLine("Word" + "\t" + "Frequency");
+                    str.AppendLine(((m_text_search_type == TextSearchType.Root) ? "Root" : "Word") + "\t" + "Frequency");
                     str.AppendLine("-----------------");
 
                     int count = 0;
@@ -20454,7 +20430,7 @@ public partial class MainForm : Form, ISubscriber
                         foreach (object item in WordsListBox.SelectedItems)
                         {
                             string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                            if (parts.Length == 2) // exact or proximity
+                            if (parts.Length == 2)
                             {
                                 str.AppendLine(parts[1] + "\t" + parts[0]);
                                 total += int.Parse(parts[0]);
@@ -20467,77 +20443,10 @@ public partial class MainForm : Form, ISubscriber
                         foreach (object item in WordsListBox.Items)
                         {
                             string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                            if (parts.Length == 2) // exact or proximity
+                            if (parts.Length == 2)
                             {
                                 str.AppendLine(parts[1] + "\t" + parts[0]);
                                 total += int.Parse(parts[0]);
-                            }
-                        }
-                    }
-                    str.AppendLine("-----------------");
-                    str.AppendLine("Count = " + count.ToString());
-                    str.AppendLine("Total = " + total.ToString());
-
-                    writer.Write(str.ToString());
-                }
-
-                // show file content after save
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void InspectRootFrequencies()
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            string text = FindByTextTextBox.Text;
-
-            if (Directory.Exists(Globals.STATISTICS_FOLDER))
-            {
-                string filename = Globals.STATISTICS_FOLDER + "/" + "root_" + text + ".txt";
-                using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
-                {
-                    StringBuilder str = new StringBuilder();
-                    str.AppendLine("-----------------");
-                    str.AppendLine("Root" + "\t" + "Frequency");
-                    str.AppendLine("-----------------");
-
-                    int count = 0;
-                    int total = 0;
-                    char[] separators = { ' ' };
-                    if (WordsListBox.SelectedIndices.Count > 1)
-                    {
-                        count = WordsListBox.SelectedIndices.Count;
-                        foreach (object item in WordsListBox.SelectedItems)
-                        {
-                            string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                            if (parts.Length == 1) // root
-                            {
-                                str.AppendLine(parts[0] + "\t" + m_client.Book.RootWords[parts[0]].Count);
-                                total += 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        count = WordsListBox.Items.Count;
-                        foreach (object item in WordsListBox.Items)
-                        {
-                            string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                            if (parts.Length == 1) // root
-                            {
-                                str.AppendLine(parts[0] + "\t" + m_client.Book.RootWords[parts[0]].Count);
-                                total += 1;
                             }
                         }
                     }

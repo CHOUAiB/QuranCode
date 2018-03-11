@@ -35,9 +35,9 @@ partial class SplashForm
             this.SsalawaaaaaaaaaaaaaatLabel = new System.Windows.Forms.Label();
             this.ProductNameLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
-            this.CloseLabel = new System.Windows.Forms.Label();
             this.WordFrequencyLabel = new System.Windows.Forms.Label();
             this.InitialLettersLabel = new System.Windows.Forms.Label();
+            this.CloseLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // InformationLabel
@@ -138,26 +138,12 @@ partial class SplashForm
             this.ToolTip.SetToolTip(this.VersionLabel, "©2009-2017 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي");
             this.VersionLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 
-            // CloseLabel
-            // 
-            this.CloseLabel.AutoSize = true;
-            this.CloseLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CloseLabel.ForeColor = System.Drawing.Color.DarkSlateBlue;
-            this.CloseLabel.Location = new System.Drawing.Point(224, 0);
-            this.CloseLabel.Name = "CloseLabel";
-            this.CloseLabel.Size = new System.Drawing.Size(13, 13);
-            this.CloseLabel.TabIndex = 10;
-            this.CloseLabel.Text = "x";
-            this.CloseLabel.Visible = false;
-            this.CloseLabel.Click += new System.EventHandler(this.CloseLabel_Click);
-            // 
             // WordFrequencyLabel
             // 
             this.WordFrequencyLabel.BackColor = System.Drawing.Color.Transparent;
             this.WordFrequencyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WordFrequencyLabel.ForeColor = System.Drawing.Color.LightGreen;
             this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 106);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
@@ -185,6 +171,20 @@ partial class SplashForm
             this.InitialLettersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.InitialLettersLabel, "Perfect text with a decisive secret. Ali is a Truth path we hold fast to.");
             this.InitialLettersLabel.Click += new System.EventHandler(this.LinkLabel_Click);
+            // 
+            // CloseLabel
+            // 
+            this.CloseLabel.AutoSize = true;
+            this.CloseLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CloseLabel.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            this.CloseLabel.Location = new System.Drawing.Point(224, 0);
+            this.CloseLabel.Name = "CloseLabel";
+            this.CloseLabel.Size = new System.Drawing.Size(13, 13);
+            this.CloseLabel.TabIndex = 10;
+            this.CloseLabel.Text = "x";
+            this.CloseLabel.Visible = false;
+            this.CloseLabel.Click += new System.EventHandler(this.CloseLabel_Click);
             // 
             // SplashForm
             // 
