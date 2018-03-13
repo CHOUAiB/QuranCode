@@ -2938,42 +2938,27 @@ public partial class MainForm : Form, ISubscriber
                 if (((sender as MenuItem).Parent as ContextMenu).SourceControl is TextBoxBase)
                 {
                     TextBoxBase control = (((sender as MenuItem).Parent as ContextMenu).SourceControl as TextBoxBase);
-                    bool nothing_was_selected = false;
-                    if (control.SelectionLength == 0)
+
+                    if (m_found_verses_displayed)
                     {
-                        nothing_was_selected = true;
-
-                        List<Verse> selected_verses = new List<Verse>();
-                        if (m_found_verses_displayed)
-                        {
-                            selected_verses = m_client.FoundVerses;
-                        }
-                        else
-                        {
-                            selected_verses = m_client.Selection.Verses;
-                        }
-
-                        StringBuilder str = new StringBuilder();
-                        foreach (Verse verse in selected_verses)
-                        {
-                            str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
-                        }
-                        Clipboard.SetText(str.ToString());
+                        (((sender as MenuItem).Parent as ContextMenu).SourceControl as TextBoxBase).Copy();
                     }
                     else
                     {
-                        List<Verse> selected_verses = GetCurrentVerses();
-                        StringBuilder str = new StringBuilder();
-                        foreach (Verse verse in selected_verses)
+                        if (control.SelectionLength > 0)
                         {
-                            str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
+                            List<Verse> selected_verses = GetCurrentVerses();
+                            if (selected_verses != null)
+                            {
+                                StringBuilder str = new StringBuilder();
+                                foreach (Verse verse in selected_verses)
+                                {
+                                    str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
+                                }
+                                Clipboard.SetText(str.ToString());
+                                Thread.Sleep(100); // must give chance for Clipboard to refresh its content before Paste
+                            }
                         }
-                        Clipboard.SetText(str.ToString());
-                    }
-
-                    if (nothing_was_selected)
-                    {
-                        control.DeselectAll();
                     }
                 }
             }
@@ -4082,15 +4067,28 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (m_active_textbox != null)
                 {
-                    List<Verse> selected_verses = GetCurrentVerses();
-                    StringBuilder str = new StringBuilder();
-                    foreach (Verse verse in selected_verses)
+                    if (m_found_verses_displayed)
                     {
-                        str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
+                        m_active_textbox.Copy();
                     }
-                    Clipboard.SetText(str.ToString());
-                    Thread.Sleep(100); // must give chance for Clipboard to refresh its content before Paste
-                    e.Handled = true;
+                    else
+                    {
+                        if (m_active_textbox.SelectionLength > 0)
+                        {
+                            List<Verse> selected_verses = GetCurrentVerses();
+                            if (selected_verses != null)
+                            {
+                                StringBuilder str = new StringBuilder();
+                                foreach (Verse verse in selected_verses)
+                                {
+                                    str.AppendLine(verse.Chapter.Name + "\t" + verse.Address + "\t" + verse.Text);
+                                }
+                                Clipboard.SetText(str.ToString());
+                                Thread.Sleep(100); // must give chance for Clipboard to refresh its content before Paste
+                                e.Handled = true;
+                            }
+                        }
+                    }
                 }
             }
             else if ((e.Control) && (e.KeyCode == Keys.V))
@@ -4847,11 +4845,11 @@ public partial class MainForm : Form, ISubscriber
                     int length = GetVerseDisplayLength(m_previous_highlighted_verse);
                     if (m_found_verses_displayed)
                     {
-                        m_active_textbox.Highlight(start, length, m_found_verse_backcolors[m_previous_highlighted_verse]);
+                        m_active_textbox.Highlight(start, length - 1, m_found_verse_backcolors[m_previous_highlighted_verse]);
                     }
                     else
                     {
-                        m_active_textbox.ClearHighlight(start, length);
+                        m_active_textbox.ClearHighlight(start, length - 1);
                     }
                 }
 
@@ -4860,7 +4858,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     int start = GetVerseDisplayStart(verse);
                     int length = GetVerseDisplayLength(verse);
-                    m_active_textbox.Highlight(start, length, Color.Lavender);
+                    m_active_textbox.Highlight(start, length - 1, Color.Lavender);
 
                     // ####### re-wire MainTextBox_SelectionChanged event
                     m_active_textbox.EndUpdate();
@@ -20700,6 +20698,11 @@ public partial class MainForm : Form, ISubscriber
                 DisplayLetterFrequencies();
             }
         }
+        LetterFrequencyWithDiacriticsCheckBox.Checked = FindByTextWithDiacriticsCheckBox.Checked;
+    }
+    private void LetterFrequencyWithDiacriticsCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        FindByTextWithDiacriticsCheckBox.Checked = LetterFrequencyWithDiacriticsCheckBox.Checked;
     }
     private void FindByTextWordnessCheckBox_CheckStateChanged(object sender, EventArgs e)
     {
@@ -25668,14 +25671,13 @@ public partial class MainForm : Form, ISubscriber
                                     {
                                         blue = 0;
                                     }
-
                                     m_found_verse_backcolors.Add(verse, Color.FromArgb(red, green, blue));
-                                    SearchResultTextBox.Highlight(start, length, m_found_verse_backcolors[verse]);
                                 }
                                 else
                                 {
                                     m_found_verse_backcolors.Add(verse, SearchResultTextBox.BackColor);
                                 }
+                                SearchResultTextBox.Highlight(start, length - 1, m_found_verse_backcolors[verse]);
                             }
                         }
                     }

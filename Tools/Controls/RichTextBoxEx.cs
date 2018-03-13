@@ -839,7 +839,7 @@ public class RichTextBoxEx : RichTextBox
     }
     public void ClearHighlight()
     {
-        this.ClearHighlight(0, this.Text.Length);
+        this.ClearHighlight(0, this.Text.Length + 1); // + 1 for \n
     }
 
     private const int EM_SETCHARFORMAT = 1092;

@@ -515,6 +515,7 @@ partial class MainForm
             this.ChaptersTextBox = new System.Windows.Forms.TextBox();
             this.ChaptersLabel = new System.Windows.Forms.Label();
             this.LetterFrequencyPanel = new System.Windows.Forms.Panel();
+            this.LetterFrequencyWithDiacriticsCheckBox = new System.Windows.Forms.CheckBox();
             this.LetterFrequencyListView = new System.Windows.Forms.ListView();
             this.LetterOrderColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LetterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -4990,7 +4991,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(821, 194);
+            this.TabControl.Size = new System.Drawing.Size(821, 196);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -8419,6 +8420,7 @@ partial class MainForm
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LetterFrequencyPanel.BackColor = System.Drawing.Color.LightSteelBlue;
             this.LetterFrequencyPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyWithDiacriticsCheckBox);
             this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyListView);
             this.LetterFrequencyPanel.Controls.Add(this.FindByFrequncyPanel);
             this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencySumLabel);
@@ -8430,6 +8432,21 @@ partial class MainForm
             this.LetterFrequencyPanel.Size = new System.Drawing.Size(180, 191);
             this.LetterFrequencyPanel.TabIndex = 240;
             this.LetterFrequencyPanel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
+            // 
+            // LetterFrequencyWithDiacriticsCheckBox
+            // 
+            this.LetterFrequencyWithDiacriticsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LetterFrequencyWithDiacriticsCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.LetterFrequencyWithDiacriticsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LetterFrequencyWithDiacriticsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LetterFrequencyWithDiacriticsCheckBox.ForeColor = System.Drawing.Color.Navy;
+            this.LetterFrequencyWithDiacriticsCheckBox.Location = new System.Drawing.Point(139, 170);
+            this.LetterFrequencyWithDiacriticsCheckBox.Name = "LetterFrequencyWithDiacriticsCheckBox";
+            this.LetterFrequencyWithDiacriticsCheckBox.Size = new System.Drawing.Size(15, 17);
+            this.LetterFrequencyWithDiacriticsCheckBox.TabIndex = 16;
+            this.ToolTip.SetToolTip(this.LetterFrequencyWithDiacriticsCheckBox, "with diacritics  مع الحركات");
+            this.LetterFrequencyWithDiacriticsCheckBox.UseVisualStyleBackColor = false;
+            this.LetterFrequencyWithDiacriticsCheckBox.CheckedChanged += new System.EventHandler(this.LetterFrequencyWithDiacriticsCheckBox_CheckedChanged);
             // 
             // LetterFrequencyListView
             // 
@@ -8754,7 +8771,7 @@ partial class MainForm
             this.LetterFrequencyInspectLabel.Location = new System.Drawing.Point(157, 169);
             this.LetterFrequencyInspectLabel.Name = "LetterFrequencyInspectLabel";
             this.LetterFrequencyInspectLabel.Size = new System.Drawing.Size(16, 18);
-            this.LetterFrequencyInspectLabel.TabIndex = 16;
+            this.LetterFrequencyInspectLabel.TabIndex = 17;
             this.ToolTip.SetToolTip(this.LetterFrequencyInspectLabel, "Inspect letter frequencies");
             this.LetterFrequencyInspectLabel.Click += new System.EventHandler(this.LetterFrequencyInspectLabel_Click);
             this.LetterFrequencyInspectLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
@@ -11047,4 +11064,5 @@ partial class MainForm
     private System.Windows.Forms.NumericUpDown UserTextValueNumericUpDown;
     private System.Windows.Forms.Label UserTextValueLabel;
     private System.Windows.Forms.Button UserTextValueButton;
+    private System.Windows.Forms.CheckBox LetterFrequencyWithDiacriticsCheckBox;
 }
