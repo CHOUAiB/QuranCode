@@ -8876,8 +8876,6 @@ public class Server : IPublisher
     {
         if (word != null)
         {
-            long value = 0L;
-
             int number = 0;
             switch (query.NumberScope)
             {
@@ -8930,7 +8928,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.LetterCountNumberType == NumberType.None) || (query.LetterCountNumberType == NumberType.Natural))
+            if (query.LetterCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(word.Letters.Count, number, query.LetterCountComparisonOperator, query.LetterCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.LetterCountNumberType == NumberType.None)
             {
                 if (query.LetterCount > 0)
                 {
@@ -8972,7 +8977,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.UniqueLetterCountNumberType == NumberType.None) || (query.UniqueLetterCountNumberType == NumberType.Natural))
+            if (query.UniqueLetterCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(word.UniqueLetters.Count, number, query.LetterCountComparisonOperator, query.LetterCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.UniqueLetterCountNumberType == NumberType.None)
             {
                 if (query.UniqueLetterCount > 0)
                 {
@@ -8990,23 +9002,29 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.ValueNumberType == NumberType.None) || (query.ValueNumberType == NumberType.Natural))
+            long value = CalculateValue(word);
+            if (query.Value > 0)
             {
-                if (query.Value > 0)
+                if (query.ValueNumberType == NumberType.Natural)
                 {
-                    if (value == 0L) { value = CalculateValue(word); }
+                    if (!Numbers.Compare(value, number, query.LetterCountComparisonOperator, query.LetterCountRemainder))
+                    {
+                        return false;
+                    }
+                }
+                else if (query.ValueNumberType == NumberType.None)
+                {
                     if (!Numbers.Compare(value, query.Value, query.ValueComparisonOperator, query.ValueRemainder))
                     {
                         return false;
                     }
                 }
-            }
-            else
-            {
-                if (value == 0L) { value = CalculateValue(word); }
-                if (!Numbers.IsNumberType(value, query.ValueNumberType))
+                else
                 {
-                    return false;
+                    if (!Numbers.IsNumberType(value, query.ValueNumberType))
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -9523,8 +9541,6 @@ public class Server : IPublisher
     {
         if (verse != null)
         {
-            long value = 0L;
-
             int number = 0;
             switch (query.NumberScope)
             {
@@ -9538,6 +9554,7 @@ public class Server : IPublisher
                     number = verse.NumberInChapter;
                     break;
             }
+
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
                 if (query.Number < 0)
@@ -9555,7 +9572,7 @@ public class Server : IPublisher
                             break;
                     }
                 }
-                if (query.Number > 0)
+                else if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
                     {
@@ -9571,7 +9588,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.WordCountNumberType == NumberType.None) || (query.WordCountNumberType == NumberType.Natural))
+            if (query.WordCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(verse.Words.Count, number, query.WordCountComparisonOperator, query.WordCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.WordCountNumberType == NumberType.None)
             {
                 if (query.WordCount > 0)
                 {
@@ -9613,7 +9637,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.LetterCountNumberType == NumberType.None) || (query.LetterCountNumberType == NumberType.Natural))
+            if (query.LetterCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(verse.LetterCount, number, query.LetterCountComparisonOperator, query.LetterCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.LetterCountNumberType == NumberType.None)
             {
                 if (query.LetterCount > 0)
                 {
@@ -9655,7 +9686,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.UniqueLetterCountNumberType == NumberType.None) || (query.UniqueLetterCountNumberType == NumberType.Natural))
+            if (query.UniqueLetterCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(verse.UniqueLetters.Count, number, query.UniqueLetterCountComparisonOperator, query.UniqueLetterCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.UniqueLetterCountNumberType == NumberType.None)
             {
                 if (query.UniqueLetterCount > 0)
                 {
@@ -9673,11 +9711,18 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.ValueNumberType == NumberType.None) || (query.ValueNumberType == NumberType.Natural))
+            long value = CalculateValue(verse);
+            if (query.ValueNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(value, number, query.ValueComparisonOperator, query.ValueRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.ValueNumberType == NumberType.None)
             {
                 if (query.Value > 0)
                 {
-                    if (value == 0L) { value = CalculateValue(verse); }
                     if (!Numbers.Compare(value, query.Value, query.ValueComparisonOperator, query.ValueRemainder))
                     {
                         return false;
@@ -10144,14 +10189,12 @@ public class Server : IPublisher
     {
         if (chapter != null)
         {
-            long value = 0L;
-
             int number = chapter.SortedNumber;
             if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
             {
                 if (query.Number < 0)
                 {
-                    query.Number = chapter.SortedNumber + query.Number + 1;
+                    query.Number = number + query.Number + 1;
                 }
                 if (query.Number > 0)
                 {
@@ -10169,7 +10212,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.VerseCountNumberType == NumberType.None) || (query.VerseCountNumberType == NumberType.Natural))
+            if (query.VerseCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(chapter.Verses.Count, number, query.VerseCountComparisonOperator, query.VerseCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.VerseCountNumberType == NumberType.None)
             {
                 if (query.VerseCount > 0)
                 {
@@ -10211,7 +10261,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.WordCountNumberType == NumberType.None) || (query.WordCountNumberType == NumberType.Natural))
+            if (query.WordCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(chapter.WordCount, number, query.WordCountComparisonOperator, query.WordCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.WordCountNumberType == NumberType.None)
             {
                 if (query.WordCount > 0)
                 {
@@ -10253,7 +10310,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.LetterCountNumberType == NumberType.None) || (query.LetterCountNumberType == NumberType.Natural))
+            if (query.LetterCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(chapter.LetterCount, number, query.LetterCountComparisonOperator, query.LetterCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.LetterCountNumberType == NumberType.None)
             {
                 if (query.LetterCount > 0)
                 {
@@ -10295,7 +10359,14 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.UniqueLetterCountNumberType == NumberType.None) || (query.UniqueLetterCountNumberType == NumberType.Natural))
+            if (query.UniqueLetterCountNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(chapter.UniqueLetters.Count, number, query.UniqueLetterCountComparisonOperator, query.UniqueLetterCountRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.UniqueLetterCountNumberType == NumberType.None)
             {
                 if (query.UniqueLetterCount > 0)
                 {
@@ -10313,11 +10384,19 @@ public class Server : IPublisher
                 }
             }
 
-            if ((query.ValueNumberType == NumberType.None) || (query.ValueNumberType == NumberType.Natural))
+
+            long value = CalculateValue(chapter);
+            if (query.ValueNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(value, number, query.ValueComparisonOperator, query.ValueRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.ValueNumberType == NumberType.None)
             {
                 if (query.Value > 0)
                 {
-                    if (value == 0L) { value = CalculateValue(chapter); }
                     if (!Numbers.Compare(value, query.Value, query.ValueComparisonOperator, query.ValueRemainder))
                     {
                         return false;
@@ -10326,7 +10405,6 @@ public class Server : IPublisher
             }
             else
             {
-                if (value == 0L) { value = CalculateValue(chapter); }
                 if (!Numbers.IsNumberType(value, query.ValueNumberType))
                 {
                     return false;

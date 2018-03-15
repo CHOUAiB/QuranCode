@@ -21683,6 +21683,7 @@ public partial class MainForm : Form, ISubscriber
     private void UpdateKeyboard(string text_mode)
     {
         FindByTextWithDiacriticsCheckBox.Visible = false;
+        LetterFrequencyWithDiacriticsCheckBox.Visible = false;
         FindByTextHamzaLabel.Visible = false;
         FindByTextTaaMarbootaLabel.Visible = false;
         FindByTextElfMaqsuraLabel.Visible = false;
@@ -21738,6 +21739,7 @@ public partial class MainForm : Form, ISubscriber
             FindByTextHamzaAboveYaaLabel.Visible = true;
 
             FindByTextWithDiacriticsCheckBox.Visible = true;
+            LetterFrequencyWithDiacriticsCheckBox.Visible = true;
             //FindByTextWithDiacriticsCheckBox.Text = "ā";
             //ToolTip.SetToolTip(FindByTextWithDiacriticsCheckBox, "with diacritics  مع الحركات");
         }
@@ -21978,8 +21980,8 @@ public partial class MainForm : Form, ISubscriber
     {
         FindByNumbersControls_Enter(null, null);
     }
-    private NumberScope m_word_number_scope = NumberScope.Number;
-    private NumberScope m_verse_number_scope = NumberScope.Number;
+    private NumberScope m_word_number_scope = NumberScope.NumberInVerse;
+    private NumberScope m_verse_number_scope = NumberScope.NumberInChapter;
     private NumberScope m_chapter_number_scope = NumberScope.Number;
     private void UpdateFindByNumbersNumberLabel()
     {
@@ -22142,6 +22144,8 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersVersesNumericUpDown.Value = 0;
         FindByNumbersWordsNumericUpDown.Value = 1;
         FindByNumbersLettersNumericUpDown.Focus();
+
+        UpdateFindByNumbersNumberLabel();
     }
     private void FindByNumbersResultTypeSentencesLabel_Click(object sender, EventArgs e)
     {
@@ -22186,16 +22190,16 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersVersesNumericUpDown.Focus();
     }
     private void EnableFindByNumbersControls(
-                                                bool enable_number,
-                                                bool enable_chapters,
-                                                bool enable_verses,
-                                                bool enable_words,
-                                                bool enable_letters,
-                                                bool enable_unique_letters,
-                                                bool enable_value,
-                                                bool enable_value_digit_sum,
-                                                bool enable_value_digital_root
-                                            )
+                    bool enable_number,
+                    bool enable_chapters,
+                    bool enable_verses,
+                    bool enable_words,
+                    bool enable_letters,
+                    bool enable_unique_letters,
+                    bool enable_value,
+                    bool enable_value_digit_sum,
+                    bool enable_value_digital_root
+                 )
     {
         bool not_number_number_type = ((FindByNumbersNumberNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersNumberNumberTypeLabel.Text[0])));
         FindByNumbersNumberLabel.Enabled = enable_number;
@@ -22735,6 +22739,20 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (control.Text == "")
                 {
+                    control.Text = "#";
+                    control.ForeColor = GetNumberTypeColor(0L);
+                    string text = null;
+                    switch (m_numbers_result_type)
+                    {
+                        case NumbersResultType.Words: { text = "word number"; break; }
+                        case NumbersResultType.Verses: { text = "verse number"; break; }
+                        case NumbersResultType.Chapters: { text = "chapter number"; break; }
+                        default: { text = "number"; break; }
+                    }
+                    ToolTip.SetToolTip(control, text);
+                }
+                else if (control.Text == "#")
+                {
                     control.Text = "P";
                     control.ForeColor = GetNumberTypeColor(19L);
                     ToolTip.SetToolTip(control, "prime = divisible by itself only");
@@ -22911,6 +22929,20 @@ public partial class MainForm : Form, ISubscriber
                     ToolTip.SetToolTip(control, "prime = divisible by itself only");
                 }
                 else if (control.Text == "P")
+                {
+                    control.Text = "#";
+                    control.ForeColor = GetNumberTypeColor(0L);
+                    string text = null;
+                    switch (m_numbers_result_type)
+                    {
+                        case NumbersResultType.Words: { text = "word number"; break; }
+                        case NumbersResultType.Verses: { text = "verse number"; break; }
+                        case NumbersResultType.Chapters: { text = "chapter number"; break; }
+                        default: { text = "number"; break; }
+                    }
+                    ToolTip.SetToolTip(control, text);
+                }
+                else if (control.Text == "#")
                 {
                     control.Text = "";
                     control.ForeColor = control.BackColor;
@@ -23371,8 +23403,9 @@ public partial class MainForm : Form, ISubscriber
                 (number_symbol == "^5") ? NumberType.Quintic :
                 (number_symbol == "^6") ? NumberType.Sextic :
                 (number_symbol == "^7") ? NumberType.Septic :
+                (number_symbol == "#") ? NumberType.Natural :
                 (number_symbol == "") ? NumberType.None :
-                                        NumberType.Natural;
+                                        NumberType.None;
             string chapter_count_symbol = FindByNumbersChaptersNumberTypeLabel.Enabled ? FindByNumbersChaptersNumberTypeLabel.Text : "";
             NumberType chapter_count_number_type =
                 (chapter_count_symbol == "P") ? NumberType.Prime :
@@ -23389,8 +23422,9 @@ public partial class MainForm : Form, ISubscriber
                 (chapter_count_symbol == "^5") ? NumberType.Quintic :
                 (chapter_count_symbol == "^6") ? NumberType.Sextic :
                 (chapter_count_symbol == "^7") ? NumberType.Septic :
+                (chapter_count_symbol == "#") ? NumberType.Natural :
                 (chapter_count_symbol == "") ? NumberType.None :
-                                               NumberType.Natural;
+                                               NumberType.None;
             string verse_count_symbol = FindByNumbersVersesNumberTypeLabel.Enabled ? FindByNumbersVersesNumberTypeLabel.Text : "";
             NumberType verse_count_number_type =
                 (verse_count_symbol == "P") ? NumberType.Prime :
@@ -23407,8 +23441,9 @@ public partial class MainForm : Form, ISubscriber
                 (verse_count_symbol == "^5") ? NumberType.Quintic :
                 (verse_count_symbol == "^6") ? NumberType.Sextic :
                 (verse_count_symbol == "^7") ? NumberType.Septic :
+                (verse_count_symbol == "#") ? NumberType.Natural :
                 (verse_count_symbol == "") ? NumberType.None :
-                                             NumberType.Natural;
+                                             NumberType.None;
             string word_count_symbol = FindByNumbersWordsNumberTypeLabel.Enabled ? FindByNumbersWordsNumberTypeLabel.Text : "";
             NumberType word_count_number_type =
                 (word_count_symbol == "P") ? NumberType.Prime :
@@ -23425,8 +23460,9 @@ public partial class MainForm : Form, ISubscriber
                 (word_count_symbol == "^5") ? NumberType.Quintic :
                 (word_count_symbol == "^6") ? NumberType.Sextic :
                 (word_count_symbol == "^7") ? NumberType.Septic :
+                (word_count_symbol == "#") ? NumberType.Natural :
                 (word_count_symbol == "") ? NumberType.None :
-                                            NumberType.Natural;
+                                            NumberType.None;
             string letter_count_symbol = FindByNumbersLettersNumberTypeLabel.Enabled ? FindByNumbersLettersNumberTypeLabel.Text : "";
             NumberType letter_count_number_type =
                 (letter_count_symbol == "P") ? NumberType.Prime :
@@ -23443,8 +23479,9 @@ public partial class MainForm : Form, ISubscriber
                 (letter_count_symbol == "^5") ? NumberType.Quintic :
                 (letter_count_symbol == "^6") ? NumberType.Sextic :
                 (letter_count_symbol == "^7") ? NumberType.Septic :
+                (letter_count_symbol == "#") ? NumberType.Natural :
                 (letter_count_symbol == "") ? NumberType.None :
-                                              NumberType.Natural;
+                                              NumberType.None;
             string unique_letter_count_symbol = FindByNumbersUniqueLettersNumberTypeLabel.Enabled ? FindByNumbersUniqueLettersNumberTypeLabel.Text : "";
             NumberType unique_letter_count_number_type =
                 (unique_letter_count_symbol == "P") ? NumberType.Prime :
@@ -23461,8 +23498,9 @@ public partial class MainForm : Form, ISubscriber
                 (unique_letter_count_symbol == "^5") ? NumberType.Quintic :
                 (unique_letter_count_symbol == "^6") ? NumberType.Sextic :
                 (unique_letter_count_symbol == "^7") ? NumberType.Septic :
+                (unique_letter_count_symbol == "#") ? NumberType.Natural :
                 (unique_letter_count_symbol == "") ? NumberType.None :
-                                                     NumberType.Natural;
+                                                     NumberType.None;
             string value_symbol = FindByNumbersValueNumberTypeLabel.Enabled ? FindByNumbersValueNumberTypeLabel.Text : "";
             NumberType value_number_type =
                 (value_symbol == "P") ? NumberType.Prime :
@@ -23479,8 +23517,9 @@ public partial class MainForm : Form, ISubscriber
                 (value_symbol == "^5") ? NumberType.Quintic :
                 (value_symbol == "^6") ? NumberType.Sextic :
                 (value_symbol == "^7") ? NumberType.Septic :
+                (value_symbol == "#") ? NumberType.Natural :
                 (value_symbol == "") ? NumberType.None :
-                                       NumberType.Natural;
+                                       NumberType.None;
 
             // 2. numbers
             int number = FindByNumbersNumberNumericUpDown.Enabled ? (int)FindByNumbersNumberNumericUpDown.Value : 0;

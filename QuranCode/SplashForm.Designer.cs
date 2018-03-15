@@ -93,7 +93,7 @@ partial class SplashForm
             this.SsalawaaaaaaaaaaaaaatLabel.BackColor = System.Drawing.Color.Transparent;
             this.SsalawaaaaaaaaaaaaaatLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SsalawaaaaaaaaaaaaaatLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SsalawaaaaaaaaaaaaaatLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SsalawaaaaaaaaaaaaaatLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SsalawaaaaaaaaaaaaaatLabel.ForeColor = System.Drawing.Color.Lavender;
             this.SsalawaaaaaaaaaaaaaatLabel.Location = new System.Drawing.Point(0, 21);
             this.SsalawaaaaaaaaaaaaaatLabel.Name = "SsalawaaaaaaaaaaaaaatLabel";
@@ -144,7 +144,7 @@ partial class SplashForm
             this.WordFrequencyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.LightGreen;
+            this.WordFrequencyLabel.ForeColor = System.Drawing.Color.MintCream;
             this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 106);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
             this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 21);
@@ -162,9 +162,9 @@ partial class SplashForm
             this.InitialLettersLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.InitialLettersLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InitialLettersLabel.ForeColor = System.Drawing.Color.Lavender;
-            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 89);
+            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 87);
             this.InitialLettersLabel.Name = "InitialLettersLabel";
-            this.InitialLettersLabel.Size = new System.Drawing.Size(239, 17);
+            this.InitialLettersLabel.Size = new System.Drawing.Size(239, 19);
             this.InitialLettersLabel.TabIndex = 13;
             this.InitialLettersLabel.Tag = "http://qurancode.com";
             this.InitialLettersLabel.Text = "نص حكيم له سر قاطع  |  علي صراط حق نمسكه";
