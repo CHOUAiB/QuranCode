@@ -19997,28 +19997,55 @@ public partial class MainForm : Form, ISubscriber
                                 break;
                         }
 
-                        int count = 0;
-                        int total = 0;
-                        foreach (string key in dictionary.Keys)
+                        if (dictionary != null)
                         {
-                            string entry = String.Format("{0,-3} {1,10}", dictionary[key], key);
-                            WordsListBox.Items.Add(entry);
-                            total += dictionary[key];
-                            count++;
-                        }
+                            // sort dictionary by value or key
+                            List<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>(dictionary);
+                            if (m_sort_by_word_frequency)
+                            {
+                                list.Sort(
+                                    delegate(KeyValuePair<string, int> firstPair, KeyValuePair<string, int> nextPair)
+                                    {
+                                        return nextPair.Value.CompareTo(firstPair.Value);
+                                    }
+                                );
+                            }
+                            else
+                            {
+                                list.Sort(
+                                    delegate(KeyValuePair<string, int> firstPair, KeyValuePair<string, int> nextPair)
+                                    {
+                                        return firstPair.Key.CompareTo(nextPair.Key);
+                                    }
+                                );
+                            }
 
-                        if (WordsListBox.Items.Count > 0)
-                        {
-                            WordsListBox.SelectedIndex = 0;
+                            int count = 0;
+                            int total = 0;
+                            foreach (KeyValuePair<string, int> pair in list)
+                            {
+                                //string value_str = found_words[key].ToString().PadRight(3, ' ');
+                                //string key_str = key.PadLeft(10, ' ');
+                                //string entry = String.Format("{0} {1}", value_str, key_str);
+                                string entry = String.Format("{0,-3} {1,10}", pair.Value, pair.Key);
+                                WordsListBox.Items.Add(entry);
+                                total += pair.Value;
+                                count++;
+                            }
+
+                            if (WordsListBox.Items.Count > 0)
+                            {
+                                WordsListBox.SelectedIndex = 0;
+                            }
+                            else
+                            {
+                                // if not a valid root, put word as is so we can find same rooted words
+                                WordsListBox.Items.Add(text);
+                            }
+                            WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
+                            WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
+                            WordsListBoxLabel.Refresh();
                         }
-                        else
-                        {
-                            // if not a valid root, put word as is so we can find same rooted words
-                            WordsListBox.Items.Add(text);
-                        }
-                        WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
-                        WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
-                        WordsListBoxLabel.Refresh();
                     }
                 }
             }

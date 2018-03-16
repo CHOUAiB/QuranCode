@@ -2345,7 +2345,7 @@ namespace Model
         public Dictionary<string, int> GetWordRoots(List<Verse> verses, string text, TextLocationInWord text_location_in_word)
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
-            if (!String.IsNullOrEmpty(text))
+            if (text != null)
             {
                 SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
                 if (root_words_dictionary != null)
