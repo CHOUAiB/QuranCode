@@ -19682,7 +19682,7 @@ public partial class MainForm : Form, ISubscriber
         else
         {
             m_sort_by_word_frequency = !m_sort_by_word_frequency;
-            //ToolTip.SetToolTip(WordsListBoxLabel, (m_sort_by_word_frequency ? "sort by words" : "sort by frequency"));
+            ToolTip.SetToolTip(WordsListBoxLabel, (m_sort_by_word_frequency ? "sort alphabetically" : "sort by frequency"));
 
             if (m_auto_complete_mode)
             {
@@ -19760,10 +19760,10 @@ public partial class MainForm : Form, ISubscriber
             {
                 //SearchGroupBox.Text = " Search by Exact words      ";
                 //SearchGroupBox.Refresh();
-                //WordsListBoxLabel.Text = "000 (00)";
-                //WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
+                WordsListBoxLabel.Text = "000 (00)";
+                WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
                 //ToolTip.SetToolTip(WordsListBoxLabel, "total (unique)");
-                //WordsListBoxLabel.Refresh();
+                WordsListBoxLabel.Refresh();
 
                 WordsListBox.BeginUpdate();
                 WordsListBox.Items.Clear();
@@ -19867,10 +19867,10 @@ public partial class MainForm : Form, ISubscriber
             {
                 //SearchGroupBox.Text = " Search by Proximity        ";
                 //SearchGroupBox.Refresh();
-                //WordsListBoxLabel.Text = "000 (00)";
-                //WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
+                WordsListBoxLabel.Text = "000 (00)";
+                WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
                 //ToolTip.SetToolTip(WordsListBoxLabel, "total (unique)");
-                //WordsListBoxLabel.Refresh();
+                WordsListBoxLabel.Refresh();
 
                 WordsListBox.BeginUpdate();
                 WordsListBox.Items.Clear();
@@ -19956,9 +19956,9 @@ public partial class MainForm : Form, ISubscriber
                 {
                     //SearchGroupBox.Text = " Search by Roots            ";
                     //SearchGroupBox.Refresh();
-                    WordsListBoxLabel.Text = "0 Roots";
+                    WordsListBoxLabel.Text = "000 (00)";
                     WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
-                    ToolTip.SetToolTip(WordsListBoxLabel, "total roots");
+                    //ToolTip.SetToolTip(WordsListBoxLabel, "total (unique)");
                     WordsListBoxLabel.Refresh();
 
                     WordsListBox.BeginUpdate();
