@@ -19569,7 +19569,14 @@ public partial class MainForm : Form, ISubscriber
     {
         if (e.KeyCode == Keys.Enter)
         {
-            WordsListBox_DoubleClick(sender, e);
+            if (WordsListBox.SelectedIndices.Count > 1)
+            {
+                FindSelectedWordsMenuItem_Click(null, null);
+            }
+            else
+            {
+                WordsListBox_DoubleClick(sender, e);
+            }
         }
         else if (e.KeyCode == Keys.Space)
         {
@@ -19730,10 +19737,6 @@ public partial class MainForm : Form, ISubscriber
             FindByTextTextBox.Refresh();
             FindByTextTextBox.SelectionStart = FindByTextTextBox.Text.Length;
         }
-    }
-    private void ClearWordsListBox()
-    {
-        WordsListBox.Items.Clear();
     }
     private void PopulateWordsListBox()
     {
@@ -19975,32 +19978,32 @@ public partial class MainForm : Form, ISubscriber
                         text = text_parts[text_parts.Length - 1];
                     }
 
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    if (dictionary != null)
+                    m_word_frequency_dictionary = new Dictionary<string, int>();
+                    if (m_word_frequency_dictionary != null)
                     {
                         switch (m_client.SearchScope)
                         {
                             case SearchScope.Book:
                                 {
-                                    dictionary = m_client.Book.GetWordRoots(m_client.Book.Verses, text, m_text_location_in_word);
+                                    m_word_frequency_dictionary = m_client.Book.GetWordRoots(m_client.Book.Verses, text, m_text_location_in_word);
                                 }
                                 break;
                             case SearchScope.Selection:
                                 {
-                                    dictionary = m_client.Book.GetWordRoots(m_client.Selection.Verses, text, m_text_location_in_word);
+                                    m_word_frequency_dictionary = m_client.Book.GetWordRoots(m_client.Selection.Verses, text, m_text_location_in_word);
                                 }
                                 break;
                             case SearchScope.Result:
                                 {
-                                    dictionary = m_client.Book.GetWordRoots(m_client.FoundVerses, text, m_text_location_in_word);
+                                    m_word_frequency_dictionary = m_client.Book.GetWordRoots(m_client.FoundVerses, text, m_text_location_in_word);
                                 }
                                 break;
                         }
 
-                        if (dictionary != null)
+                        if (m_word_frequency_dictionary != null)
                         {
                             // sort dictionary by value or key
-                            List<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>(dictionary);
+                            List<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>(m_word_frequency_dictionary);
                             if (m_sort_by_word_frequency)
                             {
                                 list.Sort(
@@ -21058,7 +21061,14 @@ public partial class MainForm : Form, ISubscriber
                 break;
             case TextSearchType.Root:
                 {
-                    FindByRoot();
+                    if (WordsListBox.SelectedIndices.Count > 1)
+                    {
+                        FindSelectedWordsMenuItem_Click(null, null);
+                    }
+                    else
+                    {
+                        FindByRoot();
+                    }
                 }
                 break;
             default:
@@ -21257,7 +21267,7 @@ public partial class MainForm : Form, ISubscriber
             if (WordsListBox.SelectedIndices.Count > 0)
             {
                 char[] separators = { ' ' };
-                foreach (object item in WordsListBox.Items)
+                foreach (object item in WordsListBox.SelectedItems)
                 {
                     string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
                     if (parts.Length == 1)  // root
