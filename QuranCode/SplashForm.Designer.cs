@@ -79,7 +79,7 @@ partial class SplashForm
             this.BismAllahLabel.ForeColor = System.Drawing.Color.Lavender;
             this.BismAllahLabel.Location = new System.Drawing.Point(0, 0);
             this.BismAllahLabel.Name = "BismAllahLabel";
-            this.BismAllahLabel.Size = new System.Drawing.Size(239, 21);
+            this.BismAllahLabel.Size = new System.Drawing.Size(239, 23);
             this.BismAllahLabel.TabIndex = 0;
             this.BismAllahLabel.Tag = "http://qurancode.com";
             this.BismAllahLabel.Text = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
@@ -95,7 +95,7 @@ partial class SplashForm
             this.SsalawaaaaaaaaaaaaaatLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.SsalawaaaaaaaaaaaaaatLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SsalawaaaaaaaaaaaaaatLabel.ForeColor = System.Drawing.Color.Lavender;
-            this.SsalawaaaaaaaaaaaaaatLabel.Location = new System.Drawing.Point(0, 21);
+            this.SsalawaaaaaaaaaaaaaatLabel.Location = new System.Drawing.Point(0, 23);
             this.SsalawaaaaaaaaaaaaaatLabel.Name = "SsalawaaaaaaaaaaaaaatLabel";
             this.SsalawaaaaaaaaaaaaaatLabel.Size = new System.Drawing.Size(239, 19);
             this.SsalawaaaaaaaaaaaaaatLabel.TabIndex = 1;
@@ -112,7 +112,7 @@ partial class SplashForm
             this.ProductNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ProductNameLabel.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.ProductNameLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.ProductNameLabel.Location = new System.Drawing.Point(0, 40);
+            this.ProductNameLabel.Location = new System.Drawing.Point(0, 42);
             this.ProductNameLabel.Name = "ProductNameLabel";
             this.ProductNameLabel.Size = new System.Drawing.Size(239, 29);
             this.ProductNameLabel.TabIndex = 2;
@@ -128,7 +128,7 @@ partial class SplashForm
             this.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.VersionLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VersionLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.VersionLabel.Location = new System.Drawing.Point(0, 69);
+            this.VersionLabel.Location = new System.Drawing.Point(0, 71);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(239, 19);
             this.VersionLabel.TabIndex = 3;
@@ -145,9 +145,9 @@ partial class SplashForm
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WordFrequencyLabel.ForeColor = System.Drawing.Color.MintCream;
-            this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 106);
+            this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 109);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
-            this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 21);
+            this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 18);
             this.WordFrequencyLabel.TabIndex = 14;
             this.WordFrequencyLabel.Tag = "http://qurancode.com";
             this.WordFrequencyLabel.Text = "من  الله  ان  في  ما  لا  الذين  الا  علي\r\nولا  وما  الي  قال  لهم  ومن  ثم  لكم";
@@ -160,14 +160,14 @@ partial class SplashForm
             this.InitialLettersLabel.BackColor = System.Drawing.Color.Transparent;
             this.InitialLettersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.InitialLettersLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.InitialLettersLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InitialLettersLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InitialLettersLabel.ForeColor = System.Drawing.Color.Lavender;
-            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 87);
+            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 90);
             this.InitialLettersLabel.Name = "InitialLettersLabel";
             this.InitialLettersLabel.Size = new System.Drawing.Size(239, 19);
             this.InitialLettersLabel.TabIndex = 13;
             this.InitialLettersLabel.Tag = "http://qurancode.com";
-            this.InitialLettersLabel.Text = "نص حكيم له سر قاطع  |  علي صراط حق نمسكه";
+            this.InitialLettersLabel.Text = "نص حكيم له سر قاطع | علي صراط حق نمسكه";
             this.InitialLettersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.InitialLettersLabel, "Perfect text with a decisive secret. Ali is a Truth path we hold fast to.");
             this.InitialLettersLabel.Click += new System.EventHandler(this.LinkLabel_Click);
