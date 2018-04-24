@@ -66,7 +66,8 @@ partial class AboutBox
             this.AboutPictureBox.Location = new System.Drawing.Point(3, 3);
             this.AboutPictureBox.Name = "AboutPictureBox";
             this.TableLayoutPanel.SetRowSpan(this.AboutPictureBox, 3);
-            this.AboutPictureBox.Size = new System.Drawing.Size(204, 406);
+            this.AboutPictureBox.Size = new System.Drawing.Size(204, 408);
+            this.AboutPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.AboutPictureBox.TabIndex = 12;
             this.AboutPictureBox.TabStop = false;
             this.AboutPictureBox.Tag = "http://heliwave.com/Soul.and.Spirit.pdf";
@@ -114,7 +115,7 @@ partial class AboutBox
             this.DescriptionTextBox.Name = "DescriptionTextBox";
             this.DescriptionTextBox.ReadOnly = true;
             this.DescriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DescriptionTextBox.Size = new System.Drawing.Size(330, 364);
+            this.DescriptionTextBox.Size = new System.Drawing.Size(330, 366);
             this.DescriptionTextBox.TabIndex = 23;
             this.DescriptionTextBox.TabStop = false;
             this.DescriptionTextBox.Tag = "";
@@ -130,7 +131,7 @@ partial class AboutBox
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutBox";
-            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

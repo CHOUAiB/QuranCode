@@ -7,8 +7,8 @@ using System.IO;
 using System.Threading;
 using Model;
 
-public enum Direction { Right, Up, Left, Down };
-public enum DrawingShape { Spiral, SquareSpiral, Square, HGoldenRect, VGoldenRect, Cube, HGoldenCube, VGoldenCube };
+public enum DrawingShape { Lines, Spiral, SquareSpiral, Square, HGoldenRect, VGoldenRect, Cube };
+public enum DrawingDirection { Right, Up, Left, Down };
 
 public static class Drawing
 {
@@ -26,11 +26,16 @@ public static class Drawing
         {
             int count = values.Count;
 
-            int width = 0;
-            int height = 0;
+            int width = 1;
+            int height = 1;
 
             switch (shape)
             {
+                case DrawingShape.Lines:
+                    {
+                        //DrawPageLines(bitmap, values, color);
+                        return;
+                    }
                 case DrawingShape.Spiral:
                     {
                         DrawValuesSpiral(bitmap, values, color);
@@ -49,14 +54,12 @@ public static class Drawing
                     }
                     break;
                 case DrawingShape.HGoldenRect:
-                case DrawingShape.HGoldenCube:
                     {
                         width = (int)Math.Round(Math.Sqrt((count * Numbers.PHI) + 1));
                         height = (int)Math.Round(Math.Sqrt((count / Numbers.PHI) + 1));
                     }
                     break;
                 case DrawingShape.VGoldenRect:
-                case DrawingShape.VGoldenCube:
                     {
                         width = (int)Math.Round(Math.Sqrt((count / Numbers.PHI) + 1));
                         height = (int)Math.Round(Math.Sqrt((count * Numbers.PHI) + 1));
@@ -179,7 +182,7 @@ public static class Drawing
                 int x = (bitmap.Width - x_shift) / 2;
                 int y = (bitmap.Height - y_shift) / 2;
 
-                Direction direction = Direction.Right;
+                DrawingDirection direction = DrawingDirection.Right;
                 int steps = 1;
                 int steps_in_directoin = steps;
 
@@ -217,10 +220,10 @@ public static class Drawing
                             // change direction
                             switch (direction)
                             {
-                                case Direction.Right: { direction = Direction.Up; } break;
-                                case Direction.Up: { direction = Direction.Left; steps_in_directoin++; } break;
-                                case Direction.Left: { direction = Direction.Down; } break;
-                                case Direction.Down: { direction = Direction.Right; steps_in_directoin++; } break;
+                                case DrawingDirection.Right: { direction = DrawingDirection.Up; } break;
+                                case DrawingDirection.Up: { direction = DrawingDirection.Left; steps_in_directoin++; } break;
+                                case DrawingDirection.Left: { direction = DrawingDirection.Down; } break;
+                                case DrawingDirection.Down: { direction = DrawingDirection.Right; steps_in_directoin++; } break;
                             }
                             steps = steps_in_directoin;
                         }
@@ -228,10 +231,10 @@ public static class Drawing
                         // move one step in current direction
                         switch (direction)
                         {
-                            case Direction.Right: x += dx; break;
-                            case Direction.Up: y -= dy; break;
-                            case Direction.Left: x -= dx; break;
-                            case Direction.Down: y += dy; break;
+                            case DrawingDirection.Right: x += dx; break;
+                            case DrawingDirection.Up: y -= dy; break;
+                            case DrawingDirection.Left: x -= dx; break;
+                            case DrawingDirection.Down: y += dy; break;
                         }
 
                         // one step done
@@ -241,85 +244,31 @@ public static class Drawing
             }
         }
     }
-    //private static void DrawValuesCube(Bitmap bitmap, List<long> values, Color color)
-    //{
-    //    using (Graphics graphics = Graphics.FromImage(bitmap))
-    //    {
-    //        if (graphics != null)
-    //        {
-    //            graphics.Clear(Color.Black); // set background
-    //            int count = values.Count;
-    //            int width = (int)Math.Round(Math.Pow(count + 1, 1.0D / 3.0D));
-    //            int height = width;
-    //            int layers = width;
 
-    //            if (values != null)
-    //            {
-    //                double normalizer = 1.0D;
-    //                long max_value = long.MinValue;
-    //                foreach (long value in values)
-    //                {
-    //                    if (max_value < value)
-    //                    {
-    //                        max_value = value;
-    //                    }
-    //                }
-    //                if (max_value > 0L)
-    //                {
-    //                    normalizer = (255.0 / max_value);
-    //                }
-
-    //                if (graphics != null)
-    //                {
-    //                    graphics.Clear(Color.Black); // set background
-    //                    for (int n = 0; n < layers; n++)
-    //                    {
-    //                        for (int i = 0; i < (width * height); i++)
-    //                        {
-    //                            int dx = 1;
-    //                            int dy = 1;
-    //                            int x_shift = (bitmap.Width - dx * width) / 2;
-    //                            int y_shift = (bitmap.Height - dy * height) / 2;
-
-    //                            // draw point at new location in color shaded by numerology value
-    //                            int r = (int)((values[n * (width * height) + i] * normalizer) * (color.R / 255.0));
-    //                            int g = (int)((values[n * (width * height) + i] * normalizer) * (color.G / 255.0));
-    //                            int b = (int)((values[n * (width * height) + i] * normalizer) * (color.B / 255.0));
-    //                            Color value_color = Color.FromArgb(r, g, b);
-    //                            using (SolidBrush brush = new SolidBrush(value_color))
-    //                            {
-    //                                graphics.FillRectangle(brush, new Rectangle(x_shift + (i % width) * dx, y_shift + (i / width) * dy, dx, dy));
-    //                            }
-    //                        }
-
-    //                        // wait before drawing next layer
-    //                        Thread.Sleep(100);
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-
-    public static void DrawValues(Bitmap bitmap, List<long> values, Color color1, Color color2, Color color3, DrawingShape shape)
+    public static void DrawPoints(Bitmap bitmap, List<long> values, Dictionary<long, Color> colors, DrawingShape shape)
     {
         if (values != null)
         {
             int count = values.Count;
 
-            int width = 0;
-            int height = 0;
+            int width = 1;
+            int height = 1;
 
             switch (shape)
             {
+                case DrawingShape.Lines:
+                    {
+                        //DrawPageLines(bitmap, values, colors);
+                        return;
+                    }
                 case DrawingShape.Spiral:
                     {
-                        DrawValuesSpiral(bitmap, values, color1, color2);
+                        DrawPointsSpiral(bitmap, values, colors);
                         return;
                     }
                 case DrawingShape.SquareSpiral:
                     {
-                        DrawValuesSquareSpiral(bitmap, values, color1, color2);
+                        DrawPointsSquareSpiral(bitmap, values, colors);
                         return;
                     }
                 case DrawingShape.Square:
@@ -330,14 +279,12 @@ public static class Drawing
                     }
                     break;
                 case DrawingShape.HGoldenRect:
-                case DrawingShape.HGoldenCube:
                     {
                         width = (int)Math.Round(Math.Sqrt((count * Numbers.PHI) + 1));
                         height = (int)Math.Round(Math.Sqrt((count / Numbers.PHI) + 1));
                     }
                     break;
                 case DrawingShape.VGoldenRect:
-                case DrawingShape.VGoldenCube:
                     {
                         width = (int)Math.Round(Math.Sqrt((count / Numbers.PHI) + 1));
                         height = (int)Math.Round(Math.Sqrt((count * Numbers.PHI) + 1));
@@ -357,29 +304,13 @@ public static class Drawing
                         int x_shift = (bitmap.Width - dx * width) / 2;
                         int y_shift = (bitmap.Height - dy * height) / 2;
 
-                        Color value_color = Color.Black;
-                        if (values[i] == 3)
+                        Color color = Color.Black;
+                        if (colors.ContainsKey(values[i]))
                         {
-                            value_color = color3;
-                        }
-                        else if (values[i] == 2)
-                        {
-                            value_color = color2;
-                        }
-                        else if (values[i] == 1)
-                        {
-                            value_color = color1;
-                        }
-                        else if (values[i] == 0)
-                        {
-                            value_color = Color.Black;
-                        }
-                        else
-                        {
-                            continue;
+                            color = colors[values[i]];
                         }
 
-                        using (SolidBrush brush = new SolidBrush(value_color))
+                        using (SolidBrush brush = new SolidBrush(color))
                         {
                             graphics.FillRectangle(brush, new Rectangle(x_shift + (i % width) * dx, y_shift + (i / width) * dy, dx, dy));
                         }
@@ -388,7 +319,7 @@ public static class Drawing
             }
         }
     }
-    private static void DrawValuesSpiral(Bitmap bitmap, List<long> values, Color color1, Color color2)
+    private static void DrawPointsSpiral(Bitmap bitmap, List<long> values, Dictionary<long, Color> colors)
     {
         using (Graphics graphics = Graphics.FromImage(bitmap))
         {
@@ -418,25 +349,13 @@ public static class Drawing
                         points[i].X = (float)(x * (1 + scale * Math.Cos(angle))) + x_shift / 2;
                         points[i].Y = (float)(y * (1 + scale * Math.Sin(angle))) + y_shift / 2;
 
-                        Color value_color = Color.Black;
-                        if (values[i] == 2)
+                        Color color = Color.Black;
+                        if (colors.ContainsKey(values[i]))
                         {
-                            value_color = color2;
-                        }
-                        else if (values[i] == 1)
-                        {
-                            value_color = color1;
-                        }
-                        else if (values[i] == 0)
-                        {
-                            value_color = Color.Black;
-                        }
-                        else
-                        {
-                            continue;
+                            color = colors[values[i]];
                         }
 
-                        using (SolidBrush brush = new SolidBrush(value_color))
+                        using (SolidBrush brush = new SolidBrush(color))
                         {
                             graphics.FillRectangle(brush, points[i].X, points[i].Y, dx, dy);
                         }
@@ -445,7 +364,7 @@ public static class Drawing
             }
         }
     }
-    private static void DrawValuesSquareSpiral(Bitmap bitmap, List<long> values, Color color1, Color color2)
+    private static void DrawPointsSquareSpiral(Bitmap bitmap, List<long> values, Dictionary<long, Color> colors)
     {
         using (Graphics graphics = Graphics.FromImage(bitmap))
         {
@@ -462,7 +381,7 @@ public static class Drawing
                 int x = (bitmap.Width - x_shift) / 2;
                 int y = (bitmap.Height - y_shift) / 2;
 
-                Direction direction = Direction.Right;
+                DrawingDirection direction = DrawingDirection.Right;
                 int steps = 1;
                 int steps_in_directoin = steps;
 
@@ -470,25 +389,13 @@ public static class Drawing
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        Color value_color = Color.Black;
-                        if (values[i] == 2)
+                        Color color = Color.Black;
+                        if (colors.ContainsKey(values[i]))
                         {
-                            value_color = color2;
-                        }
-                        else if (values[i] == 1)
-                        {
-                            value_color = color1;
-                        }
-                        else if (values[i] == 0)
-                        {
-                            value_color = Color.Black;
-                        }
-                        else
-                        {
-                            continue;
+                            color = colors[values[i]];
                         }
 
-                        using (SolidBrush brush = new SolidBrush(value_color))
+                        using (SolidBrush brush = new SolidBrush(color))
                         {
                             graphics.FillRectangle(brush, x, y, dx, dy);
                         }
@@ -499,10 +406,10 @@ public static class Drawing
                             // change direction
                             switch (direction)
                             {
-                                case Direction.Right: { direction = Direction.Up; } break;
-                                case Direction.Up: { direction = Direction.Left; steps_in_directoin++; } break;
-                                case Direction.Left: { direction = Direction.Down; } break;
-                                case Direction.Down: { direction = Direction.Right; steps_in_directoin++; } break;
+                                case DrawingDirection.Right: { direction = DrawingDirection.Up; } break;
+                                case DrawingDirection.Up: { direction = DrawingDirection.Left; steps_in_directoin++; } break;
+                                case DrawingDirection.Left: { direction = DrawingDirection.Down; } break;
+                                case DrawingDirection.Down: { direction = DrawingDirection.Right; steps_in_directoin++; } break;
                             }
                             steps = steps_in_directoin;
                         }
@@ -510,14 +417,55 @@ public static class Drawing
                         // move one step in current direction
                         switch (direction)
                         {
-                            case Direction.Right: x += dx; break;
-                            case Direction.Up: y -= dy; break;
-                            case Direction.Left: x -= dx; break;
-                            case Direction.Down: y += dy; break;
+                            case DrawingDirection.Right: x += dx; break;
+                            case DrawingDirection.Up: y -= dy; break;
+                            case DrawingDirection.Left: x -= dx; break;
+                            case DrawingDirection.Down: y += dy; break;
                         }
 
                         // one step done
                         steps--;
+                    }
+                }
+            }
+        }
+    }
+    public static void DrawPageLines(Bitmap bitmap, List<List<long>> lengthss, List<List<long>> valuess, Dictionary<long, Color> colors)
+    {
+        using (Graphics graphics = Graphics.FromImage(bitmap))
+        {
+            if (graphics != null)
+            {
+                graphics.Clear(Color.Black); // set background
+
+                if (lengthss != null)
+                {
+                    int x = bitmap.Width;
+                    int y = 0;
+                    int width = 0;
+                    int height = 1;
+                    int space = 1;
+                    for (int i = 0; i < lengthss.Count; i++)
+                    {
+                        for (int j = 0; j < lengthss[i].Count; j++)
+                        {
+                            width = (int)lengthss[i][j];
+                            x -= (width + space);
+
+                            Color color = Color.Black;
+                            if (colors.ContainsKey(valuess[i][j]))
+                            {
+                                color = colors[valuess[i][j]];
+                            }
+
+                            using (SolidBrush brush = new SolidBrush(color))
+                            {
+                                graphics.FillRectangle(brush, new Rectangle(x, y, width, height));
+                            }
+                        }
+
+                        x = bitmap.Width;
+                        y += height;
                     }
                 }
             }
@@ -680,7 +628,7 @@ public static class Drawing
                 // initialize first step
                 int x = (WIDTH / 2) - 1;
                 int y = (HEIGHT / 2);
-                Direction direction = Direction.Right;
+                DrawingDirection direction = DrawingDirection.Right;
                 int steps = 1;
                 int remaining_steps = steps;
 
@@ -704,10 +652,10 @@ public static class Drawing
                         // change direction
                         switch (direction)
                         {
-                            case Direction.Right: { direction = Direction.Up; } break;
-                            case Direction.Up: { direction = Direction.Left; steps++; } break;
-                            case Direction.Left: { direction = Direction.Down; } break;
-                            case Direction.Down: { direction = Direction.Right; steps++; } break;
+                            case DrawingDirection.Right: { direction = DrawingDirection.Up; } break;
+                            case DrawingDirection.Up: { direction = DrawingDirection.Left; steps++; } break;
+                            case DrawingDirection.Left: { direction = DrawingDirection.Down; } break;
+                            case DrawingDirection.Down: { direction = DrawingDirection.Right; steps++; } break;
                         }
                         remaining_steps = steps;
                     }
@@ -715,10 +663,10 @@ public static class Drawing
                     // move one step in current direction
                     switch (direction)
                     {
-                        case Direction.Right: x += 1; break;
-                        case Direction.Up: y -= 1; break;
-                        case Direction.Left: x -= 1; break;
-                        case Direction.Down: y += 1; break;
+                        case DrawingDirection.Right: x += 1; break;
+                        case DrawingDirection.Up: y -= 1; break;
+                        case DrawingDirection.Left: x -= 1; break;
+                        case DrawingDirection.Down: y += 1; break;
                     }
 
                     // one step done
@@ -801,7 +749,7 @@ public static class Drawing
                 // initialize first step
                 int x = (WIDTH / 2) - 1;
                 int y = (HEIGHT / 2);
-                Direction direction = Direction.Right;
+                DrawingDirection direction = DrawingDirection.Right;
                 int steps = 1;
                 int remaining_steps = steps;
 
@@ -823,10 +771,10 @@ public static class Drawing
                         // change direction
                         switch (direction)
                         {
-                            case Direction.Right: { direction = Direction.Up; } break;
-                            case Direction.Up: { direction = Direction.Left; steps++; } break;
-                            case Direction.Left: { direction = Direction.Down; } break;
-                            case Direction.Down: { direction = Direction.Right; steps++; } break;
+                            case DrawingDirection.Right: { direction = DrawingDirection.Up; } break;
+                            case DrawingDirection.Up: { direction = DrawingDirection.Left; steps++; } break;
+                            case DrawingDirection.Left: { direction = DrawingDirection.Down; } break;
+                            case DrawingDirection.Down: { direction = DrawingDirection.Right; steps++; } break;
                         }
                         remaining_steps = steps;
                     }
@@ -834,10 +782,10 @@ public static class Drawing
                     // move one step in current direction
                     switch (direction)
                     {
-                        case Direction.Right: x += 1; break;
-                        case Direction.Up: y -= 1; break;
-                        case Direction.Left: x -= 1; break;
-                        case Direction.Down: y += 1; break;
+                        case DrawingDirection.Right: x += 1; break;
+                        case DrawingDirection.Up: y -= 1; break;
+                        case DrawingDirection.Left: x -= 1; break;
+                        case DrawingDirection.Down: y += 1; break;
                     }
 
                     // one step done

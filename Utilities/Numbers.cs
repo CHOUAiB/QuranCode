@@ -196,7 +196,7 @@ public static class Numbers
         }
     }
 
-    public static int MAX_NUMBER = int.MaxValue / ((Globals.EDITION == Edition.Ultimate) ? 16 : 1024);
+    public static int MAX_NUMBER = int.MaxValue / ((Globals.EDITION == Edition.Ultimate) ? 64 : 1024);
 
     // pi = circumference / diameter ~= 355/113
     public const double PI = 3.141592653589793238462643383279D;
@@ -321,12 +321,12 @@ public static class Numbers
 
         LoadInterestingNumbers();
 
-        //GeneratePrimes(s_max_number_limit);
-        //GenerateAdditivePrimes(s_max_number_limit);
-        //GenerateNonAdditivePrimes(s_max_number_limit);
-        //GenerateComposites(s_max_number_limit);
-        //GenerateAdditiveComposites(s_max_number_limit);
-        //GenerateNonAdditiveComposites(s_max_number_limit);
+        //GeneratePrimes(MAX_NUMBER);
+        //GenerateAdditivePrimes(MAX_NUMBER);
+        //GenerateNonAdditivePrimes(MAX_NUMBER);
+        //GenerateComposites(MAX_NUMBER);
+        //GenerateAdditiveComposites(MAX_NUMBER);
+        //GenerateNonAdditiveComposites(MAX_NUMBER);
 
         //// >20Mb files. Too big for users to download
         //SavePrimes();

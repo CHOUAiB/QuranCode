@@ -120,6 +120,15 @@
   <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="WordFrequencyLabel.ToolTip" xml:space="preserve">
+    <value>Most Repeated Words
+من الله ان في ما لا الذين الا علي ولا وما الي قال لهم ومن ثم لكم
+كان به وان قل بما الارض ذلك او له الذي هو ءامنوا هم قالوا كل فيها والله
+from, Allah, certainly, in, among, none, them, except, above / Ali,
+and none, and among, to me, he said, to them, and, then, to you all,
+it was, in Him, and certainly, say, how, the Earth, as is, or, to Him,
+Whom, He, believed, they, said, everyone, in it, and Allah, ...</value>
+  </data>
   <data name="ProductNameLabel.ToolTip" xml:space="preserve">
     <value>First 7 verses = 29 words
 بسم الله الرحمن الرحيم
@@ -149,14 +158,5 @@ Last  7 words  = 29 letters
 
 29 is the 7th additive prime number and
 29 is a Fermat's prime of the form 4n+1 where n = 7</value>
-  </data>
-  <data name="WordFrequencyLabel.ToolTip" xml:space="preserve">
-    <value>Most Repeated Words
-من الله ان في ما لا الذين الا علي ولا وما الي قال لهم ومن ثم لكم
-كان به وان قل بما الارض ذلك او له الذي هو ءامنوا هم قالوا كل فيها والله
-from, Allah, certainly, in, among, none, them, except, above / Ali,
-and none, and among, to me, he said, to them, and, then, to you all,
-it was, in Him, and certainly, say, how, the Earth, as is, or, to Him,
-Whom, He, believed, they, said, everyone, in it, and Allah, ...</value>
   </data>
 </root>

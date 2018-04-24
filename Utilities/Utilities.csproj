@@ -41,6 +41,10 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anagrams.cs" />
+    <Compile Include="Bag.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Combinatorics\Combinations.cs">
       <SubType>Code</SubType>
     </Compile>

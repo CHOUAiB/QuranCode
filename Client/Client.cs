@@ -85,16 +85,6 @@ public class Client : IPublisher, ISubscriber
 
     public Client(string numerology_system_name)
     {
-        if (!Directory.Exists(Globals.VALUES_FOLDER))
-        {
-            Directory.CreateDirectory(Globals.VALUES_FOLDER);
-        }
-
-        if (!Directory.Exists(Globals.STATISTICS_FOLDER))
-        {
-            Directory.CreateDirectory(Globals.STATISTICS_FOLDER);
-        }
-
         if (!Directory.Exists(Globals.BOOKMARKS_FOLDER))
         {
             Directory.CreateDirectory(Globals.BOOKMARKS_FOLDER);
@@ -140,10 +130,7 @@ public class Client : IPublisher, ISubscriber
     public void BuildSimplifiedBook(string text_mode, bool with_bism_Allah, bool waw_as_word, bool shadda_as_letter)
     {
         Server.BuildSimplifiedBook(text_mode, with_bism_Allah, waw_as_word, shadda_as_letter);
-        if (m_selection != null)
-        {
-            m_selection = new Selection(Book, m_selection.Scope, m_selection.Indexes);
-        }
+        UpdatePhrasePositionsAndLengths(text_mode);
     }
 
     // current numerology system
@@ -169,14 +156,14 @@ public class Client : IPublisher, ISubscriber
     {
         Server.UpdateNumerologySystem(text);
     }
-    private void UpdatePhrasePositionsAndLengths(Book book)
+    private void UpdatePhrasePositionsAndLengths(string text_mode)
     {
-        if (book != null)
+        if (Book != null)
         {
             // update Selection to point at new book object
             if (m_selection != null)
             {
-                m_selection = new Selection(book, m_selection.Scope, m_selection.Indexes);
+                m_selection = new Selection(Book, m_selection.Scope, m_selection.Indexes);
             }
 
             if (m_selection != null)
@@ -184,7 +171,7 @@ public class Client : IPublisher, ISubscriber
                 if (NumerologySystem != null)
                 {
                     // update FoundVerses to point at new book object
-                    if (book.Verses != null)
+                    if (Book.Verses != null)
                     {
                         if (m_found_verses != null)
                         {
@@ -192,9 +179,9 @@ public class Client : IPublisher, ISubscriber
                             foreach (Verse verse in m_found_verses)
                             {
                                 int index = verse.Number - 1;
-                                if ((index >= 0) && (index < book.Verses.Count))
+                                if ((index >= 0) && (index < Book.Verses.Count))
                                 {
-                                    verses.Add(book.Verses[index]);
+                                    verses.Add(Book.Verses[index]);
                                 }
                             }
                             m_found_verses = verses;
@@ -202,7 +189,7 @@ public class Client : IPublisher, ISubscriber
                     }
 
                     // update FoundPhrases to point at new book object
-                    if (book.Verses != null)
+                    if (Book.Verses != null)
                     {
                         if (m_found_phrases != null)
                         {
@@ -212,10 +199,10 @@ public class Client : IPublisher, ISubscriber
                                 if (phrase != null)
                                 {
                                     int index = phrase.Verse.Number - 1;
-                                    if ((index >= 0) && (index < book.Verses.Count))
+                                    if ((index >= 0) && (index < Book.Verses.Count))
                                     {
-                                        phrase = new Phrase(book.Verses[index], phrase.Position, phrase.Text);
-                                        m_found_phrases[i] = Server.SwitchTextMode(phrase, NumerologySystem.TextMode);
+                                        phrase = new Phrase(Book.Verses[index], phrase.Position, phrase.Text);
+                                        m_found_phrases[i] = Server.SwitchTextMode(phrase, text_mode);
                                     }
                                 }
                             }
@@ -597,13 +584,16 @@ public class Client : IPublisher, ISubscriber
             List<Phrase> filtered_found_phrases = new List<Phrase>();
             foreach (Phrase phrase in m_found_phrases)
             {
-                if (phrase.Verse != null)
+                if (phrase != null)
                 {
-                    if (phrase.Verse.Chapter != null)
+                    if (phrase.Verse != null)
                     {
-                        if (m_filter_chapters.Contains(phrase.Verse.Chapter))
+                        if (phrase.Verse.Chapter != null)
                         {
-                            filtered_found_phrases.Add(phrase);
+                            if (m_filter_chapters.Contains(phrase.Verse.Chapter))
+                            {
+                                filtered_found_phrases.Add(phrase);
+                            }
                         }
                     }
                 }
@@ -1239,7 +1229,17 @@ public class Client : IPublisher, ISubscriber
                         string range_text = null;
                         foreach (Word word in range)
                         {
-                            range_text += word.Text + " ";
+                            if (word != null)
+                            {
+                                range_text += word.Text + " ";
+                                //if (NumerologySystem.TextMode == "Original")
+                                //{
+                                //    if (word.Stopmark != Stopmark.None)
+                                //    {
+                                //        range_text += StopmarkHelper.GetStopmarkText(word.Stopmark) + ";
+                                //    }
+                                //}
+                            }
                         }
                         range_text = range_text.Remove(range_text.Length - 1, 1);
 
@@ -1248,7 +1248,10 @@ public class Client : IPublisher, ISubscriber
 
                         // build found phrases // allow multiple phrases even if overlapping inside same verse
                         Phrase phrase = new Phrase(verse, range_position, range_text);
-                        m_found_phrases.Add(phrase);
+                        if (phrase != null)
+                        {
+                            m_found_phrases.Add(phrase);
+                        }
                     }
                 }
             }

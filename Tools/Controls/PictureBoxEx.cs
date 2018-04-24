@@ -138,6 +138,17 @@ public class PictureBoxEx : Control
     private int m_start_y = 0;      // y offset of image where mouse was pressed
     private int m_image_x = 0;      // current x offset of image
     private int m_image_y = 0;      // current y offset of image
+    [Category("Appearance"), Description("The X loxcatin mode of the image")]
+    public int Image_X
+    {
+        get { return m_image_x; }
+    }
+    [Category("Appearance"), Description("The Y loxcatin mode of the image")]
+    public int Image_Y
+    {
+        get { return m_image_y; }
+    }
+
     protected override void OnPaint(PaintEventArgs e)
     {
         if (m_image != null)
@@ -155,21 +166,21 @@ public class PictureBoxEx : Control
     }
     protected override void OnResize(EventArgs e)
     {
-        if (m_image != null)
-        {
-            Graphics g = this.CreateGraphics();
+        //if (m_image != null)
+        //{
+        //    Graphics g = this.CreateGraphics();
 
-            // fit whole image
-            m_zoom_factor = Math.Min(
-                ((float)this.Height / (float)m_image.Height) * (m_image.VerticalResolution / g.DpiY),
-                ((float)this.Width / (float)m_image.Width) * (m_image.HorizontalResolution / g.DpiX)
-            );
-            // OR
-            // fit image width only
-            //m_zoom_factor = ((float)this.Width / (float)m_image.Width) * (m_image.HorizontalResolution / g.DpiX);
+        //    // fit whole image
+        //    m_zoom_factor = Math.Min(
+        //        ((float)this.Height / (float)m_image.Height) * (m_image.VerticalResolution / g.DpiY),
+        //        ((float)this.Width / (float)m_image.Width) * (m_image.HorizontalResolution / g.DpiX)
+        //    );
+        //    // OR
+        //    // fit image width only
+        //    //m_zoom_factor = ((float)this.Width / (float)m_image.Width) * (m_image.HorizontalResolution / g.DpiX);
 
-            this.Invalidate(); // after all other messages are processed (using PostMessage not SendMessage)
-        }
+        //    this.Invalidate(); // after all other messages are processed (using PostMessage not SendMessage)
+        //}
 
         base.OnResize(e);
     }

@@ -539,8 +539,6 @@ public partial class MainForm : Form
     {
         ValueTextBox.Text = Radix.Encode(number, 10L);
         ValueTextBox.ForeColor = GetNumberTypeColor(number);
-        ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
-        ValueTextBox.SelectionLength = 0;
         ValueTextBox.Refresh();
 
         //string factors_str = Numbers.FactorizeToString(number);
@@ -554,6 +552,8 @@ public partial class MainForm : Form
         this.Cursor = Cursors.WaitCursor;
         try
         {
+            ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
+            ValueTextBox.SelectionLength = 0;
             ValueTextBox.ForeColor = GetNumberTypeColor(number);
             ValueTextBox.Refresh();
 

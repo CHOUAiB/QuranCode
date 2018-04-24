@@ -1470,6 +1470,8 @@ namespace Model
 
         public List<Chapter> GetChapters(List<Verse> verses)
         {
+            if (verses == null) return null;
+
             List<Chapter> result = new List<Chapter>();
             foreach (Verse verse in verses)
             {
@@ -1480,36 +1482,38 @@ namespace Model
             }
             return result;
         }
-        public List<Chapter> GetCompleteChapters(List<Verse> verses)
-        {
-            List<Chapter> result = new List<Chapter>();
-            Chapter chapter = null;
-            foreach (Verse verse in verses)
-            {
-                if (chapter != verse.Chapter)
-                {
-                    chapter = verse.Chapter;
-                    if (!result.Contains(chapter))
-                    {
-                        bool include_chapter = true;
-                        foreach (Verse chapter_verse in chapter.Verses)
-                        {
-                            if (!verses.Contains(chapter_verse))
-                            {
-                                include_chapter = false;
-                                break;
-                            }
-                        }
+        //public List<Chapter> GetCompleteChapters(List<Verse> verses)
+        //{
+        //    if (verses == null) return null;
 
-                        if (include_chapter)
-                        {
-                            result.Add(chapter);
-                        }
-                    }
-                }
-            }
-            return result;
-        }
+        //    List<Chapter> result = new List<Chapter>();
+        //    Chapter chapter = null;
+        //    foreach (Verse verse in verses)
+        //    {
+        //        if (chapter != verse.Chapter)
+        //        {
+        //            chapter = verse.Chapter;
+        //            if (!result.Contains(chapter))
+        //            {
+        //                bool include_chapter = true;
+        //                foreach (Verse chapter_verse in chapter.Verses)
+        //                {
+        //                    if (!verses.Contains(chapter_verse))
+        //                    {
+        //                        include_chapter = false;
+        //                        break;
+        //                    }
+        //                }
+
+        //                if (include_chapter)
+        //                {
+        //                    result.Add(chapter);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return result;
+        //}
 
         public void SortChapters(ChapterSortMethod sort_method, ChapterSortOrder sort_order, bool pin_chapter1)
         {
@@ -1548,6 +1552,8 @@ namespace Model
         /// <returns></returns>
         public List<Verse> GetVerses(List<Word> words)
         {
+            if (words == null) return null;
+
             List<Verse> result = new List<Verse>();
             Verse verse = null;
             foreach (Word word in words)
@@ -2345,142 +2351,145 @@ namespace Model
         public Dictionary<string, int> GetWordRoots(List<Verse> verses, string text, TextLocationInWord text_location_in_word)
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
-            if (text != null)
+            if (verses != null)
             {
-                SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
-                if (root_words_dictionary != null)
+                if (text != null)
                 {
-                    if (root_words_dictionary.Keys != null)
+                    SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
+                    if (root_words_dictionary != null)
                     {
-                        foreach (string key in root_words_dictionary.Keys)
+                        if (root_words_dictionary.Keys != null)
                         {
-                            if (root_words_dictionary.ContainsKey(key))
+                            foreach (string key in root_words_dictionary.Keys)
                             {
-                                int count = 0;
-                                List<Word> root_words = root_words_dictionary[key];
-                                if (verses.Count == this.Verses.Count)
+                                if (root_words_dictionary.ContainsKey(key))
                                 {
-                                    count = root_words.Count;
-                                }
-                                else
-                                {
+                                    int count = 0;
+                                    List<Word> root_words = root_words_dictionary[key];
+                                    if (verses.Count == this.Verses.Count)
+                                    {
+                                        count = root_words.Count;
+                                    }
+                                    else
+                                    {
+                                        foreach (Word root_word in root_words)
+                                        {
+                                            if (verses.Contains(root_word.Verse))
+                                            {
+                                                count++;
+                                            }
+                                        }
+                                    }
+
                                     foreach (Word root_word in root_words)
                                     {
                                         if (verses.Contains(root_word.Verse))
                                         {
-                                            count++;
+                                            switch (text_location_in_word)
+                                            {
+                                                case TextLocationInWord.AtStart:
+                                                    {
+                                                        if (text.Length == 0)
+                                                        {
+                                                            result.Add(key, count);
+                                                        }
+                                                        else
+                                                        {
+                                                            if ((this.text_mode == "Original") && (!with_diacritics))
+                                                            {
+                                                                if (key.StartsWith(text.Simplify36()))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (key.StartsWith(text))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                case TextLocationInWord.AtMiddle:
+                                                    {
+                                                        if (text.Length == 0)
+                                                        {
+                                                            result.Add(key, count);
+                                                        }
+                                                        else
+                                                        {
+                                                            if ((this.text_mode == "Original") && (!with_diacritics))
+                                                            {
+                                                                if (key.ContainsInside(text.Simplify36()))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (key.ContainsInside(text))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                case TextLocationInWord.AtEnd:
+                                                    {
+                                                        if (text.Length == 0)
+                                                        {
+                                                            result.Add(key, count);
+                                                        }
+                                                        else
+                                                        {
+                                                            if ((this.text_mode == "Original") && (!with_diacritics))
+                                                            {
+                                                                if (key.EndsWith(text.Simplify36()))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (key.EndsWith(text))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                case TextLocationInWord.Anywhere:
+                                                    {
+                                                        if (text.Length == 0)
+                                                        {
+                                                            result.Add(key, count);
+                                                        }
+                                                        else
+                                                        {
+                                                            if ((this.text_mode == "Original") && (!with_diacritics))
+                                                            {
+                                                                if (key.Contains(text.Simplify36()))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                if (key.Contains(text))
+                                                                {
+                                                                    result.Add(key, count);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                            }
+                                            break;
                                         }
-                                    }
-                                }
-
-                                foreach (Word root_word in root_words)
-                                {
-                                    if (verses.Contains(root_word.Verse))
-                                    {
-                                        switch (text_location_in_word)
-                                        {
-                                            case TextLocationInWord.AtStart:
-                                                {
-                                                    if (text.Length == 0)
-                                                    {
-                                                        result.Add(key, count);
-                                                    }
-                                                    else
-                                                    {
-                                                        if ((this.text_mode == "Original") && (!with_diacritics))
-                                                        {
-                                                            if (key.StartsWith(text.Simplify36()))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            if (key.StartsWith(text))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                break;
-                                            case TextLocationInWord.AtMiddle:
-                                                {
-                                                    if (text.Length == 0)
-                                                    {
-                                                        result.Add(key, count);
-                                                    }
-                                                    else
-                                                    {
-                                                        if ((this.text_mode == "Original") && (!with_diacritics))
-                                                        {
-                                                            if (key.ContainsInside(text.Simplify36()))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            if (key.ContainsInside(text))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                break;
-                                            case TextLocationInWord.AtEnd:
-                                                {
-                                                    if (text.Length == 0)
-                                                    {
-                                                        result.Add(key, count);
-                                                    }
-                                                    else
-                                                    {
-                                                        if ((this.text_mode == "Original") && (!with_diacritics))
-                                                        {
-                                                            if (key.EndsWith(text.Simplify36()))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            if (key.EndsWith(text))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                break;
-                                            case TextLocationInWord.Anywhere:
-                                                {
-                                                    if (text.Length == 0)
-                                                    {
-                                                        result.Add(key, count);
-                                                    }
-                                                    else
-                                                    {
-                                                        if ((this.text_mode == "Original") && (!with_diacritics))
-                                                        {
-                                                            if (key.Contains(text.Simplify36()))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            if (key.Contains(text))
-                                                            {
-                                                                result.Add(key, count);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                break;
-                                        }
-                                        break;
                                     }
                                 }
                             }

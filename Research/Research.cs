@@ -30,6 +30,40 @@ using Model;
 
 public static partial class Research
 {
+    private static List<Verse> GetSourceVerses(Client client, bool in_search_result)
+    {
+        List<Verse> verses = null;
+        if (client != null)
+        {
+            switch (client.SearchScope)
+            {
+                case SearchScope.Book:
+                    {
+                        if (client.Book != null)
+                        {
+                            verses = client.Book.Verses;
+                        }
+                    }
+                    break;
+                case SearchScope.Selection:
+                    {
+                        if (client.Selection != null)
+                        {
+                            verses = client.Selection.Verses;
+                        }
+                    }
+                    break;
+                case SearchScope.Result:
+                    {
+                        verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+                    }
+                    break;
+            }
+        }
+        return verses;
+    }
+
+
     public static void AllahWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
@@ -1128,7 +1162,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         StringBuilder str = new StringBuilder();
         List<Chapter> matching_chapters = new List<Chapter>();
@@ -1188,7 +1222,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1205,7 +1239,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1222,7 +1256,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1239,7 +1273,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1256,7 +1290,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1273,7 +1307,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1290,7 +1324,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1307,7 +1341,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1324,7 +1358,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1341,7 +1375,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1358,7 +1392,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1375,7 +1409,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1392,7 +1426,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1409,7 +1443,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1426,7 +1460,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1443,7 +1477,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1460,7 +1494,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1477,7 +1511,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1494,7 +1528,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1511,7 +1545,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1528,7 +1562,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1545,7 +1579,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1562,7 +1596,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1579,7 +1613,7 @@ public static partial class Research
         if (client == null) return null;
         if (client.Book == null) return null;
         if (verses == null) return null;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<Chapter> matching_chapters = new List<Chapter>();
         foreach (Chapter chapter in chapters)
@@ -1666,7 +1700,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByX(client, verses, param);
 
@@ -1683,7 +1717,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByValue(client, verses, param);
 
@@ -1700,7 +1734,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByPrimeNumbers(client, verses, param);
 
@@ -1717,7 +1751,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByAdditivePrimeNumbers(client, verses, param);
 
@@ -1734,7 +1768,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByNonAdditivePrimeNumbers(client, verses, param);
 
@@ -1751,7 +1785,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByCompositeNumbers(client, verses, param);
 
@@ -1768,7 +1802,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByAdditiveCompositeNumbers(client, verses, param);
 
@@ -1785,7 +1819,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByNonAdditiveCompositeNumbers(client, verses, param);
 
@@ -1802,7 +1836,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByFibonacciNumbers(client, verses, param);
 
@@ -1819,7 +1853,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByPiDigits(client, verses, param);
 
@@ -1836,7 +1870,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByEulerDigits(client, verses, param);
 
@@ -1853,7 +1887,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoJumpWordsByGoldenRatioDigits(client, verses, param);
 
@@ -2183,7 +2217,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoPrimeWords(client, verses, param);
 
@@ -2200,7 +2234,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoAdditivePrimeWords(client, verses, param);
 
@@ -2217,7 +2251,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoCompositeWords(client, verses, param);
 
@@ -2234,7 +2268,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoAdditiveCompositeWords(client, verses, param);
 
@@ -2251,7 +2285,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<string> result = DoFibonacciWords(client, verses, param);
 
@@ -2372,8 +2406,8 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<long> values = new List<long>();
         foreach (Chapter chapter in chapters)
@@ -2393,8 +2427,8 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<long> values = new List<long>();
         foreach (Chapter chapter in chapters)
@@ -2414,8 +2448,8 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<long> values = new List<long>();
         foreach (Chapter chapter in chapters)
@@ -2435,8 +2469,8 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         List<long> values = new List<long>();
         foreach (Chapter chapter in chapters)
@@ -2456,7 +2490,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2476,7 +2510,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2496,7 +2530,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2516,7 +2550,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2536,7 +2570,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2559,7 +2593,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2582,7 +2616,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2605,7 +2639,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2629,7 +2663,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2655,7 +2689,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<long> values = new List<long>();
         foreach (Verse verse in verses)
@@ -2710,8 +2744,8 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterInformation(client, chapters);
 
@@ -2728,8 +2762,8 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterValues(client, chapters);
 
@@ -2746,8 +2780,8 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterLetterRatios(client, chapters);
 
@@ -2764,7 +2798,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoVerseInformation(client, verses);
 
@@ -2781,7 +2815,7 @@ public static partial class Research
         if (client == null) return;
         if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoVerseValues(client, verses);
 
@@ -2797,7 +2831,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<Word> words = new List<Word>();
         foreach (Verse verse in verses)
@@ -2818,7 +2852,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<Word> words = new List<Word>();
         foreach (Verse verse in verses)
@@ -2839,7 +2873,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoLetterFrequencySums(client, verses, param);
 
@@ -3095,8 +3129,6 @@ public static partial class Research
         str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t");
         foreach (string key in client.LoadedNumerologySystems.Keys)
         {
-            if (key.Contains("English")) continue;
-
             if (key.StartsWith(client.NumerologySystem.TextMode))
             {
                 str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
@@ -3117,8 +3149,6 @@ public static partial class Research
             str.Append(chapter.SortedNumber + "\t");
             foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
             {
-                if (numerology_system.Name.Contains("English")) continue;
-
                 if (numerology_system.TextMode == client.NumerologySystem.TextMode)
                 {
                     long value = numerology_system.CalculateValue(chapter.Text);
@@ -3301,8 +3331,6 @@ public static partial class Research
         str.Append("#" + "\t" + "Chapter" + "\t" + "Verse" + "\t");
         foreach (string key in client.LoadedNumerologySystems.Keys)
         {
-            if (key.Contains("English")) continue;
-
             if (key.StartsWith(client.NumerologySystem.TextMode))
             {
                 str.Append(key.Substring(client.NumerologySystem.TextMode.Length + 1) + "\t");
@@ -3323,8 +3351,6 @@ public static partial class Research
             str.Append(verse.NumberInChapter + "\t");
             foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
             {
-                if (numerology_system.Name.Contains("English")) continue;
-
                 if (numerology_system.TextMode == client.NumerologySystem.TextMode)
                 {
                     long value = numerology_system.CalculateValue(verse.Text);
@@ -3587,8 +3613,6 @@ public static partial class Research
         Dictionary<long, string> duplicate_values = new Dictionary<long, string>();
         foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
         {
-            if (numerology_system.Name.Contains("English")) continue;
-
             if (numerology_system.TextMode == client.NumerologySystem.TextMode)
             {
                 value_frequencies.Clear();
@@ -3642,8 +3666,6 @@ public static partial class Research
         Dictionary<long, string> duplicate_values = new Dictionary<long, string>();
         foreach (NumerologySystem numerology_system in client.LoadedNumerologySystems.Values)
         {
-            if (numerology_system.Name.Contains("English")) continue;
-
             if (numerology_system.TextMode == client.NumerologySystem.TextMode)
             {
                 value_frequencies.Clear();
@@ -3688,14 +3710,585 @@ public static partial class Research
         return str.ToString();
     }
 
-    public static void _____________________________________(Client client, string param, bool in_search_result)
+    public static void __________________________________(Client client, string param, bool in_search_result)
+    {
+    }
+    public static void P_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoP_PivotConsecutiveVerses(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "P_PivotConsecutiveVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void AP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoAP_PivotConsecutiveVerses(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "AP_PivotConsecutiveVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void XP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoXP_PivotConsecutiveVerses(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "XP_PivotConsecutiveVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoC_PivotConsecutiveVerses(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "C_PivotConsecutiveVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoAC_PivotConsecutiveVerses(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "AC_PivotConsecutiveVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoXC_PivotConsecutiveVerses(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "XC_PivotConsecutiveVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static string DoP_PivotConsecutiveVerses(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("M" + "\t" + "N" + "\t" + "M*N" + "\t" + "P" + "\t" + "MN+P" + "\r\n");
+
+        int pivot = 0;
+        if (param.Length > 0)
+        {
+            if (int.TryParse(param, out pivot))
+            {
+                int min = 0;
+                int max = 0;
+                if (pivot == 0)
+                {
+                    min = 1;
+                    max = 114;
+                }
+                else
+                {
+                    min = pivot;
+                    max = pivot;
+                }
+
+                for (int i = min; i <= max; i++)
+                {
+                    int M = 1;
+                    int N = (i * 2) - 1;
+
+                    do
+                    {
+                        long MN = M * N;
+                        long P = Numbers.Primes[M - 1];
+                        long MN_P = MN + P;
+
+                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                        string text2 = GetConsecutiveVerses(client, MN, MN_P, true);
+                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                        string text4 = "";
+                        if ((Numbers.Primes.Count >= 0) && (Numbers.Primes.Count < (M - 2)))
+                        {
+                            text4 = GetConsecutiveVerses(client, MN_P, ((M - 1) * (N + 1)) + Numbers.Primes[M - 2], false);
+                        }
+                        string text5 = "";
+                        if ((Numbers.Primes.Count >= 0) && (Numbers.Primes.Count < M))
+                        {
+                            text5 = GetConsecutiveVerses(client, MN_P, ((M + 1) * (N - 1)) + Numbers.Primes[M], false);
+                        }
+
+                        string text = "";
+                        if (!text.Contains(text1)) text += text1;
+                        if (!text.Contains(text2)) text += text2;
+                        if (!text.Contains(text3)) text += text3;
+                        if (!text.Contains(text4)) text += text4;
+                        if (!text.Contains(text5)) text += text5;
+
+                        str.Append(M + "\t" + N + "\t" + MN + "\t" + P + "\t" + MN_P + "\t" + text + "\r\n");
+
+                        M++;
+                        N--;
+                    } while (N > 0);
+
+                    str.AppendLine();
+                    str.AppendLine();
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoAP_PivotConsecutiveVerses(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("M" + "\t" + "N" + "\t" + "M*N" + "\t" + "AP" + "\t" + "MN+AP" + "\r\n");
+
+        int pivot = 0;
+        if (param.Length > 0)
+        {
+            if (int.TryParse(param, out pivot))
+            {
+                int min = 0;
+                int max = 0;
+                if (pivot == 0)
+                {
+                    min = 1;
+                    max = 114;
+                }
+                else
+                {
+                    min = pivot;
+                    max = pivot;
+                }
+
+                for (int i = min; i <= max; i++)
+                {
+                    int M = 1;
+                    int N = (i * 2) - 1;
+
+                    do
+                    {
+                        long MN = M * N;
+                        long AP = Numbers.AdditivePrimes[M - 1];
+                        long MN_AP = MN + AP;
+
+                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                        string text2 = GetConsecutiveVerses(client, MN, MN_AP, true);
+                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                        string text4 = "";
+                        if ((Numbers.AdditivePrimes.Count >= 0) && (Numbers.AdditivePrimes.Count < (M - 2)))
+                        {
+                            text4 = GetConsecutiveVerses(client, MN_AP, ((M - 1) * (N + 1)) + Numbers.AdditivePrimes[M - 2], false);
+                        }
+                        string text5 = "";
+                        if ((Numbers.AdditivePrimes.Count >= 0) && (Numbers.AdditivePrimes.Count < M))
+                        {
+                            text5 = GetConsecutiveVerses(client, MN_AP, ((M + 1) * (N - 1)) + Numbers.AdditivePrimes[M], false);
+                        }
+
+                        string text = "";
+                        if (!text.Contains(text1)) text += text1;
+                        if (!text.Contains(text2)) text += text2;
+                        if (!text.Contains(text3)) text += text3;
+                        if (!text.Contains(text4)) text += text4;
+                        if (!text.Contains(text5)) text += text5;
+
+                        str.Append(M + "\t" + N + "\t" + MN + "\t" + AP + "\t" + MN_AP + "\t" + text + "\r\n");
+
+                        M++;
+                        N--;
+                    } while (N > 0);
+
+                    str.AppendLine();
+                    str.AppendLine();
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoXP_PivotConsecutiveVerses(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("M" + "\t" + "N" + "\t" + "M*N" + "\t" + "XP" + "\t" + "MN+XP" + "\r\n");
+
+        int pivot = 0;
+        if (param.Length > 0)
+        {
+            if (int.TryParse(param, out pivot))
+            {
+                int min = 0;
+                int max = 0;
+                if (pivot == 0)
+                {
+                    min = 1;
+                    max = 114;
+                }
+                else
+                {
+                    min = pivot;
+                    max = pivot;
+                }
+
+                for (int i = min; i <= max; i++)
+                {
+                    int M = 1;
+                    int N = (i * 2) - 1;
+
+                    do
+                    {
+                        long MN = M * N;
+                        long XP = Numbers.NonAdditivePrimes[M - 1];
+                        long MN_XP = MN + XP;
+
+                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                        string text2 = GetConsecutiveVerses(client, MN, MN_XP, true);
+                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                        string text4 = "";
+                        if ((Numbers.NonAdditivePrimes.Count >= 0) && (Numbers.NonAdditivePrimes.Count < (M - 2)))
+                        {
+                            text4 = GetConsecutiveVerses(client, MN_XP, ((M - 1) * (N + 1)) + Numbers.NonAdditivePrimes[M - 2], false);
+                        }
+                        string text5 = "";
+                        if ((Numbers.NonAdditivePrimes.Count >= 0) && (Numbers.NonAdditivePrimes.Count < M))
+                        {
+                            text5 = GetConsecutiveVerses(client, MN_XP, ((M + 1) * (N - 1)) + Numbers.NonAdditivePrimes[M], false);
+                        }
+
+                        string text = "";
+                        if (!text.Contains(text1)) text += text1;
+                        if (!text.Contains(text2)) text += text2;
+                        if (!text.Contains(text3)) text += text3;
+                        if (!text.Contains(text4)) text += text4;
+                        if (!text.Contains(text5)) text += text5;
+
+                        str.Append(M + "\t" + N + "\t" + MN + "\t" + XP + "\t" + MN_XP + "\t" + text + "\r\n");
+
+                        M++;
+                        N--;
+                    } while (N > 0);
+
+                    str.AppendLine();
+                    str.AppendLine();
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoC_PivotConsecutiveVerses(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("M" + "\t" + "N" + "\t" + "M*N" + "\t" + "C" + "\t" + "MN+C" + "\r\n");
+
+        int pivot = 0;
+        if (param.Length > 0)
+        {
+            if (int.TryParse(param, out pivot))
+            {
+                int min = 0;
+                int max = 0;
+                if (pivot == 0)
+                {
+                    min = 1;
+                    max = 114;
+                }
+                else
+                {
+                    min = pivot;
+                    max = pivot;
+                }
+
+                for (int i = min; i <= max; i++)
+                {
+                    int M = 1;
+                    int N = (i * 2) - 1;
+
+                    do
+                    {
+                        long MN = M * N;
+                        long C = Numbers.Composites[M - 1];
+                        long MN_C = MN + C;
+
+                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                        string text2 = GetConsecutiveVerses(client, MN, MN_C, true);
+                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                        string text4 = "";
+                        if ((Numbers.Composites.Count >= 0) && (Numbers.Composites.Count < (M - 2)))
+                        {
+                            text4 = GetConsecutiveVerses(client, MN_C, ((M - 1) * (N + 1)) + Numbers.Composites[M - 2], false);
+                        }
+                        string text5 = "";
+                        if ((Numbers.Composites.Count >= 0) && (Numbers.Composites.Count < M))
+                        {
+                            text5 = GetConsecutiveVerses(client, MN_C, ((M + 1) * (N - 1)) + Numbers.Composites[M], false);
+                        }
+
+                        string text = "";
+                        if (!text.Contains(text1)) text += text1;
+                        if (!text.Contains(text2)) text += text2;
+                        if (!text.Contains(text3)) text += text3;
+                        if (!text.Contains(text4)) text += text4;
+                        if (!text.Contains(text5)) text += text5;
+
+                        str.Append(M + "\t" + N + "\t" + MN + "\t" + C + "\t" + MN_C + "\t" + text + "\r\n");
+
+                        M++;
+                        N--;
+                    } while (N > 0);
+
+                    str.AppendLine();
+                    str.AppendLine();
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoAC_PivotConsecutiveVerses(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("M" + "\t" + "N" + "\t" + "M*N" + "\t" + "AC" + "\t" + "MN+AC" + "\r\n");
+
+        int pivot = 0;
+        if (param.Length > 0)
+        {
+            if (int.TryParse(param, out pivot))
+            {
+                int min = 0;
+                int max = 0;
+                if (pivot == 0)
+                {
+                    min = 1;
+                    max = 114;
+                }
+                else
+                {
+                    min = pivot;
+                    max = pivot;
+                }
+
+                for (int i = min; i <= max; i++)
+                {
+                    int M = 1;
+                    int N = (i * 2) - 1;
+
+                    do
+                    {
+                        long MN = M * N;
+                        long AC = Numbers.AdditiveComposites[M - 1];
+                        long MN_AC = MN + AC;
+
+                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                        string text2 = GetConsecutiveVerses(client, MN, MN_AC, true);
+                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                        string text4 = "";
+                        if ((Numbers.AdditiveComposites.Count >= 0) && (Numbers.AdditiveComposites.Count < (M - 2)))
+                        {
+                            text4 = GetConsecutiveVerses(client, MN_AC, ((M - 1) * (N + 1)) + Numbers.AdditiveComposites[M - 2], false);
+                        }
+                        string text5 = "";
+                        if ((Numbers.AdditiveComposites.Count >= 0) && (Numbers.AdditiveComposites.Count < M))
+                        {
+                            text5 = GetConsecutiveVerses(client, MN_AC, ((M + 1) * (N - 1)) + Numbers.AdditiveComposites[M], false);
+                        }
+
+                        string text = "";
+                        if (!text.Contains(text1)) text += text1;
+                        if (!text.Contains(text2)) text += text2;
+                        if (!text.Contains(text3)) text += text3;
+                        if (!text.Contains(text4)) text += text4;
+                        if (!text.Contains(text5)) text += text5;
+
+                        str.Append(M + "\t" + N + "\t" + MN + "\t" + AC + "\t" + MN_AC + "\t" + text + "\r\n");
+
+                        M++;
+                        N--;
+                    } while (N > 0);
+
+                    str.AppendLine();
+                    str.AppendLine();
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoXC_PivotConsecutiveVerses(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.Append("M" + "\t" + "N" + "\t" + "M*N" + "\t" + "XC" + "\t" + "MN+XC" + "\r\n");
+
+        int pivot = 0;
+        if (param.Length > 0)
+        {
+            if (int.TryParse(param, out pivot))
+            {
+                int min = 0;
+                int max = 0;
+                if (pivot == 0)
+                {
+                    min = 1;
+                    max = 114;
+                }
+                else
+                {
+                    min = pivot;
+                    max = pivot;
+                }
+
+                for (int i = min; i <= max; i++)
+                {
+                    int M = 1;
+                    int N = (i * 2) - 1;
+
+                    do
+                    {
+                        long MN = M * N;
+                        long XC = Numbers.NonAdditiveComposites[M - 1];
+                        long MN_XC = MN + XC;
+
+                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                        string text2 = GetConsecutiveVerses(client, MN, MN_XC, true);
+                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                        string text4 = "";
+                        if ((Numbers.NonAdditiveComposites.Count >= 0) && (Numbers.NonAdditiveComposites.Count < (M - 2)))
+                        {
+                            text4 = GetConsecutiveVerses(client, MN_XC, ((M - 1) * (N + 1)) + Numbers.NonAdditiveComposites[M - 2], false);
+                        }
+                        string text5 = "";
+                        if ((Numbers.NonAdditiveComposites.Count >= 0) && (Numbers.NonAdditiveComposites.Count < M))
+                        {
+                            text5 = GetConsecutiveVerses(client, MN_XC, ((M + 1) * (N - 1)) + Numbers.NonAdditiveComposites[M], false);
+                        }
+
+                        string text = "";
+                        if (!text.Contains(text1)) text += text1;
+                        if (!text.Contains(text2)) text += text2;
+                        if (!text.Contains(text3)) text += text3;
+                        if (!text.Contains(text4)) text += text4;
+                        if (!text.Contains(text5)) text += text5;
+
+                        str.Append(M + "\t" + N + "\t" + MN + "\t" + XC + "\t" + MN_XC + "\t" + text + "\r\n");
+
+                        M++;
+                        N--;
+                    } while (N > 0);
+
+                    str.AppendLine();
+                    str.AppendLine();
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string GetConsecutiveVerses(Client client, long value1, long value2, bool display_both)
+    {
+        string result = "";
+        if ((value1 > 0) && (value2 > 0))
+        {
+            NumberQuery query = new NumberQuery();
+            query.Value = value1;
+            int matches = client.FindVerses(query);
+            if (matches > 0)
+            {
+                List<Verse> found_verses1 = new List<Verse>(client.FoundVerses);
+                query = new NumberQuery();
+                query.Value = value2;
+                matches = client.FindVerses(query);
+                if (matches > 0)
+                {
+                    List<Verse> found_verses2 = new List<Verse>(client.FoundVerses);
+                    foreach (Verse v1 in found_verses1)
+                    {
+                        foreach (Verse v2 in found_verses2)
+                        {
+                            if (Math.Abs(v2.Number - v1.Number) == 1)
+                            {
+                                if (display_both)
+                                {
+                                    result += v1.Text + "\t" + v2.Text + "\t";
+                                }
+                                else
+                                {
+                                    result += v1.Text + "\t";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void ______________________________________(Client client, string param, bool in_search_result)
     {
     }
     public static void RelatedWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWords(client, verses);
 
@@ -3711,7 +4304,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordsMeanings(client, verses);
 
@@ -3727,7 +4320,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordAddresses(client, verses);
 
@@ -3743,7 +4336,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordVerses(client, verses);
 
@@ -3759,7 +4352,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordsVerseMeanings(client, verses);
 
@@ -3775,7 +4368,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordVerseAddresses(client, verses);
 
@@ -4117,15 +4710,15 @@ public static partial class Research
         return str.ToString();
     }
 
-    private static void ____________________________________(Client client, string param, bool in_search_result)
+    private static void _______________________________________(Client client, string param, bool in_search_result)
     {
     }
     private static void ChapterVerseWordLetterFactors(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterVerseWordLetterFactors(client, chapters);
 
@@ -4141,8 +4734,8 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterVerseSumFactors(client, chapters);
 
@@ -4158,8 +4751,8 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterVerseSquaresSumFactors(client, chapters);
 
@@ -4175,8 +4768,8 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterVerseCubesSumFactors(client, chapters);
 
@@ -4192,8 +4785,8 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterVerseWordLetterSumAZ(client, chapters);
 
@@ -4209,8 +4802,8 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Verse> verses = in_search_result ? client.FoundVerses : client.Selection.Verses;
-        List<Chapter> chapters = client.Book.GetCompleteChapters(verses);
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        List<Chapter> chapters = client.Book.GetChapters(verses);
 
         string result = DoChapterVerseWordLetterSumZA(client, chapters);
 
@@ -4726,7 +5319,7 @@ public static partial class Research
         return str.ToString();
     }
 
-    private static void ________________________________________(Client client, string param, bool in_search_result)
+    private static void _________________________________________(Client client, string param, bool in_search_result)
     {
     }
     private static void FindVersesWithXValueDigitSum(Client client, string param, bool in_search_result)

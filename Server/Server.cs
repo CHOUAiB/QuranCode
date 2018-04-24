@@ -2139,15 +2139,15 @@ public class Server : IPublisher
         }
         return result;
     }
-    private static Phrase OriginifyPhrase(Phrase simple_phrase)
+    private static Phrase OriginifyPhrase(Phrase phrase)
     {
-        if (simple_phrase != null)
+        if (phrase != null)
         {
-            Verse verse = simple_phrase.Verse;
+            Verse verse = phrase.Verse;
             if (verse != null)
             {
-                string text = simple_phrase.Text;
-                int position = simple_phrase.Position;
+                string text = phrase.Text;
+                int position = phrase.Position;
 
                 int start = 0;
                 for (int i = 0; i < verse.Text.Length; i++)
@@ -2226,43 +2226,42 @@ public class Server : IPublisher
     {
         if (phrase != null)
         {
-            if (to_text_mode == "Original")
-            {
-                // simple phrase
-                Verse phrase_verse = phrase.Verse;
-                string phrase_text = phrase.Text.Trim();
-                int phrase_position = phrase.Position;
-                int phrase_length = phrase_text.Length;
+            Verse phrase_verse = phrase.Verse;
+            int phrase_position = phrase.Position;
+            string phrase_text = phrase.Text;
+            int phrase_length = phrase_text.Length;
 
-                // convert to original
-                if (phrase_verse != null)
+            if (phrase_verse != null)
+            {
+                if (to_text_mode == "Original")
                 {
+                    Verse original_verse = phrase_verse;
                     int letter_count = 0;
                     int position = 0;
-                    for (int i = 0; i < phrase_verse.Text.Length; i++)
+                    foreach (char c in original_verse.Text)
                     {
-                        char character = phrase_verse.Text[i];
-                        if ((character == ' ') || (Constants.ARABIC_LETTERS.Contains(character)))
+                        position++;
+                        if ((c == ' ') || (Constants.ARABIC_LETTERS.Contains(c)))
                         {
                             letter_count++;
                         }
-                        else if (Constants.STOPMARKS.Contains(character))
-                        {
-                            letter_count--; // decrement space after stopmark as it will be incremented above
-                            if (letter_count < 0)
-                            {
-                                letter_count = 0;
-                            }
-                        }
-                        else if (Constants.QURANMARKS.Contains(character))
-                        {
-                            letter_count--; // decrement space after stopmark as it will be incremented above
-                        }
 
-                        // check if finished
                         if (letter_count == phrase_position)
                         {
-                            position = i;
+                            break;
+                        }
+                    }
+
+                    foreach (char c in original_verse.Text)
+                    {
+                        position++;
+                        if ((c == ' ') || (Constants.ARABIC_LETTERS.Contains(c)))
+                        {
+                            letter_count++;
+                        }
+
+                        if (letter_count == phrase_position)
+                        {
                             break;
                         }
                     }
@@ -2322,26 +2321,23 @@ public class Server : IPublisher
                     }
                 }
             }
-            else // simplify phrase
+            else
             {
-                //TODO: ConvertPhrase to simplified still not complete:  ONLY builds first phrase occurrence in verse
-
-                Verse verse = phrase.Verse;
-                int position = phrase.Position;
-                string text = phrase.Text;
-
                 // simplifiy text
-                text = text.SimplifyTo(to_text_mode);
-                text = text.Trim();
-                if (!String.IsNullOrEmpty(text)) // re-test in case text was just harakaat which is simplifed to nothing
+                Verse simplified_verse = phrase_verse;
+                phrase_text = phrase_text.SimplifyTo(to_text_mode);
+                phrase_text = phrase_text.Trim();
+                if (!String.IsNullOrEmpty(phrase_text)) // re-test in case text was just harakaat which is simplifed to nothing
                 {
                     // simplifiy position
-                    string verse_text = verse.Text.SimplifyTo(to_text_mode);
-                    position = verse_text.IndexOf(text);  // will ONLY build first phrase occurrence in verse
+                    string verse_text = phrase_verse.Text.SimplifyTo(to_text_mode);
+                    phrase_position = verse_text.IndexOf(phrase_text);  // will ONLY build first phrase occurrence in verse
 
                     // build simplified phrase
-                    return new Phrase(verse, position, text);
+                    return new Phrase(phrase_verse, phrase_position, phrase_text);
                 }
+
+                //TODO: ConvertPhrase to simplified still not complete:  ONLY builds first phrase occurrence in verse
             }
         }
         return null;
@@ -11760,7 +11756,7 @@ public class Server : IPublisher
             {
                 if (s_book != null)
                 {
-                    List<Chapter> chapters = s_book.GetCompleteChapters(source);
+                    List<Chapter> chapters = s_book.GetChapters(source);
                     if (chapters != null)
                     {
                         if (query.ChapterCount <= 1) // ensure no range search
@@ -11798,7 +11794,7 @@ public class Server : IPublisher
             {
                 if (s_book != null)
                 {
-                    List<Chapter> chapters = s_book.GetCompleteChapters(source);
+                    List<Chapter> chapters = s_book.GetChapters(source);
                     if (chapters != null)
                     {
                         int range_length = query.ChapterCount;
@@ -11889,7 +11885,7 @@ public class Server : IPublisher
             {
                 if (s_book != null)
                 {
-                    List<Chapter> chapters = s_book.GetCompleteChapters(source);
+                    List<Chapter> chapters = s_book.GetChapters(source);
                     if (chapters != null)
                     {
                         int set_size = query.ChapterCount;
@@ -12614,7 +12610,7 @@ public class Server : IPublisher
                 {
                     if (s_book != null)
                     {
-                        List<Chapter> source_chapters = s_book.GetCompleteChapters(source);
+                        List<Chapter> source_chapters = s_book.GetChapters(source);
                         if (!String.IsNullOrEmpty(phrase))
                         {
                             foreach (Chapter chapter in source_chapters)

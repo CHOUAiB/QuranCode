@@ -177,6 +177,23 @@ public static class StringExtensions
                 result += c;
             }
         }
+
+        return result;
+    }
+    public static string RemoveDuplicateLetters(this string source)
+    {
+        if (String.IsNullOrEmpty(source)) return "";
+
+        string result = "";
+        foreach (char c in source)
+        {
+            if (!result.Contains(c.ToString()))
+            {
+                result += c + " ";
+            }
+        }
+        result = result.Remove(result.Length - 1, 1);
+
         return result;
     }
     public static string ToNth(this string source)
@@ -501,12 +518,12 @@ public static class StringExtensions
         }
         else if (text_mode == "Original")
         {
-            if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+            //if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
             {
                 return source.Simplify29();
             }
             // no simplification in Research and Ultimate Editions
-            return source;
+            //return source;
         }
         else
         {
