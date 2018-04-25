@@ -1101,7 +1101,7 @@ namespace Model
                 foreach (Word word in verse.Words)
                 {
                     string word_text = word.Text;
-                    if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                    if (Globals.EDITION == Edition.Standard)
                     {
                         if (text_mode == "Original")
                         {
@@ -1130,7 +1130,7 @@ namespace Model
                 foreach (Word word in verse.Words)
                 {
                     string word_text = word.Text;
-                    if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                    if (Globals.EDITION == Edition.Standard)
                     {
                         if (text_mode == "Original")
                         {
@@ -1153,7 +1153,7 @@ namespace Model
                 foreach (Word word in verse.Words)
                 {
                     string word_text = word.Text;
-                    if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                    if (Globals.EDITION == Edition.Standard)
                     {
                         if (text_mode == "Original")
                         {

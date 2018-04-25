@@ -24,10 +24,6 @@ using System.IO;
 using System.Threading;
 using Model;
 
-// public methods are for Grammar/Standard Editions
-// private methods are for Research Edition
-// public FindSystem methods are for Ultimte Edition
-
 public static partial class Research
 {
     private static List<Verse> GetSourceVerses(Client client, bool in_search_result)
@@ -63,12 +59,11 @@ public static partial class Research
         return verses;
     }
 
-
     public static void AllahWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoAllahWords(client, verses);
 
@@ -84,7 +79,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoNonAllahWords(client, verses);
 
@@ -100,7 +95,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRepeatedWords(client, verses);
 
@@ -116,7 +111,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoAllWords(client, verses);
 
@@ -132,7 +127,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoWordVerbForms(client, verses);
 
@@ -148,7 +143,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoVerbForms(client, verses);
 
@@ -164,7 +159,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoStopmarks(client, verses);
 
@@ -464,7 +459,7 @@ public static partial class Research
             {
                 try
                 {
-                    string word_heading = (Globals.EDITION == Edition.Grammar) ? "Lemma" : "Text";
+                    string word_heading = "Lemma";
                     str.AppendLine("Word" + "\t" + word_heading + "\t" + "Root" + "\t" + "Form" + "\t" + "Perfect" + "\t" + "Imperfect" + "\t" + "ActiveParticiple" + "\t" + "PassiveParticiple" + "\t" + "VerbalNoun");
 
                     foreach (Verse verse in verses)
@@ -473,7 +468,7 @@ public static partial class Research
                         {
                             string word_address = word.Address;
                             string word_text = word.Text;
-                            string word_lemma = (Globals.EDITION == Edition.Grammar) ? word.Lemma : word_text;
+                            string word_lemma = word.Lemma;
                             string root = client.Book.GetBestRoot(word_text);
                             if (root != null)
                             {
@@ -761,7 +756,7 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Book == null) return;
-        List<Verse> verses = client.Book.Verses;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoAllDigits(client, verses);
 
@@ -773,390 +768,390 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    //private static void OddDigitChapters(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+    private static void OddDigitChapters(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoOddDigitChapters(client, verses);
+        string result = DoOddDigitChapters(client, verses);
 
-    //    string filename = "OddDigitChapters" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void EvenDigitChapters(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "OddDigitChapters" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void EvenDigitChapters(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoEvenDigitChapters(client, verses);
+        string result = DoEvenDigitChapters(client, verses);
 
-    //    string filename = "EvenDigitChapters" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void PrimeDigitChapters(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "EvenDigitChapters" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void PrimeDigitChapters(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoPrimeDigitChapters(client, verses);
+        string result = DoPrimeDigitChapters(client, verses);
 
-    //    string filename = "PrimeDigitChapters" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void CompositeDigitChapters(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "PrimeDigitChapters" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void CompositeDigitChapters(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoCompositeDigitChapters(client, verses);
+        string result = DoCompositeDigitChapters(client, verses);
 
-    //    string filename = "CompositeDigitChapters" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void PrimeOr1DigitChapters(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "CompositeDigitChapters" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void PrimeOr1DigitChapters(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoPrimeOr1DigitChapters(client, verses);
+        string result = DoPrimeOr1DigitChapters(client, verses);
 
-    //    string filename = "PrimeOr1DigitChapters" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void CompositeOr0DigitChapters(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "PrimeOr1DigitChapters" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void CompositeOr0DigitChapters(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoCompositeOr0DigitChapters(client, verses);
+        string result = DoCompositeOr0DigitChapters(client, verses);
 
-    //    string filename = "CompositeOr0DigitChapters" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void OddDigitVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "CompositeOr0DigitChapters" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void OddDigitVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoOddDigitVerses(client, verses);
+        string result = DoOddDigitVerses(client, verses);
 
-    //    string filename = "OddDigitVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void EvenDigitVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "OddDigitVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void EvenDigitVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoEvenDigitVerses(client, verses);
+        string result = DoEvenDigitVerses(client, verses);
 
-    //    string filename = "EvenDigitVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void PrimeDigitVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "EvenDigitVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void PrimeDigitVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoPrimeDigitVerses(client, verses);
+        string result = DoPrimeDigitVerses(client, verses);
 
-    //    string filename = "PrimeDigitVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void CompositeDigitVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "PrimeDigitVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void CompositeDigitVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoCompositeDigitVerses(client, verses);
+        string result = DoCompositeDigitVerses(client, verses);
 
-    //    string filename = "CompositeDigitVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void PrimeOr1DigitVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "CompositeDigitVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void PrimeOr1DigitVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoPrimeOr1DigitVerses(client, verses);
+        string result = DoPrimeOr1DigitVerses(client, verses);
 
-    //    string filename = "PrimeOr1DigitVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void CompositeOr0DigitVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "PrimeOr1DigitVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void CompositeOr0DigitVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoCompositeOr0DigitVerses(client, verses);
+        string result = DoCompositeOr0DigitVerses(client, verses);
 
-    //    string filename = "CompositeOr0DigitVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void OODigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "CompositeOr0DigitVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void OODigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoOODigitChaptersVerses(client, verses);
+        string result = DoOODigitChaptersVerses(client, verses);
 
-    //    string filename = "OODigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void EEDigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "OODigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void EEDigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoEEDigitChaptersVerses(client, verses);
+        string result = DoEEDigitChaptersVerses(client, verses);
 
-    //    string filename = "EEDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void PPDigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "EEDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void PPDigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoPPDigitChaptersVerses(client, verses);
+        string result = DoPPDigitChaptersVerses(client, verses);
 
-    //    string filename = "PPDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void CCDigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "PPDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void CCDigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoCCDigitChaptersVerses(client, verses);
+        string result = DoCCDigitChaptersVerses(client, verses);
 
-    //    string filename = "CCDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void P1P1DigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "CCDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void P1P1DigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoP1P1DigitChaptersVerses(client, verses);
+        string result = DoP1P1DigitChaptersVerses(client, verses);
 
-    //    string filename = "P1P1DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void C0C0DigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "P1P1DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void C0C0DigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoC0C0DigitChaptersVerses(client, verses);
+        string result = DoC0C0DigitChaptersVerses(client, verses);
 
-    //    string filename = "C0C0DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void OEDigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "C0C0DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void OEDigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoOEDigitChaptersVerses(client, verses);
+        string result = DoOEDigitChaptersVerses(client, verses);
 
-    //    string filename = "OEDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void EODigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "OEDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void EODigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoEODigitChaptersVerses(client, verses);
+        string result = DoEODigitChaptersVerses(client, verses);
 
-    //    string filename = "EODigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void PCDigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "EODigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void PCDigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoPCDigitChaptersVerses(client, verses);
+        string result = DoPCDigitChaptersVerses(client, verses);
 
-    //    string filename = "PCDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void CPDigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "PCDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void CPDigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoCPDigitChaptersVerses(client, verses);
+        string result = DoCPDigitChaptersVerses(client, verses);
 
-    //    string filename = "CPDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void P1C0DigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "CPDigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void P1C0DigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoP1C0DigitChaptersVerses(client, verses);
+        string result = DoP1C0DigitChaptersVerses(client, verses);
 
-    //    string filename = "P1C0DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
-    //private static void C0P1DigitChaptersVerses(Client client, string param, bool in_search_result)
-    //{
-    //    if (client == null) return;
-    //    if (client.Book == null) return;
-    //    List<Verse> verses = client.Book.Verses;
+        string filename = "P1C0DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static void C0P1DigitChaptersVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Book == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
 
-    //    string result = DoC0P1DigitChaptersVerses(client, verses);
+        string result = DoC0P1DigitChaptersVerses(client, verses);
 
-    //    string filename = "C0P1DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
-    //    if (Directory.Exists(Globals.RESEARCH_FOLDER))
-    //    {
-    //        string path = Globals.RESEARCH_FOLDER + "/" + filename;
-    //        FileHelper.SaveText(path, result);
-    //        FileHelper.DisplayFile(path);
-    //    }
-    //}
+        string filename = "C0P1DigitChaptersVerses" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
     private static string DoAllDigits(Client client, List<Verse> verses)
     {
         if (client == null) return null;
@@ -3397,8 +3392,8 @@ public static partial class Research
                 "Word" + "\t" +
                 "Text" + "\t" +
                 "Transliteration" + "\t" +
-                (((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate)) ? ("ArabicGrammar" + "\t") : "") +
-                (((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate)) ? ("EnglishGrammar" + "\t") : "") +
+                "ArabicGrammar" + "\t" +
+                "EnglishGrammar" + "\t" +
                 "Roots" + "\t" +
                 "Meaning" + "\t" +
                 "Occurrence" + "\t" +
@@ -3421,7 +3416,7 @@ public static partial class Research
                 }
 
                 StringBuilder parts_arabic_grammar_str = new StringBuilder();
-                if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
+                if (Globals.EDITION == Edition.Dynamic)
                 {
                     if (word.Parts.Count > 0)
                     {
@@ -3439,7 +3434,7 @@ public static partial class Research
                     }
                 }
                 StringBuilder parts_english_grammar_str = new StringBuilder();
-                if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
+                if (Globals.EDITION == Edition.Dynamic)
                 {
                     if (word.Parts.Count > 0)
                     {
@@ -3465,8 +3460,8 @@ public static partial class Research
                     word.NumberInVerse + "\t" +
                     word.Text + "\t" +
                     word.Transliteration + "\t" +
-                    (((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate)) ? (parts_arabic_grammar_str + "\t") : "") +
-                    (((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate)) ? (parts_english_grammar_str + "\t") : "") +
+                    parts_arabic_grammar_str + "\t" +
+                    parts_english_grammar_str + "\t" +
                     roots_str + "\t" +
                     word.Meaning + "\t" +
                     word.Occurrence + "\t" +
@@ -3505,7 +3500,7 @@ public static partial class Research
         StringBuilder str = new StringBuilder();
         if (words.Count > 0)
         {
-            if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
+            if (Globals.EDITION == Edition.Dynamic)
             {
                 str.AppendLine
                 (
@@ -3597,8 +3592,10 @@ public static partial class Research
         {
             foreach (Verse verse in verses)
             {
-                string verse_text = verse.Text.SimplifyTo(client.NumerologySystem.TextMode);
-                int lfsum = client.CalculateLetterFrequencySum(verse_text, phrase, FrequencySearchType.DuplicateLetters);
+                //string simplified_text = verse.Text.SimplifyTo(client.NumerologySystem.TextMode);
+                //string simplified_phrase = phrase.SimplifyTo(client.NumerologySystem.TextMode);
+                //int lfsum = client.CalculateLetterFrequencySum(simplified_text, simplified_phrase, FrequencySearchType.DuplicateLetters);
+                int lfsum = client.CalculateLetterFrequencySum(verse.Text, phrase, FrequencySearchType.DuplicateLetters);
                 letter_frequency_sums.Add(verse, lfsum);
             }
         }

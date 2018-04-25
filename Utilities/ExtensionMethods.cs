@@ -518,12 +518,7 @@ public static class StringExtensions
         }
         else if (text_mode == "Original")
         {
-            //if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
-            {
-                return source.Simplify29();
-            }
-            // no simplification in Research and Ultimate Editions
-            //return source;
+            return source.Simplify29();
         }
         else
         {

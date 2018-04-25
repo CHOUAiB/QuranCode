@@ -424,10 +424,7 @@ namespace Model
             this.position = position;
             this.text = text;
 
-            if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
-            {
-                this.parts = new List<WordPart>();
-            }
+            this.parts = new List<WordPart>();
 
             this.letters = new List<Letter>();
             string simplified_text = null;

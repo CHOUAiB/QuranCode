@@ -81,8 +81,6 @@ public class Client : IPublisher, ISubscriber
     public const string DEFAULT_TRANSLATION_6 = Server.DEFAULT_TRANSLATION_6;
     public const string DEFAULT_TRANSLATION_7 = Server.DEFAULT_TRANSLATION_7;
 
-    public const string DEFAULT_TAFSEER = Server.DEFAULT_TAFSEER;
-
     public Client(string numerology_system_name)
     {
         if (!Directory.Exists(Globals.BOOKMARKS_FOLDER))
@@ -2202,7 +2200,7 @@ public class Client : IPublisher, ISubscriber
 
                 if (!String.IsNullOrEmpty(text))
                 {
-                    //phrase = phrase.SimplifyTo(NumerologySystem.TextMode);
+                    if (!with_diacritics) phrase = phrase.SimplifyTo(NumerologySystem.TextMode);
                     phrase = phrase.Replace("\r", "");
                     phrase = phrase.Replace("\n", "");
                     phrase = phrase.Replace("\t", "");

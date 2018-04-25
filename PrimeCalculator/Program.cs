@@ -19,17 +19,9 @@ static class Program
             {
                 Globals.EDITION = Edition.Standard;
             }
-            else if (args[0].ToUpper() == "G")
+            else if (args[0].ToUpper() == "D")
             {
-                Globals.EDITION = Edition.Ultimate;
-            }
-            else if (args[0].ToUpper() == "R")
-            {
-                Globals.EDITION = Edition.Ultimate;
-            }
-            else if (args[0].ToUpper() == "U")
-            {
-                Globals.EDITION = Edition.Ultimate;
+                Globals.EDITION = Edition.Dynamic;
             }
             else
             {
@@ -38,17 +30,13 @@ static class Program
         }
         else
         {
-            if (Control.ModifierKeys == (Keys.Control | Keys.Shift))
+            if (Control.ModifierKeys == Keys.Control)
             {
-                Globals.EDITION = Edition.Ultimate;
-            }
-            else if (Control.ModifierKeys == Keys.Control)
-            {
-                Globals.EDITION = Edition.Ultimate;
+                Globals.EDITION = Edition.Dynamic;
             }
             else if (Control.ModifierKeys == Keys.Shift)
             {
-                Globals.EDITION = Edition.Ultimate;
+                Globals.EDITION = Edition.Dynamic;
             }
             else // default
             {

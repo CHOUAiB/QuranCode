@@ -24,7 +24,7 @@ namespace Model
         //   5. The word "Allah" (269 with 2+6+9=17)
         // See Help\Primalogy.pdf for full details in English and
         // See Help\Primalogy_AR.pdf for full details in Arabic.
-        public const string DEFAULT_NAME = "Original_Alphabet_Primes1"; // show original text but use Simplified29 internally in all editions except Research Edition and higher
+        public const string DEFAULT_NAME = "Original_Alphabet_Primes1"; // show original text but use Simplified29 internally in Standard Edition
 
         //private NumerologySystemScope scope = NumerologySystemScope.Book;
         //public NumerologySystemScope Scope

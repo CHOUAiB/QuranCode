@@ -259,14 +259,8 @@ public partial class MainForm : Form, ISubscriber
                 splash_form.Version += " - " + Globals.SHORT_VERSION;
 
                 InitializeControls();
-                if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
-                {
-                    splash_form.Information = "Loading grammar information ...";
-                }
-                else
-                {
-                    splash_form.Information = "Initializing Server ...";
-                }
+
+                splash_form.Information = "Loading grammar information ...";
                 splash_form.Progress = 10;
                 Thread.Sleep(100);
 
@@ -305,11 +299,6 @@ public partial class MainForm : Form, ISubscriber
                             PopulateTranslatorComboBox();
                             PopulateTranslatorsComboBox();
                             splash_form.Progress = 50;
-                            Thread.Sleep(100);
-
-                            splash_form.Information = "Loading tafseer info ...";
-                            PopulateTafseerComboBox();
-                            splash_form.Progress = 55;
                             Thread.Sleep(100);
 
                             splash_form.Information = "Loading recitation info ...";
@@ -393,7 +382,7 @@ public partial class MainForm : Form, ISubscriber
 
                             UpdateTextModeOptions();
 
-                            if (Globals.EDITION == Edition.Ultimate)
+                            if (Globals.EDITION == Edition.Dynamic)
                             {
                                 splash_form.Information = "Preparing prime/composite indexes ...";
                             }
@@ -402,10 +391,10 @@ public partial class MainForm : Form, ISubscriber
                                 splash_form.Information = "Preparing text for display ...";
                             }
 
-                            ScopeBookRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
-                            ScopeSelectionRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
-                            ScopeHighlightedTextRadioButton.Enabled = ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
-                            if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                            ScopeBookRadioButton.Enabled = (Globals.EDITION == Edition.Dynamic);
+                            ScopeSelectionRadioButton.Enabled = (Globals.EDITION == Edition.Dynamic);
+                            ScopeHighlightedTextRadioButton.Enabled = (Globals.EDITION == Edition.Dynamic);
+                            if (Globals.EDITION == Edition.Standard)
                             {
                                 ScopeBookRadioButton.Checked = true;
 
@@ -423,10 +412,7 @@ public partial class MainForm : Form, ISubscriber
                                 }
                             }
 
-                            if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
-                            {
-                                GrammarTextBox.Text = "Click a word to display its grammar information in Arabic and English.";
-                            }
+                            GrammarTextBox.Text = "Click a word to display its grammar information in Arabic and English.";
 
                             // refresh chapter sort method/order/pin_chapter1
                             m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
@@ -521,7 +507,7 @@ public partial class MainForm : Form, ISubscriber
             }
         }
 
-        if ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate))
+        if (Globals.EDITION == Edition.Dynamic)
         {
             EditNumerologySystemLabel.Enabled = false;
         }
@@ -961,10 +947,6 @@ public partial class MainForm : Form, ISubscriber
         {
             TranslatorComboBox.DroppedDown = false;
         }
-        else if (TafseerComboBox.DroppedDown)
-        {
-            TafseerComboBox.DroppedDown = false;
-        }
         else if (ReciterComboBox.DroppedDown)
         {
             ReciterComboBox.DroppedDown = false;
@@ -1085,7 +1067,6 @@ public partial class MainForm : Form, ISubscriber
                 if (verse != null)
                 {
                     DisplayTranslations(verse);
-                    DisplayTafseer(verse);
                     DisplaySymmetry();
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
@@ -1282,11 +1263,6 @@ public partial class MainForm : Form, ISubscriber
                                     case "TranslationsFolder":
                                         {
                                             Globals.TRANSLATIONS_FOLDER = parts[1].Replace("\\", "/").Trim();
-                                        }
-                                        break;
-                                    case "TafseersFolder":
-                                        {
-                                            Globals.TAFSEERS_FOLDER = parts[1].Replace("\\", "/").Trim();
                                         }
                                         break;
                                     case "RulesFolder":
@@ -1632,30 +1608,6 @@ public partial class MainForm : Form, ISubscriber
                                                     AllTranslatorsCheckBox.Checked = m_show_all_translations;
                                                 }
                                                 break;
-                                            case "Tafseer":
-                                                {
-                                                    try
-                                                    {
-                                                        int index = int.Parse(parts[1].Trim());
-                                                        if ((index >= 0) && (index < this.TafseerComboBox.Items.Count))
-                                                        {
-                                                            this.TafseerComboBox.SelectedIndex = index;
-                                                        }
-                                                    }
-                                                    catch
-                                                    {
-                                                        string item = Client.DEFAULT_TAFSEER.Replace("/", " - ");
-                                                        if (this.TafseerComboBox.Items.Contains(item))
-                                                        {
-                                                            this.TafseerComboBox.SelectedItem = item;
-                                                        }
-                                                        else
-                                                        {
-                                                            this.TafseerComboBox.SelectedIndex = -1;
-                                                        }
-                                                    }
-                                                }
-                                                break;
                                             case "SymmetryType":
                                                 {
                                                     try
@@ -1856,7 +1808,7 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            if ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate))
+                                                            if (Globals.EDITION == Edition.Dynamic)
                                                             {
                                                                 m_client.NumerologySystemScope = (NumerologySystemScope)Enum.Parse(typeof(NumerologySystemScope), parts[1].Trim());
                                                             }
@@ -1870,133 +1822,133 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterLNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterLNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterWNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterWNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterVNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterVNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterCNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterLDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterLDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterWDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterWDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterVDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterVDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterCDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToLetterCDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordWNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToWordWNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordVNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToWordVNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordCNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToWordCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordWDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToWordWDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordVDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToWordVDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordCDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToWordCDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseVNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToVerseVNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseCNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToVerseCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseVDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToVerseVDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseCDistance = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToVerseCDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToChapterCNumber = bool.Parse(parts[1].Trim()) && ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate));
+                                                            m_client.NumerologySystem.AddToChapterCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
                                                         }
                                                     }
                                                 }
@@ -2492,11 +2444,6 @@ public partial class MainForm : Form, ISubscriber
                                 this.TranslatorsComboBox.SelectedItem = item;
                             }
                         }
-                        item = Client.DEFAULT_TAFSEER.Replace("/", " - ");
-                        if (this.TafseerComboBox.Items.Contains(item))
-                        {
-                            this.TafseerComboBox.SelectedItem = item;
-                        }
                         if (this.SymmetryTypeComboBox.Items.Count > 0)
                         {
                             this.SymmetryTypeComboBox.SelectedIndex = 0;
@@ -2571,7 +2518,6 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine("Translator" + "=" + this.TranslatorComboBox.SelectedIndex);
                     writer.WriteLine("Translators" + "=" + this.TranslatorsComboBox.SelectedIndex);
                     writer.WriteLine("ShowAllTranslations" + "=" + m_show_all_translations);
-                    writer.WriteLine("Tafseer" + "=" + this.TafseerComboBox.SelectedIndex);
                     writer.WriteLine("SymmetryType" + "=" + this.SymmetryTypeComboBox.SelectedIndex);
                     writer.WriteLine("SymmetryIncludeBoundaryCases" + "=" + m_symmetry_include_boundary_cases);
                     writer.WriteLine("CVWLSequenceType" + "=" + this.CVWLSequenceTypeComboBox.SelectedIndex);
@@ -2689,7 +2635,6 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine("DataFolder=" + Globals.DATA_FOLDER);
                     writer.WriteLine("AudioFolder=" + Globals.AUDIO_FOLDER);
                     writer.WriteLine("TranslationsFolder=" + Globals.TRANSLATIONS_FOLDER);
-                    writer.WriteLine("TafseersFolder=" + Globals.TAFSEERS_FOLDER);
                     writer.WriteLine("RulesFolder=" + Globals.RULES_FOLDER);
                     writer.WriteLine("ValuesFolder=" + Globals.VALUES_FOLDER);
                     writer.WriteLine("StatisticsFolder=" + Globals.STATISTICS_FOLDER);
@@ -2856,7 +2801,6 @@ public partial class MainForm : Form, ISubscriber
         RegisterContextMenu(TranslationsTextBox);
         RegisterContextMenu(RelatedWordsTextBox);
         RegisterContextMenu(GrammarTextBox);
-        RegisterContextMenu(VerbFormsTextBox);
         RegisterContextMenu(SymmetryTextBox);
         RegisterContextMenu(CVWLSequenceTextBox);
         RegisterContextMenu(ValuesSequenceTextBox);
@@ -3526,7 +3470,7 @@ public partial class MainForm : Form, ISubscriber
                     if (class_type != null)
                     {
                         MethodInfo[] method_infos = null;
-                        if ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate))
+                        if (Globals.EDITION == Edition.Dynamic)
                         {
                             method_infos = class_type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                         }
@@ -3542,18 +3486,11 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 string method_name = method_info.Name;
 
-                                if (method_name.Contains("WordPart"))
+                                if (method_name.Contains("FindSystem"))
                                 {
-                                    if ((Globals.EDITION != Edition.Grammar) && (Globals.EDITION != Edition.Ultimate))
+                                    if (Globals.EDITION == Edition.Standard)
                                     {
-                                        continue; // skip WordPart methods in non-Grammar editions
-                                    }
-                                }
-                                else if (method_name.Contains("FindSystem"))
-                                {
-                                    if (Globals.EDITION != Edition.Ultimate)
-                                    {
-                                        continue; // skip FindSystem methods in non-Ultimate editions
+                                        continue;
                                     }
                                 }
 
@@ -4045,10 +3982,6 @@ public partial class MainForm : Form, ISubscriber
             GrammarTextBox.ForeColor = m_translation_color;
             GrammarTextBox.Refresh();
 
-            VerbFormsTextBox.Font = m_translation_font;
-            VerbFormsTextBox.ForeColor = m_translation_color;
-            VerbFormsTextBox.Refresh();
-
             SymmetryTextBox.Font = m_translation_font;
             SymmetryTextBox.ForeColor = m_translation_color;
             SymmetryTextBox.Refresh();
@@ -4245,7 +4178,6 @@ public partial class MainForm : Form, ISubscriber
                         if (verse != null)
                         {
                             DisplayTranslations(verse);
-                            DisplayTafseer(verse);
                             DisplaySymmetry();
                             DisplayCVWLSequence();
                             DisplayValuesSequence();
@@ -4359,10 +4291,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     word_info += GetWordInformation(m_clicked_word);
                     word_info += "\r\n\r\n";
-                    if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
-                    {
-                        word_info += GetWordGrammar(m_clicked_word) + "\r\n\r\n";
-                    }
+                    word_info += GetWordGrammar(m_clicked_word) + "\r\n\r\n";
                     word_info += GetWordRelatedWords(m_clicked_word);
                 }
                 ToolTip.SetToolTip(m_active_textbox, word_info);
@@ -4381,7 +4310,6 @@ public partial class MainForm : Form, ISubscriber
 
                 //DisplayRelatedWords(m_clicked_word);
                 //DisplayWordGrammar(m_clicked_word);
-                //DisplayVerbForms(m_clicked_word);
             }
         }
     }
@@ -4399,7 +4327,6 @@ public partial class MainForm : Form, ISubscriber
         {
             DisplayRelatedWords(m_clicked_word);
             DisplayWordGrammar(m_clicked_word);
-            DisplayVerbForms(m_clicked_word);
 
             // calculate the C V W L distances
             int chapter_number = ChapterComboBox.SelectedIndex + 1;
@@ -4448,7 +4375,6 @@ public partial class MainForm : Form, ISubscriber
                 if (verse != null)
                 {
                     DisplayTranslations(verse);
-                    DisplayTafseer(verse);
                     DisplaySymmetry();
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
@@ -4517,7 +4443,6 @@ public partial class MainForm : Form, ISubscriber
                                     DisplayLetterFrequencies();
 
                                     DisplayTranslations(verse);
-                                    DisplayTafseer(verse);
                                     DisplaySymmetry();
                                     DisplayCVWLSequence();
                                     DisplayValuesSequence();
@@ -6039,14 +5964,14 @@ public partial class MainForm : Form, ISubscriber
 
             for (int i = 0; i <= char_index; i++)
             {
-                if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                if (Globals.EDITION == Edition.Standard)
                 {
                     if (Constants.ARABIC_LETTERS.Contains(verse.Text[i]))
                     {
                         letter_index++;
                     }
                 }
-                else // Research and Ultimate Editions
+                else
                 {
                     if ((Constants.ARABIC_LETTERS.Contains(verse.Text[i])) || (Constants.DIACRITICS.Contains(verse.Text[i])))
                     {
@@ -8806,7 +8731,6 @@ public partial class MainForm : Form, ISubscriber
                 if (m_client.Selection != null)
                 {
                     DisplayTranslations(m_client.Selection.Verses);
-                    DisplayTafseer(m_client.Selection.Verses);
                     DisplaySymmetry();
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
@@ -11304,7 +11228,7 @@ public partial class MainForm : Form, ISubscriber
     }
     ///////////////////////////////////////////////////////////////////////////////
     #endregion
-    #region Translations/Tafseers
+    #region Translations
     ///////////////////////////////////////////////////////////////////////////////
     private int m_information_page_index = 0;
     private int m_information_box_top = DEFAULT_INFORMATION_BOX_TOP;
@@ -12050,7 +11974,6 @@ public partial class MainForm : Form, ISubscriber
             if (
                 (TabControl.SelectedTab == TranslationTabPage) ||
                 (TabControl.SelectedTab == GrammarTabPage) ||
-                (TabControl.SelectedTab == VerbFormsTabPage) ||
                 (TabControl.SelectedTab == RelatedWordsTabPage)
                )
             {
@@ -12185,7 +12108,6 @@ public partial class MainForm : Form, ISubscriber
             if (
                 (TabControl.SelectedTab == TranslationTabPage) ||
                 (TabControl.SelectedTab == GrammarTabPage) ||
-                (TabControl.SelectedTab == VerbFormsTabPage) ||
                 (TabControl.SelectedTab == RelatedWordsTabPage)
                )
             {
@@ -12268,257 +12190,6 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    // tafseer
-    private string m_tafseer = null;
-    private List<Verse> m_tafseer_verses = new List<Verse>();
-    private void PopulateTafseerComboBox()
-    {
-        try
-        {
-            for (int i = 0; i < 3; i++) TafseerComboBox.SelectedIndexChanged -= new EventHandler(TafseerComboBox_SelectedIndexChanged);
-            TafseerComboBox.BeginUpdate();
-
-            if (TafseerComboBox.Items.Count == 0)
-            {
-                string[] folders = Directory.GetDirectories(Globals.TAFSEERS_FOLDER, "*.*", SearchOption.TopDirectoryOnly);
-                if (folders.Length > 0)
-                {
-                    TafseerComboBox.Items.Clear();
-                    foreach (string folder in folders)
-                    {
-                        string language_folder = Path.GetFileNameWithoutExtension(folder);
-                        string[] sub_folders = Directory.GetDirectories(folder, "*.*", SearchOption.TopDirectoryOnly);
-                        if (sub_folders.Length > 0)
-                        {
-                            foreach (string sub_folder in sub_folders)
-                            {
-                                string tafseer_folder = Path.GetFileNameWithoutExtension(sub_folder);
-                                TafseerComboBox.Items.Add(language_folder + " - " + tafseer_folder);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        catch
-        {
-            TafseerComboBox.SelectedIndex = -1;
-        }
-        finally
-        {
-            TafseerComboBox.EndUpdate();
-            TafseerComboBox.SelectedIndexChanged += new EventHandler(TafseerComboBox_SelectedIndexChanged);
-
-            // trigger TafseerComboBox_SelectedIndexChanged
-            if (TafseerComboBox.Items.Count > 0)
-            {
-                TafseerComboBox.SelectedIndex = 0;
-            }
-        }
-    }
-    private void TafseerComboBox_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (TafseerComboBox.SelectedIndex != -1)
-        {
-            m_tafseer = TafseerComboBox.SelectedItem.ToString();
-
-            if (m_tafseer_verses != null)
-            {
-                if (m_tafseer_verses.Count == 1)
-                {
-                    Verse verse = m_tafseer_verses[0];
-                    DisplayTafseer(verse);
-                }
-                else if (m_tafseer_verses.Count > 1)
-                {
-                    List<Verse> verses = new List<Verse>(m_tafseer_verses);
-                    DisplayTafseer(verses);
-                }
-                else // not set yet
-                {
-                    Verse verse = GetCurrentVerse();
-                    if (verse != null)
-                    {
-                        DisplayTafseer(verse);
-                    }
-                }
-            }
-        }
-    }
-    private void DisplayTafseer(Verse verse)
-    {
-        if (
-             (m_text_display_mode == TextDisplayMode.Both) ||
-             (m_text_display_mode == TextDisplayMode.TranslationOnly)
-           )
-        {
-            if (TabControl.SelectedTab == TafseerTabPage)
-            {
-                if (verse != null)
-                {
-                    if (m_tafseer_verses != null)
-                    {
-                        string tafseers_folder = Application.StartupPath + "/" + Globals.TAFSEERS_FOLDER;
-                        string filename = (verse.Chapter.Number.ToString("000") + verse.NumberInChapter.ToString("000") + ".htm");
-                        string tafseer_langauge = m_tafseer.Substring(0, m_tafseer.IndexOf(" - "));
-                        string tafseer_folder = m_tafseer.Substring(m_tafseer.IndexOf(" - ") + 3);
-                        string path = tafseers_folder + "/" + tafseer_langauge + "/" + tafseer_folder + "/" + filename;
-                        if (!File.Exists(path))
-                        {
-                            try
-                            {
-                                string download_folder = tafseers_folder + "/" + tafseer_langauge + "/" + tafseer_folder;
-
-                                // should use metadata.txt later
-                                string zip_remote_folder = "";
-                                string zip_filename = "";
-                                switch (tafseer_langauge)
-                                {
-                                    case "Arabic":
-                                        {
-                                        }
-                                        break;
-                                    case "English":
-                                        {
-                                            switch (tafseer_folder)
-                                            {
-                                                case "Ibn Katheer":
-                                                    zip_remote_folder = "http://ia902705.us.archive.org/22/items/IbnKatheer_201412";
-                                                    zip_filename = "IbnKatheer.zip";
-                                                    break;
-                                                case "Maududi":
-                                                    zip_remote_folder = "http://ia802703.us.archive.org/6/items/Maududi_201412";
-                                                    zip_filename = "Maududi.zip";
-                                                    break;
-                                                case "Al-Tustari":
-                                                    zip_remote_folder = "http://ia902702.us.archive.org/28/items/AlTustari";
-                                                    zip_filename = "Al-Tustari.zip";
-                                                    break;
-                                                default:
-                                                    // do nothing so "404.htm" is already diaplayed
-                                                    break;
-                                            }
-                                        }
-                                        break;
-                                    default:
-                                        // do nothing so "404.htm" is already diaplayed
-                                        break;
-                                }
-
-                                DownloadFile(zip_remote_folder + "/" + zip_filename, download_folder + "/" + zip_filename);
-                                string zip_filepath = download_folder + "/" + zip_filename;
-                                if (File.Exists(zip_filepath))
-                                {
-                                    ZipFile zip_file = ZipFile.Open(zip_filepath, FileAccess.Read);
-                                    List<ZipFile.Entry> zip_entries = zip_file.GetEntries();
-                                    foreach (ZipFile.Entry entry in zip_entries)
-                                    {
-                                        zip_file.ExtractFile(entry, download_folder + "/" + entry.FileName);
-                                    }
-                                    zip_file.Close();
-                                }
-                            }
-                            catch
-                            {
-                                path = tafseers_folder + "/" + "404.htm";
-                            }
-                        }
-
-                        if (File.Exists(path))
-                        {
-                            TafseerWebBrowser.Url = new Uri(path);
-
-                            m_tafseer_verses.Clear();
-                            m_tafseer_verses.Add(verse);
-                        }
-                        else
-                        {
-                            TafseerWebBrowser.Url = null;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    private void DisplayTafseer(List<Verse> verses)
-    {
-        if (
-             (m_text_display_mode == TextDisplayMode.Both) ||
-             (m_text_display_mode == TextDisplayMode.TranslationOnly)
-           )
-        {
-            if (TabControl.SelectedTab == TafseerTabPage)
-            {
-                if (verses != null)
-                {
-                    if (verses.Count > 0)
-                    {
-                        if (m_client != null)
-                        {
-                            if (m_client.Book != null)
-                            {
-                                List<Chapter> chapters = m_client.Book.GetChapters(verses);
-                                if (chapters != null)
-                                {
-                                    if (chapters.Count > 0)
-                                    {
-                                        if (m_tafseer_verses != null)
-                                        {
-                                            string tafseers_folder = Application.StartupPath + "/" + Globals.TAFSEERS_FOLDER;
-                                            string filename = (chapters[0].Number.ToString("000") + "000" + ".htm");
-                                            string tafseer_langauge = m_tafseer.Substring(0, m_tafseer.IndexOf(" - "));
-                                            string tafseer_folder = m_tafseer.Substring(m_tafseer.IndexOf(" - ") + 3);
-                                            string path = tafseers_folder + "/" + tafseer_langauge + "/" + tafseer_folder + "/" + filename;
-                                            if (!File.Exists(path))
-                                            {
-                                                try
-                                                {
-                                                    string download_folder = tafseers_folder + "/" + tafseer_langauge + "/" + tafseer_folder;
-                                                    string zip_filename = "XXXXXX.zip";
-                                                    DownloadFile("http://archive.org/" + zip_filename, download_folder + "/" + zip_filename);
-                                                    string zip_filepath = download_folder + "/" + zip_filename;
-                                                    if (File.Exists(zip_filepath))
-                                                    {
-                                                        ZipFile zip_file = ZipFile.Open(zip_filepath, FileAccess.Read);
-                                                        List<ZipFile.Entry> zip_entries = zip_file.GetEntries();
-                                                        foreach (ZipFile.Entry entry in zip_entries)
-                                                        {
-                                                            zip_file.ExtractFile(entry, download_folder + "/" + entry.FileName);
-                                                        }
-                                                        zip_file.Close();
-                                                    }
-                                                }
-                                                catch
-                                                {
-                                                    path = tafseers_folder + "/" + "404.htm";
-                                                }
-                                            }
-
-                                            if (File.Exists(path))
-                                            {
-                                                TafseerWebBrowser.Url = new Uri(path);
-
-                                                m_tafseer_verses.Clear();
-                                                m_tafseer_verses.AddRange(verses);
-                                            }
-                                            else
-                                            {
-                                                TafseerWebBrowser.Url = null;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        DisplayTafseer(verses[0]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
     ///////////////////////////////////////////////////////////////////////////////
     #endregion
     #region Grammar/RelatedWords
@@ -12563,29 +12234,27 @@ public partial class MainForm : Form, ISubscriber
         if (word != null)
         {
             string grammar_info = "";
-            if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
-            {
-                //if (word.Lemma != null)
-                //{
-                //    grammar_info += "Lemma\t" + word.Lemma + "\t";
-                //}
-                //if (word.Root != null)
-                //{
-                //    grammar_info += "Root\t" + word.Root + "\t";
-                //}
-                //if (word.SpecialGroup != null)
-                //{
-                //    grammar_info += "Special Group\t" + word.SpecialGroup + "\t";
-                //}
-                //if (grammar_info.Length > 0)
-                //{
-                //    grammar_info += "\r\n";
-                //}
 
-                grammar_info += word.ArabicGrammar;
-                grammar_info += "\r\n";
-                grammar_info += word.EnglishGrammar;
-            }
+            //if (word.Lemma != null)
+            //{
+            //    grammar_info += "Lemma\t" + word.Lemma + "\t";
+            //}
+            //if (word.Root != null)
+            //{
+            //    grammar_info += "Root\t" + word.Root + "\t";
+            //}
+            //if (word.SpecialGroup != null)
+            //{
+            //    grammar_info += "Special Group\t" + word.SpecialGroup + "\t";
+            //}
+            //if (grammar_info.Length > 0)
+            //{
+            //    grammar_info += "\r\n";
+            //}
+
+            grammar_info += word.ArabicGrammar;
+            grammar_info += "\r\n";
+            grammar_info += word.EnglishGrammar;
 
             return grammar_info;
         }
@@ -12642,7 +12311,6 @@ public partial class MainForm : Form, ISubscriber
                 if (
                     (TabControl.SelectedTab == TranslationTabPage) ||
                     (TabControl.SelectedTab == GrammarTabPage) ||
-                    (TabControl.SelectedTab == VerbFormsTabPage) ||
                     (TabControl.SelectedTab == RelatedWordsTabPage)
                    )
                 {
@@ -12666,141 +12334,21 @@ public partial class MainForm : Form, ISubscriber
                 if (
                     (TabControl.SelectedTab == TranslationTabPage) ||
                     (TabControl.SelectedTab == GrammarTabPage) ||
-                    (TabControl.SelectedTab == VerbFormsTabPage) ||
                     (TabControl.SelectedTab == RelatedWordsTabPage)
                    )
                 {
-                    if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
+                    string word_grammar = GetWordGrammar(m_clicked_word);
+                    if (!String.IsNullOrEmpty(word_grammar))
                     {
-                        string word_grammar = GetWordGrammar(m_clicked_word);
-                        if (!String.IsNullOrEmpty(word_grammar))
-                        {
-                            GrammarTextBox.Text = word_grammar;
-                        }
-                        else
-                        {
-                            GrammarTextBox.Text = "";
-                        }
-                        GrammarTextBox.Refresh();
-
-                        m_info_word = word;
+                        GrammarTextBox.Text = word_grammar;
                     }
-                }
-            }
-        }
-    }
-    private Word m_verb_forms_word = null;
-    private void DisplayVerbForms(Word word)
-    {
-        if (
-             (m_text_display_mode == TextDisplayMode.Both) ||
-             (m_text_display_mode == TextDisplayMode.TranslationOnly)
-           )
-        {
-            if (word != null)
-            {
-                if (m_client != null)
-                {
-                    if (m_client.Book != null)
+                    else
                     {
-                        if (
-                            (TabControl.SelectedTab == TranslationTabPage) ||
-                            (TabControl.SelectedTab == GrammarTabPage) ||
-                            (TabControl.SelectedTab == VerbFormsTabPage) ||
-                            (TabControl.SelectedTab == RelatedWordsTabPage)
-                           )
-                        {
-                            string verb = word.BestRoot;
-                            if (verb != null)
-                            {
-                                StringBuilder str = new StringBuilder();
-                                if (verb.Length == 3)
-                                {
-                                    char Faa = verb[0];
-                                    char Ain = verb[1];
-                                    char Laam = verb[2];
-
-                                    string form1_perfect = Faa + "َ" + Ain + "َ" + Laam + "َ";
-                                    string form1_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُ";
-                                    string form1_active_participle = Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form1_passive_participle = "مَ" + Faa + "ْ" + Ain + "ُ" + Laam + "ٌ";
-                                    string form1_verbal_noun = Faa + "ِ" + Ain + "َ" + Laam + "ٌ";
-
-                                    string form2_perfect = Faa + "َ" + Ain + "َّ" + Laam + "َ";
-                                    string form2_imperfect = "يُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
-                                    string form2_active_participle = "مُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
-                                    string form2_passive_participle = "مُ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
-                                    string form2_verbal_noun = "تَ" + Faa + "ْ" + Ain + "ِ" + "ي" + Laam + "ٌ";
-
-                                    string form3_perfect = Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
-                                    string form3_imperfect = "يُ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ُ";
-                                    string form3_active_participle = "مُ" + Faa + "" + "ا" + Ain + "ِ" + Laam + "ٌ";
-                                    string form3_passive_participle = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "ٌ";
-                                    string form3_verbal_noun = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "َ" + "ة" + " / " + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                                    string form4_perfect = "اَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
-                                    string form4_imperfect = "يُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
-                                    string form4_active_participle = "مُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form4_passive_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-                                    string form4_verbal_noun = "اِ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-
-                                    string form5_perfect = "تَ" + Faa + "َ" + Ain + "َّ" + Laam + "َ";
-                                    string form5_imperfect = "يَتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
-                                    string form5_active_participle = "مُتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
-                                    string form5_passive_participle = "مُتَ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
-                                    string form5_verbal_noun = "تَ" + Faa + "َ" + Ain + "ُّ" + Laam + "ٌ";
-
-                                    string form6_perfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
-                                    string form6_imperfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
-                                    string form6_active_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ٌ";
-                                    string form6_passive_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
-                                    string form6_verbal_noun = "تَ" + Faa + "َ" + "ا" + Ain + "ُ" + Laam + "ٌ";
-
-                                    string form7_perfect = "اِنْ" + Faa + "َ" + Ain + "َ" + Laam + "َ";
-                                    string form7_imperfect = "يَنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ُ";
-                                    string form7_active_participle = "مُنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form7_passive_participle = "مُنْ" + Faa + "َ" + Ain + "َ" + Laam + "ٌ";
-                                    string form7_verbal_noun = "اِنْ" + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                                    string form8_perfect = "إِ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "َ";
-                                    string form8_imperfect = "يَ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ُ";
-                                    string form8_active_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form8_passive_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "ٌ";
-                                    string form8_verbal_noun = "إ" + Faa + "ْ" + "تِ" + Ain + "َ" + Laam + "ٌ";
-
-                                    string form9_perfect = "إِ" + Faa + "ْ" + Ain + "َ" + Laam + "َّ";
-                                    string form9_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُّ";
-                                    string form9_active_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌّ";
-                                    string form9_passive_participle = "";
-                                    string form9_verbal_noun = "إِ" + Faa + "ْ" + Ain + "ِ" + Laam + "ا" + Laam + "ٌ";
-
-                                    string form10_perfect = "إِسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
-                                    string form10_imperfect = "يَسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
-                                    string form10_active_participle = "مُسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form10_passive_participle = "مُسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-                                    string form10_verbal_noun = "اِسْتِ" + Faa + "ْ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                                    //str.AppendLine("Form" + "\t" + "Perfect" + "\t" + "Imperfect" + "\t" + "ActiveParticiple" + "\t" + "PassiveParticiple" + "\t" + "VerbalNoun");
-                                    str.AppendLine("الصيغة" + "\t" + "ماضي" + "\t" + "مضارع" + "\t" + "إسم فاعل" + "\t" + "إسم مفعول" + "\t" + "مصدر");
-                                    str.AppendLine("I\t" + form1_perfect + "\t" + form1_imperfect + "\t" + form1_active_participle + "\t" + form1_passive_participle + "\t" + form1_verbal_noun);
-                                    str.AppendLine("II\t" + form2_perfect + "\t" + form2_imperfect + "\t" + form2_active_participle + "\t" + form2_passive_participle + "\t" + form2_verbal_noun);
-                                    str.AppendLine("III\t" + form3_perfect + "\t" + form3_imperfect + "\t" + form3_active_participle + "\t" + form3_passive_participle + "\t" + form3_verbal_noun);
-                                    str.AppendLine("IV\t" + form4_perfect + "\t" + form4_imperfect + "\t" + form4_active_participle + "\t" + form4_passive_participle + "\t" + form4_verbal_noun);
-                                    str.AppendLine("V\t" + form5_perfect + "\t" + form5_imperfect + "\t" + form5_active_participle + "\t" + form5_passive_participle + "\t" + form5_verbal_noun);
-                                    str.AppendLine("VI\t" + form6_perfect + "\t" + form6_imperfect + "\t" + form6_active_participle + "\t" + form6_passive_participle + "\t" + form6_verbal_noun);
-                                    str.AppendLine("VII\t" + form7_perfect + "\t" + form7_imperfect + "\t" + form7_active_participle + "\t" + form7_passive_participle + "\t" + form7_verbal_noun);
-                                    str.AppendLine("VIII\t" + form8_perfect + "\t" + form8_imperfect + "\t" + form8_active_participle + "\t" + form8_passive_participle + "\t" + form8_verbal_noun);
-                                    str.AppendLine("IX\t" + form9_perfect + "\t" + form9_imperfect + "\t" + form9_active_participle + "\t" + form9_passive_participle + "\t" + form9_verbal_noun);
-                                    str.Append("X\t" + form10_perfect + "\t" + form10_imperfect + "\t" + form10_active_participle + "\t" + form10_passive_participle + "\t" + form10_verbal_noun);
-                                }
-
-                                VerbFormsTextBox.Text = str.ToString();
-                                VerbFormsTextBox.Refresh();
-
-                                m_verb_forms_word = word;
-                            }
-                        }
+                        GrammarTextBox.Text = "";
                     }
+                    GrammarTextBox.Refresh();
+
+                    m_info_word = word;
                 }
             }
         }
@@ -20912,14 +20460,15 @@ public partial class MainForm : Form, ISubscriber
 
                 PopulateWordsListBox();
 
-                if ((Globals.EDITION == Edition.Standard || Globals.EDITION == Edition.Grammar))
+                //?????
+                if (Globals.EDITION == Edition.Standard)
                 {
                     BuildLetterFrequencies();
                     DisplayLetterFrequencies();
                 }
             }
         }
-        LetterFrequencyWithDiacriticsCheckBox.Checked = FindByTextWithDiacriticsCheckBox.Checked && (Globals.EDITION == Edition.Standard || Globals.EDITION == Edition.Grammar);
+        LetterFrequencyWithDiacriticsCheckBox.Checked = FindByTextWithDiacriticsCheckBox.Checked && (Globals.EDITION == Edition.Standard);
     }
     private void LetterFrequencyWithDiacriticsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
@@ -22008,7 +21557,7 @@ public partial class MainForm : Form, ISubscriber
             FindByTextHamzaAboveYaaLabel.Visible = true;
 
             FindByTextWithDiacriticsCheckBox.Visible = true;
-            LetterFrequencyWithDiacriticsCheckBox.Visible = (Globals.EDITION == Edition.Standard || Globals.EDITION == Edition.Grammar);
+            LetterFrequencyWithDiacriticsCheckBox.Visible = (Globals.EDITION == Edition.Standard);
             //FindByTextWithDiacriticsCheckBox.Text = "ā";
             //ToolTip.SetToolTip(FindByTextWithDiacriticsCheckBox, "with diacritics  مع الحركات");
         }
@@ -25381,7 +24930,6 @@ public partial class MainForm : Form, ISubscriber
                     DisplayCurrentPositions();
 
                     DisplayTranslations(m_client.FoundVerses);
-                    DisplayTafseer(m_client.FoundVerses);
                     DisplaySymmetry();
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
@@ -25542,7 +25090,6 @@ public partial class MainForm : Form, ISubscriber
                     DisplayCurrentPositions();
 
                     DisplayTranslations(verses);
-                    DisplayTafseer(verses);
                     DisplaySymmetry();
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
@@ -25722,7 +25269,6 @@ public partial class MainForm : Form, ISubscriber
                         verses.AddRange(chapter.Verses);
                     }
                     DisplayTranslations(verses);
-                    DisplayTafseer(verses);
                     DisplaySymmetry();
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
@@ -25853,7 +25399,6 @@ public partial class MainForm : Form, ISubscriber
                     DisplayCurrentPositions();
 
                     DisplayTranslations(verses);
-                    DisplayTafseer(verses);
                     DisplaySymmetry();
                     DisplayCVWLSequence();
                     DisplayValuesSequence();
@@ -27629,7 +27174,7 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_client != null)
             {
-                if ((Globals.EDITION == Edition.Research) || (Globals.EDITION == Edition.Ultimate))
+                if (Globals.EDITION == Edition.Dynamic)
                 {
                     UpdateNumerologySystem();
                 }
@@ -27879,11 +27424,11 @@ public partial class MainForm : Form, ISubscriber
                                     int last_verse_letter_index = letter2.NumberInVerse - 1;
 
                                     // calculate and display verse_number_sum, word_number_sum, letter_number_sum
-                                    if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                                    if (Globals.EDITION == Edition.Standard)
                                     {
                                         CalculateAndDisplayCounts(highlighted_verses, first_verse_letter_index, last_verse_letter_index);
                                     }
-                                    else // Research and Ultimate Editions
+                                    else
                                     {
                                         int stopmarks = 0;
                                         int quranmarks = 0;
@@ -29747,7 +29292,6 @@ public partial class MainForm : Form, ISubscriber
                         DisplayMathsChapterVerseSums(verses); // update C, V, C+V, C-V, C×V, C÷V, etc.
 
                         DisplayTranslations(verses); // display translations for selected verses
-                        DisplayTafseer(verses);
                         DisplaySymmetry();
                         DisplayCVWLSequence();
                         DisplayValuesSequence();
@@ -29811,7 +29355,6 @@ public partial class MainForm : Form, ISubscriber
                         DisplayMathsChapterVerseSums(verses); // update C, V, C+V, C-V, C×V, C÷V, etc.
 
                         DisplayTranslations(verses); // display translations for selected verses
-                        DisplayTafseer(verses);
                         DisplaySymmetry();
                         DisplayCVWLSequence();
                         DisplayValuesSequence();
@@ -30079,7 +29622,6 @@ public partial class MainForm : Form, ISubscriber
                         DisplayMathsChapterVerseSums(verses); // update C, V, C+V, C-V, C×V, C÷V, etc.
 
                         DisplayTranslations(verses); // display translations for selected verses
-                        DisplayTafseer(verses);
                         DisplaySymmetry();
                         DisplayCVWLSequence();
                         DisplayValuesSequence();

@@ -205,7 +205,7 @@ namespace Model
         {
             get
             {
-                if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                if (Globals.EDITION == Edition.Standard)
                 {
                     int letter_count = 0;
                     if (this.words != null)
@@ -234,7 +234,7 @@ namespace Model
             get
             {
                 unique_letters = new List<char>();
-                if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                if (Globals.EDITION == Edition.Standard)
                 {
                     if (this.words != null)
                     {

@@ -5,45 +5,45 @@ using System.Runtime.InteropServices;
 
 static class Program
 {
-    //// disable the X close icon
-    //const int MF_BYPOSITION = 0x400;
-    //[DllImport("User32")]
-    //private static extern int RemoveMenu(IntPtr hMenu, int nPosition, int wFlags);
-    //[DllImport("User32")]
-    //private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-    //[DllImport("User32")]
-    //private static extern int GetMenuItemCount(IntPtr hWnd);
-    //static void DisableCloseIcon(IntPtr system_menu_handle)
+    //// disable the x close icon
+    //const int mf_byposition = 0x400;
+    //[dllimport("user32")]
+    //private static extern int removemenu(intptr hmenu, int nposition, int wflags);
+    //[dllimport("user32")]
+    //private static extern intptr getsystemmenu(intptr hwnd, bool brevert);
+    //[dllimport("user32")]
+    //private static extern int getmenuitemcount(intptr hwnd);
+    //static void disablecloseicon(intptr system_menu_handle)
     //{
-    //    int system_menu_item_count = GetMenuItemCount(system_menu_handle);
-    //    RemoveMenu(system_menu_handle, system_menu_item_count - 1, MF_BYPOSITION);
+    //    int system_menu_item_count = getmenuitemcount(system_menu_handle);
+    //    removemenu(system_menu_handle, system_menu_item_count - 1, mf_byposition);
     //}
 
-    //// Single Instance
+    //// single instance
     //    bool m_first_instance = true;
-    //    using (Mutex mutex = new Mutex(true, Application.ProductName, out m_first_instance))
+    //    using (mutex mutex = new mutex(true, application.productname, out m_first_instance))
     //    {
     //        if (m_first_instance)
     //        {
-    //            Application.EnableVisualStyles();
-    //            Application.SetCompatibleTextRenderingDefault(false);
-    //            MainForm form = new MainForm();
+    //            application.enablevisualstyles();
+    //            application.setcompatibletextrenderingdefault(false);
+    //            mainform form = new mainform();
 
-    //            // disable the X close button of the form
-    //            IntPtr system_menu_handle = GetSystemMenu(form.Handle, false);
-    //            DisableCloseIcon(system_menu_handle);
+    //            // disable the x close button of the form
+    //            intptr system_menu_handle = getsystemmenu(form.handle, false);
+    //            disablecloseicon(system_menu_handle);
 
-    //            Application.Run(form);
+    //            application.run(form);
     //        }
     //        else
     //        {
-    //            Windows windows = new Windows(true, true);
-    //            foreach (Window window in windows)
+    //            windows windows = new windows(true, true);
+    //            foreach (window window in windows)
     //            {
-    //                if (window.Title.StartsWith(Application.ProductName))
+    //                if (window.title.startswith(application.productname))
     //                {
-    //                    window.Visible = true;
-    //                    window.BringToFront();
+    //                    window.visible = true;
+    //                    window.bringtofront();
     //                }
     //            }
     //        }
@@ -62,17 +62,9 @@ static class Program
             {
                 Globals.EDITION = Edition.Standard;
             }
-            else if (args[0].ToUpper() == "G")
+            else if (args[0].ToUpper() == "D")
             {
-                Globals.EDITION = Edition.Grammar;
-            }
-            else if (args[0].ToUpper() == "R")
-            {
-                Globals.EDITION = Edition.Research;
-            }
-            else if (args[0].ToUpper() == "U")
-            {
-                Globals.EDITION = Edition.Ultimate;
+                Globals.EDITION = Edition.Dynamic;
             }
             else
             {
@@ -81,17 +73,13 @@ static class Program
         }
         else
         {
-            if (Control.ModifierKeys == (Keys.Control | Keys.Shift))
+            if (Control.ModifierKeys == Keys.Control)
             {
-                Globals.EDITION = Edition.Ultimate;
-            }
-            else if (Control.ModifierKeys == Keys.Control)
-            {
-                Globals.EDITION = Edition.Grammar;
+                Globals.EDITION = Edition.Dynamic;
             }
             else if (Control.ModifierKeys == Keys.Shift)
             {
-                Globals.EDITION = Edition.Research;
+                Globals.EDITION = Edition.Dynamic;
             }
             else // default
             {

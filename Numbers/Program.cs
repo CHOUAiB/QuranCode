@@ -19,17 +19,9 @@ static class Program
             {
                 Globals.EDITION = Edition.Standard;
             }
-            else if (args[0].ToUpper() == "G")
+            else if (args[0].ToUpper() == "D")
             {
-                Globals.EDITION = Edition.Ultimate;
-            }
-            else if (args[0].ToUpper() == "R")
-            {
-                Globals.EDITION = Edition.Ultimate;
-            }
-            else if (args[0].ToUpper() == "U")
-            {
-                Globals.EDITION = Edition.Ultimate;
+                Globals.EDITION = Edition.Dynamic;
             }
             else
             {
@@ -38,17 +30,13 @@ static class Program
         }
         else
         {
-            if (Control.ModifierKeys == (Keys.Control | Keys.Shift))
+            if (Control.ModifierKeys == Keys.Control)
             {
-                Globals.EDITION = Edition.Ultimate;
-            }
-            else if (Control.ModifierKeys == Keys.Control)
-            {
-                Globals.EDITION = Edition.Ultimate;
+                Globals.EDITION = Edition.Dynamic;
             }
             else if (Control.ModifierKeys == Keys.Shift)
             {
-                Globals.EDITION = Edition.Ultimate;
+                Globals.EDITION = Edition.Dynamic;
             }
             else // default
             {
@@ -60,27 +48,17 @@ static class Program
         {
             case Edition.Standard:
                 {
+                    Numbers.MAX_NUMBER = int.MaxValue / 1024;
+                }
+                break;
+            case Edition.Dynamic:
+                {
                     Numbers.MAX_NUMBER = int.MaxValue / 256;
-                }
-                break;
-            case Edition.Grammar:
-                {
-                    Numbers.MAX_NUMBER = int.MaxValue / 128;
-                }
-                break;
-            case Edition.Research:
-                {
-                    Numbers.MAX_NUMBER = int.MaxValue / 64;
-                }
-                break;
-            case Edition.Ultimate:
-                {
-                    Numbers.MAX_NUMBER = int.MaxValue / 32;
                 }
                 break;
             default:
                 {
-                    Numbers.MAX_NUMBER = int.MaxValue / 256;
+                    Numbers.MAX_NUMBER = int.MaxValue / 1024;
                 }
                 break;
         }

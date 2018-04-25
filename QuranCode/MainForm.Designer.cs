@@ -489,13 +489,8 @@ partial class MainForm
             this.RelatedWordsTabPage = new System.Windows.Forms.TabPage();
             this.RelatedWordsButton = new System.Windows.Forms.Button();
             this.RelatedWordsTextBox = new System.Windows.Forms.TextBox();
-            this.TafseerTabPage = new System.Windows.Forms.TabPage();
-            this.TafseerComboBox = new System.Windows.Forms.ComboBox();
-            this.TafseerWebBrowser = new System.Windows.Forms.WebBrowser();
             this.GrammarTabPage = new System.Windows.Forms.TabPage();
             this.GrammarTextBox = new System.Windows.Forms.TextBox();
-            this.VerbFormsTabPage = new System.Windows.Forms.TabPage();
-            this.VerbFormsTextBox = new System.Windows.Forms.TextBox();
             this.UserTextTabPage = new System.Windows.Forms.TabPage();
             this.UserTextValueButton = new System.Windows.Forms.Button();
             this.UserTextValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -708,9 +703,7 @@ partial class MainForm
             this.DistancesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DistancesDivisorNumericUpDown)).BeginInit();
             this.RelatedWordsTabPage.SuspendLayout();
-            this.TafseerTabPage.SuspendLayout();
             this.GrammarTabPage.SuspendLayout();
-            this.VerbFormsTabPage.SuspendLayout();
             this.UserTextTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserTextValueNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FindByFrequencySumNumericUpDown)).BeginInit();
@@ -5034,23 +5027,21 @@ partial class MainForm
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControl.Controls.Add(this.TranslationTabPage);
+            this.TabControl.Controls.Add(this.GrammarTabPage);
+            this.TabControl.Controls.Add(this.RelatedWordsTabPage);
             this.TabControl.Controls.Add(this.SymmetryTabPage);
             this.TabControl.Controls.Add(this.CVWLSequenceTabPage);
             this.TabControl.Controls.Add(this.ValuesSequenceTabPage);
             this.TabControl.Controls.Add(this.DNASequenceTabPage);
             this.TabControl.Controls.Add(this.MathsTabPage);
             this.TabControl.Controls.Add(this.DistancesTabPage);
-            this.TabControl.Controls.Add(this.RelatedWordsTabPage);
-            this.TabControl.Controls.Add(this.TafseerTabPage);
-            this.TabControl.Controls.Add(this.GrammarTabPage);
-            this.TabControl.Controls.Add(this.VerbFormsTabPage);
             this.TabControl.Controls.Add(this.UserTextTabPage);
             this.TabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TabControl.Location = new System.Drawing.Point(0, 0);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(818, 193);
+            this.TabControl.Size = new System.Drawing.Size(818, 195);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5063,7 +5054,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(810, 167);
+            this.TranslationTabPage.Size = new System.Drawing.Size(810, 169);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = " Translation ";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse";
@@ -5258,7 +5249,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(810, 167);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(810, 169);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]";
@@ -5336,7 +5327,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(810, 167);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(810, 169);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
@@ -5432,7 +5423,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(810, 167);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(810, 169);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
@@ -5551,7 +5542,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(810, 167);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(810, 169);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
@@ -5628,7 +5619,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(810, 167);
+            this.MathsTabPage.Size = new System.Drawing.Size(810, 169);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations";
@@ -5742,7 +5733,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(810, 167);
+            this.MathsPanel.Size = new System.Drawing.Size(810, 169);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -7030,7 +7021,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(810, 167);
+            this.DistancesTabPage.Size = new System.Drawing.Size(810, 169);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word.";
@@ -7106,7 +7097,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(810, 167);
+            this.DistancesPanel.Size = new System.Drawing.Size(810, 169);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -7946,9 +7937,9 @@ partial class MainForm
             this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
             this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
             this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(810, 167);
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(810, 169);
             this.RelatedWordsTabPage.TabIndex = 192;
-            this.RelatedWordsTabPage.Text = "Related Words ";
+            this.RelatedWordsTabPage.Text = "Words ";
             this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
             this.RelatedWordsTabPage.UseVisualStyleBackColor = true;
             // 
@@ -7991,49 +7982,13 @@ partial class MainForm
             this.RelatedWordsTextBox.TextChanged += new System.EventHandler(this.RelatedWordsTextBox_TextChanged);
             this.RelatedWordsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
-            // TafseerTabPage
-            // 
-            this.TafseerTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.TafseerTabPage.Controls.Add(this.TafseerComboBox);
-            this.TafseerTabPage.Controls.Add(this.TafseerWebBrowser);
-            this.TafseerTabPage.Location = new System.Drawing.Point(4, 22);
-            this.TafseerTabPage.Name = "TafseerTabPage";
-            this.TafseerTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TafseerTabPage.Size = new System.Drawing.Size(810, 167);
-            this.TafseerTabPage.TabIndex = 191;
-            this.TafseerTabPage.Text = " Tafseer ";
-            this.TafseerTabPage.ToolTipText = "Exegesis/commentry of the current chapter/verse";
-            this.TafseerTabPage.UseVisualStyleBackColor = true;
-            // 
-            // TafseerComboBox
-            // 
-            this.TafseerComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.TafseerComboBox.BackColor = System.Drawing.SystemColors.Control;
-            this.TafseerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.TafseerComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TafseerComboBox.FormattingEnabled = true;
-            this.TafseerComboBox.Location = new System.Drawing.Point(612, 144);
-            this.TafseerComboBox.Name = "TafseerComboBox";
-            this.TafseerComboBox.Size = new System.Drawing.Size(183, 20);
-            this.TafseerComboBox.TabIndex = 2;
-            this.TafseerComboBox.SelectedIndexChanged += new System.EventHandler(this.TafseerComboBox_SelectedIndexChanged);
-            // 
-            // TafseerWebBrowser
-            // 
-            this.TafseerWebBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TafseerWebBrowser.Location = new System.Drawing.Point(3, 3);
-            this.TafseerWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.TafseerWebBrowser.Name = "TafseerWebBrowser";
-            this.TafseerWebBrowser.Size = new System.Drawing.Size(804, 161);
-            this.TafseerWebBrowser.TabIndex = 1;
-            // 
             // GrammarTabPage
             // 
             this.GrammarTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
             this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
             this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
             this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(810, 167);
+            this.GrammarTabPage.Size = new System.Drawing.Size(810, 169);
             this.GrammarTabPage.TabIndex = 193;
             this.GrammarTabPage.Text = " Grammar";
             this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
@@ -8059,38 +8014,6 @@ partial class MainForm
             this.GrammarTextBox.WordWrap = false;
             this.GrammarTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
-            // VerbFormsTabPage
-            // 
-            this.VerbFormsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.VerbFormsTabPage.Controls.Add(this.VerbFormsTextBox);
-            this.VerbFormsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.VerbFormsTabPage.Name = "VerbFormsTabPage";
-            this.VerbFormsTabPage.Size = new System.Drawing.Size(810, 167);
-            this.VerbFormsTabPage.TabIndex = 196;
-            this.VerbFormsTabPage.Text = "Verb Forms";
-            this.VerbFormsTabPage.ToolTipText = "Verb forms for the current word in Arabic";
-            this.VerbFormsTabPage.UseVisualStyleBackColor = true;
-            // 
-            // VerbFormsTextBox
-            // 
-            this.VerbFormsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.VerbFormsTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.VerbFormsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VerbFormsTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.VerbFormsTextBox.HideSelection = false;
-            this.VerbFormsTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.VerbFormsTextBox.Multiline = true;
-            this.VerbFormsTextBox.Name = "VerbFormsTextBox";
-            this.VerbFormsTextBox.ReadOnly = true;
-            this.VerbFormsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.VerbFormsTextBox.Size = new System.Drawing.Size(817, 169);
-            this.VerbFormsTextBox.TabIndex = 1;
-            this.VerbFormsTextBox.Text = "Click a word to display its verb forms in Arabic.";
-            this.VerbFormsTextBox.WordWrap = false;
-            this.VerbFormsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
-            // 
             // UserTextTabPage
             // 
             this.UserTextTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -8100,7 +8023,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(810, 167);
+            this.UserTextTabPage.Size = new System.Drawing.Size(810, 169);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any text using the current value-letter system and show it" +
@@ -10481,11 +10404,8 @@ partial class MainForm
             ((System.ComponentModel.ISupportInitialize)(this.DistancesDivisorNumericUpDown)).EndInit();
             this.RelatedWordsTabPage.ResumeLayout(false);
             this.RelatedWordsTabPage.PerformLayout();
-            this.TafseerTabPage.ResumeLayout(false);
             this.GrammarTabPage.ResumeLayout(false);
             this.GrammarTabPage.PerformLayout();
-            this.VerbFormsTabPage.ResumeLayout(false);
-            this.VerbFormsTabPage.PerformLayout();
             this.UserTextTabPage.ResumeLayout(false);
             this.UserTextTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserTextValueNumericUpDown)).EndInit();
@@ -10807,16 +10727,11 @@ partial class MainForm
     private System.Windows.Forms.Label TranslationsCancelSettingsLabel;
     private System.Windows.Forms.Label TranslationsApplySettingsLabel;
     private System.Windows.Forms.ComboBox TranslatorComboBox;
-    private System.Windows.Forms.TabPage TafseerTabPage;
-    private System.Windows.Forms.ComboBox TafseerComboBox;
-    private System.Windows.Forms.WebBrowser TafseerWebBrowser;
     private System.Windows.Forms.TabPage RelatedWordsTabPage;
     private System.Windows.Forms.Button RelatedWordsButton;
     private System.Windows.Forms.TextBox RelatedWordsTextBox;
     private System.Windows.Forms.TabPage GrammarTabPage;
     private System.Windows.Forms.TextBox GrammarTextBox;
-    private System.Windows.Forms.TabPage VerbFormsTabPage;
-    private System.Windows.Forms.TextBox VerbFormsTextBox;
     private System.Windows.Forms.TabPage DNASequenceTabPage;
     private System.Windows.Forms.Label DNASequenceDirectionLabel;
     private System.Windows.Forms.Label DNASequenceSystemEditLabel;

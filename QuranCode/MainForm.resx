@@ -467,6 +467,14 @@ God &gt;</value>
         PjqVZ8bJGXfP9jiYRCI9OLc+fpL7MeV8bfck/AO68uIPuIVrFQAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="RelatedWordsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABmSURBVDhPY7h9
+        +/Z/SjADJZpBejEMUNro83/rM1miXYXVAFIMwWkAsYbgNYAYQwgaQMgQogzAZwjRBtTX12ONGaIMwKUZ
+        ZzoAORmG8WkmaAAhzXgNIEYzTgMYGBjIT8qkZi6KcyMAE2hGb/GrtrMAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="SymmetryInspectLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
@@ -628,14 +636,6 @@ God &gt;</value>
         sPTmAQnfWfRoP5uLN4hM9qL/jNpz2RbwfLQb1BjhiTO4HXv5KE71jvWg/QjbyTsCnJcPY3ldWL5xfM6j
         zA4fJBMPUCwW69q2gr7uPYxe7MB99xQL09fIpWLIK21UK8CvVj7YYr8ih2j7qGqmTvEH6iKwpZkaIBUR
         q0kDNgLaxUbnf9i5Zndp/XYJ+A0hbp0s3C/xLAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="RelatedWordsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABmSURBVDhPY7h9
-        +/Z/SjADJZpBejEMUNro83/rM1miXYXVAFIMwWkAsYbgNYAYQwgaQMgQogzAZwjRBtTX12ONGaIMwKUZ
-        ZzoAORmG8WkmaAAhzXgNIEYzTgMYGBjIT8qkZi6KcyMAE2hGb/GrtrMAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="GoldenRatioTypeLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

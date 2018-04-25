@@ -7,12 +7,9 @@
 
   ------------------------------------------------------------------------------
   QuranCode Editions:
-  Standard Edition	Static letter-value systems.		[Start normally]
-  Grammar Edition	Word-by-word grammar information.	[Start with Ctrl]
-  Research Edition	Dynamic letter-value systems.		[Start with Shift]
-  Ultimate Edition	Big prime/composite indices.		[Start with Ctrl+Shift]
+  	Standard Edition	Static letter-value systems.		[Start normally]
+	Dynamic Edition		Dynamic letter-value systems.		[Start with Shift]
   ------------------------------------------------------------------------------
-
 
   Initial Letter Sentences (جمل الحروف المقطعة)
   ------------------------------------------------------------------------------

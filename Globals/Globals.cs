@@ -1,9 +1,9 @@
-public enum Edition { Standard, Grammar, Research, Ultimate }
+public enum Edition { Standard, Dynamic }
 
 public static class Globals
 {
-    public static Edition EDITION = Edition.Grammar;
-    public static string VERSION = "6.19.607.4"; // updated by Version.bat (with AssemblyInfo.cs of all projects)
+    public static Edition EDITION = Edition.Standard;
+    public static string VERSION = "6.19.613.4"; // updated by Version.bat (with AssemblyInfo.cs of all projects)
     public static string SHORT_VERSION
     {
         get
@@ -23,17 +23,9 @@ public static class Globals
             {
                 return ("v" + version + "");
             }
-            else if (EDITION == Edition.Grammar)
+            else if (EDITION == Edition.Dynamic)
             {
-                return ("v" + version + "G");
-            }
-            else if (EDITION == Edition.Research)
-            {
-                return ("v" + version + "R");
-            }
-            else if (EDITION == Edition.Ultimate)
-            {
-                return ("v" + version + "U");
+                return ("v" + version + "D");
             }
             else
             {
@@ -66,7 +58,6 @@ public static class Globals
     public static string TRANSLATIONS_FOLDER = "Translations";
     public static string TRANSLATIONS_OFFLINE_FOLDER = "Translations/Offline";
     public static string TRANSLATIONS_FLAGS_FOLDER = "Translations/Flags";
-    public static string TAFSEERS_FOLDER = "Tafseers";
     public static string RULES_FOLDER = "Rules";
     public static string VALUES_FOLDER = "Values";
     public static string NUMBERS_FOLDER = "Numbers";

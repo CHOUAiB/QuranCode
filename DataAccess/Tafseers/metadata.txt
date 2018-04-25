@@ -1,4 +1,0 @@
-﻿Name	Language	Url
-AlTustari	English	http://archive.org/download/AlTustari/Al-Tustari.zip
-IbnKatheer	English	http://archive.org/download/IbnKatheer/Ibn%20Katheer.zip
-Irving	English	http://archive.org/download/IrvingHtmEdited/Irving%20htm%20edited.zip

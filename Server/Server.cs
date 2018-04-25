@@ -125,8 +125,6 @@ public class Server : IPublisher
     public const string DEFAULT_TRANSLATION_6 = "ur.jawadi";
     public const string DEFAULT_TRANSLATION_7 = "zh.jian";
 
-    public const string DEFAULT_TAFSEER = "English/Ibn Katheer";
-
     static Server()
     {
         if (!Directory.Exists(Globals.STATISTICS_FOLDER))
@@ -441,10 +439,7 @@ public class Server : IPublisher
                         DataAccess.LoadTranslations(s_book);
                         DataAccess.LoadWordMeanings(s_book);
                         DataAccess.LoadWordRoots(s_book);
-                        if ((Globals.EDITION == Edition.Grammar) || (Globals.EDITION == Edition.Ultimate))
-                        {
-                            DataAccess.LoadWordParts(s_book);
-                        }
+                        DataAccess.LoadWordParts(s_book);
 
                         // populate root-words dictionary
                         s_book.PopulateRootWords();
@@ -602,7 +597,7 @@ public class Server : IPublisher
                                 if (numerology_system_name.Contains("DNA")) continue;
 
                                 // zero static letter-value for dynamic letter position/distance testing only
-                                if ((Globals.EDITION == Edition.Standard) || (Globals.EDITION == Edition.Grammar))
+                                if (Globals.EDITION == Edition.Standard)
                                 {
                                     if (numerology_system_name.Contains("Zeros")) continue;
                                 }

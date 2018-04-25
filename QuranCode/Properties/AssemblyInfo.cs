@@ -7,15 +7,13 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("QuranCode")]
 [assembly: AssemblyDescription(
-    "\t\t" + "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" + "\r\n" +
+     "\r\n" + "\t\t" + "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" + "\r\n" + "\r\n" +
     "All praise to Allah, the Creator and Sustainer of the worlds." + "\r\n" +
     "\r\n" +
     "QuranCode is a free and open-source similarity and numerical research tool for the ever-revealing Quran (القرءان الكريم)." + "\r\n" +
     "\r\n" +
     "Standard Edition\tStart normally for static value systems." + "\r\n" +
-    "Grammar Edition\tStart with Ctrl for word-by-word grammar." + "\r\n" +
-    "Research Edition\tStart with Shift for dynamic value systems." + "\r\n" +
-    "Ultimate Edition\tStart with Ctrl+Shift for big prime indices." + "\r\n" +
+    "Dynamic Edition\tStart with Shift for dynamic value systems." + "\r\n" +
     "\r\n" +
     "CREDITS:" + "\r\n" +
     "http://tanzil.net for the Quran text and translations." + "\r\n" +
@@ -23,14 +21,13 @@ using System.Runtime.InteropServices;
     "http://qurandev.appspot.com for the word meanings." + "\r\n" +
     "http://corpus.quran.com for the word grammar." + "\r\n" +
     "http://everyayah.com for live audio streaming." + "\r\n" +
-    "http://facebook.com/442224832489787 for tafseers." + "\r\n" +
     "Authors of any used open-source projects or code fragments." + "\r\n" +
     "\r\n" +
     "If you have found QuranCode useful, then please recite chapters الفاتِحة and الإخلآص for the spirits (أرواح) and the souls (أنفُس) of its developers, sincere users, and their parents too. Thank you." + "\r\n" +
     //"\r\n" +
     "May Allah bless us all with guidance in this life and forgiveness and generous reward in the hereafter (مَغْفِرَةٍۢ وَأَجْرٍۢ كَرِيمٍ)." + "\r\n" +
     "\r\n" +
-    "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ" + "\t\t" + "الله أكبر" + "\t" + "God >"
+    "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ" + "\r\n" + "الله أكبر" + "\t" + "God >"
     )
 ]
 [assembly: AssemblyConfiguration("")]
@@ -58,5 +55,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.0.*")]
-[assembly: AssemblyVersion("6.19.607.4")]
-[assembly: AssemblyFileVersion("6.19.607.4")]
+[assembly: AssemblyVersion("6.19.613.4")]
+[assembly: AssemblyFileVersion("6.19.613.4")]
