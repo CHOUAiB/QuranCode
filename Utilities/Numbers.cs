@@ -196,7 +196,7 @@ public static class Numbers
         }
     }
 
-    public static int MAX_NUMBER = int.MaxValue / ((Globals.EDITION == Edition.Standard) ? 1024 : 256);
+    public static int MAX_NUMBER = int.MaxValue / 1024;
 
     // pi = circumference / diameter ~= 355/113
     public const double PI = 3.141592653589793238462643383279D;

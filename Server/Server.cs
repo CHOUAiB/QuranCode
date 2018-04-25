@@ -12065,14 +12065,14 @@ public class Server : IPublisher
 
         return false;
     }
-    public static int CalculateLetterFrequencySum(string text, string phrase, FrequencySearchType frequency_search_type)
+    public static int CalculateLetterFrequencySum(string text, string phrase, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         if (String.IsNullOrEmpty(phrase)) return 0;
 
         int result = 0;
         if (s_numerology_system != null)
         {
-            //text = text.SimplifyTo(s_numerology_system.TextMode);
+            if (!with_diacritics) text = text.SimplifyTo(s_numerology_system.TextMode);
             text = text.Replace("\r", "");
             text = text.Replace("\n", "");
             text = text.Replace("\t", "");
@@ -12087,7 +12087,7 @@ public class Server : IPublisher
 
             if (!String.IsNullOrEmpty(text))
             {
-                //phrase = phrase.SimplifyTo(s_numerology_system.TextMode);
+                if (!with_diacritics) phrase = phrase.SimplifyTo(s_numerology_system.TextMode);
                 phrase = phrase.Replace("\r", "");
                 phrase = phrase.Replace("\n", "");
                 phrase = phrase.Replace("\t", "");
@@ -12129,16 +12129,16 @@ public class Server : IPublisher
         return result;
     }
     // find by frequency - Words
-    public static List<Word> FindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public static List<Word> FindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        return DoFindWords(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindWords(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Word> DoFindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Word> DoFindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
-        return DoFindWords(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindWords(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Word> DoFindWords(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Word> DoFindWords(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Word> result = new List<Word>();
         if (!string.IsNullOrEmpty(phrase))
@@ -12156,7 +12156,10 @@ public class Server : IPublisher
                                 foreach (Word word in verse.Words)
                                 {
                                     string text = word.Text;
-                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                    if (!with_diacritics) text = text.SimplifyTo(s_numerology_system.TextMode);
+                                    if (!with_diacritics) phrase = phrase.SimplifyTo(s_numerology_system.TextMode);
+
+                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                     if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                     {
                                         result.Add(word);
@@ -12171,16 +12174,16 @@ public class Server : IPublisher
         return result;
     }
     // find by frequency - Sentences
-    public static List<Sentence> FindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public static List<Sentence> FindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        return DoFindSentences(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindSentences(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Sentence> DoFindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Sentence> DoFindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
-        return DoFindSentences(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindSentences(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Sentence> DoFindSentences(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Sentence> DoFindSentences(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Sentence> result = new List<Sentence>();
         if (source != null)
@@ -12216,7 +12219,7 @@ public class Server : IPublisher
                         if (sentence != null)
                         {
                             string text = sentence.ToString();
-                            int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                            int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                             if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                             {
                                 result.Add(sentence);
@@ -12279,7 +12282,7 @@ public class Server : IPublisher
                                     if (sentence != null)
                                     {
                                         string text = sentence.ToString();
-                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                         if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                         {
                                             result.Add(sentence);
@@ -12323,7 +12326,7 @@ public class Server : IPublisher
                                             if (sentence != null)
                                             {
                                                 string text = sentence.ToString();
-                                                int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                                int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                                 if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                                 {
                                                     result.Add(sentence);
@@ -12368,7 +12371,7 @@ public class Server : IPublisher
                                     if (sentence != null)
                                     {
                                         string text = sentence.ToString();
-                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                         if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                         {
                                             result.Add(sentence);
@@ -12397,7 +12400,7 @@ public class Server : IPublisher
                                         if (sentence != null)
                                         {
                                             string text = sentence.ToString();
-                                            int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                            int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                             if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                             {
                                                 result.Add(sentence);
@@ -12420,7 +12423,7 @@ public class Server : IPublisher
                                     if (sentence != null)
                                     {
                                         string text = sentence.ToString();
-                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                         if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                         {
                                             result.Add(sentence);
@@ -12469,7 +12472,7 @@ public class Server : IPublisher
                                                 if (sentence != null)
                                                 {
                                                     string text = sentence.ToString();
-                                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                                     if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                                     {
                                                         result.Add(sentence);
@@ -12486,7 +12489,7 @@ public class Server : IPublisher
                                                 if (sentence != null)
                                                 {
                                                     string text = sentence.ToString();
-                                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                                     if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                                     {
                                                         result.Add(sentence);
@@ -12498,7 +12501,7 @@ public class Server : IPublisher
                                                 if (sentence != null)
                                                 {
                                                     string text = sentence.ToString();
-                                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                                     if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                                     {
                                                         result.Add(sentence);
@@ -12523,7 +12526,7 @@ public class Server : IPublisher
                                     if (sentence != null)
                                     {
                                         string text = sentence.ToString();
-                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                        int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                         if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                         {
                                             result.Add(sentence);
@@ -12546,16 +12549,16 @@ public class Server : IPublisher
         return result;
     }
     // find by frequency - Verses
-    public static List<Verse> FindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public static List<Verse> FindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        return DoFindVerses(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindVerses(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
-        return DoFindVerses(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindVerses(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Verse> DoFindVerses(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Verse> DoFindVerses(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Verse> result = new List<Verse>();
         if (!string.IsNullOrEmpty(phrase))
@@ -12571,7 +12574,7 @@ public class Server : IPublisher
                             if (verse != null)
                             {
                                 string text = verse.Text;
-                                int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                 if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                 {
                                     result.Add(verse);
@@ -12585,16 +12588,16 @@ public class Server : IPublisher
         return result;
     }
     // find by frequency - Chapters
-    public static List<Chapter> FindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public static List<Chapter> FindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        return DoFindChapters(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindChapters(search_scope, current_selection, previous_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
-        return DoFindChapters(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        return DoFindChapters(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
-    private static List<Chapter> DoFindChapters(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    private static List<Chapter> DoFindChapters(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         List<Chapter> result = new List<Chapter>();
         if (!string.IsNullOrEmpty(phrase))
@@ -12613,7 +12616,7 @@ public class Server : IPublisher
                                 if (chapter != null)
                                 {
                                     string text = chapter.Text;
-                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+                                    int letter_frequency_sum = CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
                                     if (Compare(letter_frequency_sum, sum, number_type, comparison_operator, sum_remainder))
                                     {
                                         result.Add(chapter);

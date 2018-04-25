@@ -384,7 +384,7 @@ public partial class MainForm : Form, ISubscriber
 
                             if (Globals.EDITION == Edition.Dynamic)
                             {
-                                splash_form.Information = "Preparing prime/composite indexes ...";
+                                splash_form.Information = "Building prime/composite indexes ...";
                             }
                             else
                             {
@@ -5052,19 +5052,19 @@ public partial class MainForm : Form, ISubscriber
                 case GoldenRatioScope.None:
                     {
                         m_golden_ratio_scope = GoldenRatioScope.Sentence;
-                        if (File.Exists("Images/golden_sentence.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_sentence.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Sentence-level golden ratio");
                         }
                     }
                     break;
                 case GoldenRatioScope.Letter:
                     {
-                        m_golden_ratio_scope = GoldenRatioScope.None;
-                        if (File.Exists("Images/golden_none.png"))
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
+                            m_golden_ratio_scope = GoldenRatioScope.None;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_none.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Golden ratio colorization");
                         }
                     }
@@ -5072,9 +5072,9 @@ public partial class MainForm : Form, ISubscriber
                 case GoldenRatioScope.Word:
                     {
                         m_golden_ratio_scope = GoldenRatioScope.Letter;
-                        if (File.Exists("Images/golden_letter.png"))
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_letter.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Letter-level golden ratio");
                         }
                     }
@@ -5082,9 +5082,9 @@ public partial class MainForm : Form, ISubscriber
                 case GoldenRatioScope.Sentence:
                     {
                         m_golden_ratio_scope = GoldenRatioScope.Word;
-                        if (File.Exists("Images/golden_word.png"))
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_word.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Word-level golden ratio");
                         }
                     }
@@ -5098,9 +5098,9 @@ public partial class MainForm : Form, ISubscriber
                 case GoldenRatioScope.None:
                     {
                         m_golden_ratio_scope = GoldenRatioScope.Letter;
-                        if (File.Exists("Images/golden_letter.png"))
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_letter.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Letter-level golden ratio");
                         }
                     }
@@ -5108,9 +5108,9 @@ public partial class MainForm : Form, ISubscriber
                 case GoldenRatioScope.Letter:
                     {
                         m_golden_ratio_scope = GoldenRatioScope.Word;
-                        if (File.Exists("Images/golden_word.png"))
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_word.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Word-level golden ratio");
                         }
                     }
@@ -5118,9 +5118,9 @@ public partial class MainForm : Form, ISubscriber
                 case GoldenRatioScope.Word:
                     {
                         m_golden_ratio_scope = GoldenRatioScope.Sentence;
-                        if (File.Exists("Images/golden_sentence.png"))
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_sentence.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Sentence-level golden ratio");
                         }
                     }
@@ -5128,9 +5128,9 @@ public partial class MainForm : Form, ISubscriber
                 case GoldenRatioScope.Sentence:
                     {
                         m_golden_ratio_scope = GoldenRatioScope.None;
-                        if (File.Exists("Images/golden_none.png"))
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
                         {
-                            GoldenRatioScopeLabel.Image = new Bitmap("Images/golden_none.png");
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
                             ToolTip.SetToolTip(GoldenRatioScopeLabel, "Golden ratio colorization");
                         }
                     }
@@ -5149,9 +5149,9 @@ public partial class MainForm : Form, ISubscriber
             case GoldenRatioOrder.LongShort:
                 {
                     m_golden_ratio_order = GoldenRatioOrder.ShortLong;
-                    if (File.Exists("Images/golden_sl.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sl.png"))
                     {
-                        GoldenRatioOrderLabel.Image = new Bitmap("Images/golden_sl.png");
+                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sl.png");
                         ToolTip.SetToolTip(GoldenRatioOrderLabel, "Golden ratio ~= 1 + 0.618");
                     }
                 }
@@ -5159,9 +5159,9 @@ public partial class MainForm : Form, ISubscriber
             case GoldenRatioOrder.ShortLong:
                 {
                     m_golden_ratio_order = GoldenRatioOrder.LongShort;
-                    if (File.Exists("Images/golden_ls.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_ls.png"))
                     {
-                        GoldenRatioOrderLabel.Image = new Bitmap("Images/golden_ls.png");
+                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_ls.png");
                         ToolTip.SetToolTip(GoldenRatioOrderLabel, "Golden ratio ~= 0.618 + 1");
                     }
                 }
@@ -5177,9 +5177,9 @@ public partial class MainForm : Form, ISubscriber
             case GoldenRatioType.Text:
                 {
                     m_golden_ratio_type = GoldenRatioType.Value;
-                    if (File.Exists("Images/golden_value.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_value.png"))
                     {
-                        GoldenRatioTypeLabel.Image = new Bitmap("Images/golden_value.png");
+                        GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_value.png");
                         ToolTip.SetToolTip(GoldenRatioTypeLabel, "Value-based golden ratio");
                     }
                 }
@@ -5187,9 +5187,9 @@ public partial class MainForm : Form, ISubscriber
             case GoldenRatioType.Value:
                 {
                     m_golden_ratio_type = GoldenRatioType.Text;
-                    if (File.Exists("Images/golden_text.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_text.png"))
                     {
-                        GoldenRatioTypeLabel.Image = new Bitmap("Images/golden_text.png");
+                        GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_text.png");
                         ToolTip.SetToolTip(GoldenRatioTypeLabel, "Text-based golden ratio");
                     }
                 }
@@ -7798,18 +7798,18 @@ public partial class MainForm : Form, ISubscriber
                         if (Chapter.SortOrder == ChapterSortOrder.Ascending)
                         {
                             m_chapter_sort_order = ChapterSortOrder.Descending;
-                            if (File.Exists("Images/arrow_down.png"))
+                            if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_down.png"))
                             {
-                                ChapterSortLabel.Image = new Bitmap("Images/arrow_down.png");
+                                ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_down.png");
                                 ToolTip.SetToolTip(ChapterSortLabel, "ترتيب تنازلي Descending");
                             }
                         }
                         else
                         {
                             m_chapter_sort_order = ChapterSortOrder.Ascending;
-                            if (File.Exists("Images/arrow_up.png"))
+                            if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_up.png"))
                             {
-                                ChapterSortLabel.Image = new Bitmap("Images/arrow_up.png");
+                                ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_up.png");
                                 ToolTip.SetToolTip(ChapterSortLabel, "ترتيب نصاعدي Ascending");
                             }
                         }
@@ -7906,17 +7906,17 @@ public partial class MainForm : Form, ISubscriber
             //////////////////////////////////////////////////////////
             if (Chapter.SortOrder == ChapterSortOrder.Ascending)
             {
-                if (File.Exists("Images/arrow_up.png"))
+                if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_up.png"))
                 {
-                    ChapterSortLabel.Image = new Bitmap("Images/arrow_up.png");
+                    ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_up.png");
                     ToolTip.SetToolTip(ChapterSortLabel, "ترتيب نصاعدي Ascending");
                 }
             }
             else
             {
-                if (File.Exists("Images/arrow_down.png"))
+                if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_down.png"))
                 {
-                    ChapterSortLabel.Image = new Bitmap("Images/arrow_down.png");
+                    ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_down.png");
                     ToolTip.SetToolTip(ChapterSortLabel, "ترتيب تنازلي Descending");
                 }
             }
@@ -20460,15 +20460,11 @@ public partial class MainForm : Form, ISubscriber
 
                 PopulateWordsListBox();
 
-                //?????
-                if (Globals.EDITION == Edition.Standard)
-                {
-                    BuildLetterFrequencies();
-                    DisplayLetterFrequencies();
-                }
+                LetterFrequencyWithDiacriticsCheckBox.Checked = m_with_diacritics;
+                BuildLetterFrequencies();
+                DisplayLetterFrequencies();
             }
         }
-        LetterFrequencyWithDiacriticsCheckBox.Checked = FindByTextWithDiacriticsCheckBox.Checked && (Globals.EDITION == Edition.Standard);
     }
     private void LetterFrequencyWithDiacriticsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
@@ -21500,8 +21496,6 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateKeyboard(string text_mode)
     {
-        FindByTextWithDiacriticsCheckBox.Visible = false;
-        LetterFrequencyWithDiacriticsCheckBox.Visible = false;
         FindByTextHamzaLabel.Visible = false;
         FindByTextTaaMarbootaLabel.Visible = false;
         FindByTextElfMaqsuraLabel.Visible = false;
@@ -21510,6 +21504,7 @@ public partial class MainForm : Form, ISubscriber
         FindByTextHamzaBelowElfLabel.Visible = false;
         FindByTextHamzaAboveWawLabel.Visible = false;
         FindByTextHamzaAboveYaaLabel.Visible = false;
+        LetterFrequencyWithDiacriticsCheckBox.Visible = m_find_by_phrase;
 
         if (text_mode == "Simplified28")
         {
@@ -21555,11 +21550,7 @@ public partial class MainForm : Form, ISubscriber
             FindByTextHamzaBelowElfLabel.Visible = true;
             FindByTextHamzaAboveWawLabel.Visible = true;
             FindByTextHamzaAboveYaaLabel.Visible = true;
-
-            FindByTextWithDiacriticsCheckBox.Visible = true;
-            LetterFrequencyWithDiacriticsCheckBox.Visible = (Globals.EDITION == Edition.Standard);
-            //FindByTextWithDiacriticsCheckBox.Text = "ā";
-            //ToolTip.SetToolTip(FindByTextWithDiacriticsCheckBox, "with diacritics  مع الحركات");
+            LetterFrequencyWithDiacriticsCheckBox.Visible = true;
         }
         else
         {
@@ -24064,6 +24055,7 @@ public partial class MainForm : Form, ISubscriber
     private void FindByFrequencyPhraseCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_find_by_phrase = !m_find_by_phrase;
+        UpdateKeyboard(m_client.NumerologySystem.TextMode);
 
         ResetFindByFrequencyResultTypeLabels();
         m_frequency_result_type = (m_find_by_phrase) ? FrequencyResultType.Sentences : FrequencyResultType.Chapters;
@@ -24497,7 +24489,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         case FrequencyResultType.Words:
                             {
-                                int match_count = m_client.FindWords(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type);
+                                int match_count = m_client.FindWords(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
                                 if (m_client.FoundWords != null)
                                 {
                                     m_find_result_header = match_count + ((match_count == 1) ? " word" : " words") + " with " + text + " in " + m_client.SearchScope.ToString();
@@ -24507,7 +24499,7 @@ public partial class MainForm : Form, ISubscriber
                             break;
                         case FrequencyResultType.Sentences:
                             {
-                                int match_count = m_client.FindSentences(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type);
+                                int match_count = m_client.FindSentences(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
                                 if (m_client.FoundSentences != null)
                                 {
                                     m_find_result_header = match_count + ((match_count == 1) ? " sentence" : " sentences") + " with " + text + " in " + m_client.SearchScope.ToString();
@@ -24517,7 +24509,7 @@ public partial class MainForm : Form, ISubscriber
                             break;
                         case FrequencyResultType.Verses:
                             {
-                                int match_count = m_client.FindVerses(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type);
+                                int match_count = m_client.FindVerses(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
                                 if (m_client.FoundVerses != null)
                                 {
                                     m_find_result_header = match_count + ((match_count == 1) ? " verse" : " verses") + " with " + text + " in " + m_client.SearchScope.ToString();
@@ -24527,7 +24519,7 @@ public partial class MainForm : Form, ISubscriber
                             break;
                         case FrequencyResultType.Chapters:
                             {
-                                int match_count = m_client.FindChapters(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type);
+                                int match_count = m_client.FindChapters(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
                                 if (m_client.FoundChapters != null)
                                 {
                                     m_find_result_header = match_count + ((match_count == 1) ? " chapter" : " chapters") + " with " + text + " in " + m_client.SearchScope.ToString();
@@ -30012,75 +30004,69 @@ public partial class MainForm : Form, ISubscriber
             case DrawingShape.Lines:
                 {
                     m_drawing_shape = DrawingShape.Spiral;
-                    if (File.Exists("Images/spiral.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "spiral.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/spiral.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/spiral.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "spiral.png");
                     }
                 }
                 break;
             case DrawingShape.Spiral:
                 {
                     m_drawing_shape = DrawingShape.SquareSpiral;
-                    if (File.Exists("Images/squarespiral.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "squarespiral.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/squarespiral.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/squarespiral.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "squarespiral.png");
                     }
                 }
                 break;
             case DrawingShape.SquareSpiral:
                 {
                     m_drawing_shape = DrawingShape.Square;
-                    if (File.Exists("Images/square.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "square.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/square.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/square.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "square.png");
                     }
                 }
                 break;
             case DrawingShape.Square:
                 {
                     m_drawing_shape = DrawingShape.HGoldenRect;
-                    if (File.Exists("Images/hgoldenrect.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "hgoldenrect.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/hgoldenrect.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/hgoldenrect.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "hgoldenrect.png");
                     }
                 }
                 break;
             case DrawingShape.HGoldenRect:
                 {
                     m_drawing_shape = DrawingShape.VGoldenRect;
-                    if (File.Exists("Images/vgoldenrect.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "vgoldenrect.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/vgoldenrect.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/vgoldenrect.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "vgoldenrect.png");
                     }
                 }
                 break;
             case DrawingShape.VGoldenRect:
                 {
                     m_drawing_shape = DrawingShape.Cube;
-                    if (File.Exists("Images/cube.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "cube.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/cube.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/cube.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "cube.png");
                     }
                 }
                 break;
             case DrawingShape.Cube:
                 {
                     m_drawing_shape = DrawingShape.Lines;
-                    if (File.Exists("Images/lines.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "lines.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/lines.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/lines.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "lines.png");
                     }
 
                 }
                 break;
         }
+        DrawSearchTermsLabel.Image = ChangeDrawingShapeLabel.Image;
     }
     private void GotoPreviousShape()
     {
@@ -30089,70 +30075,70 @@ public partial class MainForm : Form, ISubscriber
             case DrawingShape.Lines:
                 {
                     m_drawing_shape = DrawingShape.Cube;
-                    if (File.Exists("Images/cube.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "cube.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/cube.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/cube.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "cube.png");
+                        DrawSearchTermsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "cube.png");
                     }
                 }
                 break;
             case DrawingShape.Spiral:
                 {
                     m_drawing_shape = DrawingShape.Lines;
-                    if (File.Exists("Images/lines.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "lines.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/lines.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/lines.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "lines.png");
+                        DrawSearchTermsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "lines.png");
                     }
                 }
                 break;
             case DrawingShape.SquareSpiral:
                 {
                     m_drawing_shape = DrawingShape.Spiral;
-                    if (File.Exists("Images/spiral.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "spiral.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/spiral.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/spiral.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "spiral.png");
+                        DrawSearchTermsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "spiral.png");
                     }
                 }
                 break;
             case DrawingShape.Square:
                 {
                     m_drawing_shape = DrawingShape.SquareSpiral;
-                    if (File.Exists("Images/squarespiral.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "squarespiral.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/squarespiral.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/squarespiral.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "squarespiral.png");
+                        DrawSearchTermsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "squarespiral.png");
                     }
                 }
                 break;
             case DrawingShape.HGoldenRect:
                 {
                     m_drawing_shape = DrawingShape.Square;
-                    if (File.Exists("Images/square.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "square.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/square.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/square.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "square.png");
+                        DrawSearchTermsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "square.png");
                     }
                 }
                 break;
             case DrawingShape.VGoldenRect:
                 {
                     m_drawing_shape = DrawingShape.HGoldenRect;
-                    if (File.Exists("Images/hgoldenrect.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "hgoldenrect.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/hgoldenrect.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/hgoldenrect.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "hgoldenrect.png");
+                        DrawSearchTermsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "hgoldenrect.png");
                     }
                 }
                 break;
             case DrawingShape.Cube:
                 {
                     m_drawing_shape = DrawingShape.VGoldenRect;
-                    if (File.Exists("Images/vgoldenrect.png"))
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "vgoldenrect.png"))
                     {
-                        ChangeDrawingShapeLabel.Image = new Bitmap("Images/vgoldenrect.png");
-                        DrawSearchTermsLabel.Image = new Bitmap("Images/vgoldenrect.png");
+                        ChangeDrawingShapeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "vgoldenrect.png");
+                        DrawSearchTermsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "vgoldenrect.png");
                     }
                 }
                 break;

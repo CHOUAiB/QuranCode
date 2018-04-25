@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("QuranCode")]
 [assembly: AssemblyDescription(
-     "\r\n" + "\t\t" + "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" + "\r\n" + "\r\n" +
+    "\t\t" + "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" + "\r\n" + "\r\n" +
     "All praise to Allah, the Creator and Sustainer of the worlds." + "\r\n" +
     "\r\n" +
     "QuranCode is a free and open-source similarity and numerical research tool for the ever-revealing Quran (القرءان الكريم)." + "\r\n" +
@@ -27,7 +27,8 @@ using System.Runtime.InteropServices;
     //"\r\n" +
     "May Allah bless us all with guidance in this life and forgiveness and generous reward in the hereafter (مَغْفِرَةٍۢ وَأَجْرٍۢ كَرِيمٍ)." + "\r\n" +
     "\r\n" +
-    "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ" + "\r\n" + "الله أكبر" + "\t" + "God >"
+    "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ" + "\r\n" + "\r\n" +
+    "الله أكبر" + "\t" + "God >"
     )
 ]
 [assembly: AssemblyConfiguration("")]

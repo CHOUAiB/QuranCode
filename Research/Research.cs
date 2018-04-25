@@ -3416,40 +3416,35 @@ public static partial class Research
                 }
 
                 StringBuilder parts_arabic_grammar_str = new StringBuilder();
-                if (Globals.EDITION == Edition.Dynamic)
+                if (word.Parts.Count > 0)
                 {
-                    if (word.Parts.Count > 0)
+                    foreach (WordPart word_part in word.Parts)
                     {
-                        foreach (WordPart word_part in word.Parts)
-                        {
-                            parts_arabic_grammar_str.Append(
-                                GrammarDictionary.Arabic(word_part.Grammar.Position) +
-                                " " +
-                                GrammarDictionary.Arabic(word_part.Grammar.Attribute) +
-                                ((word_part.Grammar.Position == "V") ? (" " + GrammarDictionary.Arabic(word_part.Grammar.Qualifier)) : "") +
-                                " و");
-                        }
-                        parts_arabic_grammar_str.Remove(parts_arabic_grammar_str.Length - 2, 2);
-                        parts_arabic_grammar_str.Replace("  ", " ");
+                        parts_arabic_grammar_str.Append(
+                            GrammarDictionary.Arabic(word_part.Grammar.Position) +
+                            " " +
+                            GrammarDictionary.Arabic(word_part.Grammar.Attribute) +
+                            ((word_part.Grammar.Position == "V") ? (" " + GrammarDictionary.Arabic(word_part.Grammar.Qualifier)) : "") +
+                            " و");
                     }
+                    parts_arabic_grammar_str.Remove(parts_arabic_grammar_str.Length - 2, 2);
+                    parts_arabic_grammar_str.Replace("  ", " ");
                 }
+
                 StringBuilder parts_english_grammar_str = new StringBuilder();
-                if (Globals.EDITION == Edition.Dynamic)
+                if (word.Parts.Count > 0)
                 {
-                    if (word.Parts.Count > 0)
+                    foreach (WordPart word_part in word.Parts)
                     {
-                        foreach (WordPart word_part in word.Parts)
-                        {
-                            parts_english_grammar_str.Append(
-                                GrammarDictionary.English(word_part.Grammar.Position) +
-                                " " +
-                                GrammarDictionary.English(word_part.Grammar.Attribute) +
-                                ((word_part.Grammar.Position == "V") ? (" " + GrammarDictionary.English(word_part.Grammar.Qualifier)) : "") +
-                                " and ");
-                        }
-                        parts_english_grammar_str.Remove(parts_english_grammar_str.Length - 5, 5);
-                        parts_english_grammar_str.Replace("  ", " ");
+                        parts_english_grammar_str.Append(
+                            GrammarDictionary.English(word_part.Grammar.Position) +
+                            " " +
+                            GrammarDictionary.English(word_part.Grammar.Attribute) +
+                            ((word_part.Grammar.Position == "V") ? (" " + GrammarDictionary.English(word_part.Grammar.Qualifier)) : "") +
+                            " and ");
                     }
+                    parts_english_grammar_str.Remove(parts_english_grammar_str.Length - 5, 5);
+                    parts_english_grammar_str.Replace("  ", " ");
                 }
 
                 str.Append
@@ -3570,19 +3565,24 @@ public static partial class Research
             str.AppendLine("Verse" + "\t" + "LFSum" + "\t" + "Address" + "\t" + "Text");
 
             Dictionary<Verse, int> letter_frequency_sums = new Dictionary<Verse, int>();
-            CalculateLetterFrequencySums(client, verses, ref letter_frequency_sums, phrase);
-
-            foreach (Verse verse in letter_frequency_sums.Keys)
+            if (letter_frequency_sums != null)
             {
-                str.AppendLine
-                (
-                    verse.Number + "\t" + letter_frequency_sums[verse] + "\t" + verse.Address + "\t" + verse.Text
-                );
+                CalculateLetterFrequencySums(client, verses, ref letter_frequency_sums, phrase, client.Book.WithDiacritics);
+                if (letter_frequency_sums != null)
+                {
+                    foreach (Verse verse in letter_frequency_sums.Keys)
+                    {
+                        str.AppendLine
+                        (
+                            verse.Number + "\t" + letter_frequency_sums[verse] + "\t" + verse.Address + "\t" + verse.Text
+                        );
+                    }
+                }
             }
         }
         return str.ToString();
     }
-    private static void CalculateLetterFrequencySums(Client client, List<Verse> verses, ref Dictionary<Verse, int> letter_frequency_sums, string phrase)
+    private static void CalculateLetterFrequencySums(Client client, List<Verse> verses, ref Dictionary<Verse, int> letter_frequency_sums, string phrase, bool with_diacritics)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -3592,10 +3592,7 @@ public static partial class Research
         {
             foreach (Verse verse in verses)
             {
-                //string simplified_text = verse.Text.SimplifyTo(client.NumerologySystem.TextMode);
-                //string simplified_phrase = phrase.SimplifyTo(client.NumerologySystem.TextMode);
-                //int lfsum = client.CalculateLetterFrequencySum(simplified_text, simplified_phrase, FrequencySearchType.DuplicateLetters);
-                int lfsum = client.CalculateLetterFrequencySum(verse.Text, phrase, FrequencySearchType.DuplicateLetters);
+                int lfsum = client.CalculateLetterFrequencySum(verse.Text, phrase, FrequencySearchType.DuplicateLetters, with_diacritics);
                 letter_frequency_sums.Add(verse, lfsum);
             }
         }

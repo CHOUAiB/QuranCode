@@ -293,6 +293,11 @@ partial class MainForm
             this.AllTranslatorsCheckBox = new System.Windows.Forms.CheckBox();
             this.TranslatorsComboBox = new System.Windows.Forms.ComboBox();
             this.TranslationsTextBox = new System.Windows.Forms.TextBox();
+            this.GrammarTabPage = new System.Windows.Forms.TabPage();
+            this.GrammarTextBox = new System.Windows.Forms.TextBox();
+            this.RelatedWordsTabPage = new System.Windows.Forms.TabPage();
+            this.RelatedWordsButton = new System.Windows.Forms.Button();
+            this.RelatedWordsTextBox = new System.Windows.Forms.TextBox();
             this.SymmetryTabPage = new System.Windows.Forms.TabPage();
             this.SymmetryIncludeBoundaryCasesCheckBox = new System.Windows.Forms.CheckBox();
             this.SymmetryTypeComboBox = new System.Windows.Forms.ComboBox();
@@ -486,11 +491,6 @@ partial class MainForm
             this.DistancesWithinVerseLabel = new System.Windows.Forms.Label();
             this.DistancesWithinChapterLabel = new System.Windows.Forms.Label();
             this.DistancesWithinBookLabel = new System.Windows.Forms.Label();
-            this.RelatedWordsTabPage = new System.Windows.Forms.TabPage();
-            this.RelatedWordsButton = new System.Windows.Forms.Button();
-            this.RelatedWordsTextBox = new System.Windows.Forms.TextBox();
-            this.GrammarTabPage = new System.Windows.Forms.TabPage();
-            this.GrammarTextBox = new System.Windows.Forms.TextBox();
             this.UserTextTabPage = new System.Windows.Forms.TabPage();
             this.UserTextValueButton = new System.Windows.Forms.Button();
             this.UserTextValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -691,6 +691,8 @@ partial class MainForm
             this.TranslationSplitContainer.Panel1.SuspendLayout();
             this.TranslationSplitContainer.Panel2.SuspendLayout();
             this.TranslationSplitContainer.SuspendLayout();
+            this.GrammarTabPage.SuspendLayout();
+            this.RelatedWordsTabPage.SuspendLayout();
             this.SymmetryTabPage.SuspendLayout();
             this.CVWLSequenceTabPage.SuspendLayout();
             this.ValuesSequenceTabPage.SuspendLayout();
@@ -702,8 +704,6 @@ partial class MainForm
             this.DistancesTabPage.SuspendLayout();
             this.DistancesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DistancesDivisorNumericUpDown)).BeginInit();
-            this.RelatedWordsTabPage.SuspendLayout();
-            this.GrammarTabPage.SuspendLayout();
             this.UserTextTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserTextValueNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FindByFrequencySumNumericUpDown)).BeginInit();
@@ -5041,7 +5041,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(818, 195);
+            this.TabControl.Size = new System.Drawing.Size(818, 196);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5054,7 +5054,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(810, 169);
+            this.TranslationTabPage.Size = new System.Drawing.Size(810, 170);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = " Translation ";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse";
@@ -5240,6 +5240,90 @@ partial class MainForm
             this.TranslationsTextBox.WordWrap = false;
             this.TranslationsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
             // 
+            // GrammarTabPage
+            // 
+            this.GrammarTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
+            this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
+            this.GrammarTabPage.Name = "GrammarTabPage";
+            this.GrammarTabPage.Size = new System.Drawing.Size(810, 170);
+            this.GrammarTabPage.TabIndex = 193;
+            this.GrammarTabPage.Text = " Grammar";
+            this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
+            this.GrammarTabPage.UseVisualStyleBackColor = true;
+            // 
+            // GrammarTextBox
+            // 
+            this.GrammarTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.GrammarTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.GrammarTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GrammarTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.GrammarTextBox.HideSelection = false;
+            this.GrammarTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.GrammarTextBox.Multiline = true;
+            this.GrammarTextBox.Name = "GrammarTextBox";
+            this.GrammarTextBox.ReadOnly = true;
+            this.GrammarTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.GrammarTextBox.Size = new System.Drawing.Size(817, 169);
+            this.GrammarTextBox.TabIndex = 1;
+            this.GrammarTextBox.Text = "Start QuranCode with Ctrl key for the Grammar Edition.";
+            this.GrammarTextBox.WordWrap = false;
+            this.GrammarTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            // 
+            // RelatedWordsTabPage
+            // 
+            this.RelatedWordsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsButton);
+            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
+            this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(810, 170);
+            this.RelatedWordsTabPage.TabIndex = 192;
+            this.RelatedWordsTabPage.Text = "Words ";
+            this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
+            this.RelatedWordsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // RelatedWordsButton
+            // 
+            this.RelatedWordsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RelatedWordsButton.BackColor = System.Drawing.SystemColors.Control;
+            this.RelatedWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.RelatedWordsButton.Enabled = false;
+            this.RelatedWordsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RelatedWordsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RelatedWordsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.RelatedWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("RelatedWordsButton.Image")));
+            this.RelatedWordsButton.Location = new System.Drawing.Point(795, 149);
+            this.RelatedWordsButton.Name = "RelatedWordsButton";
+            this.RelatedWordsButton.Size = new System.Drawing.Size(18, 18);
+            this.RelatedWordsButton.TabIndex = 2;
+            this.ToolTip.SetToolTip(this.RelatedWordsButton, "Display all verses with related words");
+            this.RelatedWordsButton.UseVisualStyleBackColor = false;
+            this.RelatedWordsButton.Click += new System.EventHandler(this.RelatedWordsButton_Click);
+            // 
+            // RelatedWordsTextBox
+            // 
+            this.RelatedWordsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RelatedWordsTextBox.BackColor = System.Drawing.Color.LightGray;
+            this.RelatedWordsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RelatedWordsTextBox.ForeColor = System.Drawing.Color.Navy;
+            this.RelatedWordsTextBox.HideSelection = false;
+            this.RelatedWordsTextBox.Location = new System.Drawing.Point(-3, 0);
+            this.RelatedWordsTextBox.Multiline = true;
+            this.RelatedWordsTextBox.Name = "RelatedWordsTextBox";
+            this.RelatedWordsTextBox.ReadOnly = true;
+            this.RelatedWordsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.RelatedWordsTextBox.Size = new System.Drawing.Size(817, 169);
+            this.RelatedWordsTextBox.TabIndex = 1;
+            this.RelatedWordsTextBox.Text = "Click a word to display words from the same root.";
+            this.RelatedWordsTextBox.WordWrap = false;
+            this.RelatedWordsTextBox.TextChanged += new System.EventHandler(this.RelatedWordsTextBox_TextChanged);
+            this.RelatedWordsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+            // 
             // SymmetryTabPage
             // 
             this.SymmetryTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -5249,7 +5333,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(810, 169);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(810, 170);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]";
@@ -5327,7 +5411,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(810, 169);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(810, 170);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
@@ -5423,7 +5507,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(810, 169);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(810, 170);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
@@ -5542,7 +5626,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(810, 169);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(810, 170);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
@@ -5619,7 +5703,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(810, 169);
+            this.MathsTabPage.Size = new System.Drawing.Size(810, 170);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations";
@@ -5733,7 +5817,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(810, 169);
+            this.MathsPanel.Size = new System.Drawing.Size(810, 170);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -7021,7 +7105,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(810, 169);
+            this.DistancesTabPage.Size = new System.Drawing.Size(810, 170);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word.";
@@ -7097,7 +7181,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(810, 169);
+            this.DistancesPanel.Size = new System.Drawing.Size(810, 170);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -7930,90 +8014,6 @@ partial class MainForm
             this.DistancesWithinBookLabel.Text = "in Book";
             this.DistancesWithinBookLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // RelatedWordsTabPage
-            // 
-            this.RelatedWordsTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsButton);
-            this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
-            this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
-            this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(810, 169);
-            this.RelatedWordsTabPage.TabIndex = 192;
-            this.RelatedWordsTabPage.Text = "Words ";
-            this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
-            this.RelatedWordsTabPage.UseVisualStyleBackColor = true;
-            // 
-            // RelatedWordsButton
-            // 
-            this.RelatedWordsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RelatedWordsButton.BackColor = System.Drawing.SystemColors.Control;
-            this.RelatedWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.RelatedWordsButton.Enabled = false;
-            this.RelatedWordsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RelatedWordsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RelatedWordsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.RelatedWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("RelatedWordsButton.Image")));
-            this.RelatedWordsButton.Location = new System.Drawing.Point(795, 149);
-            this.RelatedWordsButton.Name = "RelatedWordsButton";
-            this.RelatedWordsButton.Size = new System.Drawing.Size(18, 18);
-            this.RelatedWordsButton.TabIndex = 2;
-            this.ToolTip.SetToolTip(this.RelatedWordsButton, "Display all verses with related words");
-            this.RelatedWordsButton.UseVisualStyleBackColor = false;
-            this.RelatedWordsButton.Click += new System.EventHandler(this.RelatedWordsButton_Click);
-            // 
-            // RelatedWordsTextBox
-            // 
-            this.RelatedWordsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.RelatedWordsTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.RelatedWordsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RelatedWordsTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.RelatedWordsTextBox.HideSelection = false;
-            this.RelatedWordsTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.RelatedWordsTextBox.Multiline = true;
-            this.RelatedWordsTextBox.Name = "RelatedWordsTextBox";
-            this.RelatedWordsTextBox.ReadOnly = true;
-            this.RelatedWordsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.RelatedWordsTextBox.Size = new System.Drawing.Size(817, 169);
-            this.RelatedWordsTextBox.TabIndex = 1;
-            this.RelatedWordsTextBox.Text = "Click a word to display words from the same root.";
-            this.RelatedWordsTextBox.WordWrap = false;
-            this.RelatedWordsTextBox.TextChanged += new System.EventHandler(this.RelatedWordsTextBox_TextChanged);
-            this.RelatedWordsTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
-            // 
-            // GrammarTabPage
-            // 
-            this.GrammarTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
-            this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
-            this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(810, 169);
-            this.GrammarTabPage.TabIndex = 193;
-            this.GrammarTabPage.Text = " Grammar";
-            this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
-            this.GrammarTabPage.UseVisualStyleBackColor = true;
-            // 
-            // GrammarTextBox
-            // 
-            this.GrammarTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.GrammarTextBox.BackColor = System.Drawing.Color.LightGray;
-            this.GrammarTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GrammarTextBox.ForeColor = System.Drawing.Color.Navy;
-            this.GrammarTextBox.HideSelection = false;
-            this.GrammarTextBox.Location = new System.Drawing.Point(-3, 0);
-            this.GrammarTextBox.Multiline = true;
-            this.GrammarTextBox.Name = "GrammarTextBox";
-            this.GrammarTextBox.ReadOnly = true;
-            this.GrammarTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.GrammarTextBox.Size = new System.Drawing.Size(817, 169);
-            this.GrammarTextBox.TabIndex = 1;
-            this.GrammarTextBox.Text = "Start QuranCode with Ctrl key for the Grammar Edition.";
-            this.GrammarTextBox.WordWrap = false;
-            this.GrammarTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
-            // 
             // UserTextTabPage
             // 
             this.UserTextTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -8023,7 +8023,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(810, 169);
+            this.UserTextTabPage.Size = new System.Drawing.Size(810, 170);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any text using the current value-letter system and show it" +
@@ -8422,7 +8422,7 @@ partial class MainForm
             this.LetterFrequencyWithDiacriticsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.LetterFrequencyWithDiacriticsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LetterFrequencyWithDiacriticsCheckBox.ForeColor = System.Drawing.Color.Navy;
-            this.LetterFrequencyWithDiacriticsCheckBox.Location = new System.Drawing.Point(138, 170);
+            this.LetterFrequencyWithDiacriticsCheckBox.Location = new System.Drawing.Point(139, 171);
             this.LetterFrequencyWithDiacriticsCheckBox.Name = "LetterFrequencyWithDiacriticsCheckBox";
             this.LetterFrequencyWithDiacriticsCheckBox.Size = new System.Drawing.Size(15, 17);
             this.LetterFrequencyWithDiacriticsCheckBox.TabIndex = 16;
@@ -8544,7 +8544,7 @@ partial class MainForm
             this.FindByFrequencyPhraseCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FindByFrequencyPhraseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencyPhraseCheckBox.ForeColor = System.Drawing.Color.Black;
-            this.FindByFrequencyPhraseCheckBox.Location = new System.Drawing.Point(108, 5);
+            this.FindByFrequencyPhraseCheckBox.Location = new System.Drawing.Point(106, 5);
             this.FindByFrequencyPhraseCheckBox.Name = "FindByFrequencyPhraseCheckBox";
             this.FindByFrequencyPhraseCheckBox.Size = new System.Drawing.Size(15, 14);
             this.FindByFrequencyPhraseCheckBox.TabIndex = 109;
@@ -10385,6 +10385,10 @@ partial class MainForm
             this.TranslationSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TranslationSplitContainer)).EndInit();
             this.TranslationSplitContainer.ResumeLayout(false);
+            this.GrammarTabPage.ResumeLayout(false);
+            this.GrammarTabPage.PerformLayout();
+            this.RelatedWordsTabPage.ResumeLayout(false);
+            this.RelatedWordsTabPage.PerformLayout();
             this.SymmetryTabPage.ResumeLayout(false);
             this.SymmetryTabPage.PerformLayout();
             this.CVWLSequenceTabPage.ResumeLayout(false);
@@ -10402,10 +10406,6 @@ partial class MainForm
             this.DistancesPanel.ResumeLayout(false);
             this.DistancesPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DistancesDivisorNumericUpDown)).EndInit();
-            this.RelatedWordsTabPage.ResumeLayout(false);
-            this.RelatedWordsTabPage.PerformLayout();
-            this.GrammarTabPage.ResumeLayout(false);
-            this.GrammarTabPage.PerformLayout();
             this.UserTextTabPage.ResumeLayout(false);
             this.UserTextTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UserTextValueNumericUpDown)).EndInit();

@@ -53,7 +53,7 @@ static class Program
                 break;
             case Edition.Dynamic:
                 {
-                    Numbers.MAX_NUMBER = int.MaxValue / 256;
+                    Numbers.MAX_NUMBER = int.MaxValue / 64;
                 }
                 break;
             default:

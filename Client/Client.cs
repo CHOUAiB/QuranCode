@@ -1540,10 +1540,10 @@ public class Client : IPublisher, ISubscriber
     /// <param name="sum"></param>
     /// <param name="frequency_search_type"></param>
     /// <returns>Number of found words. Result is stored in FoundWords.</returns>
-    public int FindWords(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public int FindWords(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         ClearSearchResults();
-        m_found_words = Server.FindWords(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        m_found_words = Server.FindWords(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
         if (m_found_words != null)
         {
             m_found_verses = new List<Verse>();
@@ -1574,10 +1574,10 @@ public class Client : IPublisher, ISubscriber
     /// <param name="sum"></param>
     /// <param name="frequency_search_type"></param>
     /// <returns>Number of found sentences. Result is stored in FoundSentences.</returns>
-    public int FindSentences(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public int FindSentences(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         ClearSearchResults();
-        m_found_sentences = Server.FindSentences(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        m_found_sentences = Server.FindSentences(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
         if (m_found_sentences != null)
         {
             BuildSentencePhrases();
@@ -1655,10 +1655,10 @@ public class Client : IPublisher, ISubscriber
     /// <param name="sum"></param>
     /// <param name="frequency_search_type"></param>
     /// <returns>Number of found verses. Result is stored in FoundVerses.</returns>
-    public int FindVerses(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public int FindVerses(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         ClearSearchResults();
-        m_found_verses = Server.FindVerses(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        m_found_verses = Server.FindVerses(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
         if (m_found_verses != null)
         {
             return m_found_verses.Count;
@@ -1672,10 +1672,10 @@ public class Client : IPublisher, ISubscriber
     /// <param name="sum"></param>
     /// <param name="frequency_search_type"></param>
     /// <returns>Number of found chapters. Result is stored in FoundChapters.</returns>
-    public int FindChapters(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type)
+    public int FindChapters(string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
         ClearSearchResults();
-        m_found_chapters = Server.FindChapters(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type);
+        m_found_chapters = Server.FindChapters(m_search_scope, m_selection, m_found_verses, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
         if (m_found_chapters != null)
         {
             if (m_found_chapters != null)
@@ -1694,9 +1694,9 @@ public class Client : IPublisher, ISubscriber
         }
         return 0;
     }
-    public int CalculateLetterFrequencySum(string text, string phrase, FrequencySearchType frequency_search_type)
+    public int CalculateLetterFrequencySum(string text, string phrase, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        return Server.CalculateLetterFrequencySum(text, phrase, frequency_search_type);
+        return Server.CalculateLetterFrequencySum(text, phrase, frequency_search_type, with_diacritics);
     }
 
     private List<object> m_history_items = new List<object>();
