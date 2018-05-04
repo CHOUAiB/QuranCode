@@ -4403,71 +4403,7 @@ public partial class MainForm : Form, ISubscriber
                     Verse verse = GetCurrentVerse();
                     if (verse != null)
                     {
-                        if (verse.Chapter != null)
-                        {
-                            if (m_client != null)
-                            {
-                                // select chapter and display it and colorize target verse
-                                m_client.Selection = new Selection(m_client.Book, SelectionScope.Chapter, new List<int>() { verse.Chapter.Number - 1 });
-                                if (m_client.Selection != null)
-                                {
-                                    SwitchToMainTextBox();
-
-                                    BookmarkTextBox.Enabled = true;
-                                    // display selection's note (if any)
-                                    DisplayNote(m_client.GetBookmark(m_client.Selection));
-
-                                    m_user_text_mode = false;
-                                    m_selection_mode = false;
-
-                                    ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
-                                    WordsListBoxLabel.Visible = false;
-                                    WordsListBox.Visible = false;
-                                    WordsListBox.SendToBack();
-
-                                    this.Text = Application.ProductName + " | " + GetSelectionSummary();
-                                    UpdateSearchScope();
-
-                                    DisplaySelectionText();
-
-                                    MainTextBox.ClearHighlight();
-                                    MainTextBox.AlignToStart();
-                                    HighlightVerse(verse);
-                                    UpdateHeaderLabel();
-
-                                    CalculateCurrentValue();
-
-                                    UpdateVersePositions(verse);
-
-                                    BuildLetterFrequencies();
-                                    DisplayLetterFrequencies();
-
-                                    DisplayTranslations(verse);
-                                    DisplaySymmetry();
-                                    DisplayCVWLSequence();
-                                    DisplayValuesSequence();
-                                    DisplayDNASequence();
-
-                                    //if (add_to_history)
-                                    {
-                                        AddSearchHistoryItem();
-                                    }
-
-                                    // change focus to MainTextBox control insead of SearchTextBox
-                                    MainTextBox.Focus();
-
-                                    ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
-                                    WordsListBoxLabel.Visible = false;
-                                    WordsListBox.Visible = false;
-                                    WordsListBox.SendToBack();
-
-                                    GenerateSentencesLabel.Visible = false;
-                                    DuplicateLettersCheckBox.Visible = false;
-                                    GenerateSentencesLabel.Refresh();
-                                    DuplicateLettersCheckBox.Refresh();
-                                }
-                            }
-                        }
+                        GotoVerse(verse);
                     }
                 }
             }
@@ -4481,6 +4417,77 @@ public partial class MainForm : Form, ISubscriber
             MainTextBox.EndUpdate();
             MainTextBox.SelectionChanged += new EventHandler(MainTextBox_SelectionChanged);
             MainTextBox.TextChanged += new EventHandler(MainTextBox_TextChanged);
+        }
+    }
+    private void GotoVerse(Verse verse)
+    {
+        if (verse != null)
+        {
+            if (verse.Chapter != null)
+            {
+                if (m_client != null)
+                {
+                    // select chapter and display it and colorize target verse
+                    m_client.Selection = new Selection(m_client.Book, SelectionScope.Chapter, new List<int>() { verse.Chapter.Number - 1 });
+                    if (m_client.Selection != null)
+                    {
+                        SwitchToMainTextBox();
+
+                        BookmarkTextBox.Enabled = true;
+                        // display selection's note (if any)
+                        DisplayNote(m_client.GetBookmark(m_client.Selection));
+
+                        m_user_text_mode = false;
+                        m_selection_mode = false;
+
+                        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+                        WordsListBoxLabel.Visible = false;
+                        WordsListBox.Visible = false;
+                        WordsListBox.SendToBack();
+
+                        this.Text = Application.ProductName + " | " + GetSelectionSummary();
+                        UpdateSearchScope();
+
+                        DisplaySelectionText();
+
+                        MainTextBox.ClearHighlight();
+                        MainTextBox.AlignToStart();
+                        HighlightVerse(verse);
+                        UpdateHeaderLabel();
+
+                        CalculateCurrentValue();
+
+                        UpdateVersePositions(verse);
+
+                        BuildLetterFrequencies();
+                        DisplayLetterFrequencies();
+
+                        DisplayTranslations(verse);
+                        DisplaySymmetry();
+                        DisplayCVWLSequence();
+                        DisplayValuesSequence();
+                        DisplayDNASequence();
+
+                        //if (add_to_history)
+                        {
+                            AddSearchHistoryItem();
+                        }
+
+                        // change focus to MainTextBox control insead of SearchTextBox
+                        MainTextBox.Focus();
+
+                        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+                        WordsListBoxLabel.Visible = false;
+                        WordsListBox.Visible = false;
+                        WordsListBox.SendToBack();
+
+                        GenerateSentencesLabel.Visible = false;
+                        DuplicateLettersCheckBox.Visible = false;
+                        GenerateSentencesLabel.Refresh();
+                        DuplicateLettersCheckBox.Refresh();
+                    }
+                }
+            }
         }
     }
     private void MainTextBox_MouseWheel(object sender, MouseEventArgs e)
@@ -9097,8 +9104,8 @@ public partial class MainForm : Form, ISubscriber
 
                             // show postion of verse in the Quran visually
                             ProgressBar.Minimum = 1;
-                            ProgressBar.Maximum = verse.Book.Pages.Count;
-                            ProgressBar.Value = verse.Page.Number;
+                            ProgressBar.Maximum = verse.Book.Verses.Count;
+                            ProgressBar.Value = verse.Number;
                             ProgressBar.Refresh();
 
                             if (verse.Chapter != null)
@@ -9498,6 +9505,81 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
+    private void HighlightWord(int word_number)
+    {
+        if (m_active_textbox != null)
+        {
+            if (m_client != null)
+            {
+                if (m_client.Book != null)
+                {
+                    Verse verse = m_client.Book.GetVerseByWordNumber(word_number);
+                    if (verse != null)
+                    {
+                        word_number -= verse.Words[0].Number;
+                        if ((word_number >= 0) && (word_number < verse.Words.Count))
+                        {
+                            Word word = verse.Words[word_number];
+                            m_active_textbox.Select(word.Position, word.Text.Length);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void HighlightLetter(int letter_number)
+    {
+        if (m_active_textbox != null)
+        {
+            if (m_client != null)
+            {
+                if (m_client.Book != null)
+                {
+                    Word word = m_client.Book.GetWordByLetterNumber(letter_number);
+                    if (word != null)
+                    {
+                        letter_number -= word.Letters[0].Number;
+                        if ((letter_number >= 0) && (letter_number < word.Letters.Count))
+                        {
+                            int letter_position = word.Position + letter_number;
+                            int letter_length = 1;
+                            m_active_textbox.Select(letter_position, letter_length);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private int m_progressbar_X = 0;
+    private Verse m_progressbar_verse = null;
+    private void ProgressBar_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (e.X == m_progressbar_X) return;
+        m_progressbar_X = e.X;
+
+        if (m_client != null)
+        {
+            if (m_client.Book != null)
+            {
+                int delta = (int)((double)ProgressBar.Maximum / (double)ProgressBar.Width);
+                int index = (int)(((double)m_progressbar_X / (double)ProgressBar.Width) * (ProgressBar.Maximum + delta));
+                if ((index >= 0) && (index < m_client.Book.Verses.Count))
+                {
+                    m_progressbar_verse = m_client.Book.Verses[index];
+                    ToolTip.SetToolTip(ProgressBar, m_progressbar_verse.Text);
+                }
+            }
+        }
+    }
+    private void ProgressBar_Click(object sender, EventArgs e)
+    {
+        if (m_progressbar_verse != null)
+        {
+            GotoVerse(m_progressbar_verse);
+            UpdateProgressBar(m_progressbar_verse);
+        }
+    }
     private void UpdateProgressBar(Verse verse)
     {
         if (m_client != null)
@@ -9552,54 +9634,9 @@ public partial class MainForm : Form, ISubscriber
 
                 // show postion of verse in the Quran visually
                 ProgressBar.Minimum = 1;
-                ProgressBar.Maximum = verse.Book.Pages.Count;
-                ProgressBar.Value = verse.Page.Number;
+                ProgressBar.Maximum = verse.Book.Verses.Count;
+                ProgressBar.Value = verse.Number;
                 ProgressBar.Refresh();
-            }
-        }
-    }
-    private void HighlightWord(int word_number)
-    {
-        if (m_active_textbox != null)
-        {
-            if (m_client != null)
-            {
-                if (m_client.Book != null)
-                {
-                    Verse verse = m_client.Book.GetVerseByWordNumber(word_number);
-                    if (verse != null)
-                    {
-                        word_number -= verse.Words[0].Number;
-                        if ((word_number >= 0) && (word_number < verse.Words.Count))
-                        {
-                            Word word = verse.Words[word_number];
-                            m_active_textbox.Select(word.Position, word.Text.Length);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    private void HighlightLetter(int letter_number)
-    {
-        if (m_active_textbox != null)
-        {
-            if (m_client != null)
-            {
-                if (m_client.Book != null)
-                {
-                    Word word = m_client.Book.GetWordByLetterNumber(letter_number);
-                    if (word != null)
-                    {
-                        letter_number -= word.Letters[0].Number;
-                        if ((letter_number >= 0) && (letter_number < word.Letters.Count))
-                        {
-                            int letter_position = word.Position + letter_number;
-                            int letter_length = 1;
-                            m_active_textbox.Select(letter_position, letter_length);
-                        }
-                    }
-                }
             }
         }
     }
