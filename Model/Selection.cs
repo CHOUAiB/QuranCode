@@ -267,6 +267,26 @@ namespace Model
                                     }
                                 }
                                 break;
+                            case SelectionScope.Half:
+                                {
+                                    if (book.Halfs != null)
+                                    {
+                                        foreach (int index in indexes)
+                                        {
+                                            if ((index >= 0) && (index < book.Halfs.Count))
+                                            {
+                                                foreach (Verse verse in book.Halfs[index].Verses)
+                                                {
+                                                    if (!chapters.Contains(verse.Chapter))
+                                                    {
+                                                        chapters.Add(verse.Chapter);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
                             case SelectionScope.Quarter:
                                 {
                                     if (book.Quarters != null)

@@ -8641,19 +8641,19 @@ public partial class MainForm : Form, ISubscriber
                                     // do nothing
                                 }
 
-                                // if selection has changed
                                 if (m_client.Selection != null)
                                 {
+                                    // if selection has changed
                                     if (
                                         (m_client.Selection.Scope != scope)
                                         ||
                                         ((m_client.Selection.Indexes.Count > 0) && (m_client.Selection.Indexes[0] != (number - 1)))
                                        )
                                     {
+                                        PlayerStopLabel_Click(null, null);
+
                                         List<int> indexes = new List<int>() { number - 1 };
                                         m_client.Selection = new Selection(m_client.Book, scope, indexes);
-
-                                        PlayerStopLabel_Click(null, null);
 
                                         DisplaySelection(true);
                                     }
