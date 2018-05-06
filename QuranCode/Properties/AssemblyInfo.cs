@@ -7,8 +7,9 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("QuranCode")]
 [assembly: AssemblyDescription(
-    "\t\t" + "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" + "\r\n" + "\r\n" +
-    "All praise to Allah, the Creator and Sustainer of the worlds." + "\r\n" +
+    "\t\t" + "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" + "\r\n" +
+    "\r\n" +
+    "All praise to Allah, the Sustainer of the worlds. ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ" + "\r\n" +
     "\r\n" +
     "QuranCode is a free and open-source similarity and numerical research tool for the ever-revealing Quran (القرءان الكريم)." + "\r\n" +
     "\r\n" +
