@@ -3080,12 +3080,12 @@ public partial class MainForm : Form, ISubscriber
             string text = (sender as TextBoxBase).SelectedText.Trim();
             if (text.Length == 0) // no selection, get word under mouse pointer
             {
-                m_clicked_word = GetWordAtCursor();
-                if (m_clicked_word == null)
+                m_current_word = GetWordAtCursor();
+                if (m_current_word == null)
                 {
                     return;
                 }
-                text = m_clicked_word.Text;
+                text = m_current_word.Text;
             }
 
             DoFindSameHarakat(text);
@@ -3128,12 +3128,12 @@ public partial class MainForm : Form, ISubscriber
             string text = (sender as TextBoxBase).SelectedText.Trim();
             if (text.Length == 0) // no selection, get word under mouse pointer
             {
-                m_clicked_word = GetWordAtCursor();
-                if (m_clicked_word == null)
+                m_current_word = GetWordAtCursor();
+                if (m_current_word == null)
                 {
                     return;
                 }
-                text = m_clicked_word.Text;
+                text = m_current_word.Text;
             }
 
             DoFindRelatedWords(text);
@@ -3203,12 +3203,12 @@ public partial class MainForm : Form, ISubscriber
             string text = (sender as TextBoxBase).SelectedText.Trim();
             if (text.Length == 0) // no selection, get word under mouse pointer
             {
-                m_clicked_word = GetWordAtCursor();
-                if (m_clicked_word == null)
+                m_current_word = GetWordAtCursor();
+                if (m_current_word == null)
                 {
                     return;
                 }
-                text = m_clicked_word.Text;
+                text = m_current_word.Text;
             }
 
             DoFindSameText(text);
@@ -4279,20 +4279,20 @@ public partial class MainForm : Form, ISubscriber
         Word word = GetWordAtPointer(e);
         if (word != null)
         {
-            m_clicked_word = GetWordAtPointer(e);
-            if (m_clicked_word != null)
+            m_current_word = GetWordAtPointer(e);
+            if (m_current_word != null)
             {
                 // in all cases
                 this.Text = Application.ProductName + " | " + GetSelectionSummary();
                 UpdateFindMatchCaption();
 
-                string word_info = GetWordSummary(m_clicked_word) + "\r\n";
+                string word_info = GetWordSummary(m_current_word) + "\r\n";
                 if (ModifierKeys == Keys.Control)
                 {
-                    word_info += GetWordInformation(m_clicked_word);
+                    word_info += GetWordInformation(m_current_word);
                     word_info += "\r\n\r\n";
-                    word_info += GetWordGrammar(m_clicked_word) + "\r\n\r\n";
-                    word_info += GetWordRelatedWords(m_clicked_word);
+                    word_info += GetWordGrammar(m_current_word) + "\r\n\r\n";
+                    word_info += GetWordRelatedWords(m_current_word);
                 }
                 ToolTip.SetToolTip(m_active_textbox, word_info);
 
@@ -4307,9 +4307,6 @@ public partial class MainForm : Form, ISubscriber
                     word.Meaning + SPACE_GAP +
                     word.Occurrence.ToString() + "/" + word.Frequency.ToString()
                 );
-
-                //DisplayRelatedWords(m_clicked_word);
-                //DisplayWordGrammar(m_clicked_word);
             }
         }
     }
@@ -4320,13 +4317,13 @@ public partial class MainForm : Form, ISubscriber
             if (e.Button == MouseButtons.Left)
             {
                 // go to related words to word under mouse pointer
-                FindRelatedWords(m_clicked_word);
+                FindRelatedWords(m_current_word);
             }
         }
         else
         {
-            DisplayRelatedWords(m_clicked_word);
-            DisplayWordGrammar(m_clicked_word);
+            DisplayRelatedWords(m_current_word);
+            DisplayWordGrammar(m_current_word);
 
             // calculate the C V W L distances
             int chapter_number = ChapterComboBox.SelectedIndex + 1;
@@ -12231,14 +12228,16 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Grammar/RelatedWords
     ///////////////////////////////////////////////////////////////////////////////
-    private Word m_clicked_word = null;
+    private Word m_current_word = null;
     private Word m_info_word = null;
     private string GetWordSummary(Word word)
     {
         return
+            word.Address + SPACE_GAP +
             word.Transliteration + SPACE_GAP +
             word.Text + SPACE_GAP +
-            word.Meaning;
+            word.Meaning + SPACE_GAP +
+            word.Occurrence.ToString() + "/" + word.Frequency.ToString();
     }
     private string GetWordInformation(Word word)
     {
@@ -12258,7 +12257,7 @@ public partial class MainForm : Form, ISubscriber
             }
 
             return
-                word.Verse.Chapter.SortedNumber + ". " + word.Verse.Chapter.Name + SPACE_GAP +
+                "chapter " + word.Verse.Chapter.SortedNumber + SPACE_GAP +
                 "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
                 "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
                 "occurrence " + word.Occurrence.ToString() + "/" + word.Frequency.ToString() + SPACE_GAP + SPACE_GAP +
@@ -12351,7 +12350,7 @@ public partial class MainForm : Form, ISubscriber
                     (TabControl.SelectedTab == RelatedWordsTabPage)
                    )
                 {
-                    RelatedWordsTextBox.Text = GetWordRelatedWords(m_clicked_word);
+                    RelatedWordsTextBox.Text = GetWordRelatedWords(m_current_word);
                     RelatedWordsTextBox.Refresh();
 
                     m_info_word = word;
@@ -12374,7 +12373,7 @@ public partial class MainForm : Form, ISubscriber
                     (TabControl.SelectedTab == RelatedWordsTabPage)
                    )
                 {
-                    string word_grammar = GetWordGrammar(m_clicked_word);
+                    string word_grammar = GetWordGrammar(m_current_word);
                     if (!String.IsNullOrEmpty(word_grammar))
                     {
                         GrammarTextBox.Text = word_grammar;
@@ -27290,14 +27289,7 @@ public partial class MainForm : Form, ISubscriber
                             }
                             else // some text is selected
                             {
-                                if (m_translation_readonly)
-                                {
-                                    CalculateSelectedTextValue();
-                                }
-                                else // edit mode so user can paste any text they like to calculate its value
-                                {
-                                    CalculateValueAndDisplayFactors(m_current_text);
-                                }
+                                CalculateSelectedTextValue();
                             }
                         }
                     }
@@ -27366,7 +27358,7 @@ public partial class MainForm : Form, ISubscriber
                 string selected_text = m_active_textbox.SelectedText;
 
                 int first_char = m_active_textbox.SelectionStart;
-                int last_char = first_char + m_active_textbox.SelectionLength - 1;
+                int last_char = m_active_textbox.SelectionStart + m_active_textbox.SelectionLength - 1;
 
                 // skip any \n at beginning of selected text
                 // skip any Endmark at beginning of selected text

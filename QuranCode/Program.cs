@@ -62,7 +62,7 @@ static class Program
             {
                 Globals.EDITION = Edition.Standard;
             }
-            else if (args[0].ToUpper() == "D")
+            else if (args[0].ToUpper() == "i")
             {
                 Globals.EDITION = Edition.Dynamic;
             }

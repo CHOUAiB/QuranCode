@@ -25,7 +25,7 @@ public static class Globals
             }
             else if (EDITION == Edition.Dynamic)
             {
-                return ("v" + version + "d");
+                return ("v" + version + "i");
             }
             else
             {
