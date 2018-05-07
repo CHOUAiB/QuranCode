@@ -8021,7 +8021,10 @@ public partial class MainForm : Form, ISubscriber
         SearchGroupBox_Leave(null, null);
         this.AcceptButton = null;
 
-        m_active_textbox.Focus();
+        if (sender == HeaderLabel)
+        {
+            m_active_textbox.Focus();
+        }
 
         // Ctrl+Click factorizes number
         if (ModifierKeys == Keys.Control)
