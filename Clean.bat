@@ -35,6 +35,7 @@ rd /S /Q Server\obj
 rd /S /Q Client\obj
 rd /S /Q Research\obj
 rd /S /Q QuranCode\obj
+rd /S /Q QuranCode.125\obj
 rd /S /Q PrimeCalculator\obj
 rd /S /Q QuranLab\obj
 rd /S /Q InitialLetters\obj
