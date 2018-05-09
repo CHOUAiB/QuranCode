@@ -19,4 +19,3 @@ XCOPY /E /EXCLUDE:exclude.txt Numbers\*.* NET2\Numbers\
 DEL exclude.txt
 Tools\Replace\bin\Release\Replace.exe NET2 *.Designer.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)
 CALL Version.bat
-CALL NET2\Version.bat
