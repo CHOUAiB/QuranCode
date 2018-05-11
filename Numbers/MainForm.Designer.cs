@@ -38,14 +38,17 @@
             this.VersionLabel = new System.Windows.Forms.Label();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.CopyButton = new System.Windows.Forms.Button();
+            this.PasteButton = new System.Windows.Forms.Button();
             this.NotifyIconContextMenuStrip.SuspendLayout();
+            this.MainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // ProgressBar
             // 
             this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar.Location = new System.Drawing.Point(0, 668);
+            this.ProgressBar.Location = new System.Drawing.Point(0, 689);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(994, 6);
             this.ProgressBar.TabIndex = 0;
@@ -58,12 +61,12 @@
             this.WebsiteLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WebsiteLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.WebsiteLabel.ForeColor = System.Drawing.Color.Purple;
-            this.WebsiteLabel.Location = new System.Drawing.Point(0, 656);
+            this.WebsiteLabel.Location = new System.Drawing.Point(0, 677);
             this.WebsiteLabel.Name = "WebsiteLabel";
             this.WebsiteLabel.Size = new System.Drawing.Size(1074, 14);
             this.WebsiteLabel.TabIndex = 999;
             this.WebsiteLabel.Tag = "http://qurancode.com";
-            this.WebsiteLabel.Text = "©2009-2018   Ali Adams    www.heliwave.com    www.qurancode.com";
+            this.WebsiteLabel.Text = "©2018 Ali Adams      www.qurancode.com";
             this.WebsiteLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ToolTip.SetToolTip(this.WebsiteLabel, "Quran 89:3 \"By the composites and the primes\".");
             this.WebsiteLabel.Click += new System.EventHandler(this.LinkLabel_Click);
@@ -105,7 +108,7 @@
             this.VersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VersionLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VersionLabel.ForeColor = System.Drawing.Color.Purple;
-            this.VersionLabel.Location = new System.Drawing.Point(1008, 677);
+            this.VersionLabel.Location = new System.Drawing.Point(1008, 698);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(63, 14);
             this.VersionLabel.TabIndex = 32;
@@ -126,17 +129,41 @@
             // 
             this.MainPanel.BackColor = System.Drawing.SystemColors.Control;
             this.MainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MainPanel.Controls.Add(this.PasteButton);
+            this.MainPanel.Controls.Add(this.CopyButton);
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1074, 656);
+            this.MainPanel.Size = new System.Drawing.Size(1074, 677);
             this.MainPanel.TabIndex = 0;
+            // 
+            // CopyButton
+            // 
+            this.CopyButton.Image = ((System.Drawing.Image)(resources.GetObject("CopyButton.Image")));
+            this.CopyButton.Location = new System.Drawing.Point(23, -1);
+            this.CopyButton.Name = "CopyButton";
+            this.CopyButton.Size = new System.Drawing.Size(23, 21);
+            this.CopyButton.TabIndex = 1000;
+            this.ToolTip.SetToolTip(this.CopyButton, "Copy");
+            this.CopyButton.UseVisualStyleBackColor = true;
+            this.CopyButton.Click += new System.EventHandler(this.CopyButton_Click);
+            // 
+            // PasteButton
+            // 
+            this.PasteButton.Image = ((System.Drawing.Image)(resources.GetObject("PasteButton.Image")));
+            this.PasteButton.Location = new System.Drawing.Point(53, -1);
+            this.PasteButton.Name = "PasteButton";
+            this.PasteButton.Size = new System.Drawing.Size(23, 21);
+            this.PasteButton.TabIndex = 1001;
+            this.ToolTip.SetToolTip(this.PasteButton, "Paste");
+            this.PasteButton.UseVisualStyleBackColor = true;
+            this.PasteButton.Click += new System.EventHandler(this.PasteButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1074, 670);
+            this.ClientSize = new System.Drawing.Size(1074, 691);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.WebsiteLabel);
@@ -154,6 +181,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.NotifyIconContextMenuStrip.ResumeLayout(false);
+            this.MainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
     }
@@ -170,4 +198,6 @@
     private System.Windows.Forms.Label VersionLabel;
     private System.Windows.Forms.ToolTip ToolTip;
     private System.Windows.Forms.Panel MainPanel;
+    private System.Windows.Forms.Button CopyButton;
+    private System.Windows.Forms.Button PasteButton;
 }

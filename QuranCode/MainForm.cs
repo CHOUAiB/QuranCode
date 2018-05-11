@@ -8024,6 +8024,7 @@ public partial class MainForm : Form, ISubscriber
         if (sender == HeaderLabel)
         {
             m_active_textbox.Focus();
+            CalculateCurrentValue();
         }
 
         // Ctrl+Click factorizes number
@@ -8057,9 +8058,12 @@ public partial class MainForm : Form, ISubscriber
                 try
                 {
                     string[] parts = (sender as Control).Text.Split(' ');
-                    if (parts.Length > 0)
+                    foreach (string part in parts)
                     {
-                        value = (long)double.Parse(parts[0]);
+                        if (long.TryParse(part, out value))
+                        {
+                            break;
+                        }
                     }
                 }
                 catch

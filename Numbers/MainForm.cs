@@ -278,6 +278,84 @@ public partial class MainForm : Form
             controls[0, 0].Focus();
         }
     }
+    private void CopyButton_Click(object sender, EventArgs e)
+    {
+        if (Directory.Exists(Globals.NUMBERS_FOLDER))
+        {
+            string filename = Globals.NUMBERS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "Numbers" + ".txt";
+
+            StringBuilder str = new StringBuilder();
+            str.AppendLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
+            str.AppendLine("i" + "\t" + "P" + "\t" + "AP" + "\t" + "XP" + "\t" + "C" + "\t" + "AC" + "\t" + "XC" + "\t" + "DF" + "\t" + "AB" + "\t" + "Diff" + "\t" + "Sum" + "\t" + "P=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "C=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Med(i)" + "\t" + "Sum(i)");
+            str.AppendLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
+            for (int i = 0; i < ROWS; i++)
+            {
+                for (int j = 0; j < COLS; j++)
+                {
+                    str.Append(controls[i, j].Text + "\t");
+                }
+                if (str.Length > 0)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
+            }
+            str.AppendLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            FileHelper.SaveText(filename, str.ToString());
+            FileHelper.DisplayFile(filename);
+        }
+    }
+    private void PasteButton_Click(object sender, EventArgs e)
+    {
+        string text = Clipboard.GetText();
+        string[] lines = text.Split('\n');
+
+        List<int> numbers = new List<int>();
+        foreach (string line in lines)
+        {
+            if (!String.IsNullOrEmpty(line))
+            {
+                int number = 0;
+                if (Char.IsDigit(line[0])) // 0..9
+                {
+                    string[] parts = line.Split('\t');
+                    if (int.TryParse(parts[0], out number))
+                    {
+                        numbers.Add(number);
+                    }
+                    else
+                    {
+                        numbers.Add(0);
+                    }
+                }
+                else
+                {
+                    numbers.Add(0);
+                }
+            }
+            else
+            {
+                numbers.Add(0);
+            }
+        }
+
+        if (numbers.Count <= ROWS)
+        {
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                if (numbers[i] > 0)
+                {
+                    controls[i, 0].Text = numbers[i].ToString();
+                }
+                else
+                {
+                    controls[i, 0].Text = "";
+                }
+            }
+            controls[0, 0].Focus();
+        }
+    }
 
     private string DataFormatName = Application.ProductName;
     private void Control_MouseDown(object sender, MouseEventArgs e)
@@ -670,6 +748,8 @@ public partial class MainForm : Form
                 controls[point.X, 14].Text = "";
                 controls[point.X, 15].Text = "";
                 controls[point.X, 16].Text = "";
+                controls[point.X, 17].Text = "";
+                controls[point.X, 18].Text = "";
             }
         }
     }
