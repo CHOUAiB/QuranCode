@@ -12242,12 +12242,18 @@ public partial class MainForm : Form, ISubscriber
     private Word m_info_word = null;
     private string GetWordSummary(Word word)
     {
-        return
-            word.Address + SPACE_GAP +
-            word.Transliteration + SPACE_GAP +
-            word.Text + SPACE_GAP +
-            word.Meaning + SPACE_GAP +
-            word.Occurrence.ToString() + "/" + word.Frequency.ToString();
+        if (word != null)
+        {
+            return
+                word.Transliteration + SPACE_GAP +
+                word.Text + SPACE_GAP +
+                word.Meaning + "\r\n" +
+                word.Verse.Chapter.Number + ". " + word.Verse.Chapter.Name + SPACE_GAP +
+                "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
+                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
+                "" + word.Occurrence.ToString() + "/" + word.Frequency.ToString();
+        }
+        return null;
     }
     private string GetWordInformation(Word word)
     {

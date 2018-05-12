@@ -442,6 +442,7 @@ namespace Model
             this.text_mode = text_mode;
 
             SetupPartitions(verses);
+
             SetupBook();
         }
         private void SetupPartitions(List<Verse> verses)

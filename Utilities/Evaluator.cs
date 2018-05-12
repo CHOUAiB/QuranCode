@@ -93,7 +93,7 @@ public static class Evaluator
                 Module[] modules = systemAssembly.GetModules(false);
                 Type[] types = modules[0].GetTypes();
 
-                // loop through each class that was defined and look for the first occurrance of the Math class
+                // loop through each class that was defined and look for the first occurrence of the Math class
                 foreach (Type type in types)
                 {
                     if (type.Name == "Math")
