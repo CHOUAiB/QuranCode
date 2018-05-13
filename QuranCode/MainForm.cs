@@ -4286,10 +4286,9 @@ public partial class MainForm : Form, ISubscriber
                 this.Text = Application.ProductName + " | " + GetSelectionSummary();
                 UpdateFindMatchCaption();
 
-                string word_info = GetWordSummary(m_current_word) + "\r\n";
+                string word_info = GetWordInformation(m_current_word);
                 if (ModifierKeys == Keys.Control)
                 {
-                    word_info += GetWordInformation(m_current_word);
                     word_info += "\r\n\r\n";
                     word_info += GetWordGrammar(m_current_word) + "\r\n\r\n";
                     word_info += GetWordRelatedWords(m_current_word);
@@ -12240,21 +12239,6 @@ public partial class MainForm : Form, ISubscriber
     ///////////////////////////////////////////////////////////////////////////////
     private Word m_current_word = null;
     private Word m_info_word = null;
-    private string GetWordSummary(Word word)
-    {
-        if (word != null)
-        {
-            return
-                word.Transliteration + SPACE_GAP +
-                word.Text + SPACE_GAP +
-                word.Meaning + "\r\n" +
-                word.Verse.Chapter.Number + ". " + word.Verse.Chapter.Name + SPACE_GAP +
-                "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                "" + word.Occurrence.ToString() + "/" + word.Frequency.ToString();
-        }
-        return null;
-    }
     private string GetWordInformation(Word word)
     {
         if (word != null)
@@ -12273,11 +12257,14 @@ public partial class MainForm : Form, ISubscriber
             }
 
             return
-                "chapter " + word.Verse.Chapter.SortedNumber + SPACE_GAP +
-                "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                "occurrence " + word.Occurrence.ToString() + "/" + word.Frequency.ToString() + SPACE_GAP + SPACE_GAP +
-                "roots  " + roots;
+                word.Transliteration + SPACE_GAP +
+                word.Text + SPACE_GAP +
+                word.Meaning + SPACE_GAP +
+                roots + "\r\n" +
+                "chapter " + word.Verse.Chapter.SortedNumber /*+ " " + word.Verse.Chapter.Name*/ + SPACE_GAP +
+                "verse  " + word.Verse.NumberInChapter /*+ "-" + word.Verse.Number*/ + SPACE_GAP +
+                "word  " + word.NumberInVerse /*+ "-" + word.NumberInChapter + "-" + word.Number*/ + SPACE_GAP + SPACE_GAP + SPACE_GAP +
+                word.Occurrence.ToString() + "/" + word.Frequency.ToString();
         }
         return null;
     }
@@ -29951,7 +29938,7 @@ public partial class MainForm : Form, ISubscriber
                                                 word.Occurrence.ToString() + "/" + word.Frequency.ToString()
                                             );
 
-                                            ToolTip.SetToolTip(PictureBox, GetWordSummary(word));
+                                            ToolTip.SetToolTip(PictureBox, GetWordInformation(word));
                                         }
                                         else
                                         {
