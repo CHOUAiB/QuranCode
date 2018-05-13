@@ -8,13 +8,14 @@ public static class Globals
     {
         get
         {
+            int pos = VERSION.LastIndexOf(".");
             if (EDITION == Edition.Lite)
             {
-                return ("v" + VERSION + "L");
+                return ("v" + VERSION.Remove(pos) + "L");
             }
             else
             {
-                return ("v" + VERSION + "!"); // Invalid Edition
+                return ("v" + VERSION.Remove(pos) + "!"); // Invalid Edition
             }
         }
     }

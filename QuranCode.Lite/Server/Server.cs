@@ -300,9 +300,6 @@ public class Server
                         // re-create new Words with word stopmarks
                         verse.RecreateWordsApplyStopmarks(str.ToString());
                     }
-
-                    // update verses/words/letters numbers
-                    book.SetupBook();
                 }
             }
         }

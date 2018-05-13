@@ -2829,8 +2829,7 @@ public partial class MainForm : Form
                 word.Meaning + "\r\n" +
                 word.Verse.Chapter.Number + ". " + word.Verse.Chapter.Name + SPACE_GAP +
                 "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                "occurrence " + word.Occurrence.ToString() + "/" + word.Frequency.ToString();
+                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number;
         }
         return null;
     }
@@ -2844,8 +2843,7 @@ public partial class MainForm : Form
                 word.Meaning + "\r\n" +
                 word.Verse.Chapter.Number + ". " + word.Verse.Chapter.Name + SPACE_GAP +
                 "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                "" + word.Occurrence.ToString() + "/" + word.Frequency.ToString();
+                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number;
         }
         return null;
     }

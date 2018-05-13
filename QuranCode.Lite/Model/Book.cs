@@ -435,8 +435,6 @@ namespace Model
             this.text_mode = text_mode;
 
             SetupPartitions(verses);
-
-            SetupBook();
         }
         private void SetupPartitions(List<Verse> verses)
         {
@@ -894,128 +892,6 @@ namespace Model
                                 this.chapters[chapter - 1].InitializationType = type;
                             }
                         }
-                    }
-                }
-            }
-        }
-        public void SetupBook()
-        {
-            SetupNumbers();
-            SetupWordOccurrences();
-            SetupWordFrequencies();
-        }
-        private void SetupNumbers()
-        {
-            int chapter_number = 1;
-            int verse_number = 1;
-            int word_number = 1;
-            int letter_number = 1;
-
-            if (this.chapters != null)
-            {
-                foreach (Chapter chapter in this.chapters)
-                {
-                    chapter.Number = chapter_number++;
-
-                    int verse_number_in_chapter = 1;
-                    int word_number_in_chapter = 1;
-                    int letter_number_in_chapter = 1;
-                    foreach (Verse verse in chapter.Verses)
-                    {
-                        verse.Number = verse_number++;
-                        verse.NumberInChapter = verse_number_in_chapter++;
-
-                        int word_number_in_verse = 1;
-                        int letter_number_in_verse = 1;
-                        if (verse.Words != null)
-                        {
-                            foreach (Word word in verse.Words)
-                            {
-                                word.Number = word_number++;
-                                word.NumberInChapter = word_number_in_chapter++;
-                                word.NumberInVerse = word_number_in_verse++;
-
-                                int letter_number_in_word = 1;
-                                foreach (Letter letter in word.Letters)
-                                {
-                                    letter.Number = letter_number++;
-                                    letter.NumberInChapter = letter_number_in_chapter++;
-                                    letter.NumberInVerse = letter_number_in_verse++;
-                                    letter.NumberInWord = letter_number_in_word++;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private void SetupWordOccurrences()
-        {
-            Dictionary<string, int> frequencies = new Dictionary<string, int>();
-            foreach (Verse verse in this.Verses)
-            {
-                foreach (Word word in verse.Words)
-                {
-                    string word_text = word.Text;
-                    if (text_mode == "Original")
-                    {
-                        word_text = word_text.Simplify29();
-                    }
-
-                    if (frequencies.ContainsKey(word_text))
-                    {
-                        frequencies[word_text]++;
-                        word.Occurrence = frequencies[word_text];
-                    }
-                    else
-                    {
-                        frequencies.Add(word_text, 1);
-                        word.Occurrence = 1;
-                    }
-                }
-            }
-        }
-        private void SetupWordFrequencies()
-        {
-            Dictionary<string, int> frequencies = new Dictionary<string, int>();
-            foreach (Verse verse in this.Verses)
-            {
-                foreach (Word word in verse.Words)
-                {
-                    string word_text = word.Text;
-                    if (text_mode == "Original")
-                    {
-                        word_text = word_text.Simplify29();
-                    }
-
-                    if (frequencies.ContainsKey(word_text))
-                    {
-                        frequencies[word_text]++;
-                    }
-                    else
-                    {
-                        frequencies.Add(word_text, 1);
-                    }
-                }
-            }
-
-            foreach (Verse verse in this.Verses)
-            {
-                foreach (Word word in verse.Words)
-                {
-                    string word_text = word.Text;
-                    if (text_mode == "Original")
-                    {
-                        word_text = word_text.Simplify29();
-                    }
-
-                    if (frequencies.ContainsKey(word_text))
-                    {
-                        word.Frequency = frequencies[word_text];
-                    }
-                    else
-                    {
-                        word.Frequency = 0;
                     }
                 }
             }

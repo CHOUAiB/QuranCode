@@ -118,20 +118,6 @@ namespace Model
             get { return meaning; }
         }
 
-        private int occurrence = 0;
-        public int Occurrence
-        {
-            get { return occurrence; }
-            internal set { occurrence = value; }
-        }
-
-        private int frequency = 0;
-        public int Frequency
-        {
-            get { return frequency; }
-            internal set { frequency = value; }
-        }
-
         private List<Letter> letters = null;
         public List<Letter> Letters
         {
