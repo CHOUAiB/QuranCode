@@ -146,9 +146,9 @@ public static class Numbers
 
     public static Color[] NUMBER_KIND_COLORS =
     { 
-        /* NumberKind.Deficient */          Color.FromArgb(240, 204, 240),
-        /* NumberKind.Perfect */            Color.FromArgb(240, 128, 240),
-        /* NumberKind.Abundant */           Color.FromArgb(240, 192, 240)
+        /* NumberKind.Deficient */          Color.FromArgb(240, 208, 255),
+        /* NumberKind.Perfect */            Color.FromArgb(240, 128, 255),
+        /* NumberKind.Abundant */           Color.FromArgb(240, 168, 255)
     };
     public static Color GetNumberTypeColor(long number)
     {
