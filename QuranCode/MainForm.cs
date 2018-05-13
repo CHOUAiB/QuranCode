@@ -19509,12 +19509,10 @@ public partial class MainForm : Form, ISubscriber
                 text = text.Substring(0, index + 1);
                 text += word_to_add;
                 FindByTextTextBox.Text = text + " ";
-                m_edited_by_hand = false;
             }
             else
             {
                 FindByTextTextBox.Text = word_to_add + " ";
-                m_edited_by_hand = false;
             }
             FindByTextTextBox.Refresh();
             FindByTextTextBox.SelectionStart = FindByTextTextBox.Text.Length;
@@ -20748,15 +20746,12 @@ public partial class MainForm : Form, ISubscriber
     {
         SearchGroupBox_Leave(null, null);
     }
-    private bool m_edited_by_hand = false;
     private void FindByTextTextBox_Enter(object sender, EventArgs e)
     {
         FindByTextTextBox_TextChanged(null, null);
     }
     private void FindByTextTextBox_TextChanged(object sender, EventArgs e)
     {
-        m_edited_by_hand = true;
-
         EnableFindByTextControls();
 
         PopulateWordsListBox();
@@ -20901,11 +20896,6 @@ public partial class MainForm : Form, ISubscriber
             {
                 ClearFindMatches();
 
-                if (!m_edited_by_hand)
-                {
-                    text = text.Trim(); // as space was added by WordFrequency double-click
-                }
-
                 if (!String.IsNullOrEmpty(text))
                 {
                     string translation = Client.DEFAULT_TRANSLATION;
@@ -20996,8 +20986,6 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_client != null)
         {
-            ClearFindMatches();
-
             string text = FindByTextTextBox.Text;
             if (text.Length > 0)
             {
@@ -21036,6 +21024,8 @@ public partial class MainForm : Form, ISubscriber
         {
             if (!String.IsNullOrEmpty(text))
             {
+                ClearFindMatches();
+
                 m_client.FindPhrases(m_text_search_block_size, text, language_type, translation, text_proximity_type, m_text_wordness, m_case_sensitive, m_with_diacritics);
                 if (m_client.FoundPhrases != null)
                 {
@@ -21060,81 +21050,37 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByRoot()
     {
-        ClearFindMatches();
-
         if (FindByTextTextBox.Text.Length > 0)
         {
             // get startup text from FindTextBox
             string[] startup_words = FindByTextTextBox.Text.Split();
             int count = startup_words.Length;
-            // ignore final incomplete word
-            if (!FindByTextTextBox.Text.EndsWith(" "))
-            {
-                count--;
-            }
 
-            string startup_text = "";
+            string text = "";
             if (m_auto_complete_mode)
             {
                 for (int i = 0; i < count; i++)
                 {
-                    startup_text += startup_words[i] + " ";
+                    text += startup_words[i] + " ";
                 }
-                if (startup_text.Length > 0)
-                {
-                    startup_text = startup_text.Remove(startup_text.Length - 1, 1);
-                }
+                text = text.Trim();
             }
-
-            // get selected word texts
-            List<string> word_texts = new List<string>();
-            if (WordsListBox.SelectedIndices.Count > 0)
-            {
-                char[] separators = { ' ' };
-                foreach (object item in WordsListBox.SelectedItems)
-                {
-                    string[] parts = item.ToString().Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                    if (parts.Length == 1)  // root
-                    {
-                        word_texts.Add(parts[0]);
-                    }
-                    else if (parts.Length == 2) // exact or proximity
-                    {
-                        word_texts.Add(parts[1]);
-                    }
-                }
-            }
-
-            // setup search parameters
-            string text = "";
-            //string translation = Client.DEFAULT_TRANSLATION;
 
             // update m_text_location_in_verse and m_text_location_in_word
             UpdateFindByTextOptions();
 
             List<Phrase> total_phrases = new List<Phrase>();
             List<Verse> total_verses = new List<Verse>();
-            if (word_texts.Count > 0)
+            if (!String.IsNullOrEmpty(text))
             {
-                foreach (string word_text in word_texts)
-                {
-                    if (startup_text.Length > 0)
-                    {
-                        text = startup_text + " " + word_text;
-                    }
-                    else
-                    {
-                        text = word_text;
-                    }
+                text = text.Trim();
 
-                    if (!String.IsNullOrEmpty(text))
-                    {
-                        m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                ClearFindMatches();
 
-                        total_phrases = total_phrases.Union(m_client.FoundPhrases);
-                        total_verses = total_verses.Union(m_client.FoundVerses);
-                    }
-                }
+                m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+
+                total_phrases = total_phrases.Union(m_client.FoundPhrases);
+                total_verses = total_verses.Union(m_client.FoundVerses);
 
                 // write final result to m_client
                 m_client.FoundPhrases = total_phrases;
@@ -21168,6 +21114,10 @@ public partial class MainForm : Form, ISubscriber
         {
             if (!String.IsNullOrEmpty(text))
             {
+                text = text.Trim();
+
+                ClearFindMatches();
+
                 m_client.FindPhrases(m_text_search_block_size, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
                 if (m_client.FoundPhrases != null)
                 {

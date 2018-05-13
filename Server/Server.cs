@@ -4120,10 +4120,10 @@ public class Server : IPublisher
         */
 
         // helper patterns
-        string whole_line = @"(" + @"^" + text + @"$" + @")";
-        string whole_word = @"(" + @"\b" + text + @"\b" + @")";
-        string word_with_prefix = @"(" + @"\b" + @"\S+?" + text + @"\b" + @")";
-        string word_with_suffix = @"(" + @"\b" + text + @"\S+?" + @"\b" + @")";
+        string whole_line = @"(" + @"^" + text.Trim() + @"$" + @")";
+        string whole_word = @"(" + @"\b" + text.Trim() + @"\b" + @")";
+        string word_with_prefix = @"(" + @"\b" + @"\S+?" + text.TrimEnd() + @"\b" + @")";
+        string word_with_suffix = @"(" + @"\b" + text.TrimStart() + @"\S+?" + @"\b" + @")";
         string word_with_prefix_and_suffix = @"(" + @"\b" + @"\S+?" + text + @"\S+?" + @"\b" + @")";
         string word_with_fix_or_fixes = @"(" + word_with_prefix + "|" + word_with_suffix + "|" + word_with_prefix_and_suffix + @")";
 
