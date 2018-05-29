@@ -18,8 +18,8 @@ mahmoud_ali_al_banna_32kbps	Arabic	Mahmoud Ali Al-Banna	32
 MultiLanguage/Basfar_Walk_192kbps	Arabic/English	AR/EN - Basfar/Walk	192
 translations/azerbaijani/balayev	Azerbaijani	Azerbajan - Rasim Balayev	64
 English/Sahih_Intnl_Ibrahim_Walk_192kbps	English	English - Ibrahim Walk	192
-translations/Fooladvand_Hedayatfar_40Kbps	Persian Persian - Fooladvand Hedayatfar	40
-translations/Makarem_Kabiri_16Kbps	Persian	Persian - Makarem Kabiri	16
+translations/Fooladvand_Hedayatfar_40Kbps	Farsi Farsi - Fooladvand Hedayatfar	40
+translations/Makarem_Kabiri_16Kbps	Farsi	Farsi - Makarem Kabiri	16
 translations/urdu_shamshad_ali_khan_46kbps	Urdu	Urdu - Shamshad Ali Khan	64
 
 

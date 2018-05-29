@@ -65,25 +65,32 @@ public class Server : IPublisher
     }
     private void OnFileChanged(object sender, FileSystemEventArgs e)
     {
-        if (e.Name.Contains("InterestingNumbers"))  // e.g. InterestingNumbers.txt
+        if (e.FullPath.StartsWith("Languages"))
         {
-            Numbers.LoadInterestingNumbers();
-            NotifySubscribers(Subject.InterestingNumbers, e);
+            NotifySubscribers(Subject.LanguageSystem, e);
         }
-        else if (e.Name.Contains("DNA"))   // e.g. Simplified29_A29T29C19G23_DNA.txt
+        else
         {
-            LoadDNASequenceSystem(s_dna_sequence_system.Name);
-            NotifySubscribers(Subject.DNASequenceSystem, e);
-        }
-        else if (e.Name.Contains("_")) // e.g. Original_Alphabet_Primes1.txt
-        {
-            LoadNumerologySystem(s_numerology_system.Name);
-            NotifySubscribers(Subject.NumerologySystem, e);
-        }
-        else                           // e.g. Simplified29.txt
-        {
-            LoadSimplificationSystem(s_simplification_system.Name);
-            NotifySubscribers(Subject.SimplificationSystem, e);
+            if (e.Name.Contains("InterestingNumbers"))  // e.g. InterestingNumbers.txt
+            {
+                Numbers.LoadInterestingNumbers();
+                NotifySubscribers(Subject.InterestingNumbers, e);
+            }
+            else if (e.Name.Contains("DNA"))   // e.g. Simplified29_A29T29C19G23_DNA.txt
+            {
+                LoadDNASequenceSystem(s_dna_sequence_system.Name);
+                NotifySubscribers(Subject.DNASequenceSystem, e);
+            }
+            else if (e.Name.Contains("_")) // e.g. Original_Alphabet_Primes1.txt
+            {
+                LoadNumerologySystem(s_numerology_system.Name);
+                NotifySubscribers(Subject.NumerologySystem, e);
+            }
+            else                           // e.g. Simplified29.txt
+            {
+                LoadSimplificationSystem(s_simplification_system.Name);
+                NotifySubscribers(Subject.SimplificationSystem, e);
+            }
         }
     }
     // helper method

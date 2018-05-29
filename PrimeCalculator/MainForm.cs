@@ -266,12 +266,12 @@ public partial class MainForm : Form
 
         int digit_sum = Numbers.DigitSum(ValueTextBox.Text);
         DigitSumTextBox.Text = digit_sum.ToString();
-        DigitSumTextBox.ForeColor = GetNumberTypeColor(digit_sum);
+        DigitSumTextBox.ForeColor = Numbers.GetNumberTypeColor(digit_sum);
         DigitSumTextBox.Refresh();
 
         int digital_root = Numbers.DigitalRoot(ValueTextBox.Text);
         DigitalRootTextBox.Text = digital_root.ToString();
-        DigitalRootTextBox.ForeColor = GetNumberTypeColor(digital_root);
+        DigitalRootTextBox.ForeColor = Numbers.GetNumberTypeColor(digital_root);
         DigitalRootTextBox.Refresh();
 
         ClearFactors();
@@ -538,7 +538,7 @@ public partial class MainForm : Form
     private void FactorizeValue(long number)
     {
         ValueTextBox.Text = Radix.Encode(number, 10L);
-        ValueTextBox.ForeColor = GetNumberTypeColor(number);
+        ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(number);
         ValueTextBox.Refresh();
 
         //string factors_str = Numbers.FactorizeToString(number);
@@ -554,35 +554,35 @@ public partial class MainForm : Form
         {
             ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
             ValueTextBox.SelectionLength = 0;
-            ValueTextBox.ForeColor = GetNumberTypeColor(number);
+            ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(number);
             ValueTextBox.Refresh();
 
             DigitSumTextBox.Text = Numbers.DigitSum(number).ToString();
-            DigitSumTextBox.ForeColor = GetNumberTypeColor(Numbers.DigitSum(number));
+            DigitSumTextBox.ForeColor = Numbers.GetNumberTypeColor(Numbers.DigitSum(number));
             DigitSumTextBox.Refresh();
 
             DigitalRootTextBox.Text = Numbers.DigitalRoot(number).ToString();
-            DigitalRootTextBox.ForeColor = GetNumberTypeColor(Numbers.DigitalRoot(number));
+            DigitalRootTextBox.ForeColor = Numbers.GetNumberTypeColor(Numbers.DigitalRoot(number));
             DigitalRootTextBox.Refresh();
 
             PCIndexChainL2RTextBox.Text = DecimalPCIndexChainL2R(number).ToString();
-            PCIndexChainL2RTextBox.ForeColor = GetNumberTypeColor(DecimalPCIndexChainL2R(number));
+            PCIndexChainL2RTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalPCIndexChainL2R(number));
             PCIndexChainL2RTextBox.Refresh();
 
             PCIndexChainR2LTextBox.Text = DecimalPCIndexChainR2L(number).ToString();
-            PCIndexChainR2LTextBox.ForeColor = GetNumberTypeColor(DecimalPCIndexChainR2L(number));
+            PCIndexChainR2LTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalPCIndexChainR2L(number));
             PCIndexChainR2LTextBox.Refresh();
 
             CPIndexChainL2RTextBox.Text = DecimalCPIndexChainL2R(number).ToString();
-            CPIndexChainL2RTextBox.ForeColor = GetNumberTypeColor(DecimalCPIndexChainL2R(number));
+            CPIndexChainL2RTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalCPIndexChainL2R(number));
             CPIndexChainL2RTextBox.Refresh();
 
             CPIndexChainR2LTextBox.Text = DecimalCPIndexChainR2L(number).ToString();
-            CPIndexChainR2LTextBox.ForeColor = GetNumberTypeColor(DecimalCPIndexChainR2L(number));
+            CPIndexChainR2LTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalCPIndexChainR2L(number));
             CPIndexChainR2LTextBox.Refresh();
 
             IndexChainLengthTextBox.Text = IndexChainLength(number).ToString();
-            //IndexChainLengthTextBox.ForeColor = GetNumberTypeColor(IndexChainLength(number));
+            //IndexChainLengthTextBox.ForeColor = Numbers.GetNumberTypeColor(IndexChainLength(number));
             IndexChainLengthTextBox.Refresh();
 
             string squares1_str = "";
@@ -626,9 +626,9 @@ public partial class MainForm : Form
                         nth_number_index = Numbers.PrimeIndexOf(number) + 1;
                         nth_additive_number_index = Numbers.AdditivePrimeIndexOf(number) + 1;
                         nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(number) + 1;
-                        NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_number_index);
-                        NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_additive_number_index);
-                        NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_non_additive_number_index);
+                        NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_number_index);
+                        NthAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_additive_number_index);
+                        NthNonAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_non_additive_number_index);
                         NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
                         NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
                         NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
@@ -645,9 +645,9 @@ public partial class MainForm : Form
                         nth_number_index = Numbers.CompositeIndexOf(number) + 1;
                         nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(number) + 1;
                         nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(number) + 1;
-                        NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_number_index);
-                        NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_additive_number_index);
-                        NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_non_additive_number_index);
+                        NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_number_index);
+                        NthAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_additive_number_index);
+                        NthNonAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_non_additive_number_index);
                         NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
                         NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
                         NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
@@ -666,16 +666,16 @@ public partial class MainForm : Form
                 {
                     m_index_type = IndexType.Prime;
 
-                    ValueTextBox.ForeColor = GetNumberTypeColor(19L);
+                    ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(19L);
                     if (Numbers.IsPrime(Numbers.DigitSum(m_factorizer.Number)))
                     {
-                        ValueTextBox.ForeColor = GetNumberTypeColor(29L);
+                        ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(29L);
                     }
                     ValueTextBox.Refresh();
 
-                    NthNumberTextBox.ForeColor = GetNumberTypeColor(-1L);
-                    NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(-1L);
-                    NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(-1L);
+                    NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(-1L);
+                    NthAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(-1L);
+                    NthNonAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(-1L);
                     NthNumberTextBox.Text = "-1";
                     NthAdditiveNumberTextBox.Text = "-1";
                     NthNonAdditiveNumberTextBox.Text = "-1";
@@ -687,21 +687,21 @@ public partial class MainForm : Form
                 {
                     m_index_type = IndexType.Composite;
 
-                    ValueTextBox.ForeColor = GetNumberTypeColor(21L);
+                    ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(21L);
                     if (Numbers.IsComposite(Numbers.DigitSum(m_factorizer.Number)))
                     {
-                        ValueTextBox.ForeColor = GetNumberTypeColor(15L);
+                        ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(15L);
 
                         if (Numbers.IsCompositeDigits(m_factorizer.Number))
                         {
-                            ValueTextBox.ForeColor = GetNumberTypeColor(4L);
+                            ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(4L);
                         }
                     }
                     ValueTextBox.Refresh();
 
-                    NthNumberTextBox.ForeColor = GetNumberTypeColor(-1L);
-                    NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(-1L);
-                    NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(-1L);
+                    NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(-1L);
+                    NthAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(-1L);
+                    NthNonAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(-1L);
                     NthNumberTextBox.Text = "-1";
                     NthAdditiveNumberTextBox.Text = "-1";
                     NthNonAdditiveNumberTextBox.Text = "-1";
@@ -756,7 +756,7 @@ public partial class MainForm : Form
                 break;
         }
         NumberKindIndexTextBox.Text = number_kind_index.ToString();
-        NumberKindIndexTextBox.ForeColor = GetNumberTypeColor(number_kind_index);
+        NumberKindIndexTextBox.ForeColor = Numbers.GetNumberTypeColor(number_kind_index);
         ToolTip.SetToolTip(NumberKindIndexTextBox, m_number_kind.ToString() + " number index");
         NumberKindIndexTextBox.Refresh();
     }
@@ -880,14 +880,14 @@ public partial class MainForm : Form
         long sum_of_divisors = Numbers.SumOfDivisors(number);
         string divisors = Numbers.GetDivisorsString(number);
         SumOfDivisorsTextBox.Text = sum_of_divisors.ToString();
-        SumOfDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_divisors);
+        SumOfDivisorsTextBox.ForeColor = Numbers.GetNumberTypeColor(sum_of_divisors);
         SumOfDivisorsTextBox.Refresh();
         ToolTip.SetToolTip(SumOfDivisorsTextBox, "Sum Of Divisors\r\n" + divisors + " = " + sum_of_divisors);
 
         long sum_of_proper_divisors = Numbers.SumOfProperDivisors(number);
         string proper_divisors = Numbers.GetProperDivisorsString(number);
         SumOfProperDivisorsTextBox.Text = sum_of_proper_divisors.ToString();
-        SumOfProperDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_proper_divisors);
+        SumOfProperDivisorsTextBox.ForeColor = Numbers.GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
         ToolTip.SetToolTip(SumOfProperDivisorsTextBox, "Sum Of Proper Divisors\r\n" + proper_divisors + " = " + sum_of_proper_divisors);
     }
@@ -1549,7 +1549,7 @@ public partial class MainForm : Form
             {
                 long number = 0L;
                 int nth_index = int.Parse(NthNumberTextBox.Text) - 1;
-                NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
+                NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.Primes[nth_index];
@@ -1575,7 +1575,7 @@ public partial class MainForm : Form
             {
                 long number = 0L;
                 int nth_index = int.Parse(NthAdditiveNumberTextBox.Text) - 1;
-                NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
+                NthAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.AdditivePrimes[nth_index];
@@ -1601,7 +1601,7 @@ public partial class MainForm : Form
             {
                 long number = 0L;
                 int nth_index = int.Parse(NthNonAdditiveNumberTextBox.Text) - 1;
-                NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
+                NthNonAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.NonAdditivePrimes[nth_index];
@@ -1659,37 +1659,6 @@ public partial class MainForm : Form
             {
                 FactorizeValue(0L);
             }
-        }
-    }
-    private Color GetNumberTypeColor(long number)
-    {
-        if (number <= 0L)
-        {
-            return Color.Gray;
-        }
-        else if (Numbers.IsUnit(number))
-        {
-            return Color.FromArgb(180, 0, 208);
-        }
-        else if (Numbers.IsAdditivePrime(number))
-        {
-            return Color.Blue;
-        }
-        else if (Numbers.IsPrime(number))
-        {
-            return Color.Green;
-        }
-        else if (Numbers.IsAdditiveComposite(number))
-        {
-            return Color.Brown;
-        }
-        else if (Numbers.IsComposite(number))
-        {
-            return Color.Black;
-        }
-        else
-        {
-            return Color.Black;
         }
     }
 

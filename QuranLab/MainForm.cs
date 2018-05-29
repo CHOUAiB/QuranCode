@@ -661,73 +661,73 @@ public partial class MainForm : Form
             if (control.Text == "")
             {
                 control.Text = "P";
-                control.ForeColor = GetNumberTypeColor(19L);
+                control.ForeColor = Numbers.GetNumberTypeColor(19L);
                 ToolTip.SetToolTip(control, "prime = divisible by itself only");
             }
             else if (control.Text == "P")
             {
                 control.Text = "AP";
-                control.ForeColor = GetNumberTypeColor(47L);
+                control.ForeColor = Numbers.GetNumberTypeColor(47L);
                 ToolTip.SetToolTip(control, "additive prime = prime with a prime digit sum");
             }
             else if (control.Text == "AP")
             {
                 control.Text = "XP";
-                control.ForeColor = GetNumberTypeColor(19L);
+                control.ForeColor = Numbers.GetNumberTypeColor(19L);
                 ToolTip.SetToolTip(control, "non-additive prime = prime with a composite digit sum");
             }
             else if (control.Text == "XP")
             {
                 control.Text = "C";
-                control.ForeColor = GetNumberTypeColor(14L);
+                control.ForeColor = Numbers.GetNumberTypeColor(14L);
                 ToolTip.SetToolTip(control, "composite = divisible by prime(s) below it");
             }
             else if (control.Text == "C")
             {
                 control.Text = "AC";
-                control.ForeColor = GetNumberTypeColor(114L);
+                control.ForeColor = Numbers.GetNumberTypeColor(114L);
                 ToolTip.SetToolTip(control, "additive composite = composite with a composite digit sum");
             }
             else if (control.Text == "AC")
             {
                 control.Text = "XC";
-                control.ForeColor = GetNumberTypeColor(25L);
+                control.ForeColor = Numbers.GetNumberTypeColor(25L);
                 ToolTip.SetToolTip(control, "non-additive composite = composite with a prime digit sum");
             }
             else if (control.Text == "XC")
             {
                 control.Text = "^2";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "square number");
             }
             else if (control.Text == "^2")
             {
                 control.Text = "^3";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "cubic number");
             }
             else if (control.Text == "^3")
             {
                 control.Text = "^4";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "quartic number");
             }
             else if (control.Text == "^4")
             {
                 control.Text = "^5";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "quintic number");
             }
             else if (control.Text == "^5")
             {
                 control.Text = "^6";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "sextic number");
             }
             else if (control.Text == "^6")
             {
                 control.Text = "^7";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "septic number");
             }
             else if (control.Text == "^7")
@@ -742,73 +742,73 @@ public partial class MainForm : Form
             if (control.Text == "")
             {
                 control.Text = "^7";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "septic number");
             }
             else if (control.Text == "^7")
             {
                 control.Text = "^6";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "sextic number");
             }
             else if (control.Text == "^6")
             {
                 control.Text = "^5";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "quartic number");
             }
             else if (control.Text == "^5")
             {
                 control.Text = "^4";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "quartic number");
             }
             else if (control.Text == "^4")
             {
                 control.Text = "^3";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "cubic number");
             }
             else if (control.Text == "^3")
             {
                 control.Text = "^2";
-                control.ForeColor = GetNumberTypeColor(0L);
+                control.ForeColor = Numbers.GetNumberTypeColor(0L);
                 ToolTip.SetToolTip(control, "square number");
             }
             else if (control.Text == "^2")
             {
                 control.Text = "XC";
-                control.ForeColor = GetNumberTypeColor(25L);
+                control.ForeColor = Numbers.GetNumberTypeColor(25L);
                 ToolTip.SetToolTip(control, "non-additive composite = composite with a prime digit sum");
             }
             else if (control.Text == "XC")
             {
                 control.Text = "AC";
-                control.ForeColor = GetNumberTypeColor(114L);
+                control.ForeColor = Numbers.GetNumberTypeColor(114L);
                 ToolTip.SetToolTip(control, "additive composite = composite with a composite digit sum");
             }
             else if (control.Text == "AC")
             {
                 control.Text = "C";
-                control.ForeColor = GetNumberTypeColor(14L);
+                control.ForeColor = Numbers.GetNumberTypeColor(14L);
                 ToolTip.SetToolTip(control, "composite = divisible by prime(s) below it");
             }
             else if (control.Text == "C")
             {
                 control.Text = "XP";
-                control.ForeColor = GetNumberTypeColor(19L);
+                control.ForeColor = Numbers.GetNumberTypeColor(19L);
                 ToolTip.SetToolTip(control, "non-additive prime = prime with a composite digit sum");
             }
             else if (control.Text == "XP")
             {
                 control.Text = "AP";
-                control.ForeColor = GetNumberTypeColor(47L);
+                control.ForeColor = Numbers.GetNumberTypeColor(47L);
                 ToolTip.SetToolTip(control, "additive prime = prime with a prime digit sum");
             }
             else if (control.Text == "AP")
             {
                 control.Text = "P";
-                control.ForeColor = GetNumberTypeColor(19L);
+                control.ForeColor = Numbers.GetNumberTypeColor(19L);
                 ToolTip.SetToolTip(control, "prime = divisible by itself only");
             }
             else if (control.Text == "P")
@@ -817,48 +817,6 @@ public partial class MainForm : Form
                 control.ForeColor = control.BackColor;
                 ToolTip.SetToolTip(control, "");
             }
-        }
-    }
-    private Color GetNumberTypeColor(long number)
-    {
-        return GetNumberTypeColor(number.ToString(), 10L);
-    }
-    private Color GetNumberTypeColor(string value, long radix)
-    {
-        // if negative number, remove -ve sign
-        if (value.StartsWith("-")) value = value.Remove(0, 1);
-
-        if (Numbers.IsUnit(value, radix))
-        {
-            return Color.DarkViolet;
-        }
-        else if (Numbers.IsNonAdditivePrime(value, radix))
-        {
-            return Color.DarkGreen;
-        }
-        else if (Numbers.IsAdditivePrime(value, radix))
-        {
-            return Color.Blue;
-        }
-        else if (Numbers.IsPrime(value, radix))
-        {
-            return Color.Green;
-        }
-        else if (Numbers.IsNonAdditiveComposite(value, radix))
-        {
-            return Color.DarkGray;
-        }
-        else if (Numbers.IsAdditiveComposite(value, radix))
-        {
-            return Color.Brown;
-        }
-        else if (Numbers.IsComposite(value, radix))
-        {
-            return Color.Black;
-        }
-        else
-        {
-            return Color.Black;
         }
     }
     private NumberType m_chapter_sum_number_type;

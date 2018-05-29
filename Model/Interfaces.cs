@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-public enum Subject { SimplificationSystem, NumerologySystem, DNASequenceSystem, InterestingNumbers };
+public enum Subject { LanguageSystem, SimplificationSystem, NumerologySystem, DNASequenceSystem, InterestingNumbers };
 
 public interface IPublisher
 {

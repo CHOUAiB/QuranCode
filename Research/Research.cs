@@ -2822,6 +2822,40 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
+    public static void VerseStarts(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoVerseStarts(client, verses);
+
+        string filename = "VerseStarts" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void VerseEnds(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.Selection == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoVerseEnds(client, verses);
+
+        string filename = "VerseEnds" + "_" + client.NumerologySystem.TextMode + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
     public static void WordInformation(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
@@ -3372,6 +3406,80 @@ public static partial class Research
         if (str.Length > 2)
         {
             str.Remove(str.Length - 2, 2);
+        }
+
+        return str.ToString();
+    }
+    private static string DoVerseStarts(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.AppendLine("Letter" + "\t" + "Frequency");
+
+        foreach (char c in Constants.ARABIC_LETTERS)
+        {
+            int count = 0;
+            foreach (Verse verse in verses)
+            {
+                char first = '\0';
+                for (int i = 0; i < verse.Text.Length; i++)
+                {
+                    if (Constants.ARABIC_LETTERS.Contains(verse.Text[i]))
+                    {
+                        first = verse.Text[i];
+                        break;
+                    }
+                }
+
+                if (c == first)
+                {
+                    count++;
+                }
+            }
+            str.AppendLine(c.ToString() + "\t" + count.ToString());
+        }
+        if (str.Length > 2)
+        {
+            str.Remove(str.Length - 2, 2); // \r\n
+        }
+
+        return str.ToString();
+    }
+    private static string DoVerseEnds(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        str.AppendLine("Letter" + "\t" + "Frequency");
+
+        foreach (char c in Constants.ARABIC_LETTERS)
+        {
+            int count = 0;
+            foreach (Verse verse in verses)
+            {
+                char last = '\0';
+                for (int i = verse.Text.Length - 1; i >= 0; i--)
+                {
+                    if (Constants.ARABIC_LETTERS.Contains(verse.Text[i]))
+                    {
+                        last = verse.Text[i];
+                        break;
+                    }
+                }
+
+                if (c == last)
+                {
+                    count++;
+                }
+            }
+            str.AppendLine(c.ToString() + "\t" + count.ToString());
+        }
+        if (str.Length > 2)
+        {
+            str.Remove(str.Length - 2, 2); // \r\n
         }
 
         return str.ToString();
@@ -5323,7 +5431,7 @@ public static partial class Research
 
         string result = DoFindVersesWithXValueDigitSum(client, param, in_search_result, NumberType.Natural);
 
-        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithXValueDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".csv";
+        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithXValueDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;
@@ -5338,7 +5446,7 @@ public static partial class Research
 
         string result = DoFindVersesWithXValueDigitSum(client, param, in_search_result, NumberType.Prime);
 
-        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithPValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".csv";
+        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithPValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;
@@ -5353,7 +5461,7 @@ public static partial class Research
 
         string result = DoFindVersesWithXValueDigitSum(client, param, in_search_result, NumberType.AdditivePrime);
 
-        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithAPValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".csv";
+        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithAPValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;
@@ -5368,7 +5476,7 @@ public static partial class Research
 
         string result = DoFindVersesWithXValueDigitSum(client, param, in_search_result, NumberType.Composite);
 
-        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithCValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".csv";
+        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithCValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;
@@ -5383,7 +5491,7 @@ public static partial class Research
 
         string result = DoFindVersesWithXValueDigitSum(client, param, in_search_result, NumberType.AdditiveComposite);
 
-        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithACValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + ".csv";
+        string filename = client.NumerologySystem.Name + "_" + "FindVersesWithACValueAndXDigitSum" + "_" + param + "_" + DateTime.Now.ToString("yyyyMMdd_hhmmss") + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;

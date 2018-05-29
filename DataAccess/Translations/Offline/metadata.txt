@@ -50,24 +50,24 @@ id.indonesian	id.png	Indonesian	Bahasa Indonesia	Indonesian Ministry of Religiou
 id.muntakhab	id.png	Indonesian	Quraish Shihab	Muhammed Quraish Shihab et al. *
 id.jalalayn	id.png	Indonesian	Tafsir Al-Jalalayn	Jalal ad-Din al-Mahalli and Jalal ad-Din as-Suyuti *
 it.piccardo	it.png	Italian	Hamza Roberto Piccardo	Hamza Roberto Piccardo *
-ja.japanese	jp.png	Japanese	Unknown	Unknown
+ja.japanese	jp.png	Farsi	Unknown	Unknown
 ko.korean	kr.png	Korean	Unknown	Unknown
 ku.asan	iq.png	Kurdish	ته‌فسیری ئاسان	Burhan Muhammed-Amin
 ms.basmeih	my.png	Malay	Abdullah Muhammed Basmeih	Abdullah Muhammed Basmeih
 ml.abdulhameed	in.png	Malayalam	അബ്ദുല്‍ ഹമീദ് & പറപ്പൂര്‍	Cheriyamundam Abdul Hameed and Kunhi Mohammed Parappoor
 ml.karakunnu	in.png	Malayalam	കാരകുന്ന് & എളയാവൂര്	Muhammed Karakunnu and Vanidas Elayavoor *
 no.berg	no.png	Norwegian	Einar Berg	Einar Berg
-fa.ghomshei	ir.png	Persian	الهی قمشه‌ای	Mahdi Elahi Ghomshei *
-fa.ansarian	ir.png	Persian	انصاریان	Hussain Ansarian *
-fa.ayati	ir.png	Persian	آیتی	AbdolMohammad Ayati *
-fa.bahrampour	ir.png	Persian	بهرام پور	Abolfazl Bahrampour *
-fa.khorramdel	ir.png	Persian	خرمدل	Mostafa Khorramdel *
-fa.khorramshahi	ir.png	Persian	خرمشاهی	Baha'oddin Khorramshahi *
-fa.sadeqi	ir.png	Persian	صادقی تهرانی	Mohammad Sadeqi Tehrani *
-fa.fooladvand	ir.png	Persian	فولادوند	Mohammad Mahdi Fooladvand *
-fa.mojtabavi	ir.png	Persian	مجتبوی	Sayyed Jalaloddin Mojtabavi *
-fa.moezzi	ir.png	Persian	معزی	Mohammad Kazem Moezzi
-fa.makarem	ir.png	Persian	مکارم شیرازی	Naser Makarem Shirazi *
+fa.ghomshei	ir.png	Farsi	الهی قمشه‌ای	Mahdi Elahi Ghomshei *
+fa.ansarian	ir.png	Farsi	انصاریان	Hussain Ansarian *
+fa.ayati	ir.png	Farsi	آیتی	AbdolMohammad Ayati *
+fa.bahrampour	ir.png	Farsi	بهرام پور	Abolfazl Bahrampour *
+fa.khorramdel	ir.png	Farsi	خرمدل	Mostafa Khorramdel *
+fa.khorramshahi	ir.png	Farsi	خرمشاهی	Baha'oddin Khorramshahi *
+fa.sadeqi	ir.png	Farsi	صادقی تهرانی	Mohammad Sadeqi Tehrani *
+fa.fooladvand	ir.png	Farsi	فولادوند	Mohammad Mahdi Fooladvand *
+fa.mojtabavi	ir.png	Farsi	مجتبوی	Sayyed Jalaloddin Mojtabavi *
+fa.moezzi	ir.png	Farsi	معزی	Mohammad Kazem Moezzi
+fa.makarem	ir.png	Farsi	مکارم شیرازی	Naser Makarem Shirazi *
 pl.bielawskiego	pl.png	Polish	Józefa Bielawskiego	Józefa Bielawskiego
 pt.elhayek	pt.png	Portuguese	Samir El-Hayek	Samir El-Hayek
 ro.grigore	ro.png	Romanian	George Grigore	George Grigore

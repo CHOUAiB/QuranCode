@@ -27,7 +27,7 @@ public partial class MainForm : Form
         }
     }
 
-    private static int ROWS = 30;
+    private static int ROWS = 32;
     private static int COLS = 19;
     private TextBox[,] controls = new TextBox[ROWS, COLS];
 
@@ -35,40 +35,44 @@ public partial class MainForm : Form
     {
         InitializeComponent();
 
-        // build ClearAll label
+        // build Copy label
         {
             Label control = new Label();
             if (control != null)
             {
-                control.Width = 12;
-                control.Height = 18;
-                control.Top = 0;
+                control.Width = 14;
+                control.Height = 12;
+                control.Top = -3;
                 control.Left = 0;
+                control.Cursor = Cursors.Hand;
                 control.TextAlign = ContentAlignment.TopLeft;
                 control.Font = new Font("Arial", 10);
-                control.Text = "◊";
-                ToolTip.SetToolTip(control, "Clear All");
-                control.Cursor = Cursors.No;
-                control.Click += ClearAllLabel_Click;
+                control.Text = "˄";
+                control.MouseEnter += Label_MouseEnter;
+                control.MouseLeave += Label_MouseLeave;
+                control.Click += CopyLabel_Click;
+                ToolTip.SetToolTip(control, "Copy");
                 MainPanel.Controls.Add(control);
             }
         }
 
-        // build AutoFill label
+        // build Paste label
         {
             Label control = new Label();
             if (control != null)
             {
-                control.Width = 12;
-                control.Height = 18;
-                control.Top = 6;
-                control.Left = 12;
-                control.TextAlign = ContentAlignment.BottomLeft;
+                control.Width = 14;
+                control.Height = 12;
+                control.Top = 8;
+                control.Left = 0;
+                control.Cursor = Cursors.Hand;
+                control.TextAlign = ContentAlignment.TopLeft;
                 control.Font = new Font("Arial", 10);
-                control.Text = "ⁿ";
-                ToolTip.SetToolTip(control, "Auto Fill");
-                control.Cursor = Cursors.PanSouth;
-                control.Click += AutoFillLabel_Click;
+                control.Text = "˅";
+                control.MouseEnter += Label_MouseEnter;
+                control.MouseLeave += Label_MouseLeave;
+                control.Click += PasteLabel_Click;
+                ToolTip.SetToolTip(control, "Paste");
                 MainPanel.Controls.Add(control);
             }
         }
@@ -80,9 +84,9 @@ public partial class MainForm : Form
             if (control != null)
             {
                 control.Width = 20;
-                control.Height = 23;
-                control.Top = 20 + i * 21;
-                control.Left = 2;
+                control.Height = 21;
+                control.Top = 21 + (i * 22);
+                control.Left = 0;
                 control.TextAlign = ContentAlignment.MiddleRight;
                 control.Font = new Font("Arial", 8);
                 control.Text = (i + 1).ToString();
@@ -102,7 +106,7 @@ public partial class MainForm : Form
                 control.Width = 53;
                 control.Height = 19;
                 control.Top = 0;
-                control.Left = 23 + j * 55;
+                control.Left = 19 + (j * 55);
                 control.TextAlign = ContentAlignment.MiddleCenter;
                 control.Font = new Font("Arial", 8);
                 MainPanel.Controls.Add(control);
@@ -110,24 +114,24 @@ public partial class MainForm : Form
                 switch (j)
                 {
                     case 0: { control.Text = "i"; ToolTip.SetToolTip(control, "Index"); break; }
-                    case 1: { control.Text = "P"; ToolTip.SetToolTip(control, "Prime"); break; }
-                    case 2: { control.Text = "AP"; ToolTip.SetToolTip(control, "Additive Prime"); break; }
-                    case 3: { control.Text = "XP"; ToolTip.SetToolTip(control, "Non-additive Prime"); break; }
-                    case 4: { control.Text = "C"; ToolTip.SetToolTip(control, "Composite"); break; }
-                    case 5: { control.Text = "AC"; ToolTip.SetToolTip(control, "Additive Composite"); break; }
-                    case 6: { control.Text = "XC"; ToolTip.SetToolTip(control, "Non-additive Composite"); break; }
-                    case 7: { control.Text = "DF"; ToolTip.SetToolTip(control, "Deficient Number"); break; }
-                    case 8: { control.Text = "AB"; ToolTip.SetToolTip(control, "Abundant Number"); break; }
-                    case 9: { control.Text = "Diff"; ToolTip.SetToolTip(control, "AB - DF"); break; }
-                    case 10: { control.Text = "Sum"; ToolTip.SetToolTip(control, "AB + DF"); break; }
-                    case 11: { control.Text = "P=4n+1"; ToolTip.SetToolTip(control, "n of Fermat's 4n+1 Prime = a^2 + b^2"); break; }
-                    case 12: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Prime = a^2 + b^2"); break; }
-                    case 13: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Prime = a^2 + b^2"); break; }
-                    case 14: { control.Text = "C=4n+1"; ToolTip.SetToolTip(control, "n of Ali Adams' 4n+1 Composite = a^2 - b^2"); break; }
-                    case 15: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Composite = a^2 - b^2"); break; }
-                    case 16: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Composite = a^2 - b^2"); break; }
-                    case 17: { control.Text = "Med(1..i)"; ToolTip.SetToolTip(control, "Median(1..i) = (i+1)/2"); break; }
-                    case 18: { control.Text = "Sum(1..i)"; ToolTip.SetToolTip(control, "Sum(1..i) = (i*(i+1))/2"); break; }
+                    case 1: { control.Text = "Pi"; ToolTip.SetToolTip(control, "Prime"); break; }
+                    case 2: { control.Text = "APi"; ToolTip.SetToolTip(control, "Additive Prime"); break; }
+                    case 3: { control.Text = "XPi"; ToolTip.SetToolTip(control, "Non-additive Prime"); break; }
+                    case 4: { control.Text = "Ci"; ToolTip.SetToolTip(control, "Composite"); break; }
+                    case 5: { control.Text = "ACi"; ToolTip.SetToolTip(control, "Additive Composite"); break; }
+                    case 6: { control.Text = "XCi"; ToolTip.SetToolTip(control, "Non-additive Composite"); break; }
+                    case 7: { control.Text = "DFi"; ToolTip.SetToolTip(control, "Deficient Number"); break; }
+                    case 8: { control.Text = "ABi"; ToolTip.SetToolTip(control, "Abundant Number"); break; }
+                    case 9: { control.Text = "Pi=4n+1"; ToolTip.SetToolTip(control, "n of Fermat's 4n+1 Prime = a^2 + b^2"); break; }
+                    case 10: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Prime = a^2 + b^2"); break; }
+                    case 11: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Prime = a^2 + b^2"); break; }
+                    case 12: { control.Text = "Ci=4n+1"; ToolTip.SetToolTip(control, "n of Ali Adams' 4n+1 Composite = a^2 - b^2"); break; }
+                    case 13: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Composite = a^2 - b^2"); break; }
+                    case 14: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Composite = a^2 - b^2"); break; }
+                    case 15: { control.Text = "Sum"; ToolTip.SetToolTip(control, "Sum(1..i) = (i*(i+1))/2"); break; }
+                    case 16: { control.Text = "Half"; ToolTip.SetToolTip(control, "i/2"); break; }
+                    case 17: { control.Text = "Median"; ToolTip.SetToolTip(control, "Median(1..i/2) = ((i/2)+1)/2"); break; }
+                    case 18: { control.Text = "Product"; ToolTip.SetToolTip(control, "Half * Median"); break; }
                     default: break;
                 }
             }
@@ -143,10 +147,10 @@ public partial class MainForm : Form
                 {
                     control.Width = 53;
                     control.Height = 21;
-                    control.Top = 19 + i * 21;
-                    control.Left = 23 + j * 55;
+                    control.Top = 19 + (i * 22);
+                    control.Left = 19 + (j * 55);
                     control.TextAlign = HorizontalAlignment.Center;
-                    control.Font = new Font("Arial", 12);
+                    control.Font = new Font("Arial", 11);
                     control.MaxLength = 7;
                     if (j >= 9) control.ReadOnly = true;
                     MainPanel.Controls.Add(control);
@@ -197,24 +201,20 @@ public partial class MainForm : Form
                             break;
                         case 9:
                         case 10:
-                            {
-                                control.BackColor = Color.LightGray;
-                            }
-                            break;
                         case 11:
-                        case 12:
-                        case 13:
                             {
                                 control.BackColor = Color.Lavender;
                             }
                             break;
+                        case 12:
+                        case 13:
                         case 14:
-                        case 15:
-                        case 16:
                             {
                                 control.BackColor = Color.SeaShell;
                             }
                             break;
+                        case 15:
+                        case 16:
                         case 17:
                         case 18:
                             {
@@ -255,71 +255,76 @@ public partial class MainForm : Form
             }
         }
     }
-    private void ClearAllLabel_Click(object sender, EventArgs e)
+    private void Label_MouseEnter(object sender, EventArgs e)
     {
-        for (int i = 0; i < ROWS; i++)
-        {
-            for (int j = 0; j < COLS; j++)
-            {
-                controls[i, j].Text = "";
-            }
-        }
-        controls[0, 0].Focus();
-    }
-    private void AutoFillLabel_Click(object sender, EventArgs e)
-    {
-        Control control = (sender as Label);
+        Control control = sender as Label;
         if (control != null)
         {
-            for (int i = 0; i < ROWS; i++)
-            {
-                controls[i, 0].Text = (i + 1).ToString();
-            }
-            controls[0, 0].Focus();
+            control.BackColor = SystemColors.Info;
         }
     }
-    private void CopyButton_Click(object sender, EventArgs e)
+    private void Label_MouseLeave(object sender, EventArgs e)
     {
-        if (Directory.Exists(Globals.NUMBERS_FOLDER))
+        Control control = sender as Label;
+        if (control != null)
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "Numbers" + ".txt";
-
-            StringBuilder str = new StringBuilder();
-            str.AppendLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
-            str.AppendLine("i" + "\t" + "P" + "\t" + "AP" + "\t" + "XP" + "\t" + "C" + "\t" + "AC" + "\t" + "XC" + "\t" + "DF" + "\t" + "AB" + "\t" + "Diff" + "\t" + "Sum" + "\t" + "P=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "C=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Med(i)" + "\t" + "Sum(i)");
-            str.AppendLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
-            for (int i = 0; i < ROWS; i++)
-            {
-                for (int j = 0; j < COLS; j++)
-                {
-                    str.Append(controls[i, j].Text + "\t");
-                }
-                if (str.Length > 0)
-                {
-                    str.Remove(str.Length - 1, 1);
-                }
-                str.AppendLine();
-            }
-            str.AppendLine("------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-            FileHelper.SaveText(filename, str.ToString());
-            FileHelper.DisplayFile(filename);
+            control.BackColor = SystemColors.Control;
         }
     }
-    private void PasteButton_Click(object sender, EventArgs e)
+    private void CopyLabel_Click(object sender, EventArgs e)
     {
-        string text = Clipboard.GetText();
-        string[] lines = text.Split('\n');
-
-        List<int> numbers = new List<int>();
-        foreach (string line in lines)
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            if (!String.IsNullOrEmpty(line))
+            if (Directory.Exists(Globals.NUMBERS_FOLDER))
             {
-                int number = 0;
-                if (Char.IsDigit(line[0])) // 0..9
+                string filename = Globals.NUMBERS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "Numbers" + ".txt";
+
+                StringBuilder str = new StringBuilder();
+                str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                str.AppendLine("i" + "\t" + "Pi" + "\t" + "APi" + "\t" + "XPi" + "\t" + "Ci" + "\t" + "ACi" + "\t" + "XCi" + "\t" + "DFi" + "\t" + "ABi" + "\t" + "Pi=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Ci=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Sum" + "\t" + "Half" + "\t" + "Median" + "\t" + "Product");
+                str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                for (int i = 0; i < ROWS; i++)
                 {
-                    string[] parts = line.Split('\t');
+                    for (int j = 0; j < COLS; j++)
+                    {
+                        str.Append(controls[i, j].Text + "\t");
+                    }
+                    if (str.Length > 0)
+                    {
+                        str.Remove(str.Length - 1, 1);
+                    }
+                    str.AppendLine();
+                }
+                str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                FileHelper.SaveText(filename, str.ToString());
+                FileHelper.DisplayFile(filename);
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void PasteLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            string text = Clipboard.GetText();
+            string[] lines = text.Split('\n');
+
+            char[] separators = { ' ', '.', ',', ';', '\t', 't', 's', 'n' };
+            List<int> numbers = new List<int>();
+            foreach (string line in lines)
+            {
+                if (!String.IsNullOrEmpty(line))
+                {
+                    int number = 0;
+                    //if (Char.IsDigit(line[0])) // 0..9
+                    //{
+                    string[] parts = line.Split(separators, StringSplitOptions.RemoveEmptyEntries);
                     if (int.TryParse(parts[0], out number))
                     {
                         numbers.Add(number);
@@ -328,32 +333,37 @@ public partial class MainForm : Form
                     {
                         numbers.Add(0);
                     }
+                    //}
+                    //else
+                    //{
+                    //    numbers.Add(0);
+                    //}
                 }
                 else
                 {
                     numbers.Add(0);
                 }
             }
-            else
+
+            if (numbers.Count <= ROWS)
             {
-                numbers.Add(0);
+                for (int i = 0; i < numbers.Count; i++)
+                {
+                    if (numbers[i] > 0)
+                    {
+                        controls[i, 0].Text = numbers[i].ToString();
+                    }
+                    else
+                    {
+                        controls[i, 0].Text = "";
+                    }
+                }
+                controls[0, 0].Focus();
             }
         }
-
-        if (numbers.Count <= ROWS)
+        finally
         {
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                if (numbers[i] > 0)
-                {
-                    controls[i, 0].Text = numbers[i].ToString();
-                }
-                else
-                {
-                    controls[i, 0].Text = "";
-                }
-            }
-            controls[0, 0].Focus();
+            this.Cursor = Cursors.Default;
         }
     }
 
@@ -615,18 +625,18 @@ public partial class MainForm : Form
                             Numbers.GetTwoSquaresInSum(p, out a, out b);
                             a = (long)Math.Sqrt(a);
                             b = (long)Math.Sqrt(b);
-                            controls[point.X, 11].Text = n.ToString();
-                            controls[point.X, 12].Text = a.ToString();
-                            controls[point.X, 13].Text = b.ToString();
-                            controls[point.X, 11].ForeColor = Numbers.GetNumberTypeColor(n);
-                            controls[point.X, 12].ForeColor = Numbers.GetNumberTypeColor(a);
-                            controls[point.X, 13].ForeColor = Numbers.GetNumberTypeColor(b);
+                            controls[point.X, 9].Text = n.ToString();
+                            controls[point.X, 10].Text = a.ToString();
+                            controls[point.X, 11].Text = b.ToString();
+                            controls[point.X, 9].ForeColor = Numbers.GetNumberTypeColor(n);
+                            controls[point.X, 10].ForeColor = Numbers.GetNumberTypeColor(a);
+                            controls[point.X, 11].ForeColor = Numbers.GetNumberTypeColor(b);
                         }
                         else
                         {
+                            controls[point.X, 9].Text = "";
+                            controls[point.X, 10].Text = "";
                             controls[point.X, 11].Text = "";
-                            controls[point.X, 12].Text = "";
-                            controls[point.X, 13].Text = "";
                         }
 
                         if (((c - 1) % 4) == 0)  // 4n+1 Composite
@@ -637,26 +647,32 @@ public partial class MainForm : Form
                             Numbers.GetTwoSquaresInDiff(c, out a, out b);
                             a = (long)Math.Sqrt(a);
                             b = (long)Math.Sqrt(b);
-                            controls[point.X, 14].Text = n.ToString();
-                            controls[point.X, 15].Text = a.ToString();
-                            controls[point.X, 16].Text = b.ToString();
-                            controls[point.X, 14].ForeColor = Numbers.GetNumberTypeColor(n);
-                            controls[point.X, 15].ForeColor = Numbers.GetNumberTypeColor(a);
-                            controls[point.X, 16].ForeColor = Numbers.GetNumberTypeColor(b);
+                            controls[point.X, 12].Text = n.ToString();
+                            controls[point.X, 13].Text = a.ToString();
+                            controls[point.X, 14].Text = b.ToString();
+                            controls[point.X, 12].ForeColor = Numbers.GetNumberTypeColor(n);
+                            controls[point.X, 13].ForeColor = Numbers.GetNumberTypeColor(a);
+                            controls[point.X, 14].ForeColor = Numbers.GetNumberTypeColor(b);
                         }
                         else
                         {
+                            controls[point.X, 12].Text = "";
+                            controls[point.X, 13].Text = "";
                             controls[point.X, 14].Text = "";
-                            controls[point.X, 15].Text = "";
-                            controls[point.X, 16].Text = "";
                         }
 
-                        int mid = (index + 1) / 2;
                         int sum = (index * (index + 1)) / 2;
-                        controls[point.X, 17].Text = mid.ToString();
-                        controls[point.X, 18].Text = sum.ToString();
-                        controls[point.X, 17].ForeColor = Numbers.GetNumberTypeColor(mid);
-                        controls[point.X, 18].ForeColor = Numbers.GetNumberTypeColor(sum);
+                        int half = ((index % 2) == 0) ? index / 2 : 0;
+                        int median = ((half % 2) == 1) ? (half + 1) / 2 : 0;
+                        int product = half * median;
+                        controls[point.X, 15].Text = sum.ToString();
+                        controls[point.X, 16].Text = (half > 0) ? half.ToString() : "";
+                        controls[point.X, 17].Text = (median > 0) ? median.ToString() : "";
+                        controls[point.X, 18].Text = (product > 0) ? product.ToString() : "";
+                        controls[point.X, 15].ForeColor = Numbers.GetNumberTypeColor(sum);
+                        controls[point.X, 16].ForeColor = Numbers.GetNumberTypeColor(half);
+                        controls[point.X, 17].ForeColor = Numbers.GetNumberTypeColor(median);
+                        controls[point.X, 18].ForeColor = Numbers.GetNumberTypeColor(product);
                     }
                     catch
                     {
@@ -685,23 +701,15 @@ public partial class MainForm : Form
                     {
                         long df = Numbers.Deficients[index - 1];
                         long ab = Numbers.Abundants[index - 1];
-                        long diff = ab - df;
-                        long sum = ab + df;
                         controls[point.X, 7].Text = df.ToString();
                         controls[point.X, 8].Text = ab.ToString();
-                        controls[point.X, 9].Text = diff.ToString();
-                        controls[point.X, 10].Text = sum.ToString();
                         controls[point.X, 7].ForeColor = Numbers.GetNumberTypeColor(df);
                         controls[point.X, 8].ForeColor = Numbers.GetNumberTypeColor(ab);
-                        controls[point.X, 9].ForeColor = Numbers.GetNumberTypeColor(diff);
-                        controls[point.X, 10].ForeColor = Numbers.GetNumberTypeColor(sum);
                     }
                     catch
                     {
                         controls[point.X, 7].Text = "";
                         controls[point.X, 8].Text = "";
-                        controls[point.X, 9].Text = "";
-                        controls[point.X, 10].Text = "";
                     }
                     finally
                     {

@@ -45,6 +45,11 @@ public partial class MainForm : Form, ISubscriber
     {
         switch (subject)
         {
+            case Subject.LanguageSystem:
+                {
+                    LanguageComboBox_SelectedIndexChanged(null, null);
+                }
+                break;
             case Subject.SimplificationSystem:
                 {
                     TextModeComboBox_SelectedIndexChanged(null, null);
@@ -71,6 +76,235 @@ public partial class MainForm : Form, ISubscriber
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
+    #endregion
+    #region Languages
+    ///////////////////////////////////////////////////////////////////////////////
+    private string m_language_name = DEFAULT_LANGUAGE;
+    private List<string> m_language_names = null;
+    private void LanguageLabel_Click(object sender, EventArgs e)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            Control control = sender as Control;
+            if (control != null)
+            {
+                int pos = control.Name.IndexOf("LanguageLabel");
+                if (pos > -1)
+                {
+                    m_language_name = control.Name.Remove(pos);
+                    LoadLanguage(m_language_name);
+                    LanguageComboBox.SelectedItem = m_language_name;
+                }
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void LoadLanguages()
+    {
+        if (Directory.Exists(Globals.LANGUAGES_FOLDER))
+        {
+            LoadLanguageNames(Globals.LANGUAGES_FOLDER);
+            PopulateLanguageComboBox();
+        }
+    }
+    private void LoadLanguageNames(string languages_folder)
+    {
+        if (m_language_names == null)
+        {
+            m_language_names = new List<string>();
+        }
+        if (m_language_names != null)
+        {
+            m_language_names.Clear();
+
+            DirectoryInfo folder = new DirectoryInfo(languages_folder);
+            if (folder != null)
+            {
+                FileInfo[] files = folder.GetFiles("*.txt");
+                if ((files != null) && (files.Length > 0))
+                {
+                    foreach (FileInfo file in files)
+                    {
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(file.Name))
+                            {
+                                int pos = file.Name.IndexOf(file.Extension);
+                                if (pos > -1)
+                                {
+                                    m_language_names.Add(file.Name.Remove(pos));
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            // skip non-conformant language
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void PopulateLanguageComboBox()
+    {
+        try
+        {
+            for (int i = 0; i < 3; i++) LanguageComboBox.SelectedIndexChanged -= new EventHandler(LanguageComboBox_SelectedIndexChanged);
+            LanguageComboBox.BeginUpdate();
+
+            if (m_language_names != null)
+            {
+                LanguageComboBox.Items.Clear();
+                foreach (string language_name in m_language_names)
+                {
+                    LanguageComboBox.Items.Add(language_name);
+                }
+            }
+        }
+        finally
+        {
+            LanguageComboBox.EndUpdate();
+            LanguageComboBox.SelectedIndexChanged += new EventHandler(LanguageComboBox_SelectedIndexChanged);
+        }
+    }
+    private void LanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (LanguageComboBox.SelectedIndex > -1)
+        {
+            ApplyLanguage(LanguageComboBox.SelectedIndex);
+        }
+    }
+    private void ApplyLanguage(int index)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_language_names != null)
+            {
+                if ((index >= 0) && (index < m_language_names.Count))
+                {
+                    m_language_name = m_language_names[index];
+                    if (m_language_name != null)
+                    {
+                        LoadLanguage(m_language_name);
+                        LanguageComboBox.SelectedItem = m_language_name;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private Dictionary<string, Dictionary<string, string>> m_languages = new Dictionary<string, Dictionary<string, string>>();
+    private void LoadLanguage(string language_name)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (Directory.Exists(Globals.LANGUAGES_FOLDER))
+            {
+                Dictionary<string, string> language = new Dictionary<string, string>();
+
+                string filename = Globals.LANGUAGES_FOLDER + "/" + language_name + ".txt";
+                List<string> lines = FileHelper.LoadLines(filename);
+                foreach (string line in lines)
+                {
+                    string[] parts = line.Split('\t');
+                    if (parts.Length >= 2)
+                    {
+                        if (parts[0] == "Dictionary")
+                        {
+                            language.Add(parts[1], parts[2]);
+                        }
+                        else
+                        {
+                            foreach (Control control in GetDescendentControls(this))
+                            {
+                                if (control.Name == parts[0])
+                                {
+                                    if (parts.Length > 2)
+                                    {
+                                        if (parts[2].Length > 0)
+                                        {
+                                            control.Text = parts[2];
+                                        }
+                                    }
+
+                                    if (parts.Length > 4)
+                                    {
+                                        if (parts[4].Length > 0)
+                                        {
+                                            ToolTip.SetToolTip(control, parts[4]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (m_languages.ContainsKey(m_language_name))
+                {
+                    m_languages[m_language_name] = language;
+                }
+                else
+                {
+                    m_languages.Add(language_name, language);
+                }
+
+
+                UpdateFindByNumbersNumberLabel();
+                UpdateDistancesOptions();
+                UpdateFindByNumbersResultType();
+                foreach (Control control in GetDescendentControls(this))
+                {
+                    if (control.Name.Contains("ComparisonOperator"))
+                    {
+                        if (control.Text.Length > 0)
+                        {
+                            ToolTip.SetToolTip(control, m_languages[m_language_name][control.Text]);
+                        }
+                    }
+                    else if (control.Name.Contains("NumberType"))
+                    {
+                        if (control.Text.Length > 0)
+                        {
+                            int remainder;
+                            if (int.TryParse(control.Text, out remainder))
+                            {
+                                ToolTip.SetToolTip(control, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                ToolTip.SetToolTip(control, m_languages[m_language_name][control.Text]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private List<Control> GetDescendentControls(Control control)
+    {
+        List<Control> result = new List<Control>();
+        foreach (Control c in control.Controls)
+        {
+            result.Add(c);
+            result.AddRange(GetDescendentControls(c));
+        }
+        return result;
+    }
+    /////////////////////////////////////////////////////////////////////////////
     #endregion
     #region Framework
     ///////////////////////////////////////////////////////////////////////////////
@@ -160,6 +394,7 @@ public partial class MainForm : Form, ISubscriber
 
     private const int DEFAULT_WINDOW_WIDTH = 1290;
     private const int DEFAULT_WINDOW_HEIGHT = 753;
+    private const string DEFAULT_LANGUAGE = "English";
     private const int DEFAULT_INFORMATION_BOX_TOP = 456;
     private const int DEFAULT_AUDIO_VOLUME = 1000;
     private const string VERSE_ADDRESS_TRANSLATION_SEPARATOR = " ";
@@ -198,7 +433,10 @@ public partial class MainForm : Form, ISubscriber
         InitializeComponent();
         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
+        LoadLanguages();
+
         InstallFonts();
+
         AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
 
         using (Graphics graphics = this.CreateGraphics())
@@ -268,6 +506,7 @@ public partial class MainForm : Form, ISubscriber
                 m_client = new Client(numerology_system_name);
                 if (m_client != null)
                 {
+                    m_client.Subscribe(this, Subject.LanguageSystem);
                     m_client.Subscribe(this, Subject.SimplificationSystem);
                     m_client.Subscribe(this, Subject.NumerologySystem);
                     m_client.Subscribe(this, Subject.DNASequenceSystem);
@@ -411,8 +650,6 @@ public partial class MainForm : Form, ISubscriber
                                     LetterFrequencyPanel.Height += 115;
                                 }
                             }
-
-                            GrammarTextBox.Text = "Click a word to display its grammar information in Arabic and English.";
 
                             // refresh chapter sort method/order/pin_chapter1
                             m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
@@ -1087,7 +1324,7 @@ public partial class MainForm : Form, ISubscriber
                     EditSaveTranslationLabel.Enabled = false;
                 }
 
-                ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+                ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
                 WordsListBoxLabel.Visible = false;
                 WordsListBox.Visible = false;
                 WordsListBox.SendToBack();
@@ -1235,6 +1472,11 @@ public partial class MainForm : Form, ISubscriber
                                 switch (parts[0])
                                 {
                                     // [Folders]
+                                    case "LanguagesFolder":
+                                        {
+                                            Globals.LANGUAGES_FOLDER = parts[1].Replace("\\", "/").Trim();
+                                        }
+                                        break;
                                     case "NumbersFolder":
                                         {
                                             Globals.NUMBERS_FOLDER = parts[1].Replace("\\", "/").Trim();
@@ -1508,6 +1750,29 @@ public partial class MainForm : Form, ISubscriber
                                                     catch
                                                     {
                                                         // use default Drawing.HEIGHT
+                                                    }
+                                                }
+                                                break;
+                                            case "Language":
+                                                {
+                                                    try
+                                                    {
+                                                        int index = int.Parse(parts[1].Trim());
+                                                        if ((index >= 0) && (index < this.LanguageComboBox.Items.Count))
+                                                        {
+                                                            this.LanguageComboBox.SelectedIndex = index;
+                                                        }
+                                                    }
+                                                    catch
+                                                    {
+                                                        if (this.LanguageComboBox.Items.Contains(DEFAULT_LANGUAGE))
+                                                        {
+                                                            this.LanguageComboBox.SelectedItem = DEFAULT_LANGUAGE;
+                                                        }
+                                                        else
+                                                        {
+                                                            this.LanguageComboBox.SelectedIndex = 0;
+                                                        }
                                                     }
                                                 }
                                                 break;
@@ -2423,7 +2688,19 @@ public partial class MainForm : Form, ISubscriber
                         m_translation_font = new Font(DEFAULT_TRANSALTION_FONT_NAME, DEFAULT_TRANSALTION_FONT_SIZE);
                         AllTranslatorsCheckBox.Checked = m_show_all_translations;
 
-                        if (this.ChapterComboBox.Items.Count > 1)
+                        if (this.LanguageComboBox.Items.Count > 0)
+                        {
+                            if (this.LanguageComboBox.Items.Contains(DEFAULT_LANGUAGE))
+                            {
+                                this.LanguageComboBox.SelectedItem = DEFAULT_LANGUAGE;
+                            }
+                            else
+                            {
+                                this.LanguageComboBox.SelectedIndex = 0;
+                            }
+                        }
+
+                        if (this.ChapterComboBox.Items.Count > 0)
                         {
                             this.ChapterComboBox.SelectedIndex = 0;
                         }
@@ -2512,6 +2789,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                     writer.WriteLine("DrawingWidth" + "=" + Drawing.WIDTH);
                     writer.WriteLine("DrawingHeight" + "=" + Drawing.HEIGHT);
+                    writer.WriteLine("Language" + "=" + this.LanguageComboBox.SelectedIndex);
                     writer.WriteLine("InformationBoxTop" + "=" + m_information_box_top);
                     writer.WriteLine("InformationPageIndex" + "=" + m_information_page_index);
                     writer.WriteLine("TranslationBoxWidth" + "=" + m_translation_box_width);
@@ -2629,6 +2907,7 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine();
 
                     writer.WriteLine("[Folders]");
+                    writer.WriteLine("LanguagesFolder=" + Globals.LANGUAGES_FOLDER);
                     writer.WriteLine("NumbersFolder=" + Globals.NUMBERS_FOLDER);
                     writer.WriteLine("FontsFolder=" + Globals.FONTS_FOLDER);
                     writer.WriteLine("ImagesFolder=" + Globals.IMAGES_FOLDER);
@@ -2657,7 +2936,7 @@ public partial class MainForm : Form, ISubscriber
     ///////////////////////////////////////////////////////////////////////////////
     private void SetupToolTips()
     {
-        this.ToolTip.SetToolTip(this.WebsiteLinkLabel, "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ");
+        this.ToolTip.SetToolTip(this.HelpFolderLabel, "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ");
         this.ToolTip.SetToolTip(this.PlayerPreviousLabel, "Previous verse");
         this.ToolTip.SetToolTip(this.PlayerPlayLabel, "Play");
         this.ToolTip.SetToolTip(this.PlayerNextLabel, "Next verse");
@@ -2760,19 +3039,19 @@ public partial class MainForm : Form, ISubscriber
         this.ToolTip.SetToolTip(this.AddToVerseCDistanceCheckBox, "Increment each verse's value by the number of chapters back to the same verse");
         this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, "Increment each chapter's value by its chapter number in book");
         this.ToolTip.SetToolTip(this.ChapterComboBox, "C, C-C, C:V, C:V-C, C-C:V, C:V-C:V or any combination" + "\r\n" + "36  40-46  15:87  18:9-25  1-2:5  24:35-27:62  2:29,41:9-12");
-        this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "ءاية" + "\r\n" + "V, V-V, ...");
-        this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "كلمة" + "\r\n" + "W, W-W, ...");
-        this.ToolTip.SetToolTip(this.ChapterLetterNumericUpDown, "حرف" + "\r\n" + "L, L-L, ...");
-        this.ToolTip.SetToolTip(this.PartNumericUpDown, "جزء" + "\r\n" + "P, P-P, ...");
-        this.ToolTip.SetToolTip(this.PageNumericUpDown, "صفحة" + "\r\n" + "P, P-P, ...");
-        this.ToolTip.SetToolTip(this.StationNumericUpDown, "منزل" + "\r\n" + "S, S-S, ...");
-        this.ToolTip.SetToolTip(this.GroupNumericUpDown, "حزب" + "\r\n" + "G, G-G, ...");
-        this.ToolTip.SetToolTip(this.HalfNumericUpDown, "نصف حزب" + "\r\n" + "H, H-H, ...");
-        this.ToolTip.SetToolTip(this.QuarterNumericUpDown, "ربع حزب" + "\r\n" + "Q, Q-Q, ...");
-        this.ToolTip.SetToolTip(this.BowingNumericUpDown, "ركوع" + "\r\n" + "B, B-B, ...");
-        this.ToolTip.SetToolTip(this.VerseNumericUpDown, "ءاية" + "\r\n" + "V, V-V, ...");
-        this.ToolTip.SetToolTip(this.WordNumericUpDown, "كلمة" + "\r\n" + "W, W-W, ...");
-        this.ToolTip.SetToolTip(this.LetterNumericUpDown, "حرف" + "\r\n" + "L, L-L, ...");
+        this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "V, V-V, ...");
+        this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "W, W-W, ...");
+        this.ToolTip.SetToolTip(this.ChapterLetterNumericUpDown, "L, L-L, ...");
+        this.ToolTip.SetToolTip(this.PartNumericUpDown, "P, P-P, ...");
+        this.ToolTip.SetToolTip(this.PageNumericUpDown, "#, #-#, ...");
+        this.ToolTip.SetToolTip(this.StationNumericUpDown, "S, S-S, ...");
+        this.ToolTip.SetToolTip(this.GroupNumericUpDown, "G, G-G, ...");
+        this.ToolTip.SetToolTip(this.HalfNumericUpDown, "H, H-H, ...");
+        this.ToolTip.SetToolTip(this.QuarterNumericUpDown, "Q, Q-Q, ...");
+        this.ToolTip.SetToolTip(this.BowingNumericUpDown, "B, B-B, ...");
+        this.ToolTip.SetToolTip(this.VerseNumericUpDown, "V, V-V, ...");
+        this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
+        this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
         this.ToolTip.SetToolTip(this.SearchScopeBookLabel, "Search in entire book  إبحث في الكتاب");
         this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, "Search in current selection  إبحث في النص المعروض");
         this.ToolTip.SetToolTip(this.SearchScopeResultLabel, "Search in current search result  إبحث في النتائج");
@@ -2780,11 +3059,11 @@ public partial class MainForm : Form, ISubscriber
         this.ToolTip.SetToolTip(this.FindByTextWordnessCheckBox, "find verses with whole word only");
         this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, "case sensitive for non-Arabic languages");
         this.ToolTip.SetToolTip(this.FindByNumbersResultTypeWordsLabel, "find words within verses");
-        this.ToolTip.SetToolTip(this.FindByNumbersResultTypeSentencesLabel, "find sentences across verses");
+        this.ToolTip.SetToolTip(this.FindByNumbersResultTypeSentencesLabel, "find sentences");
         this.ToolTip.SetToolTip(this.FindByNumbersResultTypeVersesLabel, "find verses");
         this.ToolTip.SetToolTip(this.FindByNumbersResultTypeChaptersLabel, "find chapters");
         this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeWordsLabel, "find words within verses");
-        this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeSentencesLabel, "find sentences across verses");
+        this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeSentencesLabel, "find sentences");
         this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeVersesLabel, "find verses");
         this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeChaptersLabel, "find chapters");
         this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeDuplicateLettersLabel, "include duplicate phrase letters");
@@ -4082,7 +4361,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                     else
                     {
-                        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+                        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
                         WordsListBoxLabel.Visible = false;
                         WordsListBox.Visible = false;
                         WordsListBox.SendToBack();
@@ -4286,13 +4565,12 @@ public partial class MainForm : Form, ISubscriber
                 this.Text = Application.ProductName + " | " + GetSelectionSummary();
                 UpdateFindMatchCaption();
 
-                string word_info = GetWordSummary(m_current_word) + "\r\n";
+                string word_info = GetWordInformation(m_current_word);
                 if (ModifierKeys == Keys.Control)
                 {
-                    word_info += GetWordInformation(m_current_word);
                     word_info += "\r\n\r\n";
-                    word_info += GetWordGrammar(m_current_word) + "\r\n\r\n";
-                    word_info += GetWordRelatedWords(m_current_word);
+                    word_info += GetGrammarInformation(m_current_word) + "\r\n\r\n";
+                    word_info += GetRelatedWordsInformation(m_current_word);
                 }
                 ToolTip.SetToolTip(m_active_textbox, word_info);
 
@@ -4322,8 +4600,8 @@ public partial class MainForm : Form, ISubscriber
         }
         else
         {
-            DisplayRelatedWords(m_current_word);
-            DisplayWordGrammar(m_current_word);
+            DisplayRelatedWordsInformation(m_current_word);
+            DisplayGrammarInformation(m_current_word);
 
             // calculate the C V W L distances
             int chapter_number = ChapterComboBox.SelectedIndex + 1;
@@ -4341,10 +4619,10 @@ public partial class MainForm : Form, ISubscriber
             WordDiffTextBox.Text = m_clicked_word_distance.ToString();
             LetterDiffTextBox.Text = m_clicked_letter_distance.ToString();
 
-            ChapterDiffTextBox.ForeColor = GetNumberTypeColor(m_clicked_chapter_distance);
-            VerseDiffTextBox.ForeColor = GetNumberTypeColor(m_clicked_verse_distance);
-            WordDiffTextBox.ForeColor = GetNumberTypeColor(m_clicked_word_distance);
-            LetterDiffTextBox.ForeColor = GetNumberTypeColor(m_clicked_letter_distance);
+            ChapterDiffTextBox.ForeColor = Numbers.GetNumberTypeColor(m_clicked_chapter_distance);
+            VerseDiffTextBox.ForeColor = Numbers.GetNumberTypeColor(m_clicked_verse_distance);
+            WordDiffTextBox.ForeColor = Numbers.GetNumberTypeColor(m_clicked_word_distance);
+            LetterDiffTextBox.ForeColor = Numbers.GetNumberTypeColor(m_clicked_letter_distance);
 
             m_clicked_chapter_number = chapter_number;
             m_clicked_verse_number = verse_number;
@@ -4437,7 +4715,7 @@ public partial class MainForm : Form, ISubscriber
                         m_user_text_mode = false;
                         m_selection_mode = false;
 
-                        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+                        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
                         WordsListBoxLabel.Visible = false;
                         WordsListBox.Visible = false;
                         WordsListBox.SendToBack();
@@ -4473,7 +4751,7 @@ public partial class MainForm : Form, ISubscriber
                         // change focus to MainTextBox control insead of SearchTextBox
                         MainTextBox.Focus();
 
-                        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+                        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
                         WordsListBoxLabel.Visible = false;
                         WordsListBox.Visible = false;
                         WordsListBox.SendToBack();
@@ -7947,7 +8225,7 @@ public partial class MainForm : Form, ISubscriber
 
         DisplaySelection(false);
     }
-    private void ChaptersInspectLabel_Click(object sender, EventArgs e)
+    private void InpectChaptersLabel_Click(object sender, EventArgs e)
     {
         if (m_client == null) return;
         if (m_client.Book == null) return;
@@ -8047,24 +8325,6 @@ public partial class MainForm : Form, ISubscriber
                 try
                 {
                     value = (int)(sender as NumericUpDown).Value;
-                }
-                catch
-                {
-                    value = -1L; // error
-                }
-            }
-            else if ((sender is TextBox) || (sender is Label))
-            {
-                try
-                {
-                    string[] parts = (sender as Control).Text.Split(' ');
-                    foreach (string part in parts)
-                    {
-                        if (long.TryParse(part, out value))
-                        {
-                            break;
-                        }
-                    }
                 }
                 catch
                 {
@@ -8715,7 +8975,7 @@ public partial class MainForm : Form, ISubscriber
             m_user_text_mode = false;
             m_selection_mode = true;
 
-            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+            ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
             WordsListBoxLabel.Visible = false;
             WordsListBox.Visible = false;
             WordsListBox.SendToBack();
@@ -9383,25 +9643,25 @@ public partial class MainForm : Form, ISubscriber
                 {
                     int chapter_number = m_client.Book.Chapters[ChapterComboBox.SelectedIndex].SortedNumber;
                     //ChapterComboBox.ForeColor = ChaptersListBox.GetItemColor(chapter_number - 1);
-                    ChapterComboBox.ForeColor = GetNumberTypeColor(chapter_number);
+                    ChapterComboBox.ForeColor = Numbers.GetNumberTypeColor(chapter_number);
                     ChapterComboBox.BackColor = (Numbers.Compare(chapter_number, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
                 }
             }
         }
 
-        ChapterVerseNumericUpDown.ForeColor = GetNumberTypeColor((int)ChapterVerseNumericUpDown.Value);
-        ChapterWordNumericUpDown.ForeColor = GetNumberTypeColor((int)ChapterWordNumericUpDown.Value);
-        ChapterLetterNumericUpDown.ForeColor = GetNumberTypeColor((int)ChapterLetterNumericUpDown.Value);
-        PageNumericUpDown.ForeColor = GetNumberTypeColor((int)PageNumericUpDown.Value);
-        StationNumericUpDown.ForeColor = GetNumberTypeColor((int)StationNumericUpDown.Value);
-        PartNumericUpDown.ForeColor = GetNumberTypeColor((int)PartNumericUpDown.Value);
-        GroupNumericUpDown.ForeColor = GetNumberTypeColor((int)GroupNumericUpDown.Value);
-        HalfNumericUpDown.ForeColor = GetNumberTypeColor((int)HalfNumericUpDown.Value);
-        QuarterNumericUpDown.ForeColor = GetNumberTypeColor((int)QuarterNumericUpDown.Value);
-        BowingNumericUpDown.ForeColor = GetNumberTypeColor((int)BowingNumericUpDown.Value);
-        VerseNumericUpDown.ForeColor = GetNumberTypeColor((int)VerseNumericUpDown.Value);
-        WordNumericUpDown.ForeColor = GetNumberTypeColor((int)WordNumericUpDown.Value);
-        LetterNumericUpDown.ForeColor = GetNumberTypeColor((int)LetterNumericUpDown.Value);
+        ChapterVerseNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)ChapterVerseNumericUpDown.Value);
+        ChapterWordNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)ChapterWordNumericUpDown.Value);
+        ChapterLetterNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)ChapterLetterNumericUpDown.Value);
+        PageNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)PageNumericUpDown.Value);
+        StationNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)StationNumericUpDown.Value);
+        PartNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)PartNumericUpDown.Value);
+        GroupNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)GroupNumericUpDown.Value);
+        HalfNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)HalfNumericUpDown.Value);
+        QuarterNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)QuarterNumericUpDown.Value);
+        BowingNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)BowingNumericUpDown.Value);
+        VerseNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)VerseNumericUpDown.Value);
+        WordNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)WordNumericUpDown.Value);
+        LetterNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)LetterNumericUpDown.Value);
 
         ChapterVerseNumericUpDown.BackColor = (Numbers.Compare((int)ChapterVerseNumericUpDown.Value, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
         ChapterWordNumericUpDown.BackColor = (Numbers.Compare((int)ChapterWordNumericUpDown.Value, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
@@ -9439,7 +9699,7 @@ public partial class MainForm : Form, ISubscriber
             // reset colors
             ChapterPositionLabel.ForeColor = Color.CornflowerBlue;
             ChapterVerseWordLetterPositionLabel.ForeColor = Color.CornflowerBlue;
-            PagePositionLabel.ForeColor = Color.LightSteelBlue;
+            PagePositionLabel.ForeColor = Color.LightSkyBlue;
             StationPositionLabel.ForeColor = Color.LightSteelBlue;
             PartPositionLabel.ForeColor = Color.LightSteelBlue;
             GroupPositionLabel.ForeColor = Color.LightSteelBlue;
@@ -12240,21 +12500,6 @@ public partial class MainForm : Form, ISubscriber
     ///////////////////////////////////////////////////////////////////////////////
     private Word m_current_word = null;
     private Word m_info_word = null;
-    private string GetWordSummary(Word word)
-    {
-        if (word != null)
-        {
-            return
-                word.Transliteration + SPACE_GAP +
-                word.Text + SPACE_GAP +
-                word.Meaning + "\r\n" +
-                word.Verse.Chapter.Number + ". " + word.Verse.Chapter.Name + SPACE_GAP +
-                "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                "" + word.Occurrence.ToString() + "/" + word.Frequency.ToString();
-        }
-        return null;
-    }
     private string GetWordInformation(Word word)
     {
         if (word != null)
@@ -12273,15 +12518,18 @@ public partial class MainForm : Form, ISubscriber
             }
 
             return
-                "chapter " + word.Verse.Chapter.SortedNumber + SPACE_GAP +
-                "verse  " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                "word  " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                "occurrence " + word.Occurrence.ToString() + "/" + word.Frequency.ToString() + SPACE_GAP + SPACE_GAP +
-                "roots  " + roots;
+                word.Transliteration + SPACE_GAP +
+                word.Text + SPACE_GAP +
+                word.Meaning + SPACE_GAP +
+                roots + "\r\n" +
+                "chapter " + word.Verse.Chapter.SortedNumber /*+ " " + word.Verse.Chapter.Name*/ + SPACE_GAP +
+                "verse  " + word.Verse.NumberInChapter /*+ "-" + word.Verse.Number*/ + SPACE_GAP +
+                "word  " + word.NumberInVerse /*+ "-" + word.NumberInChapter + "-" + word.Number*/ + SPACE_GAP + SPACE_GAP + SPACE_GAP +
+                word.Occurrence.ToString() + "/" + word.Frequency.ToString();
         }
         return null;
     }
-    private string GetWordGrammar(Word word)
+    private string GetGrammarInformation(Word word)
     {
         if (word != null)
         {
@@ -12312,7 +12560,7 @@ public partial class MainForm : Form, ISubscriber
         }
         return null;
     }
-    private string GetWordRelatedWords(Word word)
+    private string GetRelatedWordsInformation(Word word)
     {
         if (word != null)
         {
@@ -12320,11 +12568,15 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (m_client.Book != null)
                 {
-                    string related_words_lines = null;
+                    string result = null;
                     int words_per_line = 0;
                     int max_words_per_line = 10;
+                    List<Verse> related_verses = m_client.Book.GetRelatedWordVerses(word);
+                    int verse_count = related_verses.Count;
                     List<Word> related_words = m_client.Book.GetRelatedWords(word);
+                    int word_count = related_words.Count;
                     related_words = related_words.RemoveDuplicates();
+                    int unique_word_count = related_words.Count;
                     if (related_words != null)
                     {
                         StringBuilder str = new StringBuilder();
@@ -12340,18 +12592,46 @@ public partial class MainForm : Form, ISubscriber
                                 str.Remove(str.Length - 1, 1); // \t
                             }
                             str.AppendLine();
-                            str.AppendLine("Count = " + related_words.Count.ToString());
 
-                            related_words_lines = str.ToString();
+                            str.AppendLine(verse_count.ToString() + "  related verses" + "\t\t"
+                                          + word_count.ToString() + " (" + unique_word_count.ToString() + ")" + "  related words");
+
+                            result = str.ToString();
                         }
                     }
-                    return related_words_lines;
+                    return result;
                 }
             }
         }
         return null;
     }
-    private void DisplayRelatedWords(Word word)
+    private string GetRelatedVersesInformation(Word word)
+    {
+        if (word != null)
+        {
+            if (m_client != null)
+            {
+                if (m_client.Book != null)
+                {
+                    string result = null;
+                    List<Verse> related_verses = m_client.Book.GetRelatedWordVerses(word);
+                    if (related_verses != null)
+                    {
+                        StringBuilder str = new StringBuilder();
+                        foreach (Verse related_verse in related_verses)
+                        {
+                            str.AppendLine(related_verse.Text);
+                        }
+                        str.AppendLine();
+                        result = str.ToString();
+                    }
+                    return result;
+                }
+            }
+        }
+        return null;
+    }
+    private void DisplayRelatedWordsInformation(Word word)
     {
         if (
              (m_text_display_mode == TextDisplayMode.Both) ||
@@ -12366,7 +12646,7 @@ public partial class MainForm : Form, ISubscriber
                     (TabControl.SelectedTab == RelatedWordsTabPage)
                    )
                 {
-                    RelatedWordsTextBox.Text = GetWordRelatedWords(m_current_word);
+                    RelatedWordsTextBox.Text = GetRelatedWordsInformation(m_current_word) + "\r\n\r\n" + GetRelatedVersesInformation(m_current_word);
                     RelatedWordsTextBox.Refresh();
 
                     m_info_word = word;
@@ -12374,7 +12654,7 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void DisplayWordGrammar(Word word)
+    private void DisplayGrammarInformation(Word word)
     {
         if (
              (m_text_display_mode == TextDisplayMode.Both) ||
@@ -12389,7 +12669,7 @@ public partial class MainForm : Form, ISubscriber
                     (TabControl.SelectedTab == RelatedWordsTabPage)
                    )
                 {
-                    string word_grammar = GetWordGrammar(m_current_word);
+                    string word_grammar = GetGrammarInformation(m_current_word);
                     if (!String.IsNullOrEmpty(word_grammar))
                     {
                         GrammarTextBox.Text = word_grammar;
@@ -13159,36 +13439,36 @@ public partial class MainForm : Form, ISubscriber
                             MathsChaptersCDivideVPrimeSumTextBox.Text = (pCDivideV).ToString("0.0");
                             MathsChaptersCDivideVCompositeSumTextBox.Text = (cCDivideV).ToString("0.0");
 
-                            MathsChaptersCSumTextBox.ForeColor = GetNumberTypeColor(C);
-                            MathsChaptersCOddSumTextBox.ForeColor = GetNumberTypeColor(oC);
-                            MathsChaptersCEvenSumTextBox.ForeColor = GetNumberTypeColor(eC);
-                            MathsChaptersCPrimeSumTextBox.ForeColor = GetNumberTypeColor(pC);
-                            MathsChaptersCCompositeSumTextBox.ForeColor = GetNumberTypeColor(cC);
-                            MathsChaptersVSumTextBox.ForeColor = GetNumberTypeColor(V);
-                            MathsChaptersVOddSumTextBox.ForeColor = GetNumberTypeColor(oV);
-                            MathsChaptersVEvenSumTextBox.ForeColor = GetNumberTypeColor(eV);
-                            MathsChaptersVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pV);
-                            MathsChaptersVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cV);
-                            MathsChaptersCPlusVSumTextBox.ForeColor = GetNumberTypeColor(CPlusV);
-                            MathsChaptersCPlusVOddSumTextBox.ForeColor = GetNumberTypeColor(oCPlusV);
-                            MathsChaptersCPlusVEvenSumTextBox.ForeColor = GetNumberTypeColor(eCPlusV);
-                            MathsChaptersCPlusVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pCPlusV);
-                            MathsChaptersCPlusVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cCPlusV);
-                            MathsChaptersCMinusVSumTextBox.ForeColor = GetNumberTypeColor(CMinusV);
-                            MathsChaptersCMinusVOddSumTextBox.ForeColor = GetNumberTypeColor(oCMinusV);
-                            MathsChaptersCMinusVEvenSumTextBox.ForeColor = GetNumberTypeColor(eCMinusV);
-                            MathsChaptersCMinusVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pCMinusV);
-                            MathsChaptersCMinusVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cCMinusV);
-                            MathsChaptersCMultiplyVSumTextBox.ForeColor = GetNumberTypeColor(CMultiplyV);
-                            MathsChaptersCMultiplyVOddSumTextBox.ForeColor = GetNumberTypeColor(oCMultiplyV);
-                            MathsChaptersCMultiplyVEvenSumTextBox.ForeColor = GetNumberTypeColor(eCMultiplyV);
-                            MathsChaptersCMultiplyVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pCMultiplyV);
-                            MathsChaptersCMultiplyVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cCMultiplyV);
-                            MathsChaptersCDivideVSumTextBox.ForeColor = GetNumberTypeColor((long)CDivideV);
-                            MathsChaptersCDivideVOddSumTextBox.ForeColor = GetNumberTypeColor((long)oCDivideV);
-                            MathsChaptersCDivideVEvenSumTextBox.ForeColor = GetNumberTypeColor((long)eCDivideV);
-                            MathsChaptersCDivideVPrimeSumTextBox.ForeColor = GetNumberTypeColor((long)pCDivideV);
-                            MathsChaptersCDivideVCompositeSumTextBox.ForeColor = GetNumberTypeColor((long)cCDivideV);
+                            MathsChaptersCSumTextBox.ForeColor = Numbers.GetNumberTypeColor(C);
+                            MathsChaptersCOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oC);
+                            MathsChaptersCEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eC);
+                            MathsChaptersCPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pC);
+                            MathsChaptersCCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cC);
+                            MathsChaptersVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(V);
+                            MathsChaptersVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oV);
+                            MathsChaptersVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eV);
+                            MathsChaptersVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pV);
+                            MathsChaptersVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cV);
+                            MathsChaptersCPlusVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(CPlusV);
+                            MathsChaptersCPlusVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oCPlusV);
+                            MathsChaptersCPlusVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eCPlusV);
+                            MathsChaptersCPlusVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pCPlusV);
+                            MathsChaptersCPlusVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cCPlusV);
+                            MathsChaptersCMinusVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(CMinusV);
+                            MathsChaptersCMinusVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oCMinusV);
+                            MathsChaptersCMinusVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eCMinusV);
+                            MathsChaptersCMinusVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pCMinusV);
+                            MathsChaptersCMinusVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cCMinusV);
+                            MathsChaptersCMultiplyVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(CMultiplyV);
+                            MathsChaptersCMultiplyVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oCMultiplyV);
+                            MathsChaptersCMultiplyVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eCMultiplyV);
+                            MathsChaptersCMultiplyVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pCMultiplyV);
+                            MathsChaptersCMultiplyVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cCMultiplyV);
+                            MathsChaptersCDivideVSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)CDivideV);
+                            MathsChaptersCDivideVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)oCDivideV);
+                            MathsChaptersCDivideVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)eCDivideV);
+                            MathsChaptersCDivideVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)pCDivideV);
+                            MathsChaptersCDivideVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)cCDivideV);
 
                             MathsChaptersCSumTextBox.BackColor = (Numbers.Compare(C, m_maths_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
                             MathsChaptersCOddSumTextBox.BackColor = (Numbers.Compare(oC, m_maths_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
@@ -13305,7 +13585,7 @@ public partial class MainForm : Form, ISubscriber
                                 double duC = 0.0D; // ratio
                                 if (uC != 0) duC = (double)dC / (double)uC;
                                 MathsChaptersCDUSumTextBox.Text = duC.ToString("0.00000");
-                                MathsChaptersCDUSumTextBox.ForeColor = GetNumberTypeColor((long)duC);
+                                MathsChaptersCDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duC);
                                 if (duC.IsInteresting()) MathsChaptersCDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
 
                                 ToolTip.SetToolTip(MathsChaptersCDUSumTextBox, dC.ToString() + "/" + uC.ToString());
@@ -13339,7 +13619,7 @@ public partial class MainForm : Form, ISubscriber
                                 double duV = 0.0D; // ratio
                                 if (uV != 0) duV = (double)dV / (double)uV;
                                 MathsChaptersVDUSumTextBox.Text = duV.ToString("0.00000");
-                                MathsChaptersVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duV);
+                                MathsChaptersVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duV);
                                 if (duV.IsInteresting()) MathsChaptersVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                                 ToolTip.SetToolTip(MathsChaptersVDUSumTextBox, dV.ToString() + "/" + uV.ToString());
 
@@ -13372,7 +13652,7 @@ public partial class MainForm : Form, ISubscriber
                                 double duCPlusV = 0.0D; // ratio
                                 if (uCPlusV != 0) duCPlusV = (double)dCPlusV / (double)uCPlusV;
                                 MathsChaptersCPlusVDUSumTextBox.Text = duCPlusV.ToString("0.00000");
-                                MathsChaptersCPlusVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCPlusV);
+                                MathsChaptersCPlusVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCPlusV);
                                 if (duCPlusV.IsInteresting()) MathsChaptersCPlusVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                                 ToolTip.SetToolTip(MathsChaptersCPlusVDUSumTextBox, dCPlusV.ToString() + "/" + uCPlusV.ToString());
 
@@ -13405,7 +13685,7 @@ public partial class MainForm : Form, ISubscriber
                                 double duCMinusV = 0.0D; // ratio
                                 if (uCMinusV != 0) duCMinusV = (double)dCMinusV / (double)uCMinusV;
                                 MathsChaptersCMinusVDUSumTextBox.Text = duCMinusV.ToString("0.00000");
-                                MathsChaptersCMinusVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCMinusV);
+                                MathsChaptersCMinusVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCMinusV);
                                 if (duCMinusV.IsInteresting()) MathsChaptersCMinusVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                                 ToolTip.SetToolTip(MathsChaptersCMinusVDUSumTextBox, dCMinusV.ToString() + "/" + uCMinusV.ToString());
 
@@ -13438,7 +13718,7 @@ public partial class MainForm : Form, ISubscriber
                                 double duCMultiplyV = 0.0D; // ratio
                                 if (uCMultiplyV != 0) duCMultiplyV = (double)dCMultiplyV / (double)uCMultiplyV;
                                 MathsChaptersCMultiplyVDUSumTextBox.Text = duCMultiplyV.ToString("0.00000");
-                                MathsChaptersCMultiplyVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCMultiplyV);
+                                MathsChaptersCMultiplyVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCMultiplyV);
                                 if (duCMultiplyV.IsInteresting()) MathsChaptersCMultiplyVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                                 ToolTip.SetToolTip(MathsChaptersCMultiplyVDUSumTextBox, dCMultiplyV.ToString() + "/" + uCMultiplyV.ToString());
 
@@ -13471,7 +13751,7 @@ public partial class MainForm : Form, ISubscriber
                                 double duCDivideV = 0.0D; // ratio
                                 if (uCDivideV != 0) duCDivideV = (double)dCDivideV / (double)uCDivideV;
                                 MathsChaptersCDivideVDUSumTextBox.Text = duCDivideV.ToString("0.00000");
-                                MathsChaptersCDivideVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCDivideV);
+                                MathsChaptersCDivideVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCDivideV);
                                 if (duCDivideV.IsInteresting()) MathsChaptersCDivideVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                                 ToolTip.SetToolTip(MathsChaptersCDivideVDUSumTextBox, dCDivideV.ToString() + "/" + uCDivideV.ToString());
                             }
@@ -13685,36 +13965,36 @@ public partial class MainForm : Form, ISubscriber
                 MathsVersesCDivideVPrimeSumTextBox.Text = (pCDivideV).ToString("0.0");
                 MathsVersesCDivideVCompositeSumTextBox.Text = (cCDivideV).ToString("0.0");
 
-                MathsVersesCSumTextBox.ForeColor = GetNumberTypeColor(C);
-                MathsVersesCOddSumTextBox.ForeColor = GetNumberTypeColor(oC);
-                MathsVersesCEvenSumTextBox.ForeColor = GetNumberTypeColor(eC);
-                MathsVersesCPrimeSumTextBox.ForeColor = GetNumberTypeColor(pC);
-                MathsVersesCCompositeSumTextBox.ForeColor = GetNumberTypeColor(cC);
-                MathsVersesVSumTextBox.ForeColor = GetNumberTypeColor(V);
-                MathsVersesVOddSumTextBox.ForeColor = GetNumberTypeColor(oV);
-                MathsVersesVEvenSumTextBox.ForeColor = GetNumberTypeColor(eV);
-                MathsVersesVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pV);
-                MathsVersesVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cV);
-                MathsVersesCPlusVSumTextBox.ForeColor = GetNumberTypeColor(CPlusV);
-                MathsVersesCPlusVOddSumTextBox.ForeColor = GetNumberTypeColor(oCPlusV);
-                MathsVersesCPlusVEvenSumTextBox.ForeColor = GetNumberTypeColor(eCPlusV);
-                MathsVersesCPlusVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pCPlusV);
-                MathsVersesCPlusVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cCPlusV);
-                MathsVersesCMinusVSumTextBox.ForeColor = GetNumberTypeColor(CMinusV);
-                MathsVersesCMinusVOddSumTextBox.ForeColor = GetNumberTypeColor(oCMinusV);
-                MathsVersesCMinusVEvenSumTextBox.ForeColor = GetNumberTypeColor(eCMinusV);
-                MathsVersesCMinusVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pCMinusV);
-                MathsVersesCMinusVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cCMinusV);
-                MathsVersesCMultiplyVSumTextBox.ForeColor = GetNumberTypeColor(CMultiplyV);
-                MathsVersesCMultiplyVOddSumTextBox.ForeColor = GetNumberTypeColor(oCMultiplyV);
-                MathsVersesCMultiplyVEvenSumTextBox.ForeColor = GetNumberTypeColor(eCMultiplyV);
-                MathsVersesCMultiplyVPrimeSumTextBox.ForeColor = GetNumberTypeColor(pCMultiplyV);
-                MathsVersesCMultiplyVCompositeSumTextBox.ForeColor = GetNumberTypeColor(cCMultiplyV);
-                MathsVersesCDivideVSumTextBox.ForeColor = GetNumberTypeColor((long)CDivideV);
-                MathsVersesCDivideVOddSumTextBox.ForeColor = GetNumberTypeColor((long)oCDivideV);
-                MathsVersesCDivideVEvenSumTextBox.ForeColor = GetNumberTypeColor((long)eCDivideV);
-                MathsVersesCDivideVPrimeSumTextBox.ForeColor = GetNumberTypeColor((long)pCDivideV);
-                MathsVersesCDivideVCompositeSumTextBox.ForeColor = GetNumberTypeColor((long)cCDivideV);
+                MathsVersesCSumTextBox.ForeColor = Numbers.GetNumberTypeColor(C);
+                MathsVersesCOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oC);
+                MathsVersesCEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eC);
+                MathsVersesCPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pC);
+                MathsVersesCCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cC);
+                MathsVersesVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(V);
+                MathsVersesVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oV);
+                MathsVersesVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eV);
+                MathsVersesVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pV);
+                MathsVersesVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cV);
+                MathsVersesCPlusVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(CPlusV);
+                MathsVersesCPlusVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oCPlusV);
+                MathsVersesCPlusVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eCPlusV);
+                MathsVersesCPlusVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pCPlusV);
+                MathsVersesCPlusVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cCPlusV);
+                MathsVersesCMinusVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(CMinusV);
+                MathsVersesCMinusVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oCMinusV);
+                MathsVersesCMinusVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eCMinusV);
+                MathsVersesCMinusVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pCMinusV);
+                MathsVersesCMinusVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cCMinusV);
+                MathsVersesCMultiplyVSumTextBox.ForeColor = Numbers.GetNumberTypeColor(CMultiplyV);
+                MathsVersesCMultiplyVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor(oCMultiplyV);
+                MathsVersesCMultiplyVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor(eCMultiplyV);
+                MathsVersesCMultiplyVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(pCMultiplyV);
+                MathsVersesCMultiplyVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor(cCMultiplyV);
+                MathsVersesCDivideVSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)CDivideV);
+                MathsVersesCDivideVOddSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)oCDivideV);
+                MathsVersesCDivideVEvenSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)eCDivideV);
+                MathsVersesCDivideVPrimeSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)pCDivideV);
+                MathsVersesCDivideVCompositeSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)cCDivideV);
 
                 MathsVersesCSumTextBox.BackColor = (Numbers.Compare(C, m_maths_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
                 MathsVersesCOddSumTextBox.BackColor = (Numbers.Compare(oC, m_maths_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
@@ -13821,7 +14101,7 @@ public partial class MainForm : Form, ISubscriber
                     double duC = 0.0D; // ratio
                     if (uC != 0) duC = (double)dC / (double)uC;
                     MathsVersesCDUSumTextBox.Text = duC.ToString("0.00000");
-                    MathsVersesCDUSumTextBox.ForeColor = GetNumberTypeColor((long)duC);
+                    MathsVersesCDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duC);
                     if (duC.IsInteresting()) MathsVersesCDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                     ToolTip.SetToolTip(MathsVersesCDUSumTextBox, dC.ToString() + "/" + uC.ToString());
 
@@ -13854,7 +14134,7 @@ public partial class MainForm : Form, ISubscriber
                     double duV = 0.0D; // ratio
                     if (uV != 0) duV = (double)dV / (double)uV;
                     MathsVersesVDUSumTextBox.Text = duV.ToString("0.00000");
-                    MathsVersesVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duV);
+                    MathsVersesVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duV);
                     if (duV.IsInteresting()) MathsVersesVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                     ToolTip.SetToolTip(MathsVersesVDUSumTextBox, dV.ToString() + "/" + uV.ToString());
 
@@ -13887,7 +14167,7 @@ public partial class MainForm : Form, ISubscriber
                     double duCPlusV = 0.0D; // ratio
                     if (uCPlusV != 0) duCPlusV = (double)dCPlusV / (double)uCPlusV;
                     MathsVersesCPlusVDUSumTextBox.Text = duCPlusV.ToString("0.00000");
-                    MathsVersesCPlusVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCPlusV);
+                    MathsVersesCPlusVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCPlusV);
                     if (duCPlusV.IsInteresting()) MathsVersesCPlusVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                     ToolTip.SetToolTip(MathsVersesCPlusVDUSumTextBox, dCPlusV.ToString() + "/" + uCPlusV.ToString());
 
@@ -13920,7 +14200,7 @@ public partial class MainForm : Form, ISubscriber
                     double duCMinusV = 0.0D; // ratio
                     if (uCMinusV != 0) duCMinusV = (double)dCMinusV / (double)uCMinusV;
                     MathsVersesCMinusVDUSumTextBox.Text = duCMinusV.ToString("0.00000");
-                    MathsVersesCMinusVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCMinusV);
+                    MathsVersesCMinusVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCMinusV);
                     if (duCMinusV.IsInteresting()) MathsVersesCMinusVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                     ToolTip.SetToolTip(MathsVersesCMinusVDUSumTextBox, dCMinusV.ToString() + "/" + uCMinusV.ToString());
 
@@ -13953,7 +14233,7 @@ public partial class MainForm : Form, ISubscriber
                     double duCMultiplyV = 0.0D; // ratio
                     if (uCMultiplyV != 0) duCMultiplyV = (double)dCMultiplyV / (double)uCMultiplyV;
                     MathsVersesCMultiplyVDUSumTextBox.Text = duCMultiplyV.ToString("0.00000");
-                    MathsVersesCMultiplyVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCMultiplyV);
+                    MathsVersesCMultiplyVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCMultiplyV);
                     if (duCMultiplyV.IsInteresting()) MathsVersesCMultiplyVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                     ToolTip.SetToolTip(MathsVersesCMultiplyVDUSumTextBox, dCMultiplyV.ToString() + "/" + uCMultiplyV.ToString());
 
@@ -13986,7 +14266,7 @@ public partial class MainForm : Form, ISubscriber
                     double duCDivideV = 0.0D; // ratio
                     if (uCDivideV != 0) duCDivideV = (double)dCDivideV / (double)uCDivideV;
                     MathsVersesCDivideVDUSumTextBox.Text = duCDivideV.ToString("0.00000");
-                    MathsVersesCDivideVDUSumTextBox.ForeColor = GetNumberTypeColor((long)duCDivideV);
+                    MathsVersesCDivideVDUSumTextBox.ForeColor = Numbers.GetNumberTypeColor((long)duCDivideV);
                     if (duCDivideV.IsInteresting()) MathsVersesCDivideVDUSumTextBox.BackColor = INTERESTING_NUMBER_COLOR;
                     ToolTip.SetToolTip(MathsVersesCDivideVDUSumTextBox, dCDivideV.ToString() + "/" + uCDivideV.ToString());
                 }
@@ -15281,51 +15561,55 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateDistancesOptions()
     {
-        DistancesDivisorNumericUpDown.Value = m_distances_divisor;
-
-        switch (m_distances_running_chapter_number_scope)
+        if (m_languages != null)
         {
-            case NumberScope.Number:
-            default:
+            if (m_languages.ContainsKey(m_language_name))
+            {
+                switch (m_distances_running_chapter_number_scope)
                 {
-                    DistancesRunningVerseNumberScopeLabel.Text = "Chapter numbers in Book";
+                    case NumberScope.Number:
+                    default:
+                        {
+                            DistancesRunningVerseNumberScopeLabel.Text = m_languages[m_language_name]["Chapter numbers in Book"];
+                        }
+                        break;
                 }
-                break;
-        }
 
-        switch (m_distances_running_verse_number_scope)
-        {
-            case NumberScope.Number:
+                switch (m_distances_running_verse_number_scope)
                 {
-                    DistancesRunningVerseNumberScopeLabel.Text = "Verse numbers in Book";
+                    case NumberScope.Number:
+                        {
+                            DistancesRunningVerseNumberScopeLabel.Text = m_languages[m_language_name]["Verse numbers in Book"];
+                        }
+                        break;
+                    case NumberScope.NumberInChapter:
+                    default:
+                        {
+                            DistancesRunningVerseNumberScopeLabel.Text = m_languages[m_language_name]["Verse numbers in chapters"];
+                        }
+                        break;
                 }
-                break;
-            case NumberScope.NumberInChapter:
-            default:
-                {
-                    DistancesRunningVerseNumberScopeLabel.Text = "Verse numbers in chapters";
-                }
-                break;
-        }
 
-        switch (m_distances_running_word_number_scope)
-        {
-            case NumberScope.Number:
+                switch (m_distances_running_word_number_scope)
                 {
-                    DistancesRunningWordNumberScopeLabel.Text = "Word numbers in Book";
+                    case NumberScope.Number:
+                        {
+                            DistancesRunningWordNumberScopeLabel.Text = m_languages[m_language_name]["Word numbers in Book"];
+                        }
+                        break;
+                    case NumberScope.NumberInChapter:
+                        {
+                            DistancesRunningWordNumberScopeLabel.Text = m_languages[m_language_name]["Word numbers in chapters"];
+                        }
+                        break;
+                    case NumberScope.NumberInVerse:
+                    default:
+                        {
+                            DistancesRunningWordNumberScopeLabel.Text = m_languages[m_language_name]["Word numbers in verses"];
+                        }
+                        break;
                 }
-                break;
-            case NumberScope.NumberInChapter:
-                {
-                    DistancesRunningWordNumberScopeLabel.Text = "Word numbers in chapters";
-                }
-                break;
-            case NumberScope.NumberInVerse:
-            default:
-                {
-                    DistancesRunningWordNumberScopeLabel.Text = "Word numbers in verses";
-                }
-                break;
+            }
         }
     }
 
@@ -16386,55 +16670,55 @@ public partial class MainForm : Form, ISubscriber
                                 DistancesWordDifferenceWithinVerseRunningTotalTextBox.Text = chapter_selection_mode ? "" : DistancesWordDifferenceWithinVerseRunningTotal.ToString();
 
                                 // .ForeColor
-                                DistancesChapterBeforeWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesChapterBeforeWithinBook);
-                                DistancesChapterWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesChapterWithinBook);
-                                DistancesChapterAfterWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesChapterAfterWithinBook);
-                                DistancesChapterDifferenceWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesChapterDifferenceWithinBook);
-                                DistancesVerseBeforeWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesVerseBeforeWithinBook);
-                                DistancesVerseWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesVerseWithinBook);
-                                DistancesVerseAfterWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesVerseAfterWithinBook);
-                                DistancesVerseDifferenceWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesVerseDifferenceWithinBook);
-                                DistancesVerseBeforeWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesVerseBeforeWithinChapter);
-                                DistancesVerseWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesVerseWithinChapter);
-                                DistancesVerseAfterWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesVerseAfterWithinChapter);
-                                DistancesVerseDifferenceWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesVerseDifferenceWithinChapter);
-                                DistancesWordBeforeWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesWordBeforeWithinBook);
-                                DistancesWordWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesWordWithinBook);
-                                DistancesWordAfterWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesWordAfterWithinBook);
-                                DistancesWordDifferenceWithinBookTextBox.ForeColor = GetNumberTypeColor(DistancesWordDifferenceWithinBook);
-                                DistancesWordBeforeWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesWordBeforeWithinChapter);
-                                DistancesWordWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesWordWithinChapter);
-                                DistancesWordAfterWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesWordAfterWithinChapter);
-                                DistancesWordDifferenceWithinChapterTextBox.ForeColor = GetNumberTypeColor(DistancesWordDifferenceWithinChapter);
-                                DistancesWordBeforeWithinVerseTextBox.ForeColor = GetNumberTypeColor(DistancesWordBeforeWithinVerse);
-                                DistancesWordWithinVerseTextBox.ForeColor = GetNumberTypeColor(DistancesWordWithinVerse);
-                                DistancesWordAfterWithinVerseTextBox.ForeColor = GetNumberTypeColor(DistancesWordAfterWithinVerse);
-                                DistancesWordDifferenceWithinVerseTextBox.ForeColor = GetNumberTypeColor(DistancesWordDifferenceWithinVerse);
+                                DistancesChapterBeforeWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterBeforeWithinBook);
+                                DistancesChapterWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterWithinBook);
+                                DistancesChapterAfterWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterAfterWithinBook);
+                                DistancesChapterDifferenceWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterDifferenceWithinBook);
+                                DistancesVerseBeforeWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseBeforeWithinBook);
+                                DistancesVerseWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseWithinBook);
+                                DistancesVerseAfterWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseAfterWithinBook);
+                                DistancesVerseDifferenceWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseDifferenceWithinBook);
+                                DistancesVerseBeforeWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseBeforeWithinChapter);
+                                DistancesVerseWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseWithinChapter);
+                                DistancesVerseAfterWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseAfterWithinChapter);
+                                DistancesVerseDifferenceWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseDifferenceWithinChapter);
+                                DistancesWordBeforeWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordBeforeWithinBook);
+                                DistancesWordWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordWithinBook);
+                                DistancesWordAfterWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordAfterWithinBook);
+                                DistancesWordDifferenceWithinBookTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordDifferenceWithinBook);
+                                DistancesWordBeforeWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordBeforeWithinChapter);
+                                DistancesWordWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordWithinChapter);
+                                DistancesWordAfterWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordAfterWithinChapter);
+                                DistancesWordDifferenceWithinChapterTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordDifferenceWithinChapter);
+                                DistancesWordBeforeWithinVerseTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordBeforeWithinVerse);
+                                DistancesWordWithinVerseTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordWithinVerse);
+                                DistancesWordAfterWithinVerseTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordAfterWithinVerse);
+                                DistancesWordDifferenceWithinVerseTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordDifferenceWithinVerse);
                                 // Running totals ...
-                                DistancesChapterBeforeWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesChapterBeforeWithinBookRunningTotal);
-                                DistancesChapterWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesChapterWithinBookRunningTotal);
-                                DistancesChapterAfterWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesChapterAfterWithinBookRunningTotal);
-                                DistancesChapterDifferenceWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesChapterDifferenceWithinBookRunningTotal);
-                                DistancesVerseBeforeWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseBeforeWithinBookRunningTotal);
-                                DistancesVerseWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseWithinBookRunningTotal);
-                                DistancesVerseAfterWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseAfterWithinBookRunningTotal);
-                                DistancesVerseDifferenceWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseDifferenceWithinBookRunningTotal);
-                                DistancesVerseBeforeWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseBeforeWithinChapterRunningTotal);
-                                DistancesVerseWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseWithinChapterRunningTotal);
-                                DistancesVerseAfterWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseAfterWithinChapterRunningTotal);
-                                DistancesVerseDifferenceWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesVerseDifferenceWithinChapterRunningTotal);
-                                DistancesWordBeforeWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordBeforeWithinBookRunningTotal);
-                                DistancesWordWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordWithinBookRunningTotal);
-                                DistancesWordAfterWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordAfterWithinBookRunningTotal);
-                                DistancesWordDifferenceWithinBookRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordDifferenceWithinBookRunningTotal);
-                                DistancesWordBeforeWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordBeforeWithinChapterRunningTotal);
-                                DistancesWordWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordWithinChapterRunningTotal);
-                                DistancesWordAfterWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordAfterWithinChapterRunningTotal);
-                                DistancesWordDifferenceWithinChapterRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordDifferenceWithinChapterRunningTotal);
-                                DistancesWordBeforeWithinVerseRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordBeforeWithinVerseRunningTotal);
-                                DistancesWordWithinVerseRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordWithinVerseRunningTotal);
-                                DistancesWordAfterWithinVerseRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordAfterWithinVerseRunningTotal);
-                                DistancesWordDifferenceWithinVerseRunningTotalTextBox.ForeColor = GetNumberTypeColor(DistancesWordDifferenceWithinVerseRunningTotal);
+                                DistancesChapterBeforeWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterBeforeWithinBookRunningTotal);
+                                DistancesChapterWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterWithinBookRunningTotal);
+                                DistancesChapterAfterWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterAfterWithinBookRunningTotal);
+                                DistancesChapterDifferenceWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesChapterDifferenceWithinBookRunningTotal);
+                                DistancesVerseBeforeWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseBeforeWithinBookRunningTotal);
+                                DistancesVerseWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseWithinBookRunningTotal);
+                                DistancesVerseAfterWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseAfterWithinBookRunningTotal);
+                                DistancesVerseDifferenceWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseDifferenceWithinBookRunningTotal);
+                                DistancesVerseBeforeWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseBeforeWithinChapterRunningTotal);
+                                DistancesVerseWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseWithinChapterRunningTotal);
+                                DistancesVerseAfterWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseAfterWithinChapterRunningTotal);
+                                DistancesVerseDifferenceWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesVerseDifferenceWithinChapterRunningTotal);
+                                DistancesWordBeforeWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordBeforeWithinBookRunningTotal);
+                                DistancesWordWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordWithinBookRunningTotal);
+                                DistancesWordAfterWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordAfterWithinBookRunningTotal);
+                                DistancesWordDifferenceWithinBookRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordDifferenceWithinBookRunningTotal);
+                                DistancesWordBeforeWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordBeforeWithinChapterRunningTotal);
+                                DistancesWordWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordWithinChapterRunningTotal);
+                                DistancesWordAfterWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordAfterWithinChapterRunningTotal);
+                                DistancesWordDifferenceWithinChapterRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordDifferenceWithinChapterRunningTotal);
+                                DistancesWordBeforeWithinVerseRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordBeforeWithinVerseRunningTotal);
+                                DistancesWordWithinVerseRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordWithinVerseRunningTotal);
+                                DistancesWordAfterWithinVerseRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordAfterWithinVerseRunningTotal);
+                                DistancesWordDifferenceWithinVerseRunningTotalTextBox.ForeColor = Numbers.GetNumberTypeColor(DistancesWordDifferenceWithinVerseRunningTotal);
 
                                 // Divisor coloring
                                 DistancesChapterBeforeWithinBookTextBox.BackColor = (Numbers.Compare((long)DistancesChapterBeforeWithinBook, m_distances_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.Window;
@@ -19457,7 +19741,7 @@ public partial class MainForm : Form, ISubscriber
             }
 
             WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
-            WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
+            WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(total);
             WordsListBoxLabel.Refresh();
         }
     }
@@ -19544,7 +19828,7 @@ public partial class MainForm : Form, ISubscriber
                 //SearchGroupBox.Text = " Search by Exact words      ";
                 //SearchGroupBox.Refresh();
                 WordsListBoxLabel.Text = "000 (00)";
-                WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
+                WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(0);
                 //ToolTip.SetToolTip(WordsListBoxLabel, "total (unique)");
                 WordsListBoxLabel.Refresh();
 
@@ -19628,7 +19912,7 @@ public partial class MainForm : Form, ISubscriber
                         }
 
                         WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
-                        WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
+                        WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(total);
                         WordsListBoxLabel.Refresh();
                     }
                 }
@@ -19651,7 +19935,7 @@ public partial class MainForm : Form, ISubscriber
                 //SearchGroupBox.Text = " Search by Proximity        ";
                 //SearchGroupBox.Refresh();
                 WordsListBoxLabel.Text = "000 (00)";
-                WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
+                WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(0);
                 //ToolTip.SetToolTip(WordsListBoxLabel, "total (unique)");
                 WordsListBoxLabel.Refresh();
 
@@ -19714,7 +19998,7 @@ public partial class MainForm : Form, ISubscriber
                             }
 
                             WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
-                            WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
+                            WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(total);
                             WordsListBoxLabel.Refresh();
                         }
                     }
@@ -19740,7 +20024,7 @@ public partial class MainForm : Form, ISubscriber
                     //SearchGroupBox.Text = " Search by Roots            ";
                     //SearchGroupBox.Refresh();
                     WordsListBoxLabel.Text = "000 (00)";
-                    WordsListBoxLabel.ForeColor = GetNumberTypeColor(0);
+                    WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(0);
                     //ToolTip.SetToolTip(WordsListBoxLabel, "total (unique)");
                     WordsListBoxLabel.Refresh();
 
@@ -19826,7 +20110,7 @@ public partial class MainForm : Form, ISubscriber
                                 WordsListBox.Items.Add(text);
                             }
                             WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
-                            WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
+                            WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(total);
                             WordsListBoxLabel.Refresh();
                         }
                     }
@@ -19937,7 +20221,7 @@ public partial class MainForm : Form, ISubscriber
                         }
 
                         WordsListBoxLabel.Text = total.ToString() + " (" + count.ToString() + ")";
-                        WordsListBoxLabel.ForeColor = GetNumberTypeColor(total);
+                        WordsListBoxLabel.ForeColor = Numbers.GetNumberTypeColor(total);
                         WordsListBoxLabel.Refresh();
                     }
                 }
@@ -20289,7 +20573,7 @@ public partial class MainForm : Form, ISubscriber
     {
         //if (!WordsListBox.Focused)
         //{
-        //    ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+        //    ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
         //    WordsListBoxLabel.Visible = false;
         //    WordsListBox.Visible = false;
         //}
@@ -20627,11 +20911,11 @@ public partial class MainForm : Form, ISubscriber
 
         if (m_text_search_type == TextSearchType.Root)
         {
-            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect root frequencies");
+            ToolTip.SetToolTip(InpectChaptersLabel, "Inspect root frequencies");
         }
         else
         {
-            ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect word frequencies");
+            ToolTip.SetToolTip(InpectChaptersLabel, "Inspect word frequencies");
         }
         WordsListBoxLabel.Visible = true;
         WordsListBox.Visible = true;
@@ -21430,7 +21714,7 @@ public partial class MainForm : Form, ISubscriber
                     FindByTextMultiplicityNumberTypeLabel.Text = remainder.ToString();
                     FindByTextMultiplicityNumberTypeLabel.ForeColor = Color.Black;
                     FindByTextMultiplicityNumberTypeLabel.Enabled = true;
-                    ToolTip.SetToolTip(FindByTextMultiplicityNumberTypeLabel, "remainder");
+                    ToolTip.SetToolTip(FindByTextMultiplicityNumberTypeLabel, m_languages[m_language_name]["remainder"]);
                 }
                 else
                 {
@@ -21636,150 +21920,162 @@ public partial class MainForm : Form, ISubscriber
     private NumberScope m_chapter_number_scope = NumberScope.Number;
     private void UpdateFindByNumbersNumberLabel()
     {
-        switch (m_numbers_result_type)
+        if (m_languages != null)
         {
-            case NumbersResultType.Words:
+            if (m_languages.ContainsKey(m_language_name))
+            {
+                switch (m_numbers_result_type)
                 {
-                    if (m_word_number_scope == NumberScope.Number)
-                    {
-                        m_word_number_scope = NumberScope.Number;
-                        FindByNumbersNumberLabel.Text = "number";
-                    }
-                    else if (m_word_number_scope == NumberScope.NumberInChapter)
-                    {
-                        m_word_number_scope = NumberScope.NumberInChapter;
-                        FindByNumbersNumberLabel.Text = "in chapter";
-                    }
-                    else if (m_word_number_scope == NumberScope.NumberInVerse)
-                    {
-                        m_word_number_scope = NumberScope.NumberInVerse;
-                        FindByNumbersNumberLabel.Text = "in verse";
-                    }
+                    case NumbersResultType.Words:
+                        {
+                            if (m_word_number_scope == NumberScope.Number)
+                            {
+                                m_word_number_scope = NumberScope.Number;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            }
+                            else if (m_word_number_scope == NumberScope.NumberInChapter)
+                            {
+                                m_word_number_scope = NumberScope.NumberInChapter;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            }
+                            else if (m_word_number_scope == NumberScope.NumberInVerse)
+                            {
+                                m_word_number_scope = NumberScope.NumberInVerse;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in verse"];
+                            }
+                        }
+                        break;
+                    case NumbersResultType.WordRanges:
+                    case NumbersResultType.WordSets:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                        }
+                        break;
+                    case NumbersResultType.Sentences:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                        }
+                        break;
+                    case NumbersResultType.Verses:
+                        {
+                            if (m_verse_number_scope == NumberScope.Number)
+                            {
+                                m_verse_number_scope = NumberScope.Number;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            }
+                            else if (m_verse_number_scope == NumberScope.NumberInChapter)
+                            {
+                                m_verse_number_scope = NumberScope.NumberInChapter;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            }
+                        }
+                        break;
+                    case NumbersResultType.VerseRanges:
+                    case NumbersResultType.VerseSets:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                        }
+                        break;
+                    case NumbersResultType.Chapters:
+                        {
+                            if (m_chapter_number_scope == NumberScope.Number)
+                            {
+                                m_chapter_number_scope = NumberScope.Number;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            }
+                        }
+                        break;
+                    case NumbersResultType.ChapterRanges:
+                    case NumbersResultType.ChapterSets:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                break;
-            case NumbersResultType.WordRanges:
-            case NumbersResultType.WordSets:
-                {
-                    FindByNumbersNumberLabel.Text = "sum";
-                }
-                break;
-            case NumbersResultType.Sentences:
-                {
-                    FindByNumbersNumberLabel.Text = "number";
-                }
-                break;
-            case NumbersResultType.Verses:
-                {
-                    if (m_verse_number_scope == NumberScope.Number)
-                    {
-                        m_verse_number_scope = NumberScope.Number;
-                        FindByNumbersNumberLabel.Text = "number";
-                    }
-                    else if (m_verse_number_scope == NumberScope.NumberInChapter)
-                    {
-                        m_verse_number_scope = NumberScope.NumberInChapter;
-                        FindByNumbersNumberLabel.Text = "in chapter";
-                    }
-                }
-                break;
-            case NumbersResultType.VerseRanges:
-            case NumbersResultType.VerseSets:
-                {
-                    FindByNumbersNumberLabel.Text = "sum";
-                }
-                break;
-            case NumbersResultType.Chapters:
-                {
-                    if (m_chapter_number_scope == NumberScope.Number)
-                    {
-                        m_chapter_number_scope = NumberScope.Number;
-                        FindByNumbersNumberLabel.Text = "number";
-                    }
-                }
-                break;
-            case NumbersResultType.ChapterRanges:
-            case NumbersResultType.ChapterSets:
-                {
-                    FindByNumbersNumberLabel.Text = "sum";
-                }
-                break;
-            default:
-                break;
+            }
         }
     }
     private void FindByNumbersNumberLabel_Click(object sender, EventArgs e)
     {
         FindByNumbersControls_Enter(null, null);
 
-        switch (m_numbers_result_type)
+        if (m_languages != null)
         {
-            case NumbersResultType.Words:
+            if (m_languages.ContainsKey(m_language_name))
+            {
+                switch (m_numbers_result_type)
                 {
-                    if (m_word_number_scope == NumberScope.Number)
-                    {
-                        m_word_number_scope = NumberScope.NumberInChapter;
-                        FindByNumbersNumberLabel.Text = "in chapter";
-                    }
-                    else if (m_word_number_scope == NumberScope.NumberInChapter)
-                    {
-                        m_word_number_scope = NumberScope.NumberInVerse;
-                        FindByNumbersNumberLabel.Text = "in verse";
-                    }
-                    else if (m_word_number_scope == NumberScope.NumberInVerse)
-                    {
-                        m_word_number_scope = NumberScope.Number;
-                        FindByNumbersNumberLabel.Text = "number";
-                    }
+                    case NumbersResultType.Words:
+                        {
+                            if (m_word_number_scope == NumberScope.Number)
+                            {
+                                m_word_number_scope = NumberScope.NumberInChapter;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            }
+                            else if (m_word_number_scope == NumberScope.NumberInChapter)
+                            {
+                                m_word_number_scope = NumberScope.NumberInVerse;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in verse"];
+                            }
+                            else if (m_word_number_scope == NumberScope.NumberInVerse)
+                            {
+                                m_word_number_scope = NumberScope.Number;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            }
+                        }
+                        break;
+                    case NumbersResultType.WordRanges:
+                    case NumbersResultType.WordSets:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                        }
+                        break;
+                    case NumbersResultType.Sentences:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                        }
+                        break;
+                    case NumbersResultType.Verses:
+                        {
+                            if (m_verse_number_scope == NumberScope.Number)
+                            {
+                                m_verse_number_scope = NumberScope.NumberInChapter;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            }
+                            else if (m_verse_number_scope == NumberScope.NumberInChapter)
+                            {
+                                m_verse_number_scope = NumberScope.Number;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            }
+                        }
+                        break;
+                    case NumbersResultType.VerseRanges:
+                    case NumbersResultType.VerseSets:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                        }
+                        break;
+                    case NumbersResultType.Chapters:
+                        {
+                            if (m_chapter_number_scope == NumberScope.Number)
+                            {
+                                m_chapter_number_scope = NumberScope.Number;
+                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            }
+                        }
+                        break;
+                    case NumbersResultType.ChapterRanges:
+                    case NumbersResultType.ChapterSets:
+                        {
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                break;
-            case NumbersResultType.WordRanges:
-            case NumbersResultType.WordSets:
-                {
-                    FindByNumbersNumberLabel.Text = "sum";
-                }
-                break;
-            case NumbersResultType.Sentences:
-                {
-                    FindByNumbersNumberLabel.Text = "number";
-                }
-                break;
-            case NumbersResultType.Verses:
-                {
-                    if (m_verse_number_scope == NumberScope.Number)
-                    {
-                        m_verse_number_scope = NumberScope.NumberInChapter;
-                        FindByNumbersNumberLabel.Text = "in chapter";
-                    }
-                    else if (m_verse_number_scope == NumberScope.NumberInChapter)
-                    {
-                        m_verse_number_scope = NumberScope.Number;
-                        FindByNumbersNumberLabel.Text = "number";
-                    }
-                }
-                break;
-            case NumbersResultType.VerseRanges:
-            case NumbersResultType.VerseSets:
-                {
-                    FindByNumbersNumberLabel.Text = "sum";
-                }
-                break;
-            case NumbersResultType.Chapters:
-                {
-                    if (m_chapter_number_scope == NumberScope.Number)
-                    {
-                        m_chapter_number_scope = NumberScope.Number;
-                        FindByNumbersNumberLabel.Text = "number";
-                    }
-                }
-                break;
-            case NumbersResultType.ChapterRanges:
-            case NumbersResultType.ChapterSets:
-                {
-                    FindByNumbersNumberLabel.Text = "sum";
-                }
-                break;
-            default:
-                break;
+            }
         }
     }
     private void FindByNumbersResultTypeWordsLabel_Click(object sender, EventArgs e)
@@ -22079,121 +22375,127 @@ public partial class MainForm : Form, ISubscriber
         }
 
 
-        // reset Words label
-        FindByNumbersResultTypeWordsLabel.Text = "W";
-        ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, "find words");
-        ToolTip.SetToolTip(FindByNumbersNumberLabel, "word number");
-        // reset Sentences label
-        FindByNumbersResultTypeSentencesLabel.Text = "S";
-        ToolTip.SetToolTip(FindByNumbersResultTypeSentencesLabel, "find sentences across verses");
-        // reset Verses label
-        FindByNumbersResultTypeVersesLabel.Text = "V";
-        ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, "find verses");
-        ToolTip.SetToolTip(FindByNumbersNumberLabel, "verse number");
-        // reset Chapters label
-        FindByNumbersResultTypeChaptersLabel.Text = "C";
-        ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, "find chapters");
-        ToolTip.SetToolTip(FindByNumbersNumberLabel, "chapter number");
+        if (m_languages != null)
+        {
+            if (m_languages.ContainsKey(m_language_name))
+            {
+                // reset Words label
+                FindByNumbersResultTypeWordsLabel.Text = "W";
+                ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find words"]);
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["word number"]);
+                // reset Sentences label
+                FindByNumbersResultTypeSentencesLabel.Text = "S";
+                ToolTip.SetToolTip(FindByNumbersResultTypeSentencesLabel, m_languages[m_language_name]["find sentences"]);
+                // reset Verses label
+                FindByNumbersResultTypeVersesLabel.Text = "V";
+                ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verses"]);
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["verse number"]);
+                // reset Chapters label
+                FindByNumbersResultTypeChaptersLabel.Text = "C";
+                ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapters"]);
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["chapter number"]);
 
-        // overwrite label and tooltips
-        if (m_numbers_result_type == NumbersResultType.Words)
-        {
-            FindByNumbersResultTypeWordsLabel.Text = "W";
-            ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, "find words");
-            // update Text based on m_number_scope
-            switch (m_word_number_scope)
-            {
-                case NumberScope.Number:
-                    FindByNumbersNumberLabel.Text = "number";
-                    break;
-                case NumberScope.NumberInChapter:
-                    FindByNumbersNumberLabel.Text = "in chapter";
-                    break;
-                case NumberScope.NumberInVerse:
-                    FindByNumbersNumberLabel.Text = "in verse";
-                    break;
-                default:
-                    FindByNumbersNumberLabel.Text = "number";
-                    break;
+                // overwrite label and tooltips
+                if (m_numbers_result_type == NumbersResultType.Words)
+                {
+                    FindByNumbersResultTypeWordsLabel.Text = "W";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find words"]);
+                    // update Text based on m_number_scope
+                    switch (m_word_number_scope)
+                    {
+                        case NumberScope.Number:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            break;
+                        case NumberScope.NumberInChapter:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            break;
+                        case NumberScope.NumberInVerse:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in verse"];
+                            break;
+                        default:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            break;
+                    }
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["word number"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.WordRanges)
+                {
+                    FindByNumbersResultTypeWordsLabel.Text = "-W-";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find word ranges"]);
+                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of word numbers"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.WordSets)
+                {
+                    FindByNumbersResultTypeWordsLabel.Text = "Ws";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find word sets"]);
+                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of word numbers"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.Verses)
+                {
+                    FindByNumbersResultTypeVersesLabel.Text = "V";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verses"]);
+                    // update Text based on m_number_scope
+                    switch (m_verse_number_scope)
+                    {
+                        case NumberScope.Number:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            break;
+                        case NumberScope.NumberInChapter:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            break;
+                        default:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            break;
+                    }
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["verse number"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.VerseRanges)
+                {
+                    FindByNumbersResultTypeVersesLabel.Text = "-V-";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verse ranges"]);
+                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of verse numbers"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.VerseSets)
+                {
+                    FindByNumbersResultTypeVersesLabel.Text = "Vs";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verse sets"]);
+                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of verse numbers"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.Chapters)
+                {
+                    FindByNumbersResultTypeChaptersLabel.Text = "C";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapters"]);
+                    // update Text based on m_number_scope
+                    switch (m_chapter_number_scope)
+                    {
+                        case NumberScope.Number:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            break;
+                        default:
+                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            break;
+                    }
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["chapter number"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.ChapterRanges)
+                {
+                    FindByNumbersResultTypeChaptersLabel.Text = "-C-";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapter ranges"]);
+                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of chapter numbers"]);
+                }
+                else if (m_numbers_result_type == NumbersResultType.ChapterSets)
+                {
+                    FindByNumbersResultTypeChaptersLabel.Text = "Cs";
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapter sets"]);
+                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of chapter numbers"]);
+                }
             }
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "word number");
-        }
-        else if (m_numbers_result_type == NumbersResultType.WordRanges)
-        {
-            FindByNumbersResultTypeWordsLabel.Text = "-W-";
-            ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, "find word ranges");
-            FindByNumbersNumberLabel.Text = "sum";
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "sum of word numbers");
-        }
-        else if (m_numbers_result_type == NumbersResultType.WordSets)
-        {
-            FindByNumbersResultTypeWordsLabel.Text = "Ws";
-            ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, "find word sets");
-            FindByNumbersNumberLabel.Text = "sum";
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "sum of word numbers");
-        }
-        else if (m_numbers_result_type == NumbersResultType.Verses)
-        {
-            FindByNumbersResultTypeVersesLabel.Text = "V";
-            ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, "find verses");
-            // update Text based on m_number_scope
-            switch (m_verse_number_scope)
-            {
-                case NumberScope.Number:
-                    FindByNumbersNumberLabel.Text = "number";
-                    break;
-                case NumberScope.NumberInChapter:
-                    FindByNumbersNumberLabel.Text = "in chapter";
-                    break;
-                default:
-                    FindByNumbersNumberLabel.Text = "number";
-                    break;
-            }
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "verse number");
-        }
-        else if (m_numbers_result_type == NumbersResultType.VerseRanges)
-        {
-            FindByNumbersResultTypeVersesLabel.Text = "-V-";
-            ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, "find verse ranges");
-            FindByNumbersNumberLabel.Text = "sum";
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "sum of verse numbers");
-        }
-        else if (m_numbers_result_type == NumbersResultType.VerseSets)
-        {
-            FindByNumbersResultTypeVersesLabel.Text = "Vs";
-            ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, "find verse sets");
-            FindByNumbersNumberLabel.Text = "sum";
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "sum of verse numbers");
-        }
-        else if (m_numbers_result_type == NumbersResultType.Chapters)
-        {
-            FindByNumbersResultTypeChaptersLabel.Text = "C";
-            ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, "find chapters");
-            // update Text based on m_number_scope
-            switch (m_chapter_number_scope)
-            {
-                case NumberScope.Number:
-                    FindByNumbersNumberLabel.Text = "number";
-                    break;
-                default:
-                    FindByNumbersNumberLabel.Text = "number";
-                    break;
-            }
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "chapter number");
-        }
-        else if (m_numbers_result_type == NumbersResultType.ChapterRanges)
-        {
-            FindByNumbersResultTypeChaptersLabel.Text = "-C-";
-            ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, "find chapter ranges");
-            FindByNumbersNumberLabel.Text = "sum";
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "sum of chapter numbers");
-        }
-        else if (m_numbers_result_type == NumbersResultType.ChapterSets)
-        {
-            FindByNumbersResultTypeChaptersLabel.Text = "Cs";
-            ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, "find chapter sets");
-            FindByNumbersNumberLabel.Text = "sum";
-            ToolTip.SetToolTip(FindByNumbersNumberLabel, "sum of chapter numbers");
         }
 
         switch (m_numbers_result_type)
@@ -22246,108 +22548,114 @@ public partial class MainForm : Form, ISubscriber
     {
         if (control == null) return false;
 
-        if (ModifierKeys == Keys.Shift)
+        if (m_languages != null)
         {
-            if (control.Text == "=")
+            if (m_languages.ContainsKey(m_language_name))
             {
-                control.Text = "Ʃ";
-                ToolTip.SetToolTip(control, "equals to sum");
-            }
-            else if (control.Text == "Ʃ")
-            {
-                control.Text = "!÷";
-                ToolTip.SetToolTip(control, "indivisible by");
-            }
-            else if (control.Text == "!÷")
-            {
-                control.Text = "÷";
-                ToolTip.SetToolTip(control, "divisible by (with remainder)");
-            }
-            else if (control.Text == "÷")
-            {
-                control.Text = "≥";
-                ToolTip.SetToolTip(control, "greater than or equals to");
-            }
-            else if (control.Text == "≥")
-            {
-                control.Text = ">";
-                ToolTip.SetToolTip(control, "greater than");
-            }
-            else if (control.Text == ">")
-            {
-                control.Text = "≤";
-                ToolTip.SetToolTip(control, "less than or equals to");
-            }
-            else if (control.Text == "≤")
-            {
-                control.Text = "<";
-                ToolTip.SetToolTip(control, "less than");
-            }
-            else if (control.Text == "<")
-            {
-                control.Text = "≠";
-                ToolTip.SetToolTip(control, "not equals to");
-            }
-            else if (control.Text == "≠")
-            {
-                control.Text = "=";
-                ToolTip.SetToolTip(control, "equals to");
-            }
-            else
-            {
-                // do nothing
-            }
-        }
-        else
-        {
-            if (control.Text == "=")
-            {
-                control.Text = "≠";
-                ToolTip.SetToolTip(control, "not equals to");
-            }
-            else if (control.Text == "≠")
-            {
-                control.Text = "<";
-                ToolTip.SetToolTip(control, "less than");
-            }
-            else if (control.Text == "<")
-            {
-                control.Text = "≤";
-                ToolTip.SetToolTip(control, "less than or equals to");
-            }
-            else if (control.Text == "≤")
-            {
-                control.Text = ">";
-                ToolTip.SetToolTip(control, "greater than");
-            }
-            else if (control.Text == ">")
-            {
-                control.Text = "≥";
-                ToolTip.SetToolTip(control, "greater than or equals to");
-            }
-            else if (control.Text == "≥")
-            {
-                control.Text = "÷";
-                ToolTip.SetToolTip(control, "divisible by (with remainder)");
-            }
-            else if (control.Text == "÷")
-            {
-                control.Text = "!÷";
-                ToolTip.SetToolTip(control, "indivisible by");
-            }
-            else if (control.Text == "!÷")
-            {
-                control.Text = "Ʃ";
-                ToolTip.SetToolTip(control, "equals to sum");
-            }
-            else if (control.Text == "Ʃ")
-            {
-                control.Text = "=";
-                ToolTip.SetToolTip(control, "equals to");
-            }
-            else
-            {
-                // do nothing
+                if (ModifierKeys == Keys.Shift)
+                {
+                    if (control.Text == "=")
+                    {
+                        control.Text = "Ʃ";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to sum"]);
+                    }
+                    else if (control.Text == "Ʃ")
+                    {
+                        control.Text = "!÷";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["indivisible by"]);
+                    }
+                    else if (control.Text == "!÷")
+                    {
+                        control.Text = "÷";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["divisible by"]);
+                    }
+                    else if (control.Text == "÷")
+                    {
+                        control.Text = "≥";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater or equals to"]);
+                    }
+                    else if (control.Text == "≥")
+                    {
+                        control.Text = ">";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater than"]);
+                    }
+                    else if (control.Text == ">")
+                    {
+                        control.Text = "≤";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less or equals to"]);
+                    }
+                    else if (control.Text == "≤")
+                    {
+                        control.Text = "<";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less than"]);
+                    }
+                    else if (control.Text == "<")
+                    {
+                        control.Text = "≠";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["not equals to"]);
+                    }
+                    else if (control.Text == "≠")
+                    {
+                        control.Text = "=";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to"]);
+                    }
+                    else
+                    {
+                        // do nothing
+                    }
+                }
+                else
+                {
+                    if (control.Text == "=")
+                    {
+                        control.Text = "≠";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["not equals to"]);
+                    }
+                    else if (control.Text == "≠")
+                    {
+                        control.Text = "<";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less than"]);
+                    }
+                    else if (control.Text == "<")
+                    {
+                        control.Text = "≤";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less or equals to"]);
+                    }
+                    else if (control.Text == "≤")
+                    {
+                        control.Text = ">";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater than"]);
+                    }
+                    else if (control.Text == ">")
+                    {
+                        control.Text = "≥";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater or equals to"]);
+                    }
+                    else if (control.Text == "≥")
+                    {
+                        control.Text = "÷";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["divisible by"]);
+                    }
+                    else if (control.Text == "÷")
+                    {
+                        control.Text = "!÷";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["indivisible by"]);
+                    }
+                    else if (control.Text == "!÷")
+                    {
+                        control.Text = "Ʃ";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to sum"]);
+                    }
+                    else if (control.Text == "Ʃ")
+                    {
+                        control.Text = "=";
+                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to"]);
+                    }
+                    else
+                    {
+                        // do nothing
+                    }
+                }
             }
         }
         return true;
@@ -22386,218 +22694,224 @@ public partial class MainForm : Form, ISubscriber
         }
         else
         {
-            if (ModifierKeys != Keys.Shift)
+            if (m_languages != null)
             {
-                if (control.Text == "")
+                if (m_languages.ContainsKey(m_language_name))
                 {
-                    control.Text = "#";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    string text = null;
-                    switch (m_numbers_result_type)
+                    if (ModifierKeys != Keys.Shift)
                     {
-                        case NumbersResultType.Words: { text = "word number"; break; }
-                        case NumbersResultType.Verses: { text = "verse number"; break; }
-                        case NumbersResultType.Chapters: { text = "chapter number"; break; }
-                        default: { text = "number"; break; }
+                        if (control.Text == "")
+                        {
+                            control.Text = "#";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            string text = null;
+                            switch (m_numbers_result_type)
+                            {
+                                case NumbersResultType.Words: { text = m_languages[m_language_name]["word number"]; break; }
+                                case NumbersResultType.Verses: { text = m_languages[m_language_name]["verse number"]; break; }
+                                case NumbersResultType.Chapters: { text = m_languages[m_language_name]["chapter number"]; break; }
+                                default: { text = m_languages[m_language_name]["number"]; break; }
+                            }
+                            ToolTip.SetToolTip(control, text);
+                        }
+                        else if (control.Text == "#")
+                        {
+                            control.Text = "P";
+                            control.ForeColor = Numbers.GetNumberTypeColor(19L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["prime = divisible by itself only"]);
+                        }
+                        else if (control.Text == "P")
+                        {
+                            control.Text = "AP";
+                            control.ForeColor = Numbers.GetNumberTypeColor(47L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive prime = prime with a prime digit sum"]);
+                        }
+                        else if (control.Text == "AP")
+                        {
+                            control.Text = "XP";
+                            control.ForeColor = Numbers.GetNumberTypeColor(19L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive prime = prime with a non-prime digit sum"]);
+                        }
+                        else if (control.Text == "XP")
+                        {
+                            control.Text = "C";
+                            control.ForeColor = Numbers.GetNumberTypeColor(14L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["composite = divisible by itself and others"]);
+                        }
+                        else if (control.Text == "C")
+                        {
+                            control.Text = "AC";
+                            control.ForeColor = Numbers.GetNumberTypeColor(114L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive composite = composite with a composite digit sum"]);
+                        }
+                        else if (control.Text == "AC")
+                        {
+                            control.Text = "XC";
+                            control.ForeColor = Numbers.GetNumberTypeColor(25L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive composite = composite with a non-composite digit sum"]);
+                        }
+                        else if (control.Text == "XC")
+                        {
+                            control.Text = "O";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["odd number"]);
+                        }
+                        else if (control.Text == "O")
+                        {
+                            control.Text = "E";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["even number"]);
+                        }
+                        else if (control.Text == "E")
+                        {
+                            control.Text = "^2";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["square number"]);
+                        }
+                        else if (control.Text == "^2")
+                        {
+                            control.Text = "^3";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["cubic number"]);
+                        }
+                        else if (control.Text == "^3")
+                        {
+                            control.Text = "^4";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quartic number"]);
+                        }
+                        else if (control.Text == "^4")
+                        {
+                            control.Text = "^5";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quintic number"]);
+                        }
+                        else if (control.Text == "^5")
+                        {
+                            control.Text = "^6";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["sextic number"]);
+                        }
+                        else if (control.Text == "^6")
+                        {
+                            control.Text = "^7";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["septic number"]);
+                        }
+                        else if (control.Text == "^7")
+                        {
+                            control.Text = "";
+                            control.ForeColor = control.BackColor;
+                            ToolTip.SetToolTip(control, "");
+                        }
                     }
-                    ToolTip.SetToolTip(control, text);
-                }
-                else if (control.Text == "#")
-                {
-                    control.Text = "P";
-                    control.ForeColor = GetNumberTypeColor(19L);
-                    ToolTip.SetToolTip(control, "prime = divisible by itself only");
-                }
-                else if (control.Text == "P")
-                {
-                    control.Text = "AP";
-                    control.ForeColor = GetNumberTypeColor(47L);
-                    ToolTip.SetToolTip(control, "additive prime = prime with a prime digit sum");
-                }
-                else if (control.Text == "AP")
-                {
-                    control.Text = "XP";
-                    control.ForeColor = GetNumberTypeColor(19L);
-                    ToolTip.SetToolTip(control, "non-additive prime = prime with a composite digit sum");
-                }
-                else if (control.Text == "XP")
-                {
-                    control.Text = "C";
-                    control.ForeColor = GetNumberTypeColor(14L);
-                    ToolTip.SetToolTip(control, "composite = divisible by prime(s) below it");
-                }
-                else if (control.Text == "C")
-                {
-                    control.Text = "AC";
-                    control.ForeColor = GetNumberTypeColor(114L);
-                    ToolTip.SetToolTip(control, "additive composite = composite with a composite digit sum");
-                }
-                else if (control.Text == "AC")
-                {
-                    control.Text = "XC";
-                    control.ForeColor = GetNumberTypeColor(25L);
-                    ToolTip.SetToolTip(control, "non-additive composite = composite with a prime digit sum");
-                }
-                else if (control.Text == "XC")
-                {
-                    control.Text = "O";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "odd number");
-                }
-                else if (control.Text == "O")
-                {
-                    control.Text = "E";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "even number");
-                }
-                else if (control.Text == "E")
-                {
-                    control.Text = "^2";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "square number");
-                }
-                else if (control.Text == "^2")
-                {
-                    control.Text = "^3";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "cubic number");
-                }
-                else if (control.Text == "^3")
-                {
-                    control.Text = "^4";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "quartic number");
-                }
-                else if (control.Text == "^4")
-                {
-                    control.Text = "^5";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "quintic number");
-                }
-                else if (control.Text == "^5")
-                {
-                    control.Text = "^6";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "sextic number");
-                }
-                else if (control.Text == "^6")
-                {
-                    control.Text = "^7";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "septic number");
-                }
-                else if (control.Text == "^7")
-                {
-                    control.Text = "";
-                    control.ForeColor = control.BackColor;
-                    ToolTip.SetToolTip(control, "");
-                }
-            }
-            else // if (ModifierKeys == Keys.Shift)
-            {
-                if (control.Text == "")
-                {
-                    control.Text = "^7";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "septic number");
-                }
-                else if (control.Text == "^7")
-                {
-                    control.Text = "^6";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "sextic number");
-                }
-                else if (control.Text == "^6")
-                {
-                    control.Text = "^5";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "quartic number");
-                }
-                else if (control.Text == "^5")
-                {
-                    control.Text = "^4";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "quartic number");
-                }
-                else if (control.Text == "^4")
-                {
-                    control.Text = "^3";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "cubic number");
-                }
-                else if (control.Text == "^3")
-                {
-                    control.Text = "^2";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "square number");
-                }
-                else if (control.Text == "^2")
-                {
-                    control.Text = "E";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "even number");
-                }
-                else if (control.Text == "E")
-                {
-                    control.Text = "O";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    ToolTip.SetToolTip(control, "odd number");
-                }
-                else if (control.Text == "O")
-                {
-                    control.Text = "XC";
-                    control.ForeColor = GetNumberTypeColor(25L);
-                    ToolTip.SetToolTip(control, "non-additive composite = composite with a prime digit sum");
-                }
-                else if (control.Text == "XC")
-                {
-                    control.Text = "AC";
-                    control.ForeColor = GetNumberTypeColor(114L);
-                    ToolTip.SetToolTip(control, "additive composite = composite with a composite digit sum");
-                }
-                else if (control.Text == "AC")
-                {
-                    control.Text = "C";
-                    control.ForeColor = GetNumberTypeColor(14L);
-                    ToolTip.SetToolTip(control, "composite = divisible by prime(s) below it");
-                }
-                else if (control.Text == "C")
-                {
-                    control.Text = "XP";
-                    control.ForeColor = GetNumberTypeColor(19L);
-                    ToolTip.SetToolTip(control, "non-additive prime = prime with a composite digit sum");
-                }
-                else if (control.Text == "XP")
-                {
-                    control.Text = "AP";
-                    control.ForeColor = GetNumberTypeColor(47L);
-                    ToolTip.SetToolTip(control, "additive prime = prime with a prime digit sum");
-                }
-                else if (control.Text == "AP")
-                {
-                    control.Text = "P";
-                    control.ForeColor = GetNumberTypeColor(19L);
-                    ToolTip.SetToolTip(control, "prime = divisible by itself only");
-                }
-                else if (control.Text == "P")
-                {
-                    control.Text = "#";
-                    control.ForeColor = GetNumberTypeColor(0L);
-                    string text = null;
-                    switch (m_numbers_result_type)
+                    else // if (ModifierKeys == Keys.Shift)
                     {
-                        case NumbersResultType.Words: { text = "word number"; break; }
-                        case NumbersResultType.Verses: { text = "verse number"; break; }
-                        case NumbersResultType.Chapters: { text = "chapter number"; break; }
-                        default: { text = "number"; break; }
+                        if (control.Text == "")
+                        {
+                            control.Text = "^7";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["septic number"]);
+                        }
+                        else if (control.Text == "^7")
+                        {
+                            control.Text = "^6";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["sextic number"]);
+                        }
+                        else if (control.Text == "^6")
+                        {
+                            control.Text = "^5";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quartic number"]);
+                        }
+                        else if (control.Text == "^5")
+                        {
+                            control.Text = "^4";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quartic number"]);
+                        }
+                        else if (control.Text == "^4")
+                        {
+                            control.Text = "^3";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["cubic number"]);
+                        }
+                        else if (control.Text == "^3")
+                        {
+                            control.Text = "^2";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["square number"]);
+                        }
+                        else if (control.Text == "^2")
+                        {
+                            control.Text = "E";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["even number"]);
+                        }
+                        else if (control.Text == "E")
+                        {
+                            control.Text = "O";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["odd number"]);
+                        }
+                        else if (control.Text == "O")
+                        {
+                            control.Text = "XC";
+                            control.ForeColor = Numbers.GetNumberTypeColor(25L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive composite = composite with a non-composite digit sum"]);
+                        }
+                        else if (control.Text == "XC")
+                        {
+                            control.Text = "AC";
+                            control.ForeColor = Numbers.GetNumberTypeColor(114L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive composite = composite with a composite digit sum"]);
+                        }
+                        else if (control.Text == "AC")
+                        {
+                            control.Text = "C";
+                            control.ForeColor = Numbers.GetNumberTypeColor(14L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["composite = divisible by itself and others"]);
+                        }
+                        else if (control.Text == "C")
+                        {
+                            control.Text = "XP";
+                            control.ForeColor = Numbers.GetNumberTypeColor(19L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive prime = prime with a non-prime digit sum"]);
+                        }
+                        else if (control.Text == "XP")
+                        {
+                            control.Text = "AP";
+                            control.ForeColor = Numbers.GetNumberTypeColor(47L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive prime = prime with a prime digit sum"]);
+                        }
+                        else if (control.Text == "AP")
+                        {
+                            control.Text = "P";
+                            control.ForeColor = Numbers.GetNumberTypeColor(19L);
+                            ToolTip.SetToolTip(control, m_languages[m_language_name]["prime = divisible by itself only"]);
+                        }
+                        else if (control.Text == "P")
+                        {
+                            control.Text = "#";
+                            control.ForeColor = Numbers.GetNumberTypeColor(0L);
+                            string text = null;
+                            switch (m_numbers_result_type)
+                            {
+                                case NumbersResultType.Words: { text = m_languages[m_language_name]["word number"]; break; }
+                                case NumbersResultType.Verses: { text = m_languages[m_language_name]["verse number"]; break; }
+                                case NumbersResultType.Chapters: { text = m_languages[m_language_name]["chapter number"]; break; }
+                                default: { text = m_languages[m_language_name]["number"]; break; }
+                            }
+                            ToolTip.SetToolTip(control, text);
+                        }
+                        else if (control.Text == "#")
+                        {
+                            control.Text = "";
+                            control.ForeColor = control.BackColor;
+                            ToolTip.SetToolTip(control, "");
+                        }
                     }
-                    ToolTip.SetToolTip(control, text);
-                }
-                else if (control.Text == "#")
-                {
-                    control.Text = "";
-                    control.ForeColor = control.BackColor;
-                    ToolTip.SetToolTip(control, "");
                 }
             }
             return true;
@@ -22607,136 +22921,142 @@ public partial class MainForm : Form, ISubscriber
     {
         UpdateNumberTypeLabelTags();
 
-        Control control = sender as Control;
-        if (control != null)
+        if (m_languages != null)
         {
-            if (UpdateComparisonOperator(control))
+            if (m_languages.ContainsKey(m_language_name))
             {
-                if (control == FindByNumbersNumberComparisonOperatorLabel)
+                Control control = sender as Control;
+                if (control != null)
                 {
-                    if (FindByNumbersNumberComparisonOperatorLabel.Text == "÷")
+                    if (UpdateComparisonOperator(control))
                     {
-                        int remainder = 0;
-                        FindByNumbersNumberNumberTypeLabel.Tag = remainder;
-                        FindByNumbersNumberNumberTypeLabel.Text = remainder.ToString();
-                        FindByNumbersNumberNumberTypeLabel.ForeColor = Color.Black;
-                        FindByNumbersNumberNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, "remainder");
-                    }
-                    else
-                    {
-                        FindByNumbersNumberNumberTypeLabel.Text = "";
-                        ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, null);
-                    }
-                }
-                else if (control == FindByNumbersChaptersComparisonOperatorLabel)
-                {
-                    if (FindByNumbersChaptersComparisonOperatorLabel.Text == "÷")
-                    {
-                        int remainder = 0;
-                        FindByNumbersChaptersNumberTypeLabel.Tag = remainder;
-                        FindByNumbersChaptersNumberTypeLabel.Text = remainder.ToString();
-                        FindByNumbersChaptersNumberTypeLabel.ForeColor = Color.Black;
-                        FindByNumbersChaptersNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, "remainder");
-                    }
-                    else
-                    {
-                        FindByNumbersChaptersNumberTypeLabel.Text = "";
-                        ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, null);
-                    }
-                }
-                else if (control == FindByNumbersVersesComparisonOperatorLabel)
-                {
-                    if (FindByNumbersVersesComparisonOperatorLabel.Text == "÷")
-                    {
-                        int remainder = 0;
-                        FindByNumbersVersesNumberTypeLabel.Tag = remainder;
-                        FindByNumbersVersesNumberTypeLabel.Text = remainder.ToString();
-                        FindByNumbersVersesNumberTypeLabel.ForeColor = Color.Black;
-                        FindByNumbersVersesNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, "remainder");
-                    }
-                    else
-                    {
-                        FindByNumbersVersesNumberTypeLabel.Text = "";
-                        ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, null);
-                    }
-                }
-                else if (control == FindByNumbersWordsComparisonOperatorLabel)
-                {
-                    if (FindByNumbersWordsComparisonOperatorLabel.Text == "÷")
-                    {
-                        int remainder = 0;
-                        FindByNumbersWordsNumberTypeLabel.Tag = remainder;
-                        FindByNumbersWordsNumberTypeLabel.Text = remainder.ToString();
-                        FindByNumbersWordsNumberTypeLabel.ForeColor = Color.Black;
-                        FindByNumbersWordsNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, "remainder");
-                    }
-                    else
-                    {
-                        FindByNumbersWordsNumberTypeLabel.Text = "";
-                        ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, null);
-                    }
-                }
-                else if (control == FindByNumbersLettersComparisonOperatorLabel)
-                {
-                    if (FindByNumbersLettersComparisonOperatorLabel.Text == "÷")
-                    {
-                        int remainder = 0;
-                        FindByNumbersLettersNumberTypeLabel.Tag = remainder;
-                        FindByNumbersLettersNumberTypeLabel.Text = remainder.ToString();
-                        FindByNumbersLettersNumberTypeLabel.ForeColor = Color.Black;
-                        FindByNumbersLettersNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, "remainder");
-                    }
-                    else
-                    {
-                        FindByNumbersLettersNumberTypeLabel.Text = "";
-                        ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, null);
-                    }
-                }
-                else if (control == FindByNumbersUniqueLettersComparisonOperatorLabel)
-                {
-                    if (FindByNumbersUniqueLettersComparisonOperatorLabel.Text == "÷")
-                    {
-                        int remainder = 0;
-                        FindByNumbersUniqueLettersNumberTypeLabel.Tag = remainder;
-                        FindByNumbersUniqueLettersNumberTypeLabel.Text = remainder.ToString();
-                        FindByNumbersUniqueLettersNumberTypeLabel.ForeColor = Color.Black;
-                        FindByNumbersUniqueLettersNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, "remainder");
-                    }
-                    else
-                    {
-                        FindByNumbersUniqueLettersNumberTypeLabel.Text = "";
-                        ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, null);
-                    }
-                }
-                else if (control == FindByNumbersValueComparisonOperatorLabel)
-                {
-                    if (FindByNumbersValueComparisonOperatorLabel.Text == "÷")
-                    {
-                        int remainder = 0;
-                        FindByNumbersValueNumberTypeLabel.Tag = remainder;
-                        FindByNumbersValueNumberTypeLabel.Text = remainder.ToString();
-                        FindByNumbersValueNumberTypeLabel.ForeColor = Color.Black;
-                        FindByNumbersValueNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, "remainder");
-                    }
-                    else
-                    {
-                        FindByNumbersValueNumberTypeLabel.Text = "";
-                        ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, null);
-                    }
-                }
-                else
-                {
-                    // do nothing
-                }
+                        if (control == FindByNumbersNumberComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersNumberComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersNumberNumberTypeLabel.Tag = remainder;
+                                FindByNumbersNumberNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersNumberNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersNumberNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersNumberNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, null);
+                            }
+                        }
+                        else if (control == FindByNumbersChaptersComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersChaptersComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersChaptersNumberTypeLabel.Tag = remainder;
+                                FindByNumbersChaptersNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersChaptersNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersChaptersNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersChaptersNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, null);
+                            }
+                        }
+                        else if (control == FindByNumbersVersesComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersVersesComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersVersesNumberTypeLabel.Tag = remainder;
+                                FindByNumbersVersesNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersVersesNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersVersesNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersVersesNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, null);
+                            }
+                        }
+                        else if (control == FindByNumbersWordsComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersWordsComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersWordsNumberTypeLabel.Tag = remainder;
+                                FindByNumbersWordsNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersWordsNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersWordsNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersWordsNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, null);
+                            }
+                        }
+                        else if (control == FindByNumbersLettersComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersLettersComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersLettersNumberTypeLabel.Tag = remainder;
+                                FindByNumbersLettersNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersLettersNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersLettersNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersLettersNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, null);
+                            }
+                        }
+                        else if (control == FindByNumbersUniqueLettersComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersUniqueLettersComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersUniqueLettersNumberTypeLabel.Tag = remainder;
+                                FindByNumbersUniqueLettersNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersUniqueLettersNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersUniqueLettersNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersUniqueLettersNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, null);
+                            }
+                        }
+                        else if (control == FindByNumbersValueComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersValueComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersValueNumberTypeLabel.Tag = remainder;
+                                FindByNumbersValueNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersValueNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersValueNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersValueNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, null);
+                            }
+                        }
+                        else
+                        {
+                            // do nothing
+                        }
 
-                FindByNumbersControls_Enter(null, null);
+                        FindByNumbersControls_Enter(null, null);
+                    }
+                }
             }
         }
     }
@@ -22874,7 +23194,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -23630,7 +23950,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -23773,7 +24093,7 @@ public partial class MainForm : Form, ISubscriber
         FindByProstrationTypeButton.Enabled = true;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -24165,7 +24485,7 @@ public partial class MainForm : Form, ISubscriber
                         FindByFrequencySumNumberTypeLabel.Text = remainder.ToString();
                         FindByFrequencySumNumberTypeLabel.ForeColor = Color.Black;
                         FindByFrequencySumNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByFrequencySumNumberTypeLabel, "remainder");
+                        ToolTip.SetToolTip(FindByFrequencySumNumberTypeLabel, m_languages[m_language_name]["remainder"]);
                     }
                     else
                     {
@@ -24222,7 +24542,7 @@ public partial class MainForm : Form, ISubscriber
                                         ||
                                         ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
 
-        ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -24238,32 +24558,24 @@ public partial class MainForm : Form, ISubscriber
                 {
                     FindByFrequencyResultTypeWordsLabel.BackColor = Color.SteelBlue;
                     FindByFrequencyResultTypeWordsLabel.BorderStyle = BorderStyle.Fixed3D;
-                    ToolTip.SetToolTip(FindByFrequencyButton, "Find words with selected letters\r\nwith required letter frequency sum");
-                    ToolTip.SetToolTip(FindByFrequencyPhraseTextBox, "phrase to find its letter frequency sum in words");
                 }
                 break;
             case FrequencyResultType.Sentences:
                 {
                     FindByFrequencyResultTypeSentencesLabel.BackColor = Color.SteelBlue;
                     FindByFrequencyResultTypeSentencesLabel.BorderStyle = BorderStyle.Fixed3D;
-                    ToolTip.SetToolTip(FindByFrequencyButton, "Find sentence with selected letters\r\nwith required letter frequency sum");
-                    ToolTip.SetToolTip(FindByFrequencyPhraseTextBox, "phrase to find its letter frequency sum in sentences");
                 }
                 break;
             case FrequencyResultType.Verses:
                 {
                     FindByFrequencyResultTypeVersesLabel.BackColor = Color.SteelBlue;
                     FindByFrequencyResultTypeVersesLabel.BorderStyle = BorderStyle.Fixed3D;
-                    ToolTip.SetToolTip(FindByFrequencyButton, "Find verses with selected letters\r\nwith required letter frequency sum");
-                    ToolTip.SetToolTip(FindByFrequencyPhraseTextBox, "phrase to find its letter frequency sum in verses");
                 }
                 break;
             case FrequencyResultType.Chapters:
                 {
                     FindByFrequencyResultTypeChaptersLabel.BackColor = Color.SteelBlue;
                     FindByFrequencyResultTypeChaptersLabel.BorderStyle = BorderStyle.Fixed3D;
-                    ToolTip.SetToolTip(FindByFrequencyButton, "Find chapters with selected letters\r\nwith required letter frequency sum");
-                    ToolTip.SetToolTip(FindByFrequencyPhraseTextBox, "phrase to find its letter frequency sum in chapters");
                 }
                 break;
         }
@@ -24687,73 +24999,51 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_client != null)
         {
+            string text = "";
+            int number = 0;
+
             if (m_found_verses_displayed)
             {
                 if (m_find_result_header != null)
                 {
+                    text = m_find_result_header;
+
                     string[] parts = m_find_result_header.Split();
                     if (parts.Length > 0)
                     {
-                        int count = 0;
-                        if (int.TryParse(parts[0], out count))
+                        if (int.TryParse(parts[0], out number))
                         {
-                            HeaderLabel.ForeColor = GetNumberTypeColor(count);
-                            HeaderLabel.Text = m_find_result_header;
-                            HeaderLabel.Refresh();
-                        }
-                        else
-                        {
-                            HeaderLabel.ForeColor = GetNumberTypeColor(0);
-                            HeaderLabel.Text = "";
-                            HeaderLabel.Refresh();
+                            // do nothing
                         }
                     }
-                    else
-                    {
-                        HeaderLabel.ForeColor = GetNumberTypeColor(0);
-                        HeaderLabel.Text = "";
-                        HeaderLabel.Refresh();
-                    }
-                }
-                else
-                {
-                    HeaderLabel.ForeColor = GetNumberTypeColor(0);
-                    HeaderLabel.Text = "";
-                    HeaderLabel.Refresh();
                 }
             }
             else
             {
-                HeaderLabel.ForeColor = SystemColors.WindowText;
-                if (m_client.Selection != null)
+                Verse verse = GetCurrentVerse();
+                if (verse != null)
                 {
-                    if (m_client.Selection.Verses != null)
+                    if (verse.Chapter != null)
                     {
-                        if (m_client.Selection.Verses.Count > 0)
-                        {
-                            Verse verse = GetCurrentVerse();
-                            if (verse != null)
-                            {
-                                if (verse.Chapter != null)
-                                {
-                                    string chapter_name_text = " " + verse.Chapter.TransliteratedName + " / " + verse.Chapter.EnglishName + " " + verse.Chapter.SortedNumber;
-                                    HeaderLabel.Text = verse.Chapter.Name + " "
-                                          + "   ءاية " + verse.NumberInChapter
-                                        //+ "   منزل " + ((verse.Station != null) ? verse.Station.Number : -1)
-                                        //+ "   جزء " + ((verse.Part != null) ? verse.Part.Number : -1)
-                                        //+ "   حزب " + ((verse.Group != null) ? verse.Group.Number : -1)
-                                        //+ "   نصف " + ((verse.Half != null) ? verse.Half.Number : -1)
-                                        //+ "   ربع " + ((verse.Quarter != null) ? verse.Quarter.Number : -1)
-                                        //+ "   ركوع " + ((verse.Bowing != null) ? verse.Bowing.Number : -1)
-                                        //+ "   صفحة " + ((verse.Page != null) ? verse.Page.Number : -1)
-                                          + chapter_name_text;
-                                    HeaderLabel.Refresh();
-                                }
-                            }
-                        }
+                        text = verse.Chapter.Name + " " + verse.Chapter.Number
+                            + "   ءاية " + verse.NumberInChapter
+                            + "   منزل " + ((verse.Station != null) ? verse.Station.Number : -1)
+                            + "   جزء " + ((verse.Part != null) ? verse.Part.Number : -1)
+                            + "   حزب " + ((verse.Group != null) ? verse.Group.Number : -1)
+                            + "   نصف " + ((verse.Half != null) ? verse.Half.Number : -1)
+                            + "   ربع " + ((verse.Quarter != null) ? verse.Quarter.Number : -1)
+                            + "   ركوع " + ((verse.Bowing != null) ? verse.Bowing.Number : -1)
+                            + "   صفحة " + ((verse.Page != null) ? verse.Page.Number : -1)
+                            ;
+
+                        number = verse.NumberInChapter;
                     }
                 }
             }
+
+            HeaderLabel.Text = text;
+            HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(number);
+            HeaderLabel.Refresh();
         }
     }
 
@@ -24977,29 +25267,29 @@ public partial class MainForm : Form, ISubscriber
         }
 
         WordsTextBox.Text = Radix.Encode(word_count, m_radix);
-        WordsTextBox.ForeColor = GetNumberTypeColor(WordsTextBox.Text, m_radix);
+        WordsTextBox.ForeColor = Numbers.GetNumberTypeColor(WordsTextBox.Text, m_radix);
         WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
         WordsTextBox.Refresh();
         DecimalWordsTextBox.Text = word_count.ToString();
-        DecimalWordsTextBox.ForeColor = GetNumberTypeColor(word_count);
+        DecimalWordsTextBox.ForeColor = Numbers.GetNumberTypeColor(word_count);
         DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
         DecimalWordsTextBox.Refresh();
         LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
-        LettersTextBox.ForeColor = GetNumberTypeColor(LettersTextBox.Text, m_radix);
+        LettersTextBox.ForeColor = Numbers.GetNumberTypeColor(LettersTextBox.Text, m_radix);
         LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
         LettersTextBox.Refresh();
         DecimalLettersTextBox.Text = letter_count.ToString();
-        DecimalLettersTextBox.ForeColor = GetNumberTypeColor(letter_count);
+        DecimalLettersTextBox.ForeColor = Numbers.GetNumberTypeColor(letter_count);
         DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
         DecimalLettersTextBox.Refresh();
         ValueTextBox.Text = Radix.Encode(value, m_radix);
-        ValueTextBox.ForeColor = GetNumberTypeColor(value);
+        ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
         ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
         ValueTextBox.SelectionLength = 0;
         ValueTextBox.Refresh();
         DecimalValueTextBox.Text = value.ToString();
         DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
-        DecimalValueTextBox.ForeColor = GetNumberTypeColor(value);
+        DecimalValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
         DecimalValueTextBox.Refresh();
         FactorizeValue(value, "Phrases", true);
 
@@ -25822,7 +26112,7 @@ public partial class MainForm : Form, ISubscriber
         SearchResultTextBox.SelectionColor = Color.Navy;
     }
 
-    private void SearchResultInpectLabel_Click(object sender, EventArgs e)
+    private void InpectVersesLabel_Click(object sender, EventArgs e)
     {
         if (m_client == null) return;
         if (m_client.NumerologySystem == null) return;
@@ -25927,8 +26217,7 @@ public partial class MainForm : Form, ISubscriber
 
         StringBuilder str = new StringBuilder();
 
-        str.Append("#" + "\t" + "Name" + "\t" + "Chapter" + "\t" + "Verses" + "\t" + "Words" + "\t" + "Letters" + "\t" + "Value" + "\t");
-
+        str.Append("#" + "\t" + "Name" + (m_found_verses_displayed ? "\t" + FindByTextTextBox.Text : "") + "\t" + "Chapter" + "\t" + "Verses" + "\t" + "Words" + "\t" + "Letters" + "\t" + "Value" + "\t");
         NumerologySystem numerology_system = m_client.NumerologySystem;
         if (numerology_system != null)
         {
@@ -25965,12 +26254,23 @@ public partial class MainForm : Form, ISubscriber
 
                 str.Append(count + "\t");
                 str.Append(chapter.Name + "\t");
+                if (m_found_verses_displayed)
+                {
+                    int index = chapter.SortedNumber - 1;
+                    if (m_matches_per_chapter != null)
+                    {
+                        if ((index >= 0) && (index < m_matches_per_chapter.Length))
+                        {
+                            int match_count = m_matches_per_chapter[index];
+                            str.Append(match_count + "\t");
+                        }
+                    }
+                }
                 str.Append(chapter.SortedNumber.ToString() + "\t");
                 str.Append(chapter.Verses.Count.ToString() + "\t");
                 str.Append(chapter.WordCount.ToString() + "\t");
                 str.Append(chapter.LetterCount.ToString() + "\t");
                 str.Append(value.ToString() + "\t");
-
                 if (numerology_system.LetterValues.Keys.Count > 0)
                 {
                     foreach (char key in numerology_system.LetterValues.Keys)
@@ -26363,7 +26663,7 @@ public partial class MainForm : Form, ISubscriber
 
                 FindByTextTextBox.Text = null;
 
-                ToolTip.SetToolTip(ChaptersInspectLabel, "Inspect chapters");
+                ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
                 WordsListBoxLabel.Visible = false;
                 WordsListBox.Visible = false;
 
@@ -27086,8 +27386,8 @@ public partial class MainForm : Form, ISubscriber
 
                                 CalculateCurrentValue();
 
-                                BuildLetterFrequencies();
-                                DisplayLetterFrequencies();
+                                //BuildLetterFrequencies();
+                                //DisplayLetterFrequencies();
 
                                 // re-sort chapters if sorted by Value
                                 if (Chapter.SortMethod == ChapterSortMethod.ByValue)
@@ -27553,17 +27853,17 @@ public partial class MainForm : Form, ISubscriber
 
     private void ValueTextBox_TextChanged(object sender, EventArgs e)
     {
-        int digits = Numbers.DigitCount(ValueTextBox.Text, m_radix);
-        ValueInspectLabel.Text = digits.ToString();
+        //int digits = Numbers.DigitCount(ValueTextBox.Text, m_radix);
+        //ValueInspectLabel.Text = digits.ToString();
 
         int digit_sum = Numbers.DigitSum(ValueTextBox.Text);
         DigitSumTextBox.Text = digit_sum.ToString();
-        DigitSumTextBox.ForeColor = GetNumberTypeColor(digit_sum);
+        DigitSumTextBox.ForeColor = Numbers.GetNumberTypeColor(digit_sum);
         DigitSumTextBox.Refresh();
 
         int digital_root = Numbers.DigitalRoot(ValueTextBox.Text);
         DigitalRootTextBox.Text = digital_root.ToString();
-        DigitalRootTextBox.ForeColor = GetNumberTypeColor(digital_root);
+        DigitalRootTextBox.ForeColor = Numbers.GetNumberTypeColor(digital_root);
         DigitalRootTextBox.Refresh();
     }
     private void ValueTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -27821,22 +28121,22 @@ public partial class MainForm : Form, ISubscriber
             else
             {
                 ValueTextBox.Text = Radix.Encode(value, m_radix);
-                ValueTextBox.ForeColor = GetNumberTypeColor(value);
+                ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
                 ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
                 ValueTextBox.SelectionLength = 0;
                 ValueTextBox.Refresh();
 
                 DecimalValueTextBox.Text = value.ToString();
                 DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
-                DecimalValueTextBox.ForeColor = GetNumberTypeColor(value);
+                DecimalValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
                 DecimalValueTextBox.Refresh();
 
                 DigitSumTextBox.Text = Numbers.DigitSum(value).ToString();
-                DigitSumTextBox.ForeColor = GetNumberTypeColor(Numbers.DigitSum(value));
+                DigitSumTextBox.ForeColor = Numbers.GetNumberTypeColor(Numbers.DigitSum(value));
                 DigitSumTextBox.Refresh();
 
                 DigitalRootTextBox.Text = Numbers.DigitalRoot(value).ToString();
-                DigitalRootTextBox.ForeColor = GetNumberTypeColor(Numbers.DigitalRoot(value));
+                DigitalRootTextBox.ForeColor = Numbers.GetNumberTypeColor(Numbers.DigitalRoot(value));
                 DigitalRootTextBox.Refresh();
 
                 string factors_str = Numbers.FactorizeToString(value);
@@ -27874,13 +28174,13 @@ public partial class MainForm : Form, ISubscriber
                     ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive composite index");
                 }
                 NthNumberTextBox.Text = (nth_number_index > 0) ? nth_number_index.ToString() : "";
-                NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_number_index);
+                NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_number_index);
                 NthNumberTextBox.Refresh();
                 NthAdditiveNumberTextBox.Text = (nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : "";
-                NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_additive_number_index);
+                NthAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_additive_number_index);
                 NthAdditiveNumberTextBox.Refresh();
                 NthNonAdditiveNumberTextBox.Text = (nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : "";
-                NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_non_additive_number_index);
+                NthNonAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_non_additive_number_index);
                 NthNonAdditiveNumberTextBox.Refresh();
 
                 string squares1_str = "";
@@ -27904,19 +28204,19 @@ public partial class MainForm : Form, ISubscriber
                 UpdateSumOfDivisors(value);
 
                 PCIndexChainL2RTextBox.Text = DecimalPCIndexChainL2R(value).ToString();
-                PCIndexChainL2RTextBox.ForeColor = GetNumberTypeColor(DecimalPCIndexChainL2R(value));
+                PCIndexChainL2RTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalPCIndexChainL2R(value));
                 PCIndexChainL2RTextBox.Refresh();
                 PCIndexChainR2LTextBox.Text = DecimalPCIndexChainR2L(value).ToString();
-                PCIndexChainR2LTextBox.ForeColor = GetNumberTypeColor(DecimalPCIndexChainR2L(value));
+                PCIndexChainR2LTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalPCIndexChainR2L(value));
                 PCIndexChainR2LTextBox.Refresh();
                 CPIndexChainL2RTextBox.Text = DecimalCPIndexChainL2R(value).ToString();
-                CPIndexChainL2RTextBox.ForeColor = GetNumberTypeColor(DecimalCPIndexChainL2R(value));
+                CPIndexChainL2RTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalCPIndexChainL2R(value));
                 CPIndexChainL2RTextBox.Refresh();
                 CPIndexChainR2LTextBox.Text = DecimalCPIndexChainR2L(value).ToString();
-                CPIndexChainR2LTextBox.ForeColor = GetNumberTypeColor(DecimalCPIndexChainR2L(value));
+                CPIndexChainR2LTextBox.ForeColor = Numbers.GetNumberTypeColor(DecimalCPIndexChainR2L(value));
                 CPIndexChainR2LTextBox.Refresh();
                 IndexChainLengthTextBox.Text = IndexChainLength(value).ToString();
-                //IndexChainLengthTextBox.ForeColor = GetNumberTypeColor(IndexChainLength(value));
+                //IndexChainLengthTextBox.ForeColor = Numbers.GetNumberTypeColor(IndexChainLength(value));
                 IndexChainLengthTextBox.Refresh();
 
                 // update the ValueNavigator fields
@@ -27966,7 +28266,7 @@ public partial class MainForm : Form, ISubscriber
                 break;
         }
         NumberKindIndexTextBox.Text = number_kind_index.ToString();
-        NumberKindIndexTextBox.ForeColor = GetNumberTypeColor(number_kind_index);
+        NumberKindIndexTextBox.ForeColor = Numbers.GetNumberTypeColor(number_kind_index);
         ToolTip.SetToolTip(NumberKindIndexTextBox, m_number_kind.ToString() + " number index");
         NumberKindIndexTextBox.Refresh();
     }
@@ -28066,14 +28366,14 @@ public partial class MainForm : Form, ISubscriber
         long sum_of_divisors = Numbers.SumOfDivisors(value);
         string divisors = Numbers.GetDivisorsString(value);
         SumOfDivisorsTextBox.Text = sum_of_divisors.ToString();
-        SumOfDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_divisors);
+        SumOfDivisorsTextBox.ForeColor = Numbers.GetNumberTypeColor(sum_of_divisors);
         SumOfDivisorsTextBox.Refresh();
         ToolTip.SetToolTip(SumOfDivisorsTextBox, "Sum Of Divisors\r\n" + divisors + " = " + sum_of_divisors);
 
         long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
         string proper_divisors = Numbers.GetProperDivisorsString(value);
         SumOfProperDivisorsTextBox.Text = sum_of_proper_divisors.ToString();
-        SumOfProperDivisorsTextBox.ForeColor = GetNumberTypeColor(sum_of_proper_divisors);
+        SumOfProperDivisorsTextBox.ForeColor = Numbers.GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
         ToolTip.SetToolTip(SumOfProperDivisorsTextBox, "Sum Of Proper Divisors\r\n" + proper_divisors + " = " + sum_of_proper_divisors);
 
@@ -28622,7 +28922,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 long number = -1L;
                 int nth_index = int.Parse(NthNumberTextBox.Text) - 1;
-                NthNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
+                NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.Primes[nth_index];
@@ -28648,7 +28948,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 long number = -1L;
                 int nth_index = int.Parse(NthAdditiveNumberTextBox.Text) - 1;
-                NthAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
+                NthAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.AdditivePrimes[nth_index];
@@ -28674,7 +28974,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 long number = -1L;
                 int nth_index = int.Parse(NthNonAdditiveNumberTextBox.Text) - 1;
-                NthNonAdditiveNumberTextBox.ForeColor = GetNumberTypeColor(nth_index);
+                NthNonAdditiveNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_index);
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.NonAdditivePrimes[nth_index];
@@ -28732,52 +29032,6 @@ public partial class MainForm : Form, ISubscriber
             {
                 FactorizeValue(0L, "Error", true);
             }
-        }
-    }
-
-    private Color GetNumberTypeColor(long number)
-    {
-        return GetNumberTypeColor(number.ToString(), 10L);
-    }
-    private Color GetNumberTypeColor(string value, long radix)
-    {
-        // if negative number, remove -ve sign
-        if (value.StartsWith("-")) value = value.Remove(0, 1);
-
-        if (Numbers.IsUnit(value, radix))
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.Unit];
-        }
-
-        else if (Numbers.IsNonAdditivePrime(value, radix))
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.NonAdditivePrime];
-        }
-        else if (Numbers.IsAdditivePrime(value, radix))
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.AdditivePrime];
-        }
-        else if (Numbers.IsPrime(value, radix))
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.Prime];
-        }
-
-        else if (Numbers.IsNonAdditiveComposite(value, radix))
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.NonAdditiveComposite];
-        }
-        else if (Numbers.IsAdditiveComposite(value, radix))
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.AdditiveComposite];
-        }
-        else if (Numbers.IsComposite(value, radix))
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.Composite];
-        }
-
-        else
-        {
-            return Numbers.NUMBER_TYPE_COLORS[(int)NumberType.None];
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -29625,9 +29879,9 @@ public partial class MainForm : Form, ISubscriber
         if (chapter_number_sum != -1)
         {
             //ChapterNumberSumTextBox.Text = SUM_SYMBOL + Radix.Encode(chapter_number_sum, m_radix);
-            //ChapterNumberSumTextBox.ForeColor = GetNumberTypeColor(ChapterNumberSumTextBox.Text.Split()[1], m_radix);
+            //ChapterNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(ChapterNumberSumTextBox.Text.Split()[1], m_radix);
             ChapterNumberSumTextBox.Text = SUM_SYMBOL + chapter_number_sum.ToString();
-            ChapterNumberSumTextBox.ForeColor = GetNumberTypeColor(chapter_number_sum);
+            ChapterNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(chapter_number_sum);
             ChapterNumberSumTextBox.BackColor = (Numbers.Compare(chapter_number_sum, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
             ChapterNumberSumTextBox.Refresh();
         }
@@ -29635,9 +29889,9 @@ public partial class MainForm : Form, ISubscriber
         if (verse_number_sum != -1)
         {
             //VerseNumberSumTextBox.Text = SUM_SYMBOL + Radix.Encode(verse_number_sum, m_radix);
-            //VerseNumberSumTextBox.ForeColor = GetNumberTypeColor(VerseNumberSumTextBox.Text.Split()[1], m_radix);
+            //VerseNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(VerseNumberSumTextBox.Text.Split()[1], m_radix);
             VerseNumberSumTextBox.Text = SUM_SYMBOL + verse_number_sum.ToString();
-            VerseNumberSumTextBox.ForeColor = GetNumberTypeColor(verse_number_sum);
+            VerseNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(verse_number_sum);
             VerseNumberSumTextBox.BackColor = (Numbers.Compare(verse_number_sum, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
             VerseNumberSumTextBox.Refresh();
         }
@@ -29645,9 +29899,9 @@ public partial class MainForm : Form, ISubscriber
         if (word_number_sum != -1)
         {
             //WordNumberSumTextBox.Text = SUM_SYMBOL + Radix.Encode(word_number_sum, m_radix);
-            //WordNumberSumTextBox.ForeColor = GetNumberTypeColor(WordNumberSumTextBox.Text.Split()[1], m_radix);
+            //WordNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(WordNumberSumTextBox.Text.Split()[1], m_radix);
             WordNumberSumTextBox.Text = SUM_SYMBOL + word_number_sum.ToString();
-            WordNumberSumTextBox.ForeColor = GetNumberTypeColor(word_number_sum);
+            WordNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(word_number_sum);
             WordNumberSumTextBox.BackColor = (Numbers.Compare(word_number_sum, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
             WordNumberSumTextBox.Refresh();
         }
@@ -29655,9 +29909,9 @@ public partial class MainForm : Form, ISubscriber
         if (letter_number_sum != -1)
         {
             //LetterNumberSumTextBox.Text = SUM_SYMBOL + Radix.Encode(letter_number_sum, m_radix);
-            //LetterNumberSumTextBox.ForeColor = GetNumberTypeColor(LetterNumberSumTextBox.Text.Split()[1], m_radix);
+            //LetterNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(LetterNumberSumTextBox.Text.Split()[1], m_radix);
             LetterNumberSumTextBox.Text = SUM_SYMBOL + letter_number_sum.ToString();
-            LetterNumberSumTextBox.ForeColor = GetNumberTypeColor(letter_number_sum);
+            LetterNumberSumTextBox.ForeColor = Numbers.GetNumberTypeColor(letter_number_sum);
             LetterNumberSumTextBox.BackColor = (Numbers.Compare(letter_number_sum, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
             LetterNumberSumTextBox.Refresh();
         }
@@ -29665,42 +29919,42 @@ public partial class MainForm : Form, ISubscriber
     private void DisplayCounts(int chapter_count, int verse_count, int word_count, int letter_count)
     {
         ChaptersTextBox.Text = Radix.Encode(chapter_count, m_radix);
-        ChaptersTextBox.ForeColor = GetNumberTypeColor(ChaptersTextBox.Text, m_radix);
+        ChaptersTextBox.ForeColor = Numbers.GetNumberTypeColor(ChaptersTextBox.Text, m_radix);
         ChaptersTextBox.BackColor = (Numbers.Compare(chapter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
         ChaptersTextBox.Refresh();
 
         DecimalChaptersTextBox.Text = chapter_count.ToString();
-        DecimalChaptersTextBox.ForeColor = GetNumberTypeColor(chapter_count);
+        DecimalChaptersTextBox.ForeColor = Numbers.GetNumberTypeColor(chapter_count);
         DecimalChaptersTextBox.Visible = (m_radix != DEFAULT_RADIX);
         DecimalChaptersTextBox.Refresh();
 
         VersesTextBox.Text = Radix.Encode(verse_count, m_radix);
-        VersesTextBox.ForeColor = GetNumberTypeColor(VersesTextBox.Text, m_radix);
+        VersesTextBox.ForeColor = Numbers.GetNumberTypeColor(VersesTextBox.Text, m_radix);
         VersesTextBox.BackColor = (Numbers.Compare(verse_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
         VersesTextBox.Refresh();
 
         DecimalVersesTextBox.Text = verse_count.ToString();
-        DecimalVersesTextBox.ForeColor = GetNumberTypeColor(verse_count);
+        DecimalVersesTextBox.ForeColor = Numbers.GetNumberTypeColor(verse_count);
         DecimalVersesTextBox.Visible = (m_radix != DEFAULT_RADIX);
         DecimalVersesTextBox.Refresh();
 
         WordsTextBox.Text = Radix.Encode(word_count, m_radix);
-        WordsTextBox.ForeColor = GetNumberTypeColor(WordsTextBox.Text, m_radix);
+        WordsTextBox.ForeColor = Numbers.GetNumberTypeColor(WordsTextBox.Text, m_radix);
         WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
         WordsTextBox.Refresh();
 
         DecimalWordsTextBox.Text = word_count.ToString();
-        DecimalWordsTextBox.ForeColor = GetNumberTypeColor(word_count);
+        DecimalWordsTextBox.ForeColor = Numbers.GetNumberTypeColor(word_count);
         DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
         DecimalWordsTextBox.Refresh();
 
         LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
-        LettersTextBox.ForeColor = GetNumberTypeColor(LettersTextBox.Text, m_radix);
+        LettersTextBox.ForeColor = Numbers.GetNumberTypeColor(LettersTextBox.Text, m_radix);
         LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
         LettersTextBox.Refresh();
 
         DecimalLettersTextBox.Text = letter_count.ToString();
-        DecimalLettersTextBox.ForeColor = GetNumberTypeColor(letter_count);
+        DecimalLettersTextBox.ForeColor = Numbers.GetNumberTypeColor(letter_count);
         DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
         DecimalLettersTextBox.Refresh();
     }
@@ -29951,7 +30205,7 @@ public partial class MainForm : Form, ISubscriber
                                                 word.Occurrence.ToString() + "/" + word.Frequency.ToString()
                                             );
 
-                                            ToolTip.SetToolTip(PictureBox, GetWordSummary(word));
+                                            ToolTip.SetToolTip(PictureBox, GetWordInformation(word));
                                         }
                                         else
                                         {
@@ -31379,11 +31633,11 @@ public partial class MainForm : Form, ISubscriber
             }
 
             LetterFrequencyCountLabel.Text = count.ToString();
-            LetterFrequencyCountLabel.ForeColor = GetNumberTypeColor(count);
+            LetterFrequencyCountLabel.ForeColor = Numbers.GetNumberTypeColor(count);
             LetterFrequencyCountLabel.Refresh();
 
             LetterFrequencySumLabel.Text = sum.ToString();
-            LetterFrequencySumLabel.ForeColor = GetNumberTypeColor(sum);
+            LetterFrequencySumLabel.ForeColor = Numbers.GetNumberTypeColor(sum);
             LetterFrequencySumLabel.Refresh();
         }
         catch
@@ -31675,20 +31929,37 @@ public partial class MainForm : Form, ISubscriber
         if (control != null)
         {
             long value = 0L;
-            try
+            string[] parts = control.Text.Split(' ');
+            for (int i = 0; i < parts.Length; i++)
             {
-                string text = control.Text;
-                if (!String.IsNullOrEmpty(text))
+                if ((!m_found_verses_displayed) && (control == HeaderLabel))
                 {
-                    value = Math.Abs((long)double.Parse(text));
+                    if (parts[i] == "ءاية")
+                    {
+                        if (long.TryParse(parts[i + 1], out value))
+                        {
+                            break;
+                        }
+                    }
                 }
-
-                FactorizeValue(value, "Number", false);
+                else
+                {
+                    if (long.TryParse(parts[i], out value))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        double d = 0D;
+                        if (double.TryParse(parts[i + 1], out d))
+                        {
+                            value = (long)d;
+                            break;
+                        }
+                    }
+                }
             }
-            catch
-            {
-                //value = -1L; // error
-            }
+            FactorizeValue(value, "Number", false);
         }
     }
     private void FactorizeNumber(TextBox control)
@@ -31798,45 +32069,6 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void LinkLabel_Click(object sender, EventArgs e)
-    {
-        if (Directory.Exists(Globals.HELP_FOLDER))
-        {
-            System.Diagnostics.Process.Start(Globals.HELP_FOLDER);
-        }
-
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            Control control = (sender as Control);
-            if (control != null)
-            {
-                if (control.Tag != null)
-                {
-                    if (!String.IsNullOrEmpty(control.Tag.ToString()))
-                    {
-                        try
-                        {
-                            System.Diagnostics.Process.Start(control.Tag.ToString());
-                        }
-                        catch (Exception ex)
-                        {
-                            while (ex != null)
-                            {
-                                //Console.WriteLine(ex.Message);
-                                MessageBox.Show(ex.Message, Application.ProductName);
-                                ex = ex.InnerException;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
     private void BrowseGroupBox_Click(object sender, EventArgs e)
     {
         string path = Globals.HELP_FOLDER + "/" + "QuickInfo.txt";
@@ -31917,36 +32149,70 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private void EncryptedQuranLinkLabel_Click(object sender, EventArgs e)
+    private void HelpFolderLabel_Click(object sender, EventArgs e)
+    {
+        if (Directory.Exists(Globals.HELP_FOLDER))
+        {
+            System.Diagnostics.Process.Start(Globals.HELP_FOLDER);
+        }
+
+        //this.Cursor = Cursors.WaitCursor;
+        //try
+        //{
+        //    string filename = "EncryptedQuran.pdf";
+        //    string path = Application.StartupPath + "/" + Globals.HELP_FOLDER + "/" + filename;
+        //    if (!File.Exists(path))
+        //    {
+        //        DownloadFile("http://heliwave.com/" + filename, path);
+        //    }
+        //    if (File.Exists(path))
+        //    {
+        //        FileHelper.WaitForReady(path);
+
+        //        System.Diagnostics.Process.Start(path);
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    while (ex != null)
+        //    {
+        //        //Console.WriteLine(ex.Message);
+        //        MessageBox.Show(ex.Message, Application.ProductName);
+        //        ex = ex.InnerException;
+        //    }
+        //}
+        //finally
+        //{
+        //    this.Cursor = Cursors.Default;
+        //}
+    }
+    private void LinkLabel_Click(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            //string filename = "EncryptedQuran.pdf";
-            //string path = Application.StartupPath + "/" + Globals.HELP_FOLDER + "/" + filename;
-            //if (!File.Exists(path))
-            //{
-            //    DownloadFile("http://heliwave.com/" + filename, path);
-            //}
-            //if (File.Exists(path))
-            //{
-            //    FileHelper.WaitForReady(path);
-
-            //    System.Diagnostics.Process.Start(path);
-            //}
-
-            if (Directory.Exists(Globals.HELP_FOLDER))
+            Control control = (sender as Control);
+            if (control != null)
             {
-                System.Diagnostics.Process.Start(Globals.HELP_FOLDER);
-            }
-        }
-        catch (Exception ex)
-        {
-            while (ex != null)
-            {
-                //Console.WriteLine(ex.Message);
-                MessageBox.Show(ex.Message, Application.ProductName);
-                ex = ex.InnerException;
+                if (control.Tag != null)
+                {
+                    if (!String.IsNullOrEmpty(control.Tag.ToString()))
+                    {
+                        try
+                        {
+                            System.Diagnostics.Process.Start(control.Tag.ToString());
+                        }
+                        catch (Exception ex)
+                        {
+                            while (ex != null)
+                            {
+                                //Console.WriteLine(ex.Message);
+                                MessageBox.Show(ex.Message, Application.ProductName);
+                                ex = ex.InnerException;
+                            }
+                        }
+                    }
+                }
             }
         }
         finally
@@ -31969,6 +32235,6 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     #endregion
 }

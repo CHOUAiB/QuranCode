@@ -102,8 +102,6 @@ namespace Model
                         return
                         (
                             (WordCount != 1)
-                            &&
-                            IsValidWordSearch()
                         );
                     }
                 case NumbersResultType.VerseRanges:
@@ -112,8 +110,6 @@ namespace Model
                         return
                         (
                             (VerseCount != 1)
-                            &&
-                            IsValidVerseSearch()
                         );
                     }
                 case NumbersResultType.ChapterRanges:
@@ -122,8 +118,6 @@ namespace Model
                         return
                         (
                             (ChapterCount != 1)
-                            &&
-                            IsValidChapterSearch()
                         );
                     }
                 default:
@@ -143,12 +137,11 @@ namespace Model
         private bool IsValidWordSearch()
         {
             return (
-                    ((LetterCount != 0) && (LetterCount >= WordCount)) ||
-                    ((UniqueLetterCount != 0)) ||
-                    ((Value != 0) && (Value >= LetterCount)) ||
-                    ((ValueDigitSum != 0) && (ValueDigitSum <= Value)) ||
-                    ((ValueDigitalRoot != 0) && (ValueDigitalRoot <= Value)) ||
-
+                    (LetterCount != 0) ||
+                    (UniqueLetterCount != 0) ||
+                    (Value != 0) ||
+                    (ValueDigitSum != 0) ||
+                    (ValueDigitalRoot != 0) ||
                     (LetterCountNumberType != NumberType.None) ||
                     (UniqueLetterCountNumberType != NumberType.None) ||
                     (ValueNumberType != NumberType.None)
@@ -157,7 +150,7 @@ namespace Model
         private bool IsValidVerseSearch()
         {
             return (
-                    ((WordCount != 0) && (WordCount >= VerseCount)) ||
+                    (WordCount != 0) ||
                     (WordCountNumberType != NumberType.None) ||
                     IsValidWordSearch()
                    );
@@ -165,7 +158,7 @@ namespace Model
         private bool IsValidChapterSearch()
         {
             return (
-                    ((VerseCount != 0) && (VerseCount >= ChapterCount)) ||
+                    (VerseCount != 0) ||
                     (VerseCountNumberType != NumberType.None) ||
                     IsValidVerseSearch()
                    );

@@ -34,6 +34,7 @@ rd /S /Q DataAccess\obj
 rd /S /Q Server\obj
 rd /S /Q Client\obj
 rd /S /Q Research\obj
+rd /S /Q Common\obj
 rd /S /Q QuranCode\obj
 rd /S /Q QuranCode.125\obj
 rd /S /Q PrimeCalculator\obj

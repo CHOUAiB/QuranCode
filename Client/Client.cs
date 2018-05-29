@@ -97,10 +97,12 @@ public class Client : IPublisher, ISubscriber
         Server server = new Server();
         if (server != null)
         {
+            server.Subscribe(this, Subject.LanguageSystem);
             server.Subscribe(this, Subject.SimplificationSystem);
             server.Subscribe(this, Subject.NumerologySystem);
             server.Subscribe(this, Subject.DNASequenceSystem);
             server.Subscribe(this, Subject.InterestingNumbers);
+            server.WatchFolder(Globals.LANGUAGES_FOLDER, "*.txt");
             server.WatchFolder(Globals.RULES_FOLDER, "*.txt");
             server.WatchFolder(Globals.VALUES_FOLDER, "*.txt");
             server.WatchFolder(Globals.NUMBERS_FOLDER, "*.txt");
@@ -1911,14 +1913,10 @@ public class Client : IPublisher, ISubscriber
                                 parts = line.Split(',');
                                 foreach (string part in parts)
                                 {
-                                    try
+                                    int index = -1;
+                                    if (int.TryParse(part, out index))
                                     {
-                                        int index = int.Parse(part);
                                         indexes.Add(index);
-                                    }
-                                    catch
-                                    {
-                                        continue;
                                     }
                                 }
 

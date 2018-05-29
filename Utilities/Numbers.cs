@@ -101,7 +101,7 @@ public static class Numbers
     { 
         /* NumberType.None */                   Color.Black,
         /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
+        /* NumberType.Prime */                  Color.Black,
         /* NumberType.AdditivePrime */          Color.Blue,
         /* NumberType.NonAdditivePrime */       Color.Green,
         /* NumberType.Composite */              Color.Black,
@@ -142,13 +142,6 @@ public static class Numbers
         /* NumberType.Nonic */                  Color.Black,
         /* NumberType.Decic */                  Color.Black,
         /* NumberType.Natural */                Color.Black
-    };
-
-    public static Color[] NUMBER_KIND_COLORS =
-    { 
-        /* NumberKind.Deficient */          Color.FromArgb(240, 208, 255),
-        /* NumberKind.Perfect */            Color.FromArgb(240, 128, 255),
-        /* NumberKind.Abundant */           Color.FromArgb(240, 168, 255)
     };
     public static Color GetNumberTypeColor(long number)
     {
@@ -195,6 +188,13 @@ public static class Numbers
             return NUMBER_TYPE_COLORS[(int)NumberType.None];
         }
     }
+
+    public static Color[] NUMBER_KIND_COLORS =
+    { 
+        /* NumberKind.Deficient */          Color.FromArgb(240, 208, 255),
+        /* NumberKind.Perfect */            Color.FromArgb(240, 128, 255),
+        /* NumberKind.Abundant */           Color.FromArgb(240, 178, 255)
+    };
 
     public static int MAX_NUMBER = int.MaxValue / 1024;
 

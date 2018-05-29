@@ -8,6 +8,7 @@ XCOPY /E /EXCLUDE:exclude.txt DataAccess\*.* NET2\DataAccess\
 XCOPY /E /EXCLUDE:exclude.txt Server\*.* NET2\Server\
 XCOPY /E /EXCLUDE:exclude.txt Client\*.* NET2\Client\
 XCOPY /E /EXCLUDE:exclude.txt Research\*.* NET2\Research\
+XCOPY /E /EXCLUDE:exclude.txt Common\*.* NET2\Common\
 XCOPY /E /EXCLUDE:exclude.txt QuranCode\*.* NET2\QuranCode\
 XCOPY /E /EXCLUDE:exclude.txt QuranCode.125\*.* NET2\QuranCode.125\
 XCOPY /E /EXCLUDE:exclude.txt PrimeCalculator\*.* NET2\PrimeCalculator\
@@ -19,3 +20,6 @@ XCOPY /E /EXCLUDE:exclude.txt Numbers\*.* NET2\Numbers\
 DEL exclude.txt
 Tools\Replace\bin\Release\Replace.exe NET2 *.Designer.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)
 CALL Version.bat
+CD NET2
+CALL Version.bat
+CD ..
