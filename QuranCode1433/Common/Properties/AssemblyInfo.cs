@@ -13,8 +13,7 @@ using System.Runtime.InteropServices;
     "\r\n" +
     "QuranCode is a free and open-source similarity and numerical research tool for the ever-revealing Quran (القرءان الكريم)." + "\r\n" +
     "\r\n" +
-    "Standard Edition\tStart normally for static value systems." + "\r\n" +
-    "Dynamic Edition\tStart with Shift for dynamic value systems." + "\r\n" +
+    "Ultimate Edition\tDynamic letter-value systems." + "\r\n" +
     "\r\n" +
     "CREDITS:" + "\r\n" +
     "http://tanzil.net for the Quran text and translations." + "\r\n" +
@@ -29,6 +28,7 @@ using System.Runtime.InteropServices;
     "May Allah bless us all with guidance in this life and forgiveness and generous reward in the hereafter (مَغْفِرَةٍۢ وَأَجْرٍۢ كَرِيمٍ)." + "\r\n" +
     "\r\n" +
     "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ" + "\r\n" + "\r\n" +
+    "\r\n" +
     "الله أكبر" + "\t" + "God >"
     )
 ]

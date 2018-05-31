@@ -621,35 +621,7 @@ public partial class MainForm : Form, ISubscriber
 
                             UpdateTextModeOptions();
 
-                            if (Globals.EDITION == Edition.Dynamic)
-                            {
-                                splash_form.Information = "Building prime/composite indexes ...";
-                            }
-                            else
-                            {
-                                splash_form.Information = "Preparing text for display ...";
-                            }
-
-                            ScopeBookRadioButton.Enabled = (Globals.EDITION == Edition.Dynamic);
-                            ScopeSelectionRadioButton.Enabled = (Globals.EDITION == Edition.Dynamic);
-                            ScopeHighlightedTextRadioButton.Enabled = (Globals.EDITION == Edition.Dynamic);
-                            if (Globals.EDITION == Edition.Standard)
-                            {
-                                ScopeBookRadioButton.Checked = true;
-
-                                if (m_dpi_x == 120.0F)
-                                {
-                                    ValueNavigatorPanel.Top -= 145;
-                                    LetterFrequencyPanel.Top -= 145;
-                                    LetterFrequencyPanel.Height += 145;
-                                }
-                                else
-                                {
-                                    ValueNavigatorPanel.Top -= 115;
-                                    LetterFrequencyPanel.Top -= 115;
-                                    LetterFrequencyPanel.Height += 115;
-                                }
-                            }
+                            splash_form.Information = "Building prime/composite indexes ...";
 
                             // refresh chapter sort method/order/pin_chapter1
                             m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
@@ -742,11 +714,6 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
             }
-        }
-
-        if (Globals.EDITION == Edition.Dynamic)
-        {
-            EditNumerologySystemLabel.Enabled = false;
         }
 
         NotifyIcon.Visible = true;
@@ -2073,147 +2040,133 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            if (Globals.EDITION == Edition.Dynamic)
-                                                            {
-                                                                m_client.NumerologySystemScope = (NumerologySystemScope)Enum.Parse(typeof(NumerologySystemScope), parts[1].Trim());
-                                                            }
-                                                            else
-                                                            {
-                                                                m_client.NumerologySystemScope = NumerologySystemScope.Book;
-                                                            }
+                                                            m_client.NumerologySystem.AddToLetterLNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterLNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToLetterWNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterWNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToLetterVNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterVNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToLetterCNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToLetterLDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterLDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToLetterWDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterWDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToLetterVDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterVDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToLetterCDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToLetterCDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToWordWNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordWNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToWordVNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordVNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToWordCNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToWordWDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordWDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToWordVDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordVDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToWordCDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToWordCDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToVerseVNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseVNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToVerseCNumber = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToVerseVDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseVDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToVerseCDistance = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddToVerseCDistance = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
-                                                        }
-
-                                                        line = reader.ReadLine();
-                                                        parts = line.Split('=');
-                                                        if (parts.Length >= 2)
-                                                        {
-                                                            m_client.NumerologySystem.AddToChapterCNumber = bool.Parse(parts[1].Trim()) && (Globals.EDITION == Edition.Dynamic);
+                                                            m_client.NumerologySystem.AddToChapterCNumber = bool.Parse(parts[1].Trim());
                                                         }
                                                     }
                                                 }
@@ -2815,7 +2768,6 @@ public partial class MainForm : Form, ISubscriber
                     if (m_client.NumerologySystem != null)
                     {
                         writer.WriteLine("NumerologySystem" + "=" + m_client.NumerologySystem.Name);
-                        writer.WriteLine("NumerologySystemScope" + "=" + m_client.NumerologySystemScope.ToString());
                         writer.WriteLine("AddToLetterLNumber" + "=" + m_client.NumerologySystem.AddToLetterLNumber.ToString());
                         writer.WriteLine("AddToLetterWNumber" + "=" + m_client.NumerologySystem.AddToLetterWNumber.ToString());
                         writer.WriteLine("AddToLetterVNumber" + "=" + m_client.NumerologySystem.AddToLetterVNumber.ToString());
@@ -3016,9 +2968,6 @@ public partial class MainForm : Form, ISubscriber
         this.ToolTip.SetToolTip(this.NthAdditiveNumberTextBox, "Additive prime index");
         this.ToolTip.SetToolTip(this.NthNonAdditiveNumberTextBox, "Non-additive prime index");
         this.ToolTip.SetToolTip(this.AdjustValueByPositionsLabel, "Dynamic Primalogy System - ©2012 Ali Adams");
-        this.ToolTip.SetToolTip(this.ScopeBookRadioButton, "Use letters of the whole book to re-build the valuation system");
-        this.ToolTip.SetToolTip(this.ScopeSelectionRadioButton, "Use letters of current selection to re-build the valuation system");
-        this.ToolTip.SetToolTip(this.ScopeHighlightedTextRadioButton, "Use letters of current line or highlighted text to re-build the valuation system");
         this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, "Increment each letter's value by its letter number in word");
         this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, "Increment each letter's value by its word number in verse");
         this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, "Increment each letter's value by its verse number in chapter");
@@ -3748,31 +3697,13 @@ public partial class MainForm : Form, ISubscriber
                     Type class_type = m_research_methods_assembly.GetType(m_research_assembly_name);
                     if (class_type != null)
                     {
-                        MethodInfo[] method_infos = null;
-                        if (Globals.EDITION == Edition.Dynamic)
-                        {
-                            method_infos = class_type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                        }
-                        else
-                        {
-                            method_infos = class_type.GetMethods(BindingFlags.Static | BindingFlags.Public);
-                        }
-
+                        MethodInfo[] method_infos = class_type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                         if (method_infos != null)
                         {
                             ResearchMethodsComboBox.Items.Clear();
                             foreach (MethodInfo method_info in method_infos)
                             {
                                 string method_name = method_info.Name;
-
-                                if (method_name.Contains("FindSystem"))
-                                {
-                                    if (Globals.EDITION == Edition.Standard)
-                                    {
-                                        continue;
-                                    }
-                                }
-
                                 ParameterInfo[] parameters = method_info.GetParameters();
                                 if ((parameters.Length == 3) &&
                                     (parameters[0].ParameterType == typeof(Client)) &&
@@ -6246,19 +6177,9 @@ public partial class MainForm : Form, ISubscriber
 
             for (int i = 0; i <= char_index; i++)
             {
-                if (Globals.EDITION == Edition.Standard)
+                if (Constants.ARABIC_LETTERS.Contains(verse.Text[i]))
                 {
-                    if (Constants.ARABIC_LETTERS.Contains(verse.Text[i]))
-                    {
-                        letter_index++;
-                    }
-                }
-                else
-                {
-                    if ((Constants.ARABIC_LETTERS.Contains(verse.Text[i])) || (Constants.DIACRITICS.Contains(verse.Text[i])))
-                    {
-                        letter_index++;
-                    }
+                    letter_index++;
                 }
             }
         }
@@ -13187,7 +13108,7 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             // display the interesting.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers" + ".txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
@@ -15469,7 +15390,7 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             // display the interesting.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers" + ".txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
@@ -26790,31 +26711,6 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Value Systems
     ///////////////////////////////////////////////////////////////////////////////
-    private void NumerologySystemScopeRadioButton_CheckedChanged(object sender, EventArgs e)
-    {
-        if ((sender as RadioButton).Checked) // to ignore the other control's uncheck firing, so no double event handling
-        {
-            if (ScopeBookRadioButton.Checked)
-            {
-                m_client.NumerologySystemScope = NumerologySystemScope.Book;
-            }
-            else if (ScopeSelectionRadioButton.Checked)
-            {
-                m_client.NumerologySystemScope = NumerologySystemScope.Selection;
-            }
-            else if (ScopeHighlightedTextRadioButton.Checked)
-            {
-                m_client.NumerologySystemScope = NumerologySystemScope.HighlightedText;
-            }
-
-            CalculateCurrentValue();
-
-            BuildLetterFrequencies();
-            DisplayLetterFrequencies();
-        }
-
-        NumerologySystemComboBox.Focus();
-    }
     private void AddToControlCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         AddToControlCheckBox_EnabledChanged(sender, e);
@@ -26912,46 +26808,6 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void UpdateNumerologySystem()
-    {
-        if (m_client != null)
-        {
-            string text = null;
-            switch (m_client.NumerologySystemScope)
-            {
-                case NumerologySystemScope.Book:
-                    {
-                        if (m_client.Book != null)
-                        {
-                            text = m_client.Book.Text;
-                        }
-                    }
-                    break;
-                case NumerologySystemScope.Selection:
-                    {
-                        if (m_client.Selection != null)
-                        {
-                            text = m_client.Selection.Text;
-                        }
-                    }
-                    break;
-                case NumerologySystemScope.HighlightedText:
-                    {
-                        CalculateCurrentText();
-                        text = m_current_text;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            m_client.UpdateNumerologySystem(text);
-            // Server has no info about AddTo settings
-            // Only letter:value table was updated, so
-            // re-apply AddTo settings manually
-            UpdateNumerologySystemObject();
-        }
-    }
     private void LoadNumerologySystem(string numerology_system_name)
     {
         if (m_client != null)
@@ -26959,7 +26815,7 @@ public partial class MainForm : Form, ISubscriber
             m_client.LoadNumerologySystem(numerology_system_name);
         }
     }
-    private void UpdateNumerologySystemObject()
+    private void UpdateNumerologySystem()
     {
         if (m_client != null)
         {
@@ -27080,27 +26936,6 @@ public partial class MainForm : Form, ISubscriber
                     NumerologySystemComboBox.SelectedItem = m_client.NumerologySystem.LetterOrder + "_" + m_client.NumerologySystem.LetterValue;
 
                     UpdateKeyboard(m_client.NumerologySystem.TextMode);
-
-                    switch (m_client.NumerologySystemScope)
-                    {
-                        case NumerologySystemScope.Book:
-                            {
-                                ScopeBookRadioButton.Checked = true;
-                            }
-                            break;
-                        case NumerologySystemScope.Selection:
-                            {
-                                ScopeSelectionRadioButton.Checked = true;
-                            }
-                            break;
-                        case NumerologySystemScope.HighlightedText:
-                            {
-                                ScopeHighlightedTextRadioButton.Checked = true;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
                 }
                 finally
                 {
@@ -27468,10 +27303,7 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_client != null)
             {
-                if (Globals.EDITION == Edition.Dynamic)
-                {
-                    UpdateNumerologySystem();
-                }
+                UpdateNumerologySystem();
 
                 CalculateCurrentText();
                 if (!String.IsNullOrEmpty(m_current_text))
@@ -27711,40 +27543,7 @@ public partial class MainForm : Form, ISubscriber
                                     int last_verse_letter_index = letter2.NumberInVerse - 1;
 
                                     // calculate and display verse_number_sum, word_number_sum, letter_number_sum
-                                    if (Globals.EDITION == Edition.Standard)
-                                    {
-                                        CalculateAndDisplayCounts(highlighted_verses, first_verse_letter_index, last_verse_letter_index);
-                                    }
-                                    else
-                                    {
-                                        int stopmarks = 0;
-                                        int quranmarks = 0;
-                                        for (int i = 0; i < selected_text.Length; i++)
-                                        {
-                                            if (Constants.STOPMARKS.Contains(selected_text[i]))
-                                            {
-                                                // superscript Seen letter in words وَيَبْصُۜطُ and بَصْۜطَةًۭ are not stopmarks
-                                                // Quran 2:245  مَّن ذَا ٱلَّذِى يُقْرِضُ ٱللَّهَ قَرْضًا حَسَنًۭا فَيُضَٰعِفَهُۥ لَهُۥٓ أَضْعَافًۭا كَثِيرَةًۭ ۚ وَٱللَّهُ يَقْبِضُ وَيَبْصُۜطُ وَإِلَيْهِ تُرْجَعُونَ
-                                                // Quran 7:69  أَوَعَجِبْتُمْ أَن جَآءَكُمْ ذِكْرٌۭ مِّن رَّبِّكُمْ عَلَىٰ رَجُلٍۢ مِّنكُمْ لِيُنذِرَكُمْ ۚ وَٱذْكُرُوٓا۟ إِذْ جَعَلَكُمْ خُلَفَآءَ مِنۢ بَعْدِ قَوْمِ نُوحٍۢ وَزَادَكُمْ فِى ٱلْخَلْقِ بَصْۜطَةًۭ ۖ فَٱذْكُرُوٓا۟ ءَالَآءَ ٱللَّهِ لَعَلَّكُمْ تُفْلِحُونَ
-                                                if (i < selected_text.Length - 1)
-                                                {
-                                                    if ((selected_text[i] == 'ۜ') && (Constants.DIACRITICS.Contains(selected_text[i + 1])))
-                                                    {
-                                                        continue;
-                                                    }
-                                                }
-
-                                                stopmarks++;
-                                            }
-                                            else if (Constants.QURANMARKS.Contains(selected_text[i]))
-                                            {
-                                                quranmarks++;
-                                            }
-                                            else continue;
-                                        }
-
-                                        CalculateAndDisplayCounts(highlighted_verses, first_verse_letter_index, last_verse_letter_index, stopmarks, quranmarks);
-                                    }
+                                    CalculateAndDisplayCounts(highlighted_verses, first_verse_letter_index, last_verse_letter_index);
 
                                     // calculate Letters value
                                     CalculateValueAndDisplayFactors(highlighted_verses, first_verse_letter_index, last_verse_letter_index);

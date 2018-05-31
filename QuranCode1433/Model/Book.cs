@@ -1102,12 +1102,9 @@ namespace Model
                 foreach (Word word in verse.Words)
                 {
                     string word_text = word.Text;
-                    if (Globals.EDITION == Edition.Standard)
+                    if (text_mode == "Original")
                     {
-                        if (text_mode == "Original")
-                        {
-                            word_text = word_text.Simplify29();
-                        }
+                        word_text = word_text.Simplify29();
                     }
 
                     if (frequencies.ContainsKey(word_text))
@@ -1131,12 +1128,9 @@ namespace Model
                 foreach (Word word in verse.Words)
                 {
                     string word_text = word.Text;
-                    if (Globals.EDITION == Edition.Standard)
+                    if (text_mode == "Original")
                     {
-                        if (text_mode == "Original")
-                        {
-                            word_text = word_text.Simplify29();
-                        }
+                        word_text = word_text.Simplify29();
                     }
 
                     if (frequencies.ContainsKey(word_text))
@@ -1154,12 +1148,9 @@ namespace Model
                 foreach (Word word in verse.Words)
                 {
                     string word_text = word.Text;
-                    if (Globals.EDITION == Edition.Standard)
+                    if (text_mode == "Original")
                     {
-                        if (text_mode == "Original")
-                        {
-                            word_text = word_text.Simplify29();
-                        }
+                        word_text = word_text.Simplify29();
                     }
 
                     if (frequencies.ContainsKey(word_text))

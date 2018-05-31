@@ -1,4 +1,4 @@
-public enum Edition { Standard, Dynamic }
+public enum Edition { Standard }
 
 public static class Globals
 {
@@ -19,18 +19,7 @@ public static class Globals
                 }
             }
 
-            if (EDITION == Edition.Standard)
-            {
-                return ("v" + version + "");
-            }
-            else if (EDITION == Edition.Dynamic)
-            {
-                return ("v" + version + "i");
-            }
-            else
-            {
-                return ("v" + version + "!"); // Invalid Edition
-            }
+            return ("v" + version + "");
         }
     }
     public static string LONG_VERSION

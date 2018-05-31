@@ -8,7 +8,7 @@ namespace Model
     {
         // Part of Primalogy System ©2008 Ali Adams - www.heliwave.com
         //public const string DEFAULT_NAME = "Simplified29";
-        public const string DEFAULT_NAME = "Original"; // show original text but use Simplified29 internally in Standard Edition
+        public const string DEFAULT_NAME = "Original";
 
         /// <summary>
         /// Name = TextMode only

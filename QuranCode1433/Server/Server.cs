@@ -603,12 +603,6 @@ public class Server : IPublisher
                             {
                                 if (numerology_system_name.Contains("DNA")) continue;
 
-                                // zero static letter-value for dynamic letter position/distance testing only
-                                if (Globals.EDITION == Edition.Standard)
-                                {
-                                    if (numerology_system_name.Contains("Zeros")) continue;
-                                }
-
                                 string[] parts = numerology_system_name.Split('_');
                                 if (parts.Length == 3)
                                 {
@@ -749,7 +743,7 @@ public class Server : IPublisher
     {
         if (s_numerology_system != null)
         {
-            if (text != null)
+            if (!String.IsNullOrEmpty(text))
             {
                 text = text.Replace("\r", "");
                 text = text.Replace("\n", "");
@@ -759,6 +753,26 @@ public class Server : IPublisher
                 text = text.Replace(Constants.OPEN_BRACKET, "");
                 text = text.Replace(Constants.CLOSE_BRACKET, "");
                 foreach (char character in Constants.INDIAN_DIGITS)
+                {
+                    text = text.Replace(character.ToString(), "");
+                }
+                foreach (char character in Constants.DIACRITICS)
+                {
+                    text = text.Replace(character.ToString(), "");
+                }
+                foreach (char character in Constants.ARABIC_DIGITS)
+                {
+                    text = text.Replace(character.ToString(), "");
+                }
+                foreach (char character in Constants.STOPMARKS)
+                {
+                    text = text.Replace(character.ToString(), "");
+                }
+                foreach (char character in Constants.QURANMARKS)
+                {
+                    text = text.Replace(character.ToString(), "");
+                }
+                foreach (char character in Constants.SYMBOLS)
                 {
                     text = text.Replace(character.ToString(), "");
                 }

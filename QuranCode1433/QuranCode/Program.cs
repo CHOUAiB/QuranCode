@@ -56,37 +56,6 @@ static class Program
     [STAThread]
     static void Main(string[] args)
     {
-        if ((args != null) && (args.Length > 0))
-        {
-            if (args[0].ToUpper() == "")
-            {
-                Globals.EDITION = Edition.Standard;
-            }
-            else if (args[0].ToUpper() == "i")
-            {
-                Globals.EDITION = Edition.Dynamic;
-            }
-            else
-            {
-                Globals.EDITION = Edition.Standard;
-            }
-        }
-        else
-        {
-            if (Control.ModifierKeys == Keys.Control)
-            {
-                Globals.EDITION = Edition.Dynamic;
-            }
-            else if (Control.ModifierKeys == Keys.Shift)
-            {
-                Globals.EDITION = Edition.Dynamic;
-            }
-            else // default
-            {
-                Globals.EDITION = Edition.Standard;
-            }
-        }
-
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         MainForm form = new MainForm();

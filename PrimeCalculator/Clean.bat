@@ -19,12 +19,8 @@ del /F /S /Q *.exe.config
 #del /F /S /Q /AH *.suo
 rd /S /Q Build\Debug
 
-rd /S /Q Build\Release\Composites
-
 rd /S /Q Globals\obj
 rd /S /Q Utilities\obj
 rd /S /Q PrimeCalculator\obj
-rd /S /Q Composites\obj
-rd /S /Q Numbers\obj
 
 :END

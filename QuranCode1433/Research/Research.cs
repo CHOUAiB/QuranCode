@@ -3603,58 +3603,55 @@ public static partial class Research
         StringBuilder str = new StringBuilder();
         if (words.Count > 0)
         {
-            if (Globals.EDITION == Edition.Dynamic)
-            {
-                str.AppendLine
-                (
-                    "Address" + "\t" +
-                    "Chapter" + "\t" +
-                    "Verse" + "\t" +
-                    "Word" + "\t" +
-                    "Part" + "\t" +
-                    "Text" + "\t" +
-                    "Buckwalter" + "\t" +
-                    "Tag" + "\t" +
-                    "ArabicGrammar" + "\t" +
-                    "EnglishGrammar" + "\t" +
-                    "Type" + "\t" +
-                    "Position" + "\t" +
-                    "Attribute" + "\t" +
-                    "Qualifier" + "\t" +
-                    "PersonDegree" + "\t" +
-                    "PersonGender" + "\t" +
-                    "PersonNumber" + "\t" +
-                    "Mood" + "\t" +
-                    "Lemma" + "\t" +
-                    "Root" + "\t" +
-                    "SpecialGroup" + "\t" +
-                    "WordAddress"
-                );
+            str.AppendLine
+            (
+                "Address" + "\t" +
+                "Chapter" + "\t" +
+                "Verse" + "\t" +
+                "Word" + "\t" +
+                "Part" + "\t" +
+                "Text" + "\t" +
+                "Buckwalter" + "\t" +
+                "Tag" + "\t" +
+                "ArabicGrammar" + "\t" +
+                "EnglishGrammar" + "\t" +
+                "Type" + "\t" +
+                "Position" + "\t" +
+                "Attribute" + "\t" +
+                "Qualifier" + "\t" +
+                "PersonDegree" + "\t" +
+                "PersonGender" + "\t" +
+                "PersonNumber" + "\t" +
+                "Mood" + "\t" +
+                "Lemma" + "\t" +
+                "Root" + "\t" +
+                "SpecialGroup" + "\t" +
+                "WordAddress"
+            );
 
-                foreach (Word word in words)
+            foreach (Word word in words)
+            {
+                if (word.Parts != null)
                 {
-                    if (word.Parts != null)
+                    foreach (WordPart part in word.Parts)
                     {
-                        foreach (WordPart part in word.Parts)
-                        {
-                            str.AppendLine
-                            (
-                                part.Address + "\t" +
-                                part.Word.Verse.Chapter.SortedNumber + "\t" +
-                                part.Word.Verse.NumberInChapter + "\t" +
-                                part.Word.NumberInVerse + "\t" +
-                                part.NumberInWord + "\t" +
-                                part.Text + "\t" +
-                                part.Buckwalter + "\t" +
-                                part.Tag + "\t" +
-                                GrammarDictionary.Arabic(part.Grammar.Position) + " " + GrammarDictionary.Arabic(part.Grammar.Attribute) +
-                                ((part.Grammar.Position == "V") ? (" " + GrammarDictionary.Arabic(part.Grammar.Qualifier)) : "") + "\t" +
-                                GrammarDictionary.English(part.Grammar.Position) + " " + GrammarDictionary.English(part.Grammar.Attribute) +
-                                ((part.Grammar.Position == "V") ? (" " + GrammarDictionary.English(part.Grammar.Qualifier)) : "") + "\t" +
-                                part.Grammar.ToTable() + "\t" +
-                                part.Word.Address
-                            );
-                        }
+                        str.AppendLine
+                        (
+                            part.Address + "\t" +
+                            part.Word.Verse.Chapter.SortedNumber + "\t" +
+                            part.Word.Verse.NumberInChapter + "\t" +
+                            part.Word.NumberInVerse + "\t" +
+                            part.NumberInWord + "\t" +
+                            part.Text + "\t" +
+                            part.Buckwalter + "\t" +
+                            part.Tag + "\t" +
+                            GrammarDictionary.Arabic(part.Grammar.Position) + " " + GrammarDictionary.Arabic(part.Grammar.Attribute) +
+                            ((part.Grammar.Position == "V") ? (" " + GrammarDictionary.Arabic(part.Grammar.Qualifier)) : "") + "\t" +
+                            GrammarDictionary.English(part.Grammar.Position) + " " + GrammarDictionary.English(part.Grammar.Attribute) +
+                            ((part.Grammar.Position == "V") ? (" " + GrammarDictionary.English(part.Grammar.Qualifier)) : "") + "\t" +
+                            part.Grammar.ToTable() + "\t" +
+                            part.Word.Address
+                        );
                     }
                 }
             }
@@ -5642,112 +5639,86 @@ public static partial class Research
                 (number_type == NumberType.NonAdditiveComposite)
                )
             {
-                NumerologySystemScope[] numerology_system_scopes = (NumerologySystemScope[])Enum.GetValues(typeof(NumerologySystemScope));
-                foreach (NumerologySystemScope numerology_system_scope in numerology_system_scopes)
+                // Quran 74:30 "Over It Nineteen."
+                int PERMUTATIONS = 524288; // 2^19
+                for (int i = 0; i < PERMUTATIONS; i++)
                 {
-                    switch (numerology_system_scope)
+                    client.NumerologySystem.AddToLetterLNumber = ((i & 262144) != 0);
+                    client.NumerologySystem.AddToLetterWNumber = ((i & 131072) != 0);
+                    client.NumerologySystem.AddToLetterVNumber = ((i & 65536) != 0);
+                    client.NumerologySystem.AddToLetterCNumber = ((i & 32768) != 0);
+                    client.NumerologySystem.AddToLetterLDistance = ((i & 16384) != 0);
+                    client.NumerologySystem.AddToLetterWDistance = ((i & 8192) != 0);
+                    client.NumerologySystem.AddToLetterVDistance = ((i & 4096) != 0);
+                    client.NumerologySystem.AddToLetterCDistance = ((i & 2048) != 0);
+                    client.NumerologySystem.AddToWordWNumber = ((i & 1024) != 0);
+                    client.NumerologySystem.AddToWordVNumber = ((i & 512) != 0);
+                    client.NumerologySystem.AddToWordCNumber = ((i & 256) != 0);
+                    client.NumerologySystem.AddToWordWDistance = ((i & 128) != 0);
+                    client.NumerologySystem.AddToWordVDistance = ((i & 64) != 0);
+                    client.NumerologySystem.AddToWordCDistance = ((i & 32) != 0);
+                    client.NumerologySystem.AddToVerseVNumber = ((i & 16) != 0);
+                    client.NumerologySystem.AddToVerseCNumber = ((i & 8) != 0);
+                    client.NumerologySystem.AddToVerseVDistance = ((i & 4) != 0);
+                    client.NumerologySystem.AddToVerseCDistance = ((i & 2) != 0);
+                    client.NumerologySystem.AddToChapterCNumber = ((i & 1) != 0);
+
+                    long alfatiha_value = client.CalculateValue(client.Book.Chapters[0]);
+                    int alfatiha_value_index = 0;
+                    switch (number_type)
                     {
-                        case NumerologySystemScope.Book:
+                        case NumberType.Prime:
                             {
-                                client.UpdateNumerologySystem(client.Book.Text);
+                                alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value) + 1;
                             }
                             break;
-                        case NumerologySystemScope.Selection:
+                        case NumberType.AdditivePrime:
                             {
-                                client.UpdateNumerologySystem(client.Book.Chapters[0].Text);
+                                alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value) + 1;
                             }
                             break;
-                        case NumerologySystemScope.HighlightedText:
+                        case NumberType.NonAdditivePrime:
                             {
-                                client.UpdateNumerologySystem(client.Book.Verses[0].Text);
+                                alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value) + 1;
+                            }
+                            break;
+                        case NumberType.Composite:
+                            {
+                                alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value) + 1;
+                            }
+                            break;
+                        case NumberType.AdditiveComposite:
+                            {
+                                alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value) + 1;
+                            }
+                            break;
+                        case NumberType.NonAdditiveComposite:
+                            {
+                                alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value) + 1;
                             }
                             break;
                         default:
                             break;
                     }
 
-                    // Quran 74:30 "Over It Nineteen."
-                    int PERMUTATIONS = 524288; // 2^19
-                    for (int i = 0; i < PERMUTATIONS; i++)
+                    if (alfatiha_value_index > 0)
                     {
-                        client.NumerologySystem.AddToLetterLNumber = ((i & 262144) != 0);
-                        client.NumerologySystem.AddToLetterWNumber = ((i & 131072) != 0);
-                        client.NumerologySystem.AddToLetterVNumber = ((i & 65536) != 0);
-                        client.NumerologySystem.AddToLetterCNumber = ((i & 32768) != 0);
-                        client.NumerologySystem.AddToLetterLDistance = ((i & 16384) != 0);
-                        client.NumerologySystem.AddToLetterWDistance = ((i & 8192) != 0);
-                        client.NumerologySystem.AddToLetterVDistance = ((i & 4096) != 0);
-                        client.NumerologySystem.AddToLetterCDistance = ((i & 2048) != 0);
-                        client.NumerologySystem.AddToWordWNumber = ((i & 1024) != 0);
-                        client.NumerologySystem.AddToWordVNumber = ((i & 512) != 0);
-                        client.NumerologySystem.AddToWordCNumber = ((i & 256) != 0);
-                        client.NumerologySystem.AddToWordWDistance = ((i & 128) != 0);
-                        client.NumerologySystem.AddToWordVDistance = ((i & 64) != 0);
-                        client.NumerologySystem.AddToWordCDistance = ((i & 32) != 0);
-                        client.NumerologySystem.AddToVerseVNumber = ((i & 16) != 0);
-                        client.NumerologySystem.AddToVerseCNumber = ((i & 8) != 0);
-                        client.NumerologySystem.AddToVerseVDistance = ((i & 4) != 0);
-                        client.NumerologySystem.AddToVerseCDistance = ((i & 2) != 0);
-                        client.NumerologySystem.AddToChapterCNumber = ((i & 1) != 0);
+                        long bismAllah_value = client.CalculateValue(client.Book.Chapters[0].Verses[0]);
 
-                        long alfatiha_value = client.CalculateValue(client.Book.Chapters[0]);
-                        int alfatiha_value_index = 0;
-                        switch (number_type)
+                        long difference = bismAllah_value - (long)alfatiha_value_index;
+                        if (Math.Abs(difference) <= target_difference)
                         {
-                            case NumberType.Prime:
-                                {
-                                    alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.AdditivePrime:
-                                {
-                                    alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.NonAdditivePrime:
-                                {
-                                    alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.Composite:
-                                {
-                                    alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.AdditiveComposite:
-                                {
-                                    alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.NonAdditiveComposite:
-                                {
-                                    alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            default:
-                                break;
+                            ZeroDifferenceNumerologySystem good_numerology_system = new ZeroDifferenceNumerologySystem();
+                            good_numerology_system.NumerologySystem = new NumerologySystem(client.NumerologySystem);
+                            good_numerology_system.NumberType = number_type;
+                            good_numerology_system.BismAllahValue = bismAllah_value;
+                            good_numerology_system.AlFatihaValue = alfatiha_value;
+                            good_numerology_system.AlFatihaValueIndex = alfatiha_value_index;
+                            good_numerology_systems.Add(good_numerology_system);
                         }
+                    }
 
-                        if (alfatiha_value_index > 0)
-                        {
-                            long bismAllah_value = client.CalculateValue(client.Book.Chapters[0].Verses[0]);
-
-                            long difference = bismAllah_value - (long)alfatiha_value_index;
-                            if (Math.Abs(difference) <= target_difference)
-                            {
-                                ZeroDifferenceNumerologySystem good_numerology_system = new ZeroDifferenceNumerologySystem();
-                                good_numerology_system.NumerologySystem = new NumerologySystem(client.NumerologySystem);
-                                good_numerology_system.NumberType = number_type;
-                                good_numerology_system.BismAllahValue = bismAllah_value;
-                                good_numerology_system.AlFatihaValue = alfatiha_value;
-                                good_numerology_system.AlFatihaValueIndex = alfatiha_value_index;
-                                good_numerology_systems.Add(good_numerology_system);
-                            }
-                        }
-
-                    } // next PERMUTATION
-
-                } // next NumerologySystemScope
+                } // next PERMUTATION
 
                 string filename = "BismAllahEqualsAlFatiha" + number_type.ToString() + "IndexSystem" + Globals.OUTPUT_FILE_EXT;
                 if (Directory.Exists(Globals.RESEARCH_FOLDER))
@@ -5758,7 +5729,6 @@ public static partial class Research
                     str.AppendLine("TextMode" +
                             "\t" + "LetterOrder" +
                             "\t" + "LetterValues" +
-                            "\t" + "Scope" +
                             "\t" + "AddToLetterLNumber" +
                             "\t" + "AddToLetterWNumber" +
                             "\t" + "AddToLetterVNumber" +
@@ -5841,214 +5811,187 @@ public static partial class Research
                 (number_type == NumberType.NonAdditiveComposite)
                )
             {
-                NumerologySystemScope[] numerology_system_scopes = (NumerologySystemScope[])Enum.GetValues(typeof(NumerologySystemScope));
-                foreach (NumerologySystemScope numerology_system_scope in numerology_system_scopes)
+                // Quran 74:30 "Over It Nineteen."
+                int PERMUTATIONS = 524288; // 2^19
+                for (int i = 0; i < PERMUTATIONS; i++)
                 {
-                    switch (numerology_system_scope)
+                    client.NumerologySystem.AddToLetterLNumber = ((i & 262144) != 0);
+                    client.NumerologySystem.AddToLetterWNumber = ((i & 131072) != 0);
+                    client.NumerologySystem.AddToLetterVNumber = ((i & 65536) != 0);
+                    client.NumerologySystem.AddToLetterCNumber = ((i & 32768) != 0);
+                    client.NumerologySystem.AddToLetterLDistance = ((i & 16384) != 0);
+                    client.NumerologySystem.AddToLetterWDistance = ((i & 8192) != 0);
+                    client.NumerologySystem.AddToLetterVDistance = ((i & 4096) != 0);
+                    client.NumerologySystem.AddToLetterCDistance = ((i & 2048) != 0);
+                    client.NumerologySystem.AddToWordWNumber = ((i & 1024) != 0);
+                    client.NumerologySystem.AddToWordVNumber = ((i & 512) != 0);
+                    client.NumerologySystem.AddToWordCNumber = ((i & 256) != 0);
+                    client.NumerologySystem.AddToWordWDistance = ((i & 128) != 0);
+                    client.NumerologySystem.AddToWordVDistance = ((i & 64) != 0);
+                    client.NumerologySystem.AddToWordCDistance = ((i & 32) != 0);
+                    client.NumerologySystem.AddToVerseVNumber = ((i & 16) != 0);
+                    client.NumerologySystem.AddToVerseCNumber = ((i & 8) != 0);
+                    client.NumerologySystem.AddToVerseVDistance = ((i & 4) != 0);
+                    client.NumerologySystem.AddToVerseCDistance = ((i & 2) != 0);
+                    client.NumerologySystem.AddToChapterCNumber = ((i & 1) != 0);
+
+                    long alfatiha_value = client.CalculateValue(client.Book.Chapters[0]);
+                    int alfatiha_value_index = 0;
+                    switch (number_type)
                     {
-                        case NumerologySystemScope.Book:
+                        case NumberType.Prime:
                             {
-                                client.UpdateNumerologySystem(client.Book.Text);
+                                alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value) + 1;
                             }
                             break;
-                        case NumerologySystemScope.Selection:
+                        case NumberType.AdditivePrime:
                             {
-                                client.UpdateNumerologySystem(client.Book.Chapters[0].Text);
+                                alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value) + 1;
                             }
                             break;
-                        case NumerologySystemScope.HighlightedText:
+                        case NumberType.NonAdditivePrime:
                             {
-                                client.UpdateNumerologySystem(client.Book.Verses[0].Text);
+                                alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value) + 1;
+                            }
+                            break;
+                        case NumberType.Composite:
+                            {
+                                alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value) + 1;
+                            }
+                            break;
+                        case NumberType.AdditiveComposite:
+                            {
+                                alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value) + 1;
+                            }
+                            break;
+                        case NumberType.NonAdditiveComposite:
+                            {
+                                alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value) + 1;
                             }
                             break;
                         default:
                             break;
                     }
 
-                    // Quran 74:30 "Over It Nineteen."
-                    int PERMUTATIONS = 524288; // 2^19
-                    for (int i = 0; i < PERMUTATIONS; i++)
+                    if (alfatiha_value_index > 0)
                     {
-                        client.NumerologySystem.AddToLetterLNumber = ((i & 262144) != 0);
-                        client.NumerologySystem.AddToLetterWNumber = ((i & 131072) != 0);
-                        client.NumerologySystem.AddToLetterVNumber = ((i & 65536) != 0);
-                        client.NumerologySystem.AddToLetterCNumber = ((i & 32768) != 0);
-                        client.NumerologySystem.AddToLetterLDistance = ((i & 16384) != 0);
-                        client.NumerologySystem.AddToLetterWDistance = ((i & 8192) != 0);
-                        client.NumerologySystem.AddToLetterVDistance = ((i & 4096) != 0);
-                        client.NumerologySystem.AddToLetterCDistance = ((i & 2048) != 0);
-                        client.NumerologySystem.AddToWordWNumber = ((i & 1024) != 0);
-                        client.NumerologySystem.AddToWordVNumber = ((i & 512) != 0);
-                        client.NumerologySystem.AddToWordCNumber = ((i & 256) != 0);
-                        client.NumerologySystem.AddToWordWDistance = ((i & 128) != 0);
-                        client.NumerologySystem.AddToWordVDistance = ((i & 64) != 0);
-                        client.NumerologySystem.AddToWordCDistance = ((i & 32) != 0);
-                        client.NumerologySystem.AddToVerseVNumber = ((i & 16) != 0);
-                        client.NumerologySystem.AddToVerseCNumber = ((i & 8) != 0);
-                        client.NumerologySystem.AddToVerseVDistance = ((i & 4) != 0);
-                        client.NumerologySystem.AddToVerseCDistance = ((i & 2) != 0);
-                        client.NumerologySystem.AddToChapterCNumber = ((i & 1) != 0);
+                        long bismAllah_value = client.CalculateValue(client.Book.Chapters[0].Verses[0]);
 
-                        long alfatiha_value = client.CalculateValue(client.Book.Chapters[0]);
-                        int alfatiha_value_index = 0;
-                        switch (number_type)
+                        long difference = bismAllah_value - (long)alfatiha_value_index;
+                        if (difference == 0L) // not (Math.Abs(difference) <= target_difference) // use target_difference for best systems only (not good systems)
                         {
-                            case NumberType.Prime:
-                                {
-                                    alfatiha_value_index = Numbers.PrimeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.AdditivePrime:
-                                {
-                                    alfatiha_value_index = Numbers.AdditivePrimeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.NonAdditivePrime:
-                                {
-                                    alfatiha_value_index = Numbers.NonAdditivePrimeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.Composite:
-                                {
-                                    alfatiha_value_index = Numbers.CompositeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.AdditiveComposite:
-                                {
-                                    alfatiha_value_index = Numbers.AdditiveCompositeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            case NumberType.NonAdditiveComposite:
-                                {
-                                    alfatiha_value_index = Numbers.NonAdditiveCompositeIndexOf(alfatiha_value) + 1;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
+                            ZeroDifferenceNumerologySystem good_numerology_system = new ZeroDifferenceNumerologySystem();
+                            good_numerology_system.NumerologySystem = new NumerologySystem(client.NumerologySystem);
+                            good_numerology_system.NumberType = number_type;
+                            good_numerology_system.BismAllahValue = bismAllah_value;
+                            good_numerology_system.AlFatihaValue = alfatiha_value;
+                            good_numerology_system.AlFatihaValueIndex = alfatiha_value_index;
+                            good_numerology_systems.Add(good_numerology_system);
 
-                        if (alfatiha_value_index > 0)
-                        {
-                            long bismAllah_value = client.CalculateValue(client.Book.Chapters[0].Verses[0]);
-
-                            long difference = bismAllah_value - (long)alfatiha_value_index;
-                            if (difference == 0L) // not (Math.Abs(difference) <= target_difference) // use target_difference for best systems only (not good systems)
+                            // is  Value(Book) == ValueIndex(Al-Faiha)
+                            long book_value = client.CalculateValue(client.Book);
+                            int book_value_index = 0;
+                            switch (good_numerology_system.NumberType)
                             {
-                                ZeroDifferenceNumerologySystem good_numerology_system = new ZeroDifferenceNumerologySystem();
-                                good_numerology_system.NumerologySystem = new NumerologySystem(client.NumerologySystem);
-                                good_numerology_system.NumberType = number_type;
-                                good_numerology_system.BismAllahValue = bismAllah_value;
-                                good_numerology_system.AlFatihaValue = alfatiha_value;
-                                good_numerology_system.AlFatihaValueIndex = alfatiha_value_index;
-                                good_numerology_systems.Add(good_numerology_system);
-
-                                // is  Value(Book) == ValueIndex(Al-Faiha)
-                                long book_value = client.CalculateValue(client.Book);
-                                int book_value_index = 0;
-                                switch (good_numerology_system.NumberType)
-                                {
-                                    case NumberType.Prime:
-                                        {
-                                            book_value_index = Numbers.PrimeIndexOf(book_value) + 1;
-                                        }
-                                        break;
-                                    case NumberType.AdditivePrime:
-                                        {
-                                            book_value_index = Numbers.AdditivePrimeIndexOf(book_value) + 1;
-                                        }
-                                        break;
-                                    case NumberType.NonAdditivePrime:
-                                        {
-                                            book_value_index = Numbers.NonAdditivePrimeIndexOf(book_value) + 1;
-                                        }
-                                        break;
-                                    case NumberType.Composite:
-                                        {
-                                            book_value_index = Numbers.CompositeIndexOf(book_value) + 1;
-                                        }
-                                        break;
-                                    case NumberType.AdditiveComposite:
-                                        {
-                                            book_value_index = Numbers.AdditiveCompositeIndexOf(book_value) + 1;
-                                        }
-                                        break;
-                                    case NumberType.NonAdditiveComposite:
-                                        {
-                                            book_value_index = Numbers.NonAdditiveCompositeIndexOf(book_value) + 1;
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-
-                                if (book_value_index > 0)
-                                {
-                                    difference = alfatiha_value - (long)book_value_index;
-                                    if (Math.Abs(difference) <= target_difference)
+                                case NumberType.Prime:
                                     {
-                                        ZeroDifferenceNumerologySystem best_numerology_system = good_numerology_system;
-
-                                        // collect all matching systems to print out at the end
-                                        best_numerology_systems.Add(best_numerology_system);
-
-                                        // prinet out the current matching system now
-                                        string i_filename = "AlFatihaEqualsQuran" + number_type.ToString() + "IndexSystem" + Globals.OUTPUT_FILE_EXT;
-                                        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-                                        {
-                                            string i_path = Globals.RESEARCH_FOLDER + "/" + i_filename;
-
-                                            StringBuilder i_str = new StringBuilder();
-                                            i_str.AppendLine("TextMode" +
-                                                    "\t" + "LetterOrder" +
-                                                    "\t" + "LetterValues" +
-                                                    "\t" + "Scope" +
-                                                    "\t" + "AddToLetterLNumber" +
-                                                    "\t" + "AddToLetterWNumber" +
-                                                    "\t" + "AddToLetterVNumber" +
-                                                    "\t" + "AddToLetterCNumber" +
-                                                    "\t" + "AddToLetterLDistance" +
-                                                    "\t" + "AddToLetterWDistance" +
-                                                    "\t" + "AddToLetterVDistance" +
-                                                    "\t" + "AddToLetterCDistance" +
-                                                    "\t" + "AddToWordWNumber" +
-                                                    "\t" + "AddToWordVNumber" +
-                                                    "\t" + "AddToWordCNumber" +
-                                                    "\t" + "AddToWordWDistance" +
-                                                    "\t" + "AddToWordVDistance" +
-                                                    "\t" + "AddToWordCDistance" +
-                                                    "\t" + "AddToVerseVNumber" +
-                                                    "\t" + "AddToVerseCNumber" +
-                                                    "\t" + "AddToVerseVDistance" +
-                                                    "\t" + "AddToVerseCDistance" +
-                                                    "\t" + "AddToChapterCNumber" +
-                                                    "\t" + "BismAllahValue" +
-                                                    "\t" + "AlFatihaIndex" +
-                                                    "\t" + "AlFatihaValue" +
-                                                    "\t" + "BookValueIndex"
-                                                );
-
-                                            i_str.Append(best_numerology_system.NumerologySystem.ToTabbedString());
-                                            i_str.Append("\t" + best_numerology_system.BismAllahValue.ToString());
-                                            i_str.Append("\t" + best_numerology_system.AlFatihaValueIndex.ToString());
-                                            i_str.Append("\t" + best_numerology_system.AlFatihaValue.ToString());
-                                            i_str.Append("\t" + best_numerology_system.BookValueIndex.ToString());
-                                            i_str.AppendLine();
-
-                                            FileHelper.SaveText(i_path, i_str.ToString());
-                                            FileHelper.DisplayFile(i_path);
-                                        }
-
-                                        // wait for file to be written correctly to prevent cross-thread problem
-                                        // if another match was found shortly after this one
-                                        Thread.Sleep(3000);
+                                        book_value_index = Numbers.PrimeIndexOf(book_value) + 1;
                                     }
+                                    break;
+                                case NumberType.AdditivePrime:
+                                    {
+                                        book_value_index = Numbers.AdditivePrimeIndexOf(book_value) + 1;
+                                    }
+                                    break;
+                                case NumberType.NonAdditivePrime:
+                                    {
+                                        book_value_index = Numbers.NonAdditivePrimeIndexOf(book_value) + 1;
+                                    }
+                                    break;
+                                case NumberType.Composite:
+                                    {
+                                        book_value_index = Numbers.CompositeIndexOf(book_value) + 1;
+                                    }
+                                    break;
+                                case NumberType.AdditiveComposite:
+                                    {
+                                        book_value_index = Numbers.AdditiveCompositeIndexOf(book_value) + 1;
+                                    }
+                                    break;
+                                case NumberType.NonAdditiveComposite:
+                                    {
+                                        book_value_index = Numbers.NonAdditiveCompositeIndexOf(book_value) + 1;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            if (book_value_index > 0)
+                            {
+                                difference = alfatiha_value - (long)book_value_index;
+                                if (Math.Abs(difference) <= target_difference)
+                                {
+                                    ZeroDifferenceNumerologySystem best_numerology_system = good_numerology_system;
+
+                                    // collect all matching systems to print out at the end
+                                    best_numerology_systems.Add(best_numerology_system);
+
+                                    // prinet out the current matching system now
+                                    string i_filename = "AlFatihaEqualsQuran" + number_type.ToString() + "IndexSystem" + Globals.OUTPUT_FILE_EXT;
+                                    if (Directory.Exists(Globals.RESEARCH_FOLDER))
+                                    {
+                                        string i_path = Globals.RESEARCH_FOLDER + "/" + i_filename;
+
+                                        StringBuilder i_str = new StringBuilder();
+                                        i_str.AppendLine("TextMode" +
+                                                "\t" + "LetterOrder" +
+                                                "\t" + "LetterValues" +
+                                                "\t" + "AddToLetterLNumber" +
+                                                "\t" + "AddToLetterWNumber" +
+                                                "\t" + "AddToLetterVNumber" +
+                                                "\t" + "AddToLetterCNumber" +
+                                                "\t" + "AddToLetterLDistance" +
+                                                "\t" + "AddToLetterWDistance" +
+                                                "\t" + "AddToLetterVDistance" +
+                                                "\t" + "AddToLetterCDistance" +
+                                                "\t" + "AddToWordWNumber" +
+                                                "\t" + "AddToWordVNumber" +
+                                                "\t" + "AddToWordCNumber" +
+                                                "\t" + "AddToWordWDistance" +
+                                                "\t" + "AddToWordVDistance" +
+                                                "\t" + "AddToWordCDistance" +
+                                                "\t" + "AddToVerseVNumber" +
+                                                "\t" + "AddToVerseCNumber" +
+                                                "\t" + "AddToVerseVDistance" +
+                                                "\t" + "AddToVerseCDistance" +
+                                                "\t" + "AddToChapterCNumber" +
+                                                "\t" + "BismAllahValue" +
+                                                "\t" + "AlFatihaIndex" +
+                                                "\t" + "AlFatihaValue" +
+                                                "\t" + "BookValueIndex"
+                                            );
+
+                                        i_str.Append(best_numerology_system.NumerologySystem.ToTabbedString());
+                                        i_str.Append("\t" + best_numerology_system.BismAllahValue.ToString());
+                                        i_str.Append("\t" + best_numerology_system.AlFatihaValueIndex.ToString());
+                                        i_str.Append("\t" + best_numerology_system.AlFatihaValue.ToString());
+                                        i_str.Append("\t" + best_numerology_system.BookValueIndex.ToString());
+                                        i_str.AppendLine();
+
+                                        FileHelper.SaveText(i_path, i_str.ToString());
+                                        FileHelper.DisplayFile(i_path);
+                                    }
+
+                                    // wait for file to be written correctly to prevent cross-thread problem
+                                    // if another match was found shortly after this one
+                                    Thread.Sleep(3000);
                                 }
                             }
                         }
+                    }
 
-                    } // next PERMUTATION
-
-                } // next NumerologySystemScope
+                } // next PERMUTATION
 
                 string filename = "AlFatihaEqualsQuran" + number_type.ToString() + "IndexSystem" + Globals.OUTPUT_FILE_EXT;
                 if (Directory.Exists(Globals.RESEARCH_FOLDER))
@@ -6059,7 +6002,6 @@ public static partial class Research
                     str.AppendLine("TextMode" +
                             "\t" + "LetterOrder" +
                             "\t" + "LetterValues" +
-                            "\t" + "Scope" +
                             "\t" + "AddToLetterLNumber" +
                             "\t" + "AddToLetterWNumber" +
                             "\t" + "AddToLetterVNumber" +

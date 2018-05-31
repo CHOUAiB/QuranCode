@@ -15,8 +15,6 @@ CD ..
 "%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 PrimeCalculator.Source.zip Globals\*.*
 "%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 PrimeCalculator.Source.zip Utilities\*.*
 "%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 PrimeCalculator.Source.zip PrimeCalculator\*.*
-"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 PrimeCalculator.Source.zip Composites\*.*
-"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 PrimeCalculator.Source.zip Numbers\*.*
 
 CD NET2
 CALL Version.bat

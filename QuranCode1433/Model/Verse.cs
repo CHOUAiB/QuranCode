@@ -205,26 +205,18 @@ namespace Model
         {
             get
             {
-                if (Globals.EDITION == Edition.Standard)
+                int letter_count = 0;
+                if (this.words != null)
                 {
-                    int letter_count = 0;
-                    if (this.words != null)
+                    foreach (Word word in this.words)
                     {
-                        foreach (Word word in this.words)
+                        if ((word.Letters != null) && (word.Letters.Count > 0))
                         {
-                            if ((word.Letters != null) && (word.Letters.Count > 0))
-                            {
-                                letter_count += word.Letters.Count;
-                            }
+                            letter_count += word.Letters.Count;
                         }
                     }
-                    return letter_count;
                 }
-                else
-                {
-                    string no_space_text = this.text.Replace(" ", "");
-                    return no_space_text.Length;
-                }
+                return letter_count;
             }
         }
 
@@ -234,33 +226,19 @@ namespace Model
             get
             {
                 unique_letters = new List<char>();
-                if (Globals.EDITION == Edition.Standard)
+                if (this.words != null)
                 {
-                    if (this.words != null)
+                    foreach (Word word in this.words)
                     {
-                        foreach (Word word in this.words)
+                        if (word.UniqueLetters != null)
                         {
-                            if (word.UniqueLetters != null)
+                            foreach (char character in word.UniqueLetters)
                             {
-                                foreach (char character in word.UniqueLetters)
+                                if (!unique_letters.Contains(character))
                                 {
-                                    if (!unique_letters.Contains(character))
-                                    {
-                                        unique_letters.Add(character);
-                                    }
+                                    unique_letters.Add(character);
                                 }
                             }
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (char character in this.text)
-                    {
-                        if (character == ' ') continue;
-                        if (!unique_letters.Contains(character))
-                        {
-                            unique_letters.Add(character);
                         }
                     }
                 }

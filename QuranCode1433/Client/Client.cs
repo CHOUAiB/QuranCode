@@ -144,13 +144,6 @@ public class Client : IPublisher, ISubscriber
     {
         get { return Server.LoadedNumerologySystems; }
     }
-    // client-side numerology system scope (not needed by NumerologySystem class) 
-    private NumerologySystemScope m_numerology_system_scope = NumerologySystemScope.Book;
-    public NumerologySystemScope NumerologySystemScope
-    {
-        get { return m_numerology_system_scope; }
-        set { m_numerology_system_scope = value; }
-    }
     // update current numerology system
     public void UpdateNumerologySystem(string text)
     {
@@ -408,7 +401,6 @@ public class Client : IPublisher, ISubscriber
                             numbers.Remove(numbers.Length - 2, 2);
                         }
                         writer.WriteLine(NumerologySystem.Name);
-                        writer.WriteLine("Scope     = " + NumerologySystemScope.ToString());
                         writer.WriteLine("Selection = " + Selection.Scope.ToString() + " " + numbers.ToString());
                         writer.WriteLine("----------------------------------------");
                         writer.WriteLine();

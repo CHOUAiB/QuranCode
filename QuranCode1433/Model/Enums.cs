@@ -51,11 +51,6 @@ namespace Model
     public enum GoldenRatioScope { None, Letter, Word, Sentence };
 
     /// <summary>
-    /// Source of letters used in building a numerology system dynamically
-    /// </summary>
-    public enum NumerologySystemScope { Book, Selection, HighlightedText };
-
-    /// <summary>
     /// <para>    : None</para>
     /// <para>Laaa: MustContinue</para>
     /// <para>Sala: ShouldContinue</para>
