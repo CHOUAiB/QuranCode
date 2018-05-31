@@ -518,19 +518,12 @@ public static class StringExtensions
         }
         else if (text_mode == "Original")
         {
-            if (Globals.EDITION == Edition.Standard)
-            {
-                return source.Simplify29();
-            }
-            return source;
+            return source.Simplify29();
+            //return source;
         }
         else
         {
-            if (Globals.EDITION == Edition.Standard)
-            {
-                return source.Simplify29();
-            }
-            return source;
+            return source.Simplify29();
         }
     }
     public static string Simplify28(this string source)

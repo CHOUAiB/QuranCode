@@ -71,7 +71,7 @@ public class Server : IPublisher
         }
         else
         {
-            if (e.Name.Contains("InterestingNumbers"))  // e.g. InterestingNumbers.txt
+            if (e.Name.Contains("interesting"))  // e.g. interesting.txt
             {
                 Numbers.LoadInterestingNumbers();
                 NotifySubscribers(Subject.InterestingNumbers, e);

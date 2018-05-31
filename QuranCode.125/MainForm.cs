@@ -13186,8 +13186,8 @@ public partial class MainForm : Form, ISubscriber
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            // display the InterestingNumbers.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "InterestingNumbers.txt";
+            // display the interesting.txt file for live editing using ISubscriber
+            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting" + ".txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
@@ -15468,8 +15468,8 @@ public partial class MainForm : Form, ISubscriber
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            // display the InterestingNumbers.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "InterestingNumbers.txt";
+            // display the interesting.txt file for live editing using ISubscriber
+            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting" + ".txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
@@ -28311,7 +28311,7 @@ public partial class MainForm : Form, ISubscriber
     {
         try
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + "PerfectNumbers" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "perfects" + ".txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
