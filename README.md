@@ -1,6 +1,4 @@
-﻿<pre>
-  ﻿
-  بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+﻿  بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 
   QuranCode is a numerical and similarity research tool for the ever-revealing Book (القرءان الكريم)
   which is Readable (قرءان) despite being encrypted. See http://heliwave.com/EncryptedQuran.pdf.
@@ -199,4 +197,3 @@
   Ali Adams
   heliwave.com
   God >
-</pre>
