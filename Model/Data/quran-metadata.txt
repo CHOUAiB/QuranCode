@@ -450,7 +450,7 @@ quarter	start_chapter	start_chapter_verse
 103	14	10
 104	14	28
 105	15	1
-106	15	50
+106	15	49
 107	16	1
 108	16	30
 109	16	51
