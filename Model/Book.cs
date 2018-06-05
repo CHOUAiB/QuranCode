@@ -2495,7 +2495,7 @@ namespace Model
         {
             if (!String.IsNullOrEmpty(user_text))
             {
-                string simplified_user_text = user_text.Simplify31();
+                string simplified_user_text = user_text.Simplify29();
 
                 // try all roots in case user_text is an existing root
                 SortedDictionary<string, List<Word>> root_words_dictionary = this.RootWords;
@@ -2527,7 +2527,7 @@ namespace Model
                                         {
                                             Word verse_word = verse.Words[word_index];
                                             // user_text is an existing root
-                                            if (verse_word.Text.Simplify31() == simplified_user_text)
+                                            if (verse_word.Text.Simplify29() == simplified_user_text)
                                             {
                                                 return key;
                                             }

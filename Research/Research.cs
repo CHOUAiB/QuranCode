@@ -3809,10 +3809,10 @@ public static partial class Research
         return str.ToString();
     }
 
-    private static void __________________________________(Client client, string param, bool in_search_result)
+    public static void __________________________________(Client client, string param, bool in_search_result)
     {
     }
-    private static void P_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void P_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.Selection == null) return;
@@ -3863,7 +3863,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.Selection == null) return;

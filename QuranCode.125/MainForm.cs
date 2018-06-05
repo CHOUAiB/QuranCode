@@ -12647,8 +12647,6 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (m_client.Book != null)
                 {
-                    ClearFindMatches();
-
                     string text = word.Text;
                     text = RemovePunctuationMarks(text);
 
@@ -21067,8 +21065,6 @@ public partial class MainForm : Form, ISubscriber
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            ClearFindMatches();
-
             switch (m_text_search_type)
             {
                 case TextSearchType.Exact:
@@ -21277,58 +21273,61 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByRoot()
     {
-        if (FindByTextTextBox.Text.Length > 0)
+        if (m_client != null)
         {
-            // get startup text from FindTextBox
-            string[] startup_words = FindByTextTextBox.Text.Split();
-            int count = startup_words.Length;
+            ClearFindMatches();
 
-            string text = "";
-            if (m_auto_complete_mode)
+            if (FindByTextTextBox.Text.Length > 0)
             {
-                for (int i = 0; i < count; i++)
+                // get startup text from FindTextBox
+                string[] startup_words = FindByTextTextBox.Text.Split();
+                int count = startup_words.Length;
+
+                string text = "";
+                if (m_auto_complete_mode)
                 {
-                    text += startup_words[i] + " ";
+                    for (int i = 0; i < count; i++)
+                    {
+                        text += startup_words[i] + " ";
+                    }
+                    text = text.Trim();
                 }
-                text = text.Trim();
-            }
 
-            // update m_text_location_in_verse and m_text_location_in_word
-            UpdateFindByTextOptions();
+                // update m_text_location_in_verse and m_text_location_in_word
+                UpdateFindByTextOptions();
 
-            List<Phrase> total_phrases = new List<Phrase>();
-            List<Verse> total_verses = new List<Verse>();
-            if (!String.IsNullOrEmpty(text))
-            {
-                text = text.Trim();
-
-                ClearFindMatches();
-
-                m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
-
-                total_phrases = total_phrases.Union(m_client.FoundPhrases);
-                total_verses = total_verses.Union(m_client.FoundVerses);
-
-                // write final result to m_client
-                m_client.FoundPhrases = total_phrases;
-                m_client.FoundVerses = total_verses;
-            }
-
-            // display results
-            if (m_client.FoundPhrases != null)
-            {
-                int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                if (m_client.FoundVerses != null)
+                List<Phrase> total_phrases = new List<Phrase>();
+                List<Verse> total_verses = new List<Verse>();
+                if (!String.IsNullOrEmpty(text))
                 {
-                    int verse_count = m_client.FoundVerses.Count;
-                    m_find_result_header = phrase_count + " matches in " + verse_count + ((verse_count == 1) ? " verse" : " verses") + " with " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " in " + m_client.SearchScope.ToString();
-                    DisplayFoundVerses(true, true);
+                    text = text.Trim();
 
-                    SearchResultTextBox.Focus();
-                    SearchResultTextBox.Refresh();
+                    m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
 
-                    WordsListBoxLabel.Visible = false;
-                    WordsListBox.Visible = false;
+                    total_phrases = total_phrases.Union(m_client.FoundPhrases);
+                    total_verses = total_verses.Union(m_client.FoundVerses);
+
+                    // write final result to m_client
+                    m_client.FoundPhrases = total_phrases;
+                    m_client.FoundVerses = total_verses;
+                }
+
+                // display results
+                if (m_client.FoundPhrases != null)
+                {
+                    int phrase_count = GetPhraseCount(m_client.FoundPhrases);
+                    if (m_client.FoundVerses != null)
+                    {
+                        int verse_count = m_client.FoundVerses.Count;
+                        m_find_result_header = phrase_count + " matches in " + verse_count + ((verse_count == 1) ? " verse" : " verses") + " with " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " in " + m_client.SearchScope.ToString();
+                        DisplayFoundVerses(true, true);
+
+                        SearchResultTextBox.Focus();
+                        SearchResultTextBox.Refresh();
+
+                        WordsListBoxLabel.Visible = false;
+                        WordsListBox.Visible = false;
+                    }
                 }
             }
         }
@@ -21339,11 +21338,11 @@ public partial class MainForm : Form, ISubscriber
 
         if (m_client != null)
         {
+            ClearFindMatches();
+
             if (!String.IsNullOrEmpty(text))
             {
                 text = text.Trim();
-
-                ClearFindMatches();
 
                 m_client.FindPhrases(m_text_search_block_size, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
                 if (m_client.FoundPhrases != null)
@@ -23699,23 +23698,6 @@ public partial class MainForm : Form, ISubscriber
             query.LetterCountRemainder = letter_count_remainder;
             query.UniqueLetterCountRemainder = unique_letter_count_remainder;
             query.ValueRemainder = value_remainder;
-
-            //TODO: fill up digit sums and digital roots
-            query.NumberDigitSum = 0;
-            query.ChapterCountDigitSum = 0;
-            query.VerseCountDigitSum = 0;
-            query.WordCountDigitSum = 0;
-            query.LetterCountDigitSum = 0;
-            query.UniqueLetterCountDigitSum = 0;
-            query.ValueDigitSum = 0;
-            query.NumberDigitalRoot = 0;
-
-            query.ChapterCountDigitalRoot = 0;
-            query.VerseCountDigitalRoot = 0;
-            query.WordCountDigitalRoot = 0;
-            query.LetterCountDigitalRoot = 0;
-            query.UniqueLetterCountDigitalRoot = 0;
-            query.ValueDigitalRoot = 0;
 
             if (query.IsValid(m_numbers_result_type))
             {

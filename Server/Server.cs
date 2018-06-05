@@ -9040,28 +9040,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit sums
-            if (query.NumberDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.Number) != query.NumberDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.LetterCount) != query.LetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.UniqueLetterCount) != query.UniqueLetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
+            // value digit sum
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(word); }
@@ -9071,28 +9050,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digital roots
-            if (query.NumberDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.Number) != query.NumberDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.LetterCount) != query.LetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.UniqueLetterCount) != query.UniqueLetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
+            // value digital root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(word); }
@@ -9283,49 +9241,7 @@ public class Server : IPublisher
             }
 
 
-            // digit sums
-            if (query.NumberDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Word word in words)
-                {
-                    sum += word.NumberInChapter;
-                }
-                if (Numbers.DigitSum(sum) != query.NumberDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Word word in words)
-                {
-                    sum += word.Letters.Count;
-                }
-                if (Numbers.DigitSum(sum) != query.LetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitSum > 0)
-            {
-                List<char> unique_letters = new List<char>();
-                foreach (Word word in words)
-                {
-                    foreach (char character in word.UniqueLetters)
-                    {
-                        if (!unique_letters.Contains(character))
-                        {
-                            unique_letters.Add(character);
-                        }
-                    }
-                }
-                if (Numbers.DigitSum(unique_letters.Count) != query.UniqueLetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
+            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L)
@@ -9341,49 +9257,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit root
-            if (query.NumberDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Word word in words)
-                {
-                    sum += word.NumberInChapter;
-                }
-                if (Numbers.DigitalRoot(sum) != query.NumberDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Word word in words)
-                {
-                    sum += word.Letters.Count;
-                }
-                if (Numbers.DigitalRoot(sum) != query.LetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitalRoot > 0)
-            {
-                List<char> unique_letters = new List<char>();
-                foreach (Word word in words)
-                {
-                    foreach (char character in word.UniqueLetters)
-                    {
-                        if (!unique_letters.Contains(character))
-                        {
-                            unique_letters.Add(character);
-                        }
-                    }
-                }
-                if (Numbers.DigitalRoot(unique_letters.Count) != query.UniqueLetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
+            // value digit root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L)
@@ -9483,28 +9357,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit sums
-            if (query.WordCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.WordCount) != query.WordCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.LetterCount) != query.LetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.UniqueLetterCount) != query.UniqueLetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
+            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(sentence); }
@@ -9514,28 +9367,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digital roots
-            if (query.WordCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.WordCount) != query.WordCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.LetterCount) != query.LetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.UniqueLetterCount) != query.UniqueLetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
+            // value digital roots
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(sentence); }
@@ -9750,35 +9582,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit sums
-            if (query.NumberDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.Number) != query.NumberDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.WordCount) != query.WordCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.LetterCount) != query.LetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.UniqueLetterCount) != query.UniqueLetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
+            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(verse); }
@@ -9788,35 +9592,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digital roots
-            if (query.NumberDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.Number) != query.NumberDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.WordCount) != query.WordCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.LetterCount) != query.LetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.UniqueLetterCount) != query.UniqueLetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
+            // value digital roots
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(verse); }
@@ -10053,61 +9829,7 @@ public class Server : IPublisher
             }
 
 
-            // digit sums
-            if (query.NumberDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Verse verse in verses)
-                {
-                    sum += verse.NumberInChapter;
-                }
-                if (Numbers.DigitSum(sum) != query.NumberDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Verse verse in verses)
-                {
-                    sum += verse.Words.Count;
-                }
-                sum = 0;
-                if (Numbers.DigitSum(sum) != query.WordCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitSum > 0)
-            {
-                foreach (Verse verse in verses)
-                {
-                    sum += verse.LetterCount;
-                }
-                if (Numbers.DigitSum(sum) != query.LetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitSum > 0)
-            {
-                List<char> unique_letters = new List<char>();
-                foreach (Verse verse in verses)
-                {
-                    foreach (char character in verse.UniqueLetters)
-                    {
-                        if (!unique_letters.Contains(character))
-                        {
-                            unique_letters.Add(character);
-                        }
-                    }
-                }
-                if (Numbers.DigitSum(unique_letters.Count) != query.UniqueLetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
+            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L)
@@ -10123,61 +9845,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit root
-            if (query.NumberDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Verse verse in verses)
-                {
-                    sum += verse.NumberInChapter;
-                }
-                if (Numbers.DigitalRoot(sum) != query.NumberDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Verse verse in verses)
-                {
-                    sum += verse.Words.Count;
-                }
-                sum = 0;
-                if (Numbers.DigitalRoot(sum) != query.WordCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitalRoot > 0)
-            {
-                foreach (Verse verse in verses)
-                {
-                    sum += verse.LetterCount;
-                }
-                if (Numbers.DigitalRoot(sum) != query.LetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitalRoot > 0)
-            {
-                List<char> unique_letters = new List<char>();
-                foreach (Verse verse in verses)
-                {
-                    foreach (char character in verse.UniqueLetters)
-                    {
-                        if (!unique_letters.Contains(character))
-                        {
-                            unique_letters.Add(character);
-                        }
-                    }
-                }
-                if (Numbers.DigitalRoot(unique_letters.Count) != query.UniqueLetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
+            // value digit root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L)
@@ -10423,42 +10091,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit sums
-            if (query.NumberDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.Number) != query.NumberDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.VerseCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.VerseCount) != query.VerseCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.WordCount) != query.WordCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.LetterCount) != query.LetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitSum > 0)
-            {
-                if (Numbers.DigitSum(query.UniqueLetterCount) != query.UniqueLetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
+            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(chapter); }
@@ -10468,42 +10101,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digital roots
-            if (query.NumberDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.Number) != query.NumberDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.VerseCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.VerseCount) != query.VerseCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.WordCount) != query.WordCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.LetterCount) != query.LetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitalRoot > 0)
-            {
-                if (Numbers.DigitalRoot(query.UniqueLetterCount) != query.UniqueLetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
+            // value digital roots
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(chapter); }
@@ -10773,73 +10371,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit sums
-            if (query.NumberDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.SortedNumber;
-                }
-                if (Numbers.DigitSum(sum) != query.NumberDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.VerseCountDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.Verses.Count;
-                }
-                if (Numbers.DigitSum(sum) != query.VerseCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.WordCount;
-                }
-                if (Numbers.DigitSum(sum) != query.WordCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitSum > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.LetterCount;
-                }
-                if (Numbers.DigitSum(sum) != query.LetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitSum > 0)
-            {
-                List<char> unique_letters = new List<char>();
-                foreach (Chapter chapter in chapters)
-                {
-                    foreach (char character in chapter.UniqueLetters)
-                    {
-                        if (!unique_letters.Contains(character))
-                        {
-                            unique_letters.Add(character);
-                        }
-                    }
-                }
-                if (Numbers.DigitSum(unique_letters.Count) != query.UniqueLetterCountDigitSum)
-                {
-                    return false;
-                }
-            }
+            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L)
@@ -10855,73 +10387,7 @@ public class Server : IPublisher
                 }
             }
 
-            // digit root
-            if (query.NumberDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.SortedNumber;
-                }
-                if (Numbers.DigitalRoot(sum) != query.NumberDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.VerseCountDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.Verses.Count;
-                }
-                if (Numbers.DigitalRoot(sum) != query.VerseCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.WordCountDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.WordCount;
-                }
-                if (Numbers.DigitalRoot(sum) != query.WordCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.LetterCountDigitalRoot > 0)
-            {
-                sum = 0;
-                foreach (Chapter chapter in chapters)
-                {
-                    sum += chapter.LetterCount;
-                }
-                if (Numbers.DigitalRoot(sum) != query.LetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
-            if (query.UniqueLetterCountDigitalRoot > 0)
-            {
-                List<char> unique_letters = new List<char>();
-                foreach (Chapter chapter in chapters)
-                {
-                    foreach (char character in chapter.UniqueLetters)
-                    {
-                        if (!unique_letters.Contains(character))
-                        {
-                            unique_letters.Add(character);
-                        }
-                    }
-                }
-                if (Numbers.DigitalRoot(unique_letters.Count) != query.UniqueLetterCountDigitalRoot)
-                {
-                    return false;
-                }
-            }
+            // value digit root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L)

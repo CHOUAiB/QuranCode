@@ -18,6 +18,8 @@ namespace Model
         public int LetterCount;
         public int UniqueLetterCount;
         public long Value;
+        public int ValueDigitSum;
+        public int ValueDigitalRoot;
 
         public NumberType NumberNumberType;
         public NumberType ChapterCountNumberType;
@@ -26,6 +28,8 @@ namespace Model
         public NumberType LetterCountNumberType;
         public NumberType UniqueLetterCountNumberType;
         public NumberType ValueNumberType;
+        public NumberType ValueDigitSumNumberType;
+        public NumberType ValueDigitalRootNumberType;
 
         public ComparisonOperator NumberComparisonOperator;
         public ComparisonOperator ChapterCountComparisonOperator;
@@ -34,6 +38,8 @@ namespace Model
         public ComparisonOperator LetterCountComparisonOperator;
         public ComparisonOperator UniqueLetterCountComparisonOperator;
         public ComparisonOperator ValueComparisonOperator;
+        public ComparisonOperator ValueDigitSumComparisonOperator;
+        public ComparisonOperator ValueDigitalRootComparisonOperator;
         public int NumberRemainder;
         public int ChapterCountRemainder;
         public int VerseCountRemainder;
@@ -41,22 +47,8 @@ namespace Model
         public int LetterCountRemainder;
         public int UniqueLetterCountRemainder;
         public int ValueRemainder;
-
-        public int NumberDigitSum;
-        public int ChapterCountDigitSum;
-        public int VerseCountDigitSum;
-        public int WordCountDigitSum;
-        public int LetterCountDigitSum;
-        public int UniqueLetterCountDigitSum;
-        public int ValueDigitSum;
-
-        public int NumberDigitalRoot;
-        public int ChapterCountDigitalRoot;
-        public int VerseCountDigitalRoot;
-        public int WordCountDigitalRoot;
-        public int LetterCountDigitalRoot;
-        public int UniqueLetterCountDigitalRoot;
-        public int ValueDigitalRoot;
+        public int ValueDigitSumRemainder;
+        public int ValueDigitalRootRemainder;
 
         public bool IsValid(NumbersResultType numbers_result_type)
         {
@@ -144,7 +136,9 @@ namespace Model
                     (ValueDigitalRoot != 0) ||
                     (LetterCountNumberType != NumberType.None) ||
                     (UniqueLetterCountNumberType != NumberType.None) ||
-                    (ValueNumberType != NumberType.None)
+                    (ValueNumberType != NumberType.None) ||
+                    (ValueDigitSumNumberType != NumberType.None) ||
+                    (ValueDigitalRootNumberType != NumberType.None)
                    );
         }
         private bool IsValidVerseSearch()
