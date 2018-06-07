@@ -11087,7 +11087,24 @@ public class Server : IPublisher
 
             if (range_length == 0) // non-specified range length
             {
-                int limit = 114;
+                int limit = source.Count;
+                if ((query.VerseCount > 0) && (query.VerseCount < limit))
+                {
+                    limit = query.VerseCount;
+                }
+                else if ((query.WordCount > 0) && (query.WordCount < limit))
+                {
+                    limit = query.WordCount;
+                }
+                else if ((query.LetterCount > 0) && (query.LetterCount < limit))
+                {
+                    limit = query.LetterCount;
+                }
+                else if ((query.Value > 0L) && (query.Value < (limit * 10L)))
+                {
+                    limit = (int)(query.Value / 10L);
+                }
+
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
                 {
                     for (int i = 0; i < source.Count - r + 1; i++)
@@ -11156,7 +11173,24 @@ public class Server : IPublisher
 
                         if (set_size == 0) // non-specified set size
                         {
-                            int limit = 114;
+                            int limit = source.Count;
+                            if ((query.VerseCount > 0) && (query.VerseCount < limit))
+                            {
+                                limit = query.VerseCount;
+                            }
+                            else if ((query.WordCount > 0) && (query.WordCount < limit))
+                            {
+                                limit = query.WordCount;
+                            }
+                            else if ((query.LetterCount > 0) && (query.LetterCount < limit))
+                            {
+                                limit = query.LetterCount;
+                            }
+                            else if ((query.Value > 0L) && (query.Value < (limit * 10L)))
+                            {
+                                limit = (int)(query.Value / 10L);
+                            }
+
                             for (int i = 0; i < limit; i++) // try all possible set sizes
                             {
                                 int size = i + 1;
@@ -11255,23 +11289,22 @@ public class Server : IPublisher
                         if (range_length == 0) // non-specified range length
                         {
                             // limit range length to minimum
-                            int limit = chapters.Count - 1;
-                            if ((query.VerseCount > 0) && (query.VerseCount < chapters.Count))
+                            int limit = chapters.Count;
+                            if ((query.VerseCount > 0) && (query.VerseCount < limit))
                             {
                                 limit = query.VerseCount;
                             }
-                            else if ((query.WordCount > 0) && (query.WordCount < chapters.Count))
+                            else if ((query.WordCount > 0) && (query.WordCount < limit))
                             {
                                 limit = query.WordCount;
                             }
-                            else if ((query.LetterCount > 0) && (query.LetterCount < chapters.Count))
+                            else if ((query.LetterCount > 0) && (query.LetterCount < limit))
                             {
                                 limit = query.LetterCount;
                             }
-                            else if ((query.Value > 0L) && (query.Value < chapters.Count))
+                            else if ((query.Value > 0L) && (query.Value < (limit * 100L)))
                             {
-                                int min_letters_per_chapter = 61; // chapter #108 Al-Kawthar
-                                limit = (int)(query.Value / min_letters_per_chapter);
+                                limit = (int)(query.Value / 10L);
                             }
 
                             for (int r = 1; r <= limit; r++) // try all possible range lengths
@@ -11346,23 +11379,22 @@ public class Server : IPublisher
                         if (set_size == 0) // non-specified set size
                         {
                             // limit range length to minimum
-                            int limit = chapters.Count - 1;
-                            if ((query.VerseCount > 0) && (query.VerseCount < chapters.Count))
+                            int limit = chapters.Count;
+                            if ((query.VerseCount > 0) && (query.VerseCount < limit))
                             {
                                 limit = query.VerseCount;
                             }
-                            else if ((query.WordCount > 0) && (query.WordCount < chapters.Count))
+                            else if ((query.WordCount > 0) && (query.WordCount < limit))
                             {
                                 limit = query.WordCount;
                             }
-                            else if ((query.LetterCount > 0) && (query.LetterCount < chapters.Count))
+                            else if ((query.LetterCount > 0) && (query.LetterCount < limit))
                             {
                                 limit = query.LetterCount;
                             }
-                            else if ((query.Value > 0L) && (query.Value < chapters.Count))
+                            else if ((query.Value > 0L) && (query.Value < (limit * 100L)))
                             {
-                                int min_letters_per_chapter = 61; // chapter #108 Al-Kawthar
-                                limit = (int)(query.Value / min_letters_per_chapter);
+                                limit = (int)(query.Value / 10L);
                             }
 
                             for (int i = 0; i < limit; i++) // try all possible set sizes
