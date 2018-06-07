@@ -595,8 +595,7 @@ public static class StringExtensions
                   (Constants.CLOSE_BRACKET[0] != character) &&
                   !Constants.STOPMARKS.Contains(character) &&
                   !Constants.QURANMARKS.Contains(character) &&
-                  !Constants.DIACRITICS.Contains(character) &&
-                  !Constants.SYMBOLS.Contains(character)
+                  !Constants.DIACRITICS.Contains(character)
                )
             {
                 str.Append(character);

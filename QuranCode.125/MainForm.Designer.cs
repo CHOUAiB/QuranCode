@@ -3569,6 +3569,7 @@ partial class MainForm
             // FindByTextQuranHealingLabel
             // 
             this.FindByTextQuranHealingLabel.BackColor = System.Drawing.Color.LightGray;
+            this.FindByTextQuranHealingLabel.Enabled = false;
             this.FindByTextQuranHealingLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByTextQuranHealingLabel.ForeColor = System.Drawing.Color.LightCoral;
             this.FindByTextQuranHealingLabel.Location = new System.Drawing.Point(172, 107);
@@ -3580,6 +3581,9 @@ partial class MainForm
             this.FindByTextQuranHealingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.FindByTextQuranHealingLabel, "Value Navigator");
             this.FindByTextQuranHealingLabel.Click += new System.EventHandler(this.FindByTextQuranHealingLabel_Click);
+            this.FindByTextQuranHealingLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+            this.FindByTextQuranHealingLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+            this.FindByTextQuranHealingLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
             // 
             // FindByTextRaaLabel
             // 

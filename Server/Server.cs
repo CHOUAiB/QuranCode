@@ -6597,7 +6597,7 @@ public class Server : IPublisher
     {
         List<Phrase> result = new List<Phrase>();
         if (String.IsNullOrEmpty(text)) return null;
-        text = text.Simplify36();   // roots use 36 letters //XXX SimplifyTo(s_numerology_system.TextMode);
+        text = text.Simplify36();   // roots use 36 letters
         while (text.Contains("  "))
         {
             text = text.Replace("  ", " ");

@@ -20655,6 +20655,7 @@ public partial class MainForm : Form, ISubscriber
         FindByTextAtVerseAnywhereRadioButton.Checked = true;
 
         EnableFindByTextControls();
+        UpdateKeyboard(m_client.NumerologySystem.TextMode);
         FindByTextControls_Enter(null, null);
     }
     private void FindByTextProximitySearchTypeLabel_Click(object sender, EventArgs e)
@@ -20664,6 +20665,7 @@ public partial class MainForm : Form, ISubscriber
         FindByTextAllWordsRadioButton.Checked = true;
 
         EnableFindByTextControls();
+        UpdateKeyboard(m_client.NumerologySystem.TextMode);
         FindByTextControls_Enter(null, null);
     }
     private void FindByTextRootSearchTypeLabel_Click(object sender, EventArgs e)
@@ -20672,6 +20674,7 @@ public partial class MainForm : Form, ISubscriber
         PopulateWordsListBoxWithRoots();
 
         EnableFindByTextControls();
+        UpdateKeyboard("Original");
         FindByTextControls_Enter(null, null);
     }
     private void FindByTextSearchBlockSizeVerseLabel_Click(object sender, EventArgs e)
@@ -21734,6 +21737,9 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateKeyboard(string text_mode)
     {
+        // allow all letters in Root search type
+        if (m_text_search_type == TextSearchType.Root) text_mode = "Original";
+
         FindByTextHamzaLabel.Visible = false;
         FindByTextTaaMarbootaLabel.Visible = false;
         FindByTextElfMaqsuraLabel.Visible = false;
@@ -21850,6 +21856,7 @@ public partial class MainForm : Form, ISubscriber
         FindByTextMultiplicityNumericUpDown.Enabled = (FindByTextMultiplicityCheckBox.Enabled) && (FindByTextMultiplicityCheckBox.Checked);
         FindByTextMultiplicityNumberTypeLabel.Enabled = (FindByTextMultiplicityCheckBox.Enabled) && (FindByTextMultiplicityCheckBox.Checked);
 
+        FindByTextQuranHealingLabel.Enabled = (m_text_search_type == TextSearchType.Root);
         FindByTextCaseSensitiveCheckBox.Enabled = (m_language_type == LanguageType.LeftToRight);
     }
     private void FindByTextQuranHealingLabel_Click(object sender, EventArgs e)
