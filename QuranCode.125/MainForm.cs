@@ -79,7 +79,7 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Languages
     ///////////////////////////////////////////////////////////////////////////////
-    private string m_language_name = DEFAULT_LANGUAGE;
+    private string t = DEFAULT_LANGUAGE;
     private List<string> m_language_names = null;
     private void LanguageLabel_Click(object sender, EventArgs e)
     {
@@ -92,9 +92,9 @@ public partial class MainForm : Form, ISubscriber
                 int pos = control.Name.IndexOf("LanguageLabel");
                 if (pos > -1)
                 {
-                    m_language_name = control.Name.Remove(pos);
-                    LoadLanguage(m_language_name);
-                    LanguageComboBox.SelectedItem = m_language_name;
+                    t = control.Name.Remove(pos);
+                    LoadLanguage(t);
+                    LanguageComboBox.SelectedItem = t;
                 }
             }
         }
@@ -187,11 +187,11 @@ public partial class MainForm : Form, ISubscriber
             {
                 if ((index >= 0) && (index < m_language_names.Count))
                 {
-                    m_language_name = m_language_names[index];
-                    if (m_language_name != null)
+                    t = m_language_names[index];
+                    if (t != null)
                     {
-                        LoadLanguage(m_language_name);
-                        LanguageComboBox.SelectedItem = m_language_name;
+                        LoadLanguage(t);
+                        LanguageComboBox.SelectedItem = t;
                     }
                 }
             }
@@ -201,7 +201,7 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private Dictionary<string, Dictionary<string, string>> m_languages = new Dictionary<string, Dictionary<string, string>>();
+    private Dictionary<string, Dictionary<string, string>> T = new Dictionary<string, Dictionary<string, string>>();
     private void LoadLanguage(string language_name)
     {
         this.Cursor = Cursors.WaitCursor;
@@ -249,13 +249,13 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
 
-                if (m_languages.ContainsKey(m_language_name))
+                if (T.ContainsKey(t))
                 {
-                    m_languages[m_language_name] = language;
+                    T[t] = language;
                 }
                 else
                 {
-                    m_languages.Add(language_name, language);
+                    T.Add(language_name, language);
                 }
 
 
@@ -268,7 +268,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (control.Text.Length > 0)
                         {
-                            ToolTip.SetToolTip(control, m_languages[m_language_name][control.Text]);
+                            ToolTip.SetToolTip(control, T[t][control.Text]);
                         }
                     }
                     else if (control.Name.Contains("NumberType"))
@@ -278,11 +278,11 @@ public partial class MainForm : Form, ISubscriber
                             int remainder;
                             if (int.TryParse(control.Text, out remainder))
                             {
-                                ToolTip.SetToolTip(control, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
-                                ToolTip.SetToolTip(control, m_languages[m_language_name][control.Text]);
+                                ToolTip.SetToolTip(control, T[t][control.Text]);
                             }
                         }
                     }
@@ -2903,8 +2903,9 @@ public partial class MainForm : Form, ISubscriber
     private void SetupToolTips()
     {
         this.ToolTip.SetToolTip(this.HelpFolderLabel, "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ");
-        this.ToolTip.SetToolTip(this.PlayerPreviousLabel, "Previous verse");
+        this.ToolTip.SetToolTip(this.ResearchMethodsRunButton, "Run");
         this.ToolTip.SetToolTip(this.PlayerPlayLabel, "Play");
+        this.ToolTip.SetToolTip(this.PlayerPreviousLabel, "Previous verse");
         this.ToolTip.SetToolTip(this.PlayerNextLabel, "Next verse");
         this.ToolTip.SetToolTip(this.PlayerStopLabel, "Stop");
         this.ToolTip.SetToolTip(this.PlayerRepeatLabel, "Repeat verse");
@@ -3844,7 +3845,7 @@ public partial class MainForm : Form, ISubscriber
             else if (method_name.Contains("Sound"))
             {
                 ResearchMethodParameterTextBox.Text = "0";
-                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Hz");
+                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Sample rate in Hz");
                 ResearchMethodParameterTextBox.Visible = true;
             }
             else if (method_name.Contains("Pivot"))
@@ -10294,7 +10295,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
                         }
-                        ToolTip.SetToolTip(PlayerPlayLabel, "Pause");
+                        ToolTip.SetToolTip(PlayerPlayLabel, (T.ContainsKey(t)) ? T[t]["Pause"] : "");
                         PlayerPlayLabel.Refresh();
 
                         m_player.VolumeAll = m_audio_volume;
@@ -10353,7 +10354,7 @@ public partial class MainForm : Form, ISubscriber
                                         {
                                             PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
                                         }
-                                        ToolTip.SetToolTip(PlayerPlayLabel, "Pause");
+                                        ToolTip.SetToolTip(PlayerPlayLabel, (T.ContainsKey(t)) ? T[t]["Pause"] : "");
                                         PlayerPlayLabel.Refresh();
 
                                         m_player.VolumeAll = m_audio_volume;
@@ -10484,7 +10485,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
             }
-            ToolTip.SetToolTip(PlayerPlayLabel, "Pause");
+            ToolTip.SetToolTip(PlayerPlayLabel, (T.ContainsKey(t)) ? T[t]["Pause"] : "");
             PlayerPlayLabel.Refresh();
 
             m_break_playing = false;
@@ -10524,7 +10525,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
             }
-            ToolTip.SetToolTip(PlayerPlayLabel, "Pause");
+            ToolTip.SetToolTip(PlayerPlayLabel, (T.ContainsKey(t)) ? T[t]["Pause"] : "");
             PlayerPlayLabel.Refresh();
 
             m_break_playing = false;
@@ -10550,7 +10551,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
                 }
-                ToolTip.SetToolTip(PlayerPlayLabel, "Pause");
+                ToolTip.SetToolTip(PlayerPlayLabel, (T.ContainsKey(t)) ? T[t]["Pause"] : "");
                 PlayerPlayLabel.Refresh();
 
                 if ((m_player.Closed) || (m_player.Stopped))
@@ -10569,7 +10570,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_play.png");
                 }
-                ToolTip.SetToolTip(PlayerPlayLabel, "Play");
+                ToolTip.SetToolTip(PlayerPlayLabel, (T.ContainsKey(t)) ? T[t]["Play"] : "");
                 PlayerPlayLabel.Refresh();
 
                 m_player.Pause(); // pause play
@@ -10748,7 +10749,7 @@ public partial class MainForm : Form, ISubscriber
         {
             m_audio_volume = PlayerVolumeTrackBar.Value * (1000 / PlayerVolumeTrackBar.Maximum);
             m_player.VolumeAll = m_audio_volume;
-            ToolTip.SetToolTip(PlayerVolumeTrackBar, "Volume " + (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
+            ToolTip.SetToolTip(PlayerVolumeTrackBar, ((T.ContainsKey(t)) ? T[t]["Volume"] : "") + " " + (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
         }
     }
     private void PlayerVerseSilenceGapTrackBar_Scroll(object sender, EventArgs e)
@@ -10760,11 +10761,11 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_silence_between_verses == 0.0F)
         {
-            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, "no silence between verse replays");
+            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["no silence between verse replays"] : "");
         }
         else
         {
-            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, m_silence_between_verses.ToString("0.0") + " verses silence between verse replays");
+            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, m_silence_between_verses.ToString("0.0") + " " + ((T.ContainsKey(t)) ? T[t]["verses silence between verse replays"] : ""));
         }
     }
     private void PlayerSelectionSilenceGapTrackBar_Scroll(object sender, EventArgs e)
@@ -10778,51 +10779,51 @@ public partial class MainForm : Form, ISubscriber
         {
             case 0:
                 m_silence_time_between_selections = 0 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "no silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["no silence between selection replays"] : "");
                 break;
             case 1:
                 m_silence_time_between_selections = 10 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "10 seconds silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["10 seconds silence between selection replays"] : "");
                 break;
             case 2:
                 m_silence_time_between_selections = 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "1 minute silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["1 minute silence between selection replays"] : "");
                 break;
             case 3:
                 m_silence_time_between_selections = 5 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "5 minutes silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["5 minutes silence between selection replays"] : "");
                 break;
             case 4:
                 m_silence_time_between_selections = 15 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "15 minutes silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["15 minutes silence between selection replays"] : "");
                 break;
             case 5:
                 m_silence_time_between_selections = 1 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "1 hour silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["1 hour silence between selection replays"] : "");
                 break;
             case 6:
                 m_silence_time_between_selections = 2 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "2 hours silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["2 hours silence between selection replays"] : "");
                 break;
             case 7:
                 m_silence_time_between_selections = 6 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "6 hours silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["6 hours silence between selection replays"] : "");
                 break;
             case 8:
                 m_silence_time_between_selections = 12 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "12 hours silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["12 hours silence between selection replays"] : "");
                 break;
             case 9:
                 m_silence_time_between_selections = 24 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "1 day silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["1 day silence between selection replays"] : "");
                 break;
             case 10:
                 m_silence_time_between_selections = new Random().Next(10, 24 * 60 * 60) * 1000; // 10s to 24hr
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "Random silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["Random silence between selection replays"] : "");
                 break;
             default:
                 m_silence_time_between_selections = 0 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, "no silence between selection replays");
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, (T.ContainsKey(t)) ? T[t]["no silence between selection replays"] : "");
                 break;
         }
     }
@@ -11361,7 +11362,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 RecitationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "apply.png");
             }
-            ToolTip.SetToolTip(RecitationsApplySettingsLabel, "Download complete Quran recitations");
+            ToolTip.SetToolTip(RecitationsApplySettingsLabel, (T.ContainsKey(t)) ? T[t]["Download complete Quran recitations"] : "");
         }
         else
         {
@@ -11376,7 +11377,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         RecitationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "settings.png");
                     }
-                    ToolTip.SetToolTip(RecitationsApplySettingsLabel, "Add/Remove recitations");
+                    ToolTip.SetToolTip(RecitationsApplySettingsLabel, (T.ContainsKey(t)) ? T[t]["Add/Remove recitations"] : "");
 
                     if (m_client.Book.RecitationInfos != null)
                     {
@@ -11470,7 +11471,7 @@ public partial class MainForm : Form, ISubscriber
         {
             RecitationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "settings.png");
         }
-        ToolTip.SetToolTip(RecitationsApplySettingsLabel, "Setup recitations");
+        ToolTip.SetToolTip(RecitationsApplySettingsLabel, (T.ContainsKey(t)) ? T[t]["Setup recitations"] : "");
         PopulateRecitationsCheckedListBox();
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -15501,16 +15502,16 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateDistancesOptions()
     {
-        if (m_languages != null)
+        if (T != null)
         {
-            if (m_languages.ContainsKey(m_language_name))
+            if (T.ContainsKey(t))
             {
                 switch (m_distances_running_chapter_number_scope)
                 {
                     case NumberScope.Number:
                     default:
                         {
-                            DistancesRunningVerseNumberScopeLabel.Text = m_languages[m_language_name]["Chapter numbers in Book"];
+                            DistancesRunningVerseNumberScopeLabel.Text = (T.ContainsKey(t)) ? T[t]["Chapter numbers in Book"] : "";
                         }
                         break;
                 }
@@ -15519,13 +15520,13 @@ public partial class MainForm : Form, ISubscriber
                 {
                     case NumberScope.Number:
                         {
-                            DistancesRunningVerseNumberScopeLabel.Text = m_languages[m_language_name]["Verse numbers in Book"];
+                            DistancesRunningVerseNumberScopeLabel.Text = (T.ContainsKey(t)) ? T[t]["Verse numbers in Book"] : "";
                         }
                         break;
                     case NumberScope.NumberInChapter:
                     default:
                         {
-                            DistancesRunningVerseNumberScopeLabel.Text = m_languages[m_language_name]["Verse numbers in chapters"];
+                            DistancesRunningVerseNumberScopeLabel.Text = (T.ContainsKey(t)) ? T[t]["Verse numbers in chapters"] : "";
                         }
                         break;
                 }
@@ -15534,18 +15535,18 @@ public partial class MainForm : Form, ISubscriber
                 {
                     case NumberScope.Number:
                         {
-                            DistancesRunningWordNumberScopeLabel.Text = m_languages[m_language_name]["Word numbers in Book"];
+                            DistancesRunningWordNumberScopeLabel.Text = (T.ContainsKey(t)) ? T[t]["Word numbers in Book"] : "";
                         }
                         break;
                     case NumberScope.NumberInChapter:
                         {
-                            DistancesRunningWordNumberScopeLabel.Text = m_languages[m_language_name]["Word numbers in chapters"];
+                            DistancesRunningWordNumberScopeLabel.Text = (T.ContainsKey(t)) ? T[t]["Word numbers in chapters"] : "";
                         }
                         break;
                     case NumberScope.NumberInVerse:
                     default:
                         {
-                            DistancesRunningWordNumberScopeLabel.Text = m_languages[m_language_name]["Word numbers in verses"];
+                            DistancesRunningWordNumberScopeLabel.Text = (T.ContainsKey(t)) ? T[t]["Word numbers in verses"] : "";
                         }
                         break;
                 }
@@ -21665,7 +21666,7 @@ public partial class MainForm : Form, ISubscriber
                     FindByTextMultiplicityNumberTypeLabel.Text = remainder.ToString();
                     FindByTextMultiplicityNumberTypeLabel.ForeColor = Color.Black;
                     FindByTextMultiplicityNumberTypeLabel.Enabled = true;
-                    ToolTip.SetToolTip(FindByTextMultiplicityNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                    ToolTip.SetToolTip(FindByTextMultiplicityNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                 }
                 else
                 {
@@ -21979,9 +21980,9 @@ public partial class MainForm : Form, ISubscriber
     private NumberScope m_chapter_number_scope = NumberScope.Number;
     private void UpdateFindByNumbersNumberLabel()
     {
-        if (m_languages != null)
+        if (T != null)
         {
-            if (m_languages.ContainsKey(m_language_name))
+            if (T.ContainsKey(t))
             {
                 switch (m_numbers_result_type)
                 {
@@ -21990,29 +21991,29 @@ public partial class MainForm : Form, ISubscriber
                             if (m_word_number_scope == NumberScope.Number)
                             {
                                 m_word_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             }
                             else if (m_word_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_word_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in chapter"] : "";
                             }
                             else if (m_word_number_scope == NumberScope.NumberInVerse)
                             {
                                 m_word_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in verse"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in verse"] : "";
                             }
                         }
                         break;
                     case NumbersResultType.WordRanges:
                     case NumbersResultType.WordSets:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
                         }
                         break;
                     case NumbersResultType.Sentences:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                         }
                         break;
                     case NumbersResultType.Verses:
@@ -22020,19 +22021,19 @@ public partial class MainForm : Form, ISubscriber
                             if (m_verse_number_scope == NumberScope.Number)
                             {
                                 m_verse_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             }
                             else if (m_verse_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_verse_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in chapter"] : "";
                             }
                         }
                         break;
                     case NumbersResultType.VerseRanges:
                     case NumbersResultType.VerseSets:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
                         }
                         break;
                     case NumbersResultType.Chapters:
@@ -22040,14 +22041,14 @@ public partial class MainForm : Form, ISubscriber
                             if (m_chapter_number_scope == NumberScope.Number)
                             {
                                 m_chapter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             }
                         }
                         break;
                     case NumbersResultType.ChapterRanges:
                     case NumbersResultType.ChapterSets:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
                         }
                         break;
                     default:
@@ -22060,9 +22061,9 @@ public partial class MainForm : Form, ISubscriber
     {
         FindByNumbersControls_Enter(null, null);
 
-        if (m_languages != null)
+        if (T != null)
         {
-            if (m_languages.ContainsKey(m_language_name))
+            if (T.ContainsKey(t))
             {
                 switch (m_numbers_result_type)
                 {
@@ -22071,29 +22072,29 @@ public partial class MainForm : Form, ISubscriber
                             if (m_word_number_scope == NumberScope.Number)
                             {
                                 m_word_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in chapter"] : "";
                             }
                             else if (m_word_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_word_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in verse"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in verse"] : "";
                             }
                             else if (m_word_number_scope == NumberScope.NumberInVerse)
                             {
                                 m_word_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             }
                         }
                         break;
                     case NumbersResultType.WordRanges:
                     case NumbersResultType.WordSets:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
                         }
                         break;
                     case NumbersResultType.Sentences:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                         }
                         break;
                     case NumbersResultType.Verses:
@@ -22101,19 +22102,19 @@ public partial class MainForm : Form, ISubscriber
                             if (m_verse_number_scope == NumberScope.Number)
                             {
                                 m_verse_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in chapter"] : "";
                             }
                             else if (m_verse_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_verse_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             }
                         }
                         break;
                     case NumbersResultType.VerseRanges:
                     case NumbersResultType.VerseSets:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
                         }
                         break;
                     case NumbersResultType.Chapters:
@@ -22121,14 +22122,14 @@ public partial class MainForm : Form, ISubscriber
                             if (m_chapter_number_scope == NumberScope.Number)
                             {
                                 m_chapter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                                FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             }
                         }
                         break;
                     case NumbersResultType.ChapterRanges:
                     case NumbersResultType.ChapterSets:
                         {
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
                         }
                         break;
                     default:
@@ -22434,125 +22435,125 @@ public partial class MainForm : Form, ISubscriber
         }
 
 
-        if (m_languages != null)
+        if (T != null)
         {
-            if (m_languages.ContainsKey(m_language_name))
+            if (T.ContainsKey(t))
             {
                 // reset Words label
                 FindByNumbersResultTypeWordsLabel.Text = "W";
-                ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find words"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["word number"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, (T.ContainsKey(t)) ? T[t]["find words"] : "");
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["word number"] : "");
                 // reset Sentences label
                 FindByNumbersResultTypeSentencesLabel.Text = "S";
-                ToolTip.SetToolTip(FindByNumbersResultTypeSentencesLabel, m_languages[m_language_name]["find sentences"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeSentencesLabel, (T.ContainsKey(t)) ? T[t]["find sentences"] : "");
                 // reset Verses label
                 FindByNumbersResultTypeVersesLabel.Text = "V";
-                ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verses"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["verse number"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, (T.ContainsKey(t)) ? T[t]["find verses"] : "");
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["verse number"] : "");
                 // reset Chapters label
                 FindByNumbersResultTypeChaptersLabel.Text = "C";
-                ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapters"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["chapter number"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, (T.ContainsKey(t)) ? T[t]["find chapters"] : "");
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["chapter number"] : "");
 
                 // overwrite label and tooltips
                 if (m_numbers_result_type == NumbersResultType.Words)
                 {
                     FindByNumbersResultTypeWordsLabel.Text = "W";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find words"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, (T.ContainsKey(t)) ? T[t]["find words"] : "");
                     // update Text based on m_number_scope
                     switch (m_word_number_scope)
                     {
                         case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             break;
                         case NumberScope.NumberInChapter:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in chapter"] : "";
                             break;
                         case NumberScope.NumberInVerse:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in verse"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in verse"] : "";
                             break;
                         default:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             break;
                     }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["word number"]);
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["word number"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.WordRanges)
                 {
                     FindByNumbersResultTypeWordsLabel.Text = "-W-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find word ranges"]);
-                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of word numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, (T.ContainsKey(t)) ? T[t]["find word ranges"] : "");
+                    FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["sum of word numbers"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.WordSets)
                 {
                     FindByNumbersResultTypeWordsLabel.Text = "Ws";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, m_languages[m_language_name]["find word sets"]);
-                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of word numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, (T.ContainsKey(t)) ? T[t]["find word sets"] : "");
+                    FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["sum of word numbers"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.Verses)
                 {
                     FindByNumbersResultTypeVersesLabel.Text = "V";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verses"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, (T.ContainsKey(t)) ? T[t]["find verses"] : "");
                     // update Text based on m_number_scope
                     switch (m_verse_number_scope)
                     {
                         case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             break;
                         case NumberScope.NumberInChapter:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["in chapter"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["in chapter"] : "";
                             break;
                         default:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             break;
                     }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["verse number"]);
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["verse number"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.VerseRanges)
                 {
                     FindByNumbersResultTypeVersesLabel.Text = "-V-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verse ranges"]);
-                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of verse numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, (T.ContainsKey(t)) ? T[t]["find verse ranges"] : "");
+                    FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["sum of verse numbers"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.VerseSets)
                 {
                     FindByNumbersResultTypeVersesLabel.Text = "Vs";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, m_languages[m_language_name]["find verse sets"]);
-                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of verse numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, (T.ContainsKey(t)) ? T[t]["find verse sets"] : "");
+                    FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["sum of verse numbers"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.Chapters)
                 {
                     FindByNumbersResultTypeChaptersLabel.Text = "C";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapters"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, (T.ContainsKey(t)) ? T[t]["find chapters"] : "");
                     // update Text based on m_number_scope
                     switch (m_chapter_number_scope)
                     {
                         case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             break;
                         default:
-                            FindByNumbersNumberLabel.Text = m_languages[m_language_name]["number"];
+                            FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["number"] : "";
                             break;
                     }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["chapter number"]);
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["chapter number"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.ChapterRanges)
                 {
                     FindByNumbersResultTypeChaptersLabel.Text = "-C-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapter ranges"]);
-                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of chapter numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, (T.ContainsKey(t)) ? T[t]["find chapter ranges"] : "");
+                    FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["sum of chapter numbers"] : "");
                 }
                 else if (m_numbers_result_type == NumbersResultType.ChapterSets)
                 {
                     FindByNumbersResultTypeChaptersLabel.Text = "Cs";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, m_languages[m_language_name]["find chapter sets"]);
-                    FindByNumbersNumberLabel.Text = m_languages[m_language_name]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, m_languages[m_language_name]["sum of chapter numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, (T.ContainsKey(t)) ? T[t]["find chapter sets"] : "");
+                    FindByNumbersNumberLabel.Text = (T.ContainsKey(t)) ? T[t]["sum"] : "";
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, (T.ContainsKey(t)) ? T[t]["sum of chapter numbers"] : "");
                 }
             }
         }
@@ -22607,56 +22608,56 @@ public partial class MainForm : Form, ISubscriber
     {
         if (control == null) return false;
 
-        if (m_languages != null)
+        if (T != null)
         {
-            if (m_languages.ContainsKey(m_language_name))
+            if (T.ContainsKey(t))
             {
                 if (ModifierKeys == Keys.Shift)
                 {
                     if (control.Text == "=")
                     {
                         control.Text = "Ʃ";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to sum"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["equals to sum"] : "");
                     }
                     else if (control.Text == "Ʃ")
                     {
                         control.Text = "!÷";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["indivisible by"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["indivisible by"] : "");
                     }
                     else if (control.Text == "!÷")
                     {
                         control.Text = "÷";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["divisible by"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["divisible by"] : "");
                     }
                     else if (control.Text == "÷")
                     {
                         control.Text = "≥";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater or equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["greater or equals to"] : "");
                     }
                     else if (control.Text == "≥")
                     {
                         control.Text = ">";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater than"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["greater than"] : "");
                     }
                     else if (control.Text == ">")
                     {
                         control.Text = "≤";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less or equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["less or equals to"] : "");
                     }
                     else if (control.Text == "≤")
                     {
                         control.Text = "<";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less than"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["less than"] : "");
                     }
                     else if (control.Text == "<")
                     {
                         control.Text = "≠";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["not equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["not equals to"] : "");
                     }
                     else if (control.Text == "≠")
                     {
                         control.Text = "=";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["equals to"] : "");
                     }
                     else
                     {
@@ -22668,47 +22669,47 @@ public partial class MainForm : Form, ISubscriber
                     if (control.Text == "=")
                     {
                         control.Text = "≠";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["not equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["not equals to"] : "");
                     }
                     else if (control.Text == "≠")
                     {
                         control.Text = "<";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less than"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["less than"] : "");
                     }
                     else if (control.Text == "<")
                     {
                         control.Text = "≤";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["less or equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["less or equals to"] : "");
                     }
                     else if (control.Text == "≤")
                     {
                         control.Text = ">";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater than"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["greater than"] : "");
                     }
                     else if (control.Text == ">")
                     {
                         control.Text = "≥";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["greater or equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["greater or equals to"] : "");
                     }
                     else if (control.Text == "≥")
                     {
                         control.Text = "÷";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["divisible by"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["divisible by"] : "");
                     }
                     else if (control.Text == "÷")
                     {
                         control.Text = "!÷";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["indivisible by"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["indivisible by"] : "");
                     }
                     else if (control.Text == "!÷")
                     {
                         control.Text = "Ʃ";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to sum"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["equals to sum"] : "");
                     }
                     else if (control.Text == "Ʃ")
                     {
                         control.Text = "=";
-                        ToolTip.SetToolTip(control, m_languages[m_language_name]["equals to"]);
+                        ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["equals to"] : "");
                     }
                     else
                     {
@@ -22753,9 +22754,9 @@ public partial class MainForm : Form, ISubscriber
         }
         else
         {
-            if (m_languages != null)
+            if (T != null)
             {
-                if (m_languages.ContainsKey(m_language_name))
+                if (T.ContainsKey(t))
                 {
                     if (ModifierKeys != Keys.Shift)
                     {
@@ -22766,10 +22767,10 @@ public partial class MainForm : Form, ISubscriber
                             string text = null;
                             switch (m_numbers_result_type)
                             {
-                                case NumbersResultType.Words: { text = m_languages[m_language_name]["word number"]; break; }
-                                case NumbersResultType.Verses: { text = m_languages[m_language_name]["verse number"]; break; }
-                                case NumbersResultType.Chapters: { text = m_languages[m_language_name]["chapter number"]; break; }
-                                default: { text = m_languages[m_language_name]["number"]; break; }
+                                case NumbersResultType.Words: { text = (T.ContainsKey(t)) ? T[t]["word number"] : ""; break; }
+                                case NumbersResultType.Verses: { text = (T.ContainsKey(t)) ? T[t]["verse number"] : ""; break; }
+                                case NumbersResultType.Chapters: { text = (T.ContainsKey(t)) ? T[t]["chapter number"] : ""; break; }
+                                default: { text = (T.ContainsKey(t)) ? T[t]["number"] : ""; break; }
                             }
                             ToolTip.SetToolTip(control, text);
                         }
@@ -22777,85 +22778,85 @@ public partial class MainForm : Form, ISubscriber
                         {
                             control.Text = "P";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["prime = divisible by itself only"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["prime = divisible by itself only"] : "");
                         }
                         else if (control.Text == "P")
                         {
                             control.Text = "AP";
                             control.ForeColor = Numbers.GetNumberTypeColor(47L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive prime = prime with a prime digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["additive prime = prime with a prime digit sum"] : "");
                         }
                         else if (control.Text == "AP")
                         {
                             control.Text = "XP";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive prime = prime with a non-prime digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["non-additive prime = prime with a non-prime digit sum"] : "");
                         }
                         else if (control.Text == "XP")
                         {
                             control.Text = "C";
                             control.ForeColor = Numbers.GetNumberTypeColor(14L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["composite = divisible by itself and others"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["composite = divisible by itself and others"] : "");
                         }
                         else if (control.Text == "C")
                         {
                             control.Text = "AC";
                             control.ForeColor = Numbers.GetNumberTypeColor(114L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive composite = composite with a composite digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["additive composite = composite with a composite digit sum"] : "");
                         }
                         else if (control.Text == "AC")
                         {
                             control.Text = "XC";
                             control.ForeColor = Numbers.GetNumberTypeColor(25L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive composite = composite with a non-composite digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["non-additive composite = composite with a non-composite digit sum"] : "");
                         }
                         else if (control.Text == "XC")
                         {
                             control.Text = "O";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["odd number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["odd number"] : "");
                         }
                         else if (control.Text == "O")
                         {
                             control.Text = "E";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["even number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["even number"] : "");
                         }
                         else if (control.Text == "E")
                         {
                             control.Text = "^2";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["square number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["square number"] : "");
                         }
                         else if (control.Text == "^2")
                         {
                             control.Text = "^3";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["cubic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["cubic number"] : "");
                         }
                         else if (control.Text == "^3")
                         {
                             control.Text = "^4";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quartic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["quartic number"] : "");
                         }
                         else if (control.Text == "^4")
                         {
                             control.Text = "^5";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quintic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["quintic number"] : "");
                         }
                         else if (control.Text == "^5")
                         {
                             control.Text = "^6";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["sextic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["sextic number"] : "");
                         }
                         else if (control.Text == "^6")
                         {
                             control.Text = "^7";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["septic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["septic number"] : "");
                         }
                         else if (control.Text == "^7")
                         {
@@ -22870,85 +22871,85 @@ public partial class MainForm : Form, ISubscriber
                         {
                             control.Text = "^7";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["septic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["septic number"] : "");
                         }
                         else if (control.Text == "^7")
                         {
                             control.Text = "^6";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["sextic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["sextic number"] : "");
                         }
                         else if (control.Text == "^6")
                         {
                             control.Text = "^5";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quartic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["quartic number"] : "");
                         }
                         else if (control.Text == "^5")
                         {
                             control.Text = "^4";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["quartic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["quartic number"] : "");
                         }
                         else if (control.Text == "^4")
                         {
                             control.Text = "^3";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["cubic number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["cubic number"] : "");
                         }
                         else if (control.Text == "^3")
                         {
                             control.Text = "^2";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["square number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["square number"] : "");
                         }
                         else if (control.Text == "^2")
                         {
                             control.Text = "E";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["even number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["even number"] : "");
                         }
                         else if (control.Text == "E")
                         {
                             control.Text = "O";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["odd number"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["odd number"] : "");
                         }
                         else if (control.Text == "O")
                         {
                             control.Text = "XC";
                             control.ForeColor = Numbers.GetNumberTypeColor(25L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive composite = composite with a non-composite digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["non-additive composite = composite with a non-composite digit sum"] : "");
                         }
                         else if (control.Text == "XC")
                         {
                             control.Text = "AC";
                             control.ForeColor = Numbers.GetNumberTypeColor(114L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive composite = composite with a composite digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["additive composite = composite with a composite digit sum"] : "");
                         }
                         else if (control.Text == "AC")
                         {
                             control.Text = "C";
                             control.ForeColor = Numbers.GetNumberTypeColor(14L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["composite = divisible by itself and others"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["composite = divisible by itself and others"] : "");
                         }
                         else if (control.Text == "C")
                         {
                             control.Text = "XP";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["non-additive prime = prime with a non-prime digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["non-additive prime = prime with a non-prime digit sum"] : "");
                         }
                         else if (control.Text == "XP")
                         {
                             control.Text = "AP";
                             control.ForeColor = Numbers.GetNumberTypeColor(47L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["additive prime = prime with a prime digit sum"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["additive prime = prime with a prime digit sum"] : "");
                         }
                         else if (control.Text == "AP")
                         {
                             control.Text = "P";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, m_languages[m_language_name]["prime = divisible by itself only"]);
+                            ToolTip.SetToolTip(control, (T.ContainsKey(t)) ? T[t]["prime = divisible by itself only"] : "");
                         }
                         else if (control.Text == "P")
                         {
@@ -22957,10 +22958,10 @@ public partial class MainForm : Form, ISubscriber
                             string text = null;
                             switch (m_numbers_result_type)
                             {
-                                case NumbersResultType.Words: { text = m_languages[m_language_name]["word number"]; break; }
-                                case NumbersResultType.Verses: { text = m_languages[m_language_name]["verse number"]; break; }
-                                case NumbersResultType.Chapters: { text = m_languages[m_language_name]["chapter number"]; break; }
-                                default: { text = m_languages[m_language_name]["number"]; break; }
+                                case NumbersResultType.Words: { text = (T.ContainsKey(t)) ? T[t]["word number"] : ""; break; }
+                                case NumbersResultType.Verses: { text = (T.ContainsKey(t)) ? T[t]["verse number"] : ""; break; }
+                                case NumbersResultType.Chapters: { text = (T.ContainsKey(t)) ? T[t]["chapter number"] : ""; break; }
+                                default: { text = (T.ContainsKey(t)) ? T[t]["number"] : ""; break; }
                             }
                             ToolTip.SetToolTip(control, text);
                         }
@@ -22980,9 +22981,9 @@ public partial class MainForm : Form, ISubscriber
     {
         UpdateNumberTypeLabelTags();
 
-        if (m_languages != null)
+        if (T != null)
         {
-            if (m_languages.ContainsKey(m_language_name))
+            if (T.ContainsKey(t))
             {
                 Control control = sender as Control;
                 if (control != null)
@@ -22998,7 +22999,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersNumberNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersNumberNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersNumberNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
@@ -23015,7 +23016,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersChaptersNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersChaptersNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersChaptersNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
@@ -23032,7 +23033,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersVersesNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersVersesNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersVersesNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
@@ -23049,7 +23050,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersWordsNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersWordsNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersWordsNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
@@ -23066,7 +23067,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersLettersNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersLettersNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersLettersNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
@@ -23083,7 +23084,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersUniqueLettersNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersUniqueLettersNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersUniqueLettersNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
@@ -23100,7 +23101,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersValueNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersValueNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersValueNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                             }
                             else
                             {
@@ -24446,7 +24447,7 @@ public partial class MainForm : Form, ISubscriber
                         FindByFrequencySumNumberTypeLabel.Text = remainder.ToString();
                         FindByFrequencySumNumberTypeLabel.ForeColor = Color.Black;
                         FindByFrequencySumNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByFrequencySumNumberTypeLabel, m_languages[m_language_name]["remainder"]);
+                        ToolTip.SetToolTip(FindByFrequencySumNumberTypeLabel, (T.ContainsKey(t)) ? T[t]["remainder"] : "");
                     }
                     else
                     {

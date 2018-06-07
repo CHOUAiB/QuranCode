@@ -1302,7 +1302,7 @@ public class WAVFile
     /// <returns>true if the sample rate is supported, or false if not.</returns>
     public static bool SupportedSampleRate(int pSampleRateHz)
     {
-        return true; // support any frequency
+        return true; // support any sample_rate
 
         //return ((pSampleRateHz == 8000) || (pSampleRateHz == 11025) ||
         //        (pSampleRateHz == 16000) || (pSampleRateHz == 18900) ||
@@ -1963,19 +1963,19 @@ public class WAVFile
     private static short mDataStartPos; // The byte position of the start of the audio data
 
     // Added by Ali Adams
-    public static bool GenerateWAVFile(ref string path, List<long> values, int frequency)
+    public static bool GenerateWAVFile(ref string path, List<long> values, int sample_rate)
     {
         if (String.IsNullOrEmpty(path)) return false;
         if (values == null) return false;
         if (values.Count == 0) return false;
-        if (frequency == 0) return false;
+        if (sample_rate == 0) return false;
 
         WAVFile wavfile = new WAVFile();
         // update ref path.csv to .wav
         path = path.Substring(0, path.Length - 4) + ".wav";
-        wavfile.Create(path, false, frequency, 8);
+        wavfile.Create(path, false, sample_rate, 8);
 
-        Normalize(ref values, 0L, 255L);
+        Normalize(ref values, 20L, 20000L);
 
         //byte[] bytes = new byte[4 * values.Count];
         //for (int i = 0; i < values.Count; i++)
@@ -2003,21 +2003,6 @@ public class WAVFile
         // success
         return true;
     }
-    public static void PlayWAVFile(string path)
-    {
-        if (String.IsNullOrEmpty(path)) return;
-
-        try
-        {
-            System.Media.SoundPlayer myPlayer = new System.Media.SoundPlayer();
-            myPlayer.SoundLocation = path;
-            myPlayer.Play();
-        }
-        catch
-        {
-            // not WAV File
-        }
-    }
     private static void Normalize(ref List<long> values, long minimum, long maximum)
     {
         if (values == null) return;
@@ -2040,6 +2025,21 @@ public class WAVFile
             {
                 values[i] = (int)(minimum + ((values[i] - min_value) * factor));
             }
+        }
+    }
+    public static void PlayWAVFile(string path)
+    {
+        if (String.IsNullOrEmpty(path)) return;
+
+        try
+        {
+            System.Media.SoundPlayer myPlayer = new System.Media.SoundPlayer();
+            myPlayer.SoundLocation = path;
+            myPlayer.Play();
+        }
+        catch
+        {
+            // not WAV File
         }
     }
 }

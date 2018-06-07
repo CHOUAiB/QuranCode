@@ -2710,15 +2710,15 @@ public static partial class Research
         FileHelper.SaveValues(path, values);
         FileHelper.DisplayFile(path); // *.csv
 
-        int frequency = 0;
+        int sample_rate = 0;
         if (param.Length > 0)
         {
-            if (int.TryParse(param, out frequency))
+            if (int.TryParse(param, out sample_rate))
             {
-                if (frequency > 0)
+                if (sample_rate > 0)
                 {
                     // update ref path.csv to .wav
-                    WAVFile.GenerateWAVFile(ref path, values, frequency);
+                    WAVFile.GenerateWAVFile(ref path, values, sample_rate);
 
                     // play .wav file
                     WAVFile.PlayWAVFile(path);
@@ -2726,7 +2726,7 @@ public static partial class Research
             }
             else
             {
-                throw new Exception("Invalid frequency value = " + param);
+                throw new Exception("Invalid sample_rate = " + param);
             }
         }
     }
