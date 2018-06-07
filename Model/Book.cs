@@ -306,6 +306,7 @@ namespace Model
         {
             if (this.verses != null)
             {
+                number %= verses.Count;
                 if ((number > 0) && (number <= this.verses.Count))
                 {
                     return this.verses[number - 1];
@@ -315,6 +316,7 @@ namespace Model
         }
         public Verse GetVerseByWordNumber(int number)
         {
+            number %= WordCount;
             if ((number > 0) && (number <= this.WordCount))
             {
                 if (this.chapters != null)
@@ -342,6 +344,7 @@ namespace Model
         }
         public Verse GetVerseByLetterNumber(int number)
         {
+            number %= LetterCount;
             if ((number > 0) && (number <= this.LetterCount))
             {
                 if (this.chapters != null)
@@ -370,6 +373,7 @@ namespace Model
         }
         public Word GetWordByWordNumber(int number)
         {
+            number %= WordCount;
             if ((number > 0) && (number <= this.WordCount))
             {
                 if (this.chapters != null)
@@ -401,6 +405,7 @@ namespace Model
         }
         public Word GetWordByLetterNumber(int number)
         {
+            number %= LetterCount;
             if ((number > 0) && (number <= this.LetterCount))
             {
                 if (this.chapters != null)

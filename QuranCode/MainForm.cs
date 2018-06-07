@@ -28716,17 +28716,17 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_client.Book != null)
             {
-                VerseByVerseNumberLabel.Text = "---:---";
-                ToolTip.SetToolTip(VerseByVerseNumberLabel, null);
-                VerseByVerseNumberLabel.Refresh();
+                //VerseByVerseNumberLabel.Text = "---:---";
+                //ToolTip.SetToolTip(VerseByVerseNumberLabel, null);
+                //VerseByVerseNumberLabel.Refresh();
 
-                VerseByWordNumberLabel.Text = "---:---";
-                ToolTip.SetToolTip(VerseByWordNumberLabel, null);
-                VerseByWordNumberLabel.Refresh();
+                //VerseByWordNumberLabel.Text = "---:---";
+                //ToolTip.SetToolTip(VerseByWordNumberLabel, null);
+                //VerseByWordNumberLabel.Refresh();
 
-                VerseByLetterNumberLabel.Text = "---:---";
-                ToolTip.SetToolTip(VerseByLetterNumberLabel, null);
-                VerseByLetterNumberLabel.Refresh();
+                //VerseByLetterNumberLabel.Text = "---:---";
+                //ToolTip.SetToolTip(VerseByLetterNumberLabel, null);
+                //VerseByLetterNumberLabel.Refresh();
 
                 Verse verse = m_client.Book.GetVerseByVerseNumber((int)value);
                 if (verse != null)

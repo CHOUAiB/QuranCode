@@ -11087,22 +11087,7 @@ public class Server : IPublisher
 
             if (range_length == 0) // non-specified range length
             {
-                // limit range length to minimum
-                int limit = source.Count - 1;
-                if ((query.WordCount > 0) && (query.WordCount < source.Count))
-                {
-                    limit = query.WordCount;
-                }
-                else if ((query.LetterCount > 0) && (query.LetterCount < source.Count))
-                {
-                    limit = query.LetterCount;
-                }
-                else if ((query.Value > 0L) && (query.Value < source.Count))
-                {
-                    int min_letters_per_verse = 2; // HM in if without BismAllah
-                    limit = (int)(query.Value / min_letters_per_verse);
-                }
-
+                int limit = 114;
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
                 {
                     for (int i = 0; i < source.Count - r + 1; i++)
@@ -11171,22 +11156,7 @@ public class Server : IPublisher
 
                         if (set_size == 0) // non-specified set size
                         {
-                            // limit set size to minimum
-                            int limit = source.Count - 1;
-                            if ((query.WordCount > 0) && (query.WordCount < source.Count))
-                            {
-                                limit = query.WordCount;
-                            }
-                            else if ((query.LetterCount > 0) && (query.LetterCount < source.Count))
-                            {
-                                limit = query.LetterCount;
-                            }
-                            else if ((query.Value > 0L) && (query.Value < source.Count))
-                            {
-                                int min_letters_per_verse = 2; // HM in if without BismAllah
-                                limit = (int)(query.Value / min_letters_per_verse);
-                            }
-
+                            int limit = 114;
                             for (int i = 0; i < limit; i++) // try all possible set sizes
                             {
                                 int size = i + 1;
