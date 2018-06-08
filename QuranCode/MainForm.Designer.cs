@@ -1893,14 +1893,13 @@ partial class MainForm
             // 
             this.SearchGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.SearchGroupBox.Controls.Add(this.ChineseLanguageLabel);
             this.SearchGroupBox.Controls.Add(this.FindByNumbersPanel);
             this.SearchGroupBox.Controls.Add(this.UrduLanguageLabel);
             this.SearchGroupBox.Controls.Add(this.FarsiLanguageLabel);
             this.SearchGroupBox.Controls.Add(this.ArabicLanguageLabel);
             this.SearchGroupBox.Controls.Add(this.EnglishLanguageLabel);
-            this.SearchGroupBox.Controls.Add(this.LanguageComboBox);
             this.SearchGroupBox.Controls.Add(this.JapaneseLanguageLabel);
-            this.SearchGroupBox.Controls.Add(this.ChineseLanguageLabel);
             this.SearchGroupBox.Controls.Add(this.RussianLanguageLabel);
             this.SearchGroupBox.Controls.Add(this.GermanLanguageLabel);
             this.SearchGroupBox.Controls.Add(this.SpanishLanguageLabel);
@@ -1909,6 +1908,7 @@ partial class MainForm
             this.SearchGroupBox.Controls.Add(this.FindBySimilarityPanel);
             this.SearchGroupBox.Controls.Add(this.FindByTextPanel);
             this.SearchGroupBox.Controls.Add(this.SearchScopeBookLabel);
+            this.SearchGroupBox.Controls.Add(this.LanguageComboBox);
             this.SearchGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SearchGroupBox.Location = new System.Drawing.Point(0, 38);
             this.SearchGroupBox.Name = "SearchGroupBox";
@@ -2615,11 +2615,12 @@ partial class MainForm
             this.UrduLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UrduLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.UrduLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("UrduLanguageLabel.Image")));
-            this.UrduLanguageLabel.Location = new System.Drawing.Point(141, 2);
+            this.UrduLanguageLabel.Location = new System.Drawing.Point(39, 2);
             this.UrduLanguageLabel.Name = "UrduLanguageLabel";
             this.UrduLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.UrduLanguageLabel.TabIndex = 174;
+            this.UrduLanguageLabel.TabIndex = 3;
             this.UrduLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.UrduLanguageLabel, "Urdu");
             this.UrduLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // FarsiLanguageLabel
@@ -2631,11 +2632,12 @@ partial class MainForm
             this.FarsiLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FarsiLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.FarsiLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("FarsiLanguageLabel.Image")));
-            this.FarsiLanguageLabel.Location = new System.Drawing.Point(121, 2);
+            this.FarsiLanguageLabel.Location = new System.Drawing.Point(22, 2);
             this.FarsiLanguageLabel.Name = "FarsiLanguageLabel";
             this.FarsiLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.FarsiLanguageLabel.TabIndex = 175;
+            this.FarsiLanguageLabel.TabIndex = 2;
             this.FarsiLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.FarsiLanguageLabel, "Farsi");
             this.FarsiLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // ArabicLanguageLabel
@@ -2647,11 +2649,12 @@ partial class MainForm
             this.ArabicLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ArabicLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ArabicLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("ArabicLanguageLabel.Image")));
-            this.ArabicLanguageLabel.Location = new System.Drawing.Point(101, 2);
+            this.ArabicLanguageLabel.Location = new System.Drawing.Point(5, 2);
             this.ArabicLanguageLabel.Name = "ArabicLanguageLabel";
             this.ArabicLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.ArabicLanguageLabel.TabIndex = 176;
+            this.ArabicLanguageLabel.TabIndex = 1;
             this.ArabicLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.ArabicLanguageLabel, "Arabic");
             this.ArabicLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // EnglishLanguageLabel
@@ -2663,11 +2666,12 @@ partial class MainForm
             this.EnglishLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EnglishLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.EnglishLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("EnglishLanguageLabel.Image")));
-            this.EnglishLanguageLabel.Location = new System.Drawing.Point(81, 2);
+            this.EnglishLanguageLabel.Location = new System.Drawing.Point(57, 2);
             this.EnglishLanguageLabel.Name = "EnglishLanguageLabel";
             this.EnglishLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.EnglishLanguageLabel.TabIndex = 177;
+            this.EnglishLanguageLabel.TabIndex = 4;
             this.EnglishLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.EnglishLanguageLabel, "English");
             this.EnglishLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // LanguageComboBox
@@ -2677,8 +2681,9 @@ partial class MainForm
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.Location = new System.Drawing.Point(4, -5);
             this.LanguageComboBox.Name = "LanguageComboBox";
-            this.LanguageComboBox.Size = new System.Drawing.Size(71, 20);
+            this.LanguageComboBox.Size = new System.Drawing.Size(155, 20);
             this.LanguageComboBox.TabIndex = 1;
+            this.LanguageComboBox.Visible = false;
             this.LanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_SelectedIndexChanged);
             // 
             // JapaneseLanguageLabel
@@ -2693,8 +2698,9 @@ partial class MainForm
             this.JapaneseLanguageLabel.Location = new System.Drawing.Point(142, 2);
             this.JapaneseLanguageLabel.Name = "JapaneseLanguageLabel";
             this.JapaneseLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.JapaneseLanguageLabel.TabIndex = 169;
+            this.JapaneseLanguageLabel.TabIndex = 9;
             this.JapaneseLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.JapaneseLanguageLabel, "Japanese");
             this.JapaneseLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // ChineseLanguageLabel
@@ -2706,11 +2712,12 @@ partial class MainForm
             this.ChineseLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ChineseLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ChineseLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("ChineseLanguageLabel.Image")));
-            this.ChineseLanguageLabel.Location = new System.Drawing.Point(141, 2);
+            this.ChineseLanguageLabel.Location = new System.Drawing.Point(124, 2);
             this.ChineseLanguageLabel.Name = "ChineseLanguageLabel";
             this.ChineseLanguageLabel.Size = new System.Drawing.Size(18, 11);
-            this.ChineseLanguageLabel.TabIndex = 170;
+            this.ChineseLanguageLabel.TabIndex = 8;
             this.ChineseLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.ChineseLanguageLabel, "Chinese");
             this.ChineseLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // RussianLanguageLabel
@@ -2722,11 +2729,12 @@ partial class MainForm
             this.RussianLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RussianLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.RussianLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("RussianLanguageLabel.Image")));
-            this.RussianLanguageLabel.Location = new System.Drawing.Point(121, 2);
+            this.RussianLanguageLabel.Location = new System.Drawing.Point(108, 2);
             this.RussianLanguageLabel.Name = "RussianLanguageLabel";
             this.RussianLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.RussianLanguageLabel.TabIndex = 171;
+            this.RussianLanguageLabel.TabIndex = 7;
             this.RussianLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.RussianLanguageLabel, "Russian");
             this.RussianLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // GermanLanguageLabel
@@ -2738,11 +2746,12 @@ partial class MainForm
             this.GermanLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GermanLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.GermanLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("GermanLanguageLabel.Image")));
-            this.GermanLanguageLabel.Location = new System.Drawing.Point(101, 2);
+            this.GermanLanguageLabel.Location = new System.Drawing.Point(91, 2);
             this.GermanLanguageLabel.Name = "GermanLanguageLabel";
             this.GermanLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.GermanLanguageLabel.TabIndex = 172;
+            this.GermanLanguageLabel.TabIndex = 6;
             this.GermanLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.GermanLanguageLabel, "German");
             this.GermanLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // SpanishLanguageLabel
@@ -2754,11 +2763,12 @@ partial class MainForm
             this.SpanishLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SpanishLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.SpanishLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("SpanishLanguageLabel.Image")));
-            this.SpanishLanguageLabel.Location = new System.Drawing.Point(81, 2);
+            this.SpanishLanguageLabel.Location = new System.Drawing.Point(74, 2);
             this.SpanishLanguageLabel.Name = "SpanishLanguageLabel";
             this.SpanishLanguageLabel.Size = new System.Drawing.Size(16, 11);
-            this.SpanishLanguageLabel.TabIndex = 173;
+            this.SpanishLanguageLabel.TabIndex = 5;
             this.SpanishLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.SpanishLanguageLabel, "Spanish");
             this.SpanishLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
             // 
             // SearchScopeResultLabel
@@ -5300,7 +5310,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(816, 192);
+            this.TabControl.Size = new System.Drawing.Size(816, 193);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5313,7 +5323,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(808, 168);
+            this.TranslationTabPage.Size = new System.Drawing.Size(808, 167);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = " Translation ";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse";
@@ -5505,7 +5515,7 @@ partial class MainForm
             this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
             this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
             this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(808, 168);
+            this.GrammarTabPage.Size = new System.Drawing.Size(808, 167);
             this.GrammarTabPage.TabIndex = 193;
             this.GrammarTabPage.Text = " Grammar";
             this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English";
@@ -5538,7 +5548,7 @@ partial class MainForm
             this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
             this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
             this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 168);
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 167);
             this.RelatedWordsTabPage.TabIndex = 192;
             this.RelatedWordsTabPage.Text = "Related Words";
             this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word.";
@@ -5592,7 +5602,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(808, 168);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(808, 167);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]";
@@ -5671,7 +5681,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 168);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 167);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36.";
@@ -5791,7 +5801,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 168);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 167);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts";
@@ -5885,7 +5895,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 168);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 167);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to search for human genome correlation [Belkacem" +
@@ -5962,7 +5972,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(808, 168);
+            this.MathsTabPage.Size = new System.Drawing.Size(808, 167);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations";
@@ -6076,7 +6086,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(808, 168);
+            this.MathsPanel.Size = new System.Drawing.Size(808, 167);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -7364,7 +7374,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(808, 168);
+            this.DistancesTabPage.Size = new System.Drawing.Size(808, 167);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word.";
@@ -7440,7 +7450,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(808, 168);
+            this.DistancesPanel.Size = new System.Drawing.Size(808, 167);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -8282,7 +8292,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(808, 168);
+            this.UserTextTabPage.Size = new System.Drawing.Size(808, 167);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any text using the current value-letter system and show it" +
