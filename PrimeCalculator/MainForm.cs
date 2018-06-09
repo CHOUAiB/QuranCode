@@ -188,11 +188,11 @@ public partial class MainForm : Form
     }
     private void SetupToolTips()
     {
-        this.ToolTip.SetToolTip(this.PCIndexChainL2RTextBox, "Prime/composite index chain --> P=0 C=1");
-        this.ToolTip.SetToolTip(this.PCIndexChainR2LTextBox, "Prime/composite index chain <-- P=0 C=1");
-        this.ToolTip.SetToolTip(this.CPIndexChainL2RTextBox, "Prime/composite index chain --> P=1 C=0");
-        this.ToolTip.SetToolTip(this.CPIndexChainR2LTextBox, "Prime/composite index chain <-- P=1 C=0");
-        this.ToolTip.SetToolTip(this.IndexChainLengthTextBox, "Prime/composite index chain length");
+        this.ToolTip.SetToolTip(this.PCIndexChainL2RTextBox, "Prime-composite index chain --> P=0 C=1");
+        this.ToolTip.SetToolTip(this.PCIndexChainR2LTextBox, "Prime-composite index chain <-- P=0 C=1");
+        this.ToolTip.SetToolTip(this.CPIndexChainL2RTextBox, "Prime-composite index chain --> P=1 C=0");
+        this.ToolTip.SetToolTip(this.CPIndexChainR2LTextBox, "Prime-composite index chain <-- P=1 C=0");
+        this.ToolTip.SetToolTip(this.IndexChainLengthTextBox, "Prime-composite index chain length");
         this.ToolTip.SetToolTip(this.DigitSumTextBox, "Digit sum");
         this.ToolTip.SetToolTip(this.DigitalRootTextBox, "Digital root");
         this.ToolTip.SetToolTip(this.NthNumberTextBox, "Prime index");

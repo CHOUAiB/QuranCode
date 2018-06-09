@@ -79,7 +79,7 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Languages
     ///////////////////////////////////////////////////////////////////////////////
-    private string t = DEFAULT_LANGUAGE;
+    private string l = DEFAULT_LANGUAGE;
     private List<string> m_language_names = null;
     private void LanguageLabel_Click(object sender, EventArgs e)
     {
@@ -92,9 +92,9 @@ public partial class MainForm : Form, ISubscriber
                 int pos = control.Name.IndexOf("LanguageLabel");
                 if (pos > -1)
                 {
-                    t = control.Name.Remove(pos);
-                    LoadLanguage(t);
-                    LanguageComboBox.SelectedItem = t;
+                    l = control.Name.Remove(pos);
+                    LoadLanguage(l);
+                    LanguageComboBox.SelectedItem = l;
                 }
             }
         }
@@ -103,7 +103,7 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private void LoadLanguages()
+    private void InstallLanguages()
     {
         if (Directory.Exists(Globals.LANGUAGES_FOLDER))
         {
@@ -187,11 +187,11 @@ public partial class MainForm : Form, ISubscriber
             {
                 if ((index >= 0) && (index < m_language_names.Count))
                 {
-                    t = m_language_names[index];
-                    if (t != null)
+                    l = m_language_names[index];
+                    if (l != null)
                     {
-                        LoadLanguage(t);
-                        LanguageComboBox.SelectedItem = t;
+                        LoadLanguage(l);
+                        LanguageComboBox.SelectedItem = l;
                     }
                 }
             }
@@ -201,7 +201,7 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private Dictionary<string, Dictionary<string, string>> T = new Dictionary<string, Dictionary<string, string>>();
+    private Dictionary<string, Dictionary<string, string>> L = new Dictionary<string, Dictionary<string, string>>();
     private void LoadLanguage(string language_name)
     {
         this.Cursor = Cursors.WaitCursor;
@@ -226,6 +226,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             foreach (Control control in GetDescendentControls(this))
                             {
+                                // set Text
                                 if (control.Name == parts[0])
                                 {
                                     if (parts.Length > 2)
@@ -236,6 +237,7 @@ public partial class MainForm : Form, ISubscriber
                                         }
                                     }
 
+                                    // set ToolTip
                                     if (parts.Length > 4)
                                     {
                                         if (parts[4].Length > 0)
@@ -243,21 +245,27 @@ public partial class MainForm : Form, ISubscriber
                                             ToolTip.SetToolTip(control, parts[4]);
                                         }
                                     }
+
+                                    break;
                                 }
                             }
                         }
                     }
                 }
 
-                if (T.ContainsKey(t))
+                if (L.ContainsKey(l))
                 {
-                    T[t] = language;
+                    L[l] = language;
                 }
                 else
                 {
-                    T.Add(language_name, language);
+                    L.Add(language_name, language);
                 }
 
+                DisplayChapterRevelationInfo();
+                UpdateGoldenRatioScopeLabel();
+                UpdateGoldenRatioOrderLabel();
+                UpdateGoldenRatioTypeLabel();
 
                 UpdateFindByNumbersNumberLabel();
                 UpdateDistancesOptions();
@@ -268,7 +276,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (control.Text.Length > 0)
                         {
-                            ToolTip.SetToolTip(control, T[t][control.Text]);
+                            ToolTip.SetToolTip(control, L[l][control.Text]);
                         }
                     }
                     else if (control.Name.Contains("NumberType"))
@@ -278,11 +286,11 @@ public partial class MainForm : Form, ISubscriber
                             int remainder;
                             if (int.TryParse(control.Text, out remainder))
                             {
-                                ToolTip.SetToolTip(control, T[t]["remainder"]);
+                                ToolTip.SetToolTip(control, L[l]["remainder"]);
                             }
                             else
                             {
-                                ToolTip.SetToolTip(control, T[t][control.Text]);
+                                ToolTip.SetToolTip(control, L[l][control.Text]);
                             }
                         }
                     }
@@ -433,9 +441,8 @@ public partial class MainForm : Form, ISubscriber
         InitializeComponent();
         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
-        LoadLanguages();
-
         InstallFonts();
+        InstallLanguages();
 
         AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
 
@@ -615,7 +622,7 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 RecitationGroupBox.Text = ReciterComboBox.SelectedItem.ToString() + "                                 ";
                             }
-                            ToolTip.SetToolTip(PlayerVolumeTrackBar, "Volume " + (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
+                            ToolTip.SetToolTip(PlayerVolumeTrackBar, (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
 
                             PopulateChapterSortComboBox();
 
@@ -729,6 +736,9 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
+
+        //must be after initialization in order to Apply current language
+        SetToolTips();
 
         NotifyIcon.Visible = true;
 
@@ -1305,7 +1315,7 @@ public partial class MainForm : Form, ISubscriber
                     EditSaveTranslationLabel.Enabled = false;
                 }
 
-                ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+                ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
                 WordsListBoxLabel.Visible = false;
                 WordsListBox.Visible = false;
                 WordsListBox.SendToBack();
@@ -2900,139 +2910,149 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region ToolTips
     ///////////////////////////////////////////////////////////////////////////////
-    private void SetupToolTips()
+    private void SetToolTips()
     {
-        this.ToolTip.SetToolTip(this.HelpFolderLabel, "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ");
-        this.ToolTip.SetToolTip(this.ResearchMethodsRunButton, "Run");
-        this.ToolTip.SetToolTip(this.PlayerPlayLabel, "Play");
-        this.ToolTip.SetToolTip(this.PlayerPreviousLabel, "Previous verse");
-        this.ToolTip.SetToolTip(this.PlayerNextLabel, "Next verse");
-        this.ToolTip.SetToolTip(this.PlayerStopLabel, "Stop");
-        this.ToolTip.SetToolTip(this.PlayerRepeatLabel, "Repeat verse");
-        this.ToolTip.SetToolTip(this.PlayerRepeatAllLabel, "Repeat selection");
-        this.ToolTip.SetToolTip(this.PlayerRepeatCounterLabel, "Verse repetitions");
-        this.ToolTip.SetToolTip(this.PlayerRepeatAllCounterLabel, "Selection repetitions");
-        this.ToolTip.SetToolTip(this.PlayerMuteLabel, "Mute");
-        this.ToolTip.SetToolTip(this.PlayerVerseSilenceGapTrackBar, "Silence between verses");
-        this.ToolTip.SetToolTip(this.PlayerSelectionSilenceGapTrackBar, "Silence between selections");
-        this.ToolTip.SetToolTip(this.VerseByVerseNumberLabel, "Go to verse number = current value");
-        this.ToolTip.SetToolTip(this.VerseByLetterNumberLabel, "Go to verse with letter number = current value");
-        this.ToolTip.SetToolTip(this.VerseByWordNumberLabel, "Go to verse with word number = current value");
-        this.ToolTip.SetToolTip(this.UndoValueNavigationLabel, "Back");
-        this.ToolTip.SetToolTip(this.RedoValueNavigationLabel, "Forward");
-        this.ToolTip.SetToolTip(this.TextModeComboBox, "Letter simplification system\r\nنظام تبسيط الحروف");
-        this.ToolTip.SetToolTip(this.NumerologySystemComboBox, "Letter valuation system\r\nنظام تقييم الحروف");
-        this.ToolTip.SetToolTip(this.ChaptersTextBox, "Chapters in selection\r\nعدد السور");
-        this.ToolTip.SetToolTip(this.VersesTextBox, "Verses in selection\r\nعدد الءايات");
-        this.ToolTip.SetToolTip(this.WordsTextBox, "Words in selection\r\nعدد الكلمات");
-        this.ToolTip.SetToolTip(this.LettersTextBox, "Letters in selection\r\nعدد الحروف");
-        this.ToolTip.SetToolTip(this.DecimalChaptersTextBox, "Chapters in selection\r\nعدد السور");
-        this.ToolTip.SetToolTip(this.DecimalVersesTextBox, "Verses in selection\r\nعدد الءايات");
-        this.ToolTip.SetToolTip(this.DecimalWordsTextBox, "Words in selection\r\nعدد الكلمات");
-        this.ToolTip.SetToolTip(this.DecimalLettersTextBox, "Letters in selection\r\nعدد الحروف");
-        this.ToolTip.SetToolTip(this.ChapterNumberSumTextBox, "Sum of chapter numbers\r\nمجموع أرقام االسور");
-        this.ToolTip.SetToolTip(this.VerseNumberSumTextBox, "Sum of verse numbers in their chapters\r\nمجموع أرقام الءايات في سورها");
-        this.ToolTip.SetToolTip(this.WordNumberSumTextBox, "Sum of word numbers in their verses\r\nمجموع أرقام الكلمات في ءاياتها");
-        this.ToolTip.SetToolTip(this.LetterNumberSumTextBox, "Sum of letter numbers in their words\r\nمجموع أرقام الحروف في كلماتها");
-        this.ToolTip.SetToolTip(this.ValueTextBox, "Value of selection\r\nالقيمة حسب نظام تقييم الحروف الحالي");
-        this.ToolTip.SetToolTip(this.PrimeFactorsTextBox, "Prime factors of Value\r\nالعوامل الأولية للقيمة");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeVerseLabel, "in verses");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeChapterLabel, "in chapters");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePageLabel, "in pages");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeStationLabel, "in stations");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePartLabel, "in parts");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeGroupLabel, "in groups");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeHalfLabel, "in group halves");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeQuarterLabel, "in group quarters");
-        this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeBowingLabel, "in bowings");
-        this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, "find exact word or expression");
-        this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, "find any/all given words");
-        this.ToolTip.SetToolTip(this.FindByTextRootSearchTypeLabel, "find words of given roots");
-        this.ToolTip.SetToolTip(this.FindByTextAtChapterAnywhereRadioButton, "find anywhere in chapters");
-        this.ToolTip.SetToolTip(this.FindByTextAtChapterStartRadioButton, "find in first verses");
-        this.ToolTip.SetToolTip(this.FindByTextAtChapterMiddleRadioButton, "find in middle verses");
-        this.ToolTip.SetToolTip(this.FindByTextAtChapterEndRadioButton, "find in last verses");
-        this.ToolTip.SetToolTip(this.FindByTextAtVerseAnywhereRadioButton, "find anywhere in verses");
-        this.ToolTip.SetToolTip(this.FindByTextAtVerseStartRadioButton, "find in first words");
-        this.ToolTip.SetToolTip(this.FindByTextAtVerseMiddleRadioButton, "find in middle words");
-        this.ToolTip.SetToolTip(this.FindByTextAtVerseEndRadioButton, "find in last words");
-        this.ToolTip.SetToolTip(this.FindByTextAtWordAnywhereRadioButton, "find anywhere in words");
-        this.ToolTip.SetToolTip(this.FindByTextAtWordStartRadioButton, "find at the beginning of words");
-        this.ToolTip.SetToolTip(this.FindByTextAtWordMiddleRadioButton, "find in the middle of words");
-        this.ToolTip.SetToolTip(this.FindByTextAtWordEndRadioButton, "find at the end of words");
-        this.ToolTip.SetToolTip(this.FindByTextMultiplicityCheckBox, "find blocks with N repetitions");
-        this.ToolTip.SetToolTip(this.FindByTextAllWordsRadioButton, "find verses with all words in any order");
-        this.ToolTip.SetToolTip(this.FindByTextAnyWordRadioButton, "find verses with at least one word");
-        this.ToolTip.SetToolTip(this.FindBySimilarityCurrentVerseTypeLabel, "find similar verses to the current verse");
-        this.ToolTip.SetToolTip(this.FindBySimilarityAllVersesTypeLabel, "find similar verses to all verses in the Quran");
-        this.ToolTip.SetToolTip(this.FindBySimilarityPercentageTrackBar, "similarity percentage");
-        this.ToolTip.SetToolTip(this.FindBySimilarityTextRadioButton, "verses with similar text");
-        this.ToolTip.SetToolTip(this.FindBySimilarityWordsRadioButton, "verses with similar words");
-        this.ToolTip.SetToolTip(this.FindBySimilarityFirstHalfRadioButton, "verses with similar first half");
-        this.ToolTip.SetToolTip(this.FindBySimilarityLastHalfRadioButton, "verses with similar last half");
-        this.ToolTip.SetToolTip(this.FindBySimilarityFirstWordRadioButton, "verses with similar first word");
-        this.ToolTip.SetToolTip(this.FindBySimilarityLastWordRadioButton, "verses with similar last word");
-        this.ToolTip.SetToolTip(this.PCIndexChainL2RTextBox, "Prime/composite index chain --> P=0 C=1");
-        this.ToolTip.SetToolTip(this.PCIndexChainR2LTextBox, "Prime/composite index chain <-- P=0 C=1");
-        this.ToolTip.SetToolTip(this.CPIndexChainL2RTextBox, "Prime/composite index chain --> P=1 C=0");
-        this.ToolTip.SetToolTip(this.CPIndexChainR2LTextBox, "Prime/composite index chain <-- P=1 C=0");
-        this.ToolTip.SetToolTip(this.IndexChainLengthTextBox, "Prime/composite index chain length");
-        this.ToolTip.SetToolTip(this.DigitSumTextBox, "Digit sum");
-        this.ToolTip.SetToolTip(this.DigitalRootTextBox, "Digital root");
-        this.ToolTip.SetToolTip(this.NthNumberTextBox, "Prime index");
-        this.ToolTip.SetToolTip(this.NthAdditiveNumberTextBox, "Additive prime index");
-        this.ToolTip.SetToolTip(this.NthNonAdditiveNumberTextBox, "Non-additive prime index");
-        this.ToolTip.SetToolTip(this.AdjustValueByPositionsLabel, "Dynamic Primalogy System - ©2012 Ali Adams");
-        this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, "Increment each letter's value by its letter number in word");
-        this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, "Increment each letter's value by its word number in verse");
-        this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, "Increment each letter's value by its verse number in chapter");
-        this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, "Increment each letter's value by its chapter number in book");
-        this.ToolTip.SetToolTip(this.AddToLetterLDistanceCheckBox, "Increment each letter's value by the number of letters back to the same letter");
-        this.ToolTip.SetToolTip(this.AddToLetterWDistanceCheckBox, "Increment each letter's value by the number of words back to the same letter");
-        this.ToolTip.SetToolTip(this.AddToLetterVDistanceCheckBox, "Increment each letter's value by the number of verses back to the same letter");
-        this.ToolTip.SetToolTip(this.AddToLetterCDistanceCheckBox, "Increment each letter's value by the number of chapters back to the same letter");
-        this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, "Increment each word's value by its word number in verse");
-        this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, "Increment each word's value by its verse number in chapter");
-        this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, "Increment each word's value by its chapter number in book");
-        this.ToolTip.SetToolTip(this.AddToWordWDistanceCheckBox, "Increment each word's value by the number of words back to the same word");
-        this.ToolTip.SetToolTip(this.AddToWordVDistanceCheckBox, "Increment each word's value by the number of verses back to the same word");
-        this.ToolTip.SetToolTip(this.AddToWordCDistanceCheckBox, "Increment each word's value by the number of chapters back to the same word");
-        this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, "Increment each verse's value by its verse number in chapter");
-        this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, "Increment each verse's value by its chapter number in book");
-        this.ToolTip.SetToolTip(this.AddToVerseVDistanceCheckBox, "Increment each verse's value by the number of verses back to the same verse");
-        this.ToolTip.SetToolTip(this.AddToVerseCDistanceCheckBox, "Increment each verse's value by the number of chapters back to the same verse");
-        this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, "Increment each chapter's value by its chapter number in book");
-        this.ToolTip.SetToolTip(this.ChapterComboBox, "C, C-C, C:V, C:V-C, C-C:V, C:V-C:V or any combination" + "\r\n" + "36  40-46  15:87  18:9-25  1-2:5  24:35-27:62  2:29,41:9-12");
-        this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "V, V-V, ...");
-        this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "W, W-W, ...");
-        this.ToolTip.SetToolTip(this.ChapterLetterNumericUpDown, "L, L-L, ...");
-        this.ToolTip.SetToolTip(this.PartNumericUpDown, "P, P-P, ...");
-        this.ToolTip.SetToolTip(this.PageNumericUpDown, "#, #-#, ...");
-        this.ToolTip.SetToolTip(this.StationNumericUpDown, "S, S-S, ...");
-        this.ToolTip.SetToolTip(this.GroupNumericUpDown, "G, G-G, ...");
-        this.ToolTip.SetToolTip(this.HalfNumericUpDown, "H, H-H, ...");
-        this.ToolTip.SetToolTip(this.QuarterNumericUpDown, "Q, Q-Q, ...");
-        this.ToolTip.SetToolTip(this.BowingNumericUpDown, "B, B-B, ...");
-        this.ToolTip.SetToolTip(this.VerseNumericUpDown, "V, V-V, ...");
-        this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
-        this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
-        this.ToolTip.SetToolTip(this.SearchScopeBookLabel, "Search in entire book  إبحث في الكتاب");
-        this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, "Search in current selection  إبحث في النص المعروض");
-        this.ToolTip.SetToolTip(this.SearchScopeResultLabel, "Search in current search result  إبحث في النتائج");
-        this.ToolTip.SetToolTip(this.FindByTextTextBox, "text to search for in Arabic or any installed language");
-        this.ToolTip.SetToolTip(this.FindByTextWordnessCheckBox, "find verses with whole word only");
-        this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, "case sensitive for non-Arabic languages");
-        this.ToolTip.SetToolTip(this.FindByNumbersResultTypeWordsLabel, "find words within verses");
-        this.ToolTip.SetToolTip(this.FindByNumbersResultTypeSentencesLabel, "find sentences");
-        this.ToolTip.SetToolTip(this.FindByNumbersResultTypeVersesLabel, "find verses");
-        this.ToolTip.SetToolTip(this.FindByNumbersResultTypeChaptersLabel, "find chapters");
-        this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeWordsLabel, "find words within verses");
-        this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeSentencesLabel, "find sentences");
-        this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeVersesLabel, "find verses");
-        this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeChaptersLabel, "find chapters");
-        this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeDuplicateLettersLabel, "include duplicate phrase letters");
-        this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeUniqueLettersLabel, "exclude duplicate phrase letters");
-        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "©2009 Aminreza Ebrahimi Saba");
+        try
+        {
+            this.ToolTip.SetToolTip(this.HelpFolderLabel, "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ");
+            this.ToolTip.SetToolTip(this.FontLabel, L[l]["Font"]);
+            this.ToolTip.SetToolTip(this.ResearchMethodsRunButton, L[l]["Run"]);
+            this.ToolTip.SetToolTip(this.InspectChaptersLabel, L[l]["Inspect chapters"]);
+            this.ToolTip.SetToolTip(this.InspectVersesLabel, L[l]["Inspect verses"]);
+            this.ToolTip.SetToolTip(this.PlayerPlayLabel, L[l]["Play"]);
+            this.ToolTip.SetToolTip(this.PlayerPreviousLabel, L[l]["Previous verse"]);
+            this.ToolTip.SetToolTip(this.PlayerNextLabel, L[l]["Next verse"]);
+            this.ToolTip.SetToolTip(this.PlayerStopLabel, L[l]["Stop"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatLabel, L[l]["Repeat verse"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatAllLabel, L[l]["Repeat selection"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatCounterLabel, L[l]["Verse repetitions"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatAllCounterLabel, L[l]["Selection repetitions"]);
+            this.ToolTip.SetToolTip(this.PlayerMuteLabel, L[l]["Mute"]);
+            this.ToolTip.SetToolTip(this.PlayerVerseSilenceGapTrackBar, L[l]["Silence between verses"]);
+            this.ToolTip.SetToolTip(this.PlayerSelectionSilenceGapTrackBar, L[l]["Silence between selections"]);
+            this.ToolTip.SetToolTip(this.VerseByVerseNumberLabel, L[l]["Go to verse number = current value"]);
+            this.ToolTip.SetToolTip(this.VerseByLetterNumberLabel, L[l]["Go to verse with letter number = current value"]);
+            this.ToolTip.SetToolTip(this.VerseByWordNumberLabel, L[l]["Go to verse with word number = current value"]);
+            this.ToolTip.SetToolTip(this.UndoValueNavigationLabel, L[l]["Back"]);
+            this.ToolTip.SetToolTip(this.RedoValueNavigationLabel, L[l]["Forward"]);
+            this.ToolTip.SetToolTip(this.TextModeComboBox, L[l]["Letter simplification system"]);
+            this.ToolTip.SetToolTip(this.NumerologySystemComboBox, L[l]["Letter valuation system"]);
+            this.ToolTip.SetToolTip(this.ChaptersTextBox, L[l]["Chapters in selection"]);
+            this.ToolTip.SetToolTip(this.VersesTextBox, L[l]["Verses in selection"]);
+            this.ToolTip.SetToolTip(this.WordsTextBox, L[l]["Words in selection"]);
+            this.ToolTip.SetToolTip(this.LettersTextBox, L[l]["Letters in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalChaptersTextBox, L[l]["Chapters in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalVersesTextBox, L[l]["Verses in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalWordsTextBox, L[l]["Words in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalLettersTextBox, L[l]["Letters in selection"]);
+            this.ToolTip.SetToolTip(this.ChapterNumberSumTextBox, L[l]["Sum of chapter numbers"]);
+            this.ToolTip.SetToolTip(this.VerseNumberSumTextBox, L[l]["Sum of verse numbers in their chapters"]);
+            this.ToolTip.SetToolTip(this.WordNumberSumTextBox, L[l]["Sum of word numbers in their verses"]);
+            this.ToolTip.SetToolTip(this.LetterNumberSumTextBox, L[l]["Sum of letter numbers in their words"]);
+            this.ToolTip.SetToolTip(this.ValueTextBox, L[l]["Value of selection"]);
+            this.ToolTip.SetToolTip(this.PrimeFactorsTextBox, L[l]["Prime factors of Value"]);
+            this.ToolTip.SetToolTip(this.TranslationFontLabel, L[l]["Font"]);
+            this.ToolTip.SetToolTip(this.SearchScopeBookLabel, L[l]["Search in entire book"]);
+            this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, L[l]["Search in current selection"]);
+            this.ToolTip.SetToolTip(this.SearchScopeResultLabel, L[l]["Search in current search result"]);
+            this.ToolTip.SetToolTip(this.FindByTextTextBox, L[l]["text to search for in Arabic or any installed language"]);
+            this.ToolTip.SetToolTip(this.FindByTextWordnessCheckBox, L[l]["find verses with whole word only"]);
+            this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, L[l]["case sensitive for non-Arabic languages"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeVerseLabel, L[l]["in verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeChapterLabel, L[l]["in chapters"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePageLabel, L[l]["in pages"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeStationLabel, L[l]["in stations"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePartLabel, L[l]["in parts"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeGroupLabel, L[l]["in groups"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeHalfLabel, L[l]["in group halves"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeQuarterLabel, L[l]["in group quarters"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeBowingLabel, L[l]["in bowings"]);
+            this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, L[l]["find exact word or expression"]);
+            this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, L[l]["find any/all given words"]);
+            this.ToolTip.SetToolTip(this.FindByTextRootSearchTypeLabel, L[l]["find words of given roots"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterAnywhereRadioButton, L[l]["find anywhere in chapters"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterStartRadioButton, L[l]["find in first verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterMiddleRadioButton, L[l]["find in middle verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterEndRadioButton, L[l]["find in last verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseAnywhereRadioButton, L[l]["find anywhere in verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseStartRadioButton, L[l]["find in first words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseMiddleRadioButton, L[l]["find in middle words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseEndRadioButton, L[l]["find in last words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordAnywhereRadioButton, L[l]["find anywhere in words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordStartRadioButton, L[l]["find at the beginning of words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordMiddleRadioButton, L[l]["find in the middle of words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordEndRadioButton, L[l]["find at the end of words"]);
+            this.ToolTip.SetToolTip(this.FindByTextMultiplicityCheckBox, L[l]["find blocks with N repetitions"]);
+            this.ToolTip.SetToolTip(this.FindByTextAllWordsRadioButton, L[l]["find verses with all words in any order"]);
+            this.ToolTip.SetToolTip(this.FindByTextAnyWordRadioButton, L[l]["find verses with at least one word"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityCurrentVerseTypeLabel, L[l]["find similar verses to the current verse"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityAllVersesTypeLabel, L[l]["find similar verses to all verses in the Quran"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityPercentageTrackBar, L[l]["similarity percentage"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityTextRadioButton, L[l]["verses with similar text"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityWordsRadioButton, L[l]["verses with similar words"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityFirstHalfRadioButton, L[l]["verses with similar first half"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityLastHalfRadioButton, L[l]["verses with similar last half"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityFirstWordRadioButton, L[l]["verses with similar first word"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityLastWordRadioButton, L[l]["verses with similar last word"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeSentencesLabel, L[l]["find sentences"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeWordsLabel, L[l]["find words"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeSentencesLabel, L[l]["find sentences"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeVersesLabel, L[l]["find verses"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeChaptersLabel, L[l]["find chapters"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeDuplicateLettersLabel, L[l]["include duplicate phrase letters"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeUniqueLettersLabel, L[l]["exclude duplicate phrase letters"]);
+            this.ToolTip.SetToolTip(this.PCIndexChainL2RTextBox, L[l]["Prime-composite index chain --> P=0 C=1"]);
+            this.ToolTip.SetToolTip(this.PCIndexChainR2LTextBox, L[l]["Prime-composite index chain <-- P=0 C=1"]);
+            this.ToolTip.SetToolTip(this.CPIndexChainL2RTextBox, L[l]["Prime-composite index chain --> P=1 C=0"]);
+            this.ToolTip.SetToolTip(this.CPIndexChainR2LTextBox, L[l]["Prime-composite index chain <-- P=1 C=0"]);
+            this.ToolTip.SetToolTip(this.IndexChainLengthTextBox, L[l]["Prime-composite index chain length"]);
+            this.ToolTip.SetToolTip(this.DigitSumTextBox, L[l]["Digit sum"]);
+            this.ToolTip.SetToolTip(this.DigitalRootTextBox, L[l]["Digital root"]);
+            this.ToolTip.SetToolTip(this.NthNumberTextBox, L[l]["Prime index"]);
+            this.ToolTip.SetToolTip(this.NthAdditiveNumberTextBox, L[l]["Additive prime index"]);
+            this.ToolTip.SetToolTip(this.NthNonAdditiveNumberTextBox, L[l]["Non-additive prime index"]);
+            this.ToolTip.SetToolTip(this.AdjustValueByPositionsLabel, L[l]["Dynamic Primalogy System - ©2008 Ali Adams"]);
+            this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, L[l]["Increment each letter's value by its letter number in word"]);
+            this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, L[l]["Increment each letter's value by its word number in verse"]);
+            this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, L[l]["Increment each letter's value by its verse number in chapter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, L[l]["Increment each letter's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToLetterLDistanceCheckBox, L[l]["Increment each letter's value by the number of letters back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterWDistanceCheckBox, L[l]["Increment each letter's value by the number of words back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterVDistanceCheckBox, L[l]["Increment each letter's value by the number of verses back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterCDistanceCheckBox, L[l]["Increment each letter's value by the number of chapters back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, L[l]["Increment each word's value by its word number in verse"]);
+            this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, L[l]["Increment each word's value by its verse number in chapter"]);
+            this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, L[l]["Increment each word's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToWordWDistanceCheckBox, L[l]["Increment each word's value by the number of words back to the same word"]);
+            this.ToolTip.SetToolTip(this.AddToWordVDistanceCheckBox, L[l]["Increment each word's value by the number of verses back to the same word"]);
+            this.ToolTip.SetToolTip(this.AddToWordCDistanceCheckBox, L[l]["Increment each word's value by the number of chapters back to the same word"]);
+            this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, L[l]["Increment each verse's value by its verse number in chapter"]);
+            this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, L[l]["Increment each verse's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToVerseVDistanceCheckBox, L[l]["Increment each verse's value by the number of verses back to the same verse"]);
+            this.ToolTip.SetToolTip(this.AddToVerseCDistanceCheckBox, L[l]["Increment each verse's value by the number of chapters back to the same verse"]);
+            this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, L[l]["Increment each chapter's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.ChapterComboBox, "C, C-C, C:V, C:V-C, C-C:V, C:V-C:V or any combination" + "\r\n" + "36  40-46  15:87  18:9-25  1-2:5  24:35-27:62  2:29,41:9-12");
+            this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "V, V-V, ...");
+            this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "W, W-W, ...");
+            this.ToolTip.SetToolTip(this.ChapterLetterNumericUpDown, "L, L-L, ...");
+            this.ToolTip.SetToolTip(this.PartNumericUpDown, "P, P-P, ...");
+            this.ToolTip.SetToolTip(this.PageNumericUpDown, "#, #-#, ...");
+            this.ToolTip.SetToolTip(this.StationNumericUpDown, "S, S-S, ...");
+            this.ToolTip.SetToolTip(this.GroupNumericUpDown, "G, G-G, ...");
+            this.ToolTip.SetToolTip(this.HalfNumericUpDown, "H, H-H, ...");
+            this.ToolTip.SetToolTip(this.QuarterNumericUpDown, "Q, Q-Q, ...");
+            this.ToolTip.SetToolTip(this.BowingNumericUpDown, "B, B-B, ...");
+            this.ToolTip.SetToolTip(this.VerseNumericUpDown, "V, V-V, ...");
+            this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
+            this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
+        }
+        catch
+        {
+            // ignore
+        }
     }
     private void InitializeControls()
     {
@@ -3055,8 +3075,6 @@ public partial class MainForm : Form, ISubscriber
         RegisterContextMenu(NthAdditiveNumberTextBox);
         RegisterContextMenu(NthNonAdditiveNumberTextBox);
         RegisterContextMenu(FindByFrequencyPhraseTextBox);
-
-        SetupToolTips();
     }
     ///////////////////////////////////////////////////////////////////////////////
     #endregion
@@ -3851,7 +3869,7 @@ public partial class MainForm : Form, ISubscriber
             else if (method_name.Contains("Pivot"))
             {
                 ResearchMethodParameterTextBox.Text = "0";
-                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "pivot");
+                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Pivot");
                 ResearchMethodParameterTextBox.Visible = true;
             }
             else if (method_name.Contains("Equals"))
@@ -4315,7 +4333,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                     else
                     {
-                        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+                        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
                         WordsListBoxLabel.Visible = false;
                         WordsListBox.Visible = false;
                         WordsListBox.SendToBack();
@@ -4669,7 +4687,7 @@ public partial class MainForm : Form, ISubscriber
                         m_user_text_mode = false;
                         m_selection_mode = false;
 
-                        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+                        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
                         WordsListBoxLabel.Visible = false;
                         WordsListBox.Visible = false;
                         WordsListBox.SendToBack();
@@ -4705,7 +4723,7 @@ public partial class MainForm : Form, ISubscriber
                         // change focus to MainTextBox control insead of SearchTextBox
                         MainTextBox.Focus();
 
-                        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+                        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
                         WordsListBoxLabel.Visible = false;
                         WordsListBox.Visible = false;
                         WordsListBox.SendToBack();
@@ -4905,7 +4923,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 WordWrapLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "text_wrap.png");
             }
-            ToolTip.SetToolTip(WordWrapLabel, "Wrapped");
+            ToolTip.SetToolTip(WordWrapLabel, "Unwrap");
         }
         else
         {
@@ -4913,7 +4931,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 WordWrapLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "text_unwrap.png");
             }
-            ToolTip.SetToolTip(WordWrapLabel, "Unwrapped");
+            ToolTip.SetToolTip(WordWrapLabel, "Wrap");
         }
         WordWrapLabel.Refresh();
     }
@@ -5290,18 +5308,17 @@ public partial class MainForm : Form, ISubscriber
                         m_golden_ratio_scope = GoldenRatioScope.Sentence;
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Sentence-level golden ratio");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
                         }
                     }
                     break;
                 case GoldenRatioScope.Letter:
                     {
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
-                            m_golden_ratio_scope = GoldenRatioScope.None;
+                        m_golden_ratio_scope = GoldenRatioScope.None;
                         if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Golden ratio colorization");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
                         }
                     }
                     break;
@@ -5311,7 +5328,7 @@ public partial class MainForm : Form, ISubscriber
                         if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Letter-level golden ratio");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
                         }
                     }
                     break;
@@ -5321,7 +5338,7 @@ public partial class MainForm : Form, ISubscriber
                         if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Word-level golden ratio");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
                         }
                     }
                     break;
@@ -5337,7 +5354,7 @@ public partial class MainForm : Form, ISubscriber
                         if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Letter-level golden ratio");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
                         }
                     }
                     break;
@@ -5347,7 +5364,7 @@ public partial class MainForm : Form, ISubscriber
                         if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Word-level golden ratio");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
                         }
                     }
                     break;
@@ -5357,7 +5374,7 @@ public partial class MainForm : Form, ISubscriber
                         if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Sentence-level golden ratio");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
                         }
                     }
                     break;
@@ -5367,7 +5384,7 @@ public partial class MainForm : Form, ISubscriber
                         if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
                         {
                             GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, "Golden ratio colorization");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
                         }
                     }
                     break;
@@ -5388,7 +5405,7 @@ public partial class MainForm : Form, ISubscriber
                     if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sl.png"))
                     {
                         GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sl.png");
-                        ToolTip.SetToolTip(GoldenRatioOrderLabel, "Golden ratio ~= 1 + 0.618");
+                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
                     }
                 }
                 break;
@@ -5398,7 +5415,7 @@ public partial class MainForm : Form, ISubscriber
                     if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_ls.png"))
                     {
                         GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_ls.png");
-                        ToolTip.SetToolTip(GoldenRatioOrderLabel, "Golden ratio ~= 0.618 + 1");
+                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
                     }
                 }
                 break;
@@ -5416,7 +5433,7 @@ public partial class MainForm : Form, ISubscriber
                     if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_value.png"))
                     {
                         GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_value.png");
-                        ToolTip.SetToolTip(GoldenRatioTypeLabel, "Value-based golden ratio");
+                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio"]);
                     }
                 }
                 break;
@@ -5426,13 +5443,74 @@ public partial class MainForm : Form, ISubscriber
                     if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_text.png"))
                     {
                         GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_text.png");
-                        ToolTip.SetToolTip(GoldenRatioTypeLabel, "Text-based golden ratio");
+                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio"]);
                     }
                 }
                 break;
         }
 
         DisplaySelectionText();
+    }
+    private void UpdateGoldenRatioScopeLabel()
+    {
+        switch (m_golden_ratio_scope)
+        {
+            case GoldenRatioScope.None:
+                {
+                    m_golden_ratio_scope = GoldenRatioScope.Sentence;
+                    {
+                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
+                    }
+                }
+                break;
+            case GoldenRatioScope.Letter:
+                {
+                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
+                }
+                break;
+            case GoldenRatioScope.Word:
+                {
+                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
+                }
+                break;
+            case GoldenRatioScope.Sentence:
+                {
+                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
+                }
+                break;
+        }
+    }
+    private void UpdateGoldenRatioOrderLabel()
+    {
+        switch (m_golden_ratio_order)
+        {
+            case GoldenRatioOrder.LongShort:
+                {
+                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
+                }
+                break;
+            case GoldenRatioOrder.ShortLong:
+                {
+                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
+                }
+                break;
+        }
+    }
+    private void UpdateGoldenRatioTypeLabel()
+    {
+        switch (m_golden_ratio_type)
+        {
+            case GoldenRatioType.Text:
+                {
+                    ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio"]);
+                }
+                break;
+            case GoldenRatioType.Value:
+                {
+                    ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio"]);
+                }
+                break;
+        }
     }
     private void ColorizeGoldenRatios()
     {
@@ -6328,7 +6406,7 @@ public partial class MainForm : Form, ISubscriber
                                 }
                                 ChapterGroupBox.ForeColor = Color.Black;
                                 ChapterGroupBox.Text = ((matching_chapters > 99) ? "" : ((matching_chapters > 9) ? " " : "  ")) + matching_chapters + " Chapters        ";
-                                this.ToolTip.SetToolTip(this.ChapterGroupBox, "Found chapters");
+                                this.ToolTip.SetToolTip(this.ChapterGroupBox, L[l]["Found chapters"]);
                             }
                         }
                         else // selection displayed
@@ -7015,17 +7093,17 @@ public partial class MainForm : Form, ISubscriber
                             switch (chapter.RevelationPlace)
                             {
                                 case RevelationPlace.Makkah:
-                                    arabic_revelation_place = "مكّية";
+                                    arabic_revelation_place = L[l]["Makkah"];
                                     break;
                                 case RevelationPlace.Medina:
-                                    arabic_revelation_place = "مدنيّة";
+                                    arabic_revelation_place = L[l]["Medina"];
                                     break;
                                 default:
                                     arabic_revelation_place = "";
                                     break;
                             }
-                            ChapterGroupBox.Text = "     " + chapter.RevelationOrder.ToString() + " - " + arabic_revelation_place + "        ";
-                            //ChapterGroupBox.Text = "     " + chapter.RevelationOrder.ToString().ToNth() + " - " + arabic_revelation_place + "        ";
+                            ChapterGroupBox.Text = " " + chapter.RevelationOrder.ToString() + " - " + arabic_revelation_place + "        ";
+                            //ChapterGroupBox.Text = " " + chapter.RevelationOrder.ToString().ToNth() + " - " + arabic_revelation_place + "        ";
                         }
                     }
                 }
@@ -7033,7 +7111,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     ChapterGroupBox.Text = "";
                 }
-                this.ToolTip.SetToolTip(this.ChapterGroupBox, "Revelation التنزيل");
+                this.ToolTip.SetToolTip(this.ChapterGroupBox, L[l]["Revelation order"]);
 
                 UpdateChapterGroupBoxTextColor();
             }
@@ -8169,7 +8247,7 @@ public partial class MainForm : Form, ISubscriber
 
         DisplaySelection(false);
     }
-    private void InpectChaptersLabel_Click(object sender, EventArgs e)
+    private void InspectChaptersLabel_Click(object sender, EventArgs e)
     {
         if (m_client == null) return;
         if (m_client.Book == null) return;
@@ -8919,7 +8997,7 @@ public partial class MainForm : Form, ISubscriber
             m_user_text_mode = false;
             m_selection_mode = true;
 
-            ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+            ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
             WordsListBoxLabel.Visible = false;
             WordsListBox.Visible = false;
             WordsListBox.SendToBack();
@@ -10295,7 +10373,7 @@ public partial class MainForm : Form, ISubscriber
                         {
                             PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
                         }
-                        ToolTip.SetToolTip(PlayerPlayLabel, T[t]["Pause"]);
+                        ToolTip.SetToolTip(PlayerPlayLabel, L[l]["Pause"]);
                         PlayerPlayLabel.Refresh();
 
                         m_player.VolumeAll = m_audio_volume;
@@ -10354,7 +10432,7 @@ public partial class MainForm : Form, ISubscriber
                                         {
                                             PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
                                         }
-                                        ToolTip.SetToolTip(PlayerPlayLabel, T[t]["Pause"]);
+                                        ToolTip.SetToolTip(PlayerPlayLabel, L[l]["Pause"]);
                                         PlayerPlayLabel.Refresh();
 
                                         m_player.VolumeAll = m_audio_volume;
@@ -10485,7 +10563,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
             }
-            ToolTip.SetToolTip(PlayerPlayLabel, T[t]["Pause"]);
+            ToolTip.SetToolTip(PlayerPlayLabel, L[l]["Pause"]);
             PlayerPlayLabel.Refresh();
 
             m_break_playing = false;
@@ -10525,7 +10603,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
             }
-            ToolTip.SetToolTip(PlayerPlayLabel, T[t]["Pause"]);
+            ToolTip.SetToolTip(PlayerPlayLabel, L[l]["Pause"]);
             PlayerPlayLabel.Refresh();
 
             m_break_playing = false;
@@ -10551,7 +10629,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_pause.png");
                 }
-                ToolTip.SetToolTip(PlayerPlayLabel, T[t]["Pause"]);
+                ToolTip.SetToolTip(PlayerPlayLabel, L[l]["Pause"]);
                 PlayerPlayLabel.Refresh();
 
                 if ((m_player.Closed) || (m_player.Stopped))
@@ -10570,7 +10648,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     PlayerPlayLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "player_play.png");
                 }
-                ToolTip.SetToolTip(PlayerPlayLabel, T[t]["Play"]);
+                ToolTip.SetToolTip(PlayerPlayLabel, L[l]["Play"]);
                 PlayerPlayLabel.Refresh();
 
                 m_player.Pause(); // pause play
@@ -10749,7 +10827,7 @@ public partial class MainForm : Form, ISubscriber
         {
             m_audio_volume = PlayerVolumeTrackBar.Value * (1000 / PlayerVolumeTrackBar.Maximum);
             m_player.VolumeAll = m_audio_volume;
-            ToolTip.SetToolTip(PlayerVolumeTrackBar, T[t]["Volume"] + " " + (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
+            ToolTip.SetToolTip(PlayerVolumeTrackBar, (m_audio_volume / (1000 / PlayerVolumeTrackBar.Maximum)).ToString() + "%");
         }
     }
     private void PlayerVerseSilenceGapTrackBar_Scroll(object sender, EventArgs e)
@@ -10761,11 +10839,11 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_silence_between_verses == 0.0F)
         {
-            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, T[t]["no silence between verse replays"]);
+            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, L[l]["no silence between verse replays"]);
         }
         else
         {
-            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, m_silence_between_verses.ToString("0.0") + " " + T[t]["verses silence between verse replays"]);
+            ToolTip.SetToolTip(PlayerVerseSilenceGapTrackBar, m_silence_between_verses.ToString("0.0") + " " + L[l]["verses silence between verse replays"]);
         }
     }
     private void PlayerSelectionSilenceGapTrackBar_Scroll(object sender, EventArgs e)
@@ -10779,51 +10857,51 @@ public partial class MainForm : Form, ISubscriber
         {
             case 0:
                 m_silence_time_between_selections = 0 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["no silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["no silence between selection replays"]);
                 break;
             case 1:
                 m_silence_time_between_selections = 10 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["10 seconds silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["10 seconds silence between selection replays"]);
                 break;
             case 2:
                 m_silence_time_between_selections = 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["1 minute silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["1 minute silence between selection replays"]);
                 break;
             case 3:
                 m_silence_time_between_selections = 5 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["5 minutes silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["5 minutes silence between selection replays"]);
                 break;
             case 4:
                 m_silence_time_between_selections = 15 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["15 minutes silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["15 minutes silence between selection replays"]);
                 break;
             case 5:
                 m_silence_time_between_selections = 1 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["1 hour silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["1 hour silence between selection replays"]);
                 break;
             case 6:
                 m_silence_time_between_selections = 2 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["2 hours silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["2 hours silence between selection replays"]);
                 break;
             case 7:
                 m_silence_time_between_selections = 6 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["6 hours silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["6 hours silence between selection replays"]);
                 break;
             case 8:
                 m_silence_time_between_selections = 12 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["12 hours silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["12 hours silence between selection replays"]);
                 break;
             case 9:
                 m_silence_time_between_selections = 24 * 60 * 60 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["1 day silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["1 day silence between selection replays"]);
                 break;
             case 10:
                 m_silence_time_between_selections = new Random().Next(10, 24 * 60 * 60) * 1000; // 10s to 24hr
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["Random silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["Random silence between selection replays"]);
                 break;
             default:
                 m_silence_time_between_selections = 0 * 1000;
-                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, T[t]["no silence between selection replays"]);
+                ToolTip.SetToolTip(PlayerSelectionSilenceGapTrackBar, L[l]["no silence between selection replays"]);
                 break;
         }
     }
@@ -11362,7 +11440,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 RecitationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "apply.png");
             }
-            ToolTip.SetToolTip(RecitationsApplySettingsLabel, T[t]["Download complete Quran recitations"]);
+            ToolTip.SetToolTip(RecitationsApplySettingsLabel, L[l]["Download complete Quran recitations"]);
         }
         else
         {
@@ -11377,7 +11455,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         RecitationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "settings.png");
                     }
-                    ToolTip.SetToolTip(RecitationsApplySettingsLabel, T[t]["Add/Remove recitations"]);
+                    ToolTip.SetToolTip(RecitationsApplySettingsLabel, L[l]["Add/Remove recitations"]);
 
                     if (m_client.Book.RecitationInfos != null)
                     {
@@ -11471,7 +11549,7 @@ public partial class MainForm : Form, ISubscriber
         {
             RecitationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "settings.png");
         }
-        ToolTip.SetToolTip(RecitationsApplySettingsLabel, T[t]["Setup recitations"]);
+        ToolTip.SetToolTip(RecitationsApplySettingsLabel, L[l]["Setup recitations"]);
         PopulateRecitationsCheckedListBox();
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -11848,7 +11926,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 TranslationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "apply.png");
             }
-            ToolTip.SetToolTip(TranslationsApplySettingsLabel, "Download translations");
+            ToolTip.SetToolTip(TranslationsApplySettingsLabel, L[l]["Download translations"]);
         }
         else // download any newly checked translation(s)
         {
@@ -11859,7 +11937,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 TranslationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "settings.png");
             }
-            ToolTip.SetToolTip(TranslationsApplySettingsLabel, "Add/Remove translations");
+            ToolTip.SetToolTip(TranslationsApplySettingsLabel, L[l]["Add/Remove translations"]);
 
             int index_of_first_new_translation = DownloadTranslations();
             if ((index_of_first_new_translation >= 0) && (index_of_first_new_translation < TranslatorComboBox.Items.Count))
@@ -11880,7 +11958,7 @@ public partial class MainForm : Form, ISubscriber
         {
             TranslationsApplySettingsLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "settings.png");
         }
-        ToolTip.SetToolTip(TranslationsApplySettingsLabel, "Add/Remove translations");
+        ToolTip.SetToolTip(TranslationsApplySettingsLabel, L[l]["Add/Remove translations"]);
 
         // remove any new user checkes 
         PopulateTranslatorsCheckedListBox();
@@ -11984,7 +12062,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 EditSaveTranslationLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "text_unlocked.png");
             }
-            ToolTip.SetToolTip(EditSaveTranslationLabel, "Edit translation");
+            ToolTip.SetToolTip(EditSaveTranslationLabel, L[l]["Edit translation"]);
         }
         else
         {
@@ -11992,7 +12070,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 EditSaveTranslationLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "save.png");
             }
-            ToolTip.SetToolTip(EditSaveTranslationLabel, "Save translation");
+            ToolTip.SetToolTip(EditSaveTranslationLabel, L[l]["Save translation"]);
         }
         EditSaveTranslationLabel.Refresh();
     }
@@ -15502,16 +15580,16 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateDistancesOptions()
     {
-        if (T != null)
+        if (L != null)
         {
-            if (T.ContainsKey(t))
+            if (L.ContainsKey(l))
             {
                 switch (m_distances_running_chapter_number_scope)
                 {
                     case NumberScope.Number:
                     default:
                         {
-                            DistancesRunningVerseNumberScopeLabel.Text = T[t]["Chapter numbers in Book"];
+                            DistancesRunningVerseNumberScopeLabel.Text = L[l]["Chapter numbers in Book"];
                         }
                         break;
                 }
@@ -15520,13 +15598,13 @@ public partial class MainForm : Form, ISubscriber
                 {
                     case NumberScope.Number:
                         {
-                            DistancesRunningVerseNumberScopeLabel.Text = T[t]["Verse numbers in Book"];
+                            DistancesRunningVerseNumberScopeLabel.Text = L[l]["Verse numbers in Book"];
                         }
                         break;
                     case NumberScope.NumberInChapter:
                     default:
                         {
-                            DistancesRunningVerseNumberScopeLabel.Text = T[t]["Verse numbers in chapters"];
+                            DistancesRunningVerseNumberScopeLabel.Text = L[l]["Verse numbers in chapters"];
                         }
                         break;
                 }
@@ -15535,18 +15613,18 @@ public partial class MainForm : Form, ISubscriber
                 {
                     case NumberScope.Number:
                         {
-                            DistancesRunningWordNumberScopeLabel.Text = T[t]["Word numbers in Book"];
+                            DistancesRunningWordNumberScopeLabel.Text = L[l]["Word numbers in Book"];
                         }
                         break;
                     case NumberScope.NumberInChapter:
                         {
-                            DistancesRunningWordNumberScopeLabel.Text = T[t]["Word numbers in chapters"];
+                            DistancesRunningWordNumberScopeLabel.Text = L[l]["Word numbers in chapters"];
                         }
                         break;
                     case NumberScope.NumberInVerse:
                     default:
                         {
-                            DistancesRunningWordNumberScopeLabel.Text = T[t]["Word numbers in verses"];
+                            DistancesRunningWordNumberScopeLabel.Text = L[l]["Word numbers in verses"];
                         }
                         break;
                 }
@@ -20514,7 +20592,7 @@ public partial class MainForm : Form, ISubscriber
     {
         //if (!WordsListBox.Focused)
         //{
-        //    ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+        //    ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
         //    WordsListBoxLabel.Visible = false;
         //    WordsListBox.Visible = false;
         //}
@@ -20854,11 +20932,11 @@ public partial class MainForm : Form, ISubscriber
 
         if (m_text_search_type == TextSearchType.Root)
         {
-            ToolTip.SetToolTip(InpectChaptersLabel, "Inspect root frequencies");
+            ToolTip.SetToolTip(InspectChaptersLabel, "Inspect root frequencies");
         }
         else
         {
-            ToolTip.SetToolTip(InpectChaptersLabel, "Inspect word frequencies");
+            ToolTip.SetToolTip(InspectChaptersLabel, "Inspect word frequencies");
         }
         WordsListBoxLabel.Visible = true;
         WordsListBox.Visible = true;
@@ -21669,7 +21747,7 @@ public partial class MainForm : Form, ISubscriber
                     FindByTextMultiplicityNumberTypeLabel.Text = remainder.ToString();
                     FindByTextMultiplicityNumberTypeLabel.ForeColor = Color.Black;
                     FindByTextMultiplicityNumberTypeLabel.Enabled = true;
-                    ToolTip.SetToolTip(FindByTextMultiplicityNumberTypeLabel, T[t]["remainder"]);
+                    ToolTip.SetToolTip(FindByTextMultiplicityNumberTypeLabel, L[l]["remainder"]);
                 }
                 else
                 {
@@ -21987,9 +22065,9 @@ public partial class MainForm : Form, ISubscriber
     private NumberScope m_chapter_number_scope = NumberScope.Number;
     private void UpdateFindByNumbersNumberLabel()
     {
-        if (T != null)
+        if (L != null)
         {
-            if (T.ContainsKey(t))
+            if (L.ContainsKey(l))
             {
                 switch (m_numbers_result_type)
                 {
@@ -21998,29 +22076,29 @@ public partial class MainForm : Form, ISubscriber
                             if (m_word_number_scope == NumberScope.Number)
                             {
                                 m_word_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = T[t]["number"];
+                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             }
                             else if (m_word_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_word_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = T[t]["in chapter"];
+                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
                             }
                             else if (m_word_number_scope == NumberScope.NumberInVerse)
                             {
                                 m_word_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = T[t]["in verse"];
+                                FindByNumbersNumberLabel.Text = L[l]["in verse"];
                             }
                         }
                         break;
                     case NumbersResultType.WordRanges:
                     case NumbersResultType.WordSets:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["sum"];
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
                         }
                         break;
                     case NumbersResultType.Sentences:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                         }
                         break;
                     case NumbersResultType.Verses:
@@ -22028,19 +22106,19 @@ public partial class MainForm : Form, ISubscriber
                             if (m_verse_number_scope == NumberScope.Number)
                             {
                                 m_verse_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = T[t]["number"];
+                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             }
                             else if (m_verse_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_verse_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = T[t]["in chapter"];
+                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
                             }
                         }
                         break;
                     case NumbersResultType.VerseRanges:
                     case NumbersResultType.VerseSets:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["sum"];
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
                         }
                         break;
                     case NumbersResultType.Chapters:
@@ -22048,14 +22126,14 @@ public partial class MainForm : Form, ISubscriber
                             if (m_chapter_number_scope == NumberScope.Number)
                             {
                                 m_chapter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = T[t]["number"];
+                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             }
                         }
                         break;
                     case NumbersResultType.ChapterRanges:
                     case NumbersResultType.ChapterSets:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["sum"];
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
                         }
                         break;
                     default:
@@ -22068,9 +22146,9 @@ public partial class MainForm : Form, ISubscriber
     {
         FindByNumbersControls_Enter(null, null);
 
-        if (T != null)
+        if (L != null)
         {
-            if (T.ContainsKey(t))
+            if (L.ContainsKey(l))
             {
                 switch (m_numbers_result_type)
                 {
@@ -22079,29 +22157,29 @@ public partial class MainForm : Form, ISubscriber
                             if (m_word_number_scope == NumberScope.Number)
                             {
                                 m_word_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = T[t]["in chapter"];
+                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
                             }
                             else if (m_word_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_word_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = T[t]["in verse"];
+                                FindByNumbersNumberLabel.Text = L[l]["in verse"];
                             }
                             else if (m_word_number_scope == NumberScope.NumberInVerse)
                             {
                                 m_word_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = T[t]["number"];
+                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             }
                         }
                         break;
                     case NumbersResultType.WordRanges:
                     case NumbersResultType.WordSets:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["sum"];
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
                         }
                         break;
                     case NumbersResultType.Sentences:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                         }
                         break;
                     case NumbersResultType.Verses:
@@ -22109,19 +22187,19 @@ public partial class MainForm : Form, ISubscriber
                             if (m_verse_number_scope == NumberScope.Number)
                             {
                                 m_verse_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = T[t]["in chapter"];
+                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
                             }
                             else if (m_verse_number_scope == NumberScope.NumberInChapter)
                             {
                                 m_verse_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = T[t]["number"];
+                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             }
                         }
                         break;
                     case NumbersResultType.VerseRanges:
                     case NumbersResultType.VerseSets:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["sum"];
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
                         }
                         break;
                     case NumbersResultType.Chapters:
@@ -22129,14 +22207,14 @@ public partial class MainForm : Form, ISubscriber
                             if (m_chapter_number_scope == NumberScope.Number)
                             {
                                 m_chapter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = T[t]["number"];
+                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             }
                         }
                         break;
                     case NumbersResultType.ChapterRanges:
                     case NumbersResultType.ChapterSets:
                         {
-                            FindByNumbersNumberLabel.Text = T[t]["sum"];
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
                         }
                         break;
                     default:
@@ -22442,125 +22520,125 @@ public partial class MainForm : Form, ISubscriber
         }
 
 
-        if (T != null)
+        if (L != null)
         {
-            if (T.ContainsKey(t))
+            if (L.ContainsKey(l))
             {
                 // reset Words label
                 FindByNumbersResultTypeWordsLabel.Text = "W";
-                ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, T[t]["find words"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["word number"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["word number"]);
                 // reset Sentences label
                 FindByNumbersResultTypeSentencesLabel.Text = "S";
-                ToolTip.SetToolTip(FindByNumbersResultTypeSentencesLabel, T[t]["find sentences"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeSentencesLabel, L[l]["find sentences"]);
                 // reset Verses label
                 FindByNumbersResultTypeVersesLabel.Text = "V";
-                ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, T[t]["find verses"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["verse number"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["verse number"]);
                 // reset Chapters label
                 FindByNumbersResultTypeChaptersLabel.Text = "C";
-                ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, T[t]["find chapters"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["chapter number"]);
+                ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
+                ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["chapter number"]);
 
                 // overwrite label and tooltips
                 if (m_numbers_result_type == NumbersResultType.Words)
                 {
                     FindByNumbersResultTypeWordsLabel.Text = "W";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, T[t]["find words"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
                     // update Text based on m_number_scope
                     switch (m_word_number_scope)
                     {
                         case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             break;
                         case NumberScope.NumberInChapter:
-                            FindByNumbersNumberLabel.Text = T[t]["in chapter"];
+                            FindByNumbersNumberLabel.Text = L[l]["in chapter"];
                             break;
                         case NumberScope.NumberInVerse:
-                            FindByNumbersNumberLabel.Text = T[t]["in verse"];
+                            FindByNumbersNumberLabel.Text = L[l]["in verse"];
                             break;
                         default:
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             break;
                     }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["word number"]);
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["word number"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.WordRanges)
                 {
                     FindByNumbersResultTypeWordsLabel.Text = "-W-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, T[t]["find word ranges"]);
-                    FindByNumbersNumberLabel.Text = T[t]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["sum of word numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find word ranges"]);
+                    FindByNumbersNumberLabel.Text = L[l]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of word numbers"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.WordSets)
                 {
                     FindByNumbersResultTypeWordsLabel.Text = "Ws";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, T[t]["find word sets"]);
-                    FindByNumbersNumberLabel.Text = T[t]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["sum of word numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find word sets"]);
+                    FindByNumbersNumberLabel.Text = L[l]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of word numbers"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.Verses)
                 {
                     FindByNumbersResultTypeVersesLabel.Text = "V";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, T[t]["find verses"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
                     // update Text based on m_number_scope
                     switch (m_verse_number_scope)
                     {
                         case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             break;
                         case NumberScope.NumberInChapter:
-                            FindByNumbersNumberLabel.Text = T[t]["in chapter"];
+                            FindByNumbersNumberLabel.Text = L[l]["in chapter"];
                             break;
                         default:
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             break;
                     }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["verse number"]);
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["verse number"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.VerseRanges)
                 {
                     FindByNumbersResultTypeVersesLabel.Text = "-V-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, T[t]["find verse ranges"]);
-                    FindByNumbersNumberLabel.Text = T[t]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["sum of verse numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verse ranges"]);
+                    FindByNumbersNumberLabel.Text = L[l]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of verse numbers"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.VerseSets)
                 {
                     FindByNumbersResultTypeVersesLabel.Text = "Vs";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, T[t]["find verse sets"]);
-                    FindByNumbersNumberLabel.Text = T[t]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["sum of verse numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verse sets"]);
+                    FindByNumbersNumberLabel.Text = L[l]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of verse numbers"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.Chapters)
                 {
                     FindByNumbersResultTypeChaptersLabel.Text = "C";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, T[t]["find chapters"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
                     // update Text based on m_number_scope
                     switch (m_chapter_number_scope)
                     {
                         case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             break;
                         default:
-                            FindByNumbersNumberLabel.Text = T[t]["number"];
+                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
                             break;
                     }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["chapter number"]);
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["chapter number"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.ChapterRanges)
                 {
                     FindByNumbersResultTypeChaptersLabel.Text = "-C-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, T[t]["find chapter ranges"]);
-                    FindByNumbersNumberLabel.Text = T[t]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["sum of chapter numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapter ranges"]);
+                    FindByNumbersNumberLabel.Text = L[l]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of chapter numbers"]);
                 }
                 else if (m_numbers_result_type == NumbersResultType.ChapterSets)
                 {
                     FindByNumbersResultTypeChaptersLabel.Text = "Cs";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, T[t]["find chapter sets"]);
-                    FindByNumbersNumberLabel.Text = T[t]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, T[t]["sum of chapter numbers"]);
+                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapter sets"]);
+                    FindByNumbersNumberLabel.Text = L[l]["sum"];
+                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of chapter numbers"]);
                 }
             }
         }
@@ -22615,56 +22693,56 @@ public partial class MainForm : Form, ISubscriber
     {
         if (control == null) return false;
 
-        if (T != null)
+        if (L != null)
         {
-            if (T.ContainsKey(t))
+            if (L.ContainsKey(l))
             {
                 if (ModifierKeys == Keys.Shift)
                 {
                     if (control.Text == "=")
                     {
                         control.Text = "Ʃ";
-                        ToolTip.SetToolTip(control, T[t]["equals to sum"]);
+                        ToolTip.SetToolTip(control, L[l]["equals to sum"]);
                     }
                     else if (control.Text == "Ʃ")
                     {
                         control.Text = "!÷";
-                        ToolTip.SetToolTip(control, T[t]["indivisible by"]);
+                        ToolTip.SetToolTip(control, L[l]["indivisible by"]);
                     }
                     else if (control.Text == "!÷")
                     {
                         control.Text = "÷";
-                        ToolTip.SetToolTip(control, T[t]["divisible by"]);
+                        ToolTip.SetToolTip(control, L[l]["divisible by"]);
                     }
                     else if (control.Text == "÷")
                     {
                         control.Text = "≥";
-                        ToolTip.SetToolTip(control, T[t]["greater or equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["greater or equals to"]);
                     }
                     else if (control.Text == "≥")
                     {
                         control.Text = ">";
-                        ToolTip.SetToolTip(control, T[t]["greater than"]);
+                        ToolTip.SetToolTip(control, L[l]["greater than"]);
                     }
                     else if (control.Text == ">")
                     {
                         control.Text = "≤";
-                        ToolTip.SetToolTip(control, T[t]["less or equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["less or equals to"]);
                     }
                     else if (control.Text == "≤")
                     {
                         control.Text = "<";
-                        ToolTip.SetToolTip(control, T[t]["less than"]);
+                        ToolTip.SetToolTip(control, L[l]["less than"]);
                     }
                     else if (control.Text == "<")
                     {
                         control.Text = "≠";
-                        ToolTip.SetToolTip(control, T[t]["not equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["not equals to"]);
                     }
                     else if (control.Text == "≠")
                     {
                         control.Text = "=";
-                        ToolTip.SetToolTip(control, T[t]["equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["equals to"]);
                     }
                     else
                     {
@@ -22676,47 +22754,47 @@ public partial class MainForm : Form, ISubscriber
                     if (control.Text == "=")
                     {
                         control.Text = "≠";
-                        ToolTip.SetToolTip(control, T[t]["not equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["not equals to"]);
                     }
                     else if (control.Text == "≠")
                     {
                         control.Text = "<";
-                        ToolTip.SetToolTip(control, T[t]["less than"]);
+                        ToolTip.SetToolTip(control, L[l]["less than"]);
                     }
                     else if (control.Text == "<")
                     {
                         control.Text = "≤";
-                        ToolTip.SetToolTip(control, T[t]["less or equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["less or equals to"]);
                     }
                     else if (control.Text == "≤")
                     {
                         control.Text = ">";
-                        ToolTip.SetToolTip(control, T[t]["greater than"]);
+                        ToolTip.SetToolTip(control, L[l]["greater than"]);
                     }
                     else if (control.Text == ">")
                     {
                         control.Text = "≥";
-                        ToolTip.SetToolTip(control, T[t]["greater or equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["greater or equals to"]);
                     }
                     else if (control.Text == "≥")
                     {
                         control.Text = "÷";
-                        ToolTip.SetToolTip(control, T[t]["divisible by"]);
+                        ToolTip.SetToolTip(control, L[l]["divisible by"]);
                     }
                     else if (control.Text == "÷")
                     {
                         control.Text = "!÷";
-                        ToolTip.SetToolTip(control, T[t]["indivisible by"]);
+                        ToolTip.SetToolTip(control, L[l]["indivisible by"]);
                     }
                     else if (control.Text == "!÷")
                     {
                         control.Text = "Ʃ";
-                        ToolTip.SetToolTip(control, T[t]["equals to sum"]);
+                        ToolTip.SetToolTip(control, L[l]["equals to sum"]);
                     }
                     else if (control.Text == "Ʃ")
                     {
                         control.Text = "=";
-                        ToolTip.SetToolTip(control, T[t]["equals to"]);
+                        ToolTip.SetToolTip(control, L[l]["equals to"]);
                     }
                     else
                     {
@@ -22761,9 +22839,9 @@ public partial class MainForm : Form, ISubscriber
         }
         else
         {
-            if (T != null)
+            if (L != null)
             {
-                if (T.ContainsKey(t))
+                if (L.ContainsKey(l))
                 {
                     if (ModifierKeys != Keys.Shift)
                     {
@@ -22774,10 +22852,10 @@ public partial class MainForm : Form, ISubscriber
                             string text = null;
                             switch (m_numbers_result_type)
                             {
-                                case NumbersResultType.Words: { text = T[t]["word number"]; break; }
-                                case NumbersResultType.Verses: { text = T[t]["verse number"]; break; }
-                                case NumbersResultType.Chapters: { text = T[t]["chapter number"]; break; }
-                                default: { text = T[t]["number"]; break; }
+                                case NumbersResultType.Words: { text = L[l]["word number"]; break; }
+                                case NumbersResultType.Verses: { text = L[l]["verse number"]; break; }
+                                case NumbersResultType.Chapters: { text = L[l]["chapter number"]; break; }
+                                default: { text = L[l]["number"]; break; }
                             }
                             ToolTip.SetToolTip(control, text);
                         }
@@ -22785,85 +22863,85 @@ public partial class MainForm : Form, ISubscriber
                         {
                             control.Text = "P";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, T[t]["prime = divisible by itself only"]);
+                            ToolTip.SetToolTip(control, L[l]["prime = divisible by itself only"]);
                         }
                         else if (control.Text == "P")
                         {
                             control.Text = "AP";
                             control.ForeColor = Numbers.GetNumberTypeColor(47L);
-                            ToolTip.SetToolTip(control, T[t]["additive prime = prime with a prime digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["additive prime = prime with a prime digit sum"]);
                         }
                         else if (control.Text == "AP")
                         {
                             control.Text = "XP";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, T[t]["non-additive prime = prime with a non-prime digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["non-additive prime = prime with a non-prime digit sum"]);
                         }
                         else if (control.Text == "XP")
                         {
                             control.Text = "C";
                             control.ForeColor = Numbers.GetNumberTypeColor(14L);
-                            ToolTip.SetToolTip(control, T[t]["composite = divisible by itself and others"]);
+                            ToolTip.SetToolTip(control, L[l]["composite = divisible by itself and others"]);
                         }
                         else if (control.Text == "C")
                         {
                             control.Text = "AC";
                             control.ForeColor = Numbers.GetNumberTypeColor(114L);
-                            ToolTip.SetToolTip(control, T[t]["additive composite = composite with a composite digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["additive composite = composite with a composite digit sum"]);
                         }
                         else if (control.Text == "AC")
                         {
                             control.Text = "XC";
                             control.ForeColor = Numbers.GetNumberTypeColor(25L);
-                            ToolTip.SetToolTip(control, T[t]["non-additive composite = composite with a non-composite digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["non-additive composite = composite with a non-composite digit sum"]);
                         }
                         else if (control.Text == "XC")
                         {
                             control.Text = "O";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["odd number"]);
+                            ToolTip.SetToolTip(control, L[l]["odd number"]);
                         }
                         else if (control.Text == "O")
                         {
                             control.Text = "E";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["even number"]);
+                            ToolTip.SetToolTip(control, L[l]["even number"]);
                         }
                         else if (control.Text == "E")
                         {
                             control.Text = "^2";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["square number"]);
+                            ToolTip.SetToolTip(control, L[l]["square number"]);
                         }
                         else if (control.Text == "^2")
                         {
                             control.Text = "^3";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["cubic number"]);
+                            ToolTip.SetToolTip(control, L[l]["cubic number"]);
                         }
                         else if (control.Text == "^3")
                         {
                             control.Text = "^4";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["quartic number"]);
+                            ToolTip.SetToolTip(control, L[l]["quartic number"]);
                         }
                         else if (control.Text == "^4")
                         {
                             control.Text = "^5";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["quintic number"]);
+                            ToolTip.SetToolTip(control, L[l]["quintic number"]);
                         }
                         else if (control.Text == "^5")
                         {
                             control.Text = "^6";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["sextic number"]);
+                            ToolTip.SetToolTip(control, L[l]["sextic number"]);
                         }
                         else if (control.Text == "^6")
                         {
                             control.Text = "^7";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["septic number"]);
+                            ToolTip.SetToolTip(control, L[l]["septic number"]);
                         }
                         else if (control.Text == "^7")
                         {
@@ -22878,85 +22956,85 @@ public partial class MainForm : Form, ISubscriber
                         {
                             control.Text = "^7";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["septic number"]);
+                            ToolTip.SetToolTip(control, L[l]["septic number"]);
                         }
                         else if (control.Text == "^7")
                         {
                             control.Text = "^6";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["sextic number"]);
+                            ToolTip.SetToolTip(control, L[l]["sextic number"]);
                         }
                         else if (control.Text == "^6")
                         {
                             control.Text = "^5";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["quartic number"]);
+                            ToolTip.SetToolTip(control, L[l]["quartic number"]);
                         }
                         else if (control.Text == "^5")
                         {
                             control.Text = "^4";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["quartic number"]);
+                            ToolTip.SetToolTip(control, L[l]["quartic number"]);
                         }
                         else if (control.Text == "^4")
                         {
                             control.Text = "^3";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["cubic number"]);
+                            ToolTip.SetToolTip(control, L[l]["cubic number"]);
                         }
                         else if (control.Text == "^3")
                         {
                             control.Text = "^2";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["square number"]);
+                            ToolTip.SetToolTip(control, L[l]["square number"]);
                         }
                         else if (control.Text == "^2")
                         {
                             control.Text = "E";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["even number"]);
+                            ToolTip.SetToolTip(control, L[l]["even number"]);
                         }
                         else if (control.Text == "E")
                         {
                             control.Text = "O";
                             control.ForeColor = Numbers.GetNumberTypeColor(0L);
-                            ToolTip.SetToolTip(control, T[t]["odd number"]);
+                            ToolTip.SetToolTip(control, L[l]["odd number"]);
                         }
                         else if (control.Text == "O")
                         {
                             control.Text = "XC";
                             control.ForeColor = Numbers.GetNumberTypeColor(25L);
-                            ToolTip.SetToolTip(control, T[t]["non-additive composite = composite with a non-composite digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["non-additive composite = composite with a non-composite digit sum"]);
                         }
                         else if (control.Text == "XC")
                         {
                             control.Text = "AC";
                             control.ForeColor = Numbers.GetNumberTypeColor(114L);
-                            ToolTip.SetToolTip(control, T[t]["additive composite = composite with a composite digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["additive composite = composite with a composite digit sum"]);
                         }
                         else if (control.Text == "AC")
                         {
                             control.Text = "C";
                             control.ForeColor = Numbers.GetNumberTypeColor(14L);
-                            ToolTip.SetToolTip(control, T[t]["composite = divisible by itself and others"]);
+                            ToolTip.SetToolTip(control, L[l]["composite = divisible by itself and others"]);
                         }
                         else if (control.Text == "C")
                         {
                             control.Text = "XP";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, T[t]["non-additive prime = prime with a non-prime digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["non-additive prime = prime with a non-prime digit sum"]);
                         }
                         else if (control.Text == "XP")
                         {
                             control.Text = "AP";
                             control.ForeColor = Numbers.GetNumberTypeColor(47L);
-                            ToolTip.SetToolTip(control, T[t]["additive prime = prime with a prime digit sum"]);
+                            ToolTip.SetToolTip(control, L[l]["additive prime = prime with a prime digit sum"]);
                         }
                         else if (control.Text == "AP")
                         {
                             control.Text = "P";
                             control.ForeColor = Numbers.GetNumberTypeColor(19L);
-                            ToolTip.SetToolTip(control, T[t]["prime = divisible by itself only"]);
+                            ToolTip.SetToolTip(control, L[l]["prime = divisible by itself only"]);
                         }
                         else if (control.Text == "P")
                         {
@@ -22965,10 +23043,10 @@ public partial class MainForm : Form, ISubscriber
                             string text = null;
                             switch (m_numbers_result_type)
                             {
-                                case NumbersResultType.Words: { text = T[t]["word number"]; break; }
-                                case NumbersResultType.Verses: { text = T[t]["verse number"]; break; }
-                                case NumbersResultType.Chapters: { text = T[t]["chapter number"]; break; }
-                                default: { text = T[t]["number"]; break; }
+                                case NumbersResultType.Words: { text = L[l]["word number"]; break; }
+                                case NumbersResultType.Verses: { text = L[l]["verse number"]; break; }
+                                case NumbersResultType.Chapters: { text = L[l]["chapter number"]; break; }
+                                default: { text = L[l]["number"]; break; }
                             }
                             ToolTip.SetToolTip(control, text);
                         }
@@ -22988,9 +23066,9 @@ public partial class MainForm : Form, ISubscriber
     {
         UpdateNumberTypeLabelTags();
 
-        if (T != null)
+        if (L != null)
         {
-            if (T.ContainsKey(t))
+            if (L.ContainsKey(l))
             {
                 Control control = sender as Control;
                 if (control != null)
@@ -23006,7 +23084,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersNumberNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersNumberNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersNumberNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, T[t]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersNumberNumberTypeLabel, L[l]["remainder"]);
                             }
                             else
                             {
@@ -23023,7 +23101,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersChaptersNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersChaptersNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersChaptersNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, T[t]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersChaptersNumberTypeLabel, L[l]["remainder"]);
                             }
                             else
                             {
@@ -23040,7 +23118,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersVersesNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersVersesNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersVersesNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, T[t]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersVersesNumberTypeLabel, L[l]["remainder"]);
                             }
                             else
                             {
@@ -23057,7 +23135,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersWordsNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersWordsNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersWordsNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, T[t]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersWordsNumberTypeLabel, L[l]["remainder"]);
                             }
                             else
                             {
@@ -23074,7 +23152,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersLettersNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersLettersNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersLettersNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, T[t]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersLettersNumberTypeLabel, L[l]["remainder"]);
                             }
                             else
                             {
@@ -23091,7 +23169,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersUniqueLettersNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersUniqueLettersNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersUniqueLettersNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, T[t]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersUniqueLettersNumberTypeLabel, L[l]["remainder"]);
                             }
                             else
                             {
@@ -23108,7 +23186,7 @@ public partial class MainForm : Form, ISubscriber
                                 FindByNumbersValueNumberTypeLabel.Text = remainder.ToString();
                                 FindByNumbersValueNumberTypeLabel.ForeColor = Color.Black;
                                 FindByNumbersValueNumberTypeLabel.Enabled = true;
-                                ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, T[t]["remainder"]);
+                                ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, L[l]["remainder"]);
                             }
                             else
                             {
@@ -23260,7 +23338,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersButton.Enabled = true;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -24101,7 +24179,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -24454,7 +24532,7 @@ public partial class MainForm : Form, ISubscriber
                         FindByFrequencySumNumberTypeLabel.Text = remainder.ToString();
                         FindByFrequencySumNumberTypeLabel.ForeColor = Color.Black;
                         FindByFrequencySumNumberTypeLabel.Enabled = true;
-                        ToolTip.SetToolTip(FindByFrequencySumNumberTypeLabel, T[t]["remainder"]);
+                        ToolTip.SetToolTip(FindByFrequencySumNumberTypeLabel, L[l]["remainder"]);
                     }
                     else
                     {
@@ -24510,7 +24588,7 @@ public partial class MainForm : Form, ISubscriber
                                         ||
                                         ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
 
-        ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -26080,7 +26158,7 @@ public partial class MainForm : Form, ISubscriber
         SearchResultTextBox.SelectionColor = Color.Navy;
     }
 
-    private void InpectVersesLabel_Click(object sender, EventArgs e)
+    private void InspectVersesLabel_Click(object sender, EventArgs e)
     {
         if (m_client == null) return;
         if (m_client.NumerologySystem == null) return;
@@ -26631,7 +26709,7 @@ public partial class MainForm : Form, ISubscriber
 
                 FindByTextTextBox.Text = null;
 
-                ToolTip.SetToolTip(InpectChaptersLabel, "Inspect chapters");
+                ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
                 WordsListBoxLabel.Visible = false;
                 WordsListBox.Visible = false;
 
