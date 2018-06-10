@@ -10461,7 +10461,11 @@ public class Server : IPublisher
         if (source != null)
         {
             int range_length = query.WordCount;
-            if (range_length == 1) return null;
+            if (range_length == 1)
+            {
+                result.Add(DoFindWords(source, query));
+                return result;
+            }
 
             List<Word> words = new List<Word>();
             foreach (Verse verse in source)
@@ -10477,15 +10481,15 @@ public class Server : IPublisher
                 {
                     word_count += verse.Words.Count;
                 }
+
                 int limit = word_count - 1;
-                if ((query.LetterCount > 0) && (query.LetterCount < word_count))
+                if (query.LetterCount > 0)
                 {
-                    limit = query.LetterCount;
+                    limit = query.LetterCount / 3;
                 }
-                else if ((query.Value > 0L) && (query.Value < word_count))
+                if (query.Value > 0L)
                 {
-                    int min_letters_per_word = 1; // Waw in WawAsWord
-                    limit = (int)(query.Value / min_letters_per_word);
+                    limit = (int)(query.Value / 114L);
                 }
 
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
@@ -10535,7 +10539,11 @@ public class Server : IPublisher
         if (source != null)
         {
             int range_length = query.WordCount;
-            if (range_length == 1) return null;
+            if (range_length == 1)
+            {
+                result.Add(DoFindWords(source, query));
+                return result;
+            }
 
             if (range_length == 0) // non-specified range length
             {
@@ -10545,15 +10553,15 @@ public class Server : IPublisher
                 {
                     word_count += verse.Words.Count;
                 }
+
                 int limit = word_count - 1;
-                if ((query.LetterCount > 0) && (query.LetterCount < word_count))
+                if (query.LetterCount > 0)
                 {
-                    limit = query.LetterCount;
+                    limit = query.LetterCount / 3;
                 }
-                else if ((query.Value > 0L) && (query.Value < word_count))
+                if (query.Value > 0L)
                 {
-                    int min_letters_per_word = 1; // Waw in WawAsWord
-                    limit = (int)(query.Value / min_letters_per_word);
+                    limit = (int)(query.Value / 114L);
                 }
 
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
@@ -10626,7 +10634,11 @@ public class Server : IPublisher
                     if (words != null)
                     {
                         int set_size = query.WordCount;
-                        if (set_size == 1) return null;
+                        if (set_size == 1)
+                        {
+                            result.Add(DoFindWords(source, query));
+                            return result;
+                        }
 
                         foreach (Verse verse in source)
                         {
@@ -10641,15 +10653,15 @@ public class Server : IPublisher
                             {
                                 word_count += verse.Words.Count;
                             }
+
                             int limit = word_count - 1;
-                            if ((query.LetterCount > 0) && (query.LetterCount < word_count))
+                            if (query.LetterCount > 0)
                             {
-                                limit = query.LetterCount;
+                                limit = query.LetterCount / 3;
                             }
-                            else if ((query.Value > 0L) && (query.Value < word_count))
+                            if (query.Value > 0L)
                             {
-                                int min_letters_per_word = 1; // Waw in WawAsWord
-                                limit = (int)(query.Value / min_letters_per_word);
+                                limit = (int)(query.Value / 114L);
                             }
 
                             for (int i = 0; i < limit; i++) // try all possible set sizes
@@ -11083,26 +11095,30 @@ public class Server : IPublisher
         if (source != null)
         {
             int range_length = query.VerseCount;
-            if (range_length == 1) return null;
+            if (range_length == 1)
+            {
+                result.Add(DoFindVerses(source, query));
+                return result;
+            }
 
             if (range_length == 0) // non-specified range length
             {
                 int limit = source.Count;
-                if ((query.VerseCount > 0) && (query.VerseCount < limit))
+                if (query.VerseCount > 0)
                 {
                     limit = query.VerseCount;
                 }
-                else if ((query.WordCount > 0) && (query.WordCount < limit))
+                if (query.WordCount > 0)
                 {
-                    limit = query.WordCount;
+                    limit = query.WordCount / 7;
                 }
-                else if ((query.LetterCount > 0) && (query.LetterCount < limit))
+                if (query.LetterCount > 0)
                 {
-                    limit = query.LetterCount;
+                    limit = query.LetterCount / 29;
                 }
-                else if ((query.Value > 0L) && (query.Value < (limit * 10L)))
+                if (query.Value > 0L)
                 {
-                    limit = (int)(query.Value / 10L);
+                    limit = (int)(query.Value / 449L);
                 }
 
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
@@ -11169,26 +11185,30 @@ public class Server : IPublisher
                     if (verses != null)
                     {
                         int set_size = query.VerseCount;
-                        if (set_size == 1) return null;
+                        if (set_size == 1)
+                        {
+                            result.Add(DoFindVerses(source, query));
+                            return result;
+                        }
 
                         if (set_size == 0) // non-specified set size
                         {
                             int limit = source.Count;
-                            if ((query.VerseCount > 0) && (query.VerseCount < limit))
+                            if (query.VerseCount > 0)
                             {
                                 limit = query.VerseCount;
                             }
-                            else if ((query.WordCount > 0) && (query.WordCount < limit))
+                            if (query.WordCount > 0)
                             {
-                                limit = query.WordCount;
+                                limit = query.WordCount / 7;
                             }
-                            else if ((query.LetterCount > 0) && (query.LetterCount < limit))
+                            if (query.LetterCount > 0)
                             {
-                                limit = query.LetterCount;
+                                limit = query.LetterCount / 29;
                             }
-                            else if ((query.Value > 0L) && (query.Value < (limit * 10L)))
+                            if (query.Value > 0L)
                             {
-                                limit = (int)(query.Value / 10L);
+                                limit = (int)(query.Value / 449L);
                             }
 
                             for (int i = 0; i < limit; i++) // try all possible set sizes
@@ -11284,28 +11304,32 @@ public class Server : IPublisher
                     if (chapters != null)
                     {
                         int range_length = query.ChapterCount;
-                        if (range_length == 1) return null;
+                        if (range_length == 1)
+                        {
+                            result.Add(DoFindChapters(source, query));
+                            return result;
+                        }
 
                         if (range_length == 0) // non-specified range length
                         {
                             // limit range length to minimum
                             int limit = chapters.Count;
-                            if ((query.VerseCount > 0) && (query.VerseCount < limit))
-                            {
-                                limit = query.VerseCount;
-                            }
-                            else if ((query.WordCount > 0) && (query.WordCount < limit))
-                            {
-                                limit = query.WordCount;
-                            }
-                            else if ((query.LetterCount > 0) && (query.LetterCount < limit))
-                            {
-                                limit = query.LetterCount;
-                            }
-                            else if ((query.Value > 0L) && (query.Value < (limit * 100L)))
-                            {
-                                limit = (int)(query.Value / 10L);
-                            }
+                            //if (query.VerseCount > 0)
+                            //{
+                            //    limit = query.VerseCount;
+                            //}
+                            //if (query.WordCount > 0)
+                            //{
+                            //    limit = query.WordCount;
+                            //}
+                            //if (query.LetterCount > 0)
+                            //{
+                            //    limit = query.LetterCount;
+                            //}
+                            //if (query.Value > 0L)
+                            //{
+                            //    limit = (int)(query.Value / 10L);
+                            //}
 
                             for (int r = 1; r <= limit; r++) // try all possible range lengths
                             {
@@ -11374,28 +11398,32 @@ public class Server : IPublisher
                     if (chapters != null)
                     {
                         int set_size = query.ChapterCount;
-                        if (set_size == 1) return null;
+                        if (set_size == 1)
+                        {
+                            result.Add(DoFindChapters(source, query));
+                            return result;
+                        }
 
                         if (set_size == 0) // non-specified set size
                         {
                             // limit range length to minimum
                             int limit = chapters.Count;
-                            if ((query.VerseCount > 0) && (query.VerseCount < limit))
-                            {
-                                limit = query.VerseCount;
-                            }
-                            else if ((query.WordCount > 0) && (query.WordCount < limit))
-                            {
-                                limit = query.WordCount;
-                            }
-                            else if ((query.LetterCount > 0) && (query.LetterCount < limit))
-                            {
-                                limit = query.LetterCount;
-                            }
-                            else if ((query.Value > 0L) && (query.Value < (limit * 100L)))
-                            {
-                                limit = (int)(query.Value / 10L);
-                            }
+                            //if (query.VerseCount > 0)
+                            //{
+                            //    limit = query.VerseCount;
+                            //}
+                            //if (query.WordCount > 0)
+                            //{
+                            //    limit = query.WordCount;
+                            //}
+                            //if (query.LetterCount > 0)
+                            //{
+                            //    limit = query.LetterCount;
+                            //}
+                            //if (query.Value > 0L)
+                            //{
+                            //    limit = (int)(query.Value / 10L);
+                            //}
 
                             for (int i = 0; i < limit; i++) // try all possible set sizes
                             {

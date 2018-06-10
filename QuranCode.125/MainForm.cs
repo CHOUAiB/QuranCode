@@ -210,6 +210,7 @@ public partial class MainForm : Form, ISubscriber
             if (Directory.Exists(Globals.LANGUAGES_FOLDER))
             {
                 Dictionary<string, string> language = new Dictionary<string, string>();
+                List<Control> controls = GetDescendentControls(this);
 
                 string filename = Globals.LANGUAGES_FOLDER + "/" + language_name + ".txt";
                 List<string> lines = FileHelper.LoadLines(filename);
@@ -224,7 +225,7 @@ public partial class MainForm : Form, ISubscriber
                         }
                         else
                         {
-                            foreach (Control control in GetDescendentControls(this))
+                            foreach (Control control in controls)
                             {
                                 // set Text
                                 if (control.Name == parts[0])
@@ -245,8 +246,6 @@ public partial class MainForm : Form, ISubscriber
                                             ToolTip.SetToolTip(control, parts[4]);
                                         }
                                     }
-
-                                    break;
                                 }
                             }
                         }
@@ -270,7 +269,7 @@ public partial class MainForm : Form, ISubscriber
                 UpdateFindByNumbersNumberLabel();
                 UpdateDistancesOptions();
                 UpdateFindByNumbersResultType();
-                foreach (Control control in GetDescendentControls(this))
+                foreach (Control control in controls)
                 {
                     if (control.Name.Contains("ComparisonOperator"))
                     {
@@ -568,14 +567,7 @@ public partial class MainForm : Form, ISubscriber
                             splash_form.Progress = 65;
                             Thread.Sleep(100);
 
-                            if (Globals.EDITION == Edition.Standard)
-                            {
-                                splash_form.Information = "Loading user settings ...";
-                            }
-                            else
-                            {
-                                splash_form.Information = "Generating big numbers ...";
-                            }
+                            splash_form.Information = "Loading user settings ...";
                             LoadApplicationSettings();
                             UpdateNumerologySystemControls();
                             splash_form.Progress = 70;
@@ -596,7 +588,8 @@ public partial class MainForm : Form, ISubscriber
 
                             if (Globals.EDITION == Edition.Standard)
                             {
-                                splash_form.Information = "Loading search history ...";
+                                splash_form.Information = "Loading user history ...";
+                                splash_form.Information = "Generating numbers ...";
                             }
                             else
                             {

@@ -243,35 +243,6 @@
         qz+RTAQAlGjMinZjhS4AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="UrduLanguageLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAIAAAD5gJpuAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIFSURBVChTY/j48yMEPf38lKGTgaGWgaGagaGcgaGY
-        gaGQgSGbgSGdgSGRgSGagSEcTAKV/geD73++15+oLzlcUnC4MPdgbua+zNR9qYm7E2J2xkRsCw/eHOy3
-        0Y/BE6bh379/X399TdqbFLItJHBLYMCWgOz9OW7r3GxX25ovMzdcYqizSMdznSeDM1gDUDUQfPn5JW53
-        HFC19wbv3fd3L7+23Ha5reMaxzXX1nit9VKbp+ayxoXBHknD55+fo3ZGAVW3nmx9+P5h/M4Es6Vmsdtj
-        r764uuzKMoVZCvYr7RksGRjef38PNP7v37+ffnwK3Rbqttpt0rlJrz69cl3rarDIQGuhdsyWGLvldlIz
-        paxXWDMYMzC8/foeqPrPnz8fv38M2BzgsMqh5kj1h68fFl9erDVbS2WWivwMeblZcqLTRYEWMugDNXx+
-        C1T9+/fvD98+eG/wslphZbLEZM31Ne+/vJ9yZkr7sfbll5eHrw8XnixsvNiIQZuB4fXn10ANv379ev/1
-        ves6V5OlJnqL9bQXaE04NeHCkwt3Xt3J3ZmrP1efewK3/gJ9BlUGhpcfXwKNB2oA2hC3My5gYwDQ325r
-        3ZyWOwF9abPcxnSRqdEiI6Bqnfk6DIoMDM/fP3/69unj149vP78Nikh3BgZXBlDwWTMwmDKAHK3LwKDJ
-        ADJbGcQGAFraFCNozosdAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="FarsiLanguageLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAIAAAD5gJpuAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHlSURBVChTPZBLS1tRFIXXPxCcOHHkxElaUREJ+EAR
-        bbk0aLU2iBHTIiWDQAWLBO1AJQSHGTszKFYLQRLzIqnUlhrlBkEaJIM2SLwNoY+Qcx/nPktPkrabxWYN
-        vm8PNhAEtv8lAGwBG8BrwAe8ApYBL/ACeA64ADcAP9Yu11h8Wd9qdnXl08rLj8veD17Pe8/S6ZI7szif
-        mncmn07Hph0RBzgmbGP9cn3x1L3wbmEuPTebmn2cmHLEHQ+iD8eOx4bCQ/a39t43vff373ERDo+AeCl+
-        UbkoVAuZu8zNr5vEbeLzj3ykGL2qXIW/HvNl/rBwmL3LhvKh3LfccGgYlmX9bgwrlmmZpmmIsh6La9GY
-        Wq1RShVFkWVZkiS2y+XyX6EON8YwDH1nR9vdVVMpGgz+p0VRZIYgCHWhSRt12NB1XaNUDQTo5qZCSPM2
-        owkhrJRKJRh+vykIRjpt5PN6MqldX6snJ5TPKUdHMs9LBwfi+TnZ2yNnZ2I4XNzagAaYHo8+MaGPjGgD
-        A2p/P+3uVmw2ubNT6ugQ29tJW1uttbXW0kJ6eorsqxQw3M90l0tzOrWZJ+rkJOU4Oj6ujI7Kg4OS3S72
-        9TGUdHURm+0LE2RABGpAFfjZyHegApQBASgBtwA7zNBm/gCdvjxtuxTYtAAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="ArabicLanguageLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAIAAAD5gJpuAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m

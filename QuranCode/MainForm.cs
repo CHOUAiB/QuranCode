@@ -567,14 +567,7 @@ public partial class MainForm : Form, ISubscriber
                             splash_form.Progress = 65;
                             Thread.Sleep(100);
 
-                            if (Globals.EDITION == Edition.Standard)
-                            {
-                                splash_form.Information = "Loading user settings ...";
-                            }
-                            else
-                            {
-                                splash_form.Information = "Generating big numbers ...";
-                            }
+                            splash_form.Information = "Loading user settings ...";
                             LoadApplicationSettings();
                             UpdateNumerologySystemControls();
                             splash_form.Progress = 70;
@@ -595,7 +588,8 @@ public partial class MainForm : Form, ISubscriber
 
                             if (Globals.EDITION == Edition.Standard)
                             {
-                                splash_form.Information = "Loading search history ...";
+                                splash_form.Information = "Loading user history ...";
+                                splash_form.Information = "Generating numbers ...";
                             }
                             else
                             {
