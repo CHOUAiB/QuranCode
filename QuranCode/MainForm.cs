@@ -315,6 +315,37 @@ public partial class MainForm : Form, ISubscriber
                         break;
                 }
 
+                switch (ChapterSortComboBox.SelectedIndex)
+                {
+                    case 0:
+                        ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Compilation"]);
+                        break;
+                    case 1:
+                        ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Revelation"]);
+                        break;
+                    case 2:
+                        ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Verses"]);
+                        break;
+                    case 3:
+                        ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Words"]);
+                        break;
+                    case 4:
+                        ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Letters"]);
+                        break;
+                    case 5:
+                        ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Value"]);
+                        break;
+                }
+
+                if (Chapter.SortOrder == ChapterSortOrder.Ascending)
+                {
+                    ToolTip.SetToolTip(ChapterSortLabel, L[l]["Ascending"]);
+                }
+                else
+                {
+                    ToolTip.SetToolTip(ChapterSortLabel, L[l]["Descending"]);
+                }
+
                 if (m_found_verses_displayed)
                 {
                     if (m_word_wrap_search_textbox)
@@ -5471,7 +5502,7 @@ public partial class MainForm : Form, ISubscriber
                     if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_value.png"))
                     {
                         GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_value.png");
-                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio"]);
+                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio colorization"]);
                     }
                 }
                 break;
@@ -5481,7 +5512,7 @@ public partial class MainForm : Form, ISubscriber
                     if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_text.png"))
                     {
                         GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_text.png");
-                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio"]);
+                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio colorization"]);
                     }
                 }
                 break;
@@ -5495,25 +5526,22 @@ public partial class MainForm : Form, ISubscriber
         {
             case GoldenRatioScope.None:
                 {
-                    m_golden_ratio_scope = GoldenRatioScope.Sentence;
-                    {
-                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
-                    }
+                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
                 }
                 break;
             case GoldenRatioScope.Letter:
                 {
-                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
+                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
                 }
                 break;
             case GoldenRatioScope.Word:
                 {
-                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
+                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
                 }
                 break;
             case GoldenRatioScope.Sentence:
                 {
-                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
+                    ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
                 }
                 break;
         }
@@ -5524,12 +5552,12 @@ public partial class MainForm : Form, ISubscriber
         {
             case GoldenRatioOrder.LongShort:
                 {
-                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
+                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
                 }
                 break;
             case GoldenRatioOrder.ShortLong:
                 {
-                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
+                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
                 }
                 break;
         }
@@ -5540,12 +5568,12 @@ public partial class MainForm : Form, ISubscriber
         {
             case GoldenRatioType.Text:
                 {
-                    ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio"]);
+                    ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio colorization"]);
                 }
                 break;
             case GoldenRatioType.Value:
                 {
-                    ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio"]);
+                    ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio colorization"]);
                 }
                 break;
         }
@@ -8046,42 +8074,42 @@ public partial class MainForm : Form, ISubscriber
                             case 0:
                                 {
                                     m_chapter_sort_method = ChapterSortMethod.ByCompilation;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, "حسب الورود في الكتاب");
+                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Compilation"]);
                                     PinChapter1CheckBox.Visible = false;
                                 }
                                 break;
                             case 1:
                                 {
                                     m_chapter_sort_method = ChapterSortMethod.ByRevelation;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, "حسب نزول السور");
+                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Revelation"]);
                                     PinChapter1CheckBox.Visible = false;
                                 }
                                 break;
                             case 2:
                                 {
                                     m_chapter_sort_method = ChapterSortMethod.ByVerses;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, "حسب عدد ءايات السور");
+                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Verses"]);
                                     PinChapter1CheckBox.Visible = true;
                                 }
                                 break;
                             case 3:
                                 {
                                     m_chapter_sort_method = ChapterSortMethod.ByWords;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, "حسب عدد كلمات السور");
+                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Words"]);
                                     PinChapter1CheckBox.Visible = true;
                                 }
                                 break;
                             case 4:
                                 {
                                     m_chapter_sort_method = ChapterSortMethod.ByLetters;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, "حسب عدد حروف السور");
+                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Letters"]);
                                     PinChapter1CheckBox.Visible = true;
                                 }
                                 break;
                             case 5:
                                 {
                                     m_chapter_sort_method = ChapterSortMethod.ByValue;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, "حسب قيم السور");
+                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Value"]);
                                     PinChapter1CheckBox.Visible = true;
                                 }
                                 break;
@@ -8143,7 +8171,7 @@ public partial class MainForm : Form, ISubscriber
                             if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_down.png"))
                             {
                                 ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_down.png");
-                                ToolTip.SetToolTip(ChapterSortLabel, "ترتيب تنازلي Descending");
+                                ToolTip.SetToolTip(ChapterSortLabel, L[l]["Descending"]);
                             }
                         }
                         else
@@ -8152,7 +8180,7 @@ public partial class MainForm : Form, ISubscriber
                             if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_up.png"))
                             {
                                 ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_up.png");
-                                ToolTip.SetToolTip(ChapterSortLabel, "ترتيب نصاعدي Ascending");
+                                ToolTip.SetToolTip(ChapterSortLabel, L[l]["Ascending"]);
                             }
                         }
                         m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
@@ -8202,42 +8230,42 @@ public partial class MainForm : Form, ISubscriber
                     case ChapterSortMethod.ByCompilation:
                         {
                             ChapterSortComboBox.SelectedIndex = 0;
-                            ToolTip.SetToolTip(ChapterSortComboBox, "حسب الورود في الكتاب");
+                            ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Compilation"]);
                             PinChapter1CheckBox.Visible = false;
                         }
                         break;
                     case ChapterSortMethod.ByRevelation:
                         {
                             ChapterSortComboBox.SelectedIndex = 1;
-                            ToolTip.SetToolTip(ChapterSortComboBox, "حسب نزول السور");
+                            ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Revelation"]);
                             PinChapter1CheckBox.Visible = false;
                         }
                         break;
                     case ChapterSortMethod.ByVerses:
                         {
                             ChapterSortComboBox.SelectedIndex = 2;
-                            ToolTip.SetToolTip(ChapterSortComboBox, "حسب عدد ءايات السور");
+                            ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Verses"]);
                             PinChapter1CheckBox.Visible = true;
                         }
                         break;
                     case ChapterSortMethod.ByWords:
                         {
                             ChapterSortComboBox.SelectedIndex = 3;
-                            ToolTip.SetToolTip(ChapterSortComboBox, "حسب عدد كلمات السور");
+                            ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Words"]);
                             PinChapter1CheckBox.Visible = true;
                         }
                         break;
                     case ChapterSortMethod.ByLetters:
                         {
                             ChapterSortComboBox.SelectedIndex = 4;
-                            ToolTip.SetToolTip(ChapterSortComboBox, "حسب عدد حروف السور");
+                            ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Letters"]);
                             PinChapter1CheckBox.Visible = true;
                         }
                         break;
                     case ChapterSortMethod.ByValue:
                         {
                             ChapterSortComboBox.SelectedIndex = 5;
-                            ToolTip.SetToolTip(ChapterSortComboBox, "حسب قيم السور");
+                            ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Value"]);
                             PinChapter1CheckBox.Visible = true;
                         }
                         break;
@@ -8251,7 +8279,7 @@ public partial class MainForm : Form, ISubscriber
                 if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_up.png"))
                 {
                     ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_up.png");
-                    ToolTip.SetToolTip(ChapterSortLabel, "ترتيب نصاعدي Ascending");
+                    ToolTip.SetToolTip(ChapterSortLabel, L[l]["Ascending"]);
                 }
             }
             else
@@ -8259,7 +8287,7 @@ public partial class MainForm : Form, ISubscriber
                 if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_down.png"))
                 {
                     ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_down.png");
-                    ToolTip.SetToolTip(ChapterSortLabel, "ترتيب تنازلي Descending");
+                    ToolTip.SetToolTip(ChapterSortLabel, L[l]["Descending"]);
                 }
             }
             //////////////////////////////////////////////////////////
