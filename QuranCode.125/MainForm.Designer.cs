@@ -47,9 +47,9 @@ partial class MainForm
         this.BookmarkPanel = new System.Windows.Forms.Panel();
         this.DeleteBookmarkLabel = new System.Windows.Forms.Label();
         this.ClearBookmarksLabel = new System.Windows.Forms.Label();
-        this.NextBookmarkButton = new System.Windows.Forms.Button();
+        this.BookmarkForwardButton = new System.Windows.Forms.Button();
         this.BookmarkCounterLabel = new System.Windows.Forms.Label();
-        this.PreviousBookmarkButton = new System.Windows.Forms.Button();
+        this.BookmarkBackwardButton = new System.Windows.Forms.Button();
         this.BookmarkTextBox = new System.Windows.Forms.TextBox();
         this.ResearchPanel = new System.Windows.Forms.Panel();
         this.ResearchMethodsRunButton = new System.Windows.Forms.Button();
@@ -78,17 +78,17 @@ partial class MainForm
         this.FindByFrequencySearchTypeDuplicateLettersLabel = new System.Windows.Forms.Label();
         this.NoorsoftLinkLabel = new System.Windows.Forms.Label();
         this.FindByTextMultiplicityCheckBox = new System.Windows.Forms.CheckBox();
-        this.SelectionHistoryDeleteLabel = new System.Windows.Forms.Label();
+        this.BrowseHistoryDeleteLabel = new System.Windows.Forms.Label();
         this.FindByFrequencySumLabel = new System.Windows.Forms.Label();
         this.FindByTextAllWordsRadioButton = new System.Windows.Forms.RadioButton();
         this.FindByTextAnyWordRadioButton = new System.Windows.Forms.RadioButton();
-        this.SelectionHistoryCounterLabel = new System.Windows.Forms.Label();
+        this.BrowseHistoryCounterLabel = new System.Windows.Forms.Label();
         this.BrowseGroupBox = new System.Windows.Forms.GroupBox();
         this.PrimalogyARLabel = new System.Windows.Forms.Label();
         this.PrimalogyLabel = new System.Windows.Forms.Label();
-        this.SelectionHistoryClearLabel = new System.Windows.Forms.Label();
-        this.SelectionHistoryForwardButton = new System.Windows.Forms.Button();
-        this.SelectionHistoryBackwardButton = new System.Windows.Forms.Button();
+        this.BrowseHistoryClearLabel = new System.Windows.Forms.Label();
+        this.BrowseHistoryForwardButton = new System.Windows.Forms.Button();
+        this.BrowseHistoryBackwardButton = new System.Windows.Forms.Button();
         this.ToolbarPanel = new System.Windows.Forms.Panel();
         this.ProgressBar = new System.Windows.Forms.ProgressBar();
         this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
@@ -523,7 +523,7 @@ partial class MainForm
         this.LetterFrequencyListView = new System.Windows.Forms.ListView();
         this.LetterOrderColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
         this.LetterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-        this.PhraseFrequencyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+        this.LetterFrequencyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
         this.FindByFrequncyPanel = new System.Windows.Forms.Panel();
         this.FindByFrequencyLinkLabel = new System.Windows.Forms.Label();
         this.FindByFrequencyPhraseCheckBox = new System.Windows.Forms.CheckBox();
@@ -1005,9 +1005,9 @@ partial class MainForm
         this.BookmarkPanel.BackColor = System.Drawing.Color.LightSteelBlue;
         this.BookmarkPanel.Controls.Add(this.DeleteBookmarkLabel);
         this.BookmarkPanel.Controls.Add(this.ClearBookmarksLabel);
-        this.BookmarkPanel.Controls.Add(this.NextBookmarkButton);
+        this.BookmarkPanel.Controls.Add(this.BookmarkForwardButton);
         this.BookmarkPanel.Controls.Add(this.BookmarkCounterLabel);
-        this.BookmarkPanel.Controls.Add(this.PreviousBookmarkButton);
+        this.BookmarkPanel.Controls.Add(this.BookmarkBackwardButton);
         this.BookmarkPanel.Controls.Add(this.BookmarkTextBox);
         this.BookmarkPanel.Location = new System.Drawing.Point(355, 0);
         this.BookmarkPanel.Margin = new System.Windows.Forms.Padding(4);
@@ -1051,26 +1051,26 @@ partial class MainForm
         this.ClearBookmarksLabel.Click += new System.EventHandler(this.ClearBookmarksLabel_Click);
         this.ClearBookmarksLabel.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
-        // NextBookmarkButton
+        // BookmarkForwardButton
         // 
-        this.NextBookmarkButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.NextBookmarkButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.NextBookmarkButton.Dock = System.Windows.Forms.DockStyle.Left;
-        this.NextBookmarkButton.Enabled = false;
-        this.NextBookmarkButton.FlatAppearance.BorderSize = 0;
-        this.NextBookmarkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.NextBookmarkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.NextBookmarkButton.ForeColor = System.Drawing.Color.Transparent;
-        this.NextBookmarkButton.Image = ((System.Drawing.Image)(resources.GetObject("NextBookmarkButton.Image")));
-        this.NextBookmarkButton.Location = new System.Drawing.Point(111, 0);
-        this.NextBookmarkButton.Margin = new System.Windows.Forms.Padding(4);
-        this.NextBookmarkButton.Name = "NextBookmarkButton";
-        this.NextBookmarkButton.Size = new System.Drawing.Size(27, 26);
-        this.NextBookmarkButton.TabIndex = 98;
-        this.ToolTip.SetToolTip(this.NextBookmarkButton, "Forward");
-        this.NextBookmarkButton.UseVisualStyleBackColor = false;
-        this.NextBookmarkButton.Click += new System.EventHandler(this.NextBookmarkButton_Click);
-        this.NextBookmarkButton.Enter += new System.EventHandler(this.StatusControls_Enter);
+        this.BookmarkForwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BookmarkForwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BookmarkForwardButton.Dock = System.Windows.Forms.DockStyle.Left;
+        this.BookmarkForwardButton.Enabled = false;
+        this.BookmarkForwardButton.FlatAppearance.BorderSize = 0;
+        this.BookmarkForwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BookmarkForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BookmarkForwardButton.ForeColor = System.Drawing.Color.Transparent;
+        this.BookmarkForwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BookmarkForwardButton.Image")));
+        this.BookmarkForwardButton.Location = new System.Drawing.Point(111, 0);
+        this.BookmarkForwardButton.Margin = new System.Windows.Forms.Padding(4);
+        this.BookmarkForwardButton.Name = "BookmarkForwardButton";
+        this.BookmarkForwardButton.Size = new System.Drawing.Size(27, 26);
+        this.BookmarkForwardButton.TabIndex = 98;
+        this.ToolTip.SetToolTip(this.BookmarkForwardButton, "Forward");
+        this.BookmarkForwardButton.UseVisualStyleBackColor = false;
+        this.BookmarkForwardButton.Click += new System.EventHandler(this.BookmarkForwardButton_Click);
+        this.BookmarkForwardButton.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
         // BookmarkCounterLabel
         // 
@@ -1090,26 +1090,26 @@ partial class MainForm
         this.BookmarkCounterLabel.Click += new System.EventHandler(this.BookmarkCounterLabel_Click);
         this.BookmarkCounterLabel.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
-        // PreviousBookmarkButton
+        // BookmarkBackwardButton
         // 
-        this.PreviousBookmarkButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.PreviousBookmarkButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.PreviousBookmarkButton.Dock = System.Windows.Forms.DockStyle.Left;
-        this.PreviousBookmarkButton.Enabled = false;
-        this.PreviousBookmarkButton.FlatAppearance.BorderSize = 0;
-        this.PreviousBookmarkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.PreviousBookmarkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.PreviousBookmarkButton.ForeColor = System.Drawing.Color.Transparent;
-        this.PreviousBookmarkButton.Image = ((System.Drawing.Image)(resources.GetObject("PreviousBookmarkButton.Image")));
-        this.PreviousBookmarkButton.Location = new System.Drawing.Point(0, 0);
-        this.PreviousBookmarkButton.Margin = new System.Windows.Forms.Padding(4);
-        this.PreviousBookmarkButton.Name = "PreviousBookmarkButton";
-        this.PreviousBookmarkButton.Size = new System.Drawing.Size(27, 26);
-        this.PreviousBookmarkButton.TabIndex = 96;
-        this.ToolTip.SetToolTip(this.PreviousBookmarkButton, "Back");
-        this.PreviousBookmarkButton.UseVisualStyleBackColor = false;
-        this.PreviousBookmarkButton.Click += new System.EventHandler(this.PreviousBookmarkButton_Click);
-        this.PreviousBookmarkButton.Enter += new System.EventHandler(this.StatusControls_Enter);
+        this.BookmarkBackwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BookmarkBackwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BookmarkBackwardButton.Dock = System.Windows.Forms.DockStyle.Left;
+        this.BookmarkBackwardButton.Enabled = false;
+        this.BookmarkBackwardButton.FlatAppearance.BorderSize = 0;
+        this.BookmarkBackwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BookmarkBackwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BookmarkBackwardButton.ForeColor = System.Drawing.Color.Transparent;
+        this.BookmarkBackwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BookmarkBackwardButton.Image")));
+        this.BookmarkBackwardButton.Location = new System.Drawing.Point(0, 0);
+        this.BookmarkBackwardButton.Margin = new System.Windows.Forms.Padding(4);
+        this.BookmarkBackwardButton.Name = "BookmarkBackwardButton";
+        this.BookmarkBackwardButton.Size = new System.Drawing.Size(27, 26);
+        this.BookmarkBackwardButton.TabIndex = 96;
+        this.ToolTip.SetToolTip(this.BookmarkBackwardButton, "Back");
+        this.BookmarkBackwardButton.UseVisualStyleBackColor = false;
+        this.BookmarkBackwardButton.Click += new System.EventHandler(this.BookmarkBackwardButton_Click);
+        this.BookmarkBackwardButton.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
         // BookmarkTextBox
         // 
@@ -1298,7 +1298,7 @@ partial class MainForm
         this.VerseDiffTextBox.TabIndex = 20;
         this.VerseDiffTextBox.Text = "-/+";
         this.VerseDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.VerseDiffTextBox, "Verses between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.VerseDiffTextBox, "Verses between mouse clicks");
         this.VerseDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.VerseDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.VerseDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -1316,7 +1316,7 @@ partial class MainForm
         this.LetterDiffTextBox.TabIndex = 22;
         this.LetterDiffTextBox.Text = "-/+";
         this.LetterDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.LetterDiffTextBox, "Letters between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.LetterDiffTextBox, "Letters between mouse clicks");
         this.LetterDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.LetterDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.LetterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -1334,7 +1334,7 @@ partial class MainForm
         this.WordDiffTextBox.TabIndex = 21;
         this.WordDiffTextBox.Text = "-/+";
         this.WordDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.WordDiffTextBox, "Words between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.WordDiffTextBox, "Words between mouse clicks");
         this.WordDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.WordDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.WordDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -1605,22 +1605,22 @@ partial class MainForm
         this.FindByTextMultiplicityCheckBox.CheckedChanged += new System.EventHandler(this.FindByTextMultiplicityCheckBox_CheckedChanged);
         this.FindByTextMultiplicityCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
-        // SelectionHistoryDeleteLabel
+        // BrowseHistoryDeleteLabel
         // 
-        this.SelectionHistoryDeleteLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryDeleteLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryDeleteLabel.Enabled = false;
-        this.SelectionHistoryDeleteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryDeleteLabel.ForeColor = System.Drawing.Color.DarkGray;
-        this.SelectionHistoryDeleteLabel.Image = ((System.Drawing.Image)(resources.GetObject("SelectionHistoryDeleteLabel.Image")));
-        this.SelectionHistoryDeleteLabel.Location = new System.Drawing.Point(175, 17);
-        this.SelectionHistoryDeleteLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-        this.SelectionHistoryDeleteLabel.Name = "SelectionHistoryDeleteLabel";
-        this.SelectionHistoryDeleteLabel.Size = new System.Drawing.Size(24, 23);
-        this.SelectionHistoryDeleteLabel.TabIndex = 4;
-        this.SelectionHistoryDeleteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.ToolTip.SetToolTip(this.SelectionHistoryDeleteLabel, "Delete");
-        this.SelectionHistoryDeleteLabel.Click += new System.EventHandler(this.SelectionHistoryDeleteLabel_Click);
+        this.BrowseHistoryDeleteLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryDeleteLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryDeleteLabel.Enabled = false;
+        this.BrowseHistoryDeleteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryDeleteLabel.ForeColor = System.Drawing.Color.DarkGray;
+        this.BrowseHistoryDeleteLabel.Image = ((System.Drawing.Image)(resources.GetObject("BrowseHistoryDeleteLabel.Image")));
+        this.BrowseHistoryDeleteLabel.Location = new System.Drawing.Point(175, 17);
+        this.BrowseHistoryDeleteLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        this.BrowseHistoryDeleteLabel.Name = "BrowseHistoryDeleteLabel";
+        this.BrowseHistoryDeleteLabel.Size = new System.Drawing.Size(24, 23);
+        this.BrowseHistoryDeleteLabel.TabIndex = 4;
+        this.BrowseHistoryDeleteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.BrowseHistoryDeleteLabel, "Delete");
+        this.BrowseHistoryDeleteLabel.Click += new System.EventHandler(this.BrowseHistoryDeleteLabel_Click);
         // 
         // FindByFrequencySumLabel
         // 
@@ -1671,21 +1671,21 @@ partial class MainForm
         this.FindByTextAnyWordRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
         this.FindByTextAnyWordRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
-        // SelectionHistoryCounterLabel
+        // BrowseHistoryCounterLabel
         // 
-        this.SelectionHistoryCounterLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryCounterLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryCounterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryCounterLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-        this.SelectionHistoryCounterLabel.Location = new System.Drawing.Point(47, 17);
-        this.SelectionHistoryCounterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-        this.SelectionHistoryCounterLabel.Name = "SelectionHistoryCounterLabel";
-        this.SelectionHistoryCounterLabel.Size = new System.Drawing.Size(89, 23);
-        this.SelectionHistoryCounterLabel.TabIndex = 2;
-        this.SelectionHistoryCounterLabel.Text = "0";
-        this.SelectionHistoryCounterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.ToolTip.SetToolTip(this.SelectionHistoryCounterLabel, "History");
-        this.SelectionHistoryCounterLabel.Click += new System.EventHandler(this.SelectionHistoryCounterLabel_Click);
+        this.BrowseHistoryCounterLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryCounterLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryCounterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryCounterLabel.ForeColor = System.Drawing.Color.MidnightBlue;
+        this.BrowseHistoryCounterLabel.Location = new System.Drawing.Point(47, 17);
+        this.BrowseHistoryCounterLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        this.BrowseHistoryCounterLabel.Name = "BrowseHistoryCounterLabel";
+        this.BrowseHistoryCounterLabel.Size = new System.Drawing.Size(89, 23);
+        this.BrowseHistoryCounterLabel.TabIndex = 2;
+        this.BrowseHistoryCounterLabel.Text = "0";
+        this.BrowseHistoryCounterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.BrowseHistoryCounterLabel, "History");
+        this.BrowseHistoryCounterLabel.Click += new System.EventHandler(this.BrowseHistoryCounterLabel_Click);
         // 
         // BrowseGroupBox
         // 
@@ -1694,11 +1694,11 @@ partial class MainForm
         this.BrowseGroupBox.BackColor = System.Drawing.SystemColors.WindowText;
         this.BrowseGroupBox.Controls.Add(this.PrimalogyARLabel);
         this.BrowseGroupBox.Controls.Add(this.PrimalogyLabel);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryClearLabel);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryForwardButton);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryBackwardButton);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryCounterLabel);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryDeleteLabel);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryClearLabel);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryForwardButton);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryBackwardButton);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryCounterLabel);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryDeleteLabel);
         this.BrowseGroupBox.Cursor = System.Windows.Forms.Cursors.Hand;
         this.BrowseGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.BrowseGroupBox.ForeColor = System.Drawing.Color.Pink;
@@ -1745,60 +1745,60 @@ partial class MainForm
         this.ToolTip.SetToolTip(this.PrimalogyLabel, "Primalogy System ©2008 Ali Adams");
         this.PrimalogyLabel.Click += new System.EventHandler(this.PrimalogyLabel_Click);
         // 
-        // SelectionHistoryClearLabel
+        // BrowseHistoryClearLabel
         // 
-        this.SelectionHistoryClearLabel.BackColor = System.Drawing.Color.LightCoral;
-        this.SelectionHistoryClearLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryClearLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryClearLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-        this.SelectionHistoryClearLabel.Location = new System.Drawing.Point(199, 17);
-        this.SelectionHistoryClearLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-        this.SelectionHistoryClearLabel.Name = "SelectionHistoryClearLabel";
-        this.SelectionHistoryClearLabel.Size = new System.Drawing.Size(8, 23);
-        this.SelectionHistoryClearLabel.TabIndex = 5;
-        this.SelectionHistoryClearLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.ToolTip.SetToolTip(this.SelectionHistoryClearLabel, "Clear");
-        this.SelectionHistoryClearLabel.Click += new System.EventHandler(this.SelectionHistoryClearLabel_Click);
+        this.BrowseHistoryClearLabel.BackColor = System.Drawing.Color.LightCoral;
+        this.BrowseHistoryClearLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryClearLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryClearLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+        this.BrowseHistoryClearLabel.Location = new System.Drawing.Point(199, 17);
+        this.BrowseHistoryClearLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        this.BrowseHistoryClearLabel.Name = "BrowseHistoryClearLabel";
+        this.BrowseHistoryClearLabel.Size = new System.Drawing.Size(8, 23);
+        this.BrowseHistoryClearLabel.TabIndex = 5;
+        this.BrowseHistoryClearLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.BrowseHistoryClearLabel, "Clear");
+        this.BrowseHistoryClearLabel.Click += new System.EventHandler(this.BrowseHistoryClearLabel_Click);
         // 
-        // SelectionHistoryForwardButton
+        // BrowseHistoryForwardButton
         // 
-        this.SelectionHistoryForwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryForwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryForwardButton.Enabled = false;
-        this.SelectionHistoryForwardButton.FlatAppearance.BorderSize = 0;
-        this.SelectionHistoryForwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.SelectionHistoryForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryForwardButton.ForeColor = System.Drawing.Color.Black;
-        this.SelectionHistoryForwardButton.Image = ((System.Drawing.Image)(resources.GetObject("SelectionHistoryForwardButton.Image")));
-        this.SelectionHistoryForwardButton.Location = new System.Drawing.Point(136, 17);
-        this.SelectionHistoryForwardButton.Margin = new System.Windows.Forms.Padding(4);
-        this.SelectionHistoryForwardButton.Name = "SelectionHistoryForwardButton";
-        this.SelectionHistoryForwardButton.Size = new System.Drawing.Size(39, 23);
-        this.SelectionHistoryForwardButton.TabIndex = 3;
-        this.SelectionHistoryForwardButton.TabStop = false;
-        this.ToolTip.SetToolTip(this.SelectionHistoryForwardButton, "Forward");
-        this.SelectionHistoryForwardButton.UseVisualStyleBackColor = false;
-        this.SelectionHistoryForwardButton.Click += new System.EventHandler(this.SelectionHistoryForwardButton_Click);
+        this.BrowseHistoryForwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryForwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryForwardButton.Enabled = false;
+        this.BrowseHistoryForwardButton.FlatAppearance.BorderSize = 0;
+        this.BrowseHistoryForwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BrowseHistoryForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryForwardButton.ForeColor = System.Drawing.Color.Black;
+        this.BrowseHistoryForwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BrowseHistoryForwardButton.Image")));
+        this.BrowseHistoryForwardButton.Location = new System.Drawing.Point(136, 17);
+        this.BrowseHistoryForwardButton.Margin = new System.Windows.Forms.Padding(4);
+        this.BrowseHistoryForwardButton.Name = "BrowseHistoryForwardButton";
+        this.BrowseHistoryForwardButton.Size = new System.Drawing.Size(39, 23);
+        this.BrowseHistoryForwardButton.TabIndex = 3;
+        this.BrowseHistoryForwardButton.TabStop = false;
+        this.ToolTip.SetToolTip(this.BrowseHistoryForwardButton, "Forward");
+        this.BrowseHistoryForwardButton.UseVisualStyleBackColor = false;
+        this.BrowseHistoryForwardButton.Click += new System.EventHandler(this.BrowseHistoryForwardButton_Click);
         // 
-        // SelectionHistoryBackwardButton
+        // BrowseHistoryBackwardButton
         // 
-        this.SelectionHistoryBackwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryBackwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryBackwardButton.Enabled = false;
-        this.SelectionHistoryBackwardButton.FlatAppearance.BorderSize = 0;
-        this.SelectionHistoryBackwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.SelectionHistoryBackwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryBackwardButton.ForeColor = System.Drawing.Color.Black;
-        this.SelectionHistoryBackwardButton.Image = ((System.Drawing.Image)(resources.GetObject("SelectionHistoryBackwardButton.Image")));
-        this.SelectionHistoryBackwardButton.Location = new System.Drawing.Point(8, 17);
-        this.SelectionHistoryBackwardButton.Margin = new System.Windows.Forms.Padding(4);
-        this.SelectionHistoryBackwardButton.Name = "SelectionHistoryBackwardButton";
-        this.SelectionHistoryBackwardButton.Size = new System.Drawing.Size(39, 23);
-        this.SelectionHistoryBackwardButton.TabIndex = 1;
-        this.SelectionHistoryBackwardButton.TabStop = false;
-        this.ToolTip.SetToolTip(this.SelectionHistoryBackwardButton, "Back");
-        this.SelectionHistoryBackwardButton.UseVisualStyleBackColor = false;
-        this.SelectionHistoryBackwardButton.Click += new System.EventHandler(this.SelectionHistoryBackwardButton_Click);
+        this.BrowseHistoryBackwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryBackwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryBackwardButton.Enabled = false;
+        this.BrowseHistoryBackwardButton.FlatAppearance.BorderSize = 0;
+        this.BrowseHistoryBackwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BrowseHistoryBackwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryBackwardButton.ForeColor = System.Drawing.Color.Black;
+        this.BrowseHistoryBackwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BrowseHistoryBackwardButton.Image")));
+        this.BrowseHistoryBackwardButton.Location = new System.Drawing.Point(8, 17);
+        this.BrowseHistoryBackwardButton.Margin = new System.Windows.Forms.Padding(4);
+        this.BrowseHistoryBackwardButton.Name = "BrowseHistoryBackwardButton";
+        this.BrowseHistoryBackwardButton.Size = new System.Drawing.Size(39, 23);
+        this.BrowseHistoryBackwardButton.TabIndex = 1;
+        this.BrowseHistoryBackwardButton.TabStop = false;
+        this.ToolTip.SetToolTip(this.BrowseHistoryBackwardButton, "Back");
+        this.BrowseHistoryBackwardButton.UseVisualStyleBackColor = false;
+        this.BrowseHistoryBackwardButton.Click += new System.EventHandler(this.BrowseHistoryBackwardButton_Click);
         // 
         // ToolbarPanel
         // 
@@ -4651,7 +4651,7 @@ partial class MainForm
         this.ChapterDiffTextBox.TabIndex = 19;
         this.ChapterDiffTextBox.Text = "-/+";
         this.ChapterDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.ChapterDiffTextBox, "Chapters between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.ChapterDiffTextBox, "Chapters between mouse clicks");
         this.ChapterDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.ChapterDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.ChapterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -5031,7 +5031,7 @@ partial class MainForm
         this.PinChapter1CheckBox.Name = "PinChapter1CheckBox";
         this.PinChapter1CheckBox.Size = new System.Drawing.Size(18, 17);
         this.PinChapter1CheckBox.TabIndex = 201;
-        this.ToolTip.SetToolTip(this.PinChapter1CheckBox, "Pin/Unpin الفاتحة");
+        this.ToolTip.SetToolTip(this.PinChapter1CheckBox, "Pin الفاتحة");
         this.PinChapter1CheckBox.UseVisualStyleBackColor = true;
         this.PinChapter1CheckBox.CheckStateChanged += new System.EventHandler(this.PinChapter1CheckBox_CheckStateChanged);
         // 
@@ -9045,7 +9045,7 @@ partial class MainForm
         this.LetterFrequencyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.LetterOrderColumnHeader,
             this.LetterColumnHeader,
-            this.PhraseFrequencyColumnHeader});
+            this.LetterFrequencyColumnHeader});
         this.LetterFrequencyListView.Cursor = System.Windows.Forms.Cursors.Hand;
         this.LetterFrequencyListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.LetterFrequencyListView.FullRowSelect = true;
@@ -9073,11 +9073,11 @@ partial class MainForm
         this.LetterColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.LetterColumnHeader.Width = 55;
         // 
-        // PhraseFrequencyColumnHeader
+        // LetterFrequencyColumnHeader
         // 
-        this.PhraseFrequencyColumnHeader.Text = "Frequency  ";
-        this.PhraseFrequencyColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.PhraseFrequencyColumnHeader.Width = 90;
+        this.LetterFrequencyColumnHeader.Text = "Frequency  ";
+        this.LetterFrequencyColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+        this.LetterFrequencyColumnHeader.Width = 90;
         // 
         // FindByFrequncyPanel
         // 
@@ -10333,7 +10333,6 @@ partial class MainForm
         this.PrimeFactorsTextBox.Size = new System.Drawing.Size(236, 23);
         this.PrimeFactorsTextBox.TabIndex = 22;
         this.PrimeFactorsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.PrimeFactorsTextBox.DoubleClick += new System.EventHandler(this.PrimeFactorsTextBox_DoubleClick);
         this.PrimeFactorsTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.PrimeFactorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
@@ -11126,7 +11125,7 @@ partial class MainForm
     private System.Windows.Forms.ListView LetterFrequencyListView;
     private System.Windows.Forms.ColumnHeader LetterOrderColumnHeader;
     private System.Windows.Forms.ColumnHeader LetterColumnHeader;
-    private System.Windows.Forms.ColumnHeader PhraseFrequencyColumnHeader;
+    private System.Windows.Forms.ColumnHeader LetterFrequencyColumnHeader;
     private System.Windows.Forms.CheckBox FindByTextWordnessCheckBox;
     private System.Windows.Forms.CheckBox FindByTextCaseSensitiveCheckBox;
     private System.Windows.Forms.RadioButton FindByTextAtVerseMiddleRadioButton;
@@ -11137,10 +11136,10 @@ partial class MainForm
     private System.Windows.Forms.GroupBox BrowseGroupBox;
     private System.Windows.Forms.CheckBox FindByTextMultiplicityCheckBox;
     private System.Windows.Forms.Label NoorsoftLinkLabel;
-    private System.Windows.Forms.Button SelectionHistoryBackwardButton;
-    private System.Windows.Forms.Button SelectionHistoryForwardButton;
-    private System.Windows.Forms.Label SelectionHistoryDeleteLabel;
-    private System.Windows.Forms.Label SelectionHistoryCounterLabel;
+    private System.Windows.Forms.Button BrowseHistoryBackwardButton;
+    private System.Windows.Forms.Button BrowseHistoryForwardButton;
+    private System.Windows.Forms.Label BrowseHistoryDeleteLabel;
+    private System.Windows.Forms.Label BrowseHistoryCounterLabel;
     private System.Windows.Forms.Label FindByFrequencySumLabel;
     private System.Windows.Forms.RadioButton FindByTextAllWordsRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAnyWordRadioButton;
@@ -11155,7 +11154,7 @@ partial class MainForm
     private System.Windows.Forms.Label HeaderLabel;
     private System.Windows.Forms.GroupBox ChapterGroupBox;
     private ListBoxEx ChaptersListBox;
-    private System.Windows.Forms.Label SelectionHistoryClearLabel;
+    private System.Windows.Forms.Label BrowseHistoryClearLabel;
     private System.Windows.Forms.Label ZoomOutLabel;
     private System.Windows.Forms.Label ZoomInLabel;
     private System.Windows.Forms.Button FindByFrequencyButton;
@@ -11200,9 +11199,9 @@ partial class MainForm
     private System.Windows.Forms.Panel BookmarkPanel;
     private System.Windows.Forms.Label DeleteBookmarkLabel;
     private System.Windows.Forms.Label ClearBookmarksLabel;
-    private System.Windows.Forms.Button NextBookmarkButton;
+    private System.Windows.Forms.Button BookmarkForwardButton;
     private System.Windows.Forms.Label BookmarkCounterLabel;
-    private System.Windows.Forms.Button PreviousBookmarkButton;
+    private System.Windows.Forms.Button BookmarkBackwardButton;
     private System.Windows.Forms.TextBox BookmarkTextBox;
     private System.Windows.Forms.Panel ResearchPanel;
     private System.Windows.Forms.CheckBox AddToChapterCNumberCheckBox;

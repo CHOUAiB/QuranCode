@@ -1807,12 +1807,12 @@ public class Client : IPublisher, ISubscriber
 
                         foreach (object history_item in m_history_items)
                         {
-                            if (history_item is SelectionHistoryItem)
+                            if (history_item is BrowseHistoryItem)
                             {
-                                SelectionHistoryItem item = history_item as SelectionHistoryItem;
+                                BrowseHistoryItem item = history_item as BrowseHistoryItem;
                                 if (item != null)
                                 {
-                                    str.AppendLine("SelectionHistoryItem");
+                                    str.AppendLine("BrowseHistoryItem");
                                     str.AppendLine(item.Scope.ToString());
                                     if (item.Indexes.Count > 0)
                                     {
@@ -1895,7 +1895,7 @@ public class Client : IPublisher, ISubscriber
                             {
                                 continue;
                             }
-                            else if (line == "SelectionHistoryItem")
+                            else if (line == "BrowseHistoryItem")
                             {
                                 line = reader.ReadLine();
                                 SelectionScope scope = (SelectionScope)Enum.Parse(typeof(SelectionScope), line);
@@ -1912,7 +1912,7 @@ public class Client : IPublisher, ISubscriber
                                     }
                                 }
 
-                                SelectionHistoryItem item = new SelectionHistoryItem(Book, scope, indexes);
+                                BrowseHistoryItem item = new BrowseHistoryItem(Book, scope, indexes);
                                 AddHistoryItem(item);
                             }
                             else if (line == "SearchHistoryItem")

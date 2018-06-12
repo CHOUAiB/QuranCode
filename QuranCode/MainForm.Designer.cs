@@ -47,9 +47,9 @@ partial class MainForm
         this.BookmarkPanel = new System.Windows.Forms.Panel();
         this.DeleteBookmarkLabel = new System.Windows.Forms.Label();
         this.ClearBookmarksLabel = new System.Windows.Forms.Label();
-        this.NextBookmarkButton = new System.Windows.Forms.Button();
+        this.BookmarkForwardButton = new System.Windows.Forms.Button();
         this.BookmarkCounterLabel = new System.Windows.Forms.Label();
-        this.PreviousBookmarkButton = new System.Windows.Forms.Button();
+        this.BookmarkBackwardButton = new System.Windows.Forms.Button();
         this.BookmarkTextBox = new System.Windows.Forms.TextBox();
         this.ResearchPanel = new System.Windows.Forms.Panel();
         this.ResearchMethodParameterTextBox = new System.Windows.Forms.TextBox();
@@ -80,18 +80,18 @@ partial class MainForm
         this.FindByFrequencySearchTypeDuplicateLettersLabel = new System.Windows.Forms.Label();
         this.NoorsoftLinkLabel = new System.Windows.Forms.Label();
         this.FindByTextMultiplicityCheckBox = new System.Windows.Forms.CheckBox();
-        this.SelectionHistoryDeleteLabel = new System.Windows.Forms.Label();
+        this.BrowseHistoryDeleteLabel = new System.Windows.Forms.Label();
         this.FindByFrequencySumLabel = new System.Windows.Forms.Label();
         this.FindByTextAllWordsRadioButton = new System.Windows.Forms.RadioButton();
         this.FindByTextAnyWordRadioButton = new System.Windows.Forms.RadioButton();
         this.FindByNumbersResultTypeWordsLabel = new System.Windows.Forms.Label();
-        this.SelectionHistoryCounterLabel = new System.Windows.Forms.Label();
+        this.BrowseHistoryCounterLabel = new System.Windows.Forms.Label();
         this.BrowseGroupBox = new System.Windows.Forms.GroupBox();
         this.PrimalogyARLabel = new System.Windows.Forms.Label();
         this.PrimalogyLabel = new System.Windows.Forms.Label();
-        this.SelectionHistoryClearLabel = new System.Windows.Forms.Label();
-        this.SelectionHistoryForwardButton = new System.Windows.Forms.Button();
-        this.SelectionHistoryBackwardButton = new System.Windows.Forms.Button();
+        this.BrowseHistoryClearLabel = new System.Windows.Forms.Label();
+        this.BrowseHistoryForwardButton = new System.Windows.Forms.Button();
+        this.BrowseHistoryBackwardButton = new System.Windows.Forms.Button();
         this.FindByNumbersWordsNumberTypeLabel = new System.Windows.Forms.Label();
         this.FindByNumbersLettersNumberTypeLabel = new System.Windows.Forms.Label();
         this.FindByNumbersValueNumberTypeLabel = new System.Windows.Forms.Label();
@@ -524,7 +524,7 @@ partial class MainForm
         this.LetterFrequencyListView = new System.Windows.Forms.ListView();
         this.LetterOrderColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
         this.LetterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-        this.PhraseFrequencyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+        this.LetterFrequencyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
         this.LetterFrequencyContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
         this.PositionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.DistancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -989,9 +989,9 @@ partial class MainForm
         this.BookmarkPanel.BackColor = System.Drawing.Color.LightSteelBlue;
         this.BookmarkPanel.Controls.Add(this.DeleteBookmarkLabel);
         this.BookmarkPanel.Controls.Add(this.ClearBookmarksLabel);
-        this.BookmarkPanel.Controls.Add(this.NextBookmarkButton);
+        this.BookmarkPanel.Controls.Add(this.BookmarkForwardButton);
         this.BookmarkPanel.Controls.Add(this.BookmarkCounterLabel);
-        this.BookmarkPanel.Controls.Add(this.PreviousBookmarkButton);
+        this.BookmarkPanel.Controls.Add(this.BookmarkBackwardButton);
         this.BookmarkPanel.Controls.Add(this.BookmarkTextBox);
         this.BookmarkPanel.Location = new System.Drawing.Point(266, 0);
         this.BookmarkPanel.Name = "BookmarkPanel";
@@ -1032,25 +1032,25 @@ partial class MainForm
         this.ClearBookmarksLabel.Click += new System.EventHandler(this.ClearBookmarksLabel_Click);
         this.ClearBookmarksLabel.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
-        // NextBookmarkButton
+        // BookmarkForwardButton
         // 
-        this.NextBookmarkButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.NextBookmarkButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.NextBookmarkButton.Dock = System.Windows.Forms.DockStyle.Left;
-        this.NextBookmarkButton.Enabled = false;
-        this.NextBookmarkButton.FlatAppearance.BorderSize = 0;
-        this.NextBookmarkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.NextBookmarkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.NextBookmarkButton.ForeColor = System.Drawing.Color.Transparent;
-        this.NextBookmarkButton.Image = ((System.Drawing.Image)(resources.GetObject("NextBookmarkButton.Image")));
-        this.NextBookmarkButton.Location = new System.Drawing.Point(83, 0);
-        this.NextBookmarkButton.Name = "NextBookmarkButton";
-        this.NextBookmarkButton.Size = new System.Drawing.Size(20, 21);
-        this.NextBookmarkButton.TabIndex = 98;
-        this.ToolTip.SetToolTip(this.NextBookmarkButton, "Forward");
-        this.NextBookmarkButton.UseVisualStyleBackColor = false;
-        this.NextBookmarkButton.Click += new System.EventHandler(this.NextBookmarkButton_Click);
-        this.NextBookmarkButton.Enter += new System.EventHandler(this.StatusControls_Enter);
+        this.BookmarkForwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BookmarkForwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BookmarkForwardButton.Dock = System.Windows.Forms.DockStyle.Left;
+        this.BookmarkForwardButton.Enabled = false;
+        this.BookmarkForwardButton.FlatAppearance.BorderSize = 0;
+        this.BookmarkForwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BookmarkForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BookmarkForwardButton.ForeColor = System.Drawing.Color.Transparent;
+        this.BookmarkForwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BookmarkForwardButton.Image")));
+        this.BookmarkForwardButton.Location = new System.Drawing.Point(83, 0);
+        this.BookmarkForwardButton.Name = "BookmarkForwardButton";
+        this.BookmarkForwardButton.Size = new System.Drawing.Size(20, 21);
+        this.BookmarkForwardButton.TabIndex = 98;
+        this.ToolTip.SetToolTip(this.BookmarkForwardButton, "Forward");
+        this.BookmarkForwardButton.UseVisualStyleBackColor = false;
+        this.BookmarkForwardButton.Click += new System.EventHandler(this.BookmarkForwardButton_Click);
+        this.BookmarkForwardButton.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
         // BookmarkCounterLabel
         // 
@@ -1069,25 +1069,25 @@ partial class MainForm
         this.BookmarkCounterLabel.Click += new System.EventHandler(this.BookmarkCounterLabel_Click);
         this.BookmarkCounterLabel.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
-        // PreviousBookmarkButton
+        // BookmarkBackwardButton
         // 
-        this.PreviousBookmarkButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.PreviousBookmarkButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.PreviousBookmarkButton.Dock = System.Windows.Forms.DockStyle.Left;
-        this.PreviousBookmarkButton.Enabled = false;
-        this.PreviousBookmarkButton.FlatAppearance.BorderSize = 0;
-        this.PreviousBookmarkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.PreviousBookmarkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.PreviousBookmarkButton.ForeColor = System.Drawing.Color.Transparent;
-        this.PreviousBookmarkButton.Image = ((System.Drawing.Image)(resources.GetObject("PreviousBookmarkButton.Image")));
-        this.PreviousBookmarkButton.Location = new System.Drawing.Point(0, 0);
-        this.PreviousBookmarkButton.Name = "PreviousBookmarkButton";
-        this.PreviousBookmarkButton.Size = new System.Drawing.Size(20, 21);
-        this.PreviousBookmarkButton.TabIndex = 96;
-        this.ToolTip.SetToolTip(this.PreviousBookmarkButton, "Back");
-        this.PreviousBookmarkButton.UseVisualStyleBackColor = false;
-        this.PreviousBookmarkButton.Click += new System.EventHandler(this.PreviousBookmarkButton_Click);
-        this.PreviousBookmarkButton.Enter += new System.EventHandler(this.StatusControls_Enter);
+        this.BookmarkBackwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BookmarkBackwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BookmarkBackwardButton.Dock = System.Windows.Forms.DockStyle.Left;
+        this.BookmarkBackwardButton.Enabled = false;
+        this.BookmarkBackwardButton.FlatAppearance.BorderSize = 0;
+        this.BookmarkBackwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BookmarkBackwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BookmarkBackwardButton.ForeColor = System.Drawing.Color.Transparent;
+        this.BookmarkBackwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BookmarkBackwardButton.Image")));
+        this.BookmarkBackwardButton.Location = new System.Drawing.Point(0, 0);
+        this.BookmarkBackwardButton.Name = "BookmarkBackwardButton";
+        this.BookmarkBackwardButton.Size = new System.Drawing.Size(20, 21);
+        this.BookmarkBackwardButton.TabIndex = 96;
+        this.ToolTip.SetToolTip(this.BookmarkBackwardButton, "Back");
+        this.BookmarkBackwardButton.UseVisualStyleBackColor = false;
+        this.BookmarkBackwardButton.Click += new System.EventHandler(this.BookmarkBackwardButton_Click);
+        this.BookmarkBackwardButton.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
         // BookmarkTextBox
         // 
@@ -1267,7 +1267,7 @@ partial class MainForm
         this.VerseDiffTextBox.TabIndex = 20;
         this.VerseDiffTextBox.Text = "-/+";
         this.VerseDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.VerseDiffTextBox, "Verses between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.VerseDiffTextBox, "Verses between mouse clicks");
         this.VerseDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.VerseDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.VerseDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -1284,7 +1284,7 @@ partial class MainForm
         this.LetterDiffTextBox.TabIndex = 22;
         this.LetterDiffTextBox.Text = "-/+";
         this.LetterDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.LetterDiffTextBox, "Letters between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.LetterDiffTextBox, "Letters between mouse clicks");
         this.LetterDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.LetterDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.LetterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -1301,7 +1301,7 @@ partial class MainForm
         this.WordDiffTextBox.TabIndex = 21;
         this.WordDiffTextBox.Text = "-/+";
         this.WordDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.WordDiffTextBox, "Words between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.WordDiffTextBox, "Words between mouse clicks");
         this.WordDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.WordDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.WordDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -1582,21 +1582,21 @@ partial class MainForm
         this.FindByTextMultiplicityCheckBox.CheckedChanged += new System.EventHandler(this.FindByTextMultiplicityCheckBox_CheckedChanged);
         this.FindByTextMultiplicityCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
-        // SelectionHistoryDeleteLabel
+        // BrowseHistoryDeleteLabel
         // 
-        this.SelectionHistoryDeleteLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryDeleteLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryDeleteLabel.Enabled = false;
-        this.SelectionHistoryDeleteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryDeleteLabel.ForeColor = System.Drawing.Color.DarkGray;
-        this.SelectionHistoryDeleteLabel.Image = ((System.Drawing.Image)(resources.GetObject("SelectionHistoryDeleteLabel.Image")));
-        this.SelectionHistoryDeleteLabel.Location = new System.Drawing.Point(131, 14);
-        this.SelectionHistoryDeleteLabel.Name = "SelectionHistoryDeleteLabel";
-        this.SelectionHistoryDeleteLabel.Size = new System.Drawing.Size(18, 19);
-        this.SelectionHistoryDeleteLabel.TabIndex = 4;
-        this.SelectionHistoryDeleteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.ToolTip.SetToolTip(this.SelectionHistoryDeleteLabel, "Delete");
-        this.SelectionHistoryDeleteLabel.Click += new System.EventHandler(this.SelectionHistoryDeleteLabel_Click);
+        this.BrowseHistoryDeleteLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryDeleteLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryDeleteLabel.Enabled = false;
+        this.BrowseHistoryDeleteLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryDeleteLabel.ForeColor = System.Drawing.Color.DarkGray;
+        this.BrowseHistoryDeleteLabel.Image = ((System.Drawing.Image)(resources.GetObject("BrowseHistoryDeleteLabel.Image")));
+        this.BrowseHistoryDeleteLabel.Location = new System.Drawing.Point(131, 14);
+        this.BrowseHistoryDeleteLabel.Name = "BrowseHistoryDeleteLabel";
+        this.BrowseHistoryDeleteLabel.Size = new System.Drawing.Size(18, 19);
+        this.BrowseHistoryDeleteLabel.TabIndex = 4;
+        this.BrowseHistoryDeleteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.BrowseHistoryDeleteLabel, "Delete");
+        this.BrowseHistoryDeleteLabel.Click += new System.EventHandler(this.BrowseHistoryDeleteLabel_Click);
         // 
         // FindByFrequencySumLabel
         // 
@@ -1659,20 +1659,20 @@ partial class MainForm
         this.FindByNumbersResultTypeWordsLabel.Click += new System.EventHandler(this.FindByNumbersResultTypeWordsLabel_Click);
         this.FindByNumbersResultTypeWordsLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         // 
-        // SelectionHistoryCounterLabel
+        // BrowseHistoryCounterLabel
         // 
-        this.SelectionHistoryCounterLabel.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryCounterLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryCounterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryCounterLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-        this.SelectionHistoryCounterLabel.Location = new System.Drawing.Point(35, 14);
-        this.SelectionHistoryCounterLabel.Name = "SelectionHistoryCounterLabel";
-        this.SelectionHistoryCounterLabel.Size = new System.Drawing.Size(67, 19);
-        this.SelectionHistoryCounterLabel.TabIndex = 2;
-        this.SelectionHistoryCounterLabel.Text = "0";
-        this.SelectionHistoryCounterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.ToolTip.SetToolTip(this.SelectionHistoryCounterLabel, "History");
-        this.SelectionHistoryCounterLabel.Click += new System.EventHandler(this.SelectionHistoryCounterLabel_Click);
+        this.BrowseHistoryCounterLabel.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryCounterLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryCounterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryCounterLabel.ForeColor = System.Drawing.Color.MidnightBlue;
+        this.BrowseHistoryCounterLabel.Location = new System.Drawing.Point(35, 14);
+        this.BrowseHistoryCounterLabel.Name = "BrowseHistoryCounterLabel";
+        this.BrowseHistoryCounterLabel.Size = new System.Drawing.Size(67, 19);
+        this.BrowseHistoryCounterLabel.TabIndex = 2;
+        this.BrowseHistoryCounterLabel.Text = "0";
+        this.BrowseHistoryCounterLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.BrowseHistoryCounterLabel, "History");
+        this.BrowseHistoryCounterLabel.Click += new System.EventHandler(this.BrowseHistoryCounterLabel_Click);
         // 
         // BrowseGroupBox
         // 
@@ -1681,11 +1681,11 @@ partial class MainForm
         this.BrowseGroupBox.BackColor = System.Drawing.SystemColors.WindowText;
         this.BrowseGroupBox.Controls.Add(this.PrimalogyARLabel);
         this.BrowseGroupBox.Controls.Add(this.PrimalogyLabel);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryClearLabel);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryForwardButton);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryBackwardButton);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryCounterLabel);
-        this.BrowseGroupBox.Controls.Add(this.SelectionHistoryDeleteLabel);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryClearLabel);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryForwardButton);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryBackwardButton);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryCounterLabel);
+        this.BrowseGroupBox.Controls.Add(this.BrowseHistoryDeleteLabel);
         this.BrowseGroupBox.Cursor = System.Windows.Forms.Cursors.Hand;
         this.BrowseGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.BrowseGroupBox.ForeColor = System.Drawing.Color.Pink;
@@ -1728,57 +1728,57 @@ partial class MainForm
         this.ToolTip.SetToolTip(this.PrimalogyLabel, "Primalogy System ©2008 Ali Adams");
         this.PrimalogyLabel.Click += new System.EventHandler(this.PrimalogyLabel_Click);
         // 
-        // SelectionHistoryClearLabel
+        // BrowseHistoryClearLabel
         // 
-        this.SelectionHistoryClearLabel.BackColor = System.Drawing.Color.LightCoral;
-        this.SelectionHistoryClearLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryClearLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryClearLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-        this.SelectionHistoryClearLabel.Location = new System.Drawing.Point(149, 14);
-        this.SelectionHistoryClearLabel.Name = "SelectionHistoryClearLabel";
-        this.SelectionHistoryClearLabel.Size = new System.Drawing.Size(6, 19);
-        this.SelectionHistoryClearLabel.TabIndex = 5;
-        this.SelectionHistoryClearLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.ToolTip.SetToolTip(this.SelectionHistoryClearLabel, "Clear");
-        this.SelectionHistoryClearLabel.Click += new System.EventHandler(this.SelectionHistoryClearLabel_Click);
+        this.BrowseHistoryClearLabel.BackColor = System.Drawing.Color.LightCoral;
+        this.BrowseHistoryClearLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryClearLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryClearLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+        this.BrowseHistoryClearLabel.Location = new System.Drawing.Point(149, 14);
+        this.BrowseHistoryClearLabel.Name = "BrowseHistoryClearLabel";
+        this.BrowseHistoryClearLabel.Size = new System.Drawing.Size(6, 19);
+        this.BrowseHistoryClearLabel.TabIndex = 5;
+        this.BrowseHistoryClearLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.BrowseHistoryClearLabel, "Clear");
+        this.BrowseHistoryClearLabel.Click += new System.EventHandler(this.BrowseHistoryClearLabel_Click);
         // 
-        // SelectionHistoryForwardButton
+        // BrowseHistoryForwardButton
         // 
-        this.SelectionHistoryForwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryForwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryForwardButton.Enabled = false;
-        this.SelectionHistoryForwardButton.FlatAppearance.BorderSize = 0;
-        this.SelectionHistoryForwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.SelectionHistoryForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryForwardButton.ForeColor = System.Drawing.Color.Black;
-        this.SelectionHistoryForwardButton.Image = ((System.Drawing.Image)(resources.GetObject("SelectionHistoryForwardButton.Image")));
-        this.SelectionHistoryForwardButton.Location = new System.Drawing.Point(102, 14);
-        this.SelectionHistoryForwardButton.Name = "SelectionHistoryForwardButton";
-        this.SelectionHistoryForwardButton.Size = new System.Drawing.Size(29, 19);
-        this.SelectionHistoryForwardButton.TabIndex = 3;
-        this.SelectionHistoryForwardButton.TabStop = false;
-        this.ToolTip.SetToolTip(this.SelectionHistoryForwardButton, "Forward");
-        this.SelectionHistoryForwardButton.UseVisualStyleBackColor = false;
-        this.SelectionHistoryForwardButton.Click += new System.EventHandler(this.SelectionHistoryForwardButton_Click);
+        this.BrowseHistoryForwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryForwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryForwardButton.Enabled = false;
+        this.BrowseHistoryForwardButton.FlatAppearance.BorderSize = 0;
+        this.BrowseHistoryForwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BrowseHistoryForwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryForwardButton.ForeColor = System.Drawing.Color.Black;
+        this.BrowseHistoryForwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BrowseHistoryForwardButton.Image")));
+        this.BrowseHistoryForwardButton.Location = new System.Drawing.Point(102, 14);
+        this.BrowseHistoryForwardButton.Name = "BrowseHistoryForwardButton";
+        this.BrowseHistoryForwardButton.Size = new System.Drawing.Size(29, 19);
+        this.BrowseHistoryForwardButton.TabIndex = 3;
+        this.BrowseHistoryForwardButton.TabStop = false;
+        this.ToolTip.SetToolTip(this.BrowseHistoryForwardButton, "Forward");
+        this.BrowseHistoryForwardButton.UseVisualStyleBackColor = false;
+        this.BrowseHistoryForwardButton.Click += new System.EventHandler(this.BrowseHistoryForwardButton_Click);
         // 
-        // SelectionHistoryBackwardButton
+        // BrowseHistoryBackwardButton
         // 
-        this.SelectionHistoryBackwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
-        this.SelectionHistoryBackwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
-        this.SelectionHistoryBackwardButton.Enabled = false;
-        this.SelectionHistoryBackwardButton.FlatAppearance.BorderSize = 0;
-        this.SelectionHistoryBackwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.SelectionHistoryBackwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.SelectionHistoryBackwardButton.ForeColor = System.Drawing.Color.Black;
-        this.SelectionHistoryBackwardButton.Image = ((System.Drawing.Image)(resources.GetObject("SelectionHistoryBackwardButton.Image")));
-        this.SelectionHistoryBackwardButton.Location = new System.Drawing.Point(6, 14);
-        this.SelectionHistoryBackwardButton.Name = "SelectionHistoryBackwardButton";
-        this.SelectionHistoryBackwardButton.Size = new System.Drawing.Size(29, 19);
-        this.SelectionHistoryBackwardButton.TabIndex = 1;
-        this.SelectionHistoryBackwardButton.TabStop = false;
-        this.ToolTip.SetToolTip(this.SelectionHistoryBackwardButton, "Back");
-        this.SelectionHistoryBackwardButton.UseVisualStyleBackColor = false;
-        this.SelectionHistoryBackwardButton.Click += new System.EventHandler(this.SelectionHistoryBackwardButton_Click);
+        this.BrowseHistoryBackwardButton.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.BrowseHistoryBackwardButton.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.BrowseHistoryBackwardButton.Enabled = false;
+        this.BrowseHistoryBackwardButton.FlatAppearance.BorderSize = 0;
+        this.BrowseHistoryBackwardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+        this.BrowseHistoryBackwardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.BrowseHistoryBackwardButton.ForeColor = System.Drawing.Color.Black;
+        this.BrowseHistoryBackwardButton.Image = ((System.Drawing.Image)(resources.GetObject("BrowseHistoryBackwardButton.Image")));
+        this.BrowseHistoryBackwardButton.Location = new System.Drawing.Point(6, 14);
+        this.BrowseHistoryBackwardButton.Name = "BrowseHistoryBackwardButton";
+        this.BrowseHistoryBackwardButton.Size = new System.Drawing.Size(29, 19);
+        this.BrowseHistoryBackwardButton.TabIndex = 1;
+        this.BrowseHistoryBackwardButton.TabStop = false;
+        this.ToolTip.SetToolTip(this.BrowseHistoryBackwardButton, "Back");
+        this.BrowseHistoryBackwardButton.UseVisualStyleBackColor = false;
+        this.BrowseHistoryBackwardButton.Click += new System.EventHandler(this.BrowseHistoryBackwardButton_Click);
         // 
         // FindByNumbersWordsNumberTypeLabel
         // 
@@ -4335,7 +4335,7 @@ partial class MainForm
         this.QuarterPositionLabel.Size = new System.Drawing.Size(56, 13);
         this.QuarterPositionLabel.TabIndex = 93;
         this.QuarterPositionLabel.Text = "Quarter";
-        this.ToolTip.SetToolTip(this.QuarterPositionLabel, "Quarter word symmetry");
+        this.ToolTip.SetToolTip(this.QuarterPositionLabel, "Quarter group word symmetry");
         this.QuarterPositionLabel.Click += new System.EventHandler(this.QuarterPositionLabel_Click);
         // 
         // HalfPositionLabel
@@ -4348,7 +4348,7 @@ partial class MainForm
         this.HalfPositionLabel.Size = new System.Drawing.Size(49, 13);
         this.HalfPositionLabel.TabIndex = 92;
         this.HalfPositionLabel.Text = "Half";
-        this.ToolTip.SetToolTip(this.HalfPositionLabel, "Half word symmetry");
+        this.ToolTip.SetToolTip(this.HalfPositionLabel, "Half group word symmetry");
         this.HalfPositionLabel.Click += new System.EventHandler(this.HalfPositionLabel_Click);
         // 
         // GroupPositionLabel
@@ -4441,7 +4441,7 @@ partial class MainForm
         this.ChapterDiffTextBox.TabIndex = 19;
         this.ChapterDiffTextBox.Text = "-/+";
         this.ChapterDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.ToolTip.SetToolTip(this.ChapterDiffTextBox, "Chapters between mouse clicks across the Quran");
+        this.ToolTip.SetToolTip(this.ChapterDiffTextBox, "Chapters between mouse clicks");
         this.ChapterDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.ChapterDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.ChapterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
@@ -4787,7 +4787,7 @@ partial class MainForm
         this.PinChapter1CheckBox.Name = "PinChapter1CheckBox";
         this.PinChapter1CheckBox.Size = new System.Drawing.Size(15, 14);
         this.PinChapter1CheckBox.TabIndex = 201;
-        this.ToolTip.SetToolTip(this.PinChapter1CheckBox, "Pin/Unpin الفاتحة");
+        this.ToolTip.SetToolTip(this.PinChapter1CheckBox, "Pin الفاتحة");
         this.PinChapter1CheckBox.UseVisualStyleBackColor = true;
         this.PinChapter1CheckBox.CheckStateChanged += new System.EventHandler(this.PinChapter1CheckBox_CheckStateChanged);
         // 
@@ -5176,7 +5176,7 @@ partial class MainForm
         this.TabControl.Name = "TabControl";
         this.TabControl.SelectedIndex = 0;
         this.TabControl.ShowToolTips = true;
-        this.TabControl.Size = new System.Drawing.Size(816, 193);
+        this.TabControl.Size = new System.Drawing.Size(816, 192);
         this.TabControl.TabIndex = 102;
         this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
         this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5189,7 +5189,7 @@ partial class MainForm
         this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
         this.TranslationTabPage.Name = "TranslationTabPage";
         this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-        this.TranslationTabPage.Size = new System.Drawing.Size(808, 167);
+        this.TranslationTabPage.Size = new System.Drawing.Size(808, 168);
         this.TranslationTabPage.TabIndex = 190;
         this.TranslationTabPage.Text = " Translation ";
         this.TranslationTabPage.ToolTipText = "Translations for current selection/verse\r\nترجمة الءاية أو الءايات المظللة";
@@ -5381,10 +5381,11 @@ partial class MainForm
         this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
         this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
         this.GrammarTabPage.Name = "GrammarTabPage";
-        this.GrammarTabPage.Size = new System.Drawing.Size(808, 167);
+        this.GrammarTabPage.Size = new System.Drawing.Size(808, 168);
         this.GrammarTabPage.TabIndex = 193;
         this.GrammarTabPage.Text = " Grammar";
-        this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English\r\nإعراب الكلمة بالعربي والإنكليزي";
+        this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English\r\nإعراب الكلمة بالعربي و" +
+"الإنكليزي";
         this.GrammarTabPage.UseVisualStyleBackColor = true;
         // 
         // GrammarTextBox
@@ -5414,10 +5415,11 @@ partial class MainForm
         this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
         this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
         this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-        this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 167);
+        this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 168);
         this.RelatedWordsTabPage.TabIndex = 192;
         this.RelatedWordsTabPage.Text = "Related Words";
-        this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word\r\nالكلمات المشتقة من نفس جذر الكلمة الحالية";
+        this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word\r\nالكلمات المشتقة من نفس جذر " +
+"الكلمة الحالية";
         this.RelatedWordsTabPage.UseVisualStyleBackColor = true;
         // 
         // RelatedWordsButton
@@ -5468,10 +5470,11 @@ partial class MainForm
         this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
         this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
         this.SymmetryTabPage.Name = "SymmetryTabPage";
-        this.SymmetryTabPage.Size = new System.Drawing.Size(808, 167);
+        this.SymmetryTabPage.Size = new System.Drawing.Size(808, 168);
         this.SymmetryTabPage.TabIndex = 201;
         this.SymmetryTabPage.Text = "Symmetry";
-        this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]\r\nتناظر النص من الطرفين (د. وليد محمد)";
+        this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]\r\nتناظر النص من ال" +
+"طرفين (د. وليد محمد)";
         // 
         // SymmetryIncludeBoundaryCasesCheckBox
         // 
@@ -5547,10 +5550,11 @@ partial class MainForm
         this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
         this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
         this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-        this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 167);
+        this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 168);
         this.ValuesSequenceTabPage.TabIndex = 198;
         this.ValuesSequenceTabPage.Text = "Values";
-        this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36\r\nقيم الحروف والكلمات والءايات والسُوَر بالأنظمة الرقمية لأساسات 2 الى 36";
+        this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36\r\nقيم الحروف والكلمات " +
+"والءايات والسُوَر بالأنظمة الرقمية لأساسات 2 الى 36";
         // 
         // ValuesSequenceScopeComboBox
         // 
@@ -5667,10 +5671,11 @@ partial class MainForm
         this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
         this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
         this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-        this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 167);
+        this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 168);
         this.CVWLSequenceTabPage.TabIndex = 200;
         this.CVWLSequenceTabPage.Text = "CVWL";
-        this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts\r\nرصف أرقام وأعداد الحروف والكلمات والءايات والسُوَر";
+        this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts\r\nرصف أرقام وأعداد الحرو" +
+"ف والكلمات والءايات والسُوَر";
         // 
         // CVWLSequenceShowFactorsCheckBox
         // 
@@ -5761,10 +5766,12 @@ partial class MainForm
         this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
         this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
         this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-        this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 167);
+        this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 168);
         this.DNASequenceTabPage.TabIndex = 195;
         this.DNASequenceTabPage.Text = "DNA";
-        this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to compare with the human genome [Belkacem Meghzouchene]\r\n(حوّل النص المظلل الى سلسلة د ن ا للمقارنة مع سلسلة الإنسان (بوالقاسم مغزوكين";
+        this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to compare with the human genome [Belkacem Meghz" +
+"ouchene]\r\n(حوّل النص المظلل الى سلسلة د ن ا للمقارنة مع سلسلة الإنسان (بوالقاسم " +
+"مغزوكين";
         this.DNASequenceTabPage.UseVisualStyleBackColor = true;
         // 
         // DNASequenceDirectionLabel
@@ -5837,7 +5844,7 @@ partial class MainForm
         this.MathsTabPage.Controls.Add(this.MathsPanel);
         this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
         this.MathsTabPage.Name = "MathsTabPage";
-        this.MathsTabPage.Size = new System.Drawing.Size(808, 167);
+        this.MathsTabPage.Size = new System.Drawing.Size(808, 168);
         this.MathsTabPage.TabIndex = 197;
         this.MathsTabPage.Text = "C+V";
         this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations\r\nحسابات مجاميع وفروق الءايات والسُوَر";
@@ -5951,7 +5958,7 @@ partial class MainForm
         this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.MathsPanel.Location = new System.Drawing.Point(0, 0);
         this.MathsPanel.Name = "MathsPanel";
-        this.MathsPanel.Size = new System.Drawing.Size(808, 167);
+        this.MathsPanel.Size = new System.Drawing.Size(808, 168);
         this.MathsPanel.TabIndex = 0;
         // 
         // MathsInterestingNumbersEditLabel
@@ -7239,10 +7246,11 @@ partial class MainForm
         this.DistancesTabPage.Controls.Add(this.DistancesPanel);
         this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
         this.DistancesTabPage.Name = "DistancesTabPage";
-        this.DistancesTabPage.Size = new System.Drawing.Size(808, 167);
+        this.DistancesTabPage.Size = new System.Drawing.Size(808, 168);
         this.DistancesTabPage.TabIndex = 199;
         this.DistancesTabPage.Text = "Distances";
-        this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word\r\nالمسافات الى بداية ونهاية الكتاب";
+        this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word\r\nالمسافات الى " +
+"بداية ونهاية الكتاب";
         // 
         // DistancesPanel
         // 
@@ -7315,7 +7323,7 @@ partial class MainForm
         this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
         this.DistancesPanel.Name = "DistancesPanel";
-        this.DistancesPanel.Size = new System.Drawing.Size(808, 167);
+        this.DistancesPanel.Size = new System.Drawing.Size(808, 168);
         this.DistancesPanel.TabIndex = 1;
         // 
         // DistancesInterestingNumbersEditLabel
@@ -8157,10 +8165,11 @@ partial class MainForm
         this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
         this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
         this.UserTextTabPage.Name = "UserTextTabPage";
-        this.UserTextTabPage.Size = new System.Drawing.Size(808, 167);
+        this.UserTextTabPage.Size = new System.Drawing.Size(808, 168);
         this.UserTextTabPage.TabIndex = 194;
         this.UserTextTabPage.Text = " User Text ";
-        this.UserTextTabPage.ToolTipText = "Calculate the value of any given text or find all words with a given value\r\nحساب القيمة لنص معين أو إيجاد الكلمات ذوات قيمة معينة";
+        this.UserTextTabPage.ToolTipText = "Calculate the value of any given text or find all words with a given value\r\nحساب " +
+"القيمة لنص معين أو إيجاد الكلمات ذوات قيمة معينة";
         this.UserTextTabPage.UseVisualStyleBackColor = true;
         // 
         // UserTextValueButton
@@ -8572,7 +8581,7 @@ partial class MainForm
         this.LetterFrequencyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.LetterOrderColumnHeader,
             this.LetterColumnHeader,
-            this.PhraseFrequencyColumnHeader});
+            this.LetterFrequencyColumnHeader});
         this.LetterFrequencyListView.ContextMenuStrip = this.LetterFrequencyContextMenuStrip;
         this.LetterFrequencyListView.Cursor = System.Windows.Forms.Cursors.Hand;
         this.LetterFrequencyListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -8601,11 +8610,11 @@ partial class MainForm
         this.LetterColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.LetterColumnHeader.Width = 35;
         // 
-        // PhraseFrequencyColumnHeader
+        // LetterFrequencyColumnHeader
         // 
-        this.PhraseFrequencyColumnHeader.Text = "Frequency  ";
-        this.PhraseFrequencyColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.PhraseFrequencyColumnHeader.Width = 77;
+        this.LetterFrequencyColumnHeader.Text = "Frequency  ";
+        this.LetterFrequencyColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+        this.LetterFrequencyColumnHeader.Width = 77;
         // 
         // LetterFrequencyContextMenuStrip
         // 
@@ -9811,7 +9820,6 @@ partial class MainForm
         this.PrimeFactorsTextBox.Size = new System.Drawing.Size(178, 20);
         this.PrimeFactorsTextBox.TabIndex = 22;
         this.PrimeFactorsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.PrimeFactorsTextBox.DoubleClick += new System.EventHandler(this.PrimeFactorsTextBox_DoubleClick);
         this.PrimeFactorsTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.PrimeFactorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
@@ -10555,7 +10563,7 @@ partial class MainForm
     private System.Windows.Forms.ListView LetterFrequencyListView;
     private System.Windows.Forms.ColumnHeader LetterOrderColumnHeader;
     private System.Windows.Forms.ColumnHeader LetterColumnHeader;
-    private System.Windows.Forms.ColumnHeader PhraseFrequencyColumnHeader;
+    private System.Windows.Forms.ColumnHeader LetterFrequencyColumnHeader;
     private System.Windows.Forms.Button FindByNumbersButton;
     private System.Windows.Forms.CheckBox FindByTextWordnessCheckBox;
     private System.Windows.Forms.CheckBox FindByTextCaseSensitiveCheckBox;
@@ -10580,10 +10588,10 @@ partial class MainForm
     private System.Windows.Forms.GroupBox BrowseGroupBox;
     private System.Windows.Forms.CheckBox FindByTextMultiplicityCheckBox;
     private System.Windows.Forms.Label NoorsoftLinkLabel;
-    private System.Windows.Forms.Button SelectionHistoryBackwardButton;
-    private System.Windows.Forms.Button SelectionHistoryForwardButton;
-    private System.Windows.Forms.Label SelectionHistoryDeleteLabel;
-    private System.Windows.Forms.Label SelectionHistoryCounterLabel;
+    private System.Windows.Forms.Button BrowseHistoryBackwardButton;
+    private System.Windows.Forms.Button BrowseHistoryForwardButton;
+    private System.Windows.Forms.Label BrowseHistoryDeleteLabel;
+    private System.Windows.Forms.Label BrowseHistoryCounterLabel;
     private System.Windows.Forms.Label FindByFrequencySumLabel;
     private System.Windows.Forms.RadioButton FindByTextAllWordsRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAnyWordRadioButton;
@@ -10598,7 +10606,7 @@ partial class MainForm
     private System.Windows.Forms.Label HeaderLabel;
     private System.Windows.Forms.GroupBox ChapterGroupBox;
     private ListBoxEx ChaptersListBox;
-    private System.Windows.Forms.Label SelectionHistoryClearLabel;
+    private System.Windows.Forms.Label BrowseHistoryClearLabel;
     private System.Windows.Forms.Label FindByNumbersNumberComparisonOperatorLabel;
     private System.Windows.Forms.Label FindByNumbersNumberNumberTypeLabel;
     private System.Windows.Forms.NumericUpDown FindByNumbersNumberNumericUpDown;
@@ -10653,9 +10661,9 @@ partial class MainForm
     private System.Windows.Forms.Panel BookmarkPanel;
     private System.Windows.Forms.Label DeleteBookmarkLabel;
     private System.Windows.Forms.Label ClearBookmarksLabel;
-    private System.Windows.Forms.Button NextBookmarkButton;
+    private System.Windows.Forms.Button BookmarkForwardButton;
     private System.Windows.Forms.Label BookmarkCounterLabel;
-    private System.Windows.Forms.Button PreviousBookmarkButton;
+    private System.Windows.Forms.Button BookmarkBackwardButton;
     private System.Windows.Forms.TextBox BookmarkTextBox;
     private System.Windows.Forms.Panel ResearchPanel;
     private System.Windows.Forms.CheckBox AddToChapterCNumberCheckBox;

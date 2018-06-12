@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Model
 {
-    public class SelectionHistoryItem : Selection
+    public class BrowseHistoryItem : Selection
     {
-        public SelectionHistoryItem(Book book, SelectionScope scope, List<int> indexes)
+        public BrowseHistoryItem(Book book, SelectionScope scope, List<int> indexes)
             : base(book, scope, indexes)
         {
         }

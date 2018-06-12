@@ -243,7 +243,14 @@ public partial class MainForm : Form, ISubscriber
                                     {
                                         if (parts[4].Length > 0)
                                         {
-                                            ToolTip.SetToolTip(control, parts[4]);
+                                            if (control is TabPage)
+                                            {
+                                                (control as TabPage).ToolTipText = parts[4];
+                                            }
+                                            else
+                                            {
+                                                ToolTip.SetToolTip(control, parts[4]);
+                                            }
                                         }
                                     }
                                 }
@@ -293,6 +300,53 @@ public partial class MainForm : Form, ISubscriber
                             }
                         }
                     }
+                }
+
+                switch (m_number_kind)
+                {
+                    case NumberKind.Abundant:
+                        ToolTip.SetToolTip(NumberKindIndexTextBox, L[l]["Abundant number index"]);
+                        break;
+                    case NumberKind.Perfect:
+                        ToolTip.SetToolTip(NumberKindIndexTextBox, L[l]["Perfect number index"]);
+                        break;
+                    case NumberKind.Deficient:
+                        ToolTip.SetToolTip(NumberKindIndexTextBox, L[l]["Deficient number index"]);
+                        break;
+                }
+
+                if (m_found_verses_displayed)
+                {
+                    if (m_word_wrap_search_textbox)
+                    {
+                        ToolTip.SetToolTip(WordWrapLabel, L[l]["Wrap"]);
+                    }
+                    else
+                    {
+                        ToolTip.SetToolTip(WordWrapLabel, L[l]["Unwrap"]);
+                    }
+                }
+                else
+                {
+                    if (m_word_wrap_main_textbox)
+                    {
+                        ToolTip.SetToolTip(WordWrapLabel, L[l]["Wrap"]);
+                    }
+                    else
+                    {
+                        ToolTip.SetToolTip(WordWrapLabel, L[l]["Unwrap"]);
+                    }
+                }
+
+                LetterFrequencyColumnHeader.Text = L[l]["Frequency"] + "  "; // + 2 spaces for sort marker after them
+
+                m_note_writing_instruction = L[l]["write a note for"];
+                DisplayNoteWritingInstruction();
+
+                long value = 0L;
+                if (long.TryParse(ValueTextBox.Text, out value))
+                {
+                    UpdateValueNavigator(value);
                 }
             }
         }
@@ -596,7 +650,7 @@ public partial class MainForm : Form, ISubscriber
                                 splash_form.Information = "Generating big numbers ...";
                             }
                             m_client.LoadHistoryItems();
-                            UpdateSelectionHistoryButtons();
+                            UpdateBrowseHistoryButtons();
                             splash_form.Progress = 95;
                             Thread.Sleep(100);
 
@@ -806,12 +860,12 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (
                             ((m_active_textbox.Focused) && (m_translation_readonly)) ||
-                            (SelectionHistoryBackwardButton.Focused) ||
-                            (SelectionHistoryForwardButton.Focused) ||
-                            (SelectionHistoryCounterLabel.Focused)
+                            (BrowseHistoryBackwardButton.Focused) ||
+                            (BrowseHistoryForwardButton.Focused) ||
+                            (BrowseHistoryCounterLabel.Focused)
                            )
                         {
-                            SelectionHistoryBackwardButton_Click(null, null);
+                            BrowseHistoryBackwardButton_Click(null, null);
                             e.Handled = true; // stop annoying beep
                         }
                     }
@@ -822,12 +876,12 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (
                             ((m_active_textbox.Focused) && (m_translation_readonly)) ||
-                            (SelectionHistoryBackwardButton.Focused) ||
-                            (SelectionHistoryForwardButton.Focused) ||
-                            (SelectionHistoryCounterLabel.Focused)
+                            (BrowseHistoryBackwardButton.Focused) ||
+                            (BrowseHistoryForwardButton.Focused) ||
+                            (BrowseHistoryCounterLabel.Focused)
                            )
                         {
-                            SelectionHistoryForwardButton_Click(null, null);
+                            BrowseHistoryForwardButton_Click(null, null);
                             e.Handled = true; // stop annoying beep
                         }
                     }
@@ -848,7 +902,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                     else
                     {
-                        NextBookmarkButton_Click(null, null);
+                        BookmarkForwardButton_Click(null, null);
                     }
                 }
                 else if (e.KeyCode == Keys.F4)
@@ -944,12 +998,12 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (
                             ((m_active_textbox.Focused) && (m_translation_readonly)) ||
-                            (SelectionHistoryBackwardButton.Focused) ||
-                            (SelectionHistoryForwardButton.Focused) ||
-                            (SelectionHistoryCounterLabel.Focused)
+                            (BrowseHistoryBackwardButton.Focused) ||
+                            (BrowseHistoryForwardButton.Focused) ||
+                            (BrowseHistoryCounterLabel.Focused)
                            )
                         {
-                            SelectionHistoryForwardButton_Click(null, null);
+                            BrowseHistoryForwardButton_Click(null, null);
                             e.Handled = true; // stop annoying beep
                         }
                     }
@@ -960,12 +1014,12 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (
                             ((m_active_textbox.Focused) && (m_translation_readonly)) ||
-                            (SelectionHistoryBackwardButton.Focused) ||
-                            (SelectionHistoryForwardButton.Focused) ||
-                            (SelectionHistoryCounterLabel.Focused)
+                            (BrowseHistoryBackwardButton.Focused) ||
+                            (BrowseHistoryForwardButton.Focused) ||
+                            (BrowseHistoryCounterLabel.Focused)
                            )
                         {
-                            SelectionHistoryBackwardButton_Click(null, null);
+                            BrowseHistoryBackwardButton_Click(null, null);
                             e.Handled = true; // stop annoying beep
                         }
                     }
@@ -984,7 +1038,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                     else
                     {
-                        PreviousBookmarkButton_Click(null, null);
+                        BookmarkBackwardButton_Click(null, null);
                     }
                 }
                 else if (e.KeyCode == Keys.F4)
@@ -1739,24 +1793,18 @@ public partial class MainForm : Form, ISubscriber
                                                 break;
                                             case "Language":
                                                 {
-                                                    try
+                                                    int index = int.Parse(parts[1].Trim());
+                                                    if ((index >= 0) && (index < this.LanguageComboBox.Items.Count))
                                                     {
-                                                        int index = int.Parse(parts[1].Trim());
-                                                        if ((index >= 0) && (index < this.LanguageComboBox.Items.Count))
-                                                        {
-                                                            this.LanguageComboBox.SelectedIndex = index;
-                                                        }
+                                                        this.LanguageComboBox.SelectedIndex = index;
                                                     }
-                                                    catch
+                                                    else if (this.LanguageComboBox.Items.Contains(DEFAULT_LANGUAGE))
                                                     {
-                                                        if (this.LanguageComboBox.Items.Contains(DEFAULT_LANGUAGE))
-                                                        {
-                                                            this.LanguageComboBox.SelectedItem = DEFAULT_LANGUAGE;
-                                                        }
-                                                        else
-                                                        {
-                                                            this.LanguageComboBox.SelectedIndex = 0;
-                                                        }
+                                                        this.LanguageComboBox.SelectedItem = DEFAULT_LANGUAGE;
+                                                    }
+                                                    else
+                                                    {
+                                                        this.LanguageComboBox.SelectedIndex = 0;
                                                     }
                                                 }
                                                 break;
@@ -2923,9 +2971,6 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.PlayerMuteLabel, L[l]["Mute"]);
             this.ToolTip.SetToolTip(this.PlayerVerseSilenceGapTrackBar, L[l]["Silence between verses"]);
             this.ToolTip.SetToolTip(this.PlayerSelectionSilenceGapTrackBar, L[l]["Silence between selections"]);
-            this.ToolTip.SetToolTip(this.VerseByVerseNumberLabel, L[l]["Go to verse number = current value"]);
-            this.ToolTip.SetToolTip(this.VerseByLetterNumberLabel, L[l]["Go to verse with letter number = current value"]);
-            this.ToolTip.SetToolTip(this.VerseByWordNumberLabel, L[l]["Go to verse with word number = current value"]);
             this.ToolTip.SetToolTip(this.UndoValueNavigationLabel, L[l]["Back"]);
             this.ToolTip.SetToolTip(this.RedoValueNavigationLabel, L[l]["Forward"]);
             this.ToolTip.SetToolTip(this.TextModeComboBox, L[l]["Letter simplification system"]);
@@ -4543,8 +4588,8 @@ public partial class MainForm : Form, ISubscriber
                 this.Text += SPACE_GAP +
                 (
                     word.Verse.Chapter.Name + SPACE_GAP +
-                    "verse " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                    "word " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
+                    L[l]["verse"] + " " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
+                    L[l]["word"] + " " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
                     word.Transliteration + SPACE_GAP +
                     word.Text + SPACE_GAP +
                     word.Meaning + SPACE_GAP +
@@ -4916,7 +4961,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 WordWrapLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "text_wrap.png");
             }
-            ToolTip.SetToolTip(WordWrapLabel, "Unwrap");
+            ToolTip.SetToolTip(WordWrapLabel, L[l]["Wrap"]);
         }
         else
         {
@@ -4924,7 +4969,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 WordWrapLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "text_unwrap.png");
             }
-            ToolTip.SetToolTip(WordWrapLabel, "Wrap");
+            ToolTip.SetToolTip(WordWrapLabel, L[l]["Unwrap"]);
         }
         WordWrapLabel.Refresh();
     }
@@ -7763,10 +7808,10 @@ public partial class MainForm : Form, ISubscriber
                     {
                         UpdateSelection();
                     }
-                    else if ((sender == PreviousBookmarkButton) || (sender == NextBookmarkButton))
+                    else if ((sender == BookmarkBackwardButton) || (sender == BookmarkForwardButton))
                     {
                     }
-                    else if ((sender == SelectionHistoryBackwardButton) || (sender == SelectionHistoryForwardButton))
+                    else if ((sender == BrowseHistoryBackwardButton) || (sender == BrowseHistoryForwardButton))
                     {
                     }
                     else
@@ -7813,11 +7858,11 @@ public partial class MainForm : Form, ISubscriber
                                     ToolTip.SetToolTip(ChaptersListBox,
                                         chapter.SortedNumber.ToString() + " - " + chapter.TransliteratedName + " - " + chapter.EnglishName + "\r\n" +
                                         chapter.RevelationPlace.ToString() + " - " + chapter.RevelationOrder.ToString() + " \t " + chapter.Number.ToString() + "\r\n" +
-                                        "Verses  \t\t " + chapter.Verses.Count.ToString() + "\r\n" +
-                                        "Words   \t\t " + chapter.WordCount.ToString() + "\r\n" +
-                                        "Letters \t\t " + chapter.LetterCount.ToString() + "\r\n" +
-                                        "Unique Letters \t " + chapter.UniqueLetters.Count.ToString() + "\r\n" +
-                                        (m_found_verses_displayed ? ("Matches" + "\t\t" + match_count.ToString() + "\r\n") : "") +
+                                        L[l]["Verses"] + "  \t\t " + chapter.Verses.Count.ToString() + "\r\n" +
+                                        L[l]["Words"] + "   \t\t " + chapter.WordCount.ToString() + "\r\n" +
+                                        L[l]["Letters"] + " \t\t " + chapter.LetterCount.ToString() + "\r\n" +
+                                        L[l]["Unique Letters"] + " \t " + chapter.UniqueLetters.Count.ToString() + "\r\n" +
+                                        (m_found_verses_displayed ? (L[l]["Matches"] + "\t\t" + match_count.ToString() + "\r\n") : "") +
                                         "\r\n" +
                                         chapter.Verses[0].Text + ((index == 41) ? ("\r\n" + chapter.Verses[1].Text) : "")
                                     );
@@ -8351,7 +8396,7 @@ public partial class MainForm : Form, ISubscriber
                 value = -1L; // error
             }
 
-            FactorizeValue(value, "User", false);
+            FactorizeValue(value, false);
         }
     }
     private void NumericUpDown_Leave(object sender, EventArgs e)
@@ -8990,7 +9035,7 @@ public partial class MainForm : Form, ISubscriber
             m_user_text_mode = false;
             m_selection_mode = true;
 
-            ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
+            ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
             WordsListBoxLabel.Visible = false;
             WordsListBox.Visible = false;
             WordsListBox.SendToBack();
@@ -9032,7 +9077,7 @@ public partial class MainForm : Form, ISubscriber
 
                     if (add_to_history)
                     {
-                        AddSelectionHistoryItem();
+                        AddBrowseHistoryItem();
                     }
 
                     // display selection's note (if any)
@@ -9086,7 +9131,7 @@ public partial class MainForm : Form, ISubscriber
                             if ((m_client.Selection.Scope == SelectionScope.Word) || (m_client.Selection.Scope == SelectionScope.Letter))
                             {
                                 int verse_number = (int)VerseNumericUpDown.Value;
-                                result = "Verse" + " " + m_client.Book.Verses[verse_number - 1].Address;
+                                result = L[l]["Verse"] + " " + m_client.Book.Verses[verse_number - 1].Address;
                             }
                             else // if scope is Chapter, Page, Station, Part, Group, Half, Quarter, Bowing, Verse
                             {
@@ -9926,7 +9971,7 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Bookmarks/Notes
     ///////////////////////////////////////////////////////////////////////////////
-    private string m_note_writing_instruction = "write a note";
+    private string m_note_writing_instruction = "write a note for";
     private Color m_note_writing_instruction_color = Color.Gray;
     private Color m_note_edit_color = Color.Black;
     private Color m_note_view_color = Color.Blue;
@@ -9990,12 +10035,12 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (m_client.Selection.Scope == SelectionScope.Book)
                         {
-                            BookmarkTextBox.Text = m_note_writing_instruction + " for "
+                            BookmarkTextBox.Text = m_note_writing_instruction + " "
                                 + m_client.Selection.Scope.ToString();
                         }
                         else if ((m_client.Selection.Scope == SelectionScope.Verse) || (m_client.Selection.Scope == SelectionScope.Word) || (m_client.Selection.Scope == SelectionScope.Letter))
                         {
-                            BookmarkTextBox.Text = m_note_writing_instruction + " for Chapter "
+                            BookmarkTextBox.Text = m_note_writing_instruction + " Chapter "
                                 + (ChapterComboBox.SelectedIndex + 1).ToString() + " Verse "
                                 + (ChapterVerseNumericUpDown.Value).ToString();
                         }
@@ -10014,7 +10059,7 @@ public partial class MainForm : Form, ISubscriber
                                 }
                             }
 
-                            BookmarkTextBox.Text = m_note_writing_instruction + " for "
+                            BookmarkTextBox.Text = m_note_writing_instruction + " "
                                          + m_client.Selection.Scope.ToString() + " "
                                          + str.ToString();
                         }
@@ -10106,7 +10151,7 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void PreviousBookmarkButton_Click(object sender, EventArgs e)
+    private void BookmarkBackwardButton_Click(object sender, EventArgs e)
     {
         if (m_client != null)
         {
@@ -10117,7 +10162,7 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void NextBookmarkButton_Click(object sender, EventArgs e)
+    private void BookmarkForwardButton_Click(object sender, EventArgs e)
     {
         if (m_client != null)
         {
@@ -10167,7 +10212,7 @@ public partial class MainForm : Form, ISubscriber
     private void ClearBookmarksLabel_Click(object sender, EventArgs e)
     {
         if (MessageBox.Show(
-            "Delete all bookmarks and notes?",
+            L[l]["Delete all bookmarks and notes?"],
             Application.ProductName,
             MessageBoxButtons.YesNo,
             MessageBoxIcon.Question) == DialogResult.Yes)
@@ -10188,8 +10233,8 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_client.Bookmarks != null)
             {
-                PreviousBookmarkButton.Enabled = (m_client.Bookmarks.Count > 0) && (m_client.CurrentBookmarkIndex > 0);
-                NextBookmarkButton.Enabled = (m_client.Bookmarks.Count > 0) && (m_client.CurrentBookmarkIndex < m_client.Bookmarks.Count - 1);
+                BookmarkBackwardButton.Enabled = (m_client.Bookmarks.Count > 0) && (m_client.CurrentBookmarkIndex > 0);
+                BookmarkForwardButton.Enabled = (m_client.Bookmarks.Count > 0) && (m_client.CurrentBookmarkIndex < m_client.Bookmarks.Count - 1);
                 BookmarkCounterLabel.Text = (m_client.CurrentBookmarkIndex + 1).ToString() + " / " + m_client.Bookmarks.Count.ToString();
                 DeleteBookmarkLabel.Enabled = (!BookmarkTextBox.Text.StartsWith(m_note_writing_instruction)) && (!m_found_verses_displayed) && (m_client.Bookmarks.Count > 0);
                 ClearBookmarksLabel.Enabled = (!BookmarkTextBox.Text.StartsWith(m_note_writing_instruction)) && (!m_found_verses_displayed) && (m_client.Bookmarks.Count > 0);
@@ -12536,9 +12581,9 @@ public partial class MainForm : Form, ISubscriber
                 word.Text + SPACE_GAP +
                 word.Meaning + SPACE_GAP +
                 roots + "\r\n" +
-                "chapter " + word.Verse.Chapter.SortedNumber /*+ " " + word.Verse.Chapter.Name*/ + SPACE_GAP +
-                "verse  " + word.Verse.NumberInChapter /*+ "-" + word.Verse.Number*/ + SPACE_GAP +
-                "word  " + word.NumberInVerse /*+ "-" + word.NumberInChapter + "-" + word.Number*/ + SPACE_GAP + SPACE_GAP + SPACE_GAP +
+                L[l]["chapter"] + "  " + word.Verse.Chapter.SortedNumber /*+ " " + word.Verse.Chapter.Name*/ + SPACE_GAP +
+                L[l]["verse"] + "  " + word.Verse.NumberInChapter /*+ "-" + word.Verse.Number*/ + SPACE_GAP +
+                L[l]["word"] + "  " + word.NumberInVerse /*+ "-" + word.NumberInChapter + "-" + word.Number*/ + SPACE_GAP + SPACE_GAP + SPACE_GAP +
                 word.Occurrence.ToString() + "/" + word.Frequency.ToString();
         }
         return null;
@@ -12607,8 +12652,8 @@ public partial class MainForm : Form, ISubscriber
                             }
                             str.AppendLine();
 
-                            str.AppendLine(verse_count.ToString() + "  related verses" + "\t\t"
-                                          + word_count.ToString() + " (" + unique_word_count.ToString() + ")" + "  related words");
+                            str.AppendLine(verse_count.ToString() + "  " + L[l]["related verses"] + "\t\t"
+                                          + word_count.ToString() + " (" + unique_word_count.ToString() + ")" + "  " + L[l]["related words"]);
 
                             result = str.ToString();
                         }
@@ -20585,7 +20630,7 @@ public partial class MainForm : Form, ISubscriber
     {
         //if (!WordsListBox.Focused)
         //{
-        //    ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
+        //    ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
         //    WordsListBoxLabel.Visible = false;
         //    WordsListBox.Visible = false;
         //}
@@ -20925,11 +20970,11 @@ public partial class MainForm : Form, ISubscriber
 
         if (m_text_search_type == TextSearchType.Root)
         {
-            ToolTip.SetToolTip(InspectChaptersLabel, "Inspect root frequencies");
+            ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect root frequencies"]);
         }
         else
         {
-            ToolTip.SetToolTip(InspectChaptersLabel, "Inspect word frequencies");
+            ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect word frequencies"]);
         }
         WordsListBoxLabel.Visible = true;
         WordsListBox.Visible = true;
@@ -23331,7 +23376,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersButton.Enabled = true;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -24172,7 +24217,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersButton.Enabled = false;
         FindByFrequencyButton.Enabled = false;
 
-        ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -24581,7 +24626,7 @@ public partial class MainForm : Form, ISubscriber
                                         ||
                                         ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
 
-        ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
+        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
         WordsListBoxLabel.Visible = false;
         WordsListBox.Visible = false;
 
@@ -25123,7 +25168,7 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_active_textbox != null)
         {
-            // allow subsequent Finds to update chapter list, and search history
+            // allow subsequent Finds to update chapter list, and browse history
             m_found_verses_displayed = true;
             PopulateChaptersListBox();
 
@@ -25330,7 +25375,7 @@ public partial class MainForm : Form, ISubscriber
         DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
         DecimalValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
         DecimalValueTextBox.Refresh();
-        FactorizeValue(value, "Phrases", true);
+        FactorizeValue(value, true);
 
         m_current_text = phrase_str.ToString();
     }
@@ -25581,7 +25626,7 @@ public partial class MainForm : Form, ISubscriber
                     BuildLetterFrequencies();
                     DisplayLetterFrequencies();
 
-                    //ColorizeChapters(); // too slow
+                    ColorizeChapters(); // too slow
 
                     m_current_found_verse_index = 0;
                     DisplayCurrentPositions();
@@ -25716,7 +25761,7 @@ public partial class MainForm : Form, ISubscriber
                     BuildLetterFrequencies();
                     DisplayLetterFrequencies();
 
-                    //ColorizeChapterRanges(); // too slow
+                    ColorizeChapterRanges(); // too slow
 
                     m_current_found_verse_index = 0;
                     DisplayCurrentPositions();
@@ -26587,12 +26632,12 @@ public partial class MainForm : Form, ISubscriber
                     }
                     item.Header = m_find_result_header;
                     m_client.AddHistoryItem(item);
-                    UpdateSelectionHistoryButtons();
+                    UpdateBrowseHistoryButtons();
                 }
             }
         }
     }
-    private void AddSelectionHistoryItem()
+    private void AddBrowseHistoryItem()
     {
         if (m_client != null)
         {
@@ -26600,17 +26645,17 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (m_client.Selection != null)
                 {
-                    SelectionHistoryItem item = new SelectionHistoryItem(m_client.Selection.Book, m_client.Selection.Scope, m_client.Selection.Indexes);
+                    BrowseHistoryItem item = new BrowseHistoryItem(m_client.Selection.Book, m_client.Selection.Scope, m_client.Selection.Indexes);
                     if (item != null)
                     {
                         m_client.AddHistoryItem(item);
-                        UpdateSelectionHistoryButtons();
+                        UpdateBrowseHistoryButtons();
                     }
                 }
             }
         }
     }
-    private void SelectionHistoryBackwardButton_Click(object sender, EventArgs e)
+    private void BrowseHistoryBackwardButton_Click(object sender, EventArgs e)
     {
         if (m_client != null)
         {
@@ -26624,18 +26669,18 @@ public partial class MainForm : Form, ISubscriber
                         m_find_matches.Clear(); // to reset Matched count
                     }
                 }
-                else if (item is SelectionHistoryItem)
+                else if (item is BrowseHistoryItem)
                 {
                     UpdateChaptersListBox();
                 }
 
-                DisplaySelectionHistoryItem(item);
-                UpdateSelectionHistoryButtons();
+                DisplayBrowseHistoryItem(item);
+                UpdateBrowseHistoryButtons();
             }
         }
         this.AcceptButton = null;
     }
-    private void SelectionHistoryForwardButton_Click(object sender, EventArgs e)
+    private void BrowseHistoryForwardButton_Click(object sender, EventArgs e)
     {
         if (m_client != null)
         {
@@ -26649,18 +26694,18 @@ public partial class MainForm : Form, ISubscriber
                         m_find_matches.Clear(); // to reset Matched count
                     }
                 }
-                else if (item is SelectionHistoryItem)
+                else if (item is BrowseHistoryItem)
                 {
                     UpdateChaptersListBox();
                 }
 
-                DisplaySelectionHistoryItem(item);
-                UpdateSelectionHistoryButtons();
+                DisplayBrowseHistoryItem(item);
+                UpdateBrowseHistoryButtons();
             }
         }
         this.AcceptButton = null;
     }
-    private void SelectionHistoryDeleteLabel_Click(object sender, EventArgs e)
+    private void BrowseHistoryDeleteLabel_Click(object sender, EventArgs e)
     {
         if (m_client != null)
         {
@@ -26678,17 +26723,17 @@ public partial class MainForm : Form, ISubscriber
                 {
                     UpdateChaptersListBox();
 
-                    DisplaySelectionHistoryItem(item);
+                    DisplayBrowseHistoryItem(item);
                 }
             }
 
-            UpdateSelectionHistoryButtons();
+            UpdateBrowseHistoryButtons();
         }
     }
-    private void SelectionHistoryClearLabel_Click(object sender, EventArgs e)
+    private void BrowseHistoryClearLabel_Click(object sender, EventArgs e)
     {
         if (MessageBox.Show(
-            "Delete all search history?",
+            L[l]["Delete all browse history?"],
             Application.ProductName,
             MessageBoxButtons.YesNo,
             MessageBoxIcon.Question) == DialogResult.Yes)
@@ -26702,17 +26747,17 @@ public partial class MainForm : Form, ISubscriber
 
                 FindByTextTextBox.Text = null;
 
-                ToolTip.SetToolTip(InspectChaptersLabel, "Inspect chapters");
+                ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
                 WordsListBoxLabel.Visible = false;
                 WordsListBox.Visible = false;
 
                 UpdateChaptersListBox();
 
-                UpdateSelectionHistoryButtons();
+                UpdateBrowseHistoryButtons();
             }
         }
     }
-    private void DisplaySelectionHistoryItem(object item)
+    private void DisplayBrowseHistoryItem(object item)
     {
         if (m_client != null)
         {
@@ -26773,7 +26818,7 @@ public partial class MainForm : Form, ISubscriber
                 }
                 else
                 {
-                    SelectionHistoryItem selection_history_item = item as SelectionHistoryItem;
+                    BrowseHistoryItem selection_history_item = item as BrowseHistoryItem;
                     if (selection_history_item != null)
                     {
                         m_client.Selection = new Selection(selection_history_item.Book, selection_history_item.Scope, selection_history_item.Indexes);
@@ -26786,18 +26831,18 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void UpdateSelectionHistoryButtons()
+    private void UpdateBrowseHistoryButtons()
     {
         if (m_client != null)
         {
             if (m_client.HistoryItems != null)
             {
-                SelectionHistoryBackwardButton.Enabled = (m_client.HistoryItems.Count > 0) && (m_client.HistoryItemIndex > 0);
-                SelectionHistoryForwardButton.Enabled = (m_client.HistoryItems.Count >= 0) && (m_client.HistoryItemIndex < m_client.HistoryItems.Count - 1);
-                SelectionHistoryDeleteLabel.Enabled = (m_client.HistoryItems.Count > 0);
-                SelectionHistoryClearLabel.Enabled = (m_client.HistoryItems.Count > 0);
-                SelectionHistoryClearLabel.BackColor = (m_client.HistoryItems.Count > 0) ? Color.LightCoral : SystemColors.ControlLight;
-                SelectionHistoryCounterLabel.Text = (m_client.HistoryItemIndex + 1).ToString() + " / " + m_client.HistoryItems.Count.ToString();
+                BrowseHistoryBackwardButton.Enabled = (m_client.HistoryItems.Count > 0) && (m_client.HistoryItemIndex > 0);
+                BrowseHistoryForwardButton.Enabled = (m_client.HistoryItems.Count >= 0) && (m_client.HistoryItemIndex < m_client.HistoryItems.Count - 1);
+                BrowseHistoryDeleteLabel.Enabled = (m_client.HistoryItems.Count > 0);
+                BrowseHistoryClearLabel.Enabled = (m_client.HistoryItems.Count > 0);
+                BrowseHistoryClearLabel.BackColor = (m_client.HistoryItems.Count > 0) ? Color.LightCoral : SystemColors.ControlLight;
+                BrowseHistoryCounterLabel.Text = (m_client.HistoryItemIndex + 1).ToString() + " / " + m_client.HistoryItems.Count.ToString();
 
                 if (m_client.HistoryItems.Count == 0)
                 {
@@ -26812,7 +26857,7 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void SelectionHistoryCounterLabel_Click(object sender, EventArgs e)
+    private void BrowseHistoryCounterLabel_Click(object sender, EventArgs e)
     {
         if (m_client != null)
         {
@@ -26820,7 +26865,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (m_client.HistoryItems.Count > 0)
                 {
-                    DisplaySelectionHistoryItem(m_client.CurrentHistoryItem);
+                    DisplayBrowseHistoryItem(m_client.CurrentHistoryItem);
                 }
             }
         }
@@ -27731,7 +27776,7 @@ public partial class MainForm : Form, ISubscriber
         if (m_client != null)
         {
             long value = m_client.CalculateValue(user_text);
-            FactorizeValue(value, "Text", false);
+            FactorizeValue(value, false);
         }
     }
     // used for Quran text only
@@ -27740,7 +27785,7 @@ public partial class MainForm : Form, ISubscriber
         if (m_client != null)
         {
             long value = m_client.CalculateValue(verse);
-            FactorizeValue(value, "Value", false);
+            FactorizeValue(value, false);
         }
     }
     private void CalculateValueAndDisplayFactors(List<Verse> verses)
@@ -27748,7 +27793,7 @@ public partial class MainForm : Form, ISubscriber
         if (m_client != null)
         {
             long value = m_client.CalculateValue(verses);
-            FactorizeValue(value, "Value", false);
+            FactorizeValue(value, false);
         }
     }
     private void CalculateValueAndDisplayFactors(Chapter chapter)
@@ -27756,7 +27801,7 @@ public partial class MainForm : Form, ISubscriber
         if (m_client != null)
         {
             long value = m_client.CalculateValue(chapter);
-            FactorizeValue(value, "Value", false);
+            FactorizeValue(value, false);
         }
     }
     private void CalculateValueAndDisplayFactors(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2)
@@ -27764,7 +27809,7 @@ public partial class MainForm : Form, ISubscriber
         if (m_client != null)
         {
             long value = m_client.CalculateValue(verses, letter_index_in_verse1, letter_index_in_verse2);
-            FactorizeValue(value, "Value", false);
+            FactorizeValue(value, false);
         }
     }
 
@@ -27819,7 +27864,7 @@ public partial class MainForm : Form, ISubscriber
         {
             if (value < long.MaxValue) value++;
             ValueTextBox.Text = value.ToString();
-            FactorizeValue(value, "User", true);
+            FactorizeValue(value, true);
         }
     }
     private void DecrementValue()
@@ -27829,7 +27874,7 @@ public partial class MainForm : Form, ISubscriber
         {
             if (value > 0) value--;
             ValueTextBox.Text = value.ToString();
-            FactorizeValue(value, "User", true);
+            FactorizeValue(value, true);
         }
     }
     private void CalculateExpression()
@@ -27842,19 +27887,19 @@ public partial class MainForm : Form, ISubscriber
             if (long.TryParse(expression, out value))
             {
                 m_double_value = (double)value;
-                FactorizeValue(value, "Number", true);
+                FactorizeValue(value, true);
             }
             else if (expression.IsArabic() || ((m_radix <= 10) && expression.IsEnglish()))
             {
                 m_double_value = m_client.CalculateValue(expression);
                 value = (long)Math.Round(m_double_value);
-                FactorizeValue(value, "Text" + expression, true); // user_text
+                FactorizeValue(value, true); // user_text
             }
             else
             {
                 m_double_value = DoCalculateExpression(expression, m_radix);
                 value = (long)Math.Round(m_double_value);
-                FactorizeValue(value, "Math", true);
+                FactorizeValue(value, true);
             }
 
             // if result has fraction, display it as is
@@ -27866,39 +27911,6 @@ public partial class MainForm : Form, ISubscriber
         }
     }
     private double m_double_value = 0.0D;
-    private bool m_double_value_displayed = false;
-    private void PrimeFactorsTextBox_DoubleClick(object sender, EventArgs e)
-    {
-        // toggle double_value <--> prime factors
-        if (m_double_value_displayed)
-        {
-            try
-            {
-                // display prime factors
-                m_double_value = double.Parse(PrimeFactorsTextBox.Text);
-                long value = (long)Math.Round(m_double_value);
-                FactorizeValue(value, "Math", true);
-                m_double_value_displayed = false;
-            }
-            catch
-            {
-                // silence error and do nothing
-            }
-        }
-        else // m_double_value_displayed == false
-        {
-            if (ValueLabel.Text == "Formula")
-            {
-                // display double_value
-                PrimeFactorsTextBox.Text = m_double_value.ToString();
-                m_double_value_displayed = true;
-            }
-            else
-            {
-                // do nothing
-            }
-        }
-    }
     private string CalculateExpression(string expression, long radix)
     {
         try
@@ -27944,44 +27956,10 @@ public partial class MainForm : Form, ISubscriber
         }
         return result;
     }
-    private void FactorizeValue(long value, string caption, bool overwrite)
+    private void FactorizeValue(long value, bool overwrite)
     {
         try
         {
-            m_double_value_displayed = false;
-
-            if (caption.StartsWith("Text")) // user_text
-            {
-                ValueLabel.Text = "Text";
-                ValueLabel.Refresh();
-
-                this.ToolTip.SetToolTip(this.ValueTextBox, "Value of  " + caption.Substring(4));
-            }
-            else
-            {
-                ValueLabel.Text = caption;
-                ValueLabel.Refresh();
-
-                if (caption == "Value")
-                {
-                    this.ToolTip.SetToolTip(this.ValueTextBox, "Selection value  القيمة حسب نظام الترقيم الحالي");
-                }
-                else if (caption == "Number")
-                {
-                    this.ToolTip.SetToolTip(this.ValueTextBox, "User number");
-                }
-                else if (caption == "Expression")
-                {
-                    this.ToolTip.SetToolTip(this.ValueTextBox, "Math expression");
-                    m_double_value_displayed = true;
-                }
-                else
-                {
-                    this.ToolTip.SetToolTip(this.ValueTextBox, caption);
-                }
-            }
-
-            // remove previous displayed results
             DigitSumTextBox.Text = "";
             DigitalRootTextBox.Text = "";
             PrimeFactorsTextBox.Text = "";
@@ -28027,7 +28005,6 @@ public partial class MainForm : Form, ISubscriber
                  )
                )
             {
-                ValueLabel.Text = "Expression";
                 ValueTextBox.Text += Radix.Encode(value, m_radix);
 
                 ValueTextBox.SelectionLength = 0;
@@ -28073,9 +28050,9 @@ public partial class MainForm : Form, ISubscriber
                     NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
                     NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditivePrime];
                     NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditivePrime];
-                    ToolTip.SetToolTip(NthNumberTextBox, "Prime index");
-                    ToolTip.SetToolTip(NthAdditiveNumberTextBox, "Additive prime index");
-                    ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive prime index");
+                    ToolTip.SetToolTip(NthNumberTextBox, L[l]["Prime index"]);
+                    ToolTip.SetToolTip(NthAdditiveNumberTextBox, L[l]["Additive prime index"]);
+                    ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, L[l]["Non-additive prime index"]);
                 }
                 else // any other index type will be treated as IndexNumberType.Composite
                 {
@@ -28086,9 +28063,9 @@ public partial class MainForm : Form, ISubscriber
                     NthNumberTextBox.BackColor = (nth_additive_number_index > 0) ? Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite] : Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
                     NthAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.AdditiveComposite];
                     NthNonAdditiveNumberTextBox.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[(int)NumberType.NonAdditiveComposite];
-                    ToolTip.SetToolTip(NthNumberTextBox, "Composite index");
-                    ToolTip.SetToolTip(NthAdditiveNumberTextBox, "Additive composite index");
-                    ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, "Non-additive composite index");
+                    ToolTip.SetToolTip(NthNumberTextBox, L[l]["Composite index"]);
+                    ToolTip.SetToolTip(NthAdditiveNumberTextBox, L[l]["Additive composite index"]);
+                    ToolTip.SetToolTip(NthNonAdditiveNumberTextBox, L[l]["Non-additive composite index"]);
                 }
                 NthNumberTextBox.Text = (nth_number_index > 0) ? nth_number_index.ToString() : "";
                 NthNumberTextBox.ForeColor = Numbers.GetNumberTypeColor(nth_number_index);
@@ -28184,7 +28161,18 @@ public partial class MainForm : Form, ISubscriber
         }
         NumberKindIndexTextBox.Text = number_kind_index.ToString();
         NumberKindIndexTextBox.ForeColor = Numbers.GetNumberTypeColor(number_kind_index);
-        ToolTip.SetToolTip(NumberKindIndexTextBox, m_number_kind.ToString() + " number index");
+        switch (m_number_kind)
+        {
+            case NumberKind.Abundant:
+                ToolTip.SetToolTip(NumberKindIndexTextBox, L[l]["Abundant number index"]);
+                break;
+            case NumberKind.Perfect:
+                ToolTip.SetToolTip(NumberKindIndexTextBox, L[l]["Perfect number index"]);
+                break;
+            case NumberKind.Deficient:
+                ToolTip.SetToolTip(NumberKindIndexTextBox, L[l]["Deficient number index"]);
+                break;
+        }
         NumberKindIndexTextBox.Refresh();
     }
     private void DisplayPerfectNumbersLabel_Click(object sender, EventArgs e)
@@ -28285,14 +28273,14 @@ public partial class MainForm : Form, ISubscriber
         SumOfDivisorsTextBox.Text = sum_of_divisors.ToString();
         SumOfDivisorsTextBox.ForeColor = Numbers.GetNumberTypeColor(sum_of_divisors);
         SumOfDivisorsTextBox.Refresh();
-        ToolTip.SetToolTip(SumOfDivisorsTextBox, "Sum Of Divisors\r\n" + divisors + " = " + sum_of_divisors);
+        ToolTip.SetToolTip(SumOfDivisorsTextBox, L[l]["Sum of divisors"] + "\r\n" + divisors + " = " + sum_of_divisors);
 
         long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
         string proper_divisors = Numbers.GetProperDivisorsString(value);
         SumOfProperDivisorsTextBox.Text = sum_of_proper_divisors.ToString();
         SumOfProperDivisorsTextBox.ForeColor = Numbers.GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
-        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, "Sum Of Proper Divisors\r\n" + proper_divisors + " = " + sum_of_proper_divisors);
+        ToolTip.SetToolTip(SumOfProperDivisorsTextBox, L[l]["Sum of proper divisors"] + "\r\n" + proper_divisors + " = " + sum_of_proper_divisors);
 
         DisplayLetterFrequenciesTotals();
     }
@@ -28811,21 +28799,21 @@ public partial class MainForm : Form, ISubscriber
                 if (verse != null)
                 {
                     VerseByVerseNumberLabel.Text = verse.Address;
-                    ToolTip.SetToolTip(VerseByVerseNumberLabel, "Go to verse number = " + ValueTextBox.Text + "\r\n" + verse.Text);
+                    ToolTip.SetToolTip(VerseByVerseNumberLabel, L[l]["Go to verse number = "] + ValueTextBox.Text + "\r\n" + verse.Text);
                 }
 
                 verse = m_client.Book.GetVerseByWordNumber((int)value);
                 if (verse != null)
                 {
                     VerseByWordNumberLabel.Text = verse.Address;
-                    ToolTip.SetToolTip(VerseByWordNumberLabel, "Go to verse with word number = " + ValueTextBox.Text + "\r\n" + verse.Text);
+                    ToolTip.SetToolTip(VerseByWordNumberLabel, L[l]["Go to verse with word number = "] + ValueTextBox.Text + "\r\n" + verse.Text);
                 }
 
                 verse = m_client.Book.GetVerseByLetterNumber((int)value);
                 if (verse != null)
                 {
                     VerseByLetterNumberLabel.Text = verse.Address;
-                    ToolTip.SetToolTip(VerseByLetterNumberLabel, "Go to verse with letter number = " + ValueTextBox.Text + "\r\n" + verse.Text);
+                    ToolTip.SetToolTip(VerseByLetterNumberLabel, L[l]["Go to verse with letter number = "] + ValueTextBox.Text + "\r\n" + verse.Text);
                 }
             }
         }
@@ -28843,17 +28831,17 @@ public partial class MainForm : Form, ISubscriber
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.Primes[nth_index];
-                    FactorizeValue(number, "P Index", true);
+                    FactorizeValue(number, true);
                 }
                 else // any other index type will be treated as IndexNumberType.Composite
                 {
                     number = Numbers.Composites[nth_index];
-                    FactorizeValue(number, "C Index", true);
+                    FactorizeValue(number, true);
                 }
             }
             catch
             {
-                FactorizeValue(0L, "Error", true);
+                FactorizeValue(0L, true);
             }
         }
     }
@@ -28869,17 +28857,17 @@ public partial class MainForm : Form, ISubscriber
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.AdditivePrimes[nth_index];
-                    FactorizeValue(number, "AP Index", true);
+                    FactorizeValue(number, true);
                 }
                 else // any other index type will be treated as IndexNumberType.Composite
                 {
                     number = Numbers.AdditiveComposites[nth_index];
-                    FactorizeValue(number, "AC Index", true);
+                    FactorizeValue(number, true);
                 }
             }
             catch
             {
-                FactorizeValue(0L, "Error", true);
+                FactorizeValue(0L, true);
             }
         }
     }
@@ -28895,17 +28883,17 @@ public partial class MainForm : Form, ISubscriber
                 if (m_index_type == IndexType.Prime)
                 {
                     number = Numbers.NonAdditivePrimes[nth_index];
-                    FactorizeValue(number, "XP Index", true);
+                    FactorizeValue(number, true);
                 }
                 else // any other index type will be treated as IndexNumberType.Composite
                 {
                     number = Numbers.NonAdditiveComposites[nth_index];
-                    FactorizeValue(number, "XC Index", true);
+                    FactorizeValue(number, true);
                 }
             }
             catch
             {
-                FactorizeValue(0L, "Error", true);
+                FactorizeValue(0L, true);
             }
         }
     }
@@ -28924,19 +28912,19 @@ public partial class MainForm : Form, ISubscriber
                     case NumberKind.Deficient:
                         {
                             number = Numbers.Deficients[nth_index];
-                            FactorizeValue(number, "DF Index", true);
+                            FactorizeValue(number, true);
                         }
                         break;
                     case NumberKind.Perfect:
                         {
                             number = Numbers.Perfects[nth_index];
-                            FactorizeValue(number, "PF Index", true);
+                            FactorizeValue(number, true);
                         }
                         break;
                     case NumberKind.Abundant:
                         {
                             number = Numbers.Abundants[nth_index];
-                            FactorizeValue(number, "AB Index", true);
+                            FactorizeValue(number, true);
                         }
                         break;
                     default:
@@ -28947,7 +28935,7 @@ public partial class MainForm : Form, ISubscriber
             }
             catch
             {
-                FactorizeValue(0L, "Error", true);
+                FactorizeValue(0L, true);
             }
         }
     }
@@ -28989,7 +28977,7 @@ public partial class MainForm : Form, ISubscriber
             // display values in next radix
             //DisplayCounts(chapter_count, verse_count, word_count, letter_count, chapter_number_sum, verse_number_sum, word_number_sum, letter_number_sum);
             DisplayCounts(chapter_count, verse_count, word_count, letter_count, -1, -1, -1, -1); // -1 means don't change what is displayed
-            FactorizeValue(value, "Value", true);
+            FactorizeValue(value, true);
         }
         catch
         {
@@ -29027,7 +29015,7 @@ public partial class MainForm : Form, ISubscriber
             // display values in next radix
             //DisplayCounts(chapter_count, verse_count, word_count, letter_count, chapter_number_sum, verse_number_sum, word_number_sum, letter_number_sum);
             DisplayCounts(chapter_count, verse_count, word_count, letter_count, -1, -1, -1, -1); // -1 means don't change what is displayed
-            FactorizeValue(value, "Value", true);
+            FactorizeValue(value, true);
         }
         catch
         {
@@ -29061,7 +29049,7 @@ public partial class MainForm : Form, ISubscriber
             // display values in next radix
             //DisplayCounts(chapter_count, verse_count, word_count, letter_count, chapter_number_sum, verse_number_sum, word_number_sum, letter_number_sum);
             DisplayCounts(chapter_count, verse_count, word_count, letter_count, -1, -1, -1, -1); // -1 means don't change what is displayed
-            FactorizeValue(value, "Value", true);
+            FactorizeValue(value, true);
         }
         catch
         {
@@ -31159,9 +31147,10 @@ public partial class MainForm : Form, ISubscriber
                     m_client.SortLetterStatistics((StatisticSortMethod)e.Column);
                     DisplayLetterFrequencies();
 
-                    // display sort marker
+                    // choose sort marker
                     string sort_marker = (LetterStatistic.SortOrder == StatisticSortOrder.Ascending) ? "▼" : "▲";
-                    // empty all sort markers
+
+                    // remove all sort markers
                     foreach (ColumnHeader column in listview.Columns)
                     {
                         if (column.Text.EndsWith("▲"))
@@ -31173,7 +31162,8 @@ public partial class MainForm : Form, ISubscriber
                             column.Text = column.Text.Replace("▼", " ");
                         }
                     }
-                    // mark clicked column
+
+                    // display sort marker
                     listview.Columns[e.Column].Text = listview.Columns[e.Column].Text.Replace("  ", " " + sort_marker);
                 }
             }
@@ -31666,11 +31656,11 @@ public partial class MainForm : Form, ISubscriber
                     str.AppendLine();
                     string divisors = Numbers.GetDivisorsString(value);
                     long sum_of_divisors = Numbers.SumOfDivisors(value);
-                    str.AppendLine("Sum Of Divisors\t\t=\t" + sum_of_divisors + " = " + divisors);
+                    str.AppendLine(L[l]["Sum of divisors"] + "\t\t=\t" + sum_of_divisors + " = " + divisors);
 
                     string proper_divisors = Numbers.GetProperDivisorsString(value);
                     long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
-                    str.AppendLine("Sum Of Proper Divisors\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
+                    str.AppendLine(L[l]["Sum of proper divisors"] + "\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
 
                     m_number_kind = Numbers.GetNumberKind(value);
                     int number_kind_index = 0;
@@ -31876,7 +31866,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
             }
-            FactorizeValue(value, "Number", false);
+            FactorizeValue(value, false);
         }
     }
     private void FactorizeNumber(TextBox control)
@@ -31917,7 +31907,7 @@ public partial class MainForm : Form, ISubscriber
                         }
                     }
 
-                    FactorizeValue(value, "Number", false);
+                    FactorizeValue(value, false);
                 }
                 catch
                 {
