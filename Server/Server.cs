@@ -2911,6 +2911,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
@@ -3064,6 +3065,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
@@ -3217,6 +3219,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
@@ -3370,6 +3373,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
@@ -3523,6 +3527,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
@@ -3676,6 +3681,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
@@ -3829,6 +3835,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
@@ -3982,6 +3989,7 @@ public class Server : IPublisher
                         }
                     }
 
+                    return result;
                     // if nothing found
                     if ((multiplicity != 0) && (result.Count == 0))
                     {
