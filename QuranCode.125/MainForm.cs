@@ -204,6 +204,16 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
+    private List<Control> GetDescendentControls(Control control)
+    {
+        List<Control> result = new List<Control>();
+        foreach (Control c in control.Controls)
+        {
+            result.Add(c);
+            result.AddRange(GetDescendentControls(c));
+        }
+        return result;
+    }
     private Dictionary<string, Dictionary<string, string>> L = new Dictionary<string, Dictionary<string, string>>();
     private void LoadLanguage(string language_name)
     {
@@ -224,15 +234,21 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (parts[0] == "Dictionary")
                         {
-                            language.Add(parts[1], parts[2]);
+                            if (parts.Length > 2)
+                            {
+                                if ((parts[1].Length > 0) && (parts[2].Length > 0))
+                                {
+                                    language.Add(parts[1], parts[2]);
+                                }
+                            }
                         }
                         else
                         {
                             foreach (Control control in controls)
                             {
-                                // set Text
-                                if (control.Name == parts[0])
+                                if (parts[0] == control.Name)
                                 {
+                                    // set Text
                                     if (parts.Length > 2)
                                     {
                                         if (parts[2].Length > 0)
@@ -271,6 +287,7 @@ public partial class MainForm : Form, ISubscriber
                     L.Add(language_name, language);
                 }
 
+                UpdateHeaderLabel();
                 DisplayChapterRevelationInfo();
                 UpdateGoldenRatioScopeLabel();
                 UpdateGoldenRatioOrderLabel();
@@ -346,6 +363,8 @@ public partial class MainForm : Form, ISubscriber
                 RegisterContextMenus();
                 SetToolTipPlayerVerseSilenceGapTrackBar();
                 SetToolTipPlayerSelectionSilenceGapTrackBar();
+
+                SetToolTips();
             }
         }
         finally
@@ -353,15 +372,146 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private List<Control> GetDescendentControls(Control control)
+    private void SetToolTips()
     {
-        List<Control> result = new List<Control>();
-        foreach (Control c in control.Controls)
+        try
         {
-            result.Add(c);
-            result.AddRange(GetDescendentControls(c));
+            this.ToolTip.SetToolTip(this.HelpFolderLabel, "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ");
+            this.ToolTip.SetToolTip(this.FontLabel, L[l]["Font"]);
+            this.ToolTip.SetToolTip(this.ResearchMethodsRunButton, L[l]["Run"]);
+            this.ToolTip.SetToolTip(this.InspectChaptersLabel, L[l]["Inspect chapters"]);
+            this.ToolTip.SetToolTip(this.InspectVersesLabel, L[l]["Inspect verses"]);
+            this.ToolTip.SetToolTip(this.PlayerPlayLabel, L[l]["Play"]);
+            this.ToolTip.SetToolTip(this.PlayerPreviousLabel, L[l]["Previous verse"]);
+            this.ToolTip.SetToolTip(this.PlayerNextLabel, L[l]["Next verse"]);
+            this.ToolTip.SetToolTip(this.PlayerStopLabel, L[l]["Stop"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatLabel, L[l]["Repeat verse"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatAllLabel, L[l]["Repeat selection"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatCounterLabel, L[l]["Verse repetitions"]);
+            this.ToolTip.SetToolTip(this.PlayerRepeatAllCounterLabel, L[l]["Selection repetitions"]);
+            this.ToolTip.SetToolTip(this.PlayerMuteLabel, L[l]["Mute"]);
+            this.ToolTip.SetToolTip(this.PlayerVerseSilenceGapTrackBar, L[l]["Silence between verses"]);
+            this.ToolTip.SetToolTip(this.PlayerSelectionSilenceGapTrackBar, L[l]["Silence between selections"]);
+            this.ToolTip.SetToolTip(this.UndoValueNavigationLabel, L[l]["Back"]);
+            this.ToolTip.SetToolTip(this.RedoValueNavigationLabel, L[l]["Forward"]);
+            this.ToolTip.SetToolTip(this.TextModeComboBox, L[l]["Letter simplification system"]);
+            this.ToolTip.SetToolTip(this.NumerologySystemComboBox, L[l]["Letter valuation system"]);
+            this.ToolTip.SetToolTip(this.ChaptersTextBox, L[l]["Chapters in selection"]);
+            this.ToolTip.SetToolTip(this.VersesTextBox, L[l]["Verses in selection"]);
+            this.ToolTip.SetToolTip(this.WordsTextBox, L[l]["Words in selection"]);
+            this.ToolTip.SetToolTip(this.LettersTextBox, L[l]["Letters in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalChaptersTextBox, L[l]["Chapters in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalVersesTextBox, L[l]["Verses in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalWordsTextBox, L[l]["Words in selection"]);
+            this.ToolTip.SetToolTip(this.DecimalLettersTextBox, L[l]["Letters in selection"]);
+            this.ToolTip.SetToolTip(this.ChapterNumberSumTextBox, L[l]["Sum of chapter numbers"]);
+            this.ToolTip.SetToolTip(this.VerseNumberSumTextBox, L[l]["Sum of verse numbers in their chapters"]);
+            this.ToolTip.SetToolTip(this.WordNumberSumTextBox, L[l]["Sum of word numbers in their verses"]);
+            this.ToolTip.SetToolTip(this.LetterNumberSumTextBox, L[l]["Sum of letter numbers in their words"]);
+            this.ToolTip.SetToolTip(this.ValueTextBox, L[l]["Value of selection"]);
+            this.ToolTip.SetToolTip(this.PrimeFactorsTextBox, L[l]["Prime factors of Value"]);
+            this.ToolTip.SetToolTip(this.TranslationFontLabel, L[l]["Font"]);
+            this.ToolTip.SetToolTip(this.SearchScopeBookLabel, L[l]["Search in entire book"]);
+            this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, L[l]["Search in current selection"]);
+            this.ToolTip.SetToolTip(this.SearchScopeResultLabel, L[l]["Search in current search result"]);
+            this.ToolTip.SetToolTip(this.FindByTextTextBox, L[l]["text to search for in Arabic or any installed language"]);
+            this.ToolTip.SetToolTip(this.FindByTextWordnessCheckBox, L[l]["find verses with whole word only"]);
+            this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, L[l]["case sensitive for non-Arabic languages"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeVerseLabel, L[l]["in verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeChapterLabel, L[l]["in chapters"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePageLabel, L[l]["in pages"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeStationLabel, L[l]["in stations"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePartLabel, L[l]["in parts"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeGroupLabel, L[l]["in groups"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeHalfLabel, L[l]["in group halves"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeQuarterLabel, L[l]["in group quarters"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeBowingLabel, L[l]["in bowings"]);
+            this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, L[l]["find exact word or expression"]);
+            this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, L[l]["find any/all given words"]);
+            this.ToolTip.SetToolTip(this.FindByTextRootSearchTypeLabel, L[l]["find words of given roots"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterAnywhereRadioButton, L[l]["find anywhere in chapters"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterStartRadioButton, L[l]["find in first verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterMiddleRadioButton, L[l]["find in middle verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterEndRadioButton, L[l]["find in last verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseAnywhereRadioButton, L[l]["find anywhere in verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseStartRadioButton, L[l]["find in first words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseMiddleRadioButton, L[l]["find in middle words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseEndRadioButton, L[l]["find in last words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordAnywhereRadioButton, L[l]["find anywhere in words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordStartRadioButton, L[l]["find at the beginning of words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordMiddleRadioButton, L[l]["find in the middle of words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordEndRadioButton, L[l]["find at the end of words"]);
+            this.ToolTip.SetToolTip(this.FindByTextMultiplicityCheckBox, L[l]["find blocks with N repetitions"]);
+            this.ToolTip.SetToolTip(this.FindByTextAllWordsRadioButton, L[l]["find verses with all words in any order"]);
+            this.ToolTip.SetToolTip(this.FindByTextAnyWordRadioButton, L[l]["find verses with at least one word"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityCurrentVerseTypeLabel, L[l]["find similar verses to the current verse"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityAllVersesTypeLabel, L[l]["find similar verses to all verses in the Quran"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityPercentageTrackBar, L[l]["similarity percentage"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityTextRadioButton, L[l]["verses with similar text"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityWordsRadioButton, L[l]["verses with similar words"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityFirstHalfRadioButton, L[l]["verses with similar first half"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityLastHalfRadioButton, L[l]["verses with similar last half"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityFirstWordRadioButton, L[l]["verses with similar first word"]);
+            this.ToolTip.SetToolTip(this.FindBySimilarityLastWordRadioButton, L[l]["verses with similar last word"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeSentencesLabel, L[l]["find sentences"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
+            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeWordsLabel, L[l]["find words"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeSentencesLabel, L[l]["find sentences"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeVersesLabel, L[l]["find verses"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeChaptersLabel, L[l]["find chapters"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeDuplicateLettersLabel, L[l]["include duplicate phrase letters"]);
+            this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeUniqueLettersLabel, L[l]["exclude duplicate phrase letters"]);
+            this.ToolTip.SetToolTip(this.PCIndexChainL2RTextBox, L[l]["Prime-composite index chain --> P=0 C=1"]);
+            this.ToolTip.SetToolTip(this.PCIndexChainR2LTextBox, L[l]["Prime-composite index chain <-- P=0 C=1"]);
+            this.ToolTip.SetToolTip(this.CPIndexChainL2RTextBox, L[l]["Prime-composite index chain --> P=1 C=0"]);
+            this.ToolTip.SetToolTip(this.CPIndexChainR2LTextBox, L[l]["Prime-composite index chain <-- P=1 C=0"]);
+            this.ToolTip.SetToolTip(this.IndexChainLengthTextBox, L[l]["Prime-composite index chain length"]);
+            this.ToolTip.SetToolTip(this.DigitSumTextBox, L[l]["Digit sum"]);
+            this.ToolTip.SetToolTip(this.DigitalRootTextBox, L[l]["Digital root"]);
+            this.ToolTip.SetToolTip(this.NthNumberTextBox, L[l]["Prime index"]);
+            this.ToolTip.SetToolTip(this.NthAdditiveNumberTextBox, L[l]["Additive prime index"]);
+            this.ToolTip.SetToolTip(this.NthNonAdditiveNumberTextBox, L[l]["Non-additive prime index"]);
+            this.ToolTip.SetToolTip(this.AdjustValueByPositionsLabel, L[l]["Dynamic Primalogy System - ©2008 Ali Adams"]);
+            this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, L[l]["Increment each letter's value by its letter number in word"]);
+            this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, L[l]["Increment each letter's value by its word number in verse"]);
+            this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, L[l]["Increment each letter's value by its verse number in chapter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, L[l]["Increment each letter's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToLetterLDistanceCheckBox, L[l]["Increment each letter's value by the number of letters back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterWDistanceCheckBox, L[l]["Increment each letter's value by the number of words back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterVDistanceCheckBox, L[l]["Increment each letter's value by the number of verses back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterCDistanceCheckBox, L[l]["Increment each letter's value by the number of chapters back to the same letter"]);
+            this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, L[l]["Increment each word's value by its word number in verse"]);
+            this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, L[l]["Increment each word's value by its verse number in chapter"]);
+            this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, L[l]["Increment each word's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToWordWDistanceCheckBox, L[l]["Increment each word's value by the number of words back to the same word"]);
+            this.ToolTip.SetToolTip(this.AddToWordVDistanceCheckBox, L[l]["Increment each word's value by the number of verses back to the same word"]);
+            this.ToolTip.SetToolTip(this.AddToWordCDistanceCheckBox, L[l]["Increment each word's value by the number of chapters back to the same word"]);
+            this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, L[l]["Increment each verse's value by its verse number in chapter"]);
+            this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, L[l]["Increment each verse's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToVerseVDistanceCheckBox, L[l]["Increment each verse's value by the number of verses back to the same verse"]);
+            this.ToolTip.SetToolTip(this.AddToVerseCDistanceCheckBox, L[l]["Increment each verse's value by the number of chapters back to the same verse"]);
+            this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, L[l]["Increment each chapter's value by its chapter number in book"]);
+            this.ToolTip.SetToolTip(this.ChapterComboBox, "C, C-C, C:V, C:V-C, C-C:V, C:V-C:V, ..." + "\r\n" + "36  40-46  15:87  18:9-25  1-2:5  24:35-27:62  2:29,41:9-12");
+            this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "V, V-V, ...");
+            this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "W, W-W, ...");
+            this.ToolTip.SetToolTip(this.ChapterLetterNumericUpDown, "L, L-L, ...");
+            this.ToolTip.SetToolTip(this.PartNumericUpDown, "P, P-P, ...");
+            this.ToolTip.SetToolTip(this.PageNumericUpDown, "#, #-#, ...");
+            this.ToolTip.SetToolTip(this.StationNumericUpDown, "S, S-S, ...");
+            this.ToolTip.SetToolTip(this.GroupNumericUpDown, "G, G-G, ...");
+            this.ToolTip.SetToolTip(this.HalfNumericUpDown, "H, H-H, ...");
+            this.ToolTip.SetToolTip(this.QuarterNumericUpDown, "Q, Q-Q, ...");
+            this.ToolTip.SetToolTip(this.BowingNumericUpDown, "B, B-B, ...");
+            this.ToolTip.SetToolTip(this.VerseNumericUpDown, "V, V-V, ...");
+            this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
+            this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
         }
-        return result;
+        catch
+        {
+            // ignore
+        }
     }
     /////////////////////////////////////////////////////////////////////////////
     #endregion
@@ -781,9 +931,6 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
-
-        //must be after initialization in order to Apply current language
-        SetToolTips(); // TODO remove redundant SetToolTips
 
         NotifyIcon.Visible = true;
 
@@ -2959,151 +3106,6 @@ public partial class MainForm : Form, ISubscriber
         catch
         {
             // silence IO errors in case running from read-only media (CD/DVD)
-        }
-    }
-    ///////////////////////////////////////////////////////////////////////////////
-    #endregion
-    #region ToolTips
-    ///////////////////////////////////////////////////////////////////////////////
-    private void SetToolTips()
-    {
-        try
-        {
-            this.ToolTip.SetToolTip(this.HelpFolderLabel, "ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ");
-            this.ToolTip.SetToolTip(this.FontLabel, L[l]["Font"]);
-            this.ToolTip.SetToolTip(this.ResearchMethodsRunButton, L[l]["Run"]);
-            this.ToolTip.SetToolTip(this.InspectChaptersLabel, L[l]["Inspect chapters"]);
-            this.ToolTip.SetToolTip(this.InspectVersesLabel, L[l]["Inspect verses"]);
-            this.ToolTip.SetToolTip(this.PlayerPlayLabel, L[l]["Play"]);
-            this.ToolTip.SetToolTip(this.PlayerPreviousLabel, L[l]["Previous verse"]);
-            this.ToolTip.SetToolTip(this.PlayerNextLabel, L[l]["Next verse"]);
-            this.ToolTip.SetToolTip(this.PlayerStopLabel, L[l]["Stop"]);
-            this.ToolTip.SetToolTip(this.PlayerRepeatLabel, L[l]["Repeat verse"]);
-            this.ToolTip.SetToolTip(this.PlayerRepeatAllLabel, L[l]["Repeat selection"]);
-            this.ToolTip.SetToolTip(this.PlayerRepeatCounterLabel, L[l]["Verse repetitions"]);
-            this.ToolTip.SetToolTip(this.PlayerRepeatAllCounterLabel, L[l]["Selection repetitions"]);
-            this.ToolTip.SetToolTip(this.PlayerMuteLabel, L[l]["Mute"]);
-            this.ToolTip.SetToolTip(this.PlayerVerseSilenceGapTrackBar, L[l]["Silence between verses"]);
-            this.ToolTip.SetToolTip(this.PlayerSelectionSilenceGapTrackBar, L[l]["Silence between selections"]);
-            this.ToolTip.SetToolTip(this.UndoValueNavigationLabel, L[l]["Back"]);
-            this.ToolTip.SetToolTip(this.RedoValueNavigationLabel, L[l]["Forward"]);
-            this.ToolTip.SetToolTip(this.TextModeComboBox, L[l]["Letter simplification system"]);
-            this.ToolTip.SetToolTip(this.NumerologySystemComboBox, L[l]["Letter valuation system"]);
-            this.ToolTip.SetToolTip(this.ChaptersTextBox, L[l]["Chapters in selection"]);
-            this.ToolTip.SetToolTip(this.VersesTextBox, L[l]["Verses in selection"]);
-            this.ToolTip.SetToolTip(this.WordsTextBox, L[l]["Words in selection"]);
-            this.ToolTip.SetToolTip(this.LettersTextBox, L[l]["Letters in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalChaptersTextBox, L[l]["Chapters in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalVersesTextBox, L[l]["Verses in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalWordsTextBox, L[l]["Words in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalLettersTextBox, L[l]["Letters in selection"]);
-            this.ToolTip.SetToolTip(this.ChapterNumberSumTextBox, L[l]["Sum of chapter numbers"]);
-            this.ToolTip.SetToolTip(this.VerseNumberSumTextBox, L[l]["Sum of verse numbers in their chapters"]);
-            this.ToolTip.SetToolTip(this.WordNumberSumTextBox, L[l]["Sum of word numbers in their verses"]);
-            this.ToolTip.SetToolTip(this.LetterNumberSumTextBox, L[l]["Sum of letter numbers in their words"]);
-            this.ToolTip.SetToolTip(this.ValueTextBox, L[l]["Value of selection"]);
-            this.ToolTip.SetToolTip(this.PrimeFactorsTextBox, L[l]["Prime factors of Value"]);
-            this.ToolTip.SetToolTip(this.TranslationFontLabel, L[l]["Font"]);
-            this.ToolTip.SetToolTip(this.SearchScopeBookLabel, L[l]["Search in entire book"]);
-            this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, L[l]["Search in current selection"]);
-            this.ToolTip.SetToolTip(this.SearchScopeResultLabel, L[l]["Search in current search result"]);
-            this.ToolTip.SetToolTip(this.FindByTextTextBox, L[l]["text to search for in Arabic or any installed language"]);
-            this.ToolTip.SetToolTip(this.FindByTextWordnessCheckBox, L[l]["find verses with whole word only"]);
-            this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, L[l]["case sensitive for non-Arabic languages"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeVerseLabel, L[l]["in verses"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeChapterLabel, L[l]["in chapters"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePageLabel, L[l]["in pages"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeStationLabel, L[l]["in stations"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePartLabel, L[l]["in parts"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeGroupLabel, L[l]["in groups"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeHalfLabel, L[l]["in group halves"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeQuarterLabel, L[l]["in group quarters"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeBowingLabel, L[l]["in bowings"]);
-            this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, L[l]["find exact word or expression"]);
-            this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, L[l]["find any/all given words"]);
-            this.ToolTip.SetToolTip(this.FindByTextRootSearchTypeLabel, L[l]["find words of given roots"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtChapterAnywhereRadioButton, L[l]["find anywhere in chapters"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtChapterStartRadioButton, L[l]["find in first verses"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtChapterMiddleRadioButton, L[l]["find in middle verses"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtChapterEndRadioButton, L[l]["find in last verses"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtVerseAnywhereRadioButton, L[l]["find anywhere in verses"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtVerseStartRadioButton, L[l]["find in first words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtVerseMiddleRadioButton, L[l]["find in middle words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtVerseEndRadioButton, L[l]["find in last words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtWordAnywhereRadioButton, L[l]["find anywhere in words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtWordStartRadioButton, L[l]["find at the beginning of words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtWordMiddleRadioButton, L[l]["find in the middle of words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtWordEndRadioButton, L[l]["find at the end of words"]);
-            this.ToolTip.SetToolTip(this.FindByTextMultiplicityCheckBox, L[l]["find blocks with N repetitions"]);
-            this.ToolTip.SetToolTip(this.FindByTextAllWordsRadioButton, L[l]["find verses with all words in any order"]);
-            this.ToolTip.SetToolTip(this.FindByTextAnyWordRadioButton, L[l]["find verses with at least one word"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityCurrentVerseTypeLabel, L[l]["find similar verses to the current verse"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityAllVersesTypeLabel, L[l]["find similar verses to all verses in the Quran"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityPercentageTrackBar, L[l]["similarity percentage"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityTextRadioButton, L[l]["verses with similar text"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityWordsRadioButton, L[l]["verses with similar words"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityFirstHalfRadioButton, L[l]["verses with similar first half"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityLastHalfRadioButton, L[l]["verses with similar last half"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityFirstWordRadioButton, L[l]["verses with similar first word"]);
-            this.ToolTip.SetToolTip(this.FindBySimilarityLastWordRadioButton, L[l]["verses with similar last word"]);
-            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
-            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeSentencesLabel, L[l]["find sentences"]);
-            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
-            this.ToolTip.SetToolTip(this.FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
-            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeWordsLabel, L[l]["find words"]);
-            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeSentencesLabel, L[l]["find sentences"]);
-            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeVersesLabel, L[l]["find verses"]);
-            this.ToolTip.SetToolTip(this.FindByFrequencyResultTypeChaptersLabel, L[l]["find chapters"]);
-            this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeDuplicateLettersLabel, L[l]["include duplicate phrase letters"]);
-            this.ToolTip.SetToolTip(this.FindByFrequencySearchTypeUniqueLettersLabel, L[l]["exclude duplicate phrase letters"]);
-            this.ToolTip.SetToolTip(this.PCIndexChainL2RTextBox, L[l]["Prime-composite index chain --> P=0 C=1"]);
-            this.ToolTip.SetToolTip(this.PCIndexChainR2LTextBox, L[l]["Prime-composite index chain <-- P=0 C=1"]);
-            this.ToolTip.SetToolTip(this.CPIndexChainL2RTextBox, L[l]["Prime-composite index chain --> P=1 C=0"]);
-            this.ToolTip.SetToolTip(this.CPIndexChainR2LTextBox, L[l]["Prime-composite index chain <-- P=1 C=0"]);
-            this.ToolTip.SetToolTip(this.IndexChainLengthTextBox, L[l]["Prime-composite index chain length"]);
-            this.ToolTip.SetToolTip(this.DigitSumTextBox, L[l]["Digit sum"]);
-            this.ToolTip.SetToolTip(this.DigitalRootTextBox, L[l]["Digital root"]);
-            this.ToolTip.SetToolTip(this.NthNumberTextBox, L[l]["Prime index"]);
-            this.ToolTip.SetToolTip(this.NthAdditiveNumberTextBox, L[l]["Additive prime index"]);
-            this.ToolTip.SetToolTip(this.NthNonAdditiveNumberTextBox, L[l]["Non-additive prime index"]);
-            this.ToolTip.SetToolTip(this.AdjustValueByPositionsLabel, L[l]["Dynamic Primalogy System - ©2008 Ali Adams"]);
-            this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, L[l]["Increment each letter's value by its letter number in word"]);
-            this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, L[l]["Increment each letter's value by its word number in verse"]);
-            this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, L[l]["Increment each letter's value by its verse number in chapter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, L[l]["Increment each letter's value by its chapter number in book"]);
-            this.ToolTip.SetToolTip(this.AddToLetterLDistanceCheckBox, L[l]["Increment each letter's value by the number of letters back to the same letter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterWDistanceCheckBox, L[l]["Increment each letter's value by the number of words back to the same letter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterVDistanceCheckBox, L[l]["Increment each letter's value by the number of verses back to the same letter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterCDistanceCheckBox, L[l]["Increment each letter's value by the number of chapters back to the same letter"]);
-            this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, L[l]["Increment each word's value by its word number in verse"]);
-            this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, L[l]["Increment each word's value by its verse number in chapter"]);
-            this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, L[l]["Increment each word's value by its chapter number in book"]);
-            this.ToolTip.SetToolTip(this.AddToWordWDistanceCheckBox, L[l]["Increment each word's value by the number of words back to the same word"]);
-            this.ToolTip.SetToolTip(this.AddToWordVDistanceCheckBox, L[l]["Increment each word's value by the number of verses back to the same word"]);
-            this.ToolTip.SetToolTip(this.AddToWordCDistanceCheckBox, L[l]["Increment each word's value by the number of chapters back to the same word"]);
-            this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, L[l]["Increment each verse's value by its verse number in chapter"]);
-            this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, L[l]["Increment each verse's value by its chapter number in book"]);
-            this.ToolTip.SetToolTip(this.AddToVerseVDistanceCheckBox, L[l]["Increment each verse's value by the number of verses back to the same verse"]);
-            this.ToolTip.SetToolTip(this.AddToVerseCDistanceCheckBox, L[l]["Increment each verse's value by the number of chapters back to the same verse"]);
-            this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, L[l]["Increment each chapter's value by its chapter number in book"]);
-            this.ToolTip.SetToolTip(this.ChapterComboBox, "C, C-C, C:V, C:V-C, C-C:V, C:V-C:V or any combination" + "\r\n" + "36  40-46  15:87  18:9-25  1-2:5  24:35-27:62  2:29,41:9-12");
-            this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "V, V-V, ...");
-            this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "W, W-W, ...");
-            this.ToolTip.SetToolTip(this.ChapterLetterNumericUpDown, "L, L-L, ...");
-            this.ToolTip.SetToolTip(this.PartNumericUpDown, "P, P-P, ...");
-            this.ToolTip.SetToolTip(this.PageNumericUpDown, "#, #-#, ...");
-            this.ToolTip.SetToolTip(this.StationNumericUpDown, "S, S-S, ...");
-            this.ToolTip.SetToolTip(this.GroupNumericUpDown, "G, G-G, ...");
-            this.ToolTip.SetToolTip(this.HalfNumericUpDown, "H, H-H, ...");
-            this.ToolTip.SetToolTip(this.QuarterNumericUpDown, "Q, Q-Q, ...");
-            this.ToolTip.SetToolTip(this.BowingNumericUpDown, "B, B-B, ...");
-            this.ToolTip.SetToolTip(this.VerseNumericUpDown, "V, V-V, ...");
-            this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
-            this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
-        }
-        catch
-        {
-            // ignore
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -6464,7 +6466,7 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                 }
                                 ChapterGroupBox.ForeColor = Color.Black;
-                                ChapterGroupBox.Text = ((matching_chapters > 99) ? "" : ((matching_chapters > 9) ? " " : "  ")) + matching_chapters + " " + L[l]["Chapters"] + "        ";
+                                ChapterGroupBox.Text = ((matching_chapters > 99) ? "" : ((matching_chapters > 9) ? " " : "  ")) + matching_chapters + " " + L[l]["Chapters"] + "   ";
                                 this.ToolTip.SetToolTip(this.ChapterGroupBox, L[l]["Found chapters"]);
                             }
                         }
@@ -12665,8 +12667,6 @@ public partial class MainForm : Form, ISubscriber
                     string result = null;
                     int words_per_line = 0;
                     int max_words_per_line = 10;
-                    List<Verse> related_verses = m_client.Book.GetRelatedWordVerses(word);
-                    int verse_count = related_verses.Count;
                     List<Word> related_words = m_client.Book.GetRelatedWords(word);
                     int word_count = related_words.Count;
                     related_words = related_words.RemoveDuplicates();
@@ -12674,6 +12674,8 @@ public partial class MainForm : Form, ISubscriber
                     if (related_words != null)
                     {
                         StringBuilder str = new StringBuilder();
+                        str.AppendLine(word_count.ToString() + " (" + unique_word_count.ToString() + ")" + "  " + L[l]["related words"]);
+
                         if (related_words.Count > 0)
                         {
                             foreach (Word related_word in related_words)
@@ -12686,9 +12688,6 @@ public partial class MainForm : Form, ISubscriber
                                 str.Remove(str.Length - 1, 1); // \t
                             }
                             str.AppendLine();
-
-                            str.AppendLine(verse_count.ToString() + "  " + L[l]["related verses"] + "\t\t"
-                                          + word_count.ToString() + " (" + unique_word_count.ToString() + ")" + "  " + L[l]["related words"]);
 
                             result = str.ToString();
                         }
@@ -12712,11 +12711,14 @@ public partial class MainForm : Form, ISubscriber
                     if (related_verses != null)
                     {
                         StringBuilder str = new StringBuilder();
+                        str.AppendLine(related_verses.Count.ToString() + "  " + L[l]["related verses"]);
+
                         foreach (Verse related_verse in related_verses)
                         {
                             str.AppendLine(related_verse.Text);
                         }
                         str.AppendLine();
+
                         result = str.ToString();
                     }
                     return result;
@@ -12740,7 +12742,7 @@ public partial class MainForm : Form, ISubscriber
                     (TabControl.SelectedTab == RelatedWordsTabPage)
                    )
                 {
-                    RelatedWordsTextBox.Text = GetRelatedWordsInformation(m_current_word) + "\r\n\r\n" + GetRelatedVersesInformation(m_current_word);
+                    RelatedWordsTextBox.Text = GetRelatedWordsInformation(m_current_word) + "\r\n" + GetRelatedVersesInformation(m_current_word);
                     RelatedWordsTextBox.Refresh();
 
                     m_info_word = word;
@@ -23477,9 +23479,8 @@ public partial class MainForm : Form, ISubscriber
 
         UpdateNumberTypeLabelTags();
 
-        // don't auto-find as user may not have finished setting all parameters yet
-        // some operations take too long and would frustrate user
-        //FindByNumbers();
+        // some operations take too long and may frustrate user
+        FindByNumbers();
     }
     private void UpdateNumberTypeLabelTags()
     {
@@ -24236,12 +24237,10 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindBySimilarityPercentageTrackBar_ValueChanged(object sender, EventArgs e)
     {
-        FindBySimilarityButton.Text = FindBySimilarityPercentageTrackBar.Value.ToString() + "% Find";
-        FindBySimilarityButton.Refresh();
-        //if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
-        //{
-        //    FindBySimilarityButton_Click(null, null);
-        //}
+        if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
+        {
+            FindBySimilarityButton_Click(null, null);
+        }
     }
     private void FindBySimilarityControls_Enter(object sender, EventArgs e)
     {
@@ -24385,7 +24384,8 @@ public partial class MainForm : Form, ISubscriber
     #region Search By Prostration
     ///////////////////////////////////////////////////////////////////////////////
     private ProstrationType m_find_by_prostration_type = ProstrationType.None;
-    private void DisplayRecommendedProstrationVersesLabel_Click(object sender, EventArgs e)
+    private int m_find_by_prostration_index = 0;
+    private void DisplayProstrationVersesLabel_Click(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
         try
@@ -24396,36 +24396,29 @@ public partial class MainForm : Form, ISubscriber
             {
                 ClearFindMatches();
 
-                m_find_by_prostration_type = ProstrationType.Recommended;
-                m_client.FindVerses(m_find_by_prostration_type);
-                if (m_client.FoundVerses != null)
+                if (m_find_by_prostration_index == 0)
                 {
-                    int verse_count = m_client.FoundVerses.Count;
-                    m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + m_find_by_prostration_type.ToString() + " " + L[l]["prostrations"] + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                    DisplayFoundVerses(true, true);
+                    m_find_by_prostration_type = ProstrationType.Obligatory | ProstrationType.Recommended;
+                    m_find_by_prostration_index = 1;
+                    DisplayProstrationVersesLabel.Text = "۞";
+                    ToolTip.SetToolTip(DisplayProstrationVersesLabel, L[l]["All prostration verses"]);
+                }
+                else if (m_find_by_prostration_index == 1)
+                {
+                    m_find_by_prostration_type = ProstrationType.Obligatory;
+                    m_find_by_prostration_index = 2;
+                    DisplayProstrationVersesLabel.Text = "۩";
+                    ToolTip.SetToolTip(DisplayProstrationVersesLabel, L[l]["Obligatory prostration verses"]);
+                }
+                else if (m_find_by_prostration_index == 2)
+                {
+                    m_find_by_prostration_type = ProstrationType.Recommended;
+                    m_find_by_prostration_index = 0;
+                    DisplayProstrationVersesLabel.Text = "⌂";
+                    ToolTip.SetToolTip(DisplayProstrationVersesLabel, L[l]["Recommended prostration verses"]);
                 }
 
-                SearchResultTextBox.Focus();
-                SearchResultTextBox.Refresh();
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void DisplayObligatoryProstrationVersesLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            m_search_type = SearchType.Prostration;
 
-            if (m_client != null)
-            {
-                ClearFindMatches();
-
-                m_find_by_prostration_type = ProstrationType.Obligatory;
                 m_client.FindVerses(m_find_by_prostration_type);
                 if (m_client.FoundVerses != null)
                 {
@@ -25144,16 +25137,18 @@ public partial class MainForm : Form, ISubscriber
                 {
                     if (verse.Chapter != null)
                     {
-                        text = verse.Chapter.Name + " " + verse.Chapter.Number
-                            + "   ءاية " + verse.NumberInChapter
-                            + "   منزل " + ((verse.Station != null) ? verse.Station.Number : -1)
-                            + "   جزء " + ((verse.Part != null) ? verse.Part.Number : -1)
-                            + "   حزب " + ((verse.Group != null) ? verse.Group.Number : -1)
-                            + "   نصف " + ((verse.Half != null) ? verse.Half.Number : -1)
-                            + "   ربع " + ((verse.Quarter != null) ? verse.Quarter.Number : -1)
-                            + "   ركوع " + ((verse.Bowing != null) ? verse.Bowing.Number : -1)
-                            + "   صفحة " + ((verse.Page != null) ? verse.Page.Number : -1)
-                            ;
+                        //text = L[l]["Chapter"] + "  " + verse.Chapter.SortedNumber + " " + L[l][verse.Chapter.TransliteratedName] + "   "
+                        text = L[l][verse.Chapter.TransliteratedName] + " " + verse.Chapter.SortedNumber + "   "
+                             + L[l]["Verse"] + " " + verse.NumberInChapter + "/" + verse.Chapter.Verses.Count + "   "
+                            //+ L[l]["Station"] + " " + ((verse.Station != null) ? verse.Station.Number : -1) + "   "
+                            //+ L[l]["Part"] + " " + ((verse.Part != null) ? verse.Part.Number : -1) + "   "
+                            //+ L[l]["Group"] + " " + ((verse.Group != null) ? verse.Group.Number : -1) + "   "
+                            //+ L[l]["Half"] + " " + ((verse.Half != null) ? verse.Half.Number : -1) + "   "
+                            //+ L[l]["Quarter"] + " " + ((verse.Quarter != null) ? verse.Quarter.Number : -1) + "   "
+                            //+ L[l]["Bowing"] + " " + ((verse.Bowing != null) ? verse.Bowing.Number : -1) + "   "
+                             + "     "
+                             + L[l]["Page"] + " " + ((verse.Page != null) ? verse.Page.Number : -1)
+                        ;
 
                         number = verse.NumberInChapter;
                     }
@@ -31874,9 +31869,11 @@ public partial class MainForm : Form, ISubscriber
             {
                 if ((!m_found_verses_displayed) && (control == HeaderLabel))
                 {
-                    if (parts[i] == "ءاية")
+                    if (parts[i].Contains("/"))
                     {
-                        if (long.TryParse(parts[i + 1], out value))
+                        int pos = parts[i].IndexOf("/");
+                        string verse_number_str = parts[i].Remove(pos);
+                        if (long.TryParse(verse_number_str, out value))
                         {
                             break;
                         }

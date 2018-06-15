@@ -117,7 +117,7 @@ chapter	verses	first_verse	name	transliterated_name	english_name	revelation_plac
 111	5	6217	المسد	Al-Masad	Palm Fibre	Makkah	6	1
 112	4	6222	الإخلاص	Al-Ikhlaas	Oneness of God	Makkah	22	1
 113	5	6226	الفلق	Al-Falaq	Daybreak	Makkah	20	1
-114	6	6231	الناس	An-Naas	Mankind	Makkah	21	1
+114	6	6231	الناس	An-Naas	People	Makkah	21	1
 
 station	start_chapter	start_chapter_verse
 1	1	1
