@@ -8366,6 +8366,62 @@ public class Server : IPublisher
         }
         return result;
     }
+    // find by text - consecutively repeated phrases
+    public static List<Phrase> FindRepeatedPhrases(int phrase_word_count, bool with_diacritics)
+    {
+        if (s_book == null) return null;
+
+        List<Verse> source = s_book.Verses;
+        return FindRepeatedPhrases(source, phrase_word_count, with_diacritics);
+    }
+    private static List<Phrase> FindRepeatedPhrases(List<Verse> source, int phrase_word_count, bool with_diacritics)
+    {
+        List<Phrase> result = new List<Phrase>();
+        if (source != null)
+        {
+            if (source.Count > 0)
+            {
+                if (phrase_word_count > 0)
+                {
+                    List<Word> words = new List<Word>();
+                    foreach (Verse verse in source)
+                    {
+                        words.AddRange(verse.Words);
+                    }
+
+                    int n = phrase_word_count;
+                    for (int i = 0; i <= words.Count - (2 * n); i++)
+                    {
+                        string original_phrase1 = null;
+                        for (int w = 0; w < n; w++)
+                        {
+                            original_phrase1 += words[i + w].Text;
+                        }
+                        string original_phrase2 = null;
+                        for (int w = 0; w < n; w++)
+                        {
+                            original_phrase2 += words[i + n + w].Text;
+                        }
+
+                        string simplified_phrase1 = original_phrase1;
+                        string simplified_phrase2 = original_phrase2;
+                        if (!with_diacritics)
+                        {
+                            simplified_phrase1 = simplified_phrase1.SimplifyTo(NumerologySystem.TextMode);
+                            simplified_phrase2 = simplified_phrase2.SimplifyTo(NumerologySystem.TextMode);
+                        }
+                        if (simplified_phrase1 == simplified_phrase2)
+                        {
+                            int spaces = n - 1;
+                            result.Add(new Phrase(words[i].Verse, words[i].Position, original_phrase1 + spaces));
+                            result.Add(new Phrase(words[i + n].Verse, words[i + n].Position, original_phrase2 + spaces));
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     // find by similarity - phrases similar to given text
     public static List<Phrase> FindPhrases(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, string text, double similarity_percentage)

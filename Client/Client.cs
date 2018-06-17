@@ -1083,6 +1083,28 @@ public class Client : IPublisher, ISubscriber
         }
         return 0;
     }
+    // find by text - Repeated phrases with N words
+    public int FindRepeatedPhrases(int phrase_word_count, bool with_diacritics)
+    {
+        ClearSearchResults();
+        m_found_phrases = Server.FindRepeatedPhrases(phrase_word_count, with_diacritics);
+        if (m_found_phrases != null)
+        {
+            m_found_verses = new List<Verse>();
+            foreach (Phrase phrase in m_found_phrases)
+            {
+                if (phrase != null)
+                {
+                    if (!m_found_verses.Contains(phrase.Verse))
+                    {
+                        m_found_verses.Add(phrase.Verse);
+                    }
+                }
+            }
+            return m_found_phrases.Count;
+        }
+        return 0;
+    }
 
     // find by similarity - phrases similar to given text
     /// <summary>
