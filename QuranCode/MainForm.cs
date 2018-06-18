@@ -606,7 +606,7 @@ public partial class MainForm : Form, ISubscriber
     private const int DEFAULT_WINDOW_WIDTH = 1290;
     private const int DEFAULT_WINDOW_HEIGHT = 753;
     private const string DEFAULT_LANGUAGE = "English";
-    private const int DEFAULT_INFORMATION_BOX_TOP = 456;
+    private const int DEFAULT_INFORMATION_BOX_TOP = 449;
     private const int DEFAULT_AUDIO_VOLUME = 1000;
     private const string VERSE_ADDRESS_TRANSLATION_SEPARATOR = " ";
     private const string VERSE_ADDRESS_MAIN_SEPARATOR = "\t";
