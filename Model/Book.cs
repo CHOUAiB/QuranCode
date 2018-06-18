@@ -2010,10 +2010,9 @@ namespace Model
                                                                 {
                                                                     if (verse_words[i].Contains(text_words[0]))
                                                                     {
-                                                                        match_count = 1;
-                                                                        //RegexOptions regex_options = RegexOptions.IgnoreCase | RegexOptions.RightToLeft;
-                                                                        //MatchCollection matches = Regex.Matches(verse_words[i], text_words[0], regex_options);
-                                                                        //match_count = matches.Count;
+                                                                        RegexOptions regex_options = RegexOptions.IgnoreCase | RegexOptions.RightToLeft;
+                                                                        MatchCollection matches = Regex.Matches(verse_words[i], text_words[0], regex_options);
+                                                                        match_count = matches.Count;
                                                                     }
                                                                 }
                                                                 break;
@@ -2068,10 +2067,9 @@ namespace Model
                                                             {
                                                                 if (verse_words[i].Contains(text_words[0]))
                                                                 {
-                                                                    match_count = 1;
-                                                                    //RegexOptions regex_options = RegexOptions.IgnoreCase | RegexOptions.RightToLeft;
-                                                                    //MatchCollection matches = Regex.Matches(verse_words[i], text_words[0], regex_options);
-                                                                    //match_count = matches.Count;
+                                                                    RegexOptions regex_options = RegexOptions.IgnoreCase | RegexOptions.RightToLeft;
+                                                                    MatchCollection matches = Regex.Matches(verse_words[i], text_words[0], regex_options);
+                                                                    match_count = matches.Count;
                                                                 }
                                                             }
                                                             break;
