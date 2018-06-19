@@ -645,6 +645,7 @@ public partial class MainForm : Form, ISubscriber
         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
         InstallLanguages();
+        LoadLanguage(DEFAULT_LANGUAGE);
 
         InstallFonts();
         AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
@@ -20671,12 +20672,12 @@ public partial class MainForm : Form, ISubscriber
     }
     private void SearchGroupBox_Leave(object sender, EventArgs e)
     {
-        //if (!WordsListBox.Focused)
-        //{
-        //    ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
-        //    WordsListBoxLabel.Visible = false;
-        //    WordsListBox.Visible = false;
-        //}
+        if (!WordsListBox.Focused)
+        {
+            ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
+            WordsListBoxLabel.Visible = false;
+            WordsListBox.Visible = false;
+        }
     }
     private void ClearFindMatches()
     {
@@ -21419,7 +21420,7 @@ public partial class MainForm : Form, ISubscriber
                     if (m_client.FoundVerses != null)
                     {
                         int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                        string block_name = L[l]["verse"];
+                        string block_name = "verse";
                         //string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
                         int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
                         m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + text_proximity_type.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];

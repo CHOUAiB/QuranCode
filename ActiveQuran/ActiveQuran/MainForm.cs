@@ -379,6 +379,8 @@ public partial class MainForm : Form
         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
         LoadLanguageNames();
+        ApplyLanguage(DEFAULT_LANGUAGE);
+        
         InstallFonts();
 
         using (Graphics graphics = this.CreateGraphics())
@@ -6014,12 +6016,12 @@ public partial class MainForm : Form
     }
     private void SearchGroupBox_Leave(object sender, EventArgs e)
     {
-        //if (!WordsListBox.Focused)
-        //{
-        //    ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
-        //    WordsListBoxLabel.Visible = false;
-        //    WordsListBox.Visible = false;
-        //}
+        if (!WordsListBox.Focused)
+        {
+            ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
+            WordsListBoxLabel.Visible = false;
+            WordsListBox.Visible = false;
+        }
     }
     private void ClearFindMatches()
     {
@@ -6240,6 +6242,7 @@ public partial class MainForm : Form
         this.AcceptButton = FindByTextButton;
 
         FindByTextButton.Enabled = true;
+
         if (m_text_search_type == TextSearchType.Root)
         {
             ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect root frequencies"]);
@@ -6517,7 +6520,7 @@ public partial class MainForm : Form
                     if (m_client.FoundVerses != null)
                     {
                         int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                        string block_name = L[l]["verse"];
+                        string block_name = "verse";
                         //string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
                         int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
                         m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + text_proximity_type.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];

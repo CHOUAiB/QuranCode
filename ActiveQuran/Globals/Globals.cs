@@ -1,8 +1,8 @@
-public enum Edition { Lite }
+public enum Edition { Standard }
 
 public static class Globals
 {
-    public static Edition EDITION = Edition.Lite;
+    public static Edition EDITION = Edition.Standard;
     public static string VERSION = "6.19.653.4"; // updated by Version.bat (with AssemblyInfo.cs of all projects)
     public static string SHORT_VERSION
     {
@@ -19,9 +19,9 @@ public static class Globals
                 }
             }
 
-            if (EDITION == Edition.Lite)
+            if (EDITION == Edition.Standard)
             {
-                return ("v" + version + "L");
+                return ("v" + version + "");
             }
             else
             {
