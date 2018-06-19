@@ -1594,7 +1594,7 @@ namespace Model
                                 bool break_loop = false;
                                 switch (text_location_in_verse)
                                 {
-                                    case TextLocationInVerse.Anywhere:
+                                    case TextLocationInVerse.Any:
                                         {
                                             // do nothing
                                         }
@@ -1699,7 +1699,7 @@ namespace Model
                                                         }
                                                     }
                                                     break;
-                                                case TextLocationInWord.Anywhere:
+                                                case TextLocationInWord.Any:
                                                     {
                                                         if (verse_words[i].Contains(text))
                                                         {
@@ -1776,7 +1776,7 @@ namespace Model
                                     bool break_loop = false;
                                     switch (text_location_in_verse)
                                     {
-                                        case TextLocationInVerse.Anywhere:
+                                        case TextLocationInVerse.Any:
                                             {
                                                 // do nothing
                                             }
@@ -1858,7 +1858,7 @@ namespace Model
                                                                     }
                                                                 }
                                                                 break;
-                                                            case TextLocationInWord.Anywhere:
+                                                            case TextLocationInWord.Any:
                                                                 {
                                                                     if (verse_words[i].Contains(text_words[0]))
                                                                     {
@@ -1915,7 +1915,7 @@ namespace Model
                                                                 }
                                                             }
                                                             break;
-                                                        case TextLocationInWord.Anywhere:
+                                                        case TextLocationInWord.Any:
                                                             {
                                                                 if (verse_words[i].Contains(text_words[0]))
                                                                 {
@@ -1983,7 +1983,7 @@ namespace Model
                                                     }
                                                 }
                                                 break;
-                                            case TextLocationInWord.Anywhere:
+                                            case TextLocationInWord.Any:
                                                 {
                                                     if (verse_words[i].EndsWith(text_words[0]))
                                                     {
@@ -2094,7 +2094,7 @@ namespace Model
                                     bool break_loop = false;
                                     switch (text_location_in_verse)
                                     {
-                                        case TextLocationInVerse.Anywhere:
+                                        case TextLocationInVerse.Any:
                                             {
                                                 // do nothing
                                             }
@@ -2128,7 +2128,7 @@ namespace Model
                                             break;
                                         case TextLocationInWord.AtMiddle:
                                         case TextLocationInWord.AtEnd:
-                                        case TextLocationInWord.Anywhere:
+                                        case TextLocationInWord.Any:
                                             {
                                                 start_found = verse_words[i].EndsWith(text_words[0]);
                                             }
@@ -2193,7 +2193,7 @@ namespace Model
         }
         public Dictionary<string, int> GetWordRoots(List<Verse> verses, string text)
         {
-            return GetWordRoots(verses, text, TextLocationInWord.Anywhere);
+            return GetWordRoots(verses, text, TextLocationInWord.Any);
         }
         public Dictionary<string, int> GetWordRoots(List<Verse> verses, string text, TextLocationInWord text_location_in_word)
         {
@@ -2309,7 +2309,7 @@ namespace Model
                                                         }
                                                     }
                                                     break;
-                                                case TextLocationInWord.Anywhere:
+                                                case TextLocationInWord.Any:
                                                     {
                                                         if (text.Length == 0)
                                                         {

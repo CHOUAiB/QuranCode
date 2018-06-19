@@ -11,9 +11,9 @@ namespace Model
 
     public enum TextSearchType { Exact, Proximity, Root };
     public enum TextSearchBlockSize { Verse, Chapter, Page, Station, Part, Group, Half, Quarter, Bowing };
-    public enum TextLocationInChapter { Anywhere, AtStart, AtMiddle, AtEnd };
-    public enum TextLocationInVerse { Anywhere, AtStart, AtMiddle, AtEnd };
-    public enum TextLocationInWord { Anywhere, AtStart, AtMiddle, AtEnd };
+    public enum TextLocationInChapter { Any, AtStart, AtMiddle, AtEnd };
+    public enum TextLocationInVerse { Any, AtStart, AtMiddle, AtEnd };
+    public enum TextLocationInWord { Any, AtStart, AtMiddle, AtEnd };
     public enum TextProximityType { AnyWord, AllWords };
     public enum TextWordness { Any, WholeWord, PartOfWord };
 

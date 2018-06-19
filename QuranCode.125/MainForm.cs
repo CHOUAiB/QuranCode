@@ -431,15 +431,15 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, L[l]["find exact word or expression"]);
             this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, L[l]["find any/all given words"]);
             this.ToolTip.SetToolTip(this.FindByTextRootSearchTypeLabel, L[l]["find words of given roots"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtChapterAnywhereRadioButton, L[l]["find anywhere in chapters"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterAnyRadioButton, L[l]["find anywhere in chapters"]);
             this.ToolTip.SetToolTip(this.FindByTextAtChapterStartRadioButton, L[l]["find in first verses"]);
             this.ToolTip.SetToolTip(this.FindByTextAtChapterMiddleRadioButton, L[l]["find in middle verses"]);
             this.ToolTip.SetToolTip(this.FindByTextAtChapterEndRadioButton, L[l]["find in last verses"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtVerseAnywhereRadioButton, L[l]["find anywhere in verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseAnyRadioButton, L[l]["find anywhere in verses"]);
             this.ToolTip.SetToolTip(this.FindByTextAtVerseStartRadioButton, L[l]["find in first words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtVerseMiddleRadioButton, L[l]["find in middle words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtVerseEndRadioButton, L[l]["find in last words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtWordAnywhereRadioButton, L[l]["find anywhere in words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordAnyRadioButton, L[l]["find anywhere in words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordStartRadioButton, L[l]["find at the beginning of words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordMiddleRadioButton, L[l]["find in the middle of words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordEndRadioButton, L[l]["find at the end of words"]);
@@ -3404,7 +3404,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 ClearFindMatches();
 
-                m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Anywhere, TextLocationInVerse.Anywhere, TextLocationInWord.Anywhere, TextWordness.Any, false, true, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Any, TextLocationInVerse.Any, TextLocationInWord.Any, TextWordness.Any, false, true, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
                 if (m_client.FoundPhrases != null)
                 {
                     int phrase_count = GetPhraseCount(m_client.FoundPhrases);
@@ -3527,7 +3527,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 ClearFindMatches();
 
-                m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Anywhere, TextLocationInVerse.Anywhere, TextLocationInWord.Anywhere, TextWordness.WholeWord, false, false, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Any, TextLocationInVerse.Any, TextLocationInWord.Any, TextWordness.WholeWord, false, false, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
                 if (m_client.FoundPhrases != null)
                 {
                     int phrase_count = GetPhraseCount(m_client.FoundPhrases);
@@ -20688,9 +20688,9 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateFindByTextOptions()
     {
-        if (FindByTextAtChapterAnywhereRadioButton.Checked)
+        if (FindByTextAtChapterAnyRadioButton.Checked)
         {
-            m_text_location_in_chapter = TextLocationInChapter.Anywhere;
+            m_text_location_in_chapter = TextLocationInChapter.Any;
         }
         else if (FindByTextAtChapterStartRadioButton.Checked)
         {
@@ -20705,9 +20705,9 @@ public partial class MainForm : Form, ISubscriber
             m_text_location_in_chapter = TextLocationInChapter.AtEnd;
         }
 
-        if (FindByTextAtVerseAnywhereRadioButton.Checked)
+        if (FindByTextAtVerseAnyRadioButton.Checked)
         {
-            m_text_location_in_verse = TextLocationInVerse.Anywhere;
+            m_text_location_in_verse = TextLocationInVerse.Any;
         }
         else if (FindByTextAtVerseStartRadioButton.Checked)
         {
@@ -20722,9 +20722,9 @@ public partial class MainForm : Form, ISubscriber
             m_text_location_in_verse = TextLocationInVerse.AtEnd;
         }
 
-        if (FindByTextAtWordAnywhereRadioButton.Checked)
+        if (FindByTextAtWordAnyRadioButton.Checked)
         {
-            m_text_location_in_word = TextLocationInWord.Anywhere;
+            m_text_location_in_word = TextLocationInWord.Any;
         }
         else if (FindByTextAtWordStartRadioButton.Checked)
         {
@@ -20779,9 +20779,9 @@ public partial class MainForm : Form, ISubscriber
     ///////////////////////////////////////////////////////////////////////////////
     private TextSearchType m_text_search_type = TextSearchType.Exact;
     private TextSearchBlockSize m_text_search_block_size = TextSearchBlockSize.Verse;
-    private TextLocationInChapter m_text_location_in_chapter = TextLocationInChapter.Anywhere;
-    private TextLocationInVerse m_text_location_in_verse = TextLocationInVerse.Anywhere;
-    private TextLocationInWord m_text_location_in_word = TextLocationInWord.Anywhere;
+    private TextLocationInChapter m_text_location_in_chapter = TextLocationInChapter.Any;
+    private TextLocationInVerse m_text_location_in_verse = TextLocationInVerse.Any;
+    private TextLocationInWord m_text_location_in_word = TextLocationInWord.Any;
     private TextProximityType m_text_proximity_type = TextProximityType.AllWords;
     private TextWordness m_text_wordness = TextWordness.Any;
     private bool m_case_sensitive = false;
@@ -20812,7 +20812,7 @@ public partial class MainForm : Form, ISubscriber
     {
         m_text_search_type = TextSearchType.Exact;
         PopulateWordsListBoxWithCurrentOrNextWords();
-        FindByTextAtVerseAnywhereRadioButton.Checked = true;
+        FindByTextAtVerseAnyRadioButton.Checked = true;
 
         EnableFindByTextControls();
         UpdateKeyboard(m_client.NumerologySystem.TextMode);
@@ -21994,12 +21994,12 @@ public partial class MainForm : Form, ISubscriber
         FindByTextAtChapterStartRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtChapterMiddleRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtChapterEndRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
-        FindByTextAtChapterAnywhereRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
+        FindByTextAtChapterAnyRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
 
         FindByTextAtVerseStartRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtVerseMiddleRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtVerseEndRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
-        FindByTextAtVerseAnywhereRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
+        FindByTextAtVerseAnyRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
 
         FindByTextAllWordsRadioButton.Enabled = (m_text_search_type == TextSearchType.Proximity);
         FindByTextAnyWordRadioButton.Enabled = (m_text_search_type == TextSearchType.Proximity)
@@ -22013,7 +22013,7 @@ public partial class MainForm : Form, ISubscriber
         FindByTextAtWordStartRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextAtWordMiddleRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextAtWordEndRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
-        FindByTextAtWordAnywhereRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
+        FindByTextAtWordAnyRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
 
         FindByTextMultiplicityCheckBox.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextMultiplicityComparisonOperatorLabel.Enabled = (FindByTextMultiplicityCheckBox.Enabled) && (FindByTextMultiplicityCheckBox.Checked);

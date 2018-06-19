@@ -241,15 +241,15 @@ public partial class MainForm : Form
             this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, L[l]["find exact word or expression"]);
             this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, L[l]["find any/all given words"]);
             this.ToolTip.SetToolTip(this.FindByTextRootSearchTypeLabel, L[l]["find words of given roots"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtChapterAnywhereRadioButton, L[l]["find anywhere in chapters"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtChapterAnyRadioButton, L[l]["find anywhere in chapters"]);
             this.ToolTip.SetToolTip(this.FindByTextAtChapterStartRadioButton, L[l]["find in first verses"]);
             this.ToolTip.SetToolTip(this.FindByTextAtChapterMiddleRadioButton, L[l]["find in middle verses"]);
             this.ToolTip.SetToolTip(this.FindByTextAtChapterEndRadioButton, L[l]["find in last verses"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtVerseAnywhereRadioButton, L[l]["find anywhere in verses"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtVerseAnyRadioButton, L[l]["find anywhere in verses"]);
             this.ToolTip.SetToolTip(this.FindByTextAtVerseStartRadioButton, L[l]["find in first words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtVerseMiddleRadioButton, L[l]["find in middle words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtVerseEndRadioButton, L[l]["find in last words"]);
-            this.ToolTip.SetToolTip(this.FindByTextAtWordAnywhereRadioButton, L[l]["find anywhere in words"]);
+            this.ToolTip.SetToolTip(this.FindByTextAtWordAnyRadioButton, L[l]["find anywhere in words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordStartRadioButton, L[l]["find at the beginning of words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordMiddleRadioButton, L[l]["find in the middle of words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordEndRadioButton, L[l]["find at the end of words"]);
@@ -380,7 +380,7 @@ public partial class MainForm : Form
 
         LoadLanguageNames();
         ApplyLanguage(DEFAULT_LANGUAGE);
-        
+
         InstallFonts();
 
         using (Graphics graphics = this.CreateGraphics())
@@ -431,7 +431,7 @@ public partial class MainForm : Form
                 }, null);
 
                 splash_form.Version += " - " + Globals.SHORT_VERSION;
-                splash_form.Progress = 10;
+                splash_form.Progress = 30;
                 Thread.Sleep(100);
 
                 string numerology_system_name = LoadNumerologySystemName();
@@ -447,7 +447,7 @@ public partial class MainForm : Form
                         string text_mode = m_client.NumerologySystem.TextMode;
                         m_client.BuildSimplifiedBook(text_mode, m_with_bism_Allah, m_waw_as_word, m_shadda_as_letter);
                         EnableFindByTextControls();
-                        splash_form.Progress = 40;
+                        splash_form.Progress = 60;
                         Thread.Sleep(100);
 
                         if (m_client.Book != null)
@@ -541,6 +541,20 @@ public partial class MainForm : Form
 
         // start user at chapter list box
         ChaptersListBox.Focus();
+    }
+    private void MainForm_Resize(object sender, EventArgs e)
+    {
+        Verse verse = GetCurrentVerse();
+        if (verse != null)
+        {
+            if (m_active_textbox != null)
+            {
+                int start = m_active_textbox.SelectionStart;
+                int length = m_active_textbox.SelectionLength;
+                m_active_textbox.AlignToLineStart();
+                m_active_textbox.Select(start, length);
+            }
+        }
     }
     private void MainForm_KeyDown(object sender, KeyEventArgs e)
     {
@@ -6030,9 +6044,9 @@ public partial class MainForm : Form
     }
     private void UpdateFindByTextOptions()
     {
-        if (FindByTextAtChapterAnywhereRadioButton.Checked)
+        if (FindByTextAtChapterAnyRadioButton.Checked)
         {
-            m_text_location_in_chapter = TextLocationInChapter.Anywhere;
+            m_text_location_in_chapter = TextLocationInChapter.Any;
         }
         else if (FindByTextAtChapterStartRadioButton.Checked)
         {
@@ -6047,9 +6061,9 @@ public partial class MainForm : Form
             m_text_location_in_chapter = TextLocationInChapter.AtEnd;
         }
 
-        if (FindByTextAtVerseAnywhereRadioButton.Checked)
+        if (FindByTextAtVerseAnyRadioButton.Checked)
         {
-            m_text_location_in_verse = TextLocationInVerse.Anywhere;
+            m_text_location_in_verse = TextLocationInVerse.Any;
         }
         else if (FindByTextAtVerseStartRadioButton.Checked)
         {
@@ -6064,9 +6078,9 @@ public partial class MainForm : Form
             m_text_location_in_verse = TextLocationInVerse.AtEnd;
         }
 
-        if (FindByTextAtWordAnywhereRadioButton.Checked)
+        if (FindByTextAtWordAnyRadioButton.Checked)
         {
-            m_text_location_in_word = TextLocationInWord.Anywhere;
+            m_text_location_in_word = TextLocationInWord.Any;
         }
         else if (FindByTextAtWordStartRadioButton.Checked)
         {
@@ -6117,9 +6131,9 @@ public partial class MainForm : Form
     ///////////////////////////////////////////////////////////////////////////////
     private TextSearchType m_text_search_type = TextSearchType.Exact;
     private TextSearchBlockSize m_text_search_block_size = TextSearchBlockSize.Verse;
-    private TextLocationInChapter m_text_location_in_chapter = TextLocationInChapter.Anywhere;
-    private TextLocationInVerse m_text_location_in_verse = TextLocationInVerse.Anywhere;
-    private TextLocationInWord m_text_location_in_word = TextLocationInWord.Anywhere;
+    private TextLocationInChapter m_text_location_in_chapter = TextLocationInChapter.Any;
+    private TextLocationInVerse m_text_location_in_verse = TextLocationInVerse.Any;
+    private TextLocationInWord m_text_location_in_word = TextLocationInWord.Any;
     private TextProximityType m_text_proximity_type = TextProximityType.AllWords;
     private TextWordness m_text_wordness = TextWordness.Any;
     private bool m_case_sensitive = false;
@@ -6150,7 +6164,7 @@ public partial class MainForm : Form
     {
         m_text_search_type = TextSearchType.Exact;
         PopulateWordsListBoxWithCurrentOrNextWords();
-        FindByTextAtVerseAnywhereRadioButton.Checked = true;
+        FindByTextAtVerseAnyRadioButton.Checked = true;
 
         EnableFindByTextControls();
         UpdateKeyboard(m_client.NumerologySystem.TextMode);
@@ -6955,12 +6969,12 @@ public partial class MainForm : Form
         FindByTextAtChapterStartRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtChapterMiddleRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtChapterEndRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
-        FindByTextAtChapterAnywhereRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
+        FindByTextAtChapterAnyRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
 
         FindByTextAtVerseStartRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtVerseMiddleRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
         FindByTextAtVerseEndRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
-        FindByTextAtVerseAnywhereRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
+        FindByTextAtVerseAnyRadioButton.Enabled = (m_text_search_type == TextSearchType.Exact);
 
         FindByTextAllWordsRadioButton.Enabled = (m_text_search_type == TextSearchType.Proximity);
         FindByTextAnyWordRadioButton.Enabled = (m_text_search_type == TextSearchType.Proximity)
@@ -6974,7 +6988,7 @@ public partial class MainForm : Form
         FindByTextAtWordStartRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextAtWordMiddleRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextAtWordEndRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
-        FindByTextAtWordAnywhereRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
+        FindByTextAtWordAnyRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
 
         FindByTextCaseSensitiveCheckBox.Enabled = (m_language_type == LanguageType.LeftToRight);
     }
@@ -7157,15 +7171,15 @@ public partial class MainForm : Form
                     {
                         //text = L[l]["Chapter"] + "  " + verse.Chapter.SortedNumber + " " + L[l][verse.Chapter.TransliteratedName] + "   "
                         text = L[l][verse.Chapter.TransliteratedName] + " " + verse.Chapter.SortedNumber + "   "
-                             + L[l]["Verse"] + " " + verse.NumberInChapter + "/" + verse.Chapter.Verses.Count + "   "
+                             + L[l]["Verse"] + " " + verse.NumberInChapter + "   "
                             //+ L[l]["Station"] + " " + ((verse.Station != null) ? verse.Station.Number : -1) + "   "
                             //+ L[l]["Part"] + " " + ((verse.Part != null) ? verse.Part.Number : -1) + "   "
                             //+ L[l]["Group"] + " " + ((verse.Group != null) ? verse.Group.Number : -1) + "   "
                             //+ L[l]["Half"] + " " + ((verse.Half != null) ? verse.Half.Number : -1) + "   "
                             //+ L[l]["Quarter"] + " " + ((verse.Quarter != null) ? verse.Quarter.Number : -1) + "   "
                             //+ L[l]["Bowing"] + " " + ((verse.Bowing != null) ? verse.Bowing.Number : -1) + "   "
-                             + "     "
-                             + L[l]["Page"] + " " + ((verse.Page != null) ? verse.Page.Number : -1)
+                            //+ "     "
+                            //+ L[l]["Page"] + " " + ((verse.Page != null) ? verse.Page.Number : -1)
                         ;
 
                         number = verse.NumberInChapter;
@@ -8051,7 +8065,40 @@ public partial class MainForm : Form
             m_client.LoadNumerologySystem(numerology_system_name);
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////
+    private void GLabel_Click(object sender, EventArgs e)
+    {
+        PLabel.BackColor = Color.MistyRose;
+        FLabel.BackColor = Color.MistyRose;
+        GLabel.BackColor = Color.MistyRose;
+
+        LoadNumerologySystem("Original_Abjad_Gematria");
+        CalculateCurrentValue();
+
+        GLabel.BackColor = Color.RosyBrown;
+    }
+    private void PLabel_Click(object sender, EventArgs e)
+    {
+        PLabel.BackColor = Color.MistyRose;
+        FLabel.BackColor = Color.MistyRose;
+        GLabel.BackColor = Color.MistyRose;
+        
+        LoadNumerologySystem("Original_Alphabet_Primes1");
+        CalculateCurrentValue();
+
+        PLabel.BackColor = Color.RosyBrown;
+    }
+    private void FLabel_Click(object sender, EventArgs e)
+    {
+        PLabel.BackColor = Color.MistyRose;
+        FLabel.BackColor = Color.MistyRose;
+        GLabel.BackColor = Color.MistyRose;
+
+        LoadNumerologySystem("Original_Frequency_Linear");
+        CalculateCurrentValue();
+
+        FLabel.BackColor = Color.RosyBrown;
+    }
+    /////////////////////////////////////////////////////////////////////////////
     #endregion
     #region Value Calculations
     ///////////////////////////////////////////////////////////////////////////////

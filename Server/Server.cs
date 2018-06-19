@@ -2040,7 +2040,7 @@ public class Server : IPublisher
                     }
                 }
                 break;
-            case TextLocationInChapter.Anywhere:
+            case TextLocationInChapter.Any:
             default:
                 {
                     result = verses;
@@ -4229,7 +4229,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = whole____start______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = whole____start_anywhere;
     //                            break;
     //                    }
@@ -4246,7 +4246,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = whole___middle______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = whole___middle_anywhere;
     //                            break;
     //                    }
@@ -4263,12 +4263,12 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = whole______end______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = whole______end_anywhere;
     //                            break;
     //                    }
     //                    break;
-    //                case TextLocationInWord.Anywhere:
+    //                case TextLocationInWord.Any:
     //                    switch (text_location_in_verse)
     //                    {
     //                        case TextLocationInVerse.AtStart:
@@ -4280,7 +4280,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = whole_anywhere______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = whole_anywhere_anywhere;
     //                            break;
     //                    }
@@ -4302,7 +4302,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = part_____start______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = part_____start_anywhere;
     //                            break;
     //                    }
@@ -4319,7 +4319,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = part____middle______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = part____middle_anywhere;
     //                            break;
     //                    }
@@ -4336,12 +4336,12 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = part_______end______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = part_______end_anywhere;
     //                            break;
     //                    }
     //                    break;
-    //                case TextLocationInWord.Anywhere:
+    //                case TextLocationInWord.Any:
     //                    switch (text_location_in_verse)
     //                    {
     //                        case TextLocationInVerse.AtStart:
@@ -4353,7 +4353,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = part__anywhere______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = part__anywhere_anywhere;
     //                            break;
     //                    }
@@ -4375,7 +4375,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = any______start______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = any______start_anywhere;
     //                            break;
     //                    }
@@ -4392,7 +4392,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = any_____middle______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = any_____middle_anywhere;
     //                            break;
     //                    }
@@ -4409,12 +4409,12 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = any________end______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = any________end_anywhere;
     //                            break;
     //                    }
     //                    break;
-    //                case TextLocationInWord.Anywhere:
+    //                case TextLocationInWord.Any:
     //                    switch (text_location_in_verse)
     //                    {
     //                        case TextLocationInVerse.AtStart:
@@ -4426,7 +4426,7 @@ public class Server : IPublisher
     //                        case TextLocationInVerse.AtEnd:
     //                            pattern = any___anywhere______end;
     //                            break;
-    //                        case TextLocationInVerse.Anywhere:
+    //                        case TextLocationInVerse.Any:
     //                            pattern = any___anywhere_anywhere;
     //                            break;
     //                    }
@@ -4569,7 +4569,7 @@ public class Server : IPublisher
 
         switch (text_location_in_verse)
         {
-            case TextLocationInVerse.Anywhere:
+            case TextLocationInVerse.Any:
                 {
                     if (text_wordness == TextWordness.Any)
                     {
@@ -4653,7 +4653,7 @@ public class Server : IPublisher
 
         switch (text_location_in_word)
         {
-            case TextLocationInWord.Anywhere:
+            case TextLocationInWord.Any:
                 {
                     // do noting
                 }
@@ -4719,7 +4719,7 @@ public class Server : IPublisher
         {
             case TextSearchBlockSize.Verse:
                 {
-                    List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+                    List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
                     if (language_type == LanguageType.RightToLeft)
                     {
                         return DoFindPhrases(source, current_selection, previous_verses, text, text_proximity_type, text_wordness, case_sensitive, with_diacritics, try_emlaaei_if_nothing_found);
@@ -6891,7 +6891,7 @@ public class Server : IPublisher
         {
             case TextSearchBlockSize.Verse:
                 {
-                    List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+                    List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
                     return DoFindPhrases(source, text, multiplicity, multiplicity_number_type, multiplicity_comparison_operator, multiplicity_remainder);
                 }
             case TextSearchBlockSize.Chapter:
@@ -8582,7 +8582,7 @@ public class Server : IPublisher
     }
     private static List<Verse> DoFindRelatedVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, Verse verse)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Any);
         return DoFindRelatedVerses(source, current_selection, previous_result, verse);
     }
     private static List<Verse> DoFindRelatedVerses(List<Verse> source, Selection current_selection, List<Verse> previous_result, Verse verse)
@@ -8737,7 +8737,7 @@ public class Server : IPublisher
     }
     private static List<Phrase> DoFindPhrases(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, string text, double similarity_percentage)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Any);
         return DoFindPhrases(source, current_selection, previous_result, text, similarity_percentage);
     }
     private static List<Phrase> DoFindPhrases(List<Verse> source, Selection current_selection, List<Verse> previous_result, string text, double similarity_percentage)
@@ -8771,7 +8771,7 @@ public class Server : IPublisher
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, Verse verse, SimilarityMethod similarity_method, double similarity_percentage)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Any);
         return DoFindVerses(source, current_selection, previous_result, verse, similarity_method, similarity_percentage);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, Selection current_selection, List<Verse> previous_result, Verse verse, SimilarityMethod find_similarity_method, double similarity_percentage)
@@ -8866,7 +8866,7 @@ public class Server : IPublisher
     }
     private static List<List<Verse>> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, SimilarityMethod similarity_method, double similarity_percentage)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Any);
         return DoFindVerses(source, current_selection, previous_result, similarity_method, similarity_percentage);
     }
     private static List<List<Verse>> DoFindVerses(List<Verse> source, Selection current_selection, List<Verse> previous_result, SimilarityMethod find_similarity_method, double similarity_percentage)
@@ -10718,7 +10718,7 @@ public class Server : IPublisher
     }
     private static List<Word> DoFindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindWords(source, query);
     }
     private static List<Word> DoFindWords(List<Verse> source, NumberQuery query)
@@ -10749,7 +10749,7 @@ public class Server : IPublisher
     }
     private static List<List<Word>> DoFindWordRanges(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         if (query.WithinVerses)
         {
             return DoFindWordRangesWithinVerses(source, query);
@@ -10922,7 +10922,7 @@ public class Server : IPublisher
     }
     private static List<List<Word>> DoFindWordSets(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindWordSets(source, query);
     }
     private static List<List<Word>> DoFindWordSets(List<Verse> source, NumberQuery query)
@@ -11007,7 +11007,7 @@ public class Server : IPublisher
     }
     private static List<Sentence> DoFindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindSentences(source, query);
     }
     private static List<Sentence> DoFindSentences(List<Verse> source, NumberQuery query)
@@ -11362,7 +11362,7 @@ public class Server : IPublisher
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, query);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, NumberQuery query)
@@ -11390,7 +11390,7 @@ public class Server : IPublisher
     }
     private static List<List<Verse>> DoFindVerseRanges(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerseRanges(source, query);
     }
     private static List<List<Verse>> DoFindVerseRanges(List<Verse> source, NumberQuery query)
@@ -11473,7 +11473,7 @@ public class Server : IPublisher
     }
     private static List<List<Verse>> DoFindVerseSets(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerseSets(source, query);
     }
     private static List<List<Verse>> DoFindVerseSets(List<Verse> source, NumberQuery query)
@@ -11554,7 +11554,7 @@ public class Server : IPublisher
     }
     private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapters(source, query);
     }
     private static List<Chapter> DoFindChapters(List<Verse> source, NumberQuery query)
@@ -11592,7 +11592,7 @@ public class Server : IPublisher
     }
     private static List<List<Chapter>> DoFindChapterRanges(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapterRanges(source, query);
     }
     private static List<List<Chapter>> DoFindChapterRanges(List<Verse> source, NumberQuery query)
@@ -11686,7 +11686,7 @@ public class Server : IPublisher
     }
     private static List<List<Chapter>> DoFindChapterSets(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapterSets(source, query);
     }
     private static List<List<Chapter>> DoFindChapterSets(List<Verse> source, NumberQuery query)
@@ -11769,7 +11769,7 @@ public class Server : IPublisher
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, ProstrationType prostration_type)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, prostration_type);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, ProstrationType prostration_type)
@@ -11798,7 +11798,7 @@ public class Server : IPublisher
     }
     private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, RevelationPlace revelation_place)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapters(source, revelation_place);
     }
     private static List<Chapter> DoFindChapters(List<Verse> source, RevelationPlace revelation_place)
@@ -11844,7 +11844,7 @@ public class Server : IPublisher
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, InitializationType initialization_type)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, initialization_type);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, InitializationType initialization_type)
@@ -11956,7 +11956,7 @@ public class Server : IPublisher
     }
     private static List<Word> DoFindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindWords(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Word> DoFindWords(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
@@ -12001,7 +12001,7 @@ public class Server : IPublisher
     }
     private static List<Sentence> DoFindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindSentences(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Sentence> DoFindSentences(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
@@ -12376,7 +12376,7 @@ public class Server : IPublisher
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
@@ -12415,7 +12415,7 @@ public class Server : IPublisher
     }
     private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapters(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Chapter> DoFindChapters(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)

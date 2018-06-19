@@ -1019,7 +1019,7 @@ public class Server
                     }
                 }
                 break;
-            case TextLocationInChapter.Anywhere:
+            case TextLocationInChapter.Any:
             default:
                 {
                     result = verses;
@@ -1671,7 +1671,7 @@ public class Server
 
         switch (text_location_in_verse)
         {
-            case TextLocationInVerse.Anywhere:
+            case TextLocationInVerse.Any:
                 {
                     if (text_wordness == TextWordness.Any)
                     {
@@ -1755,7 +1755,7 @@ public class Server
 
         switch (text_location_in_word)
         {
-            case TextLocationInWord.Anywhere:
+            case TextLocationInWord.Any:
                 {
                     // do noting
                 }
@@ -1817,7 +1817,7 @@ public class Server
     private static List<Phrase> DoFindPhrases(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, TextSearchBlockSize text_search_block_size, string text, LanguageType language_type, string translation, TextProximityType text_proximity_type, TextWordness text_wordness, bool case_sensitive, bool with_diacritics, bool try_emlaaei_if_nothing_found)
     {
         List<Verse> result = new List<Verse>();
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         if (language_type == LanguageType.RightToLeft)
         {
             return DoFindPhrases(source, current_selection, previous_verses, text, text_proximity_type, text_wordness, case_sensitive, with_diacritics, try_emlaaei_if_nothing_found);
@@ -2809,7 +2809,7 @@ public class Server
     private static List<Phrase> DoFindPhrases(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, TextSearchBlockSize text_search_block_size, string text, int multiplicity, NumberType multiplicity_number_type, ComparisonOperator multiplicity_comparison_operator, int multiplicity_remainder)
     {
         List<Verse> result = new List<Verse>();
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindPhrases(source, text, multiplicity, multiplicity_number_type, multiplicity_comparison_operator, multiplicity_remainder);
     }
     private static List<Phrase> DoFindPhrases(List<Verse> source, string text, int multiplicity, NumberType multiplicity_number_type, ComparisonOperator multiplicity_comparison_operator, int multiplicity_remainder)
@@ -2975,7 +2975,7 @@ public class Server
     }
     private static List<Verse> DoFindRelatedVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, Verse verse)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Any);
         return DoFindRelatedVerses(source, current_selection, previous_result, verse);
     }
     private static List<Verse> DoFindRelatedVerses(List<Verse> source, Selection current_selection, List<Verse> previous_result, Verse verse)
@@ -4753,7 +4753,7 @@ public class Server
     }
     private static List<Word> DoFindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindWords(source, query);
     }
     private static List<Word> DoFindWords(List<Verse> source, NumberQuery query)
@@ -4784,7 +4784,7 @@ public class Server
     }
     private static List<List<Word>> DoFindWordRanges(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         if (query.WithinVerses)
         {
             return DoFindWordRangesWithinVerses(source, query);
@@ -4957,7 +4957,7 @@ public class Server
     }
     private static List<Sentence> DoFindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindSentences(source, query);
     }
     private static List<Sentence> DoFindSentences(List<Verse> source, NumberQuery query)
@@ -5312,7 +5312,7 @@ public class Server
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, query);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, NumberQuery query)
@@ -5340,7 +5340,7 @@ public class Server
     }
     private static List<List<Verse>> DoFindVerseRanges(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerseRanges(source, query);
     }
     private static List<List<Verse>> DoFindVerseRanges(List<Verse> source, NumberQuery query)
@@ -5423,7 +5423,7 @@ public class Server
     }
     private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapters(source, query);
     }
     private static List<Chapter> DoFindChapters(List<Verse> source, NumberQuery query)
@@ -5461,7 +5461,7 @@ public class Server
     }
     private static List<List<Chapter>> DoFindChapterRanges(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapterRanges(source, query);
     }
     private static List<List<Chapter>> DoFindChapterRanges(List<Verse> source, NumberQuery query)
@@ -5556,7 +5556,7 @@ public class Server
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, ProstrationType prostration_type)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, prostration_type);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, ProstrationType prostration_type)
@@ -5585,7 +5585,7 @@ public class Server
     }
     private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, RevelationPlace revelation_place)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapters(source, revelation_place);
     }
     private static List<Chapter> DoFindChapters(List<Verse> source, RevelationPlace revelation_place)
@@ -5631,7 +5631,7 @@ public class Server
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, InitializationType initialization_type)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, initialization_type);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, InitializationType initialization_type)
@@ -5743,7 +5743,7 @@ public class Server
     }
     private static List<Word> DoFindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindWords(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Word> DoFindWords(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
@@ -5788,7 +5788,7 @@ public class Server
     }
     private static List<Sentence> DoFindSentences(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindSentences(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Sentence> DoFindSentences(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
@@ -6163,7 +6163,7 @@ public class Server
     }
     private static List<Verse> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindVerses(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Verse> DoFindVerses(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
@@ -6202,7 +6202,7 @@ public class Server
     }
     private static List<Chapter> DoFindChapters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)
     {
-        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Anywhere);
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
         return DoFindChapters(source, phrase, sum, number_type, comparison_operator, sum_remainder, frequency_search_type, with_diacritics);
     }
     private static List<Chapter> DoFindChapters(List<Verse> source, string phrase, int sum, NumberType number_type, ComparisonOperator comparison_operator, int sum_remainder, FrequencySearchType frequency_search_type, bool with_diacritics)

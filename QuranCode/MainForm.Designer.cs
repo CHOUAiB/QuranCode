@@ -70,7 +70,7 @@ partial class MainForm
             this.ValueTextBox = new System.Windows.Forms.TextBox();
             this.FindByTextAtVerseEndRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextAtVerseStartRadioButton = new System.Windows.Forms.RadioButton();
-            this.FindByTextAtVerseAnywhereRadioButton = new System.Windows.Forms.RadioButton();
+            this.FindByTextAtVerseAnyRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextAtVerseMiddleRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextCaseSensitiveCheckBox = new System.Windows.Forms.CheckBox();
             this.FindByTextWordnessCheckBox = new System.Windows.Forms.CheckBox();
@@ -165,7 +165,7 @@ partial class MainForm
             this.TextLocationWithinChapterPanel = new System.Windows.Forms.Panel();
             this.FindByTextAtChapterStartRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextAtChapterMiddleRadioButton = new System.Windows.Forms.RadioButton();
-            this.FindByTextAtChapterAnywhereRadioButton = new System.Windows.Forms.RadioButton();
+            this.FindByTextAtChapterAnyRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextAtChapterEndRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextSearchBlockSizeChapterLabel = new System.Windows.Forms.Label();
             this.FindByTextButton = new System.Windows.Forms.Button();
@@ -173,7 +173,7 @@ partial class MainForm
             this.FindByTextAtWordStartRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextAtWordEndRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextAtWordMiddleRadioButton = new System.Windows.Forms.RadioButton();
-            this.FindByTextAtWordAnywhereRadioButton = new System.Windows.Forms.RadioButton();
+            this.FindByTextAtWordAnyRadioButton = new System.Windows.Forms.RadioButton();
             this.FindByTextSearchBlockSizeQuarterLabel = new System.Windows.Forms.Label();
             this.TextLocationWithinVersePanel = new System.Windows.Forms.Panel();
             this.FindByTextSearchBlockSizePartLabel = new System.Windows.Forms.Label();
@@ -1430,22 +1430,22 @@ partial class MainForm
             this.FindByTextAtVerseStartRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
             this.FindByTextAtVerseStartRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
-            // FindByTextAtVerseAnywhereRadioButton
+            // FindByTextAtVerseAnyRadioButton
             // 
-            this.FindByTextAtVerseAnywhereRadioButton.BackColor = System.Drawing.Color.Transparent;
-            this.FindByTextAtVerseAnywhereRadioButton.Checked = true;
-            this.FindByTextAtVerseAnywhereRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FindByTextAtVerseAnywhereRadioButton.ForeColor = System.Drawing.Color.Navy;
-            this.FindByTextAtVerseAnywhereRadioButton.Location = new System.Drawing.Point(3, 0);
-            this.FindByTextAtVerseAnywhereRadioButton.Name = "FindByTextAtVerseAnywhereRadioButton";
-            this.FindByTextAtVerseAnywhereRadioButton.Size = new System.Drawing.Size(48, 18);
-            this.FindByTextAtVerseAnywhereRadioButton.TabIndex = 6;
-            this.FindByTextAtVerseAnywhereRadioButton.TabStop = true;
-            this.FindByTextAtVerseAnywhereRadioButton.Text = "any";
-            this.FindByTextAtVerseAnywhereRadioButton.UseCompatibleTextRendering = true;
-            this.FindByTextAtVerseAnywhereRadioButton.UseVisualStyleBackColor = false;
-            this.FindByTextAtVerseAnywhereRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
-            this.FindByTextAtVerseAnywhereRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+            this.FindByTextAtVerseAnyRadioButton.BackColor = System.Drawing.Color.Transparent;
+            this.FindByTextAtVerseAnyRadioButton.Checked = true;
+            this.FindByTextAtVerseAnyRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindByTextAtVerseAnyRadioButton.ForeColor = System.Drawing.Color.Navy;
+            this.FindByTextAtVerseAnyRadioButton.Location = new System.Drawing.Point(3, 0);
+            this.FindByTextAtVerseAnyRadioButton.Name = "FindByTextAtVerseAnyRadioButton";
+            this.FindByTextAtVerseAnyRadioButton.Size = new System.Drawing.Size(48, 18);
+            this.FindByTextAtVerseAnyRadioButton.TabIndex = 6;
+            this.FindByTextAtVerseAnyRadioButton.TabStop = true;
+            this.FindByTextAtVerseAnyRadioButton.Text = "any";
+            this.FindByTextAtVerseAnyRadioButton.UseCompatibleTextRendering = true;
+            this.FindByTextAtVerseAnyRadioButton.UseVisualStyleBackColor = false;
+            this.FindByTextAtVerseAnyRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+            this.FindByTextAtVerseAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
             // FindByTextAtVerseMiddleRadioButton
             // 
@@ -3018,7 +3018,7 @@ partial class MainForm
             // 
             this.TextLocationWithinChapterPanel.Controls.Add(this.FindByTextAtChapterStartRadioButton);
             this.TextLocationWithinChapterPanel.Controls.Add(this.FindByTextAtChapterMiddleRadioButton);
-            this.TextLocationWithinChapterPanel.Controls.Add(this.FindByTextAtChapterAnywhereRadioButton);
+            this.TextLocationWithinChapterPanel.Controls.Add(this.FindByTextAtChapterAnyRadioButton);
             this.TextLocationWithinChapterPanel.Controls.Add(this.FindByTextAtChapterEndRadioButton);
             this.TextLocationWithinChapterPanel.Location = new System.Drawing.Point(0, 152);
             this.TextLocationWithinChapterPanel.Name = "TextLocationWithinChapterPanel";
@@ -3056,22 +3056,22 @@ partial class MainForm
             this.FindByTextAtChapterMiddleRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
             this.FindByTextAtChapterMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
-            // FindByTextAtChapterAnywhereRadioButton
+            // FindByTextAtChapterAnyRadioButton
             // 
-            this.FindByTextAtChapterAnywhereRadioButton.BackColor = System.Drawing.Color.Transparent;
-            this.FindByTextAtChapterAnywhereRadioButton.Checked = true;
-            this.FindByTextAtChapterAnywhereRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FindByTextAtChapterAnywhereRadioButton.ForeColor = System.Drawing.Color.Navy;
-            this.FindByTextAtChapterAnywhereRadioButton.Location = new System.Drawing.Point(3, 0);
-            this.FindByTextAtChapterAnywhereRadioButton.Name = "FindByTextAtChapterAnywhereRadioButton";
-            this.FindByTextAtChapterAnywhereRadioButton.Size = new System.Drawing.Size(48, 18);
-            this.FindByTextAtChapterAnywhereRadioButton.TabIndex = 1;
-            this.FindByTextAtChapterAnywhereRadioButton.TabStop = true;
-            this.FindByTextAtChapterAnywhereRadioButton.Text = "any";
-            this.FindByTextAtChapterAnywhereRadioButton.UseCompatibleTextRendering = true;
-            this.FindByTextAtChapterAnywhereRadioButton.UseVisualStyleBackColor = false;
-            this.FindByTextAtChapterAnywhereRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
-            this.FindByTextAtChapterAnywhereRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+            this.FindByTextAtChapterAnyRadioButton.BackColor = System.Drawing.Color.Transparent;
+            this.FindByTextAtChapterAnyRadioButton.Checked = true;
+            this.FindByTextAtChapterAnyRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindByTextAtChapterAnyRadioButton.ForeColor = System.Drawing.Color.Navy;
+            this.FindByTextAtChapterAnyRadioButton.Location = new System.Drawing.Point(3, 0);
+            this.FindByTextAtChapterAnyRadioButton.Name = "FindByTextAtChapterAnyRadioButton";
+            this.FindByTextAtChapterAnyRadioButton.Size = new System.Drawing.Size(48, 18);
+            this.FindByTextAtChapterAnyRadioButton.TabIndex = 1;
+            this.FindByTextAtChapterAnyRadioButton.TabStop = true;
+            this.FindByTextAtChapterAnyRadioButton.Text = "any";
+            this.FindByTextAtChapterAnyRadioButton.UseCompatibleTextRendering = true;
+            this.FindByTextAtChapterAnyRadioButton.UseVisualStyleBackColor = false;
+            this.FindByTextAtChapterAnyRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+            this.FindByTextAtChapterAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
             // FindByTextAtChapterEndRadioButton
             // 
@@ -3122,7 +3122,7 @@ partial class MainForm
             this.TextLocationInWordPanel.Controls.Add(this.FindByTextAtWordStartRadioButton);
             this.TextLocationInWordPanel.Controls.Add(this.FindByTextAtWordEndRadioButton);
             this.TextLocationInWordPanel.Controls.Add(this.FindByTextAtWordMiddleRadioButton);
-            this.TextLocationInWordPanel.Controls.Add(this.FindByTextAtWordAnywhereRadioButton);
+            this.TextLocationInWordPanel.Controls.Add(this.FindByTextAtWordAnyRadioButton);
             this.TextLocationInWordPanel.Location = new System.Drawing.Point(103, 152);
             this.TextLocationInWordPanel.Name = "TextLocationInWordPanel";
             this.TextLocationInWordPanel.Size = new System.Drawing.Size(48, 67);
@@ -3174,22 +3174,22 @@ partial class MainForm
             this.FindByTextAtWordMiddleRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
             this.FindByTextAtWordMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
-            // FindByTextAtWordAnywhereRadioButton
+            // FindByTextAtWordAnyRadioButton
             // 
-            this.FindByTextAtWordAnywhereRadioButton.BackColor = System.Drawing.Color.Transparent;
-            this.FindByTextAtWordAnywhereRadioButton.Checked = true;
-            this.FindByTextAtWordAnywhereRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FindByTextAtWordAnywhereRadioButton.ForeColor = System.Drawing.Color.Navy;
-            this.FindByTextAtWordAnywhereRadioButton.Location = new System.Drawing.Point(2, 0);
-            this.FindByTextAtWordAnywhereRadioButton.Name = "FindByTextAtWordAnywhereRadioButton";
-            this.FindByTextAtWordAnywhereRadioButton.Size = new System.Drawing.Size(52, 18);
-            this.FindByTextAtWordAnywhereRadioButton.TabIndex = 11;
-            this.FindByTextAtWordAnywhereRadioButton.TabStop = true;
-            this.FindByTextAtWordAnywhereRadioButton.Text = "any";
-            this.FindByTextAtWordAnywhereRadioButton.UseCompatibleTextRendering = true;
-            this.FindByTextAtWordAnywhereRadioButton.UseVisualStyleBackColor = false;
-            this.FindByTextAtWordAnywhereRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
-            this.FindByTextAtWordAnywhereRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+            this.FindByTextAtWordAnyRadioButton.BackColor = System.Drawing.Color.Transparent;
+            this.FindByTextAtWordAnyRadioButton.Checked = true;
+            this.FindByTextAtWordAnyRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FindByTextAtWordAnyRadioButton.ForeColor = System.Drawing.Color.Navy;
+            this.FindByTextAtWordAnyRadioButton.Location = new System.Drawing.Point(2, 0);
+            this.FindByTextAtWordAnyRadioButton.Name = "FindByTextAtWordAnyRadioButton";
+            this.FindByTextAtWordAnyRadioButton.Size = new System.Drawing.Size(52, 18);
+            this.FindByTextAtWordAnyRadioButton.TabIndex = 11;
+            this.FindByTextAtWordAnyRadioButton.TabStop = true;
+            this.FindByTextAtWordAnyRadioButton.Text = "any";
+            this.FindByTextAtWordAnyRadioButton.UseCompatibleTextRendering = true;
+            this.FindByTextAtWordAnyRadioButton.UseVisualStyleBackColor = false;
+            this.FindByTextAtWordAnyRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+            this.FindByTextAtWordAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
             // FindByTextSearchBlockSizeQuarterLabel
             // 
@@ -3210,7 +3210,7 @@ partial class MainForm
             // 
             this.TextLocationWithinVersePanel.Controls.Add(this.FindByTextAtVerseStartRadioButton);
             this.TextLocationWithinVersePanel.Controls.Add(this.FindByTextAtVerseMiddleRadioButton);
-            this.TextLocationWithinVersePanel.Controls.Add(this.FindByTextAtVerseAnywhereRadioButton);
+            this.TextLocationWithinVersePanel.Controls.Add(this.FindByTextAtVerseAnyRadioButton);
             this.TextLocationWithinVersePanel.Controls.Add(this.FindByTextAtVerseEndRadioButton);
             this.TextLocationWithinVersePanel.Location = new System.Drawing.Point(52, 152);
             this.TextLocationWithinVersePanel.Name = "TextLocationWithinVersePanel";
@@ -10560,7 +10560,7 @@ partial class MainForm
     private System.Windows.Forms.Label ValueLabel;
     private System.Windows.Forms.TextBox VersesTextBox;
     private System.Windows.Forms.Label VersesLabel;
-    private System.Windows.Forms.RadioButton FindByTextAtVerseAnywhereRadioButton;
+    private System.Windows.Forms.RadioButton FindByTextAtVerseAnyRadioButton;
     private System.Windows.Forms.Label VerseByVerseNumberLabel;
     private System.Windows.Forms.Label VerseByWordNumberLabel;
     private System.Windows.Forms.Label VerseByLetterNumberLabel;
@@ -10784,7 +10784,7 @@ partial class MainForm
     private System.Windows.Forms.Label FindByNumbersResultTypeSentencesLabel;
     private System.Windows.Forms.Label GoldenRatioOrderLabel;
     private System.Windows.Forms.Label GoldenRatioScopeLabel;
-    private System.Windows.Forms.RadioButton FindByTextAtWordAnywhereRadioButton;
+    private System.Windows.Forms.RadioButton FindByTextAtWordAnyRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAtWordStartRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAtWordMiddleRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAtWordEndRadioButton;
@@ -10982,7 +10982,7 @@ partial class MainForm
     private System.Windows.Forms.Panel TextLocationWithinChapterPanel;
     private System.Windows.Forms.RadioButton FindByTextAtChapterStartRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAtChapterMiddleRadioButton;
-    private System.Windows.Forms.RadioButton FindByTextAtChapterAnywhereRadioButton;
+    private System.Windows.Forms.RadioButton FindByTextAtChapterAnyRadioButton;
     private System.Windows.Forms.RadioButton FindByTextAtChapterEndRadioButton;
     private System.Windows.Forms.Label TextLocationLabel;
     private System.Windows.Forms.TextBox NthNonAdditiveNumberTextBox;
