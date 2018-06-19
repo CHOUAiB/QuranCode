@@ -204,7 +204,7 @@ public class Client : IPublisher, ISubscriber
                 }
             }
 
-            // ALSO should update these less used collections as they are already held by FoundVersess
+            // ALSO should update these less used collections as they are already held by FoundVerses
             // update FoundVerseRanges to point at new book object
             // update FoundChapters to point at new book object
             // update FoundChapterRanges to point at new book object
@@ -1160,10 +1160,10 @@ public class Client : IPublisher, ISubscriber
     /// <param name="similarity_method"></param>
     /// <param name="similarity_percentage"></param>
     /// <returns>Number of found verse ranges. Result is stored in FoundVerseRanges.</returns>
-    public int FindVersess(SimilarityMethod similarity_method, double similarity_percentage)
+    public int FindVerses(SimilarityMethod similarity_method, double similarity_percentage)
     {
         ClearSearchResults();
-        m_found_verse_ranges = Server.FindVersess(m_search_scope, m_selection, m_found_verses, similarity_method, similarity_percentage);
+        m_found_verse_ranges = Server.FindVerses(m_search_scope, m_selection, m_found_verses, similarity_method, similarity_percentage);
         if (m_found_verse_ranges != null)
         {
             m_found_verses = new List<Verse>();

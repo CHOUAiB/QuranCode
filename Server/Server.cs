@@ -8860,16 +8860,16 @@ public class Server : IPublisher
         return result;
     }
     // find by similarity - all similar verses to each other throughout the book
-    public static List<List<Verse>> FindVersess(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, SimilarityMethod similarity_method, double similarity_percentage)
+    public static List<List<Verse>> FindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, SimilarityMethod similarity_method, double similarity_percentage)
     {
-        return DoFindVersess(search_scope, current_selection, previous_result, similarity_method, similarity_percentage);
+        return DoFindVerses(search_scope, current_selection, previous_result, similarity_method, similarity_percentage);
     }
-    private static List<List<Verse>> DoFindVersess(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, SimilarityMethod similarity_method, double similarity_percentage)
+    private static List<List<Verse>> DoFindVerses(SearchScope search_scope, Selection current_selection, List<Verse> previous_result, SimilarityMethod similarity_method, double similarity_percentage)
     {
         List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_result, TextLocationInChapter.Anywhere);
-        return DoFindVersess(source, current_selection, previous_result, similarity_method, similarity_percentage);
+        return DoFindVerses(source, current_selection, previous_result, similarity_method, similarity_percentage);
     }
-    private static List<List<Verse>> DoFindVersess(List<Verse> source, Selection current_selection, List<Verse> previous_result, SimilarityMethod find_similarity_method, double similarity_percentage)
+    private static List<List<Verse>> DoFindVerses(List<Verse> source, Selection current_selection, List<Verse> previous_result, SimilarityMethod find_similarity_method, double similarity_percentage)
     {
         List<List<Verse>> result = new List<List<Verse>>();
         Dictionary<Verse, List<Verse>> verse_ranges = new Dictionary<Verse, List<Verse>>(); // need dictionary to check if key exist

@@ -4597,41 +4597,38 @@ public partial class MainForm : Form, ISubscriber
         Word word = GetWordAtPointer(e);
         if (word != null)
         {
-            m_current_word = GetWordAtPointer(e);
-            if (m_current_word != null)
+            m_current_word = word;
+
+            // in all cases
+            this.Text = Application.ProductName + " | " + GetSelectionSummary();
+            UpdateFindMatchCaption();
+
+            if (m_display_word_information)
             {
-                // in all cases
-                this.Text = Application.ProductName + " | " + GetSelectionSummary();
-                UpdateFindMatchCaption();
-
-                if (m_display_word_information)
+                string word_info = GetWordInformation(word);
+                if (ModifierKeys == Keys.Control)
                 {
-                    string word_info = GetWordInformation(m_current_word);
-                    if (ModifierKeys == Keys.Control)
-                    {
-                        word_info += "\r\n\r\n";
-                        word_info += GetGrammarInformation(m_current_word) + "\r\n\r\n";
-                        word_info += GetRelatedWordsInformation(m_current_word);
-                    }
-                    ToolTip.SetToolTip(m_active_textbox, word_info);
+                    word_info += "\r\n\r\n";
+                    word_info += GetRelatedWordsInformation(word);
                 }
-                else
-                {
-                    ToolTip.SetToolTip(m_active_textbox, null);
-                }
-
-                // diplay word info at application caption
-                this.Text += SPACE_GAP +
-                (
-                    word.Verse.Chapter.Name + SPACE_GAP +
-                    L[l]["verse"] + " " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                    L[l]["word"] + " " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                    word.Transliteration + SPACE_GAP +
-                    word.Text + SPACE_GAP +
-                    word.Meaning + SPACE_GAP +
-                    word.Occurrence.ToString() + "/" + word.Frequency.ToString()
-                );
+                ToolTip.SetToolTip(m_active_textbox, word_info);
             }
+            else
+            {
+                ToolTip.SetToolTip(m_active_textbox, null);
+            }
+
+            // diplay word info at application caption
+            this.Text += SPACE_GAP +
+            (
+                word.Verse.Chapter.Name + SPACE_GAP +
+                L[l]["verse"] + " " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
+                L[l]["word"] + " " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
+                word.Transliteration + SPACE_GAP +
+                word.Text + SPACE_GAP +
+                word.Meaning + SPACE_GAP +
+                word.Occurrence.ToString() + "/" + word.Frequency.ToString()
+            );
         }
     }
     private void MainTextBox_MouseUp(object sender, MouseEventArgs e)
@@ -24412,7 +24409,7 @@ public partial class MainForm : Form, ISubscriber
             }
             else if (m_similarity_search_source == SimilaritySearchSource.AllVerses)
             {
-                m_client.FindVersess(find_by_similarity_method, similarity_percentage);
+                m_client.FindVerses(find_by_similarity_method, similarity_percentage);
                 text = null;
 
                 if (m_client.FoundVerses != null)
@@ -25362,7 +25359,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (m_client.FoundPhrases.Count > 0)
                         {
-                            CalcuaatePhraseStatistics();
+                            CalcLaatePhraseStatistics();
                         }
                     }
 
@@ -25414,7 +25411,7 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private void CalcuaatePhraseStatistics()
+    private void CalcLaatePhraseStatistics()
     {
         StringBuilder phrase_str = new StringBuilder();
         int word_count = 0;
