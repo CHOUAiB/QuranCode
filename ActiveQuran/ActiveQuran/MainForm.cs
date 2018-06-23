@@ -237,8 +237,6 @@ public partial class MainForm : Form
             this.ToolTip.SetToolTip(this.SearchScopeResultLabel, L[l]["Search in current search result"]);
             this.ToolTip.SetToolTip(this.FindByTextTextBox, L[l]["text to search for in Arabic or any installed language"]);
             this.ToolTip.SetToolTip(this.FindByTextWordnessCheckBox, L[l]["find verses with whole word only"]);
-            this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, L[l]["case sensitive for non-Arabic languages"]);
-            this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, L[l]["find exact word or expression"]);
             this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, L[l]["find any/all given words"]);
             this.ToolTip.SetToolTip(this.FindByTextRootSearchTypeLabel, L[l]["find words of given roots"]);
             this.ToolTip.SetToolTip(this.FindByTextAtChapterAnyRadioButton, L[l]["find anywhere in chapters"]);
@@ -605,6 +603,18 @@ public partial class MainForm : Form
             {
                 e.Handled = false;
             }
+        }
+        else if (e.Control && (e.KeyCode == Keys.G))
+        {
+            GLabel_Click(null, null);
+        }
+        else if (e.Control && (e.KeyCode == Keys.P))
+        {
+            PLabel_Click(null, null);
+        }
+        else if (e.Control && (e.KeyCode == Keys.F))
+        {
+            FLabel_Click(null, null);
         }
         else
         {
@@ -6108,7 +6118,7 @@ public partial class MainForm : Form
                 break;
         }
 
-        m_case_sensitive = FindByTextCaseSensitiveCheckBox.Checked;
+        m_case_sensitive = true;
     }
     private int GetPhraseCount(List<Phrase> phrases)
     {
@@ -6989,8 +6999,6 @@ public partial class MainForm : Form
         FindByTextAtWordMiddleRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextAtWordEndRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
         FindByTextAtWordAnyRadioButton.Enabled = ((m_text_search_type == TextSearchType.Exact) || (m_text_search_type == TextSearchType.Root));
-
-        FindByTextCaseSensitiveCheckBox.Enabled = (m_language_type == LanguageType.LeftToRight);
     }
     private string m_current_phrase = "";
     ///////////////////////////////////////////////////////////////////////////////
@@ -8081,7 +8089,7 @@ public partial class MainForm : Form
         PLabel.BackColor = Color.MistyRose;
         FLabel.BackColor = Color.MistyRose;
         GLabel.BackColor = Color.MistyRose;
-        
+
         LoadNumerologySystem("Original_Alphabet_Primes1");
         CalculateCurrentValue();
 

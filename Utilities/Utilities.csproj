@@ -46,24 +46,6 @@
     <Compile Include="Bag.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Combinatorics\Combinations.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Combinatorics\GenerateOption.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Combinatorics\IMetaCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Combinatorics\Permutations.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Combinatorics\SmallPrimeUtility.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Combinatorics\Variations.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DotBuilder.cs" />
     <Compile Include="Evaluator.cs">
       <SubType>Code</SubType>

@@ -89,27 +89,24 @@ namespace Model
                         );
                     }
                 case NumbersResultType.WordRanges:
-                case NumbersResultType.WordSets:
                     {
                         return
                         (
-                            (WordCount != 1)
+                            (WordCount > 1) && IsValidWordSearch()
                         );
                     }
                 case NumbersResultType.VerseRanges:
-                case NumbersResultType.VerseSets:
                     {
                         return
                         (
-                            (VerseCount != 1)
+                            (VerseCount > 1) && IsValidVerseSearch()
                         );
                     }
                 case NumbersResultType.ChapterRanges:
-                case NumbersResultType.ChapterSets:
                     {
                         return
                         (
-                            (ChapterCount != 1)
+                            (ChapterCount > 1) && IsValidChapterSearch()
                         );
                     }
                 default:
@@ -126,6 +123,22 @@ namespace Model
                     (NumberNumberType != NumberType.None)
                    );
         }
+        private bool IsValidChapterSearch()
+        {
+            return (
+                    (VerseCount != 0) ||
+                    (VerseCountNumberType != NumberType.None) ||
+                    IsValidVerseSearch()
+                   );
+        }
+        private bool IsValidVerseSearch()
+        {
+            return (
+                    (WordCount != 0) ||
+                    (WordCountNumberType != NumberType.None) ||
+                    IsValidWordSearch()
+                   );
+        }
         private bool IsValidWordSearch()
         {
             return (
@@ -139,22 +152,6 @@ namespace Model
                     (ValueNumberType != NumberType.None) ||
                     (ValueDigitSumNumberType != NumberType.None) ||
                     (ValueDigitalRootNumberType != NumberType.None)
-                   );
-        }
-        private bool IsValidVerseSearch()
-        {
-            return (
-                    (WordCount != 0) ||
-                    (WordCountNumberType != NumberType.None) ||
-                    IsValidWordSearch()
-                   );
-        }
-        private bool IsValidChapterSearch()
-        {
-            return (
-                    (VerseCount != 0) ||
-                    (VerseCountNumberType != NumberType.None) ||
-                    IsValidVerseSearch()
                    );
         }
     }

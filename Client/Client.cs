@@ -1274,57 +1274,6 @@ public class Client : IPublisher, ISubscriber
         }
         return 0;
     }
-    // find by numbers - WordSets
-    /// <summary>
-    /// Find word sets that meet query criteria.
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns>Number of found word sets. Result is stored in FoundWordSets.</returns>
-    public int FindWordSets(NumberQuery query)
-    {
-        ClearSearchResults();
-        m_found_word_sets = Server.FindWordSets(m_search_scope, m_selection, m_found_verses, query);
-        if (m_found_word_sets != null)
-        {
-            m_found_verses = new List<Verse>();
-            m_found_phrases = new List<Phrase>();
-            foreach (List<Word> set in m_found_word_sets)
-            {
-                if (set != null)
-                {
-                    if (set.Count > 0)
-                    {
-                        // prepare found phrase verse
-                        Verse verse = set[0].Verse;
-
-                        // build found verses // prevent duplicate verses in case more than 1 set is found in same verse
-                        if (!m_found_verses.Contains(verse))
-                        {
-                            m_found_verses.Add(verse);
-                        }
-
-                        // prepare found phrase text
-                        string set_text = null;
-                        foreach (Word word in set)
-                        {
-                            set_text += word.Text + " ";
-                        }
-                        set_text = set_text.Remove(set_text.Length - 1, 1);
-
-                        // prepare found phrase position
-                        int set_position = set[0].Position;
-
-                        // build found phrases // allow multiple phrases even if overlapping inside same verse
-                        Phrase phrase = new Phrase(verse, set_position, set_text);
-                        m_found_phrases.Add(phrase);
-                    }
-                }
-            }
-
-            return m_found_word_sets.Count;
-        }
-        return 0;
-    }
     // find by numbers - Sentences
     /// <summary>
     /// Find sentences across verses that meet query criteria.
@@ -1381,28 +1330,6 @@ public class Client : IPublisher, ISubscriber
         }
         return 0;
     }
-    // find by numbers - VerseSets
-    /// <summary>
-    /// Find verse sets that meet query criteria.
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns>Number of found verse sets. Result is stored in FoundVerseSets.</returns>
-    public int FindVerseSets(NumberQuery query)
-    {
-        ClearSearchResults();
-        m_found_verse_sets = Server.FindVerseSets(m_search_scope, m_selection, m_found_verses, query);
-        if (m_found_verse_sets != null)
-        {
-            m_found_verses = new List<Verse>();
-            foreach (List<Verse> set in m_found_verse_sets)
-            {
-                m_found_verses.AddRange(set);
-            }
-
-            return m_found_verse_sets.Count;
-        }
-        return 0;
-    }
     // find by numbers - Chapters
     /// <summary>
     /// Find chapters that meet query criteria.
@@ -1453,34 +1380,6 @@ public class Client : IPublisher, ISubscriber
             }
 
             return m_found_chapter_ranges.Count;
-        }
-        return 0;
-    }
-    // find by numbers - ChapterSets
-    /// <summary>
-    /// Find chapter sets that meet query criteria.
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns>Number of found chapter sets. Result is stored in FoundChapterSets.</returns>
-    public int FindChapterSets(NumberQuery query)
-    {
-        ClearSearchResults();
-        m_found_chapter_sets = Server.FindChapterSets(m_search_scope, m_selection, m_found_verses, query);
-        if (m_found_chapter_sets != null)
-        {
-            m_found_verses = new List<Verse>();
-            foreach (List<Chapter> set in m_found_chapter_sets)
-            {
-                foreach (Chapter chapter in set)
-                {
-                    if (chapter != null)
-                    {
-                        m_found_verses.AddRange(chapter.Verses);
-                    }
-                }
-            }
-
-            return m_found_chapter_sets.Count;
         }
         return 0;
     }
