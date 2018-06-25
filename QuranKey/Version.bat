@@ -3,9 +3,9 @@ Tools\Replace\bin\Release\Replace.exe NET2 Version.bat 000 673
 Tools\Version\bin\Release\Version.exe .               6.19.673.4 6.19.673.4 -Tools
 Tools\Touch\bin\Release\Touch.exe Build               6:19                  -Tools
 Tools\Touch\bin\Release\Touch.exe Tools                            2009-07-29 7:29
-
+ 
 Tools\Touch\bin\Release\Touch.exe .                   6:19                  -Tools
-COPY QuranCode1433.zip        ..\Backup\QuranCode1433_6.19.673.zip
-COPY QuranCode1433.Source.zip ..\Backup\QuranCode1433_6.19.673.Source.zip
-MOVE QuranCode1433.zip        ..\qurancode.com\
-MOVE QuranCode1433.Source.zip ..\qurancode.com\
+COPY QuranKey.zip                  ..\Backup\QuranKey_6.19.673.zip
+COPY QuranKey.Source.zip           ..\Backup\QuranKey_6.19.673.Source.zip
+MOVE QuranKey.zip                  ..\Backup\
+MOVE QuranKey.Source.zip           ..\Backup\

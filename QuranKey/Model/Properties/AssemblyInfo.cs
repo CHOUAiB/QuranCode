@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Model")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ")]
-[assembly: AssemblyProduct("QuranCode")]
+[assembly: AssemblyProduct("QuranKey")]
 [assembly: AssemblyCopyright("©2009-2018 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي")]
-[assembly: AssemblyTrademark("http://qurancode.com/")]
+[assembly: AssemblyTrademark("http://heliwave.com/")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

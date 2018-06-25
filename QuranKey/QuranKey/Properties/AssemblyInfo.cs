@@ -2,16 +2,16 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Model")]
-[assembly: AssemblyDescription("Model")]
+[assembly: AssemblyTitle("QuranKey")]
+[assembly: AssemblyDescription("QuranKey")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ")]
-[assembly: AssemblyProduct("QuranCode")]
-[assembly: AssemblyCopyright("©2009-2018 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي")]
-[assembly: AssemblyTrademark("http://qurancode.com/")]
+[assembly: AssemblyProduct("QuranKey")]
+[assembly: AssemblyCopyright("©2018 Ali Adams علي عبد الرزاق عبد الكريم القره غولي")]
+[assembly: AssemblyTrademark("http://heliwave.com/")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a73d226c-3669-42fd-9095-d142ccc18057")]
+[assembly: Guid("a73d226c-3669-42fd-9095-d142ccc18100")]
 
 // Version information for an assembly consists of the following four values:
 //

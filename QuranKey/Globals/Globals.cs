@@ -1,4 +1,4 @@
-public enum Edition { Standard, Ultimate }
+public enum Edition { Standard }
 
 public static class Globals
 {
@@ -22,10 +22,6 @@ public static class Globals
             if (EDITION == Edition.Standard)
             {
                 return ("v" + version + "");
-            }
-            else if (EDITION == Edition.Ultimate)
-            {
-                return ("v" + version + "U");
             }
             else
             {
@@ -55,17 +51,7 @@ public static class Globals
     public static string FONTS_FOLDER = "Fonts";
     public static string IMAGES_FOLDER = "Images";
     public static string DATA_FOLDER = "Data";
-    public static string AUDIO_FOLDER = "Audio";
-    public static string TRANSLATIONS_FOLDER = "Translations";
-    public static string TRANSLATIONS_OFFLINE_FOLDER = "Translations/Offline";
-    public static string TRANSLATIONS_FLAGS_FOLDER = "Translations/Flags";
     public static string RULES_FOLDER = "Rules";
     public static string VALUES_FOLDER = "Values";
-    public static string NUMBERS_FOLDER = "Numbers";
     public static string STATISTICS_FOLDER = "Statistics";
-    public static string RESEARCH_FOLDER = "Research";
-    public static string DRAWINGS_FOLDER = "Drawings";
-    public static string BOOKMARKS_FOLDER = "Bookmarks";
-    public static string HISTORY_FOLDER = "History";
-    public static string HELP_FOLDER = "Help";
 }

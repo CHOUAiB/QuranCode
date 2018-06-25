@@ -731,7 +731,7 @@ public partial class MainForm : Form, ISubscriber
                         splash_form.Progress = 20;
                         Thread.Sleep(100);
 
-                        LoadTextModeSettings();
+                        LoadBismWawShaddaOptions();
                         splash_form.Information = "Building book ...";
                         string text_mode = m_client.NumerologySystem.TextMode;
                         m_client.BuildSimplifiedBook(text_mode, m_with_bism_Allah, m_waw_as_word, m_shadda_as_letter);
@@ -881,6 +881,15 @@ public partial class MainForm : Form, ISubscriber
                         DisplayDeficientNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[0];
                         DisplayPerfectNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[1];
                         DisplayAbundantNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[2];
+
+                        if (text_mode == "Original")
+                        {
+                            ApplyFont(DEFAULT_QURAN_FONT_NAME, DEFAULT_QURAN_FONT_SIZE);
+                        }
+                        else
+                        {
+                            ApplyFont("Courier New", 16);
+                        }
 
                         this.Activate(); // bring to foreground
                     }
@@ -1742,7 +1751,7 @@ public partial class MainForm : Form, ISubscriber
         }
         return NumerologySystem.DEFAULT_NAME;
     }
-    private string LoadTextModeSettings()
+    private string LoadBismWawShaddaOptions()
     {
         if (File.Exists(m_ini_filename))
         {
@@ -4192,6 +4201,7 @@ public partial class MainForm : Form, ISubscriber
     }
     private void ApplyFont(string font_name, float font_size)
     {
+        bool found = false;
         if (m_quran_fonts != null)
         {
             for (int i = 0; i < m_quran_fonts.Count; i++)
@@ -4202,10 +4212,34 @@ public partial class MainForm : Form, ISubscriber
                     if (m_quran_font.Name == font_name)
                     {
                         ApplyFont(i);
+                        found = true;
                         break;
                     }
                 }
             }
+        }
+        if (!found)
+        {
+            Font font = new Font(font_name, font_size, FontStyle.Bold);
+            MainTextBox.Font = font;
+            SearchResultTextBox.Font = font;
+            // MUST DO IT AGAIN for it to work !!!
+            MainTextBox.Font = font;
+            SearchResultTextBox.Font = font;
+            // MUST DO IT AGAIN for it to work !!!
+            MainTextBox.Font = font;
+            SearchResultTextBox.Font = font;
+            // MUST DO IT AGAIN for it to work !!!
+            MainTextBox.Font = font;
+            SearchResultTextBox.Font = font;
+            // MUST DO IT AGAIN for it to work !!!
+            MainTextBox.Font = font;
+            SearchResultTextBox.Font = font;
+
+            MainTextBox.AlignToStart();
+            SearchResultTextBox.AlignToStart();
+            MainTextBox.Refresh();
+            SearchResultTextBox.Refresh();
         }
     }
     private void ApplyFont(int index)
@@ -27566,6 +27600,15 @@ public partial class MainForm : Form, ISubscriber
 
                                 //SearchResultTextBox.Focus();
                                 SearchResultTextBox.Refresh();
+                            }
+
+                            if (text_mode == "Original")
+                            {
+                                ApplyFont(DEFAULT_QURAN_FONT_NAME, DEFAULT_QURAN_FONT_SIZE);
+                            }
+                            else
+                            {
+                                ApplyFont("Courier New", 16);
                             }
                         }
                     }
