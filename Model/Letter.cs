@@ -39,6 +39,18 @@ namespace Model
             get { return number_in_chapter; }
         }
 
+        public string Address
+        {
+            get
+            {
+                if (word != null)
+                {
+                    return (this.word.Address + ":" + number_in_word.ToString());
+                }
+                return "XXX:XXX:XXX:XXX";
+            }
+        }
+
         public Distance DistanceToPrevious = new Distance();
 
         private char character;

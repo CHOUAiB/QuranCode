@@ -593,30 +593,33 @@ public class Client : IPublisher, ISubscriber
             return filtered_found_phrases;
         }
     }
-    private List<Sentence> m_found_sentences = null;
-    public List<Sentence> FoundSentences
+    private List<Letter> m_found_letters = null;
+    public List<Letter> FoundLetters
     {
-        set { m_found_sentences = value; }
+        set { m_found_letters = value; }
         get
         {
-            if (m_found_sentences == null) return null;
-            if (m_filter_chapters == null) return m_found_sentences;
+            if (m_found_letters == null) return null;
+            if (m_filter_chapters == null) return m_found_letters;
 
-            List<Sentence> filtered_found_sentences = new List<Sentence>();
-            foreach (Sentence sentence in m_found_sentences)
+            List<Letter> filtered_found_letters = new List<Letter>();
+            foreach (Letter letter in m_found_letters)
             {
-                if (sentence.FirstVerse != null)
+                if (letter.Word != null)
                 {
-                    if (sentence.FirstVerse.Chapter != null)
+                    if (letter.Word.Verse != null)
                     {
-                        if (m_filter_chapters.Contains(sentence.FirstVerse.Chapter))
+                        if (letter.Word.Verse.Chapter != null)
                         {
-                            filtered_found_sentences.Add(sentence);
+                            if (m_filter_chapters.Contains(letter.Word.Verse.Chapter))
+                            {
+                                filtered_found_letters.Add(letter);
+                            }
                         }
                     }
                 }
             }
-            return filtered_found_sentences;
+            return filtered_found_letters;
         }
     }
     private List<Word> m_found_words = null;
@@ -680,39 +683,30 @@ public class Client : IPublisher, ISubscriber
             return filtered_found_word_ranges;
         }
     }
-    private List<List<Word>> m_found_word_sets = null;
-    public List<List<Word>> FoundWordSets
+    private List<Sentence> m_found_sentences = null;
+    public List<Sentence> FoundSentences
     {
-        set { m_found_word_sets = value; }
+        set { m_found_sentences = value; }
         get
         {
-            if (m_found_word_sets == null) return null;
-            if (m_filter_chapters == null) return m_found_word_sets;
+            if (m_found_sentences == null) return null;
+            if (m_filter_chapters == null) return m_found_sentences;
 
-            List<List<Word>> filtered_found_word_sets = new List<List<Word>>();
-            foreach (List<Word> set in m_found_word_sets)
+            List<Sentence> filtered_found_sentences = new List<Sentence>();
+            foreach (Sentence sentence in m_found_sentences)
             {
-                bool valid_set = true;
-                foreach (Word word in set)
+                if (sentence.FirstVerse != null)
                 {
-                    if (word.Verse != null)
+                    if (sentence.FirstVerse.Chapter != null)
                     {
-                        if (word.Verse.Chapter != null)
+                        if (m_filter_chapters.Contains(sentence.FirstVerse.Chapter))
                         {
-                            if (!m_filter_chapters.Contains(word.Verse.Chapter))
-                            {
-                                valid_set = false;
-                                break;
-                            }
+                            filtered_found_sentences.Add(sentence);
                         }
                     }
                 }
-                if (valid_set)
-                {
-                    filtered_found_word_sets.Add(set);
-                }
             }
-            return filtered_found_word_sets;
+            return filtered_found_sentences;
         }
     }
     private List<Verse> m_found_verses = null;
@@ -776,41 +770,6 @@ public class Client : IPublisher, ISubscriber
             return filtered_found_verse_ranges;
         }
     }
-    private List<List<Verse>> m_found_verse_sets = null;
-    public List<List<Verse>> FoundVerseSets
-    {
-        set { m_found_verse_sets = value; }
-        get
-        {
-            if (m_found_verse_sets == null) return null;
-            if (m_filter_chapters == null) return m_found_verse_sets;
-
-            List<List<Verse>> filtered_found_verse_sets = new List<List<Verse>>();
-            foreach (List<Verse> set in m_found_verse_sets)
-            {
-                bool valid_set = true;
-                foreach (Verse verse in set)
-                {
-                    if (verse != null)
-                    {
-                        if (verse.Chapter != null)
-                        {
-                            if (!m_filter_chapters.Contains(verse.Chapter))
-                            {
-                                valid_set = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (valid_set)
-                {
-                    filtered_found_verse_sets.Add(set);
-                }
-            }
-            return filtered_found_verse_sets;
-        }
-    }
     private List<Chapter> m_found_chapters = null;
     public List<Chapter> FoundChapters
     {
@@ -866,49 +825,18 @@ public class Client : IPublisher, ISubscriber
             return filtered_found_chapter_ranges;
         }
     }
-    private List<List<Chapter>> m_found_chapter_sets = null;
-    public List<List<Chapter>> FoundChapterSets
-    {
-        set { m_found_chapter_sets = value; }
-        get
-        {
-            if (m_found_chapter_sets == null) return null;
-            if (m_filter_chapters == null) return m_found_chapter_sets;
-
-            List<List<Chapter>> filtered_found_chapter_sets = new List<List<Chapter>>();
-            foreach (List<Chapter> set in m_found_chapter_sets)
-            {
-                bool valid_set = true;
-                foreach (Chapter chapter in set)
-                {
-                    if (chapter != null)
-                    {
-                        if (!m_filter_chapters.Contains(chapter))
-                        {
-                            valid_set = false;
-                            break;
-                        }
-                    }
-                }
-                if (valid_set)
-                {
-                    filtered_found_chapter_sets.Add(set);
-                }
-            }
-            return filtered_found_chapter_sets;
-        }
-    }
     private void ClearSearchResults()
     {
         m_filter_chapters = null;
 
         m_found_phrases = new List<Phrase>();
 
-        m_found_sentences = new List<Sentence>();
+        m_found_letters = new List<Letter>();
 
         m_found_words = new List<Word>();
         m_found_word_ranges = new List<List<Word>>();
-        m_found_word_sets = new List<List<Word>>();
+
+        m_found_sentences = new List<Sentence>();
 
         // previous m_found_verses is needed in nested search
         if (m_search_scope != SearchScope.Result)
@@ -916,11 +844,9 @@ public class Client : IPublisher, ISubscriber
             m_found_verses = new List<Verse>();
         }
         m_found_verse_ranges = new List<List<Verse>>();
-        m_found_verse_sets = new List<List<Verse>>();
 
         m_found_chapters = new List<Chapter>();
         m_found_chapter_ranges = new List<List<Chapter>>();
-        m_found_chapter_sets = new List<List<Chapter>>();
     }
 
     // helper methods with GetSourceVerses (not entire book verses)
@@ -1177,6 +1103,42 @@ public class Client : IPublisher, ISubscriber
         return 0;
     }
 
+    // find by numbers - Letters
+    /// <summary>
+    /// Find letters that meet query criteria.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns>Number of found letters. Result is stored in FoundLetters.</returns>
+    public int FindLetters(NumberQuery query)
+    {
+        ClearSearchResults();
+        m_found_letters = Server.FindLetters(m_search_scope, m_selection, m_found_verses, query);
+        if (m_found_letters != null)
+        {
+            m_found_verses = new List<Verse>();
+            m_found_phrases = new List<Phrase>();
+            foreach (Letter letter in m_found_letters)
+            {
+                if (letter != null)
+                {
+                    if (letter.Word != null)
+                    {
+                        Verse verse = letter.Word.Verse;
+                        if (!m_found_verses.Contains(verse))
+                        {
+                            m_found_verses.Add(verse);
+                        }
+                    }
+                }
+
+                Phrase phrase = new Phrase(letter.Word.Verse, letter.Word.Position + letter.NumberInWord - 1, letter.ToString());
+                m_found_phrases.Add(phrase);
+            }
+
+            return m_found_letters.Count;
+        }
+        return 0;
+    }
     // find by numbers - Words
     /// <summary>
     /// Find words that meet query criteria.

@@ -54,6 +54,13 @@ namespace Model
         {
             switch (numbers_result_type)
             {
+                case NumbersResultType.Letters:
+                    {
+                        return
+                        (
+                            IsValidNumberSearch()
+                        );
+                    }
                 case NumbersResultType.Words:
                     {
                         return

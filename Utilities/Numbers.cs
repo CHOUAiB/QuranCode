@@ -89,7 +89,7 @@ public enum PolyhexType
     C2vPolyhexHydrocarbon
 };
 
-// = ≠ ≡ < ≤ > ≥ %
+// = ≠ < ≤ > ≥ ÷ !÷ Ʃ
 public enum ComparisonOperator { Equal, NotEqual, LessThan, LessOrEqual, GreaterThan, GreaterOrEqual, DivisibleBy, IndivisibleBy, EqualSum, Reserved };
 
 // + - * / %

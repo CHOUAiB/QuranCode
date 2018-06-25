@@ -4086,7 +4086,7 @@ public class Server : IPublisher
     //    \a	alert (bell) character ('\u0007') 
     //    \e	escape character ('\u001B') 
     //    \cx	control character corresponding to x 
-                                  
+
     //    Character Classes 
     //    [abc]		    a, b, or c				                    (simple class) 
     //    [^abc]		    any character except a, b, or c		        (negation) 
@@ -4095,7 +4095,7 @@ public class Server : IPublisher
     //    [a-z&&[def]]	d, e, or f				                    (intersection) 
     //    [a-z&&[^bc]]	a through z, except for b and c: [ad-z]	    (subtraction) 
     //    [a-z&&[^m-p]]	a through z, and not m through p: [a-lq-z]  (subtraction) 
-                                  
+
     //    Predefined 
     //    .	any character (inc line terminators) except newline 
     //    \d	digit				            [0-9] 
@@ -4122,7 +4122,7 @@ public class Server : IPublisher
     //    X{n}	X, exactly n times 
     //    X{n,}	X, at least n times 
     //    X{n,m}	X, at least n but not more than m times 
-                                  
+
     //    Reluctant quantifiers 
     //    X??	X, once or not at all 
     //    X*?	X, zero or more times 
@@ -4130,7 +4130,7 @@ public class Server : IPublisher
     //    X{n}?	X, exactly n times 
     //    X{n,}?	X, at least n times 
     //    X{n,m}?	X, at least n but not more than m times 
-                                  
+
     //    Possessive quantifiers 
     //    X?+	X, once or not at all 
     //    X*+	X, zero or more times 
@@ -9188,6 +9188,72 @@ public class Server : IPublisher
             }
         }
     }
+    private static bool Compare(Letter letter, NumberQuery query)
+    {
+        if (letter != null)
+        {
+            int number = 0;
+            switch (query.NumberScope)
+            {
+                case NumberScope.Number:
+                    number = letter.Number;
+                    break;
+                case NumberScope.NumberInChapter:
+                    number = letter.NumberInChapter;
+                    break;
+                case NumberScope.NumberInVerse:
+                    number = letter.NumberInVerse;
+                    break;
+                case NumberScope.NumberInWord:
+                    number = letter.NumberInWord;
+                    break;
+                default:
+                    number = letter.NumberInWord;
+                    break;
+            }
+            if ((query.NumberNumberType == NumberType.None) || (query.NumberNumberType == NumberType.Natural))
+            {
+                if (query.Number < 0)
+                {
+                    switch (query.NumberScope)
+                    {
+                        case NumberScope.Number:
+                            query.Number = letter.Word.Verse.Chapter.Book.LetterCount + query.Number + 1;
+                            break;
+                        case NumberScope.NumberInChapter:
+                            query.Number = letter.Word.Verse.Chapter.LetterCount + query.Number + 1;
+                            break;
+                        case NumberScope.NumberInVerse:
+                            query.Number = letter.Word.Verse.LetterCount + query.Number + 1;
+                            break;
+                        case NumberScope.NumberInWord:
+                            query.Number = letter.Word.Letters.Count + query.Number + 1;
+                            break;
+                        default:
+                            query.Number = letter.Word.Letters.Count + query.Number + 1;
+                            break;
+                    }
+                }
+                if (query.Number > 0)
+                {
+                    if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (!Numbers.IsNumberType(number, query.NumberNumberType))
+                {
+                    return false;
+                }
+            }
+        }
+
+        // passed all tests successfully
+        return true;
+    }
     private static bool Compare(Word word, NumberQuery query)
     {
         if (word != null)
@@ -9224,7 +9290,7 @@ public class Server : IPublisher
                             query.Number = word.Verse.Words.Count + query.Number + 1;
                             break;
                         default:
-                            query.Number = word.Verse.Chapter.WordCount + query.Number + 1;
+                            query.Number = word.Verse.Words.Count + query.Number + 1;
                             break;
                     }
                 }
@@ -10710,6 +10776,37 @@ public class Server : IPublisher
 
         // passed all tests successfully
         return true;
+    }
+    // find by numbers - Letters
+    public static List<Letter> FindLetters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
+    {
+        return DoFindLetters(search_scope, current_selection, previous_verses, query);
+    }
+    private static List<Letter> DoFindLetters(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
+    {
+        List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
+        return DoFindLetters(source, query);
+    }
+    private static List<Letter> DoFindLetters(List<Verse> source, NumberQuery query)
+    {
+        List<Letter> result = new List<Letter>();
+        if (source != null)
+        {
+            foreach (Verse verse in source)
+            {
+                foreach (Word word in verse.Words)
+                {
+                    foreach (Letter letter in word.Letters)
+                    {
+                        if (Compare(letter, query))
+                        {
+                            result.Add(letter);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
     // find by numbers - Words
     public static List<Word> FindWords(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
