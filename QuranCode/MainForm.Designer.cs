@@ -9391,7 +9391,7 @@ partial class MainForm
         this.AddAllCheckBox.ForeColor = System.Drawing.Color.Black;
         this.AddAllCheckBox.Location = new System.Drawing.Point(7, 258);
         this.AddAllCheckBox.Name = "AddAllCheckBox";
-        this.AddAllCheckBox.Size = new System.Drawing.Size(16, 16);
+        this.AddAllCheckBox.Size = new System.Drawing.Size(64, 16);
         this.AddAllCheckBox.TabIndex = 258;
         this.AddAllCheckBox.UseVisualStyleBackColor = false;
         this.AddAllCheckBox.CheckedChanged += new System.EventHandler(this.AddAllCheckBox_CheckedChanged);

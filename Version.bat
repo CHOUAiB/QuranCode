@@ -7,5 +7,5 @@ Tools\Touch\bin\Release\Touch.exe Tools                            2009-07-29 7:
 Tools\Touch\bin\Release\Touch.exe .                   6:19                  -Tools
 COPY QuranCode1433.zip        ..\Backup\QuranCode1433_6.19.673.zip
 COPY QuranCode1433.Source.zip ..\Backup\QuranCode1433_6.19.673.Source.zip
-MOVE QuranCode1433.zip        ..\qurancode.com\
-MOVE QuranCode1433.Source.zip ..\qurancode.com\
+MOVE QuranCode1433.zip        ..\Backup\
+MOVE QuranCode1433.Source.zip ..\Backup\
