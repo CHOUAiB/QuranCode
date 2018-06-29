@@ -295,9 +295,8 @@ public partial class MainForm : Form, ISubscriber
                 UpdateGoldenRatioOrderLabel();
                 UpdateGoldenRatioTypeLabel();
 
-                UpdateFindByNumbersNumberLabel();
-                UpdateDistancesOptions();
                 UpdateFindByNumbersResultType();
+                UpdateDistancesOptions();
                 foreach (Control control in controls)
                 {
                     if (control.Name.Contains("ComparisonOperator"))
@@ -971,7 +970,6 @@ public partial class MainForm : Form, ISubscriber
         else if (e.KeyCode == Keys.Escape)
         {
             HandleEscapeKeyPress(null, null);
-            e.Handled = true; // stop annoying beep
         }
         else if (e.Control && (e.KeyCode == Keys.Down)) // Redo
         {
@@ -1833,7 +1831,7 @@ public partial class MainForm : Form, ISubscriber
             PlayerVerseSilenceGapTrackBar.Value = (int)(m_silence_between_verses * (PlayerVerseSilenceGapTrackBar.Maximum / 2));
             PlayerSelectionSilenceGapTrackBar.Value = m_silence_between_selections;
 
-            UpdateFindByNumbersNumberLabel();
+            UpdateFindByNumbersResultType();
             UpdateDistancesOptions();
         }
         catch (Exception ex)
@@ -10040,7 +10038,7 @@ public partial class MainForm : Form, ISubscriber
     private void BookmarkTextBox_Leave(object sender, EventArgs e)
     {
         AddBookmarkButton_Click(null, null);
-        this.AcceptButton = null;
+        //this.AcceptButton = null;
     }
     private void BookmarkTextBox_KeyDown(object sender, KeyEventArgs e)
     {
@@ -11677,6 +11675,8 @@ public partial class MainForm : Form, ISubscriber
         ResetFindBySimilarityResultTypeLabels();
         ResetFindByNumbersResultTypeLabels();
         ResetFindByFrequencyResultTypeLabels();
+
+        UpdateFindByNumbersResultType();
     }
     private Font m_translation_font = null;
     private Color m_translation_color = DEFAULT_TRANSALTION_FONT_COLOR;
@@ -21097,6 +21097,8 @@ public partial class MainForm : Form, ISubscriber
         ResetFindByNumbersResultTypeLabels();
         ResetFindByFrequencyResultTypeLabels();
 
+        UpdateFindByNumbersResultType();
+
         switch (m_text_search_type)
         {
             case TextSearchType.Exact:
@@ -22266,207 +22268,89 @@ public partial class MainForm : Form, ISubscriber
     private NumberScope m_word_number_scope = NumberScope.NumberInVerse;
     private NumberScope m_verse_number_scope = NumberScope.NumberInChapter;
     private NumberScope m_chapter_number_scope = NumberScope.Number;
-    private void UpdateFindByNumbersNumberLabel()
-    {
-        if (L != null)
-        {
-            if (L.ContainsKey(l))
-            {
-                switch (m_numbers_result_type)
-                {
-                    case NumbersResultType.Letters:
-                        {
-                            if (m_letter_number_scope == NumberScope.Number)
-                            {
-                                m_letter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                            else if (m_letter_number_scope == NumberScope.NumberInChapter)
-                            {
-                                m_letter_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            }
-                            else if (m_letter_number_scope == NumberScope.NumberInVerse)
-                            {
-                                m_letter_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = L[l]["in verse"];
-                            }
-                            else if (m_letter_number_scope == NumberScope.NumberInWord)
-                            {
-                                m_letter_number_scope = NumberScope.NumberInWord;
-                                FindByNumbersNumberLabel.Text = L[l]["in word"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.Words:
-                        {
-                            if (m_word_number_scope == NumberScope.Number)
-                            {
-                                m_word_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                            else if (m_word_number_scope == NumberScope.NumberInChapter)
-                            {
-                                m_word_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            }
-                            else if (m_word_number_scope == NumberScope.NumberInVerse)
-                            {
-                                m_word_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = L[l]["in verse"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.WordRanges:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["sum"];
-                        }
-                        break;
-                    case NumbersResultType.Sentences:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                        }
-                        break;
-                    case NumbersResultType.Verses:
-                        {
-                            if (m_verse_number_scope == NumberScope.Number)
-                            {
-                                m_verse_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                            else if (m_verse_number_scope == NumberScope.NumberInChapter)
-                            {
-                                m_verse_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.VerseRanges:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["sum"];
-                        }
-                        break;
-                    case NumbersResultType.Chapters:
-                        {
-                            if (m_chapter_number_scope == NumberScope.Number)
-                            {
-                                m_chapter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.ChapterRanges:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["sum"];
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
     private void FindByNumbersNumberLabel_Click(object sender, EventArgs e)
     {
         FindByNumbersControls_Enter(null, null);
 
-        if (L != null)
+        switch (m_numbers_result_type)
         {
-            if (L.ContainsKey(l))
-            {
-                switch (m_numbers_result_type)
+            case NumbersResultType.Letters:
                 {
-                    case NumbersResultType.Letters:
-                        {
-                            if (m_letter_number_scope == NumberScope.Number)
-                            {
-                                m_letter_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            }
-                            else if (m_letter_number_scope == NumberScope.NumberInChapter)
-                            {
-                                m_letter_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = L[l]["in verse"];
-                            }
-                            else if (m_letter_number_scope == NumberScope.NumberInVerse)
-                            {
-                                m_letter_number_scope = NumberScope.NumberInWord;
-                                FindByNumbersNumberLabel.Text = L[l]["in word"];
-                            }
-                            else if (m_letter_number_scope == NumberScope.NumberInWord)
-                            {
-                                m_letter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.Words:
-                        {
-                            if (m_word_number_scope == NumberScope.Number)
-                            {
-                                m_word_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            }
-                            else if (m_word_number_scope == NumberScope.NumberInChapter)
-                            {
-                                m_word_number_scope = NumberScope.NumberInVerse;
-                                FindByNumbersNumberLabel.Text = L[l]["in verse"];
-                            }
-                            else if (m_word_number_scope == NumberScope.NumberInVerse)
-                            {
-                                m_word_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.WordRanges:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["sum"];
-                        }
-                        break;
-                    case NumbersResultType.Sentences:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                        }
-                        break;
-                    case NumbersResultType.Verses:
-                        {
-                            if (m_verse_number_scope == NumberScope.Number)
-                            {
-                                m_verse_number_scope = NumberScope.NumberInChapter;
-                                FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            }
-                            else if (m_verse_number_scope == NumberScope.NumberInChapter)
-                            {
-                                m_verse_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.VerseRanges:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["sum"];
-                        }
-                        break;
-                    case NumbersResultType.Chapters:
-                        {
-                            if (m_chapter_number_scope == NumberScope.Number)
-                            {
-                                m_chapter_number_scope = NumberScope.Number;
-                                FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            }
-                        }
-                        break;
-                    case NumbersResultType.ChapterRanges:
-                        {
-                            FindByNumbersNumberLabel.Text = L[l]["sum"];
-                        }
-                        break;
-                    default:
-                        break;
+                    if (m_letter_number_scope == NumberScope.Number)
+                    {
+                        m_letter_number_scope = NumberScope.NumberInWord;
+                    }
+                    else if (m_letter_number_scope == NumberScope.NumberInWord)
+                    {
+                        m_letter_number_scope = NumberScope.NumberInVerse;
+                    }
+                    else if (m_letter_number_scope == NumberScope.NumberInVerse)
+                    {
+                        m_letter_number_scope = NumberScope.NumberInChapter;
+                    }
+                    else if (m_letter_number_scope == NumberScope.NumberInChapter)
+                    {
+                        m_letter_number_scope = NumberScope.Number;
+                    }
                 }
-            }
+                break;
+            case NumbersResultType.Words:
+                {
+                    if (m_word_number_scope == NumberScope.Number)
+                    {
+                        m_word_number_scope = NumberScope.NumberInVerse;
+                    }
+                    else if (m_word_number_scope == NumberScope.NumberInVerse)
+                    {
+                        m_word_number_scope = NumberScope.NumberInChapter;
+                    }
+                    else if (m_word_number_scope == NumberScope.NumberInChapter)
+                    {
+                        m_word_number_scope = NumberScope.Number;
+                    }
+                }
+                break;
+            case NumbersResultType.WordRanges:
+                {
+                }
+                break;
+            case NumbersResultType.Sentences:
+                {
+                }
+                break;
+            case NumbersResultType.Verses:
+                {
+                    if (m_verse_number_scope == NumberScope.Number)
+                    {
+                        m_verse_number_scope = NumberScope.NumberInChapter;
+                    }
+                    else if (m_verse_number_scope == NumberScope.NumberInChapter)
+                    {
+                        m_verse_number_scope = NumberScope.Number;
+                    }
+                }
+                break;
+            case NumbersResultType.VerseRanges:
+                {
+                }
+                break;
+            case NumbersResultType.Chapters:
+                {
+                    if (m_chapter_number_scope == NumberScope.Number)
+                    {
+                        m_chapter_number_scope = NumberScope.Number;
+                    }
+                }
+                break;
+            case NumbersResultType.ChapterRanges:
+                {
+                }
+                break;
+            default:
+                break;
         }
+
+        UpdateFindByNumbersResultType();
     }
     private void FindByNumbersResultTypeLettersLabel_Click(object sender, EventArgs e)
     {
@@ -22505,8 +22389,6 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
 
         FindByNumbersNumberNumericUpDown.Focus();
-
-        UpdateFindByNumbersNumberLabel();
     }
     private void FindByNumbersResultTypeWordsLabel_Click(object sender, EventArgs e)
     {
@@ -22545,8 +22427,6 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
 
         FindByNumbersLettersNumericUpDown.Focus();
-
-        UpdateFindByNumbersNumberLabel();
     }
     private void FindByNumbersResultTypeSentencesLabel_Click(object sender, EventArgs e)
     {
@@ -22846,8 +22726,6 @@ public partial class MainForm : Form, ISubscriber
 
         FindByNumbersResultTypeChaptersLabel.BackColor = Color.DarkGray;
         FindByNumbersResultTypeChaptersLabel.BorderStyle = BorderStyle.None;
-
-        UpdateFindByNumbersResultType();
     }
     private void ResetFindByNumbersComparisonOperatorLabels()
     {
@@ -22869,240 +22747,130 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateFindByNumbersResultType()
     {
-        switch (m_numbers_result_type)
-        {
-            case NumbersResultType.Letters:
-                {
-                    m_numbers_result_type = NumbersResultType.Letters;
-                }
-                break;
-            case NumbersResultType.Words:
-            case NumbersResultType.WordRanges:
-                {
-                    if ((FindByNumbersWordsNumericUpDown.Value == 1) && (FindByNumbersWordsNumberTypeLabel.Text.Length == 0))
-                    {
-                        m_numbers_result_type = NumbersResultType.Words;
-                    }
-                    else if ((FindByNumbersWordsNumericUpDown.Value > 1) || (FindByNumbersWordsNumberTypeLabel.Text.Length > 0))
-                    {
-                        m_numbers_result_type = NumbersResultType.WordRanges;
-                    }
-                }
-                break;
-            case NumbersResultType.Sentences:
-                {
-                    m_numbers_result_type = NumbersResultType.Sentences;
-                }
-                break;
-            case NumbersResultType.Verses:
-            case NumbersResultType.VerseRanges:
-                {
-                    if ((FindByNumbersVersesNumericUpDown.Value == 1) && (FindByNumbersVersesNumberTypeLabel.Text.Length == 0))
-                    {
-                        m_numbers_result_type = NumbersResultType.Verses;
-                    }
-                    else if ((FindByNumbersVersesNumericUpDown.Value > 1) || (FindByNumbersVersesNumberTypeLabel.Text.Length > 0))
-                    {
-                        m_numbers_result_type = NumbersResultType.VerseRanges;
-                    }
-                }
-                break;
-            case NumbersResultType.Chapters:
-            case NumbersResultType.ChapterRanges:
-                {
-                    if ((FindByNumbersChaptersNumericUpDown.Value == 1) && (FindByNumbersChaptersNumberTypeLabel.Text.Length == 0))
-                    {
-                        m_numbers_result_type = NumbersResultType.Chapters;
-                    }
-                    else if ((FindByNumbersChaptersNumericUpDown.Value > 1) || (FindByNumbersChaptersNumberTypeLabel.Text.Length > 0))
-                    {
-                        m_numbers_result_type = NumbersResultType.ChapterRanges;
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
-
         if (L != null)
         {
             if (L.ContainsKey(l))
             {
-                // reset Letters label
-                FindByNumbersResultTypeLettersLabel.Text = "L";
-                ToolTip.SetToolTip(FindByNumbersResultTypeLettersLabel, L[l]["find letters"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["letter number"]);
-                // reset Words label
-                FindByNumbersResultTypeWordsLabel.Text = "W";
-                ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["word number"]);
-                // reset Sentences label
-                FindByNumbersResultTypeSentencesLabel.Text = "S";
-                ToolTip.SetToolTip(FindByNumbersResultTypeSentencesLabel, L[l]["find sentences"]);
-                // reset Verses label
-                FindByNumbersResultTypeVersesLabel.Text = "V";
-                ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["verse number"]);
-                // reset Chapters label
-                FindByNumbersResultTypeChaptersLabel.Text = "C";
-                ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
-                ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["chapter number"]);
-
-                // overwrite label and tooltips
-                if (m_numbers_result_type == NumbersResultType.Letters)
+                switch (m_numbers_result_type)
                 {
-                    FindByNumbersResultTypeLettersLabel.Text = "L";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeLettersLabel, L[l]["find letters"]);
-                    // update Text based on m_number_scope
-                    switch (m_word_number_scope)
-                    {
-                        case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            break;
-                        case NumberScope.NumberInChapter:
-                            FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            break;
-                        case NumberScope.NumberInVerse:
-                            FindByNumbersNumberLabel.Text = L[l]["in verse"];
-                            break;
-                        case NumberScope.NumberInWord:
-                            FindByNumbersNumberLabel.Text = L[l]["in word"];
-                            break;
-                        default:
-                            FindByNumbersNumberLabel.Text = L[l]["in word"];
-                            break;
-                    }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["letter number"]);
-                }
-                else if (m_numbers_result_type == NumbersResultType.Words)
-                {
-                    FindByNumbersResultTypeWordsLabel.Text = "W";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
-                    // update Text based on m_number_scope
-                    switch (m_word_number_scope)
-                    {
-                        case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            break;
-                        case NumberScope.NumberInChapter:
-                            FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            break;
-                        case NumberScope.NumberInVerse:
-                            FindByNumbersNumberLabel.Text = L[l]["in verse"];
-                            break;
-                        default:
-                            FindByNumbersNumberLabel.Text = L[l]["in verse"];
-                            break;
-                    }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["word number"]);
-                }
-                else if (m_numbers_result_type == NumbersResultType.WordRanges)
-                {
-                    FindByNumbersResultTypeWordsLabel.Text = "-W-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find word ranges"]);
-                    FindByNumbersNumberLabel.Text = L[l]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of word numbers"]);
-                }
-                else if (m_numbers_result_type == NumbersResultType.Verses)
-                {
-                    FindByNumbersResultTypeVersesLabel.Text = "V";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
-                    // update Text based on m_number_scope
-                    switch (m_verse_number_scope)
-                    {
-                        case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            break;
-                        case NumberScope.NumberInChapter:
-                            FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            break;
-                        default:
-                            FindByNumbersNumberLabel.Text = L[l]["in chapter"];
-                            break;
-                    }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["verse number"]);
-                }
-                else if (m_numbers_result_type == NumbersResultType.VerseRanges)
-                {
-                    FindByNumbersResultTypeVersesLabel.Text = "-V-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verse ranges"]);
-                    FindByNumbersNumberLabel.Text = L[l]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of verse numbers"]);
-                }
-                else if (m_numbers_result_type == NumbersResultType.Chapters)
-                {
-                    FindByNumbersResultTypeChaptersLabel.Text = "C";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
-                    // update Text based on m_number_scope
-                    switch (m_chapter_number_scope)
-                    {
-                        case NumberScope.Number:
-                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            break;
-                        default:
-                            FindByNumbersNumberLabel.Text = L[l]["in Book"];
-                            break;
-                    }
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["chapter number"]);
-                }
-                else if (m_numbers_result_type == NumbersResultType.ChapterRanges)
-                {
-                    FindByNumbersResultTypeChaptersLabel.Text = "-C-";
-                    ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapter ranges"]);
-                    FindByNumbersNumberLabel.Text = L[l]["sum"];
-                    ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of chapter numbers"]);
+                    case NumbersResultType.Letters:
+                        {
+                            FindByNumbersResultTypeLettersLabel.Text = "L";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeLettersLabel, L[l]["find letters"]);
+                            switch (m_letter_number_scope)
+                            {
+                                case NumberScope.Number:
+                                    FindByNumbersNumberLabel.Text = L[l]["number"];
+                                    break;
+                                case NumberScope.NumberInChapter:
+                                    FindByNumbersNumberLabel.Text = L[l]["in chapter"];
+                                    break;
+                                case NumberScope.NumberInVerse:
+                                    FindByNumbersNumberLabel.Text = L[l]["in verse"];
+                                    break;
+                                case NumberScope.NumberInWord:
+                                    FindByNumbersNumberLabel.Text = L[l]["in word"];
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["letter number"]);
+                        }
+                        break;
+                    case NumbersResultType.Words:
+                        {
+                            FindByNumbersResultTypeWordsLabel.Text = "W";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find words"]);
+                            switch (m_word_number_scope)
+                            {
+                                case NumberScope.Number:
+                                    FindByNumbersNumberLabel.Text = L[l]["number"];
+                                    break;
+                                case NumberScope.NumberInChapter:
+                                    FindByNumbersNumberLabel.Text = L[l]["in chapter"];
+                                    break;
+                                case NumberScope.NumberInVerse:
+                                    FindByNumbersNumberLabel.Text = L[l]["in verse"];
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["word number"]);
+                        }
+                        break;
+                    case NumbersResultType.WordRanges:
+                        {
+                            FindByNumbersResultTypeWordsLabel.Text = "-W-";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeWordsLabel, L[l]["find word ranges"]);
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of word numbers"]);
+                        }
+                        break;
+                    case NumbersResultType.Sentences:
+                        {
+                            FindByNumbersResultTypeSentencesLabel.Text = "S";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find sentences"]);
+                            FindByNumbersNumberLabel.Text = L[l]["number"];
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sentence number"]);
+                        }
+                        break;
+                    case NumbersResultType.Verses:
+                        {
+                            FindByNumbersResultTypeVersesLabel.Text = "V";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verses"]);
+                            switch (m_verse_number_scope)
+                            {
+                                case NumberScope.Number:
+                                    FindByNumbersNumberLabel.Text = L[l]["number"];
+                                    break;
+                                case NumberScope.NumberInChapter:
+                                    FindByNumbersNumberLabel.Text = L[l]["in chapter"];
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["verse number"]);
+                        }
+                        break;
+                    case NumbersResultType.VerseRanges:
+                        {
+                            FindByNumbersResultTypeVersesLabel.Text = "-V-";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeVersesLabel, L[l]["find verse ranges"]);
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of verse numbers"]);
+                        }
+                        break;
+                    case NumbersResultType.Chapters:
+                        {
+                            FindByNumbersResultTypeChaptersLabel.Text = "C";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapters"]);
+                            switch (m_chapter_number_scope)
+                            {
+                                case NumberScope.Number:
+                                    FindByNumbersNumberLabel.Text = L[l]["number"];
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["chapter number"]);
+                        }
+                        break;
+                    case NumbersResultType.ChapterRanges:
+                        {
+                            FindByNumbersResultTypeChaptersLabel.Text = "-C-";
+                            ToolTip.SetToolTip(FindByNumbersResultTypeChaptersLabel, L[l]["find chapter ranges"]);
+                            FindByNumbersNumberLabel.Text = L[l]["sum"];
+                            ToolTip.SetToolTip(FindByNumbersNumberLabel, L[l]["sum of chapter numbers"]);
+                        }
+                        break;
+                    default:
+                        {
+                        }
+                        break;
                 }
             }
         }
-
-        switch (m_numbers_result_type)
-        {
-            case NumbersResultType.Letters:
-                {
-                    //?????
-                }
-                break;
-            case NumbersResultType.Words:
-            case NumbersResultType.WordRanges:
-                {
-                    FindByNumbersWordsComparisonOperatorLabel.Text = "=";
-                    FindByNumbersWordsComparisonOperatorLabel.Enabled = false;
-                    FindByNumbersWordsNumberTypeLabel.Text = "";
-                    FindByNumbersWordsNumberTypeLabel.Enabled = false;
-                }
-                break;
-            case NumbersResultType.Sentences:
-                {
-                    FindByNumbersNumberLabel.Enabled = false;
-                    FindByNumbersNumberComparisonOperatorLabel.Enabled = false;
-                    FindByNumbersNumberNumericUpDown.Enabled = false;
-                    FindByNumbersNumberNumberTypeLabel.Enabled = false;
-                    FindByNumbersNumberComparisonOperatorLabel.Text = "=";
-                    FindByNumbersNumberNumericUpDown.Value = 0;
-                }
-                break;
-            case NumbersResultType.Verses:
-            case NumbersResultType.VerseRanges:
-                {
-                    FindByNumbersVersesComparisonOperatorLabel.Text = "=";
-                    FindByNumbersVersesComparisonOperatorLabel.Enabled = false;
-                    FindByNumbersVersesNumberTypeLabel.Text = "";
-                    FindByNumbersVersesNumberTypeLabel.Enabled = false;
-                }
-                break;
-            case NumbersResultType.Chapters:
-            case NumbersResultType.ChapterRanges:
-                {
-                    FindByNumbersChaptersComparisonOperatorLabel.Text = "=";
-                    FindByNumbersChaptersComparisonOperatorLabel.Enabled = false;
-                    FindByNumbersChaptersNumberTypeLabel.Text = "";
-                    FindByNumbersChaptersNumberTypeLabel.Enabled = false;
-                }
-                break;
-            default:
-                break;
-        }
+        FindByNumbersNumberLabel.Refresh();
     }
     private bool UpdateComparisonOperator(Control control)
     {
@@ -23764,6 +23532,8 @@ public partial class MainForm : Form, ISubscriber
         ResetFindBySimilarityResultTypeLabels();
         ResetFindByNumbersResultTypeLabels();
         ResetFindByFrequencyResultTypeLabels();
+
+        UpdateFindByNumbersResultType();
 
         switch (m_numbers_result_type)
         {
@@ -25443,6 +25213,11 @@ public partial class MainForm : Form, ISubscriber
             MainTextBox.Visible = true;
             m_active_textbox = MainTextBox;
 
+            CalculateCurrentValue();
+            BuildLetterFrequencies();
+            DisplayLetterFrequencies();
+            DisplayCurrentPositions();
+
             UpdateWordWrapLabel(m_active_textbox.WordWrap);
             ValuesSequenceTextBox.WordWrap = m_active_textbox.WordWrap;
             CVWLSequenceTextBox.WordWrap = m_active_textbox.WordWrap;
@@ -25471,7 +25246,11 @@ public partial class MainForm : Form, ISubscriber
             MainTextBox.Visible = false;
             SearchResultTextBox.Visible = true;
             m_active_textbox = SearchResultTextBox;
-            //m_active_textbox.Refresh();
+
+            CalculateCurrentValue();
+            BuildLetterFrequencies();
+            DisplayLetterFrequencies();
+            DisplayCurrentPositions();
 
             UpdateWordWrapLabel(m_active_textbox.WordWrap);
             ValuesSequenceTextBox.WordWrap = m_active_textbox.WordWrap;
@@ -27747,25 +27526,27 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (m_selection_mode)
                         {
-                            if (m_found_verses_displayed)
-                            {
-                                if (m_client.FoundVerses != null)
-                                {
-                                    CalculateAndDisplayCounts(m_client.FoundVerses);
-                                    CalculateValueAndDisplayFactors(m_client.FoundVerses);
-                                }
-                            }
-                            else
-                            {
-                                if (m_client.Selection != null)
-                                {
-                                    if (m_client.Selection.Verses != null)
-                                    {
-                                        CalculateAndDisplayCounts(m_client.Selection.Verses);
-                                        CalculateValueAndDisplayFactors(m_client.Selection.Verses);
-                                    }
-                                }
-                            }
+                            //if (m_found_verses_displayed)
+                            //{
+                            //    if (m_client.FoundVerses != null)
+                            //    {
+                            //        CalculateAndDisplayCounts(m_client.FoundVerses);
+                            //        CalculateValueAndDisplayFactors(m_client.FoundVerses);
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    if (m_client.Selection != null)
+                            //    {
+                            //        if (m_client.Selection.Verses != null)
+                            //        {
+                            //            CalculateAndDisplayCounts(m_client.Selection.Verses);
+                            //            CalculateValueAndDisplayFactors(m_client.Selection.Verses);
+                            //        }
+                            //    }
+                            //}
+                            CalculateAndDisplayCounts(m_current_text);
+                            CalculateValueAndDisplayFactors(m_current_text);
                         }
                         else // cursor inside line OR some text is highlighted
                         {

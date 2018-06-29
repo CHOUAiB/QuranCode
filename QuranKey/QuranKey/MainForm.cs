@@ -1613,7 +1613,7 @@ public partial class MainForm : Form
             m_current_word = word;
 
             // in all cases
-            this.Text = Application.ProductName + " | " + GetSelectionSummary();
+            //this.Text = Application.ProductName + " | " + GetSelectionSummary();
             UpdateFindMatchCaption();
 
             string word_info = GetWordInformation(word);
@@ -1624,17 +1624,17 @@ public partial class MainForm : Form
             }
             ToolTip.SetToolTip(m_active_textbox, word_info);
 
-            // diplay word info at application caption
-            this.Text += SPACE_GAP +
-            (
-                word.Verse.Chapter.Name + SPACE_GAP +
-                L[l]["verse"] + " " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
-                L[l]["word"] + " " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
-                word.Transliteration + SPACE_GAP +
-                word.Text + SPACE_GAP +
-                word.Meaning + SPACE_GAP +
-                word.Occurrence.ToString() + "/" + word.Frequency.ToString()
-            );
+            //// display word info at application caption
+            //this.Text += SPACE_GAP +
+            //(
+            //    word.Verse.Chapter.Name + SPACE_GAP +
+            //    L[l]["verse"] + " " + word.Verse.NumberInChapter + "-" + word.Verse.Number + SPACE_GAP +
+            //    L[l]["word"] + " " + word.NumberInVerse + "-" + word.NumberInChapter + "-" + word.Number + SPACE_GAP +
+            //    word.Transliteration + SPACE_GAP +
+            //    word.Text + SPACE_GAP +
+            //    word.Meaning + SPACE_GAP +
+            //    word.Occurrence.ToString() + "/" + word.Frequency.ToString()
+            //);
         }
     }
     private void MainTextBox_MouseUp(object sender, MouseEventArgs e)
@@ -7143,7 +7143,7 @@ public partial class MainForm : Form
             //caption += CAPTION_SEPARATOR;
         }
 
-        this.Text = caption;
+        //this.Text = caption;
     }
 
     private string m_find_result_header = null;

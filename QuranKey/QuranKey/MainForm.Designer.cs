@@ -414,7 +414,7 @@ partial class MainForm
             this.SearchGroupBox.Size = new System.Drawing.Size(161, 568);
             this.SearchGroupBox.TabIndex = 0;
             this.SearchGroupBox.TabStop = false;
-            this.SearchGroupBox.Text = "Search";
+            this.SearchGroupBox.Text = "Search in";
             this.SearchGroupBox.Enter += new System.EventHandler(this.SearchGroupBox_Enter);
             this.SearchGroupBox.Leave += new System.EventHandler(this.SearchGroupBox_Leave);
             // 
@@ -2493,7 +2493,7 @@ partial class MainForm
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Quran Key";
+            this.Text = "Quran Key 2018";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);

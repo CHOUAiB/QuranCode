@@ -118,18 +118,21 @@ namespace Model
             }
             return null;
         }
+        private int word_count = 0;
         public int WordCount
         {
             get
             {
-                int word_count = 0;
-                if (this.verses != null)
+                if (word_count <= 0)
                 {
-                    foreach (Verse verse in this.verses)
+                    if (this.verses != null)
                     {
-                        if (verse.Words != null)
+                        foreach (Verse verse in this.verses)
                         {
-                            word_count += verse.Words.Count;
+                            if (verse.Words != null)
+                            {
+                                word_count += verse.Words.Count;
+                            }
                         }
                     }
                 }
@@ -164,22 +167,25 @@ namespace Model
             }
             return null;
         }
+        private int letter_count = 0;
         public int LetterCount
         {
             get
             {
-                int letter_count = 0;
-                if (this.verses != null)
+                if (letter_count <= 0)
                 {
-                    foreach (Verse verse in this.verses)
+                    if (this.verses != null)
                     {
-                        if (verse.Words != null)
+                        foreach (Verse verse in this.verses)
                         {
-                            foreach (Word word in verse.Words)
+                            if (verse.Words != null)
                             {
-                                if ((word.Letters != null) && (word.Letters.Count > 0))
+                                foreach (Word word in verse.Words)
                                 {
-                                    letter_count += word.Letters.Count;
+                                    if ((word.Letters != null) && (word.Letters.Count > 0))
+                                    {
+                                        letter_count += word.Letters.Count;
+                                    }
                                 }
                             }
                         }
@@ -194,22 +200,25 @@ namespace Model
         {
             get
             {
-                unique_letters = new List<char>();
-                if (this.verses != null)
+                if (unique_letters == null)
                 {
-                    foreach (Verse verse in this.verses)
+                    unique_letters = new List<char>();
+                    if (this.verses != null)
                     {
-                        if (verse.Words != null)
+                        foreach (Verse verse in this.verses)
                         {
-                            foreach (Word word in verse.Words)
+                            if (verse.Words != null)
                             {
-                                if (word.UniqueLetters != null)
+                                foreach (Word word in verse.Words)
                                 {
-                                    foreach (char character in word.UniqueLetters)
+                                    if (word.UniqueLetters != null)
                                     {
-                                        if (!unique_letters.Contains(character))
+                                        foreach (char character in word.UniqueLetters)
                                         {
-                                            unique_letters.Add(character);
+                                            if (!unique_letters.Contains(character))
+                                            {
+                                                unique_letters.Add(character);
+                                            }
                                         }
                                     }
                                 }
