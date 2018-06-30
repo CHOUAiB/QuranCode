@@ -22257,6 +22257,177 @@ public partial class MainForm : Form, ISubscriber
     }
     ///////////////////////////////////////////////////////////////////////////////
     #endregion
+    #region Search By Similarity
+    ///////////////////////////////////////////////////////////////////////////////
+    private SimilaritySearchSource m_similarity_search_source = SimilaritySearchSource.CurrentVerse;
+    private void FindBySimilarityCurrentVerseTypeLabel_Click(object sender, EventArgs e)
+    {
+        m_similarity_search_source = SimilaritySearchSource.CurrentVerse;
+        FindBySimilarityPercentageTrackBar.Value = 73;
+        FindBySimilarityControls_Enter(null, null);
+    }
+    private void FindBySimilarityAllVersesTypeLabel_Click(object sender, EventArgs e)
+    {
+        m_similarity_search_source = SimilaritySearchSource.AllVerses;
+        FindBySimilarityPercentageTrackBar.Value = 100;
+        FindBySimilarityControls_Enter(null, null);
+    }
+    private void FindBySimilarityRadioButton_CheckedChanged(object sender, EventArgs e)
+    {
+        //if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
+        //{
+        //    FindBySimilarityButton_Click(null, null);
+        //}
+    }
+    private void FindBySimilarityPercentageTrackBar_ValueChanged(object sender, EventArgs e)
+    {
+        if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
+        {
+            if (sender is TrackBar)
+            {
+                FindBySimilarity();
+            }
+        }
+    }
+    private void FindBySimilarityControls_Enter(object sender, EventArgs e)
+    {
+        this.AcceptButton = FindBySimilarityButton;
+
+        FindByTextButton.Enabled = false;
+        FindBySimilarityButton.Enabled = true;
+        FindByNumbersButton.Enabled = false;
+        FindByFrequencyButton.Enabled = false;
+
+        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
+        WordsListBoxLabel.Visible = false;
+        WordsListBox.Visible = false;
+
+        ResetFindByTextSearchBlockSizeLabels();
+        ResetFindByTextSearchTypeLabels();
+        ResetFindBySimilarityResultTypeLabels();
+        ResetFindByNumbersResultTypeLabels();
+        ResetFindByFrequencyResultTypeLabels();
+
+        switch (m_similarity_search_source)
+        {
+            case SimilaritySearchSource.CurrentVerse:
+                {
+                    FindBySimilarityCurrentVerseTypeLabel.BackColor = Color.SteelBlue;
+                    FindBySimilarityCurrentVerseTypeLabel.BorderStyle = BorderStyle.Fixed3D;
+                }
+                break;
+            case SimilaritySearchSource.AllVerses:
+                {
+                    FindBySimilarityAllVersesTypeLabel.BackColor = Color.SteelBlue;
+                    FindBySimilarityAllVersesTypeLabel.BorderStyle = BorderStyle.Fixed3D;
+                }
+                break;
+        }
+    }
+    private void ResetFindBySimilarityResultTypeLabels()
+    {
+        FindBySimilarityCurrentVerseTypeLabel.BackColor = Color.DarkGray;
+        FindBySimilarityCurrentVerseTypeLabel.BorderStyle = BorderStyle.None;
+        FindBySimilarityAllVersesTypeLabel.BackColor = Color.DarkGray;
+        FindBySimilarityAllVersesTypeLabel.BorderStyle = BorderStyle.None;
+    }
+    private void FindBySimilarityButton_Click(object sender, EventArgs e)
+    {
+        FindBySimilarity();
+    }
+    private void FindBySimilarity()
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            m_search_type = SearchType.Similarity;
+
+            if (m_client != null)
+            {
+                ClearFindMatches();
+
+                SimilarityMethod find_by_similarity_method = SimilarityMethod.SimilarText;
+                if (FindBySimilarityTextRadioButton.Checked)
+                {
+                    find_by_similarity_method = SimilarityMethod.SimilarText;
+                }
+                else if (FindBySimilarityWordsRadioButton.Checked)
+                {
+                    find_by_similarity_method = SimilarityMethod.SimilarWords;
+                }
+                else if (FindBySimilarityFirstHalfRadioButton.Checked)
+                {
+                    find_by_similarity_method = SimilarityMethod.SimilarFirstHalf;
+                }
+                else if (FindBySimilarityLastHalfRadioButton.Checked)
+                {
+                    find_by_similarity_method = SimilarityMethod.SimilarLastHalf;
+                }
+                else if (FindBySimilarityFirstWordRadioButton.Checked)
+                {
+                    find_by_similarity_method = SimilarityMethod.SimilarFirstWord;
+                }
+                else if (FindBySimilarityLastWordRadioButton.Checked)
+                {
+                    find_by_similarity_method = SimilarityMethod.SimilarLastWord;
+                }
+                else
+                {
+                    //
+                }
+
+                double similarity_percentage = (double)FindBySimilarityPercentageTrackBar.Value / 100.0D;
+
+                string text = null;
+                if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
+                {
+                    Verse verse = GetCurrentVerse();
+                    if (verse != null)
+                    {
+                        if (verse.Chapter != null)
+                        {
+                            m_client.FindVerses(verse, find_by_similarity_method, similarity_percentage);
+                            text = " to verse " + verse.Chapter.Name + " " + verse.NumberInChapter + " ";
+                        }
+
+                        if (m_client.FoundVerses != null)
+                        {
+                            int verse_count = m_client.FoundVerses.Count;
+                            m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + find_by_similarity_method.ToString() + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+
+                            DisplayFoundVerses(true, true);
+                        }
+                    }
+                }
+                else if (m_similarity_search_source == SimilaritySearchSource.AllVerses)
+                {
+                    m_client.FindVerses(find_by_similarity_method, similarity_percentage);
+                    text = null;
+
+                    if (m_client.FoundVerses != null)
+                    {
+                        int verse_count = m_client.FoundVerses.Count;
+                        m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + find_by_similarity_method.ToString() + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+
+                        DisplayFoundVerseRanges(true, true);
+                    }
+                }
+                else
+                {
+                    //
+                }
+
+                //SearchResultTextBox.Focus();
+                SearchResultTextBox.Refresh();
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////
+    #endregion
     #region Search By Numbers
     ///////////////////////////////////////////////////////////////////////////////
     private NumbersResultType m_numbers_result_type = NumbersResultType.Verses;
@@ -24423,177 +24594,6 @@ public partial class MainForm : Form, ISubscriber
                         default:
                             break;
                     }
-                }
-
-                //SearchResultTextBox.Focus();
-                SearchResultTextBox.Refresh();
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    ///////////////////////////////////////////////////////////////////////////////
-    #endregion
-    #region Search By Similarity
-    ///////////////////////////////////////////////////////////////////////////////
-    private SimilaritySearchSource m_similarity_search_source = SimilaritySearchSource.CurrentVerse;
-    private void FindBySimilarityCurrentVerseTypeLabel_Click(object sender, EventArgs e)
-    {
-        m_similarity_search_source = SimilaritySearchSource.CurrentVerse;
-        FindBySimilarityPercentageTrackBar.Value = 73;
-        FindBySimilarityControls_Enter(null, null);
-    }
-    private void FindBySimilarityAllVersesTypeLabel_Click(object sender, EventArgs e)
-    {
-        m_similarity_search_source = SimilaritySearchSource.AllVerses;
-        FindBySimilarityPercentageTrackBar.Value = 100;
-        FindBySimilarityControls_Enter(null, null);
-    }
-    private void FindBySimilarityRadioButton_CheckedChanged(object sender, EventArgs e)
-    {
-        //if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
-        //{
-        //    FindBySimilarityButton_Click(null, null);
-        //}
-    }
-    private void FindBySimilarityPercentageTrackBar_ValueChanged(object sender, EventArgs e)
-    {
-        if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
-        {
-            if (sender is TrackBar)
-            {
-                FindBySimilarity();
-            }
-        }
-    }
-    private void FindBySimilarityControls_Enter(object sender, EventArgs e)
-    {
-        this.AcceptButton = FindBySimilarityButton;
-
-        FindByTextButton.Enabled = false;
-        FindBySimilarityButton.Enabled = true;
-        FindByNumbersButton.Enabled = false;
-        FindByFrequencyButton.Enabled = false;
-
-        ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
-        WordsListBoxLabel.Visible = false;
-        WordsListBox.Visible = false;
-
-        ResetFindByTextSearchBlockSizeLabels();
-        ResetFindByTextSearchTypeLabels();
-        ResetFindBySimilarityResultTypeLabels();
-        ResetFindByNumbersResultTypeLabels();
-        ResetFindByFrequencyResultTypeLabels();
-
-        switch (m_similarity_search_source)
-        {
-            case SimilaritySearchSource.CurrentVerse:
-                {
-                    FindBySimilarityCurrentVerseTypeLabel.BackColor = Color.SteelBlue;
-                    FindBySimilarityCurrentVerseTypeLabel.BorderStyle = BorderStyle.Fixed3D;
-                }
-                break;
-            case SimilaritySearchSource.AllVerses:
-                {
-                    FindBySimilarityAllVersesTypeLabel.BackColor = Color.SteelBlue;
-                    FindBySimilarityAllVersesTypeLabel.BorderStyle = BorderStyle.Fixed3D;
-                }
-                break;
-        }
-    }
-    private void ResetFindBySimilarityResultTypeLabels()
-    {
-        FindBySimilarityCurrentVerseTypeLabel.BackColor = Color.DarkGray;
-        FindBySimilarityCurrentVerseTypeLabel.BorderStyle = BorderStyle.None;
-        FindBySimilarityAllVersesTypeLabel.BackColor = Color.DarkGray;
-        FindBySimilarityAllVersesTypeLabel.BorderStyle = BorderStyle.None;
-    }
-    private void FindBySimilarityButton_Click(object sender, EventArgs e)
-    {
-        FindBySimilarity();
-    }
-    private void FindBySimilarity()
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            m_search_type = SearchType.Similarity;
-
-            if (m_client != null)
-            {
-                ClearFindMatches();
-
-                SimilarityMethod find_by_similarity_method = SimilarityMethod.SimilarText;
-                if (FindBySimilarityTextRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarText;
-                }
-                else if (FindBySimilarityWordsRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarWords;
-                }
-                else if (FindBySimilarityFirstHalfRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarFirstHalf;
-                }
-                else if (FindBySimilarityLastHalfRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarLastHalf;
-                }
-                else if (FindBySimilarityFirstWordRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarFirstWord;
-                }
-                else if (FindBySimilarityLastWordRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarLastWord;
-                }
-                else
-                {
-                    //
-                }
-
-                double similarity_percentage = (double)FindBySimilarityPercentageTrackBar.Value / 100.0D;
-
-                string text = null;
-                if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
-                {
-                    Verse verse = GetCurrentVerse();
-                    if (verse != null)
-                    {
-                        if (verse.Chapter != null)
-                        {
-                            m_client.FindVerses(verse, find_by_similarity_method, similarity_percentage);
-                            text = " to verse " + verse.Chapter.Name + " " + verse.NumberInChapter + " ";
-                        }
-
-                        if (m_client.FoundVerses != null)
-                        {
-                            int verse_count = m_client.FoundVerses.Count;
-                            m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + find_by_similarity_method.ToString() + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-
-                            DisplayFoundVerses(true, true);
-                        }
-                    }
-                }
-                else if (m_similarity_search_source == SimilaritySearchSource.AllVerses)
-                {
-                    m_client.FindVerses(find_by_similarity_method, similarity_percentage);
-                    text = null;
-
-                    if (m_client.FoundVerses != null)
-                    {
-                        int verse_count = m_client.FoundVerses.Count;
-                        m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + find_by_similarity_method.ToString() + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-
-                        DisplayFoundVerseRanges(true, true);
-                    }
-                }
-                else
-                {
-                    //
                 }
 
                 //SearchResultTextBox.Focus();
@@ -27678,8 +27678,6 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                 }
                             }
-                            //CalculateAndDisplayCounts(m_current_text);
-                            //CalculateValueAndDisplayFactors(m_current_text);
                         }
                         else // cursor inside line OR some text is highlighted
                         {
