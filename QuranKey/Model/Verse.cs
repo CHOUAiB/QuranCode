@@ -199,18 +199,21 @@ namespace Model
             }
             return null;
         }
+        private int letter_count = 0;
         public int LetterCount
         {
             get
             {
-                int letter_count = 0;
-                if (this.words != null)
+                if (letter_count <= 0)
                 {
-                    foreach (Word word in this.words)
+                    if (this.words != null)
                     {
-                        if ((word.Letters != null) && (word.Letters.Count > 0))
+                        foreach (Word word in this.words)
                         {
-                            letter_count += word.Letters.Count;
+                            if ((word.Letters != null) && (word.Letters.Count > 0))
+                            {
+                                letter_count += word.Letters.Count;
+                            }
                         }
                     }
                 }
@@ -223,18 +226,21 @@ namespace Model
         {
             get
             {
-                unique_letters = new List<char>();
-                if (this.words != null)
+                if (unique_letters == null)
                 {
-                    foreach (Word word in this.words)
+                    unique_letters = new List<char>();
+                    if (this.words != null)
                     {
-                        if (word.UniqueLetters != null)
+                        foreach (Word word in this.words)
                         {
-                            foreach (char character in word.UniqueLetters)
+                            if (word.UniqueLetters != null)
                             {
-                                if (!unique_letters.Contains(character))
+                                foreach (char character in word.UniqueLetters)
                                 {
-                                    unique_letters.Add(character);
+                                    if (!unique_letters.Contains(character))
+                                    {
+                                        unique_letters.Add(character);
+                                    }
                                 }
                             }
                         }

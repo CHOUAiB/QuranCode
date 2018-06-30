@@ -9244,7 +9244,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false;
+                    return false; // prevent matching all letters of a word when L number = -N where N > word.Letters.Count
                 }
             }
             else
@@ -9309,7 +9309,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false;
+                    //return false;
                 }
             }
             else
@@ -9489,7 +9489,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false;
+                    //return false;
                 }
             }
             else
@@ -9810,7 +9810,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false;
+                    //return false;
                 }
             }
             else
@@ -10034,7 +10034,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false;
+                    //return false;
                 }
             }
             else
@@ -10279,7 +10279,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false;
+                    //return false;
                 }
             }
             else
@@ -10534,7 +10534,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false;
+                    //return false;
                 }
             }
             else

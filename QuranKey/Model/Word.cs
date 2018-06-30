@@ -190,14 +190,17 @@ namespace Model
         {
             get
             {
-                unique_letters = new List<char>();
-                if (this.letters != null)
+                if (unique_letters == null)
                 {
-                    foreach (Letter letter in this.letters)
+                    unique_letters = new List<char>();
+                    if (this.letters != null)
                     {
-                        if (!unique_letters.Contains(letter.Character))
+                        foreach (Letter letter in this.letters)
                         {
-                            unique_letters.Add(letter.Character);
+                            if (!unique_letters.Contains(letter.Character))
+                            {
+                                unique_letters.Add(letter.Character);
+                            }
                         }
                     }
                 }

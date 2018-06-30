@@ -22554,7 +22554,7 @@ public partial class MainForm : Form, ISubscriber
                     bool enable_value_digital_root
                  )
     {
-        bool not_number_number_type = ((FindByNumbersNumberNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersNumberNumberTypeLabel.Text[0])));
+        bool not_number_number_type = ((FindByNumbersNumberNumberTypeLabel.Text.Length == 0) || ((FindByNumbersNumberNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersNumberNumberTypeLabel.Text[0])));
         FindByNumbersNumberLabel.Enabled = enable_number;
         FindByNumbersNumberComparisonOperatorLabel.Enabled = enable_number && not_number_number_type;
         FindByNumbersNumberNumericUpDown.Enabled = enable_number && not_number_number_type;
@@ -22567,7 +22567,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersNumberNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_chapters_number_type = ((FindByNumbersChaptersNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersChaptersNumberTypeLabel.Text[0])));
+        bool not_chapters_number_type = ((FindByNumbersChaptersNumberTypeLabel.Text.Length == 0) || ((FindByNumbersChaptersNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersChaptersNumberTypeLabel.Text[0])));
         FindByNumbersChaptersLabel.Enabled = enable_chapters;
         FindByNumbersChaptersComparisonOperatorLabel.Enabled = enable_chapters && not_chapters_number_type;
         FindByNumbersChaptersNumericUpDown.Enabled = enable_chapters && not_chapters_number_type;
@@ -22580,7 +22580,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersChaptersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_verses_number_type = ((FindByNumbersVersesNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersVersesNumberTypeLabel.Text[0])));
+        bool not_verses_number_type = ((FindByNumbersVersesNumberTypeLabel.Text.Length == 0) || ((FindByNumbersVersesNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersVersesNumberTypeLabel.Text[0])));
         FindByNumbersVersesLabel.Enabled = enable_verses;
         FindByNumbersVersesComparisonOperatorLabel.Enabled = enable_verses && not_verses_number_type;
         FindByNumbersVersesNumericUpDown.Enabled = enable_verses && not_verses_number_type;
@@ -22593,7 +22593,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersVersesNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_words_number_type = ((FindByNumbersWordsNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersWordsNumberTypeLabel.Text[0])));
+        bool not_words_number_type = ((FindByNumbersWordsNumberTypeLabel.Text.Length == 0) || ((FindByNumbersWordsNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersWordsNumberTypeLabel.Text[0])));
         FindByNumbersWordsLabel.Enabled = enable_words;
         FindByNumbersWordsComparisonOperatorLabel.Enabled = enable_words && not_words_number_type;
         FindByNumbersWordsNumericUpDown.Enabled = enable_words && not_words_number_type;
@@ -22606,7 +22606,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersWordsNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_letters_number_type = ((FindByNumbersLettersNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersLettersNumberTypeLabel.Text[0])));
+        bool not_letters_number_type = ((FindByNumbersLettersNumberTypeLabel.Text.Length == 0) || ((FindByNumbersLettersNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersLettersNumberTypeLabel.Text[0])));
         FindByNumbersLettersLabel.Enabled = enable_letters;
         FindByNumbersLettersComparisonOperatorLabel.Enabled = enable_letters && not_letters_number_type;
         FindByNumbersLettersNumericUpDown.Enabled = enable_letters && not_letters_number_type;
@@ -22619,7 +22619,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersLettersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_unique_letters_number_type = ((FindByNumbersUniqueLettersNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersUniqueLettersNumberTypeLabel.Text[0])));
+        bool not_unique_letters_number_type = ((FindByNumbersUniqueLettersNumberTypeLabel.Text.Length == 0) || ((FindByNumbersUniqueLettersNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersUniqueLettersNumberTypeLabel.Text[0])));
         FindByNumbersUniqueLettersLabel.Enabled = enable_unique_letters;
         FindByNumbersUniqueLettersComparisonOperatorLabel.Enabled = enable_unique_letters && not_unique_letters_number_type;
         FindByNumbersUniqueLettersNumericUpDown.Enabled = enable_unique_letters && not_unique_letters_number_type;
@@ -22632,7 +22632,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersUniqueLettersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_value_number_type = ((FindByNumbersValueNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersValueNumberTypeLabel.Text[0])));
+        bool not_value_number_type = ((FindByNumbersValueNumberTypeLabel.Text.Length == 0) || ((FindByNumbersValueNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersValueNumberTypeLabel.Text[0])));
         FindByNumbersValueLabel.Enabled = enable_value;
         FindByNumbersValueComparisonOperatorLabel.Enabled = enable_value && not_value_number_type;
         FindByNumbersValueNumericUpDown.Enabled = enable_value && not_value_number_type;
@@ -22645,7 +22645,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersValueNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_value_digit_sum_number_type = ((FindByNumbersValueNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersValueDigitSumNumberTypeLabel.Text[0])));
+        bool not_value_digit_sum_number_type = ((FindByNumbersValueNumberTypeLabel.Text.Length == 0) || ((FindByNumbersValueDigitSumNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersValueDigitSumNumberTypeLabel.Text[0])));
         FindByNumbersValueDigitSumLabel.Enabled = enable_value_digit_sum;
         FindByNumbersValueDigitSumComparisonOperatorLabel.Enabled = enable_value && not_value_digit_sum_number_type;
         FindByNumbersValueDigitSumNumericUpDown.Enabled = enable_value && not_value_digit_sum_number_type;
@@ -22658,7 +22658,7 @@ public partial class MainForm : Form, ISubscriber
             FindByNumbersValueDigitSumNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         }
 
-        bool not_value_digital_root_number_type = ((FindByNumbersValueDigitalRootNumberTypeLabel.Text.Length == 0) || (Char.IsDigit(FindByNumbersValueDigitalRootNumberTypeLabel.Text[0])));
+        bool not_value_digital_root_number_type = ((FindByNumbersValueDigitalRootNumberTypeLabel.Text.Length == 0) || ((FindByNumbersValueDigitalRootNumberTypeLabel.Text.Length > 0) && Char.IsDigit(FindByNumbersValueDigitalRootNumberTypeLabel.Text[0])));
         FindByNumbersValueDigitalRootLabel.Enabled = enable_value_digital_root;
         FindByNumbersValueDigitalRootComparisonOperatorLabel.Enabled = enable_value && not_value_digital_root_number_type;
         FindByNumbersValueDigitalRootNumericUpDown.Enabled = enable_value && not_value_digital_root_number_type;
@@ -25651,7 +25651,7 @@ public partial class MainForm : Form, ISubscriber
                     BuildLetterFrequencies();
                     DisplayLetterFrequencies();
 
-                    ColorizeChapters(); // too slow
+                    //ColorizeChapters(); // too too slow
 
                     m_current_found_verse_index = 0;
                     DisplayCurrentPositions();
@@ -25786,7 +25786,7 @@ public partial class MainForm : Form, ISubscriber
                     BuildLetterFrequencies();
                     DisplayLetterFrequencies();
 
-                    ColorizeChapterRanges(); // too slow
+                    //ColorizeChapterRanges(); // too too slow
 
                     m_current_found_verse_index = 0;
                     DisplayCurrentPositions();
