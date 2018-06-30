@@ -27659,27 +27659,27 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (m_selection_mode)
                         {
-                            //if (m_found_verses_displayed)
-                            //{
-                            //    if (m_client.FoundVerses != null)
-                            //    {
-                            //        CalculateAndDisplayCounts(m_client.FoundVerses);
-                            //        CalculateValueAndDisplayFactors(m_client.FoundVerses);
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    if (m_client.Selection != null)
-                            //    {
-                            //        if (m_client.Selection.Verses != null)
-                            //        {
-                            //            CalculateAndDisplayCounts(m_client.Selection.Verses);
-                            //            CalculateValueAndDisplayFactors(m_client.Selection.Verses);
-                            //        }
-                            //    }
-                            //}
-                            CalculateAndDisplayCounts(m_current_text);
-                            CalculateValueAndDisplayFactors(m_current_text);
+                            if (m_found_verses_displayed)
+                            {
+                                if (m_client.FoundVerses != null)
+                                {
+                                    CalculateAndDisplayCounts(m_client.FoundVerses);
+                                    CalculateValueAndDisplayFactors(m_client.FoundVerses);
+                                }
+                            }
+                            else
+                            {
+                                if (m_client.Selection != null)
+                                {
+                                    if (m_client.Selection.Verses != null)
+                                    {
+                                        CalculateAndDisplayCounts(m_client.Selection.Verses);
+                                        CalculateValueAndDisplayFactors(m_client.Selection.Verses);
+                                    }
+                                }
+                            }
+                            //CalculateAndDisplayCounts(m_current_text);
+                            //CalculateValueAndDisplayFactors(m_current_text);
                         }
                         else // cursor inside line OR some text is highlighted
                         {
