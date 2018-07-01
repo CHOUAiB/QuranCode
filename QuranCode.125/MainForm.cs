@@ -3612,7 +3612,7 @@ public partial class MainForm : Form, ISubscriber
                 if (m_client.FoundVerses != null)
                 {
                     m_client.FoundPhrases = phrases;
-                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["matche"] : " " + L[l]["matches"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["match"] : " " + L[l]["matches"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
                     DisplayFoundVerses(true, true);
 
                     //SearchResultTextBox.Focus();
