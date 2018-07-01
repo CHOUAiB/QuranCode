@@ -22359,6 +22359,16 @@ public partial class MainForm : Form, ISubscriber
         EnableFindByNumbersControls(true, false, false, false, false, false, false, false, false);
         FindByNumbersControls_Enter(null, null);
         //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
+        ResetFindByNumbersComparisonOperatorLabels();
+        ResetFindByNumbersNumberTypeControl(FindByNumbersNumberNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersChaptersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersVersesNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersWordsNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersUniqueLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22397,6 +22407,16 @@ public partial class MainForm : Form, ISubscriber
         EnableFindByNumbersControls(true, false, false, true, true, true, true, true, true);
         FindByNumbersControls_Enter(null, null);
         //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
+        ResetFindByNumbersComparisonOperatorLabels();
+        ResetFindByNumbersNumberTypeControl(FindByNumbersNumberNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersChaptersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersVersesNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersWordsNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersUniqueLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22435,6 +22455,16 @@ public partial class MainForm : Form, ISubscriber
         EnableFindByNumbersControls(true, false, false, true, true, true, true, true, true);
         FindByNumbersControls_Enter(null, null);
         //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
+        ResetFindByNumbersComparisonOperatorLabels();
+        ResetFindByNumbersNumberTypeControl(FindByNumbersNumberNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersChaptersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersVersesNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersWordsNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersUniqueLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22473,6 +22503,16 @@ public partial class MainForm : Form, ISubscriber
         EnableFindByNumbersControls(true, false, true, true, true, true, true, true, true);
         FindByNumbersControls_Enter(null, null);
         //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
+        ResetFindByNumbersComparisonOperatorLabels();
+        ResetFindByNumbersNumberTypeControl(FindByNumbersNumberNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersChaptersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersVersesNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersWordsNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersUniqueLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22511,6 +22551,16 @@ public partial class MainForm : Form, ISubscriber
         EnableFindByNumbersControls(true, true, true, true, true, true, true, true, true);
         FindByNumbersControls_Enter(null, null);
         //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
+        ResetFindByNumbersComparisonOperatorLabels();
+        ResetFindByNumbersNumberTypeControl(FindByNumbersNumberNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersChaptersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersVersesNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersWordsNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersUniqueLettersNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
+        ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -23445,6 +23495,17 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
+
+        UpdateFindByNumbersResultType();
+        // some operations take too long and may frustrate user
+        if (
+            (m_numbers_result_type != NumbersResultType.WordRanges) &&
+            (m_numbers_result_type != NumbersResultType.VerseRanges) &&
+            (m_numbers_result_type != NumbersResultType.ChapterRanges)
+           )
+        {
+            FindByNumbers();
+        }
     }
     private void FindByNumbersNumberTypeLabel_Click(object sender, EventArgs e)
     {
@@ -23560,6 +23621,17 @@ public partial class MainForm : Form, ISubscriber
 
                 FindByNumbersControls_Enter(null, null);
             }
+        }
+
+        UpdateFindByNumbersResultType();
+        // some operations take too long and may frustrate user
+        if (
+            (m_numbers_result_type != NumbersResultType.WordRanges) &&
+            (m_numbers_result_type != NumbersResultType.VerseRanges) &&
+            (m_numbers_result_type != NumbersResultType.ChapterRanges)
+           )
+        {
+            FindByNumbers();
         }
     }
     private void FindByNumbersControl_EnabledChanged(object sender, EventArgs e)

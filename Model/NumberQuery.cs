@@ -126,7 +126,7 @@ namespace Model
         private bool IsValidNumberSearch()
         {
             return (
-                    (Number > 0) ||
+                    (Number != 0) ||
                     (NumberNumberType != NumberType.None)
                    );
         }
