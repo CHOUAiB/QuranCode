@@ -411,9 +411,9 @@ public class Server : IPublisher
 
                     // simplify verse texts
                     List<string> verse_texts = new List<string>();
-                    foreach (string original_verse_text in texts)
+                    foreach (string text in texts)
                     {
-                        string verse_text = s_simplification_system.Simplify(original_verse_text);
+                        string verse_text = s_simplification_system.Simplify(text);
                         verse_texts.Add(verse_text);
                     }
 
@@ -9234,7 +9234,7 @@ public class Server : IPublisher
                             break;
                     }
                 }
-                
+
                 if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
@@ -9244,7 +9244,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    return false; // prevent matching all letters of a word when L number = -N where N > word.Letters.Count
+                    return false; // number_out_of_range
                 }
             }
             else
@@ -9309,7 +9309,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    //return false;
+                    return false; // number_out_of_range
                 }
             }
             else
@@ -9420,7 +9420,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit sum
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(word); }
@@ -9430,7 +9429,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digital root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(word); }
@@ -9486,10 +9484,6 @@ public class Server : IPublisher
                     {
                         return false;
                     }
-                }
-                else
-                {
-                    //return false;
                 }
             }
             else
@@ -9625,7 +9619,6 @@ public class Server : IPublisher
             }
 
 
-            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L)
@@ -9641,7 +9634,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L)
@@ -9741,7 +9733,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(sentence); }
@@ -9751,7 +9742,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digital roots
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(sentence); }
@@ -9800,7 +9790,7 @@ public class Server : IPublisher
                             break;
                     }
                 }
-                
+
                 if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
@@ -9810,7 +9800,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    //return false;
+                    return false; // number_out_of_range
                 }
             }
             else
@@ -9971,7 +9961,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(verse); }
@@ -9981,7 +9970,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digital roots
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(verse); }
@@ -10031,10 +10019,6 @@ public class Server : IPublisher
                     {
                         return false;
                     }
-                }
-                else
-                {
-                    //return false;
                 }
             }
             else
@@ -10222,7 +10206,6 @@ public class Server : IPublisher
             }
 
 
-            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L)
@@ -10238,7 +10221,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L)
@@ -10269,7 +10251,7 @@ public class Server : IPublisher
                 {
                     query.Number = number + query.Number + 1;
                 }
-                
+
                 if (query.Number > 0)
                 {
                     if (!Numbers.Compare(number, query.Number, query.NumberComparisonOperator, query.NumberRemainder))
@@ -10279,7 +10261,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    //return false;
+                    return false; // number_out_of_range
                 }
             }
             else
@@ -10489,7 +10471,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L) { value = CalculateValue(chapter); }
@@ -10499,7 +10480,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digital roots
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L) { value = CalculateValue(chapter); }
@@ -10531,10 +10511,6 @@ public class Server : IPublisher
                     {
                         return false;
                     }
-                }
-                else
-                {
-                    //return false;
                 }
             }
             else
@@ -10773,7 +10749,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit sums
             if (query.ValueDigitSum > 0)
             {
                 if (value == 0L)
@@ -10789,7 +10764,6 @@ public class Server : IPublisher
                 }
             }
 
-            // value digit root
             if (query.ValueDigitalRoot > 0)
             {
                 if (value == 0L)

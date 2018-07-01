@@ -1620,7 +1620,7 @@ partial class MainForm
             this.LetterFrequencyInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("LetterFrequencyInspectLabel.Image")));
             this.LetterFrequencyInspectLabel.Location = new System.Drawing.Point(128, 3);
             this.LetterFrequencyInspectLabel.Name = "LetterFrequencyInspectLabel";
-            this.LetterFrequencyInspectLabel.Size = new System.Drawing.Size(23, 21);
+            this.LetterFrequencyInspectLabel.Size = new System.Drawing.Size(20, 21);
             this.LetterFrequencyInspectLabel.TabIndex = 17;
             this.ToolTip.SetToolTip(this.LetterFrequencyInspectLabel, "Inspect letter frequencies");
             this.LetterFrequencyInspectLabel.Click += new System.EventHandler(this.LetterFrequencyInspectLabel_Click);

@@ -25942,7 +25942,7 @@ public partial class MainForm : Form, ISubscriber
                                         int red = 255;
                                         int green = 255;
                                         int blue = 255;
-                                        green -= ((match_count - 1) * 32);
+                                        green -= ((match_count - 1) * 8);
                                         if (green < 0)
                                         {
                                             red += green;

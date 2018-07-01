@@ -350,11 +350,14 @@ public static class DataAccess
                                     int word_count = 0;
                                     if (verse.Words != null)
                                     {
-                                        foreach (Word word in verse.Words)
+                                        if (verse.Book.WawAsWord)
                                         {
-                                            if (word.Text != "و") // WawAsWord
+                                            foreach (Word word in verse.Words)
                                             {
-                                                word_count++;
+                                                if (word.Text != "و") // WawAsWord
+                                                {
+                                                    word_count++;
+                                                }
                                             }
                                         }
 
@@ -382,8 +385,11 @@ public static class DataAccess
                                             }
                                             else
                                             {
-                                                word.Meaning = parts[i];
-                                                i++;
+                                                if ((i >= 0) && (i < parts.Length))
+                                                {
+                                                    word.Meaning = parts[i];
+                                                    i++;
+                                                }
                                             }
                                         }
                                     }
