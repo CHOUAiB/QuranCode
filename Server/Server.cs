@@ -10249,6 +10249,19 @@ public class Server : IPublisher
             {
                 if (query.Number < 0)
                 {
+                    switch (query.NumberScope)
+                    {
+                        case NumberScope.Number:
+                            query.Number = Book.Chapters.Count + query.Number + 1;
+                            break;
+                        default:
+                            query.Number = Book.Chapters.Count + query.Number + 1;
+                            break;
+                    }
+                }
+
+                if (query.Number < 0)
+                {
                     query.Number = number + query.Number + 1;
                 }
 
