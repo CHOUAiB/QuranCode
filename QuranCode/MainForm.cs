@@ -22357,8 +22357,8 @@ public partial class MainForm : Form, ISubscriber
         m_numbers_result_type = NumbersResultType.Letters;
         //                          num   Cs     Vs     Ws    Ls    uLs   value dsum  droot
         EnableFindByNumbersControls(true, false, false, false, false, false, false, false, false);
-
         FindByNumbersControls_Enter(null, null);
+        //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22395,8 +22395,8 @@ public partial class MainForm : Form, ISubscriber
         m_numbers_result_type = NumbersResultType.Words;
         //                          num   Cs     Vs     Ws    Ls    uLs   value dsum  droot
         EnableFindByNumbersControls(true, false, false, true, true, true, true, true, true);
-
         FindByNumbersControls_Enter(null, null);
+        //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22433,8 +22433,8 @@ public partial class MainForm : Form, ISubscriber
         m_numbers_result_type = NumbersResultType.Sentences;
         //                           num   Cs     Vs     Ws    Ls    uLs   value dsum  droot
         EnableFindByNumbersControls(true, false, false, true, true, true, true, true, true);
-
         FindByNumbersControls_Enter(null, null);
+        //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22471,8 +22471,8 @@ public partial class MainForm : Form, ISubscriber
         m_numbers_result_type = NumbersResultType.Verses;
         //                           num   Cs     Vs    Ws    Ls    uLs   value dsum  droot
         EnableFindByNumbersControls(true, false, true, true, true, true, true, true, true);
-
         FindByNumbersControls_Enter(null, null);
+        //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22509,8 +22509,8 @@ public partial class MainForm : Form, ISubscriber
         m_numbers_result_type = NumbersResultType.Chapters;
         //                           num   Cs    Vs    Ws    Ls    uLs   value dsum  droot
         EnableFindByNumbersControls(true, true, true, true, true, true, true, true, true);
-
         FindByNumbersControls_Enter(null, null);
+        //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
 
         FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -22712,18 +22712,23 @@ public partial class MainForm : Form, ISubscriber
     }
     private void ResetFindByNumbersResultTypeLabels()
     {
+        FindByNumbersResultTypeLettersLabel.Text = "L";
         FindByNumbersResultTypeLettersLabel.BackColor = Color.DarkGray;
         FindByNumbersResultTypeLettersLabel.BorderStyle = BorderStyle.None;
 
+        FindByNumbersResultTypeWordsLabel.Text = "W";
         FindByNumbersResultTypeWordsLabel.BackColor = Color.DarkGray;
         FindByNumbersResultTypeWordsLabel.BorderStyle = BorderStyle.None;
 
+        FindByNumbersResultTypeSentencesLabel.Text = "S";
         FindByNumbersResultTypeSentencesLabel.BackColor = Color.DarkGray;
         FindByNumbersResultTypeSentencesLabel.BorderStyle = BorderStyle.None;
 
+        FindByNumbersResultTypeVersesLabel.Text = "V";
         FindByNumbersResultTypeVersesLabel.BackColor = Color.DarkGray;
         FindByNumbersResultTypeVersesLabel.BorderStyle = BorderStyle.None;
 
+        FindByNumbersResultTypeChaptersLabel.Text = "C";
         FindByNumbersResultTypeChaptersLabel.BackColor = Color.DarkGray;
         FindByNumbersResultTypeChaptersLabel.BorderStyle = BorderStyle.None;
     }
@@ -22747,6 +22752,57 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateFindByNumbersResultType()
     {
+        // toggle between normal and range types
+        switch (m_numbers_result_type)
+        {
+            case NumbersResultType.Words:
+            case NumbersResultType.WordRanges:
+                {
+                    if ((FindByNumbersWordsNumericUpDown.Value == 1) && (FindByNumbersWordsNumberTypeLabel.Text.Length == 0))
+                    {
+                        m_numbers_result_type = NumbersResultType.Words;
+                    }
+                    else if ((FindByNumbersWordsNumericUpDown.Value > 1) || (FindByNumbersWordsNumberTypeLabel.Text.Length > 0))
+                    {
+                        m_numbers_result_type = NumbersResultType.WordRanges;
+                    }
+                }
+                break;
+            case NumbersResultType.Sentences:
+                {
+                    m_numbers_result_type = NumbersResultType.Sentences;
+                }
+                break;
+            case NumbersResultType.Verses:
+            case NumbersResultType.VerseRanges:
+                {
+                    if ((FindByNumbersVersesNumericUpDown.Value == 1) && (FindByNumbersVersesNumberTypeLabel.Text.Length == 0))
+                    {
+                        m_numbers_result_type = NumbersResultType.Verses;
+                    }
+                    else if ((FindByNumbersVersesNumericUpDown.Value > 1) || (FindByNumbersVersesNumberTypeLabel.Text.Length > 0))
+                    {
+                        m_numbers_result_type = NumbersResultType.VerseRanges;
+                    }
+                }
+                break;
+            case NumbersResultType.Chapters:
+            case NumbersResultType.ChapterRanges:
+                {
+                    if ((FindByNumbersChaptersNumericUpDown.Value == 1) && (FindByNumbersChaptersNumberTypeLabel.Text.Length == 0))
+                    {
+                        m_numbers_result_type = NumbersResultType.Chapters;
+                    }
+                    else if ((FindByNumbersChaptersNumericUpDown.Value > 1) || (FindByNumbersChaptersNumberTypeLabel.Text.Length > 0))
+                    {
+                        m_numbers_result_type = NumbersResultType.ChapterRanges;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
         if (L != null)
         {
             if (L.ContainsKey(l))
@@ -23595,7 +23651,12 @@ public partial class MainForm : Form, ISubscriber
         UpdateNumberTypeLabelTags();
 
         // some operations take too long and may frustrate user
-        if (sender is NumericUpDown)
+        if (
+            (sender is NumericUpDown) &&
+            (m_numbers_result_type != NumbersResultType.WordRanges) &&
+            (m_numbers_result_type != NumbersResultType.VerseRanges) &&
+            (m_numbers_result_type != NumbersResultType.ChapterRanges)
+           )
         {
             FindByNumbers();
         }
