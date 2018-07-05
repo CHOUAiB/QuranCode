@@ -27663,25 +27663,8 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (m_selection_mode)
                         {
-                            if (m_found_verses_displayed)
-                            {
-                                if (m_client.FoundVerses != null)
-                                {
-                                    CalculateAndDisplayCounts(m_client.FoundVerses);
-                                    CalculateValueAndDisplayFactors(m_client.FoundVerses);
-                                }
-                            }
-                            else
-                            {
-                                if (m_client.Selection != null)
-                                {
-                                    if (m_client.Selection.Verses != null)
-                                    {
-                                        CalculateAndDisplayCounts(m_client.Selection.Verses);
-                                        CalculateValueAndDisplayFactors(m_client.Selection.Verses);
-                                    }
-                                }
-                            }
+                            CalculateAndDisplayCounts();
+                            CalculateValueAndDisplayFactors();
                         }
                         else // cursor inside line OR some text is highlighted
                         {
@@ -27694,23 +27677,7 @@ public partial class MainForm : Form, ISubscriber
                                     {
                                         if (m_total_chapter_counts)
                                         {
-                                            if (m_found_verses_displayed)
-                                            {
-                                                if (m_client.FoundVerses != null)
-                                                {
-                                                    CalculateAndDisplayCounts(m_client.FoundVerses);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (m_client.Selection != null)
-                                                {
-                                                    if (m_client.Selection.Verses != null)
-                                                    {
-                                                        CalculateAndDisplayCounts(m_client.Selection.Verses);
-                                                    }
-                                                }
-                                            }
+                                            CalculateAndDisplayCounts();
                                         }
                                         else
                                         {
@@ -27964,8 +27931,30 @@ public partial class MainForm : Form, ISubscriber
             FactorizeValue(value, false);
         }
     }
-    private void CalculateValueAndDisplayFactors(List<Verse> verses)
+    private void CalculateValueAndDisplayFactors()
     {
+        List<Verse> verses = null;
+        if (m_found_verses_displayed)
+        {
+            if (m_client != null)
+            {
+                verses = m_client.FoundVerses;
+            }
+        }
+        else
+        {
+            if (m_client != null)
+            {
+                if (m_client.Selection != null)
+                {
+                    if (m_client.Selection.Verses != null)
+                    {
+                        verses = m_client.Selection.Verses;
+                    }
+                }
+            }
+        }
+
         if (m_client != null)
         {
             long value = m_client.CalculateValue(verses);
@@ -29548,22 +29537,41 @@ public partial class MainForm : Form, ISubscriber
             DisplayMathsChapterVerseSums(new List<Verse>() { verse }); // update C, V, C+V, C-V, C×V, C÷V, etc.
         }
     }
-    private void CalculateAndDisplayCounts(List<Verse> verses)
+    private void CalculateAndDisplayCounts()
     {
-        if (verses != null)
+        if (m_total_chapter_counts)
         {
-            if (m_total_chapter_counts)
-            {
-                CalculateAndDisplayCountsTotal(verses);
-            }
-            else
-            {
-                CalculateAndDisplayCountsLocal(verses);
-            }
+            CalculateAndDisplayCountsTotal();
+        }
+        else
+        {
+            CalculateAndDisplayCountsLocal();
         }
     }
-    private void CalculateAndDisplayCountsLocal(List<Verse> verses)
+    private void CalculateAndDisplayCountsLocal()
     {
+        List<Verse> verses = null;
+        if (m_found_verses_displayed)
+        {
+            if (m_client != null)
+            {
+                verses = m_client.FoundVerses;
+            }
+        }
+        else
+        {
+            if (m_client != null)
+            {
+                if (m_client.Selection != null)
+                {
+                    if (m_client.Selection.Verses != null)
+                    {
+                        verses = m_client.Selection.Verses;
+                    }
+                }
+            }
+        }
+
         if (verses != null)
         {
             if (m_client != null)
@@ -29623,8 +29631,30 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void CalculateAndDisplayCountsTotal(List<Verse> verses)
+    private void CalculateAndDisplayCountsTotal()
     {
+        List<Verse> verses = null;
+        if (m_found_verses_displayed)
+        {
+            if (m_client != null)
+            {
+                verses = m_client.FoundVerses;
+            }
+        }
+        else
+        {
+            if (m_client != null)
+            {
+                if (m_client.Selection != null)
+                {
+                    if (m_client.Selection.Verses != null)
+                    {
+                        verses = m_client.Selection.Verses;
+                    }
+                }
+            }
+        }
+
         if (verses != null)
         {
             if (m_client != null)
