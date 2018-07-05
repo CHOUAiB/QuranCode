@@ -2103,35 +2103,28 @@ public static class Numbers
     private static string s_deficients_filename = "deficient_numbers.txt";
     private static void LoadDeficients()
     {
-        try
+        string filename = Globals.NUMBERS_FOLDER + "/" + s_deficients_filename;
+        if (File.Exists(filename))
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + s_deficients_filename;
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
+            FileHelper.WaitForReady(filename);
 
-                s_deficients = new List<long>();
-                using (StreamReader reader = new StreamReader(filename))
+            s_deficients = new List<long>();
+            using (StreamReader reader = new StreamReader(filename))
+            {
+                string line = "";
+                while (!reader.EndOfStream)
                 {
-                    string line = "";
-                    while (!reader.EndOfStream)
+                    try
                     {
-                        try
-                        {
-                            line = reader.ReadLine();
-                            s_deficients.Add(long.Parse(line));
-                        }
-                        catch
-                        {
-                            // ignore non-long line
-                        }
+                        line = reader.ReadLine();
+                        s_deficients.Add(long.Parse(line));
+                    }
+                    catch
+                    {
+                        // ignore non-long line
                     }
                 }
             }
-        }
-        catch
-        {
-            // silence error
         }
     }
     private static void SaveDeficients()
@@ -2167,35 +2160,28 @@ public static class Numbers
     private static string s_perfect_numbers_filename = "perfect_numbers.txt";
     public static void LoadPerfectNumbers()
     {
-        try
+        string filename = Globals.NUMBERS_FOLDER + "/" + s_perfect_numbers_filename;
+        if (File.Exists(filename))
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + s_perfect_numbers_filename;
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
+            FileHelper.WaitForReady(filename);
 
-                PerfectNumbers = new List<long>();
-                using (StreamReader reader = new StreamReader(filename))
+            PerfectNumbers = new List<long>();
+            using (StreamReader reader = new StreamReader(filename))
+            {
+                string line = "";
+                while (!reader.EndOfStream)
                 {
-                    string line = "";
-                    while (!reader.EndOfStream)
+                    try
                     {
-                        try
-                        {
-                            line = reader.ReadLine();
-                            PerfectNumbers.Add(long.Parse(line));
-                        }
-                        catch
-                        {
-                            // ignore non-long line
-                        }
+                        line = reader.ReadLine();
+                        PerfectNumbers.Add(long.Parse(line));
+                    }
+                    catch
+                    {
+                        break;
                     }
                 }
             }
-        }
-        catch
-        {
-            // silence error
         }
     }
 
@@ -2243,35 +2229,28 @@ public static class Numbers
     private static string s_abundants_filename = "abundants_numbers.txt";
     private static void LoadAbundants()
     {
-        try
+        string filename = Globals.NUMBERS_FOLDER + "/" + s_abundants_filename;
+        if (File.Exists(filename))
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + s_abundants_filename;
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
+            FileHelper.WaitForReady(filename);
 
-                s_abundants = new List<long>();
-                using (StreamReader reader = new StreamReader(filename))
+            s_abundants = new List<long>();
+            using (StreamReader reader = new StreamReader(filename))
+            {
+                string line = "";
+                while (!reader.EndOfStream)
                 {
-                    string line = "";
-                    while (!reader.EndOfStream)
+                    try
                     {
-                        try
-                        {
-                            line = reader.ReadLine();
-                            s_abundants.Add(long.Parse(line));
-                        }
-                        catch
-                        {
-                            // ignore non-long line
-                        }
+                        line = reader.ReadLine();
+                        s_abundants.Add(long.Parse(line));
+                    }
+                    catch
+                    {
+                        // ignore non-long line
                     }
                 }
             }
-        }
-        catch
-        {
-            // silence error
         }
     }
     private static void SaveAbundants()

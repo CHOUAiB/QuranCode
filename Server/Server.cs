@@ -1329,10 +1329,55 @@ public class Server : IPublisher
             else
             {
                 // adjust value of letter
-                result += AdjustLetterValue(letter);
+                result += AdjustValue(letter);
 
                 // calculate the letter static value
                 result += s_numerology_system.CalculateValue(letter.Character);
+            }
+        }
+        return result;
+    }
+    public static long CalculateValue(List<Letter> letters)
+    {
+        if (letters == null) return 0L;
+        if (letters.Count == 0) return 0L;
+
+        long result = 0L;
+        if (s_numerology_system != null)
+        {
+            // adjust value of words
+            List<Word> words = GetCompleteWords(letters);
+            if (words != null)
+            {
+                foreach (Word word in words)
+                {
+                    result += AdjustValue(word);
+                }
+            }
+
+            // adjust value of verses
+            List<Verse> verses = GetCompleteVerses(words);
+            if (verses != null)
+            {
+                foreach (Verse verse in verses)
+                {
+                    result += AdjustValue(verse);
+                }
+            }
+
+            // adjust value of chapters
+            List<Chapter> chapters = GetCompleteChapters(verses);
+            if (chapters != null)
+            {
+                foreach (Chapter chapter in chapters)
+                {
+                    result += AdjustValue(chapter);
+                }
+            }
+
+            foreach (Letter letter in letters)
+            {
+                result += CalculateValue(letter);
             }
         }
         return result;
@@ -1369,20 +1414,55 @@ public class Server : IPublisher
                 // adjust value of verse
                 if (word.Verse.Words.Count == 1)
                 {
-                    result += AdjustVerseValue(word.Verse);
+                    result += AdjustValue(word.Verse);
                 }
 
                 // adjust value of word
-                result += AdjustWordValue(word);
+                result += AdjustValue(word);
 
                 foreach (Letter letter in word.Letters)
                 {
                     // adjust value of letter
-                    result += AdjustLetterValue(letter);
+                    result += AdjustValue(letter);
 
                     // calculate the letter static value
                     result += s_numerology_system.CalculateValue(letter.Character);
                 }
+            }
+        }
+        return result;
+    }
+    public static long CalculateValue(List<Word> words)
+    {
+        if (words == null) return 0L;
+        if (words.Count == 0) return 0L;
+
+        long result = 0L;
+        if (s_numerology_system != null)
+        {
+            // adjust value of verses
+            List<Verse> verses = GetCompleteVerses(words);
+            if (verses != null)
+            {
+                foreach (Verse verse in verses)
+                {
+                    result += AdjustValue(verse);
+                }
+            }
+
+            // adjust value of chapters
+            List<Chapter> chapters = GetCompleteChapters(verses);
+            if (chapters != null)
+            {
+                foreach (Chapter chapter in chapters)
+                {
+                    result += AdjustValue(chapter);
+                }
+            }
+
+            foreach (Word word in words)
+            {
+                result += CalculateValue(word);
             }
         }
         return result;
@@ -1431,7 +1511,7 @@ public class Server : IPublisher
                 {
                     foreach (Verse verse in verses)
                     {
-                        result += AdjustVerseValue(verse);
+                        result += AdjustValue(verse);
                     }
                 }
 
@@ -1441,105 +1521,18 @@ public class Server : IPublisher
                     foreach (Word word in words)
                     {
                         // adjust value of word
-                        result += AdjustWordValue(word);
+                        result += AdjustValue(word);
 
                         foreach (Letter letter in word.Letters)
                         {
                             // adjust value of letter
-                            result += AdjustLetterValue(letter);
+                            result += AdjustValue(letter);
 
                             // calculate the letter static value
                             result += s_numerology_system.CalculateValue(letter.Character);
                         }
                     }
                 }
-            }
-        }
-        return result;
-    }
-    private static List<Word> GetCompleteWords(Sentence sentence)
-    {
-        if (sentence == null) return null;
-
-        List<Word> result = new List<Word>();
-        if (sentence.FirstVerse.Number == sentence.LastVerse.Number)
-        {
-            foreach (Word word in sentence.FirstVerse.Words)
-            {
-                if ((word.Position >= sentence.StartPosition) && (word.Position < sentence.EndPosition))
-                {
-                    result.Add(word);
-                }
-            }
-        }
-        else // multi-verse
-        {
-            // first verse
-            foreach (Word word in sentence.FirstVerse.Words)
-            {
-                if (word.Position >= sentence.StartPosition)
-                {
-                    result.Add(word);
-                }
-            }
-
-            // middle verses
-            int after_first_index = (sentence.FirstVerse.Number + 1) - 1;
-            int before_last_index = (sentence.LastVerse.Number - 1) - 1;
-            if (after_first_index <= before_last_index)
-            {
-                for (int i = after_first_index; i <= before_last_index; i++)
-                {
-                    result.AddRange(sentence.FirstVerse.Book.Verses[i].Words);
-                }
-            }
-
-            // last verse
-            foreach (Word word in sentence.LastVerse.Words)
-            {
-                if (word.Position < sentence.EndPosition) // not <= because EndPosition is after the start of the last word in the sentence
-                {
-                    result.Add(word);
-                }
-            }
-        }
-        return result;
-    }
-    private static List<Verse> GetCompleteVerses(Sentence sentence)
-    {
-        if (sentence == null) return null;
-
-        List<Verse> result = new List<Verse>();
-        if (sentence.FirstVerse.Number == sentence.LastVerse.Number)
-        {
-            if ((sentence.StartPosition == 0) && (sentence.EndPosition == sentence.Text.Length - 1))
-            {
-                result.Add(sentence.FirstVerse);
-            }
-        }
-        else // multi-verse
-        {
-            // first verse
-            if (sentence.StartPosition == 0)
-            {
-                result.Add(sentence.FirstVerse);
-            }
-
-            // middle verses
-            int after_first_index = (sentence.FirstVerse.Number + 1) - 1;
-            int before_last_index = (sentence.LastVerse.Number - 1) - 1;
-            if (after_first_index <= before_last_index)
-            {
-                for (int i = after_first_index; i <= before_last_index; i++)
-                {
-                    result.Add(sentence.FirstVerse.Book.Verses[i]);
-                }
-            }
-
-            // last verse
-            if (sentence.EndPosition == sentence.LastVerse.Text.Length - 1)
-            {
-                result.Add(sentence.LastVerse);
             }
         }
         return result;
@@ -1578,17 +1571,17 @@ public class Server : IPublisher
             else
             {
                 // adjust value of verse
-                result += AdjustVerseValue(verse);
+                result += AdjustValue(verse);
 
                 foreach (Word word in verse.Words)
                 {
                     // adjust value of word
-                    result += AdjustWordValue(word);
+                    result += AdjustValue(word);
 
                     foreach (Letter letter in word.Letters)
                     {
                         // adjust value of letter
-                        result += AdjustLetterValue(letter);
+                        result += AdjustValue(letter);
 
                         // calculate the letter static value
                         result += s_numerology_system.CalculateValue(letter.Character);
@@ -1607,12 +1600,12 @@ public class Server : IPublisher
         if (s_numerology_system != null)
         {
             // adjust value of chapters
-            List<Chapter> chapters = GetCompleteChapters(verses, 0, verses[verses.Count - 1].LetterCount - 1);
+            List<Chapter> chapters = GetCompleteChapters(verses);
             if (chapters != null)
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    result += AdjustChapterValue(chapter);
+                    result += AdjustValue(chapter);
                 }
             }
 
@@ -1632,6 +1625,27 @@ public class Server : IPublisher
         {
             result = CalculateValue(chapter.Verses);
             chapter.Value = result; // update chapter values for ChapterSortMethod.ByValue
+        }
+        return result;
+    }
+    public static long CalculateValue(List<Chapter> chapters)
+    {
+        if (chapters == null) return 0L;
+        if (chapters.Count == 0) return 0L;
+
+        long result = 0L;
+        if (s_numerology_system != null)
+        {
+            // adjust value of chapters
+            foreach (Chapter chapter in chapters)
+            {
+                result += AdjustValue(chapter);
+            }
+
+            foreach (Chapter chapter in chapters)
+            {
+                result += CalculateValue(chapter);
+            }
         }
         return result;
     }
@@ -1663,7 +1677,7 @@ public class Server : IPublisher
             {
                 foreach (Chapter chapter in chapters)
                 {
-                    result += AdjustChapterValue(chapter);
+                    result += AdjustValue(chapter);
                 }
             }
 
@@ -1751,7 +1765,7 @@ public class Server : IPublisher
                 // adjust value of verse
                 if ((from_letter_index == 0) && (to_letter_index == verse.LetterCount - 1))
                 {
-                    result += AdjustVerseValue(verse);
+                    result += AdjustValue(verse);
                 }
 
                 int word_index = -1;   // in verse
@@ -1769,7 +1783,7 @@ public class Server : IPublisher
                             (to_letter_index >= word.Letters[word.Letters.Count - 1].NumberInVerse - 1) // if selection ends   at or after  last  letter in word
                            )
                         {
-                            result += AdjustWordValue(word);
+                            result += AdjustValue(word);
                         }
 
                         foreach (Letter letter in word.Letters)
@@ -1784,7 +1798,7 @@ public class Server : IPublisher
                             }
 
                             // adjust value of letter
-                            result += AdjustLetterValue(letter);
+                            result += AdjustValue(letter);
 
                             // calculate the letter static value
                             result += s_numerology_system.CalculateValue(letter.Character);
@@ -1801,47 +1815,227 @@ public class Server : IPublisher
     {
         return CalculateMiddlePartValue(verse, from_letter_index, verse.LetterCount - 1);
     }
+    // get complete words/verses/chapters
+    private static List<Word> GetCompleteWords(List<Letter> letters)
+    {
+        if (letters == null) return null;
+        if (letters.Count == 0) return null;
+
+        List<Word> result = new List<Word>();
+        for (int i = 0; i < letters.Count; i++)
+        {
+            bool complete = true;
+            Word word = letters[i].Word;
+            foreach (Letter letter in word.Letters)
+            {
+                if (!letters.Contains(letter))
+                {
+                    complete = false;
+                    break;
+                }
+            }
+            if (complete)
+            {
+                if (!result.Contains(word))
+                {
+                    result.Add(word);
+                }
+                i += word.Letters.Count;
+            }
+        }
+
+        return result;
+    }
+    private static List<Word> GetCompleteWords(Sentence sentence)
+    {
+        if (sentence == null) return null;
+        if (String.IsNullOrEmpty(sentence.Text)) return null;
+
+        List<Word> result = new List<Word>();
+        if (sentence.FirstVerse.Number == sentence.LastVerse.Number)
+        {
+            foreach (Word word in sentence.FirstVerse.Words)
+            {
+                if ((word.Position >= sentence.StartPosition) && (word.Position < sentence.EndPosition))
+                {
+                    result.Add(word);
+                }
+            }
+        }
+        else // multi-verse
+        {
+            // first verse
+            foreach (Word word in sentence.FirstVerse.Words)
+            {
+                if (word.Position >= sentence.StartPosition)
+                {
+                    result.Add(word);
+                }
+            }
+
+            // middle verses
+            int after_first_index = (sentence.FirstVerse.Number + 1) - 1;
+            int before_last_index = (sentence.LastVerse.Number - 1) - 1;
+            if (after_first_index <= before_last_index)
+            {
+                for (int i = after_first_index; i <= before_last_index; i++)
+                {
+                    result.AddRange(sentence.FirstVerse.Book.Verses[i].Words);
+                }
+            }
+
+            // last verse
+            foreach (Word word in sentence.LastVerse.Words)
+            {
+                if (word.Position < sentence.EndPosition) // not <= because EndPosition is after the start of the last word in the sentence
+                {
+                    result.Add(word);
+                }
+            }
+        }
+        return result;
+    }
+    private static List<Verse> GetCompleteVerses(List<Word> words)
+    {
+        if (words == null) return null;
+        if (words.Count == 0) return null;
+
+        List<Verse> result = new List<Verse>();
+        for (int i = 0; i < words.Count; i++)
+        {
+            bool complete = true;
+            Verse verse = words[i].Verse;
+            foreach (Word word in verse.Words)
+            {
+                if (!words.Contains(word))
+                {
+                    complete = false;
+                    break;
+                }
+            }
+            if (complete)
+            {
+                if (!result.Contains(verse))
+                {
+                    result.Add(verse);
+                }
+                i += verse.Words.Count;
+            }
+        }
+
+        return result;
+    }
+    private static List<Verse> GetCompleteVerses(Sentence sentence)
+    {
+        if (sentence == null) return null;
+        if (String.IsNullOrEmpty(sentence.Text)) return null;
+
+        List<Verse> result = new List<Verse>();
+        if (sentence.FirstVerse.Number == sentence.LastVerse.Number)
+        {
+            if ((sentence.StartPosition == 0) && (sentence.EndPosition == sentence.Text.Length - 1))
+            {
+                result.Add(sentence.FirstVerse);
+            }
+        }
+        else // multi-verse
+        {
+            // first verse
+            if (sentence.StartPosition == 0)
+            {
+                result.Add(sentence.FirstVerse);
+            }
+
+            // middle verses
+            int after_first_index = (sentence.FirstVerse.Number + 1) - 1;
+            int before_last_index = (sentence.LastVerse.Number - 1) - 1;
+            if (after_first_index <= before_last_index)
+            {
+                for (int i = after_first_index; i <= before_last_index; i++)
+                {
+                    result.Add(sentence.FirstVerse.Book.Verses[i]);
+                }
+            }
+
+            // last verse
+            if (sentence.EndPosition == sentence.LastVerse.Text.Length - 1)
+            {
+                result.Add(sentence.LastVerse);
+            }
+        }
+        return result;
+    }
+    private static List<Chapter> GetCompleteChapters(List<Verse> verses)
+    {
+        if (verses == null) return null;
+        if (verses.Count == 0) return null;
+
+        List<Chapter> result = new List<Chapter>();
+        for (int i = 0; i < verses.Count; i++)
+        {
+            bool complete = true;
+            Chapter chapter = verses[i].Chapter;
+            foreach (Verse verse in chapter.Verses)
+            {
+                if (!verses.Contains(verse))
+                {
+                    complete = false;
+                    break;
+                }
+            }
+            if (complete)
+            {
+                if (!result.Contains(chapter))
+                {
+                    result.Add(chapter);
+                }
+                i += chapter.Verses.Count;
+            }
+        }
+
+        return result;
+    }
     private static List<Chapter> GetCompleteChapters(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2)
     {
         if (verses == null) return null;
         if (verses.Count == 0) return null;
 
         List<Chapter> result = new List<Chapter>();
-        List<Verse> complete_verses = new List<Verse>(verses); // make a copy so we don't change the passed verses
+        List<Verse> copy_verses = new List<Verse>(verses); // make a copy so we don't change the passed verses
 
-        if (complete_verses != null)
+        if (copy_verses != null)
         {
-            if (complete_verses.Count > 0)
+            if (copy_verses.Count > 0)
             {
-                Verse first_verse = complete_verses[0];
+                Verse first_verse = copy_verses[0];
                 if (first_verse != null)
                 {
                     if (letter_index_in_verse1 != 0)
                     {
-                        complete_verses.Remove(first_verse);
+                        copy_verses.Remove(first_verse);
                     }
                 }
 
-                if (complete_verses.Count > 0) // check again after maybe removing a verse
+                if (copy_verses.Count > 0) // check again after maybe removing a verse
                 {
-                    Verse last_verse = complete_verses[complete_verses.Count - 1];
+                    Verse last_verse = copy_verses[copy_verses.Count - 1];
                     if (last_verse != null)
                     {
                         if (letter_index_in_verse2 != last_verse.LetterCount - 1)
                         {
-                            complete_verses.Remove(last_verse);
+                            copy_verses.Remove(last_verse);
                         }
                     }
                 }
 
-                if (complete_verses.Count > 0) // check again after maybe removing a verse
+                if (copy_verses.Count > 0) // check again after maybe removing a verse
                 {
                     foreach (Chapter chapter in s_book.Chapters)
                     {
                         bool include_chapter = true;
                         foreach (Verse v in chapter.Verses)
                         {
-                            if (!complete_verses.Contains(v))
+                            if (!copy_verses.Contains(v))
                             {
                                 include_chapter = false;
                                 break;
@@ -1860,7 +2054,7 @@ public class Server : IPublisher
         return result;
     }
     // AddTo... 19 parameters
-    private static long AdjustLetterValue(Letter letter)
+    private static long AdjustValue(Letter letter)
     {
         long result = 0L;
         if (s_numerology_system != null)
@@ -1903,7 +2097,7 @@ public class Server : IPublisher
         }
         return result;
     }
-    private static long AdjustWordValue(Word word)
+    private static long AdjustValue(Word word)
     {
         long result = 0L;
         if (s_numerology_system != null)
@@ -1938,7 +2132,7 @@ public class Server : IPublisher
         }
         return result;
     }
-    private static long AdjustVerseValue(Verse verse)
+    private static long AdjustValue(Verse verse)
     {
         long result = 0L;
         if (s_numerology_system != null)
@@ -1965,7 +2159,7 @@ public class Server : IPublisher
         }
         return result;
     }
-    private static long AdjustChapterValue(Chapter chapter)
+    private static long AdjustValue(Chapter chapter)
     {
         long result = 0L;
         if (s_numerology_system != null)

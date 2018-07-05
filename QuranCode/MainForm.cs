@@ -327,6 +327,8 @@ public partial class MainForm : Form, ISubscriber
                 if (ChapterSortComboBox.SelectedItem != null) ToolTip.SetToolTip(ChapterSortComboBox, L[l][ChapterSortComboBox.SelectedItem.ToString()]);
                 ToolTip.SetToolTip(ChapterSortLabel, L[l][Chapter.SortOrder.ToString()]);
 
+                if (ChapterSelectionComboBox.SelectedItem != null) ToolTip.SetToolTip(ChapterSelectionComboBox, L[l][(m_chapter_selection.ToString() + " " + "chapters")]);
+
                 if (m_found_verses_displayed)
                 {
                     if (m_word_wrap_search_textbox)
@@ -424,8 +426,8 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeStationLabel, L[l]["in stations"]);
             this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizePartLabel, L[l]["in parts"]);
             this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeGroupLabel, L[l]["in groups"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeHalfLabel, L[l]["in group halves"]);
-            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeQuarterLabel, L[l]["in group quarters"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeHalfLabel, L[l]["in halfs"]);
+            this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeQuarterLabel, L[l]["in quarters"]);
             this.ToolTip.SetToolTip(this.FindByTextSearchBlockSizeBowingLabel, L[l]["in bowings"]);
             this.ToolTip.SetToolTip(this.FindByTextExactSearchTypeLabel, L[l]["find exact word or expression"]);
             this.ToolTip.SetToolTip(this.FindByTextProximitySearchTypeLabel, L[l]["find any/all given words"]);
@@ -476,25 +478,25 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.NthAdditiveNumberTextBox, L[l]["Additive prime index"]);
             this.ToolTip.SetToolTip(this.NthNonAdditiveNumberTextBox, L[l]["Non-additive prime index"]);
             this.ToolTip.SetToolTip(this.AdjustValueByPositionsLabel, L[l]["Dynamic Primalogy System - ©2008 Ali Adams"]);
-            this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, L[l]["Add letter number in word"]);
-            this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, L[l]["Add word number in verse"]);
-            this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, L[l]["Add verse number in chapter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, L[l]["Add chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, L[l]["Add letter number in word to each letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, L[l]["Add word number in verse to each letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, L[l]["Add verse number in chapter to each letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, L[l]["Add chapter number in book to each letter"]);
             this.ToolTip.SetToolTip(this.AddToLetterLDistanceCheckBox, L[l]["Add the number of letters back to the same letter"]);
             this.ToolTip.SetToolTip(this.AddToLetterWDistanceCheckBox, L[l]["Add the number of words back to the same letter"]);
             this.ToolTip.SetToolTip(this.AddToLetterVDistanceCheckBox, L[l]["Add the number of verses back to the same letter"]);
             this.ToolTip.SetToolTip(this.AddToLetterCDistanceCheckBox, L[l]["Add the number of chapters back to the same letter"]);
-            this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, L[l]["Add word number in verse"]);
-            this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, L[l]["Add verse number in chapter"]);
-            this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, L[l]["Add chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, L[l]["Add word number in verse to each word"]);
+            this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, L[l]["Add verse number in chapter to each word"]);
+            this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, L[l]["Add chapter number in book to each word"]);
             this.ToolTip.SetToolTip(this.AddToWordWDistanceCheckBox, L[l]["Add the number of words back to the same word"]);
             this.ToolTip.SetToolTip(this.AddToWordVDistanceCheckBox, L[l]["Add the number of verses back to the same word"]);
             this.ToolTip.SetToolTip(this.AddToWordCDistanceCheckBox, L[l]["Add the number of chapters back to the same word"]);
-            this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, L[l]["Add verse number in chapter"]);
-            this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, L[l]["Add chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, L[l]["Add verse number in chapter to each verse"]);
+            this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, L[l]["Add chapter number in book to each verse"]);
             this.ToolTip.SetToolTip(this.AddToVerseVDistanceCheckBox, L[l]["Add the number of verses back to the same verse"]);
             this.ToolTip.SetToolTip(this.AddToVerseCDistanceCheckBox, L[l]["Add the number of chapters back to the same verse"]);
-            this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, L[l]["Add chapter number in book"]);
+            this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, L[l]["Add chapter number in book to each chapter"]);
             this.ToolTip.SetToolTip(this.ChapterComboBox, "C, C-C, C:V, C:V-C, C-C:V, C:V-C:V, ..." + "\r\n" + "36  40-46  15:87  18:9-25  1-2:5  24:35-27:62  2:29,41:9-12");
             this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "V, V-V, ...");
             this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "W, W-W, ...");
@@ -6559,6 +6561,8 @@ public partial class MainForm : Form, ISubscriber
     private void ChapterSelectionComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         m_chapter_selection = (ChapterSelection)(ChapterSelectionComboBox.SelectedIndex);
+        ToolTip.SetToolTip(ChapterSelectionComboBox, L[l][(m_chapter_selection.ToString() + " " + "chapters")]);
+
         DisplayChapterSelection();
         ChapterSelectionComboBox.Focus();
     }
@@ -30515,7 +30519,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         this.PictureBox.Image = m_bitmap;
 
-                        List<long> values = m_client.CalculateAllLetterValues(verses);
+                        List<long> values = m_client.CalculateLetterValues(verses);
                         if (m_drawing_shape == DrawingShape.Cube)
                         {
                             // cubic-root
@@ -30596,7 +30600,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         this.PictureBox.Image = m_bitmap;
 
-                        List<long> values = m_client.CalculateAllWordValues(verses);
+                        List<long> values = m_client.CalculateWordValues(verses);
                         if (m_drawing_shape == DrawingShape.Cube)
                         {
                             // cubic-root

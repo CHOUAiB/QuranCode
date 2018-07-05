@@ -1252,7 +1252,6 @@ partial class MainForm
         this.ChapterSelectionComboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
         this.ChapterSelectionComboBox.Size = new System.Drawing.Size(100, 21);
         this.ChapterSelectionComboBox.TabIndex = 119;
-        this.ToolTip.SetToolTip(this.ChapterSelectionComboBox, "إختيار السور");
         this.ChapterSelectionComboBox.SelectedIndexChanged += new System.EventHandler(this.ChapterSelectionComboBox_SelectedIndexChanged);
         // 
         // VerseDiffTextBox
@@ -4322,7 +4321,7 @@ partial class MainForm
         this.QuarterPositionLabel.Size = new System.Drawing.Size(56, 13);
         this.QuarterPositionLabel.TabIndex = 93;
         this.QuarterPositionLabel.Text = "Quarter";
-        this.ToolTip.SetToolTip(this.QuarterPositionLabel, "Quarter group word symmetry");
+        this.ToolTip.SetToolTip(this.QuarterPositionLabel, "Quarter word symmetry");
         this.QuarterPositionLabel.Click += new System.EventHandler(this.QuarterPositionLabel_Click);
         // 
         // HalfPositionLabel
@@ -4335,7 +4334,7 @@ partial class MainForm
         this.HalfPositionLabel.Size = new System.Drawing.Size(49, 13);
         this.HalfPositionLabel.TabIndex = 92;
         this.HalfPositionLabel.Text = "Half";
-        this.ToolTip.SetToolTip(this.HalfPositionLabel, "Half group word symmetry");
+        this.ToolTip.SetToolTip(this.HalfPositionLabel, "Half word symmetry");
         this.HalfPositionLabel.Click += new System.EventHandler(this.HalfPositionLabel_Click);
         // 
         // GroupPositionLabel

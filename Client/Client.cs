@@ -263,9 +263,17 @@ public class Client : IPublisher, ISubscriber
     {
         return Server.CalculateValue(letter);
     }
+    public long CalculateValue(List<Letter> letters)
+    {
+        return Server.CalculateValue(letters);
+    }
     public long CalculateValue(Word word)
     {
         return Server.CalculateValue(word);
+    }
+    public long CalculateValue(List<Word> words)
+    {
+        return Server.CalculateValue(words);
     }
     public long CalculateValue(Verse verse)
     {
@@ -279,6 +287,10 @@ public class Client : IPublisher, ISubscriber
     {
         return Server.CalculateValue(chapter);
     }
+    public long CalculateValue(List<Chapter> chapters)
+    {
+        return Server.CalculateValue(chapters);
+    }
     public long CalculateValue(Book book)
     {
         return Server.CalculateValue(book);
@@ -287,7 +299,7 @@ public class Client : IPublisher, ISubscriber
     {
         return Server.CalculateValue(verses, letter_index_in_verse1, letter_index_in_verse2);
     }
-    public List<long> CalculateAllVerseValues(List<Verse> verses)
+    public List<long> CalculateVerseValues(List<Verse> verses)
     {
         List<long> result = new List<long>();
         foreach (Verse verse in verses)
@@ -297,7 +309,7 @@ public class Client : IPublisher, ISubscriber
         }
         return result;
     }
-    public List<long> CalculateAllWordValues(List<Verse> verses)
+    public List<long> CalculateWordValues(List<Verse> verses)
     {
         List<long> result = new List<long>();
         foreach (Verse verse in verses)
@@ -310,9 +322,9 @@ public class Client : IPublisher, ISubscriber
         }
         return result;
     }
-    public List<long> CalculateAllLetterValues(List<Verse> verses)
+    public List<long> CalculateLetterValues(List<Verse> verses)
     {
-        List<long> letter_values = new List<long>();
+        List<long> result = new List<long>();
         foreach (Verse verse in verses)
         {
             foreach (Word word in verse.Words)
@@ -320,11 +332,11 @@ public class Client : IPublisher, ISubscriber
                 foreach (Letter letter in word.Letters)
                 {
                     long value = Server.CalculateValue(letter);
-                    letter_values.Add(value);
+                    result.Add(value);
                 }
             }
         }
-        return letter_values;
+        return result;
     }
     public long MaximumVerseValue
     {
