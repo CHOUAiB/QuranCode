@@ -2394,6 +2394,20 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
+                                                            m_client.NumerologySystem.AddDistancesToPrevious = bool.Parse(parts[1].Trim());
+                                                        }
+
+                                                        line = reader.ReadLine();
+                                                        parts = line.Split('=');
+                                                        if (parts.Length >= 2)
+                                                        {
+                                                            m_client.NumerologySystem.AddDistancesToNext = bool.Parse(parts[1].Trim());
+                                                        }
+
+                                                        line = reader.ReadLine();
+                                                        parts = line.Split('=');
+                                                        if (parts.Length >= 2)
+                                                        {
                                                             AddAllCheckBox.Checked = bool.Parse(parts[1].Trim());
                                                         }
                                                     }
@@ -3015,6 +3029,8 @@ public partial class MainForm : Form, ISubscriber
                         writer.WriteLine("AddToVerseVDistance" + "=" + m_client.NumerologySystem.AddToVerseVDistance.ToString());
                         writer.WriteLine("AddToVerseCDistance" + "=" + m_client.NumerologySystem.AddToVerseCDistance.ToString());
                         writer.WriteLine("AddToChapterCNumber" + "=" + m_client.NumerologySystem.AddToChapterCNumber.ToString());
+                        writer.WriteLine("AddDistancesToPrevious" + "=" + m_client.NumerologySystem.AddDistancesToPrevious.ToString());
+                        writer.WriteLine("AddDistancesToNext" + "=" + m_client.NumerologySystem.AddDistancesToNext.ToString());
                         writer.WriteLine("AddAll" + "=" + AddAllCheckBox.Checked.ToString());
                     }
                     writer.WriteLine("MathsDivisor" + "=" + m_maths_divisor);
@@ -27066,6 +27082,28 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
+    private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (m_client != null)
+        {
+            if (m_client.NumerologySystem != null)
+            {
+                m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
+                CalculateCurrentValue();
+            }
+        }
+    }
+    private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (m_client != null)
+        {
+            if (m_client.NumerologySystem != null)
+            {
+                m_client.NumerologySystem.AddDistancesToNext = AddDistancesToNextCheckBox.Checked;
+                CalculateCurrentValue();
+            }
+        }
+    }
     private void AddAllCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         try
@@ -27171,6 +27209,9 @@ public partial class MainForm : Form, ISubscriber
                 m_client.NumerologySystem.AddToVerseVDistance = AddToVerseVDistanceCheckBox.Checked;
                 m_client.NumerologySystem.AddToVerseCDistance = AddToVerseCDistanceCheckBox.Checked;
                 m_client.NumerologySystem.AddToChapterCNumber = AddToChapterCNumberCheckBox.Checked;
+
+                m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
+                m_client.NumerologySystem.AddDistancesToNext = AddDistancesToNextCheckBox.Checked;
             }
         }
     }
@@ -27222,6 +27263,9 @@ public partial class MainForm : Form, ISubscriber
                     AddToVerseVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseVDistance;
                     AddToVerseCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseCDistance;
                     AddToChapterCNumberCheckBox.Checked = m_client.NumerologySystem.AddToChapterCNumber;
+
+                    AddDistancesToPreviousCheckBox.Checked = m_client.NumerologySystem.AddDistancesToPrevious;
+                    AddDistancesToNextCheckBox.Checked = m_client.NumerologySystem.AddDistancesToNext;
                 }
                 finally
                 {
