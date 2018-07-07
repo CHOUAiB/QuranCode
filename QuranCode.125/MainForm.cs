@@ -5411,127 +5411,51 @@ public partial class MainForm : Form, ISubscriber
     private double m_golden_ratio_tolerance = 0.05D;
     private void GoldenRatioScopeLabel_Click(object sender, EventArgs e)
     {
-        if (ModifierKeys == Keys.Shift)
+        switch (m_golden_ratio_scope)
         {
-            switch (m_golden_ratio_scope)
-            {
-                case GoldenRatioScope.None:
+            case GoldenRatioScope.None:
+                {
+                    m_golden_ratio_scope = GoldenRatioScope.Letter;
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
                     {
-                        m_golden_ratio_scope = GoldenRatioScope.Sentence;
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
-                        }
+                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
+                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
                     }
-                    break;
-                case GoldenRatioScope.Letter:
+                }
+                break;
+            case GoldenRatioScope.Letter:
+                {
+                    m_golden_ratio_scope = GoldenRatioScope.Word;
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
                     {
-                        m_golden_ratio_scope = GoldenRatioScope.None;
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
-                        }
+                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
+                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
                     }
-                    break;
-                case GoldenRatioScope.Word:
+                }
+                break;
+            case GoldenRatioScope.Word:
+                {
+                    m_golden_ratio_scope = GoldenRatioScope.Sentence;
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
                     {
-                        m_golden_ratio_scope = GoldenRatioScope.Letter;
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
-                        }
+                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
+                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
                     }
-                    break;
-                case GoldenRatioScope.Sentence:
+                }
+                break;
+            case GoldenRatioScope.Sentence:
+                {
+                    m_golden_ratio_scope = GoldenRatioScope.None;
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
                     {
-                        m_golden_ratio_scope = GoldenRatioScope.Word;
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
-                        }
+                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
+                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
                     }
-                    break;
-            }
-        }
-        else
-        {
-            switch (m_golden_ratio_scope)
-            {
-                case GoldenRatioScope.None:
-                    {
-                        m_golden_ratio_scope = GoldenRatioScope.Letter;
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
-                        }
-                    }
-                    break;
-                case GoldenRatioScope.Letter:
-                    {
-                        m_golden_ratio_scope = GoldenRatioScope.Word;
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
-                        }
-                    }
-                    break;
-                case GoldenRatioScope.Word:
-                    {
-                        m_golden_ratio_scope = GoldenRatioScope.Sentence;
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
-                        }
-                    }
-                    break;
-                case GoldenRatioScope.Sentence:
-                    {
-                        m_golden_ratio_scope = GoldenRatioScope.None;
-                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
-                        {
-                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
-                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
-                        }
-                    }
-                    break;
-            }
+                }
+                break;
         }
 
         GoldenRatioOrderLabel.Enabled = (m_golden_ratio_scope != GoldenRatioScope.None);
-
-        DisplaySelectionText();
-    }
-    private void GoldenRatioOrderLabel_Click(object sender, EventArgs e)
-    {
-        switch (m_golden_ratio_order)
-        {
-            case GoldenRatioOrder.LongShort:
-                {
-                    m_golden_ratio_order = GoldenRatioOrder.ShortLong;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sl.png"))
-                    {
-                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sl.png");
-                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
-                    }
-                }
-                break;
-            case GoldenRatioOrder.ShortLong:
-                {
-                    m_golden_ratio_order = GoldenRatioOrder.LongShort;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_ls.png"))
-                    {
-                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_ls.png");
-                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
-                    }
-                }
-                break;
-        }
 
         DisplaySelectionText();
     }
@@ -5556,6 +5480,34 @@ public partial class MainForm : Form, ISubscriber
                     {
                         GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_text.png");
                         ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio colorization"]);
+                    }
+                }
+                break;
+        }
+
+        DisplaySelectionText();
+    }
+    private void GoldenRatioOrderLabel_Click(object sender, EventArgs e)
+    {
+        switch (m_golden_ratio_order)
+        {
+            case GoldenRatioOrder.LongShort:
+                {
+                    m_golden_ratio_order = GoldenRatioOrder.ShortLong;
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sl.png"))
+                    {
+                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sl.png");
+                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
+                    }
+                }
+                break;
+            case GoldenRatioOrder.ShortLong:
+                {
+                    m_golden_ratio_order = GoldenRatioOrder.LongShort;
+                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_ls.png"))
+                    {
+                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_ls.png");
+                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
                     }
                 }
                 break;
@@ -5589,22 +5541,6 @@ public partial class MainForm : Form, ISubscriber
                 break;
         }
     }
-    private void UpdateGoldenRatioOrderLabel()
-    {
-        switch (m_golden_ratio_order)
-        {
-            case GoldenRatioOrder.LongShort:
-                {
-                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
-                }
-                break;
-            case GoldenRatioOrder.ShortLong:
-                {
-                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
-                }
-                break;
-        }
-    }
     private void UpdateGoldenRatioTypeLabel()
     {
         switch (m_golden_ratio_type)
@@ -5621,15 +5557,31 @@ public partial class MainForm : Form, ISubscriber
                 break;
         }
     }
+    private void UpdateGoldenRatioOrderLabel()
+    {
+        switch (m_golden_ratio_order)
+        {
+            case GoldenRatioOrder.LongShort:
+                {
+                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
+                }
+                break;
+            case GoldenRatioOrder.ShortLong:
+                {
+                    ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
+                }
+                break;
+        }
+    }
     private void ColorizeGoldenRatios()
     {
         if (m_golden_ratio_scope != GoldenRatioScope.None)
         {
-            if (m_selection_mode)
+            if (m_client != null)
             {
-                if (m_client != null)
+                if (m_client.NumerologySystem != null)
                 {
-                    if ((m_client.NumerologySystem != null) && (m_client.NumerologySystem.TextMode == "Original"))
+                    if (m_client.NumerologySystem.TextMode == "Original")
                     {
                         ColorizeGoldenRatiosInOriginalText();
                     }
@@ -5643,7 +5595,7 @@ public partial class MainForm : Form, ISubscriber
     }
     private void ColorizeGoldenRatiosInOriginalText()
     {
-        if (m_selection_mode)
+        if (!m_found_verses_displayed)
         {
             this.Cursor = Cursors.WaitCursor;
             try
@@ -5854,7 +5806,7 @@ public partial class MainForm : Form, ISubscriber
     }
     private void ColorizeGoldenRatiosInSimplifiedText()
     {
-        if (m_selection_mode)
+        if (!m_found_verses_displayed)
         {
             this.Cursor = Cursors.WaitCursor;
             try
