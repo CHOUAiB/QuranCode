@@ -352,6 +352,8 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
 
+                UpdateEmlaaeiLabel();
+
                 LetterFrequencyColumnHeader.Text = L[l]["Frequency"] + "  "; // + 2 spaces for sort marker after them
 
                 m_note_writing_instruction = L[l]["write a note for"];
@@ -732,10 +734,10 @@ public partial class MainForm : Form, ISubscriber
                         splash_form.Progress = 20;
                         Thread.Sleep(100);
 
-                        LoadBismWawShaddaOptions();
+                        LoadEmlaaeiBismWawShaddaOptions();
                         splash_form.Information = "Building book ...";
                         string text_mode = m_client.NumerologySystem.TextMode;
-                        m_client.BuildSimplifiedBook(text_mode, m_with_bism_Allah, m_waw_as_word, m_shadda_as_letter);
+                        m_client.BuildSimplifiedBook(text_mode, m_with_bism_Allah, m_waw_as_word, m_shadda_as_letter, m_emlaaei_text);
                         EnableFindByTextControls();
                         splash_form.Progress = 40;
                         Thread.Sleep(100);
@@ -1751,7 +1753,7 @@ public partial class MainForm : Form, ISubscriber
         }
         return NumerologySystem.DEFAULT_NAME;
     }
-    private string LoadBismWawShaddaOptions()
+    private string LoadEmlaaeiBismWawShaddaOptions()
     {
         if (File.Exists(m_ini_filename))
         {
@@ -1767,6 +1769,18 @@ public partial class MainForm : Form, ISubscriber
                         {
                             switch (parts[0])
                             {
+                                case "EmlaaeiText":
+                                    {
+                                        try
+                                        {
+                                            m_emlaaei_text = bool.Parse(parts[1].Trim());
+                                        }
+                                        catch
+                                        {
+                                            m_emlaaei_text = false;
+                                        }
+                                    }
+                                    break;
                                 case "WithBismAllah":
                                     {
                                         try
@@ -3046,6 +3060,7 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine();
 
                     writer.WriteLine("[Text]");
+                    writer.WriteLine("EmlaaeiText" + "=" + m_emlaaei_text);
                     writer.WriteLine("WithBismAllah" + "=" + m_with_bism_Allah);
                     writer.WriteLine("WawAsWord" + "=" + m_waw_as_word);
                     writer.WriteLine("ShaddaAsLetter" + "=" + m_shadda_as_letter);
@@ -4610,6 +4625,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void MainTextBox_MouseMove(object sender, MouseEventArgs e)
     {
+        if (m_emlaaei_text) return;
+
         // stop flickering
         if (
             (Math.Abs(m_previous_location.X - e.X) < 8)
@@ -4655,6 +4672,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void MainTextBox_MouseUp(object sender, MouseEventArgs e)
     {
+        if (m_emlaaei_text) return;
+
         if (ModifierKeys == Keys.Control)
         {
             if (e.Button == MouseButtons.Left)
@@ -12630,6 +12649,8 @@ public partial class MainForm : Form, ISubscriber
     private Word m_info_word = null;
     private string GetWordInformation(Word word)
     {
+        if (m_emlaaei_text) return null;
+
         if (word != null)
         {
             StringBuilder roots = new StringBuilder();
@@ -12659,6 +12680,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private string GetGrammarInformation(Word word)
     {
+        if (m_emlaaei_text) return null;
+
         if (word != null)
         {
             string grammar_info = "";
@@ -12690,6 +12713,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private string GetRelatedWordsInformation(Word word)
     {
+        if (m_emlaaei_text) return null;
+
         if (word != null)
         {
             if (m_client != null)
@@ -12732,6 +12757,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private string GetRelatedVersesInformation(Word word)
     {
+        if (m_emlaaei_text) return null;
+
         if (word != null)
         {
             if (m_client != null)
@@ -12761,6 +12788,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DisplayRelatedWordsInformation(Word word)
     {
+        if (m_emlaaei_text) return;
+
         if (
              (m_text_display_mode == TextDisplayMode.Both) ||
              (m_text_display_mode == TextDisplayMode.TranslationOnly)
@@ -12784,6 +12813,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DisplayGrammarInformation(Word word)
     {
+        if (m_emlaaei_text) return;
+
         if (
              (m_text_display_mode == TextDisplayMode.Both) ||
              (m_text_display_mode == TextDisplayMode.TranslationOnly)
@@ -12826,6 +12857,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindRelatedWords(Word word)
     {
+        if (m_emlaaei_text) return;
+
         if (word != null)
         {
             if (m_client != null)
@@ -13313,7 +13346,7 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             // display the interesting.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
@@ -14427,7 +14460,7 @@ public partial class MainForm : Form, ISubscriber
     {
         if (Directory.Exists(Globals.STATISTICS_FOLDER))
         {
-            string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsChapterSums" + ".txt";
+            string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsChapterSums.txt";
 
             StringBuilder str = new StringBuilder();
             str.Append("\t");
@@ -14998,7 +15031,7 @@ public partial class MainForm : Form, ISubscriber
     {
         if (Directory.Exists(Globals.STATISTICS_FOLDER))
         {
-            string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsVerseSums" + ".txt";
+            string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsVerseSums.txt";
 
             StringBuilder str = new StringBuilder();
             str.Append("\t");
@@ -15595,7 +15628,7 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             // display the interesting.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
@@ -27463,6 +27496,8 @@ public partial class MainForm : Form, ISubscriber
                 for (int i = 0; i < 3; i++) WawAsWordCheckBox.CheckedChanged -= new EventHandler(WawAsWordCheckBox_CheckedChanged);
                 for (int i = 0; i < 3; i++) ShaddaAsLetterCheckBox.CheckedChanged -= new EventHandler(ShaddaAsLetterCheckBox_CheckedChanged);
 
+                UpdateEmlaaeiLabel();
+
                 string text_mode = TextModeComboBox.SelectedItem.ToString();
                 if (text_mode == "Original")
                 {
@@ -27494,19 +27529,45 @@ public partial class MainForm : Form, ISubscriber
     {
         TextModeComboBox.DropDownHeight = StatisticsGroupBox.Height - TextModeComboBox.Top - TextModeComboBox.Height - 1;
     }
+    private bool m_emlaaei_text = false;
     private bool m_with_bism_Allah = true;
+    private bool m_waw_as_word = false;
+    private bool m_shadda_as_letter = false;
+    private void EmlaaeiTextLabel_Click(object sender, EventArgs e)
+    {
+        m_emlaaei_text = !m_emlaaei_text;
+        BuildSimplifiedBookAndDisplaySelection();
+        UpdateEmlaaeiLabel();
+    }
+    private void UpdateEmlaaeiLabel()
+    {
+        if (m_emlaaei_text)
+        {
+            if (File.Exists(Globals.IMAGES_FOLDER + "/" + "stop.png"))
+            {
+                EmlaaeiTextLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "stop.png");
+                ToolTip.SetToolTip(EmlaaeiTextLabel, L[l]["Emlaaei Text"]);
+            }
+        }
+        else
+        {
+            if (File.Exists(Globals.IMAGES_FOLDER + "/" + "go.png"))
+            {
+                EmlaaeiTextLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "go.png");
+                ToolTip.SetToolTip(EmlaaeiTextLabel, L[l]["Uthmani Text"]);
+            }
+        }
+    }
     private void WithBismAllahCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_with_bism_Allah = WithBismAllahCheckBox.Checked;
         BuildSimplifiedBookAndDisplaySelection();
     }
-    private bool m_waw_as_word = false;
     private void WawAsWordCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_waw_as_word = WawAsWordCheckBox.Checked;
         BuildSimplifiedBookAndDisplaySelection();
     }
-    private bool m_shadda_as_letter = false;
     private void ShaddaAsLetterCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_shadda_as_letter = ShaddaAsLetterCheckBox.Checked;
@@ -27532,7 +27593,7 @@ public partial class MainForm : Form, ISubscriber
                         //    (m_client.Book.ShaddaAsLetter != m_shadda_as_letter)
                         //   )
                         {
-                            m_client.BuildSimplifiedBook(text_mode, m_with_bism_Allah, m_waw_as_word, m_shadda_as_letter);
+                            m_client.BuildSimplifiedBook(text_mode, m_with_bism_Allah, m_waw_as_word, m_shadda_as_letter, m_emlaaei_text);
 
                             bool backup_found_verses_displayed = m_found_verses_displayed;
 
@@ -28388,7 +28449,7 @@ public partial class MainForm : Form, ISubscriber
     {
         try
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + "perfects" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "perfect_numbers.txt";
             if (File.Exists(filename))
             {
                 FileHelper.WaitForReady(filename);
@@ -28405,7 +28466,7 @@ public partial class MainForm : Form, ISubscriber
     {
         try
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + "AbundantNumbers" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "abundant_numbers.txt";
             using (StreamWriter writer = new StreamWriter(filename, false))
             {
                 StringBuilder str = new StringBuilder();
@@ -28442,7 +28503,7 @@ public partial class MainForm : Form, ISubscriber
     {
         try
         {
-            string filename = Globals.NUMBERS_FOLDER + "/" + "DeficientNumbers" + ".txt";
+            string filename = Globals.NUMBERS_FOLDER + "/" + "deficient_numbers.txt";
             using (StreamWriter writer = new StreamWriter(filename, false))
             {
                 StringBuilder str = new StringBuilder();

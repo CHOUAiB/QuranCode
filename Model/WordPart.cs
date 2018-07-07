@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Model
 {
-    // Data/quran-uthmani-word-parts.txt
+    // Data/word-parts.txt
     //LOCATION	FORM	TAG	FEATURES
     //(1:1:1:1)	bi	PP	PREFIX|bi+
     //(1:1:1:2)	somi	N	STEM|POS:N|LEM:{som|ROOT:smw|M|GEN

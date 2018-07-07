@@ -502,6 +502,7 @@ partial class MainForm
             this.UserTextValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.UserTextValueLabel = new System.Windows.Forms.Label();
             this.UserTextTextBox = new System.Windows.Forms.TextBox();
+            this.EmlaaeiTextLabel = new System.Windows.Forms.Label();
             this.GoldenRatioTypeLabel = new System.Windows.Forms.Label();
             this.GoldenRatioOrderLabel = new System.Windows.Forms.Label();
             this.GoldenRatioScopeLabel = new System.Windows.Forms.Label();
@@ -573,7 +574,6 @@ partial class MainForm
             this.PCIndexChainR2LTextBox = new System.Windows.Forms.TextBox();
             this.CPIndexChainR2LTextBox = new System.Windows.Forms.TextBox();
             this.PCIndexChainL2RTextBox = new System.Windows.Forms.TextBox();
-            this.AddAllCheckBox = new System.Windows.Forms.CheckBox();
             this.AddToChapterCNumberCheckBox = new System.Windows.Forms.CheckBox();
             this.AddToVerseCDistanceCheckBox = new System.Windows.Forms.CheckBox();
             this.AddToVerseCNumberCheckBox = new System.Windows.Forms.CheckBox();
@@ -601,6 +601,9 @@ partial class MainForm
             this.AdjustValueByPositionsLabel = new System.Windows.Forms.Label();
             this.PrimeFactorsTextBox = new System.Windows.Forms.TextBox();
             this.ValueLabel = new System.Windows.Forms.Label();
+            this.AddDistancesToNextCheckBox = new System.Windows.Forms.CheckBox();
+            this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
+            this.AddAllCheckBox = new System.Windows.Forms.CheckBox();
             this.VersesTextBox = new System.Windows.Forms.TextBox();
             this.LettersTextBox = new System.Windows.Forms.TextBox();
             this.WordsTextBox = new System.Windows.Forms.TextBox();
@@ -608,7 +611,6 @@ partial class MainForm
             this.WordsLabel = new System.Windows.Forms.Label();
             this.LettersLabel = new System.Windows.Forms.Label();
             this.TextModeComboBox = new System.Windows.Forms.ComboBox();
-            this.TextModeLabel = new System.Windows.Forms.Label();
             this.DivisorLabel = new System.Windows.Forms.Label();
             this.DivisorValueLabel = new System.Windows.Forms.Label();
             this.RadixValueLabel = new System.Windows.Forms.Label();
@@ -639,8 +641,6 @@ partial class MainForm
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FontDialog = new System.Windows.Forms.FontDialog();
-            this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
-            this.AddDistancesToNextCheckBox = new System.Windows.Forms.CheckBox();
             this.StatusPanel.SuspendLayout();
             this.ChapterSortPanel.SuspendLayout();
             this.DrawingsPanel.SuspendLayout();
@@ -4976,7 +4976,7 @@ partial class MainForm
             this.DisplayProstrationVersesLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DisplayProstrationVersesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisplayProstrationVersesLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DisplayProstrationVersesLabel.Location = new System.Drawing.Point(782, -1);
+            this.DisplayProstrationVersesLabel.Location = new System.Drawing.Point(781, -1);
             this.DisplayProstrationVersesLabel.Name = "DisplayProstrationVersesLabel";
             this.DisplayProstrationVersesLabel.Size = new System.Drawing.Size(16, 14);
             this.DisplayProstrationVersesLabel.TabIndex = 117;
@@ -4993,7 +4993,7 @@ partial class MainForm
             this.GenerateSentencesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GenerateSentencesLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.GenerateSentencesLabel.Image = ((System.Drawing.Image)(resources.GetObject("GenerateSentencesLabel.Image")));
-            this.GenerateSentencesLabel.Location = new System.Drawing.Point(734, -2);
+            this.GenerateSentencesLabel.Location = new System.Drawing.Point(727, -2);
             this.GenerateSentencesLabel.Name = "GenerateSentencesLabel";
             this.GenerateSentencesLabel.Size = new System.Drawing.Size(19, 19);
             this.GenerateSentencesLabel.TabIndex = 115;
@@ -5010,7 +5010,7 @@ partial class MainForm
             this.DuplicateLettersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DuplicateLettersCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DuplicateLettersCheckBox.ForeColor = System.Drawing.Color.Navy;
-            this.DuplicateLettersCheckBox.Location = new System.Drawing.Point(748, -2);
+            this.DuplicateLettersCheckBox.Location = new System.Drawing.Point(746, -2);
             this.DuplicateLettersCheckBox.Name = "DuplicateLettersCheckBox";
             this.DuplicateLettersCheckBox.Size = new System.Drawing.Size(15, 17);
             this.DuplicateLettersCheckBox.TabIndex = 116;
@@ -5026,7 +5026,7 @@ partial class MainForm
             this.WordWrapLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WordWrapLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.WordWrapLabel.Image = ((System.Drawing.Image)(resources.GetObject("WordWrapLabel.Image")));
-            this.WordWrapLabel.Location = new System.Drawing.Point(796, -2);
+            this.WordWrapLabel.Location = new System.Drawing.Point(795, -3);
             this.WordWrapLabel.Name = "WordWrapLabel";
             this.WordWrapLabel.Size = new System.Drawing.Size(19, 19);
             this.WordWrapLabel.TabIndex = 99;
@@ -5102,7 +5102,7 @@ partial class MainForm
             this.InspectVersesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InspectVersesLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.InspectVersesLabel.Image = ((System.Drawing.Image)(resources.GetObject("InspectVersesLabel.Image")));
-            this.InspectVersesLabel.Location = new System.Drawing.Point(766, -3);
+            this.InspectVersesLabel.Location = new System.Drawing.Point(765, -3);
             this.InspectVersesLabel.Name = "InspectVersesLabel";
             this.InspectVersesLabel.Size = new System.Drawing.Size(15, 19);
             this.InspectVersesLabel.TabIndex = 113;
@@ -5117,7 +5117,7 @@ partial class MainForm
             this.HeaderLabel.BackColor = System.Drawing.Color.Transparent;
             this.HeaderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HeaderLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.HeaderLabel.Location = new System.Drawing.Point(83, -4);
+            this.HeaderLabel.Location = new System.Drawing.Point(79, -3);
             this.HeaderLabel.Name = "HeaderLabel";
             this.HeaderLabel.Size = new System.Drawing.Size(683, 16);
             this.HeaderLabel.TabIndex = 1;
@@ -5165,7 +5165,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(816, 191);
+            this.TabControl.Size = new System.Drawing.Size(816, 196);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5178,7 +5178,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(808, 165);
+            this.TranslationTabPage.Size = new System.Drawing.Size(808, 170);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = "Translation";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse\r\nترجمة الءاية أو الءايات المظللة";
@@ -5296,7 +5296,7 @@ partial class MainForm
             this.TranslationsApplySettingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TranslationsApplySettingsLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.TranslationsApplySettingsLabel.Image = ((System.Drawing.Image)(resources.GetObject("TranslationsApplySettingsLabel.Image")));
-            this.TranslationsApplySettingsLabel.Location = new System.Drawing.Point(382, 144);
+            this.TranslationsApplySettingsLabel.Location = new System.Drawing.Point(381, 146);
             this.TranslationsApplySettingsLabel.Name = "TranslationsApplySettingsLabel";
             this.TranslationsApplySettingsLabel.Size = new System.Drawing.Size(18, 18);
             this.TranslationsApplySettingsLabel.TabIndex = 5;
@@ -5312,7 +5312,7 @@ partial class MainForm
             this.TranslationsCancelSettingsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TranslationsCancelSettingsLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.TranslationsCancelSettingsLabel.Image = ((System.Drawing.Image)(resources.GetObject("TranslationsCancelSettingsLabel.Image")));
-            this.TranslationsCancelSettingsLabel.Location = new System.Drawing.Point(382, 127);
+            this.TranslationsCancelSettingsLabel.Location = new System.Drawing.Point(381, 128);
             this.TranslationsCancelSettingsLabel.Name = "TranslationsCancelSettingsLabel";
             this.TranslationsCancelSettingsLabel.Size = new System.Drawing.Size(18, 18);
             this.TranslationsCancelSettingsLabel.TabIndex = 6;
@@ -5370,7 +5370,7 @@ partial class MainForm
             this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
             this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
             this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(808, 165);
+            this.GrammarTabPage.Size = new System.Drawing.Size(808, 170);
             this.GrammarTabPage.TabIndex = 193;
             this.GrammarTabPage.Text = " Grammar";
             this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English\r\nإعراب الكلمة بالعربي و" +
@@ -5404,7 +5404,7 @@ partial class MainForm
             this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
             this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
             this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 165);
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 170);
             this.RelatedWordsTabPage.TabIndex = 192;
             this.RelatedWordsTabPage.Text = "Related Words";
             this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word\r\nالكلمات المشتقة من نفس جذر " +
@@ -5459,7 +5459,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(808, 165);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(808, 170);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]\r\nتناظر النص من ال" +
@@ -5501,7 +5501,7 @@ partial class MainForm
             this.SymmetryInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SymmetryInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.SymmetryInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("SymmetryInspectLabel.Image")));
-            this.SymmetryInspectLabel.Location = new System.Drawing.Point(791, 147);
+            this.SymmetryInspectLabel.Location = new System.Drawing.Point(790, 147);
             this.SymmetryInspectLabel.Name = "SymmetryInspectLabel";
             this.SymmetryInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.SymmetryInspectLabel.TabIndex = 9;
@@ -5539,7 +5539,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 165);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 170);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36\r\nقيم الحروف والكلمات " +
@@ -5606,7 +5606,7 @@ partial class MainForm
             this.ValuesSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValuesSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ValuesSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceInspectLabel.Image")));
-            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(791, 147);
+            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(790, 147);
             this.ValuesSequenceInspectLabel.Name = "ValuesSequenceInspectLabel";
             this.ValuesSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.ValuesSequenceInspectLabel.TabIndex = 4;
@@ -5621,7 +5621,7 @@ partial class MainForm
             this.ValuesSequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValuesSequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ValuesSequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceDirectionLabel.Image")));
-            this.ValuesSequenceDirectionLabel.Location = new System.Drawing.Point(792, 0);
+            this.ValuesSequenceDirectionLabel.Location = new System.Drawing.Point(791, 0);
             this.ValuesSequenceDirectionLabel.Name = "ValuesSequenceDirectionLabel";
             this.ValuesSequenceDirectionLabel.Size = new System.Drawing.Size(16, 18);
             this.ValuesSequenceDirectionLabel.TabIndex = 3;
@@ -5660,7 +5660,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 165);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 170);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts\r\nرصف أرقام وأعداد الحرو" +
@@ -5702,7 +5702,7 @@ partial class MainForm
             this.CVWLSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CVWLSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.CVWLSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceInspectLabel.Image")));
-            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(791, 147);
+            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(790, 147);
             this.CVWLSequenceInspectLabel.Name = "CVWLSequenceInspectLabel";
             this.CVWLSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.CVWLSequenceInspectLabel.TabIndex = 6;
@@ -5717,7 +5717,7 @@ partial class MainForm
             this.CVWLSequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CVWLSequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.CVWLSequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceDirectionLabel.Image")));
-            this.CVWLSequenceDirectionLabel.Location = new System.Drawing.Point(792, 0);
+            this.CVWLSequenceDirectionLabel.Location = new System.Drawing.Point(791, 0);
             this.CVWLSequenceDirectionLabel.Name = "CVWLSequenceDirectionLabel";
             this.CVWLSequenceDirectionLabel.Size = new System.Drawing.Size(16, 18);
             this.CVWLSequenceDirectionLabel.TabIndex = 3;
@@ -5755,7 +5755,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 165);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 170);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to compare with the human genome [Belkacem Meghz" +
@@ -5771,7 +5771,7 @@ partial class MainForm
             this.DNASequenceDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DNASequenceDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.DNASequenceDirectionLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceDirectionLabel.Image")));
-            this.DNASequenceDirectionLabel.Location = new System.Drawing.Point(792, 0);
+            this.DNASequenceDirectionLabel.Location = new System.Drawing.Point(791, 0);
             this.DNASequenceDirectionLabel.Name = "DNASequenceDirectionLabel";
             this.DNASequenceDirectionLabel.Size = new System.Drawing.Size(16, 18);
             this.DNASequenceDirectionLabel.TabIndex = 3;
@@ -5787,7 +5787,7 @@ partial class MainForm
             this.DNASequenceSystemEditLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DNASequenceSystemEditLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.DNASequenceSystemEditLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceSystemEditLabel.Image")));
-            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(791, 147);
+            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(789, 147);
             this.DNASequenceSystemEditLabel.Name = "DNASequenceSystemEditLabel";
             this.DNASequenceSystemEditLabel.Size = new System.Drawing.Size(18, 18);
             this.DNASequenceSystemEditLabel.TabIndex = 4;
@@ -5833,7 +5833,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(808, 165);
+            this.MathsTabPage.Size = new System.Drawing.Size(808, 170);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations\r\nحسابات مجاميع وفروق الءايات والسُوَر";
@@ -5947,7 +5947,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(808, 165);
+            this.MathsPanel.Size = new System.Drawing.Size(808, 170);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -7235,7 +7235,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(808, 165);
+            this.DistancesTabPage.Size = new System.Drawing.Size(808, 170);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word\r\nالمسافات الى " +
@@ -7312,7 +7312,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(808, 165);
+            this.DistancesPanel.Size = new System.Drawing.Size(808, 170);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -8154,7 +8154,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(808, 165);
+            this.UserTextTabPage.Size = new System.Drawing.Size(808, 170);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any given text or find all words with a given value\r\nحساب " +
@@ -8234,6 +8234,20 @@ partial class MainForm
             this.UserTextTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseMove);
             this.UserTextTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseUp);
             // 
+            // EmlaaeiTextLabel
+            // 
+            this.EmlaaeiTextLabel.BackColor = System.Drawing.Color.Transparent;
+            this.EmlaaeiTextLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EmlaaeiTextLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EmlaaeiTextLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.EmlaaeiTextLabel.Image = ((System.Drawing.Image)(resources.GetObject("EmlaaeiTextLabel.Image")));
+            this.EmlaaeiTextLabel.Location = new System.Drawing.Point(33, 18);
+            this.EmlaaeiTextLabel.Name = "EmlaaeiTextLabel";
+            this.EmlaaeiTextLabel.Size = new System.Drawing.Size(16, 16);
+            this.EmlaaeiTextLabel.TabIndex = 70;
+            this.EmlaaeiTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EmlaaeiTextLabel.Click += new System.EventHandler(this.EmlaaeiTextLabel_Click);
+            // 
             // GoldenRatioTypeLabel
             // 
             this.GoldenRatioTypeLabel.BackColor = System.Drawing.Color.Transparent;
@@ -8241,7 +8255,7 @@ partial class MainForm
             this.GoldenRatioTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GoldenRatioTypeLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.GoldenRatioTypeLabel.Image = ((System.Drawing.Image)(resources.GetObject("GoldenRatioTypeLabel.Image")));
-            this.GoldenRatioTypeLabel.Location = new System.Drawing.Point(37, 22);
+            this.GoldenRatioTypeLabel.Location = new System.Drawing.Point(8, 21);
             this.GoldenRatioTypeLabel.Name = "GoldenRatioTypeLabel";
             this.GoldenRatioTypeLabel.Size = new System.Drawing.Size(18, 8);
             this.GoldenRatioTypeLabel.TabIndex = 131;
@@ -8257,7 +8271,7 @@ partial class MainForm
             this.GoldenRatioOrderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GoldenRatioOrderLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.GoldenRatioOrderLabel.Image = ((System.Drawing.Image)(resources.GetObject("GoldenRatioOrderLabel.Image")));
-            this.GoldenRatioOrderLabel.Location = new System.Drawing.Point(37, 27);
+            this.GoldenRatioOrderLabel.Location = new System.Drawing.Point(8, 26);
             this.GoldenRatioOrderLabel.Name = "GoldenRatioOrderLabel";
             this.GoldenRatioOrderLabel.Size = new System.Drawing.Size(18, 10);
             this.GoldenRatioOrderLabel.TabIndex = 107;
@@ -8272,7 +8286,7 @@ partial class MainForm
             this.GoldenRatioScopeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GoldenRatioScopeLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.GoldenRatioScopeLabel.Image = ((System.Drawing.Image)(resources.GetObject("GoldenRatioScopeLabel.Image")));
-            this.GoldenRatioScopeLabel.Location = new System.Drawing.Point(37, 16);
+            this.GoldenRatioScopeLabel.Location = new System.Drawing.Point(8, 15);
             this.GoldenRatioScopeLabel.Name = "GoldenRatioScopeLabel";
             this.GoldenRatioScopeLabel.Size = new System.Drawing.Size(18, 8);
             this.GoldenRatioScopeLabel.TabIndex = 108;
@@ -8309,6 +8323,7 @@ partial class MainForm
             this.StatisticsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.StatisticsGroupBox.Controls.Add(this.EmlaaeiTextLabel);
             this.StatisticsGroupBox.Controls.Add(this.ValueNavigatorPanel);
             this.StatisticsGroupBox.Controls.Add(this.GoldenRatioTypeLabel);
             this.StatisticsGroupBox.Controls.Add(this.ShaddaAsLetterCheckBox);
@@ -8340,7 +8355,6 @@ partial class MainForm
             this.StatisticsGroupBox.Controls.Add(this.WordsLabel);
             this.StatisticsGroupBox.Controls.Add(this.LettersLabel);
             this.StatisticsGroupBox.Controls.Add(this.TextModeComboBox);
-            this.StatisticsGroupBox.Controls.Add(this.TextModeLabel);
             this.StatisticsGroupBox.Controls.Add(this.DivisorLabel);
             this.StatisticsGroupBox.Controls.Add(this.DivisorValueLabel);
             this.StatisticsGroupBox.Controls.Add(this.RadixValueLabel);
@@ -9401,19 +9415,6 @@ partial class MainForm
             this.PCIndexChainL2RTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
             this.PCIndexChainL2RTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
-            // AddAllCheckBox
-            // 
-            this.AddAllCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.AddAllCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddAllCheckBox.ForeColor = System.Drawing.Color.Black;
-            this.AddAllCheckBox.Location = new System.Drawing.Point(7, 259);
-            this.AddAllCheckBox.Name = "AddAllCheckBox";
-            this.AddAllCheckBox.Size = new System.Drawing.Size(171, 16);
-            this.AddAllCheckBox.TabIndex = 258;
-            this.AddAllCheckBox.Text = "Add all";
-            this.AddAllCheckBox.UseVisualStyleBackColor = false;
-            this.AddAllCheckBox.CheckedChanged += new System.EventHandler(this.AddAllCheckBox_CheckedChanged);
-            // 
             // AddToChapterCNumberCheckBox
             // 
             this.AddToChapterCNumberCheckBox.BackColor = System.Drawing.Color.Transparent;
@@ -9837,6 +9838,45 @@ partial class MainForm
             this.ValueLabel.TabIndex = 103;
             this.ValueLabel.Text = "Value";
             // 
+            // AddDistancesToNextCheckBox
+            // 
+            this.AddDistancesToNextCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.AddDistancesToNextCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddDistancesToNextCheckBox.ForeColor = System.Drawing.Color.Black;
+            this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(7, 242);
+            this.AddDistancesToNextCheckBox.Name = "AddDistancesToNextCheckBox";
+            this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(172, 16);
+            this.AddDistancesToNextCheckBox.TabIndex = 260;
+            this.AddDistancesToNextCheckBox.Text = "∆ →";
+            this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = false;
+            this.AddDistancesToNextCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToNextCheckBox_CheckedChanged);
+            // 
+            // AddDistancesToPreviousCheckBox
+            // 
+            this.AddDistancesToPreviousCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.AddDistancesToPreviousCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddDistancesToPreviousCheckBox.ForeColor = System.Drawing.Color.Black;
+            this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(7, 229);
+            this.AddDistancesToPreviousCheckBox.Name = "AddDistancesToPreviousCheckBox";
+            this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(172, 16);
+            this.AddDistancesToPreviousCheckBox.TabIndex = 259;
+            this.AddDistancesToPreviousCheckBox.Text = "∆ ←";
+            this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = false;
+            this.AddDistancesToPreviousCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckedChanged);
+            // 
+            // AddAllCheckBox
+            // 
+            this.AddAllCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.AddAllCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddAllCheckBox.ForeColor = System.Drawing.Color.Black;
+            this.AddAllCheckBox.Location = new System.Drawing.Point(7, 259);
+            this.AddAllCheckBox.Name = "AddAllCheckBox";
+            this.AddAllCheckBox.Size = new System.Drawing.Size(172, 16);
+            this.AddAllCheckBox.TabIndex = 258;
+            this.AddAllCheckBox.Text = "Add all";
+            this.AddAllCheckBox.UseVisualStyleBackColor = false;
+            this.AddAllCheckBox.CheckedChanged += new System.EventHandler(this.AddAllCheckBox_CheckedChanged);
+            // 
             // VersesTextBox
             // 
             this.VersesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -9935,16 +9975,6 @@ partial class MainForm
             this.TextModeComboBox.DropDown += new System.EventHandler(this.TextModeComboBox_DropDown);
             this.TextModeComboBox.SelectedIndexChanged += new System.EventHandler(this.TextModeComboBox_SelectedIndexChanged);
             this.TextModeComboBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
-            // 
-            // TextModeLabel
-            // 
-            this.TextModeLabel.BackColor = System.Drawing.Color.Transparent;
-            this.TextModeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TextModeLabel.Location = new System.Drawing.Point(3, 20);
-            this.TextModeLabel.Name = "TextModeLabel";
-            this.TextModeLabel.Size = new System.Drawing.Size(62, 13);
-            this.TextModeLabel.TabIndex = 0;
-            this.TextModeLabel.Text = "Text";
             // 
             // DivisorLabel
             // 
@@ -10381,32 +10411,6 @@ partial class MainForm
             // FontDialog
             // 
             this.FontDialog.Apply += new System.EventHandler(this.FontDialog_Apply);
-            // 
-            // AddDistancesToPreviousCheckBox
-            // 
-            this.AddDistancesToPreviousCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.AddDistancesToPreviousCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddDistancesToPreviousCheckBox.ForeColor = System.Drawing.Color.Black;
-            this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(7, 229);
-            this.AddDistancesToPreviousCheckBox.Name = "AddDistancesToPreviousCheckBox";
-            this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(171, 16);
-            this.AddDistancesToPreviousCheckBox.TabIndex = 259;
-            this.AddDistancesToPreviousCheckBox.Text = "∆ <---";
-            this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = false;
-            this.AddDistancesToPreviousCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckedChanged);
-            // 
-            // AddDistancesToNextCheckBox
-            // 
-            this.AddDistancesToNextCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.AddDistancesToNextCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddDistancesToNextCheckBox.ForeColor = System.Drawing.Color.Black;
-            this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(7, 242);
-            this.AddDistancesToNextCheckBox.Name = "AddDistancesToNextCheckBox";
-            this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(171, 16);
-            this.AddDistancesToNextCheckBox.TabIndex = 260;
-            this.AddDistancesToNextCheckBox.Text = "∆ --->";
-            this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = false;
-            this.AddDistancesToNextCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToNextCheckBox_CheckedChanged);
             // 
             // MainForm
             // 
@@ -10865,7 +10869,6 @@ partial class MainForm
     private System.Windows.Forms.TextBox ChaptersTextBox;
     private System.Windows.Forms.Label ChaptersLabel;
     private System.Windows.Forms.ComboBox TextModeComboBox;
-    private System.Windows.Forms.Label TextModeLabel;
     private System.Windows.Forms.CheckBox WawAsWordCheckBox;
     private System.Windows.Forms.CheckBox ShaddaAsLetterCheckBox;
     private System.Windows.Forms.CheckBox WithBismAllahCheckBox;
@@ -11161,4 +11164,5 @@ partial class MainForm
     private System.Windows.Forms.Label FindByNumbersValueDigitSumNumberTypeLabel;
     private System.Windows.Forms.NumericUpDown FindByNumbersValueDigitSumNumericUpDown;
     private System.Windows.Forms.Label FindByNumbersValueDigitSumLabel;
+    private System.Windows.Forms.Label EmlaaeiTextLabel;
 }

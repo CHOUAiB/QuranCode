@@ -123,10 +123,10 @@
     <Content Include="Translations\Offline\metadata.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Translations\Offline\ar.emlaaei.txt">
+    <Content Include="Translations\Offline\en.transliteration.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Translations\Offline\en.transliteration.txt">
+    <Content Include="Translations\Offline\ar.emlaaei.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Translations\Offline\tr.yildirim.txt">

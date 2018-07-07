@@ -119,6 +119,7 @@ public class Server : IPublisher
 
     public const string DEFAULT_RECITATION = "Alafasy_64kbps";
 
+    public const string DEFAULT_QURAN_TEXT = "quran-uthmani";
     public const string DEFAULT_EMLAAEI_TEXT = "ar.emlaaei";
     public const string DEFAULT_TRANSLATION = "en.qarai";
     public const string DEFAULT_OLD_TRANSLATION = "en.pickthall";
@@ -289,7 +290,7 @@ public class Server : IPublisher
             }
         }
     }
-    public static void BuildSimplifiedBook(string text_mode, bool with_bism_Allah, bool waw_as_word, bool shadda_as_letter)
+    public static void BuildSimplifiedBook(string text_mode, bool with_bism_Allah, bool waw_as_word, bool shadda_as_letter, bool emlaaei_text)
     {
         if (!String.IsNullOrEmpty(text_mode))
         {
@@ -300,7 +301,16 @@ public class Server : IPublisher
                     s_simplification_system = s_loaded_simplification_systems[text_mode];
 
                     // reload original Quran text
-                    List<string> texts = DataAccess.LoadVerseTexts();
+                    string filename = null;
+                    if (emlaaei_text)
+                    {
+                        filename = Globals.TRANSLATIONS_FOLDER + "/" + DEFAULT_EMLAAEI_TEXT + ".txt";
+                    }
+                    else
+                    {
+                        filename = Globals.DATA_FOLDER + "/" + DEFAULT_QURAN_TEXT + ".txt";
+                    }
+                    List<string> lines = DataAccess.LoadVerseTexts(filename);
 
                     // generate Quranmarks/Stopmarks word numbers
                     //int[] numbers = new int[]
@@ -329,9 +339,9 @@ public class Server : IPublisher
                     //      );
 
                     //int count = 0;
-                    //for (int v = 0; v < texts.Count; v++)
+                    //for (int v = 0; v < lines.Count; v++)
                     //{
-                    //    string[] words = texts[v].Split();
+                    //    string[] words = lines[v].Split();
 
                     //    int vv = v + 1;
                     //    int cc = 0 + 1;
@@ -365,9 +375,9 @@ public class Server : IPublisher
                     //    }
                     //}
                     //string filename = "Stopmarks" + Globals.OUTPUT_FILE_EXT;
-                    //if (Directory.Exists(Globals.RESEARCH_FOLDER))
+                    //if (Directory.Exists(Globals.DATA_FOLDER))
                     //{
-                    //    string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                    //    string path = Globals.DATA_FOLDER + "/" + filename;
                     //    FileHelper.SaveText(path, str.ToString());
                     //    FileHelper.DisplayFile(path);
                     //}
@@ -377,17 +387,46 @@ public class Server : IPublisher
                     // remove bismAllah from 112 chapters
                     if (!with_bism_Allah)
                     {
-                        string bimsAllah_text1 = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ";
-                        string bimsAllah_text2 = "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ "; // shadda on baa for chapter 95 and 97
-                        for (int i = 0; i < texts.Count; i++)
+                        string bimsAllah_text1 = emlaaei_text ? "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ " : "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ";
+                        string bimsAllah_text2 = emlaaei_text ? "بِّسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ " : "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ "; // shadda on baa for chapter 95 and 97
+                        for (int i = 0; i < lines.Count; i++)
                         {
-                            if (texts[i].StartsWith(bimsAllah_text1))
+                            if (lines[i].StartsWith(bimsAllah_text1))
                             {
-                                texts[i] = texts[i].Replace(bimsAllah_text1, "");
+                                lines[i] = lines[i].Replace(bimsAllah_text1, "");
                             }
-                            else if (texts[i].StartsWith(bimsAllah_text2))
+                            else if (lines[i].StartsWith(bimsAllah_text2))
                             {
-                                texts[i] = texts[i].Replace(bimsAllah_text2, "");
+                                lines[i] = lines[i].Replace(bimsAllah_text2, "");
+                            }
+                        }
+                    }
+
+                    // if WawAsWord and ShaddaAsLetter
+                    // replace shadda with previous letter and to waw exception list
+                    if (waw_as_word && shadda_as_letter)
+                    {
+                        LoadWawWords();
+                        for (int i = 0; i < lines.Count; i++)
+                        {
+                            string[] word_texts = lines[i].Split();
+                            foreach (string word_text in word_texts)
+                            {
+                                if (s_waw_words.Contains(s_simplification_system.Simplify(word_text)))
+                                {
+                                    if (word_text.Contains("ّ"))
+                                    {
+                                        string shadda_waw_word = null;
+                                        for (int j = 1; j < word_text.Length; j++)
+                                        {
+                                            if (word_text[j] == 'ّ')
+                                            {
+                                                shadda_waw_word = word_text.Insert(j, word_text[j - 1].ToString());
+                                                s_waw_words.Add(s_simplification_system.Simplify(shadda_waw_word));
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -395,9 +434,9 @@ public class Server : IPublisher
                     // replace shadda with previous letter before any simplification
                     if (shadda_as_letter)
                     {
-                        for (int i = 0; i < texts.Count; i++)
+                        for (int i = 0; i < lines.Count; i++)
                         {
-                            StringBuilder str = new StringBuilder(texts[i]);
+                            StringBuilder str = new StringBuilder(lines[i]);
                             for (int j = 1; j < str.Length; j++)
                             {
                                 if (str[j] == 'ّ')
@@ -405,15 +444,15 @@ public class Server : IPublisher
                                     str[j] = str[j - 1];
                                 }
                             }
-                            texts[i] = str.ToString();
+                            lines[i] = str.ToString();
                         }
                     }
 
                     // simplify verse texts
                     List<string> verse_texts = new List<string>();
-                    foreach (string text in texts)
+                    foreach (string line in lines)
                     {
-                        string verse_text = s_simplification_system.Simplify(text);
+                        string verse_text = s_simplification_system.Simplify(line);
                         verse_texts.Add(verse_text);
                     }
 
@@ -425,7 +464,7 @@ public class Server : IPublisher
                         if (verse != null)
                         {
                             verses.Add(verse);
-                            verse.ApplyWordStopmarks(texts[i]);
+                            verse.ApplyWordStopmarks(lines[i]);
                         }
                     }
 
@@ -439,7 +478,7 @@ public class Server : IPublisher
                         // build words before DataAccess.Loads
                         if (waw_as_word)
                         {
-                            SplitWawsArWords(s_book, text_mode);
+                            SplitWawPrefixsAsWords(s_book, text_mode);
                         }
                         DataAccess.LoadRecitationInfos(s_book);
                         DataAccess.LoadTranslationInfos(s_book);
@@ -455,62 +494,82 @@ public class Server : IPublisher
             }
         }
     }
-    private static void SplitWawsArWords(Book book, string text_mode)
+    private static List<string> s_waw_words = null;
+    private static void LoadWawWords()
+    {
+        string filename = Globals.DATA_FOLDER + "/" + "waw-words.txt";
+        if (File.Exists(filename))
+        {
+            s_waw_words = new List<string>();
+            List<string> lines = FileHelper.LoadLines(filename);
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split('\t');
+                if (parts.Length > 0)
+                {
+                    s_waw_words.Add(parts[0]);
+                }
+            }
+        }
+    }
+    private static void SplitWawPrefixsAsWords(Book book, string text_mode)
     {
         if (book != null)
         {
             string filename = Globals.DATA_FOLDER + "/" + "waw-words.txt";
             if (File.Exists(filename))
             {
-                List<string> exception_words = new List<string>();
+                // same spelling waw-words but their waw is prefix
                 Dictionary<string, List<Verse>> non_exception_words_in_verses = new Dictionary<string, List<Verse>>();
 
                 List<string> lines = FileHelper.LoadLines(filename);
                 foreach (string line in lines)
                 {
                     string[] parts = line.Split('\t');
-                    string exception_word = parts[0].SimplifyTo(text_mode);
-                    exception_words.Add(exception_word);
-                    if (parts.Length > 1)
+                    if (parts.Length > 0)
                     {
-                        string[] sub_parts = parts[1].Split(',');
-                        foreach (string sub_part in sub_parts)
+                        string exception_word = parts[0].SimplifyTo(text_mode);
+                        if (parts.Length > 1)
                         {
-                            string[] verse_address_parts = sub_part.Split(':');
-                            if (verse_address_parts.Length == 2)
+                            string[] sub_parts = parts[1].Split(',');
+                            foreach (string sub_part in sub_parts)
                             {
-                                try
+                                string[] verse_address_parts = sub_part.Split(':');
+                                if (verse_address_parts.Length == 2)
                                 {
-                                    Chapter chapter = book.Chapters[int.Parse(verse_address_parts[0]) - 1];
-                                    if (chapter != null)
+                                    try
                                     {
-                                        Verse verse = chapter.Verses[int.Parse(verse_address_parts[1]) - 1];
-                                        if (verse != null)
+                                        Chapter chapter = book.Chapters[int.Parse(verse_address_parts[0]) - 1];
+                                        if (chapter != null)
                                         {
-                                            if (non_exception_words_in_verses.ContainsKey(exception_word))
+                                            Verse verse = chapter.Verses[int.Parse(verse_address_parts[1]) - 1];
+                                            if (verse != null)
                                             {
-                                                List<Verse> verses = non_exception_words_in_verses[exception_word];
-                                                if (verses != null)
+                                                if (non_exception_words_in_verses.ContainsKey(exception_word))
                                                 {
-                                                    verses.Add(verse);
-                                                    non_exception_words_in_verses.Add(exception_word, verses);
+                                                    List<Verse> verses = non_exception_words_in_verses[exception_word];
+                                                    if (verses != null)
+                                                    {
+                                                        verses.Add(verse);
+                                                        non_exception_words_in_verses.Add(exception_word, verses);
+                                                    }
                                                 }
-                                            }
-                                            else
-                                            {
-                                                List<Verse> verses = new List<Verse>();
-                                                if (verses != null)
+                                                else
                                                 {
-                                                    verses.Add(verse);
-                                                    non_exception_words_in_verses.Add(exception_word, verses);
+                                                    List<Verse> verses = new List<Verse>();
+                                                    if (verses != null)
+                                                    {
+                                                        verses.Add(verse);
+                                                        non_exception_words_in_verses.Add(exception_word, verses);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                catch
-                                {
-                                    // skip error
+                                    catch
+                                    {
+                                        // skip error
+                                    }
                                 }
                             }
                         }
@@ -526,7 +585,7 @@ public class Server : IPublisher
                         {
                             if (verse.Words[i].Text.StartsWith("و"))
                             {
-                                if (!exception_words.Contains(verse.Words[i].Text))
+                                if (!s_waw_words.Contains(verse.Words[i].Text))
                                 {
                                     str.Append(verse.Words[i].Text.Insert(1, " ") + " ");
                                 }

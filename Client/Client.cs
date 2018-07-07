@@ -127,9 +127,9 @@ public class Client : IPublisher, ISubscriber
     {
         get { return Server.LoadedSimplificationSystems; }
     }
-    public void BuildSimplifiedBook(string text_mode, bool with_bism_Allah, bool waw_as_word, bool shadda_as_letter)
+    public void BuildSimplifiedBook(string text_mode, bool with_bism_Allah, bool waw_as_word, bool shadda_as_letter, bool emlaaei_text)
     {
-        Server.BuildSimplifiedBook(text_mode, with_bism_Allah, waw_as_word, shadda_as_letter);
+        Server.BuildSimplifiedBook(text_mode, with_bism_Allah, waw_as_word, shadda_as_letter, emlaaei_text);
         UpdatePhrasePositionsAndLengths(text_mode);
     }
 
@@ -1693,7 +1693,7 @@ public class Client : IPublisher, ISubscriber
         {
             if (Directory.Exists(Globals.HISTORY_FOLDER))
             {
-                string filename = Globals.HISTORY_FOLDER + "/" + "History" + ".txt";
+                string filename = Globals.HISTORY_FOLDER + "/" + "History.txt";
                 try
                 {
                     using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
@@ -1774,7 +1774,7 @@ public class Client : IPublisher, ISubscriber
     {
         if (Book != null)
         {
-            string filename = Globals.HISTORY_FOLDER + "/" + "History" + ".txt";
+            string filename = Globals.HISTORY_FOLDER + "/" + "History.txt";
             if (File.Exists(filename))
             {
                 using (StreamReader reader = File.OpenText(filename))
@@ -2402,7 +2402,7 @@ public class Client : IPublisher, ISubscriber
                                                                 ((Book.WithBismAllah) ? "" : "_WithoutBismAllah") +
                                                                 ((Book.WawAsWord) ? "_WawAsWord" : "") +
                                                                 ((Book.ShaddaAsLetter) ? "_ShaddaAsLetter" : "") +
-                                                                "-" + ".txt";
+                                                                ".txt";
             try
             {
                 using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))

@@ -278,7 +278,7 @@ public partial class MainForm : Form
         {
             if (Directory.Exists(Globals.NUMBERS_FOLDER))
             {
-                string filename = Globals.NUMBERS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "Numbers" + ".txt";
+                string filename = Globals.NUMBERS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "Numbers.txt";
 
                 StringBuilder str = new StringBuilder();
                 str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");

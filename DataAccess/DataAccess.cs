@@ -25,10 +25,9 @@ public static class DataAccess
     }
 
     // quran text from http://tanzil.net
-    public static List<string> LoadVerseTexts()
+    public static List<string> LoadVerseTexts(string filename)
     {
         List<string> result = new List<string>();
-        string filename = Globals.DATA_FOLDER + "/" + "quran-uthmani.txt";
         if (File.Exists(filename))
         {
             using (StreamReader reader = File.OpenText(filename))
