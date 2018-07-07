@@ -25048,6 +25048,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
 
+                bool phrase_search = false;
                 string phrase = "";
                 if (FindByFrequencyPhraseTextBox.Text.Length > 0)
                 {
@@ -25059,6 +25060,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         phrase = FindByFrequencyPhraseTextBox.Text.Trim();
                     }
+                    phrase_search = true;
                 }
                 else
                 {
@@ -25069,6 +25071,7 @@ public partial class MainForm : Form, ISubscriber
                             phrase += item.SubItems[1].Text;
                         }
                     }
+                    phrase_search = false;
                 }
 
                 if (!String.IsNullOrEmpty(phrase))
@@ -25077,7 +25080,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         string text = null;
                         text += phrase + " " + L[l]["letters"] + sum_comparison_operator_symbol + ((sum > 0) ? sum.ToString() : ((sum_number_type != NumberType.None) ? FindByFrequencySumNumberTypeLabel.Text : "*"))
-                             + ((m_frequency_search_type == FrequencySearchType.DuplicateLetters) ? " " + L[l]["with"] + " " : L[l]["without"] + " ") + L[l]["duplicates"];
+                            + (phrase_search ? ((m_frequency_search_type == FrequencySearchType.DuplicateLetters) ? " " + L[l]["with"] + " " : L[l]["without"] + " ") + L[l]["duplicates"] : "");
 
                         switch (m_frequency_result_type)
                         {
