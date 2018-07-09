@@ -4892,7 +4892,6 @@ public partial class MainForm : Form, ISubscriber
     {
         if (PictureBox.Visible)
         {
-            return;
             if (m_drawing_shape == DrawingShape.Lines) return;
 
             if (m_graphics_zoom_factor <= (m_max_zoom_factor - m_zoom_factor_increment + m_error_margin))
@@ -4914,6 +4913,17 @@ public partial class MainForm : Form, ISubscriber
 
                 MainTextBox.ZoomFactor = m_text_zoom_factor;
                 SearchResultTextBox.ZoomFactor = m_text_zoom_factor;
+                if (m_active_textbox != null)
+                {
+                    int selection_start = m_active_textbox.SelectionStart;
+                    int selection_kength = m_active_textbox.SelectionLength;
+                    m_active_textbox.AlignToStart();
+                    if (selection_kength > 0)
+                    {
+                        m_active_textbox.SelectionStart = selection_start;
+                        m_active_textbox.SelectionLength = selection_kength;
+                    }
+                }
             }
             // re-check same condition after zoom_factor update
             ZoomInLabel.Enabled = (m_text_zoom_factor <= (m_max_zoom_factor - m_zoom_factor_increment + m_error_margin));
@@ -4924,7 +4934,6 @@ public partial class MainForm : Form, ISubscriber
     {
         if (PictureBox.Visible)
         {
-            return;
             if (m_drawing_shape == DrawingShape.Lines) return;
 
             if (m_graphics_zoom_factor >= (m_min_zoom_factor + m_zoom_factor_increment - m_error_margin))
@@ -4945,6 +4954,17 @@ public partial class MainForm : Form, ISubscriber
 
                 MainTextBox.ZoomFactor = m_text_zoom_factor;
                 SearchResultTextBox.ZoomFactor = m_text_zoom_factor;
+                if (m_active_textbox != null)
+                {
+                    int selection_start = m_active_textbox.SelectionStart;
+                    int selection_kength = m_active_textbox.SelectionLength;
+                    m_active_textbox.AlignToStart();
+                    if (selection_kength > 0)
+                    {
+                        m_active_textbox.SelectionStart = selection_start;
+                        m_active_textbox.SelectionLength = selection_kength;
+                    }
+                }
             }
             // re-check same condition after zoom_factor update
             ZoomOutLabel.Enabled = (m_text_zoom_factor >= (m_min_zoom_factor + m_zoom_factor_increment - m_error_margin));
@@ -21225,6 +21245,7 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByTextTextBox_Enter(object sender, EventArgs e)
     {
+        FindByTextControls_Enter(null, null);
         FindByTextTextBox_TextChanged(null, null);
     }
     private void FindByTextTextBox_TextChanged(object sender, EventArgs e)
@@ -26626,42 +26647,6 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_found_verses_displayed)
             {
-                List<Verse> displayed_verses = new List<Verse>();
-                if (m_client.FoundVerses != null)
-                {
-                    displayed_verses.AddRange(m_client.FoundVerses);
-                }
-                else if (m_client.FoundChapters != null)
-                {
-                    foreach (Chapter chapter in m_client.FoundChapters)
-                    {
-                        if (chapter != null)
-                        {
-                            displayed_verses.AddRange(chapter.Verses);
-                        }
-                    }
-                }
-                else if (m_client.FoundVerseRanges != null)
-                {
-                    foreach (List<Verse> range in m_client.FoundVerseRanges)
-                    {
-                        displayed_verses.AddRange(range);
-                    }
-                }
-                else if (m_client.FoundChapterRanges != null)
-                {
-                    foreach (List<Chapter> range in m_client.FoundChapterRanges)
-                    {
-                        foreach (Chapter chapter in range)
-                        {
-                            if (chapter != null)
-                            {
-                                displayed_verses.AddRange(chapter.Verses);
-                            }
-                        }
-                    }
-                }
-
                 int start = 0;
                 // scroll to beginning to show complete verse address because in Arabic, pos=0 is after the first number :(
                 if (m_client.FoundVerses != null)
