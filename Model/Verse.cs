@@ -156,13 +156,16 @@ namespace Model
                             bool found = false;
                             foreach (string root in source_words[i].Roots)
                             {
-                                if (target_word.Roots.Contains(root))
+                                if (target_word.Roots != null)
                                 {
-                                    source_words[i] = null; // remove it from list so not to be reused
+                                    if (target_word.Roots.Contains(root))
+                                    {
+                                        source_words[i] = null; // remove it from list so not to be reused
 
-                                    common_word_count++;
-                                    found = true;
-                                    break;
+                                        common_word_count++;
+                                        found = true;
+                                        break;
+                                    }
                                 }
                             }
                             if (found)

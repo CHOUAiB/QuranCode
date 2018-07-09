@@ -3450,6 +3450,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DoFindRelatedWords(object sender)
     {
+        if (m_emlaaei_text) return;
+
         if (sender is TextBoxBase)
         {
             string text = (sender as TextBoxBase).SelectedText.Trim();
@@ -3468,6 +3470,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DoFindRelatedWords(string text)
     {
+        if (m_emlaaei_text) return;
+
         this.Cursor = Cursors.WaitCursor;
         try
         {
@@ -3488,6 +3492,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DoFindRelatedVerses(object sender)
     {
+        if (m_emlaaei_text) return;
+
         this.Cursor = Cursors.WaitCursor;
         try
         {
@@ -4625,8 +4631,6 @@ public partial class MainForm : Form, ISubscriber
     }
     private void MainTextBox_MouseMove(object sender, MouseEventArgs e)
     {
-        if (m_emlaaei_text) return;
-
         // stop flickering
         if (
             (Math.Abs(m_previous_location.X - e.X) < 8)
@@ -4672,8 +4676,6 @@ public partial class MainForm : Form, ISubscriber
     }
     private void MainTextBox_MouseUp(object sender, MouseEventArgs e)
     {
-        if (m_emlaaei_text) return;
-
         if (ModifierKeys == Keys.Control)
         {
             if (e.Button == MouseButtons.Left)
@@ -5256,7 +5258,7 @@ public partial class MainForm : Form, ISubscriber
         }
         return length;
     }
-    private int GetWordDisplayStart(Word word) //??? should be int word_index in RichTextBox
+    private int GetWordDisplayStart(Word word)
     {
         int start = 0;
         if (word != null)
@@ -12798,10 +12800,14 @@ public partial class MainForm : Form, ISubscriber
     }
     private void RelatedWordsTextBox_TextChanged(object sender, EventArgs e)
     {
+        if (m_emlaaei_text) return;
+
         RelatedWordsButton.Enabled = (RelatedWordsTextBox.Text.Length > 0);
     }
     private void RelatedWordsButton_Click(object sender, EventArgs e)
     {
+        if (m_emlaaei_text) return;
+
         if (m_info_word != null)
         {
             FindRelatedWords(m_info_word);
@@ -12830,22 +12836,33 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UpdateMouseCursor()
     {
-        if (m_active_textbox != null)
+        if (m_emlaaei_text)
         {
-            if (ModifierKeys == Keys.Control)
+            // stop cursor flicker
+            if (m_active_textbox.Cursor != Cursors.IBeam)
             {
-                // stop cursor flicker
-                if (m_active_textbox.Cursor != Cursors.Hand)
-                {
-                    m_active_textbox.Cursor = Cursors.Hand;
-                }
+                m_active_textbox.Cursor = Cursors.IBeam;
             }
-            else
+        }
+        else
+        {
+            if (m_active_textbox != null)
             {
-                // stop cursor flicker
-                if (m_active_textbox.Cursor != Cursors.IBeam)
+                if (ModifierKeys == Keys.Control)
                 {
-                    m_active_textbox.Cursor = Cursors.IBeam;
+                    // stop cursor flicker
+                    if (m_active_textbox.Cursor != Cursors.Hand)
+                    {
+                        m_active_textbox.Cursor = Cursors.Hand;
+                    }
+                }
+                else
+                {
+                    // stop cursor flicker
+                    if (m_active_textbox.Cursor != Cursors.IBeam)
+                    {
+                        m_active_textbox.Cursor = Cursors.IBeam;
+                    }
                 }
             }
         }
@@ -21515,6 +21532,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByRoot()
     {
+        if (m_emlaaei_text) return;
+
         if (m_client != null)
         {
             ClearFindMatches();
@@ -21576,6 +21595,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByRoot(string text)
     {
+        if (m_emlaaei_text) return;
+
         this.Cursor = Cursors.WaitCursor;
         try
         {
@@ -27512,6 +27533,10 @@ public partial class MainForm : Form, ISubscriber
                 ToolTip.SetToolTip(EmlaaeiTextLabel, L[l]["Uthmani Text"]);
             }
         }
+
+        FindByTextRootSearchTypeLabel.Enabled = !m_emlaaei_text;
+        m_text_search_type = TextSearchType.Exact;
+        RelatedWordsButton.Enabled = !m_emlaaei_text;
     }
     private void WithBismAllahCheckBox_CheckedChanged(object sender, EventArgs e)
     {
