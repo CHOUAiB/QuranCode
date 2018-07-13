@@ -352,6 +352,17 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
 
+                if (m_show_add_controls)
+                {
+                    ValueLabel.Text = "-- " + L[l]["Value"];
+                    ToolTip.SetToolTip(ValueLabel, L[l]["Hide value-added positions and distances"]);
+                }
+                else
+                {
+                    ValueLabel.Text = "+ " + L[l]["Value"];
+                    ToolTip.SetToolTip(ValueLabel, L[l]["Show value-added positions and distances"]);
+                }
+
                 UpdateEmlaaeiLabel();
 
                 LetterFrequencyColumnHeader.Text = L[l]["Frequency"] + "  "; // + 2 spaces for sort marker after them
@@ -2424,6 +2435,18 @@ public partial class MainForm : Form, ISubscriber
                                                         {
                                                             AddAllCheckBox.Checked = bool.Parse(parts[1].Trim());
                                                         }
+
+                                                        line = reader.ReadLine();
+                                                        parts = line.Split('=');
+                                                        if (parts.Length >= 2)
+                                                        {
+                                                            m_show_add_controls = bool.Parse(parts[1].Trim());
+                                                        }
+                                                        if (!m_show_add_controls)
+                                                        {
+                                                            m_show_add_controls = !m_show_add_controls;
+                                                            ValueLabel_Click(null, null);
+                                                        }
                                                     }
                                                 }
                                                 break;
@@ -3046,6 +3069,7 @@ public partial class MainForm : Form, ISubscriber
                         writer.WriteLine("AddDistancesToPrevious" + "=" + m_client.NumerologySystem.AddDistancesToPrevious.ToString());
                         writer.WriteLine("AddDistancesToNext" + "=" + m_client.NumerologySystem.AddDistancesToNext.ToString());
                         writer.WriteLine("AddAll" + "=" + AddAllCheckBox.Checked.ToString());
+                        writer.WriteLine("ShowAll" + "=" + m_show_add_controls.ToString());
                     }
                     writer.WriteLine("MathsDivisor" + "=" + m_maths_divisor);
                     writer.WriteLine("MathsUpdateGlobalDivisor" + "=" + m_maths_update_global_divisor);
@@ -26953,6 +26977,40 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Value Systems
     ///////////////////////////////////////////////////////////////////////////////
+    private bool m_show_add_controls = true;
+    private void ValueLabel_Click(object sender, EventArgs e)
+    {
+        m_show_add_controls = !m_show_add_controls;
+
+        int shift;
+        if (m_dpi_x == 120.0F)
+        {
+            shift = 142;
+        }
+        else
+        {
+            shift = 114;
+        }
+
+        if (m_show_add_controls)
+        {
+            ValueLabel.Text = "-- " + L[l]["Value"];
+            ToolTip.SetToolTip(ValueLabel, L[l]["Hide value-added positions and distances"]);
+            ValuePanel.Height += shift;
+            ValueNavigatorPanel.Top += shift;
+            LetterFrequencyPanel.Top += shift;
+            LetterFrequencyPanel.Height -= shift;
+        }
+        else
+        {
+            ValueLabel.Text = "+ " + L[l]["Value"];
+            ToolTip.SetToolTip(ValueLabel, L[l]["Show value-added positions and distances"]);
+            ValuePanel.Height -= shift;
+            ValueNavigatorPanel.Top -= shift;
+            LetterFrequencyPanel.Top -= shift;
+            LetterFrequencyPanel.Height += shift;
+        }
+    }
     private void AddToControlCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         if (m_client != null)
