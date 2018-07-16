@@ -898,11 +898,13 @@ public partial class MainForm : Form, ISubscriber
 
                         if (text_mode == "Original")
                         {
-                            ApplyFont(DEFAULT_QURAN_FONT_NAME, DEFAULT_QURAN_FONT_SIZE);
+                            ApplyFont(m_quran_font);
+                            FontLabel.Enabled = true;
                         }
                         else
                         {
-                            ApplyFont("Courier New", 16);
+                            ApplyFont("Courier New", DEFAULT_QURAN_FONT_SIZE);
+                            FontLabel.Enabled = false;
                         }
 
                         this.Activate(); // bring to foreground
@@ -4267,10 +4269,9 @@ public partial class MainForm : Form, ISubscriber
         {
             for (int i = 0; i < m_quran_fonts.Count; i++)
             {
-                m_quran_font = m_quran_fonts[i];
-                if (m_quran_font != null)
+                if (m_quran_fonts[i] != null)
                 {
-                    if (m_quran_font.Name == font_name)
+                    if (m_quran_fonts[i].Name == font_name)
                     {
                         ApplyFont(i);
                         found = true;
@@ -4279,24 +4280,14 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
+
         if (!found)
         {
             Font font = new Font(font_name, font_size, FontStyle.Bold);
             MainTextBox.Font = font;
-            SearchResultTextBox.Font = font;
-            // MUST DO IT AGAIN for it to work !!!
             MainTextBox.Font = font;
             SearchResultTextBox.Font = font;
-            // MUST DO IT AGAIN for it to work !!!
-            MainTextBox.Font = font;
             SearchResultTextBox.Font = font;
-            // MUST DO IT AGAIN for it to work !!!
-            MainTextBox.Font = font;
-            SearchResultTextBox.Font = font;
-            // MUST DO IT AGAIN for it to work !!!
-            MainTextBox.Font = font;
-            SearchResultTextBox.Font = font;
-
             MainTextBox.AlignToStart();
             SearchResultTextBox.AlignToStart();
             MainTextBox.Refresh();
@@ -4316,22 +4307,10 @@ public partial class MainForm : Form, ISubscriber
                     {
                         MainTextBox.BeginUpdate();
                         SearchResultTextBox.BeginUpdate();
-
+                        MainTextBox.Font = m_quran_font;
                         MainTextBox.Font = m_quran_font;
                         SearchResultTextBox.Font = m_quran_font;
-                        // MUST DO IT AGAIN for it to work !!!
-                        MainTextBox.Font = m_quran_font;
                         SearchResultTextBox.Font = m_quran_font;
-                        // MUST DO IT AGAIN for it to work !!!
-                        MainTextBox.Font = m_quran_font;
-                        SearchResultTextBox.Font = m_quran_font;
-                        // MUST DO IT AGAIN for it to work !!!
-                        MainTextBox.Font = m_quran_font;
-                        SearchResultTextBox.Font = m_quran_font;
-                        // MUST DO IT AGAIN for it to work !!!
-                        MainTextBox.Font = m_quran_font;
-                        SearchResultTextBox.Font = m_quran_font;
-
                         MainTextBox.AlignToStart();
                         SearchResultTextBox.AlignToStart();
                         MainTextBox.Refresh();
@@ -4342,6 +4321,35 @@ public partial class MainForm : Form, ISubscriber
                         MainTextBox.EndUpdate();
                         SearchResultTextBox.EndUpdate();
                     }
+                }
+            }
+        }
+    }
+    private void ApplyFont(Font font)
+    {
+        if (m_quran_fonts != null)
+        {
+            if (m_quran_fonts.Contains(font))
+            {
+                try
+                {
+                    MainTextBox.BeginUpdate();
+                    SearchResultTextBox.BeginUpdate();
+
+                    m_quran_font = font;
+                    MainTextBox.Font = m_quran_font;
+                    MainTextBox.Font = m_quran_font;
+                    SearchResultTextBox.Font = m_quran_font;
+                    SearchResultTextBox.Font = m_quran_font;
+                    MainTextBox.AlignToStart();
+                    SearchResultTextBox.AlignToStart();
+                    MainTextBox.Refresh();
+                    SearchResultTextBox.Refresh();
+                }
+                finally
+                {
+                    MainTextBox.EndUpdate();
+                    SearchResultTextBox.EndUpdate();
                 }
             }
         }
@@ -27648,11 +27656,13 @@ public partial class MainForm : Form, ISubscriber
 
                             if (text_mode == "Original")
                             {
-                                ApplyFont(DEFAULT_QURAN_FONT_NAME, DEFAULT_QURAN_FONT_SIZE);
+                                ApplyFont(m_quran_font);
+                                FontLabel.Enabled = true;
                             }
                             else
                             {
-                                ApplyFont("Courier New", 16);
+                                ApplyFont("Courier New", DEFAULT_QURAN_FONT_SIZE);
+                                FontLabel.Enabled = false;
                             }
                         }
                     }

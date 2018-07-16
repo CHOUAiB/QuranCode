@@ -1,8 +1,6 @@
 ﻿<pre>
-                         بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 
-QuranCode is a numerical and similarity research tool for the ever-revealing Book (القرءان الكريم)
-which is Readable (قرءان) despite being encrypted. See http://heliwave.com/EncryptedQuran.pdf.
+                         بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 
 ------------------------------------------------------------------------------
 QuranCode Editions:
@@ -10,21 +8,130 @@ QuranCode Editions:
 	Ultimate Edition	Private research methods and big numbers.	[Start with Shift]
 ------------------------------------------------------------------------------
 
+QuranCode is a numerical and similarity research tool for the Final Book of God, Al-Quran (القرءان)
+which is Readable despite being encrypted, hence the name Quran  (قرءان).
+See http://heliwave.com/EncryptedQuran.pdf
+
+As per Quran 56:75-80, the ever-revealing Quran (القرءان الكريم) is hidden within
+the Grand Quran (القرءان العظيم). God knows all.
+
+بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+56:75	I swear by the positions of the stars (or bookmarkers)!		۞ فَلَآ أُقْسِمُ بِمَوَٰقِعِ ٱلنُّجُومِ
+56:76	And indeed it is a great oath, if you only knew.		وَإِنَّهُۥ لَقَسَمٌۭ لَّوْ تَعْلَمُونَ عَظِيمٌ
+56:77	It is indeed an ever-revealing Quran,				إِنَّهُۥ لَقُرْءَانٌۭ كَرِيمٌۭ
+56:78	within a guarded Book,						فِى كِتَٰبٍۢ مَّكْنُونٍۢ
+56:79	none can access it except the purified,				لَّا يَمَسُّهُۥٓ إِلَّا ٱلْمُطَهَّرُونَ
+56:80	sent down gradually from the Lord of the worlds.		تَنزِيلٌۭ مِّن رَّبِّ ٱلْعَٰلَمِينَ
+
 Initial Letter Sentences (جمل الحروف المقطعة)
 ------------------------------------------------------------------------------
 Ali is a path to the Truth we follow.		علي صراط حق نمسكه
 Perfect text with a decisive secret.		نص حكيم له سر قاطع
 ------------------------------------------------------------------------------
 
-FROM ALLAH (من الله)
--------------------------------
-Word	Frequency	Meaning
--------------------------------
+Primalogy is a new numerology system that assigns prime values to the Arabic alphabet.
+It is derived from surat Al-Fatiha which is built upon prime numbers (7 verses, 29 words, 139 letters)
+and is confirmed by surat Al-Fatiha (8317), Al-Ikhlaass (4201/3167), ayat Al-Kursi (11261),
+ayat Ar-Rahmaan (683), and the Name of God "Allah" (269) glory to Him alone.
+See http://heliwave.com/Primalogy.pdf
+
+The Arabic text of ayat Al-Noor (Quran 24:35) might be a design by Allah All-knowing
+for a clean portable nuclear power generator. See http://heliwave.com
+
+
+Definitions:
+------------------------------------------------------------------------------
+U  unit               = indivisible number                              PINK
+   repunit            = repeated unit number [11111111111...] = (10^n - 1)/9
+                where n = 2, 19, 23, 317, 1031, 49081, 86453, 109297, 270343
+                                                     http://oeis.org/A004023
+P  prime              = divisible number by self only
+AP additive prime     = prime with prime digit sum                      BLUE
+XP non-additive prime = prime with non-prime digit sum                 GREEN
+
+C  composite              = divisible number by self and others
+AC additive composite     = composite with composite digit sum         BROWN
+XC non-additive composite = composite with non-composite digit sum     BLACK
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+Book         = Key + Message                        Key = chapter 1 = الفاتحة
+114 chapters =  1  +   113                          unit and additive prime
+6236 verses  =  7  +   6229                                  additive primes
+
+Key = 7 verses = 29 words = 139 letters                      additive primes
+      729139 left-to-right concatenation                     additive prime
+      139297 right-to-left concatenation                     additive prime
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+First 7 verses in the Quran = 29 words
+Last  7 verses in the Quran = 29 words
+First 7 words  in the Quran = 29 letters
+Last  7 words  in the Quran = 29 letters
+      7th additive prime is   29
+
+First 7 verses in the Quran use 109 verse   1 (البسملة) letters
+Last  7 verses in the Quran use 109 chapter 1 (الفاتحة) letters
+      29th prime is             109
+
+109297 "1"s is the 8th prime repunit.
+19          is the 8th prime number.
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+Sum of chapter numbers = 1 +  2  +  3  +  4  +  5  + ... + 114  =  6555
+Sum of chapter verses  = 7 + 286 + 200 + 176 + 120 + ... +  6   =  6236
+Difference             = 6555 - 6236                            =   319
+
+First two pages of the Quran   = 319 letters with standalone hamza of الءاخرة
+7 verses after first two pages = 319 letters with standalone hamza of الءاخر
+
+There are 5 chapters with C+V = 114. The sum of their chapter numbers is 319.
+
+	Chapter	Verses	C+V
+	-------------------
+	15	99	114
+	39	75	114
+	70	44	114
+	88	26	114
+	107	7	114
+	-------------------
+Sum	319	251	570
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+Numbers 114 and 506:
+Chapter 57 has 29 verses
+
+ 114/2 = 57
+ mid(1...57) = 29
+         57  × 29 = 1653
+                   P16 = 53
+ There are 16 additive     primes up to 114
+ There are 53 additive composites up to 114
+
+ 506/2 = 253
+ mid(1...253) = 127
+         253  × 127 = 32131
+                     P32 = 131
+ There are  32 non-additive     primes up to 506 (excluding primes with digit sum = 10)
+ There are 131 non-additive composites up to 506
+
+ P114      = 619
+ 114 + 506 = 620
+ C506      = 621
+------------------------------------------------------------------------------
+
+Most Freequenct Words: FROM ALLAH (من الله)			
+-------------------------------				
+Word	Frequency	Meaning		
+-------------------------------				
 من	2763		from
 الله	2265		Allah
 ان	1604		know that
 في	1185		in
-ما	1010		none
+ما	1012		none
 لا	812		no
 الذين	811		they
 الا	763		except
@@ -56,7 +163,7 @@ Word	Frequency	Meaning
 والله	240		and Allah
 كانوا	229		they were
 عن	223		about
-انا	222		i am
+انا	222		I am
 اذا	221		if
 ربك	220		your Lord
 يوم	217		day
@@ -66,105 +173,18 @@ Word	Frequency	Meaning
 كفروا	189		they disbelieved
 كنتم	188		you were
 الناس	182		people
+السموت	182		heavens
+لم	178		why
+وهو	171		and he
+فان	171		then certainly
+انه	170		it is
+اذ	165		suddenly
+والذين	164		and they
+عليكم	164		upon you (plural)
+الكتب	163		the Book
 ...	...		...
--------------------------------
+-------------------------------			
 
-
-------------------------------------------------------------------------------
-U  unit               = indivisible number                              PINK
-   repunit            = repeated unit number [11111111111...] = (10^n - 1)/9
-                where n = 2, 19, 23, 317, 1031, 49081, 86453, 109297, 270343
-                                                     http://oeis.org/A004023
-P  prime              = divisible number by self only
-AP additive prime     = prime with prime digit sum                      BLUE
-XP non-additive prime = prime with non-prime digit sum                 GREEN
-
-C  composite              = divisible number by self and others
-AC additive composite     = composite with composite digit sum         BROWN
-XC non-additive composite = composite with non-composite digit sum     BLACK
-------------------------------------------------------------------------------
-
-
-------------------------------------------------------------------------------
-First 7 verses in the Quran = 29 words
-Last  7 verses in the Quran = 29 words
-First 7 words  in the Quran = 29 letters
-Last  7 words  in the Quran = 29 letters
-      7th additive prime is   29
-
-First 7 verses in the Quran use 109 verse   1 (البسملة) letters
-Last  7 verses in the Quran use 109 chapter 1 (الفاتحة) letters
-      29th prime is             109
-
-109297 "1"s is the 8th prime repunit.
-19          is the 8th prime number.
-------------------------------------------------------------------------------
-
-
-------------------------------------------------------------------------------
-Book         = Key + Message                        Key = chapter 1 = الفاتحة
-114 chapters =  1  +   113                          unit and additive prime
-6236 verses  =  7  +   6229                                  additive primes
-
-Key = 7 verses = 29 words = 139 letters                      additive primes
-      729139 left-to-right concatenation                     additive prime
-      139297 right-to-left concatenation                     additive prime
-------------------------------------------------------------------------------
-
-
-------------------------------------------------------------------------------
-Sum of chapter numbers = 1 +  2  +  3  +  4  +  5  + ... + 114  =  6555
-Sum of chapter verses  = 7 + 286 + 200 + 176 + 120 + ... +  6   =  6236
-Difference             = 6555 - 6236                            =   319
-
-First two pages of the Quran   = 319 letters with standalone hamza of الءاخرة
-7 verses after first two pages = 319 letters with standalone hamza of الءاخر
-
-There are 5 chapters with C+V = 114. The sum of their chapter numbers is 319.
-
-	Chapter	Verses	C+V
-	-------------------
-	15	99	114
-	39	75	114
-	70	44	114
-	88	26	114
-	107	7	114
-	-------------------
-Sum	319	251	570
-------------------------------------------------------------------------------
-
-
-
-------------------------------------------------------------------------------
-Intertwined Numbers (114 and 506):
-
- 114/2 = 57
- mid(1...57) = 29
-         57  × 29 = 1653
-                   P16 = 53
- There are 16 additive     primes up to 114
- There are 53 additive composites up to 114
-
- 506/2 = 253
- mid(1...253) = 127
-         253  × 127 = 32131
-                     P32 = 131
- There are  32 non-additive     primes up to 506 (excluding those with digit sum = 10)
- There are 131 non-additive composites up to 506
-
- P114      = 619
- 114 + 506 = 620
- C506      = 621
-------------------------------------------------------------------------------
-
-
-Primalogy is a new numerology system that assigns prime values to the Arabic alphabet.
-It is derived from surat Al-Fatiha which is built upon prime numbers (7 verses, 29 words, 139 letters)
-and is confirmed by surat Al-Fatiha, Al-Ikhlaass, ayat Al-Kursi, ayat Ar-Rahmaan, and
-the majestic word of "الله" Glory to Him. See http://heliwave.com/Primalogy.pdf for details.
-
-Please read why the Arabic text of ayat Al-Noor (Quran 24:35) is a design by Allah All-knowing
-for a clean portable nuclear power generator at http://heliwave.com.
 
 If you find QuranCode useful, please recite Quran 27:62 a prime number of times (preferably 313)
 to bring forward the arrival of Imam Al-Mehdi (as) to restore peace and justice to the crying Earth.
