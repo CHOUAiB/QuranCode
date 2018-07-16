@@ -2980,6 +2980,9 @@ public partial class MainForm : Form, ISubscriber
                         m_distances_divisor = DEFAULT_DIVISOR;
                         DistancesDivisorNumericUpDown.Value = m_distances_divisor;
 
+                        m_show_add_controls = true;
+                        ValueLabel_Click(null, null);
+
                         // select chapter Al-Fatiha as default
                         m_client.Selection = new Selection(m_client.Book, SelectionScope.Chapter, new List<int>() { 0 });
                     }
@@ -24744,15 +24747,8 @@ public partial class MainForm : Form, ISubscriber
         m_frequency_result_type = (m_find_by_phrase) ? FrequencyResultType.Sentences : FrequencyResultType.Chapters;
         FindByFrequencyControls_Enter(null, null);
 
-        int shift;
-        if (m_dpi_x == 120.0F)
-        {
-            shift = 40;
-        }
-        else
-        {
-            shift = 46;
-        }
+        int shift = (m_dpi_x == 120.0F) ? 40 : 46;
+
         if (m_find_by_phrase)
         {
             for (int i = 0; i < 3; i++) FindByFrequencyPhraseTextBox.TextChanged -= new EventHandler(FindByFrequencyPhraseTextBox_TextChanged);
@@ -26985,21 +26981,12 @@ public partial class MainForm : Form, ISubscriber
     #endregion
     #region Value Systems
     ///////////////////////////////////////////////////////////////////////////////
-    private bool m_show_add_controls = true;
+    private bool m_show_add_controls = false;
     private void ValueLabel_Click(object sender, EventArgs e)
     {
+        int shift = (m_dpi_x == 120.0F) ? 142 : 114;
+
         m_show_add_controls = !m_show_add_controls;
-
-        int shift;
-        if (m_dpi_x == 120.0F)
-        {
-            shift = 142;
-        }
-        else
-        {
-            shift = 114;
-        }
-
         if (m_show_add_controls)
         {
             ValueLabel.Text = "-- " + L[l]["Value"];

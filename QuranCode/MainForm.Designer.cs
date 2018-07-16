@@ -522,6 +522,10 @@ partial class MainForm
             this.ChaptersLabel = new System.Windows.Forms.Label();
             this.LetterFrequencyPanel = new System.Windows.Forms.Panel();
             this.LetterFrequencyWithDiacriticsCheckBox = new System.Windows.Forms.CheckBox();
+            this.LetterFrequencySumLabel = new System.Windows.Forms.Label();
+            this.LetterFrequencyCountLabel = new System.Windows.Forms.Label();
+            this.LetterFrequencyInspectLabel = new System.Windows.Forms.Label();
+            this.LetterFrequencyTotalLabel = new System.Windows.Forms.Label();
             this.LetterFrequencyListView = new System.Windows.Forms.ListView();
             this.LetterOrderColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LetterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -542,10 +546,6 @@ partial class MainForm
             this.FindByFrequencyResultTypeVersesLabel = new System.Windows.Forms.Label();
             this.FindByFrequencyResultTypeChaptersLabel = new System.Windows.Forms.Label();
             this.FindByFrequencySearchTypeUniqueLettersLabel = new System.Windows.Forms.Label();
-            this.LetterFrequencySumLabel = new System.Windows.Forms.Label();
-            this.LetterFrequencyCountLabel = new System.Windows.Forms.Label();
-            this.LetterFrequencyInspectLabel = new System.Windows.Forms.Label();
-            this.LetterFrequencyTotalLabel = new System.Windows.Forms.Label();
             this.LetterNumberSumTextBox = new System.Windows.Forms.TextBox();
             this.WordNumberSumTextBox = new System.Windows.Forms.TextBox();
             this.VerseNumberSumTextBox = new System.Windows.Forms.TextBox();
@@ -8307,7 +8307,7 @@ partial class MainForm
             this.FindByFrequencySumNumericUpDown.BackColor = System.Drawing.SystemColors.Window;
             this.FindByFrequencySumNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencySumNumericUpDown.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.FindByFrequencySumNumericUpDown.Location = new System.Drawing.Point(70, 36);
+            this.FindByFrequencySumNumericUpDown.Location = new System.Drawing.Point(73, 36);
             this.FindByFrequencySumNumericUpDown.Margin = new System.Windows.Forms.Padding(0);
             this.FindByFrequencySumNumericUpDown.Maximum = new decimal(new int[] {
             9999999,
@@ -8315,7 +8315,7 @@ partial class MainForm
             0,
             0});
             this.FindByFrequencySumNumericUpDown.Name = "FindByFrequencySumNumericUpDown";
-            this.FindByFrequencySumNumericUpDown.Size = new System.Drawing.Size(78, 20);
+            this.FindByFrequencySumNumericUpDown.Size = new System.Drawing.Size(76, 20);
             this.FindByFrequencySumNumericUpDown.TabIndex = 9;
             this.FindByFrequencySumNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ToolTip.SetToolTip(this.FindByFrequencySumNumericUpDown, "Letter frequency sum");
@@ -8575,26 +8575,89 @@ partial class MainForm
             this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyTotalLabel);
             this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyListView);
             this.LetterFrequencyPanel.Controls.Add(this.FindByFrequncyPanel);
-            this.LetterFrequencyPanel.Location = new System.Drawing.Point(5, 431);
+            this.LetterFrequencyPanel.Location = new System.Drawing.Point(3, 429);
             this.LetterFrequencyPanel.Name = "LetterFrequencyPanel";
-            this.LetterFrequencyPanel.Size = new System.Drawing.Size(180, 213);
+            this.LetterFrequencyPanel.Size = new System.Drawing.Size(184, 215);
             this.LetterFrequencyPanel.TabIndex = 240;
             this.LetterFrequencyPanel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
             // 
             // LetterFrequencyWithDiacriticsCheckBox
             // 
-            this.LetterFrequencyWithDiacriticsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LetterFrequencyWithDiacriticsCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.LetterFrequencyWithDiacriticsCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.LetterFrequencyWithDiacriticsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.LetterFrequencyWithDiacriticsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LetterFrequencyWithDiacriticsCheckBox.ForeColor = System.Drawing.Color.Navy;
-            this.LetterFrequencyWithDiacriticsCheckBox.Location = new System.Drawing.Point(139, 193);
+            this.LetterFrequencyWithDiacriticsCheckBox.Location = new System.Drawing.Point(141, 195);
             this.LetterFrequencyWithDiacriticsCheckBox.Name = "LetterFrequencyWithDiacriticsCheckBox";
             this.LetterFrequencyWithDiacriticsCheckBox.Size = new System.Drawing.Size(15, 17);
             this.LetterFrequencyWithDiacriticsCheckBox.TabIndex = 16;
             this.ToolTip.SetToolTip(this.LetterFrequencyWithDiacriticsCheckBox, "with diacritics  مع الحركات");
             this.LetterFrequencyWithDiacriticsCheckBox.UseVisualStyleBackColor = false;
             this.LetterFrequencyWithDiacriticsCheckBox.CheckedChanged += new System.EventHandler(this.LetterFrequencyWithDiacriticsCheckBox_CheckedChanged);
+            // 
+            // LetterFrequencySumLabel
+            // 
+            this.LetterFrequencySumLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.LetterFrequencySumLabel.BackColor = System.Drawing.Color.Transparent;
+            this.LetterFrequencySumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LetterFrequencySumLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.LetterFrequencySumLabel.Location = new System.Drawing.Point(75, 193);
+            this.LetterFrequencySumLabel.Name = "LetterFrequencySumLabel";
+            this.LetterFrequencySumLabel.Size = new System.Drawing.Size(74, 18);
+            this.LetterFrequencySumLabel.TabIndex = 15;
+            this.LetterFrequencySumLabel.Text = "0";
+            this.LetterFrequencySumLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.LetterFrequencySumLabel, "Letter frequency sum");
+            this.LetterFrequencySumLabel.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+            this.LetterFrequencySumLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
+            // 
+            // LetterFrequencyCountLabel
+            // 
+            this.LetterFrequencyCountLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.LetterFrequencyCountLabel.BackColor = System.Drawing.Color.Transparent;
+            this.LetterFrequencyCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LetterFrequencyCountLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.LetterFrequencyCountLabel.Location = new System.Drawing.Point(42, 193);
+            this.LetterFrequencyCountLabel.Name = "LetterFrequencyCountLabel";
+            this.LetterFrequencyCountLabel.Size = new System.Drawing.Size(29, 18);
+            this.LetterFrequencyCountLabel.TabIndex = 14;
+            this.LetterFrequencyCountLabel.Text = "0";
+            this.LetterFrequencyCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.LetterFrequencyCountLabel, "Letters");
+            this.LetterFrequencyCountLabel.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+            this.LetterFrequencyCountLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
+            // 
+            // LetterFrequencyInspectLabel
+            // 
+            this.LetterFrequencyInspectLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.LetterFrequencyInspectLabel.BackColor = System.Drawing.Color.Transparent;
+            this.LetterFrequencyInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LetterFrequencyInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LetterFrequencyInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.LetterFrequencyInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("LetterFrequencyInspectLabel.Image")));
+            this.LetterFrequencyInspectLabel.Location = new System.Drawing.Point(161, 194);
+            this.LetterFrequencyInspectLabel.Name = "LetterFrequencyInspectLabel";
+            this.LetterFrequencyInspectLabel.Size = new System.Drawing.Size(16, 18);
+            this.LetterFrequencyInspectLabel.TabIndex = 17;
+            this.ToolTip.SetToolTip(this.LetterFrequencyInspectLabel, "Inspect letter frequencies");
+            this.LetterFrequencyInspectLabel.Click += new System.EventHandler(this.LetterFrequencyInspectLabel_Click);
+            this.LetterFrequencyInspectLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
+            // 
+            // LetterFrequencyTotalLabel
+            // 
+            this.LetterFrequencyTotalLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.LetterFrequencyTotalLabel.BackColor = System.Drawing.Color.Transparent;
+            this.LetterFrequencyTotalLabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.LetterFrequencyTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LetterFrequencyTotalLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.LetterFrequencyTotalLabel.Location = new System.Drawing.Point(4, 193);
+            this.LetterFrequencyTotalLabel.Name = "LetterFrequencyTotalLabel";
+            this.LetterFrequencyTotalLabel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.LetterFrequencyTotalLabel.Size = new System.Drawing.Size(172, 18);
+            this.LetterFrequencyTotalLabel.TabIndex = 13;
+            this.LetterFrequencyTotalLabel.Text = "Sum";
+            this.LetterFrequencyTotalLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
             // 
             // LetterFrequencyListView
             // 
@@ -8612,9 +8675,9 @@ partial class MainForm
             this.LetterFrequencyListView.FullRowSelect = true;
             this.LetterFrequencyListView.GridLines = true;
             this.LetterFrequencyListView.HideSelection = false;
-            this.LetterFrequencyListView.Location = new System.Drawing.Point(0, 55);
+            this.LetterFrequencyListView.Location = new System.Drawing.Point(0, 57);
             this.LetterFrequencyListView.Name = "LetterFrequencyListView";
-            this.LetterFrequencyListView.Size = new System.Drawing.Size(175, 136);
+            this.LetterFrequencyListView.Size = new System.Drawing.Size(182, 136);
             this.LetterFrequencyListView.TabIndex = 11;
             this.LetterFrequencyListView.UseCompatibleStateImageBehavior = false;
             this.LetterFrequencyListView.View = System.Windows.Forms.View.Details;
@@ -8682,9 +8745,9 @@ partial class MainForm
             this.FindByFrequncyPanel.Controls.Add(this.FindByFrequencySearchTypeDuplicateLettersLabel);
             this.FindByFrequncyPanel.Controls.Add(this.FindByFrequencySearchTypeUniqueLettersLabel);
             this.FindByFrequncyPanel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.FindByFrequncyPanel.Location = new System.Drawing.Point(0, -1);
+            this.FindByFrequncyPanel.Location = new System.Drawing.Point(0, 0);
             this.FindByFrequncyPanel.Name = "FindByFrequncyPanel";
-            this.FindByFrequncyPanel.Size = new System.Drawing.Size(177, 103);
+            this.FindByFrequncyPanel.Size = new System.Drawing.Size(181, 103);
             this.FindByFrequncyPanel.TabIndex = 244;
             // 
             // FindByFrequencyLinkLabel
@@ -8693,7 +8756,7 @@ partial class MainForm
             this.FindByFrequencyLinkLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.FindByFrequencyLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencyLinkLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.FindByFrequencyLinkLabel.Location = new System.Drawing.Point(166, 4);
+            this.FindByFrequencyLinkLabel.Location = new System.Drawing.Point(170, 4);
             this.FindByFrequencyLinkLabel.Name = "FindByFrequencyLinkLabel";
             this.FindByFrequencyLinkLabel.Size = new System.Drawing.Size(6, 4);
             this.FindByFrequencyLinkLabel.TabIndex = 110;
@@ -8710,7 +8773,7 @@ partial class MainForm
             this.FindByFrequencyPhraseCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FindByFrequencyPhraseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencyPhraseCheckBox.ForeColor = System.Drawing.Color.Black;
-            this.FindByFrequencyPhraseCheckBox.Location = new System.Drawing.Point(106, 5);
+            this.FindByFrequencyPhraseCheckBox.Location = new System.Drawing.Point(110, 5);
             this.FindByFrequencyPhraseCheckBox.Name = "FindByFrequencyPhraseCheckBox";
             this.FindByFrequencyPhraseCheckBox.Size = new System.Drawing.Size(15, 14);
             this.FindByFrequencyPhraseCheckBox.TabIndex = 109;
@@ -8726,7 +8789,7 @@ partial class MainForm
             this.FindByFrequencySumComparisonOperatorLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.FindByFrequencySumComparisonOperatorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencySumComparisonOperatorLabel.ForeColor = System.Drawing.Color.Black;
-            this.FindByFrequencySumComparisonOperatorLabel.Location = new System.Drawing.Point(52, 36);
+            this.FindByFrequencySumComparisonOperatorLabel.Location = new System.Drawing.Point(54, 36);
             this.FindByFrequencySumComparisonOperatorLabel.Name = "FindByFrequencySumComparisonOperatorLabel";
             this.FindByFrequencySumComparisonOperatorLabel.Size = new System.Drawing.Size(18, 19);
             this.FindByFrequencySumComparisonOperatorLabel.TabIndex = 8;
@@ -8744,9 +8807,9 @@ partial class MainForm
             this.FindByFrequencySumNumberTypeLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.FindByFrequencySumNumberTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencySumNumberTypeLabel.ForeColor = System.Drawing.Color.Black;
-            this.FindByFrequencySumNumberTypeLabel.Location = new System.Drawing.Point(147, 36);
+            this.FindByFrequencySumNumberTypeLabel.Location = new System.Drawing.Point(149, 36);
             this.FindByFrequencySumNumberTypeLabel.Name = "FindByFrequencySumNumberTypeLabel";
-            this.FindByFrequencySumNumberTypeLabel.Size = new System.Drawing.Size(27, 19);
+            this.FindByFrequencySumNumberTypeLabel.Size = new System.Drawing.Size(29, 19);
             this.FindByFrequencySumNumberTypeLabel.TabIndex = 10;
             this.FindByFrequencySumNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FindByFrequencySumNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByFrequencyControl_EnabledChanged);
@@ -8780,7 +8843,7 @@ partial class MainForm
             this.FindByFrequencyButton.Enabled = false;
             this.FindByFrequencyButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencyButton.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.FindByFrequencyButton.Location = new System.Drawing.Point(123, 1);
+            this.FindByFrequencyButton.Location = new System.Drawing.Point(127, 1);
             this.FindByFrequencyButton.Name = "FindByFrequencyButton";
             this.FindByFrequencyButton.Size = new System.Drawing.Size(52, 20);
             this.FindByFrequencyButton.TabIndex = 11;
@@ -8809,7 +8872,7 @@ partial class MainForm
             this.FindByFrequencyResultTypeWordsLabel.ForeColor = System.Drawing.SystemColors.Window;
             this.FindByFrequencyResultTypeWordsLabel.Location = new System.Drawing.Point(2, 21);
             this.FindByFrequencyResultTypeWordsLabel.Name = "FindByFrequencyResultTypeWordsLabel";
-            this.FindByFrequencyResultTypeWordsLabel.Size = new System.Drawing.Size(36, 14);
+            this.FindByFrequencyResultTypeWordsLabel.Size = new System.Drawing.Size(43, 14);
             this.FindByFrequencyResultTypeWordsLabel.TabIndex = 1;
             this.FindByFrequencyResultTypeWordsLabel.Text = "W";
             this.FindByFrequencyResultTypeWordsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -8822,9 +8885,9 @@ partial class MainForm
             this.FindByFrequencyResultTypeSentencesLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.FindByFrequencyResultTypeSentencesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencyResultTypeSentencesLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.FindByFrequencyResultTypeSentencesLabel.Location = new System.Drawing.Point(39, 21);
+            this.FindByFrequencyResultTypeSentencesLabel.Location = new System.Drawing.Point(46, 21);
             this.FindByFrequencyResultTypeSentencesLabel.Name = "FindByFrequencyResultTypeSentencesLabel";
-            this.FindByFrequencyResultTypeSentencesLabel.Size = new System.Drawing.Size(52, 14);
+            this.FindByFrequencyResultTypeSentencesLabel.Size = new System.Drawing.Size(43, 14);
             this.FindByFrequencyResultTypeSentencesLabel.TabIndex = 2;
             this.FindByFrequencyResultTypeSentencesLabel.Text = "S";
             this.FindByFrequencyResultTypeSentencesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -8837,9 +8900,9 @@ partial class MainForm
             this.FindByFrequencyResultTypeVersesLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.FindByFrequencyResultTypeVersesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencyResultTypeVersesLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.FindByFrequencyResultTypeVersesLabel.Location = new System.Drawing.Point(92, 21);
+            this.FindByFrequencyResultTypeVersesLabel.Location = new System.Drawing.Point(90, 21);
             this.FindByFrequencyResultTypeVersesLabel.Name = "FindByFrequencyResultTypeVersesLabel";
-            this.FindByFrequencyResultTypeVersesLabel.Size = new System.Drawing.Size(37, 14);
+            this.FindByFrequencyResultTypeVersesLabel.Size = new System.Drawing.Size(44, 14);
             this.FindByFrequencyResultTypeVersesLabel.TabIndex = 3;
             this.FindByFrequencyResultTypeVersesLabel.Text = "V";
             this.FindByFrequencyResultTypeVersesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -8852,9 +8915,9 @@ partial class MainForm
             this.FindByFrequencyResultTypeChaptersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.FindByFrequencyResultTypeChaptersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FindByFrequencyResultTypeChaptersLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.FindByFrequencyResultTypeChaptersLabel.Location = new System.Drawing.Point(130, 21);
+            this.FindByFrequencyResultTypeChaptersLabel.Location = new System.Drawing.Point(135, 21);
             this.FindByFrequencyResultTypeChaptersLabel.Name = "FindByFrequencyResultTypeChaptersLabel";
-            this.FindByFrequencyResultTypeChaptersLabel.Size = new System.Drawing.Size(44, 14);
+            this.FindByFrequencyResultTypeChaptersLabel.Size = new System.Drawing.Size(43, 14);
             this.FindByFrequencyResultTypeChaptersLabel.TabIndex = 4;
             this.FindByFrequencyResultTypeChaptersLabel.Text = "C";
             this.FindByFrequencyResultTypeChaptersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -8875,69 +8938,6 @@ partial class MainForm
             this.FindByFrequencySearchTypeUniqueLettersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FindByFrequencySearchTypeUniqueLettersLabel.Click += new System.EventHandler(this.FindByFrequencySearchTypeUniqueLettersLabel_Click);
             this.FindByFrequencySearchTypeUniqueLettersLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-            // 
-            // LetterFrequencySumLabel
-            // 
-            this.LetterFrequencySumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.LetterFrequencySumLabel.BackColor = System.Drawing.Color.Transparent;
-            this.LetterFrequencySumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LetterFrequencySumLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LetterFrequencySumLabel.Location = new System.Drawing.Point(73, 191);
-            this.LetterFrequencySumLabel.Name = "LetterFrequencySumLabel";
-            this.LetterFrequencySumLabel.Size = new System.Drawing.Size(74, 18);
-            this.LetterFrequencySumLabel.TabIndex = 15;
-            this.LetterFrequencySumLabel.Text = "0";
-            this.LetterFrequencySumLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.LetterFrequencySumLabel, "Letter frequency sum");
-            this.LetterFrequencySumLabel.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-            this.LetterFrequencySumLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-            // 
-            // LetterFrequencyCountLabel
-            // 
-            this.LetterFrequencyCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.LetterFrequencyCountLabel.BackColor = System.Drawing.Color.Transparent;
-            this.LetterFrequencyCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LetterFrequencyCountLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LetterFrequencyCountLabel.Location = new System.Drawing.Point(40, 191);
-            this.LetterFrequencyCountLabel.Name = "LetterFrequencyCountLabel";
-            this.LetterFrequencyCountLabel.Size = new System.Drawing.Size(29, 18);
-            this.LetterFrequencyCountLabel.TabIndex = 14;
-            this.LetterFrequencyCountLabel.Text = "0";
-            this.LetterFrequencyCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.LetterFrequencyCountLabel, "Letters");
-            this.LetterFrequencyCountLabel.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-            this.LetterFrequencyCountLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-            // 
-            // LetterFrequencyInspectLabel
-            // 
-            this.LetterFrequencyInspectLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.LetterFrequencyInspectLabel.BackColor = System.Drawing.Color.Transparent;
-            this.LetterFrequencyInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LetterFrequencyInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LetterFrequencyInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LetterFrequencyInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("LetterFrequencyInspectLabel.Image")));
-            this.LetterFrequencyInspectLabel.Location = new System.Drawing.Point(157, 192);
-            this.LetterFrequencyInspectLabel.Name = "LetterFrequencyInspectLabel";
-            this.LetterFrequencyInspectLabel.Size = new System.Drawing.Size(16, 18);
-            this.LetterFrequencyInspectLabel.TabIndex = 17;
-            this.ToolTip.SetToolTip(this.LetterFrequencyInspectLabel, "Inspect letter frequencies");
-            this.LetterFrequencyInspectLabel.Click += new System.EventHandler(this.LetterFrequencyInspectLabel_Click);
-            this.LetterFrequencyInspectLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-            // 
-            // LetterFrequencyTotalLabel
-            // 
-            this.LetterFrequencyTotalLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.LetterFrequencyTotalLabel.BackColor = System.Drawing.Color.Transparent;
-            this.LetterFrequencyTotalLabel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.LetterFrequencyTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LetterFrequencyTotalLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LetterFrequencyTotalLabel.Location = new System.Drawing.Point(2, 191);
-            this.LetterFrequencyTotalLabel.Name = "LetterFrequencyTotalLabel";
-            this.LetterFrequencyTotalLabel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.LetterFrequencyTotalLabel.Size = new System.Drawing.Size(172, 18);
-            this.LetterFrequencyTotalLabel.TabIndex = 13;
-            this.LetterFrequencyTotalLabel.Text = "Sum";
-            this.LetterFrequencyTotalLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
             // 
             // LetterNumberSumTextBox
             // 
