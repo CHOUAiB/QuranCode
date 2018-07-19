@@ -31,12 +31,11 @@ Here is my fixed bag of numbers that will NEVER change with n=114 and number ran
 
 **Requirements**
 
- - Space limit to 2-3GB max but time should be O(n^something) not
-   (something^n).
+ - Space limit to 2-3GB max but time should be O(n^x) not O(x^n).
 
- - The bag must not be sorted and duplicate must not be    removed.
+ - The bag must not be sorted and duplicate must not be removed.
 
- - The result should be the indices of the numbers in the    matching
+ - The result should be the indices of the numbers in the matching
    subset, not the numbers themselves (as we have duplicates).
 
 

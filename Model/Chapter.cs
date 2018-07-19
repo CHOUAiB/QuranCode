@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Model
 {
-    public enum ChapterSortMethod { ByCompilation, ByRevelation, ByVerses, ByWords, ByLetters, ByValue }
     public enum ChapterSortOrder { Ascending, Descending }
+    public enum ChapterSortMethod { ByCompilation, ByRevelation, ByVerses, ByWords, ByLetters, ByValue }
     public class Chapter : IComparable<Chapter>
     {
         private static ChapterSortMethod s_sort_method = ChapterSortMethod.ByCompilation;

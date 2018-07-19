@@ -59,708 +59,17 @@ public static partial class Research
         return verses;
     }
 
-    public static void AllahWords(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-
-        string result = DoAllahWords(client, verses);
-
-        string filename = "AllahWords" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void NonAllahWords(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-
-        string result = DoNonAllahWords(client, verses);
-
-        string filename = "NonAllahWords" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void RepeatedWords(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-
-        string result = DoRepeatedWords(client, verses);
-
-        string filename = "RepeatedWords" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void AllWords(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-
-        string result = DoAllWords(client, verses);
-
-        string filename = "AllWords" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void WordVerbForms(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-
-        string result = DoWordVerbForms(client, verses);
-
-        string filename = "WordVerbForms" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void VerbForms(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-
-        string result = DoVerbForms(client, verses);
-
-        string filename = "VerbForms" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    public static void Stopmarks(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-
-        string result = DoStopmarks(client, verses);
-
-        string filename = "Stopmarks" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    private static void ASCIIQuran(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        if (client.Book == null) return;
-
-        string result = client.Book.Text.ToBuckwalter();
-
-        string filename = "ASCIIQuran" + Globals.OUTPUT_FILE_EXT;
-        if (Directory.Exists(Globals.RESEARCH_FOLDER))
-        {
-            string path = Globals.RESEARCH_FOLDER + "/" + filename;
-            FileHelper.SaveText(path, result);
-            FileHelper.DisplayFile(path);
-        }
-    }
-    private static string DoAllahWords(Client client, List<Verse> verses)
-    {
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                try
-                {
-                    str.AppendLine
-                        (
-                            "#" + "\t" +
-                            "inQuran" + "\t" +
-                            "inChap" + "\t" +
-                            "Chapter" + "\t" +
-                            "Verse" + "\t" +
-                            "Word" + "\t" +
-                            "Text" + "\t" +
-                            "Order" + "\t" +
-                            "Total"
-                          );
-
-                    int count = 0;
-                    foreach (Verse verse in verses)
-                    {
-                        foreach (Word word in verse.Words)
-                        {
-                            // always simplify29 for Allah word comparison
-                            string simplified_text = word.Text.Simplify29();
-
-                            if (
-                                (simplified_text == "الله") ||
-                                (simplified_text == "ءالله") ||
-                                (simplified_text == "ابالله") ||
-                                (simplified_text == "اللهم") ||
-                                (simplified_text == "بالله") ||
-                                (simplified_text == "تالله") ||
-                                (simplified_text == "فالله") ||
-                                (simplified_text == "والله") ||
-                                (simplified_text == "وتالله") ||
-                                (simplified_text == "لله") ||
-                                (simplified_text == "فلله") ||
-                                (simplified_text == "ولله")
-                              )
-                            {
-                                count++;
-                                str.AppendLine(
-                                    count + "\t" +
-                                    word.Number + "\t" +
-                                    word.NumberInChapter + "\t" +
-                                    word.Verse.Chapter.SortedNumber + "\t" +
-                                    word.Verse.NumberInChapter + "\t" +
-                                    word.NumberInVerse + "\t" +
-                                    word.Text + "\t" +
-                                    word.Occurrence + "\t" +
-                                    word.Frequency
-                                  );
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    // log exception
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoNonAllahWords(Client client, List<Verse> verses)
-    {
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                try
-                {
-                    str.AppendLine
-                        (
-                            "#" + "\t" +
-                            "inQuran" + "\t" +
-                            "inChap" + "\t" +
-                            "Chapter" + "\t" +
-                            "Verse" + "\t" +
-                            "Word" + "\t" +
-                            "Text" + "\t" +
-                            "Order" + "\t" +
-                            "Total"
-                          );
-
-                    int count = 0;
-                    foreach (Verse verse in verses)
-                    {
-                        foreach (Word word in verse.Words)
-                        {
-                            // always simplify29 for Allah word comparison
-                            string simplified_text = word.Text.Simplify29();
-
-                            if (
-                                (simplified_text == "الضلله") ||
-                                (simplified_text == "الكلله") ||
-                                (simplified_text == "خلله") ||
-                                (simplified_text == "خللها") ||
-                                (simplified_text == "خللهما") ||
-                                (simplified_text == "سلله") ||
-                                (simplified_text == "ضلله") ||
-                                (simplified_text == "ظلله") ||
-                                (simplified_text == "ظللها") ||
-                                (simplified_text == "كلله") ||
-                                (simplified_text == "للهدي") ||
-                                (simplified_text == "وظللهم") ||
-                                (simplified_text == "يضلله") ||
-                                (simplified_text == "اللهب") ||
-                                (simplified_text == "اللهو")
-                              )
-                            {
-                                count++;
-                                str.AppendLine(
-                                    count + "\t" +
-                                    word.Number + "\t" +
-                                    word.NumberInChapter + "\t" +
-                                    word.Verse.Chapter.SortedNumber + "\t" +
-                                    word.Verse.NumberInChapter + "\t" +
-                                    word.NumberInVerse + "\t" +
-                                    word.Text + "\t" +
-                                    word.Occurrence + "\t" +
-                                    word.Frequency
-                                  );
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    // log exception
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoRepeatedWords(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                str.AppendLine
-                (
-                    "#" + "\t" +
-                    "inQuran" + "\t" +
-                    "inChap" + "\t" +
-                    "Chapter" + "\t" +
-                    "Verse" + "\t" +
-                    "Word" + "\t" +
-                    "Text" + "\t" +
-                    "Order" + "\t" +
-                    "Total" + "\t" +
-                    "Verse"
-                );
-
-                List<Word> words = new List<Word>();
-                foreach (Verse verse in verses)
-                {
-                    words.AddRange(verse.Words);
-                }
-
-                int count = 0;
-                for (int i = 0; i < words.Count - 1; i++)
-                {
-                    if (words[i].Text.SimplifyTo(client.NumerologySystem.TextMode)
-                 == words[i + 1].Text.SimplifyTo(client.NumerologySystem.TextMode))
-                    {
-                        count++;
-                        str.AppendLine
-                        (
-                            count + "\t" +
-                            words[i].Number + "\t" +
-                            words[i].NumberInChapter + "\t" +
-                            words[i].Verse.Chapter.SortedNumber + "\t" +
-                            words[i].Verse.NumberInChapter + "\t" +
-                            words[i].NumberInVerse + "\t" +
-                            words[i].Text + "\t" +
-                            words[i].Occurrence + "\t" +
-                            words[i].Frequency + "\t" +
-                            words[i].Verse.Text
-                        );
-                        str.AppendLine
-                        (
-                            count + "\t" +
-                            words[i + 1].Number + "\t" +
-                            words[i + 1].NumberInChapter + "\t" +
-                            words[i + 1].Verse.Chapter.SortedNumber + "\t" +
-                            words[i + 1].Verse.NumberInChapter + "\t" +
-                            words[i + 1].NumberInVerse + "\t" +
-                            words[i + 1].Text + "\t" +
-                            words[i + 1].Occurrence + "\t" +
-                            words[i + 1].Frequency + "\t" +
-                            words[i + 1].Verse.Text
-                        );
-                    }
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoAllWords(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                try
-                {
-                    str.AppendLine
-                        (
-                            "#" + "\t" +
-                            "inQuran" + "\t" +
-                            "inChap" + "\t" +
-                            "Chapter" + "\t" +
-                            "Verse" + "\t" +
-                            "Word" + "\t" +
-                            "Text" + "\t" +
-                            "Order" + "\t" +
-                            "Total"
-                          );
-
-                    int count = 0;
-                    foreach (Verse verse in verses)
-                    {
-                        foreach (Word word in verse.Words)
-                        {
-                            count++;
-                            str.AppendLine(
-                                count + "\t" +
-                                word.Number + "\t" +
-                                word.NumberInChapter + "\t" +
-                                word.Verse.Chapter.SortedNumber + "\t" +
-                                word.Verse.NumberInChapter + "\t" +
-                                word.NumberInVerse + "\t" +
-                                word.Text + "\t" +
-                                word.Occurrence + "\t" +
-                                word.Frequency
-                              );
-                        }
-                    }
-                }
-                catch
-                {
-                    // log exception
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoWordVerbForms(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                try
-                {
-                    string word_heading = "Lemma";
-                    str.AppendLine("Word" + "\t" + word_heading + "\t" + "Root" + "\t" + "Form" + "\t" + "Perfect" + "\t" + "Imperfect" + "\t" + "ActiveParticiple" + "\t" + "PassiveParticiple" + "\t" + "VerbalNoun");
-
-                    foreach (Verse verse in verses)
-                    {
-                        foreach (Word word in verse.Words)
-                        {
-                            string word_address = word.Address;
-                            string word_text = word.Text;
-                            string word_lemma = word.Lemma;
-                            string root = client.Book.GetBestRoot(word_text);
-                            if (root != null)
-                            {
-                                if (root.Length == 3)
-                                {
-                                    char Faa = root[0];
-                                    char Ain = root[1];
-                                    char Laam = root[2];
-
-                                    string form1_perfect = Faa + "َ" + Ain + "َ" + Laam + "َ";
-                                    string form1_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُ";
-                                    string form1_active_participle = Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form1_passive_participle = "مَ" + Faa + "ْ" + Ain + "ُ" + Laam + "ٌ";
-                                    string form1_verbal_noun = Faa + "ِ" + Ain + "َ" + Laam + "ٌ";
-
-                                    string form2_perfect = Faa + "َ" + Ain + "َّ" + Laam + "َ";
-                                    string form2_imperfect = "يُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
-                                    string form2_active_participle = "مُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
-                                    string form2_passive_participle = "مُ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
-                                    string form2_verbal_noun = "تَ" + Faa + "ْ" + Ain + "ِ" + "ي" + Laam + "ٌ";
-
-                                    string form3_perfect = Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
-                                    string form3_imperfect = "يُ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ُ";
-                                    string form3_active_participle = "مُ" + Faa + "" + "ا" + Ain + "ِ" + Laam + "ٌ";
-                                    string form3_passive_participle = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "ٌ";
-                                    string form3_verbal_noun = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "َ" + "ة" + " / " + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                                    string form4_perfect = "اَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
-                                    string form4_imperfect = "يُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
-                                    string form4_active_participle = "مُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form4_passive_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-                                    string form4_verbal_noun = "اِ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-
-                                    string form5_perfect = "تَ" + Faa + "َ" + Ain + "َّ" + Laam + "َ";
-                                    string form5_imperfect = "يَتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
-                                    string form5_active_participle = "مُتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
-                                    string form5_passive_participle = "مُتَ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
-                                    string form5_verbal_noun = "تَ" + Faa + "َ" + Ain + "ُّ" + Laam + "ٌ";
-
-                                    string form6_perfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
-                                    string form6_imperfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
-                                    string form6_active_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ٌ";
-                                    string form6_passive_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
-                                    string form6_verbal_noun = "تَ" + Faa + "َ" + "ا" + Ain + "ُ" + Laam + "ٌ";
-
-                                    string form7_perfect = "اِنْ" + Faa + "َ" + Ain + "َ" + Laam + "َ";
-                                    string form7_imperfect = "يَنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ُ";
-                                    string form7_active_participle = "مُنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form7_passive_participle = "مُنْ" + Faa + "َ" + Ain + "َ" + Laam + "ٌ";
-                                    string form7_verbal_noun = "اِنْ" + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                                    string form8_perfect = "إِ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "َ";
-                                    string form8_imperfect = "يَ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ُ";
-                                    string form8_active_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form8_passive_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "ٌ";
-                                    string form8_verbal_noun = "إ" + Faa + "ْ" + "تِ" + Ain + "َ" + Laam + "ٌ";
-
-                                    string form9_perfect = "إِ" + Faa + "ْ" + Ain + "َ" + Laam + "َّ";
-                                    string form9_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُّ";
-                                    string form9_active_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌّ";
-                                    string form9_passive_participle = "";
-                                    string form9_verbal_noun = "إِ" + Faa + "ْ" + Ain + "ِ" + Laam + "ا" + Laam + "ٌ";
-
-                                    string form10_perfect = "إِسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
-                                    string form10_imperfect = "يَسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
-                                    string form10_active_participle = "مُسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
-                                    string form10_passive_participle = "مُسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-                                    string form10_verbal_noun = "اِسْتِ" + Faa + "ْ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                                    str.AppendLine(root + "\t" + "I" + "\t" + form1_perfect + "\t" + form1_imperfect + "\t" + form1_active_participle + "\t" + form1_passive_participle + "\t" + form1_verbal_noun);
-                                    str.AppendLine(root + "\t" + "II" + "\t" + form2_perfect + "\t" + form2_imperfect + "\t" + form2_active_participle + "\t" + form2_passive_participle + "\t" + form2_verbal_noun);
-                                    str.AppendLine(root + "\t" + "III" + "\t" + form3_perfect + "\t" + form3_imperfect + "\t" + form3_active_participle + "\t" + form3_passive_participle + "\t" + form3_verbal_noun);
-                                    str.AppendLine(root + "\t" + "IV" + "\t" + form4_perfect + "\t" + form4_imperfect + "\t" + form4_active_participle + "\t" + form4_passive_participle + "\t" + form4_verbal_noun);
-                                    str.AppendLine(root + "\t" + "V" + "\t" + form5_perfect + "\t" + form5_imperfect + "\t" + form5_active_participle + "\t" + form5_passive_participle + "\t" + form5_verbal_noun);
-                                    str.AppendLine(root + "\t" + "VI" + "\t" + form6_perfect + "\t" + form6_imperfect + "\t" + form6_active_participle + "\t" + form6_passive_participle + "\t" + form6_verbal_noun);
-                                    str.AppendLine(root + "\t" + "VII" + "\t" + form7_perfect + "\t" + form7_imperfect + "\t" + form7_active_participle + "\t" + form7_passive_participle + "\t" + form7_verbal_noun);
-                                    str.AppendLine(root + "\t" + "VIII" + "\t" + form8_perfect + "\t" + form8_imperfect + "\t" + form8_active_participle + "\t" + form8_passive_participle + "\t" + form8_verbal_noun);
-                                    str.AppendLine(root + "\t" + "IX" + "\t" + form9_perfect + "\t" + form9_imperfect + "\t" + form9_active_participle + "\t" + form9_passive_participle + "\t" + form9_verbal_noun);
-                                    str.AppendLine(root + "\t" + "X" + "\t" + form10_perfect + "\t" + form10_imperfect + "\t" + form10_active_participle + "\t" + form10_passive_participle + "\t" + form10_verbal_noun);
-                                }
-                                else
-                                {
-                                }
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    // log exception
-                }
-            }
-        }
-        return str.ToString();
-    }
-    private static string DoVerbForms(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-        if (client.Book == null) return null;
-        if (client.Book.RootWords == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        try
-        {
-            str.AppendLine("Root" + "\t" + "Form" + "\t" + "Perfect" + "\t" + "Imperfect" + "\t" + "ActiveParticiple" + "\t" + "PassiveParticiple" + "\t" + "VerbalNoun");
-            foreach (string root in client.Book.RootWords.Keys)
-            {
-                if (root != null)
-                {
-                    if (root.Length == 3)
-                    {
-                        char Faa = root[0];
-                        char Ain = root[1];
-                        char Laam = root[2];
-
-                        string form1_perfect = Faa + "َ" + Ain + "َ" + Laam + "َ";
-                        string form1_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُ";
-                        string form1_active_participle = Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
-                        string form1_passive_participle = "مَ" + Faa + "ْ" + Ain + "ُ" + Laam + "ٌ";
-                        string form1_verbal_noun = Faa + "ِ" + Ain + "َ" + Laam + "ٌ";
-
-                        string form2_perfect = Faa + "َ" + Ain + "َّ" + Laam + "َ";
-                        string form2_imperfect = "يُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
-                        string form2_active_participle = "مُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
-                        string form2_passive_participle = "مُ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
-                        string form2_verbal_noun = "تَ" + Faa + "ْ" + Ain + "ِ" + "ي" + Laam + "ٌ";
-
-                        string form3_perfect = Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
-                        string form3_imperfect = "يُ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ُ";
-                        string form3_active_participle = "مُ" + Faa + "" + "ا" + Ain + "ِ" + Laam + "ٌ";
-                        string form3_passive_participle = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "ٌ";
-                        string form3_verbal_noun = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "َ" + "ة" + " / " + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                        string form4_perfect = "اَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
-                        string form4_imperfect = "يُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
-                        string form4_active_participle = "مُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
-                        string form4_passive_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-                        string form4_verbal_noun = "اِ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-
-                        string form5_perfect = "تَ" + Faa + "َ" + Ain + "َّ" + Laam + "َ";
-                        string form5_imperfect = "يَتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
-                        string form5_active_participle = "مُتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
-                        string form5_passive_participle = "مُتَ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
-                        string form5_verbal_noun = "تَ" + Faa + "َ" + Ain + "ُّ" + Laam + "ٌ";
-
-                        string form6_perfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
-                        string form6_imperfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
-                        string form6_active_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ٌ";
-                        string form6_passive_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
-                        string form6_verbal_noun = "تَ" + Faa + "َ" + "ا" + Ain + "ُ" + Laam + "ٌ";
-
-                        string form7_perfect = "اِنْ" + Faa + "َ" + Ain + "َ" + Laam + "َ";
-                        string form7_imperfect = "يَنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ُ";
-                        string form7_active_participle = "مُنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
-                        string form7_passive_participle = "مُنْ" + Faa + "َ" + Ain + "َ" + Laam + "ٌ";
-                        string form7_verbal_noun = "اِنْ" + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                        string form8_perfect = "إِ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "َ";
-                        string form8_imperfect = "يَ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ُ";
-                        string form8_active_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ٌ";
-                        string form8_passive_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "ٌ";
-                        string form8_verbal_noun = "إ" + Faa + "ْ" + "تِ" + Ain + "َ" + Laam + "ٌ";
-
-                        string form9_perfect = "إِ" + Faa + "ْ" + Ain + "َ" + Laam + "َّ";
-                        string form9_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُّ";
-                        string form9_active_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌّ";
-                        string form9_passive_participle = "";
-                        string form9_verbal_noun = "إِ" + Faa + "ْ" + Ain + "ِ" + Laam + "ا" + Laam + "ٌ";
-
-                        string form10_perfect = "إِسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
-                        string form10_imperfect = "يَسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
-                        string form10_active_participle = "مُسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
-                        string form10_passive_participle = "مُسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
-                        string form10_verbal_noun = "اِسْتِ" + Faa + "ْ" + Ain + "" + "ا" + Laam + "ٌ";
-
-                        str.AppendLine(root + "\t" + "I" + "\t" + form1_perfect + "\t" + form1_imperfect + "\t" + form1_active_participle + "\t" + form1_passive_participle + "\t" + form1_verbal_noun);
-                        str.AppendLine(root + "\t" + "II" + "\t" + form2_perfect + "\t" + form2_imperfect + "\t" + form2_active_participle + "\t" + form2_passive_participle + "\t" + form2_verbal_noun);
-                        str.AppendLine(root + "\t" + "III" + "\t" + form3_perfect + "\t" + form3_imperfect + "\t" + form3_active_participle + "\t" + form3_passive_participle + "\t" + form3_verbal_noun);
-                        str.AppendLine(root + "\t" + "IV" + "\t" + form4_perfect + "\t" + form4_imperfect + "\t" + form4_active_participle + "\t" + form4_passive_participle + "\t" + form4_verbal_noun);
-                        str.AppendLine(root + "\t" + "V" + "\t" + form5_perfect + "\t" + form5_imperfect + "\t" + form5_active_participle + "\t" + form5_passive_participle + "\t" + form5_verbal_noun);
-                        str.AppendLine(root + "\t" + "VI" + "\t" + form6_perfect + "\t" + form6_imperfect + "\t" + form6_active_participle + "\t" + form6_passive_participle + "\t" + form6_verbal_noun);
-                        str.AppendLine(root + "\t" + "VII" + "\t" + form7_perfect + "\t" + form7_imperfect + "\t" + form7_active_participle + "\t" + form7_passive_participle + "\t" + form7_verbal_noun);
-                        str.AppendLine(root + "\t" + "VIII" + "\t" + form8_perfect + "\t" + form8_imperfect + "\t" + form8_active_participle + "\t" + form8_passive_participle + "\t" + form8_verbal_noun);
-                        str.AppendLine(root + "\t" + "IX" + "\t" + form9_perfect + "\t" + form9_imperfect + "\t" + form9_active_participle + "\t" + form9_passive_participle + "\t" + form9_verbal_noun);
-                        str.AppendLine(root + "\t" + "X" + "\t" + form10_perfect + "\t" + form10_imperfect + "\t" + form10_active_participle + "\t" + form10_passive_participle + "\t" + form10_verbal_noun);
-                    }
-                    else
-                    {
-                    }
-                }
-            }
-        }
-        catch
-        {
-            // log exception
-        }
-        return str.ToString();
-    }
-    private static string DoStopmarks(Client client, List<Verse> verses)
-    {
-        if (client == null) return null;
-
-        StringBuilder str = new StringBuilder();
-        if (verses != null)
-        {
-            if (verses.Count > 0)
-            {
-                try
-                {
-                    str.AppendLine
-                        (
-                            "#" + "\t" +
-                            "Chapter" + "\t" +
-                            "Verse" + "\t" +
-                            "Word" + "\t" +
-                            "Stopmark"
-                          );
-
-                    int count = 0;
-                    foreach (Verse verse in verses)
-                    {
-                        foreach (Word word in verse.Words)
-                        {
-                            if (word.Stopmark != Stopmark.None)
-                            {
-                                // skip the artificial stopmark after 112 BismAllah
-                                if (word.Verse.NumberInChapter == 1)
-                                {
-                                    if (word.NumberInVerse == 4)
-                                    {
-                                        if ((word.Text.Simplify29() == "الرحيم") || (word.Text.Simplify29() == "الررحيم"))
-                                        {
-                                            continue;
-                                        }
-                                    }
-                                }
-
-                                // skip the artificial stopmark of last word in verse
-                                if (word.NumberInVerse == word.Verse.Words.Count)
-                                {
-                                    continue;
-                                }
-
-                                // 36:52 has MustPause then ShouldStop
-                                if (word.Verse.Chapter.Number == 36)
-                                {
-                                    if (word.Verse.NumberInChapter == 52)
-                                    {
-                                        count++;
-                                        str.AppendLine(
-                                            count + "\t" +
-                                            word.Verse.Chapter.SortedNumber + "\t" +
-                                            word.Verse.NumberInChapter + "\t" +
-                                            word.NumberInVerse + "\t" +
-                                            StopmarkHelper.GetStopmarkText(Stopmark.MustPause)
-                                          );
-                                    }
-                                }
-
-                                count++;
-                                str.AppendLine(
-                                    count + "\t" +
-                                    word.Verse.Chapter.SortedNumber + "\t" +
-                                    word.Verse.NumberInChapter + "\t" +
-                                    word.NumberInVerse + "\t" +
-                                    StopmarkHelper.GetStopmarkText(word.Stopmark)
-                                  );
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    // log exception
-                }
-            }
-        }
-        return str.ToString();
-    }
-
     private static void ______________________________(Client client, string param, bool in_search_result)
     {
     }
     private static void AllDigits(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoAllDigits(client, verses);
 
-        string filename = "Alls" + Globals.OUTPUT_FILE_EXT;
+        string filename = "AllDigits" + Globals.OUTPUT_FILE_EXT;
         if (Directory.Exists(Globals.RESEARCH_FOLDER))
         {
             string path = Globals.RESEARCH_FOLDER + "/" + filename;
@@ -771,7 +80,6 @@ public static partial class Research
     private static void OddDigitChapters(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoOddDigitChapters(client, verses);
@@ -787,7 +95,6 @@ public static partial class Research
     private static void EvenDigitChapters(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoEvenDigitChapters(client, verses);
@@ -803,7 +110,6 @@ public static partial class Research
     private static void PrimeDigitChapters(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoPrimeDigitChapters(client, verses);
@@ -819,7 +125,6 @@ public static partial class Research
     private static void CompositeDigitChapters(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoCompositeDigitChapters(client, verses);
@@ -835,7 +140,6 @@ public static partial class Research
     private static void PrimeOr1DigitChapters(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoPrimeOr1DigitChapters(client, verses);
@@ -851,7 +155,6 @@ public static partial class Research
     private static void CompositeOr0DigitChapters(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoCompositeOr0DigitChapters(client, verses);
@@ -867,7 +170,6 @@ public static partial class Research
     private static void OddDigitVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoOddDigitVerses(client, verses);
@@ -883,7 +185,6 @@ public static partial class Research
     private static void EvenDigitVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoEvenDigitVerses(client, verses);
@@ -899,7 +200,6 @@ public static partial class Research
     private static void PrimeDigitVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoPrimeDigitVerses(client, verses);
@@ -915,7 +215,6 @@ public static partial class Research
     private static void CompositeDigitVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoCompositeDigitVerses(client, verses);
@@ -931,7 +230,6 @@ public static partial class Research
     private static void PrimeOr1DigitVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoPrimeOr1DigitVerses(client, verses);
@@ -947,7 +245,6 @@ public static partial class Research
     private static void CompositeOr0DigitVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoCompositeOr0DigitVerses(client, verses);
@@ -963,7 +260,6 @@ public static partial class Research
     private static void OODigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoOODigitChaptersVerses(client, verses);
@@ -979,7 +275,6 @@ public static partial class Research
     private static void EEDigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoEEDigitChaptersVerses(client, verses);
@@ -995,7 +290,6 @@ public static partial class Research
     private static void PPDigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoPPDigitChaptersVerses(client, verses);
@@ -1011,7 +305,6 @@ public static partial class Research
     private static void CCDigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoCCDigitChaptersVerses(client, verses);
@@ -1027,7 +320,6 @@ public static partial class Research
     private static void P1P1DigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoP1P1DigitChaptersVerses(client, verses);
@@ -1043,7 +335,6 @@ public static partial class Research
     private static void C0C0DigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoC0C0DigitChaptersVerses(client, verses);
@@ -1059,7 +350,6 @@ public static partial class Research
     private static void OEDigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoOEDigitChaptersVerses(client, verses);
@@ -1075,7 +365,6 @@ public static partial class Research
     private static void EODigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoEODigitChaptersVerses(client, verses);
@@ -1091,7 +380,6 @@ public static partial class Research
     private static void PCDigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoPCDigitChaptersVerses(client, verses);
@@ -1107,7 +395,6 @@ public static partial class Research
     private static void CPDigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoCPDigitChaptersVerses(client, verses);
@@ -1123,7 +410,6 @@ public static partial class Research
     private static void P1C0DigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoP1C0DigitChaptersVerses(client, verses);
@@ -1139,7 +425,6 @@ public static partial class Research
     private static void C0P1DigitChaptersVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoC0P1DigitChaptersVerses(client, verses);
@@ -1693,7 +978,6 @@ public static partial class Research
     private static void JumpWordsByX(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1710,7 +994,6 @@ public static partial class Research
     private static void JumpWordsByValue(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1727,7 +1010,6 @@ public static partial class Research
     private static void JumpWordsByPrimeNumbers(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1744,7 +1026,6 @@ public static partial class Research
     private static void JumpWordsByAdditivePrimeNumbers(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1761,7 +1042,6 @@ public static partial class Research
     private static void JumpWordsByNonAdditivePrimeNumbers(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1778,7 +1058,6 @@ public static partial class Research
     private static void JumpWordsByCompositeNumbers(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1795,7 +1074,6 @@ public static partial class Research
     private static void JumpWordsByAdditiveCompositeNumbers(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1812,7 +1090,6 @@ public static partial class Research
     private static void JumpWordsByNonAdditiveCompositeNumbers(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1829,7 +1106,6 @@ public static partial class Research
     private static void JumpWordsByFibonacciNumbers(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1846,7 +1122,6 @@ public static partial class Research
     private static void JumpWordsByPiDigits(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1863,7 +1138,6 @@ public static partial class Research
     private static void JumpWordsByEulerDigits(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -1880,7 +1154,6 @@ public static partial class Research
     private static void JumpWordsByGoldenRatioDigits(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2210,7 +1483,6 @@ public static partial class Research
     private static void PrimeWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2227,7 +1499,6 @@ public static partial class Research
     private static void AdditivePrimeWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2244,7 +1515,6 @@ public static partial class Research
     private static void CompositeWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2261,7 +1531,6 @@ public static partial class Research
     private static void AdditiveCompositeWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2278,7 +1547,6 @@ public static partial class Research
     private static void FibonacciWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2399,7 +1667,7 @@ public static partial class Research
     public static void ChapterVersesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
@@ -2420,7 +1688,7 @@ public static partial class Research
     public static void ChapterWordsSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
@@ -2441,7 +1709,7 @@ public static partial class Research
     public static void ChapterLettersSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
@@ -2462,7 +1730,7 @@ public static partial class Research
     public static void ChapterValuesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
@@ -2483,7 +1751,6 @@ public static partial class Research
     public static void VerseWordsSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2503,7 +1770,6 @@ public static partial class Research
     public static void VerseLettersSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2523,7 +1789,6 @@ public static partial class Research
     public static void VerseValuesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2543,7 +1808,6 @@ public static partial class Research
     public static void VerseDistancesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2563,7 +1827,6 @@ public static partial class Research
     public static void WordLettersSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2586,7 +1849,6 @@ public static partial class Research
     public static void WordValuesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2609,7 +1871,6 @@ public static partial class Research
     public static void WordDistancesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2632,7 +1893,6 @@ public static partial class Research
     public static void WordFrequenciesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2656,7 +1916,6 @@ public static partial class Research
     public static void LetterValuesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2682,7 +1941,6 @@ public static partial class Research
     public static void LetterDistancesSound(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2737,7 +1995,7 @@ public static partial class Research
     public static void ChapterInformation(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
@@ -2755,7 +2013,7 @@ public static partial class Research
     public static void ChapterValues(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
@@ -2773,7 +2031,7 @@ public static partial class Research
     public static void ChapterLetterRatios(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
@@ -2791,7 +2049,6 @@ public static partial class Research
     public static void VerseInformation(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2808,7 +2065,6 @@ public static partial class Research
     public static void VerseValues(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2825,7 +2081,6 @@ public static partial class Research
     public static void VerseStarts(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2842,7 +2097,6 @@ public static partial class Research
     public static void VerseEnds(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -2859,7 +2113,6 @@ public static partial class Research
     public static void WordInformation(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<Word> words = new List<Word>();
@@ -2880,7 +2133,6 @@ public static partial class Research
     public static void WordPartInformation(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         List<Word> words = new List<Word>();
@@ -2901,7 +2153,6 @@ public static partial class Research
     public static void LetterFrequencySums(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoLetterFrequencySums(client, verses, param);
@@ -2918,9 +2169,10 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Chapter> chapters = in_search_result ? client.Book.GetChapters(client.FoundVerses) : client.Selection.Chapters;
+        if (client.FoundVerses == null) return;
+        if (client.Selection.Chapters == null) return;
         if (client.Book == null) return;
-        if (client.Book.Chapters == null) return;
+        List<Chapter> chapters = in_search_result ? client.Book.GetChapters(client.FoundVerses) : client.Selection.Chapters;
 
         Dictionary<Chapter, List<Word>> unique_chapter_words = new Dictionary<Chapter, List<Word>>();
         foreach (Chapter chapter in chapters)
@@ -2995,9 +2247,10 @@ public static partial class Research
     {
         if (client == null) return;
         if (client.Selection == null) return;
-        List<Chapter> chapters = in_search_result ? client.Book.GetChapters(client.FoundVerses) : client.Selection.Chapters;
+        if (client.FoundVerses == null) return;
+        if (client.Selection.Chapters == null) return;
         if (client.Book == null) return;
-        if (client.Book.Chapters == null) return;
+        List<Chapter> chapters = in_search_result ? client.Book.GetChapters(client.FoundVerses) : client.Selection.Chapters;
 
         Dictionary<Chapter, List<string>> unique_chapter_roots = new Dictionary<Chapter, List<string>>();
         foreach (Chapter chapter in chapters)
@@ -3809,13 +3062,12 @@ public static partial class Research
         return str.ToString();
     }
 
-    public static void __________________________________(Client client, string param, bool in_search_result)
+    private static void __________________________________(Client client, string param, bool in_search_result)
     {
     }
-    public static void P_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    private static void P_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -3832,7 +3084,6 @@ public static partial class Research
     private static void AP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -3849,7 +3100,6 @@ public static partial class Research
     private static void XP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -3863,10 +3113,9 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    public static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    private static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -3883,7 +3132,6 @@ public static partial class Research
     private static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -3900,7 +3148,6 @@ public static partial class Research
     private static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         if (client.NumerologySystem == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
@@ -4380,13 +3627,740 @@ public static partial class Research
         return result;
     }
 
+    private static void ____________________________(Client client, string param, bool in_search_result)
+    {
+    }
+    public static void AllahWords(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoAllahWords(client, verses);
+
+        string filename = "AllahWords" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void NonAllahWords(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoNonAllahWords(client, verses);
+
+        string filename = "NonAllahWords" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void RepeatedWords(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoRepeatedWords(client, verses);
+
+        string filename = "RepeatedWords" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void AllWords(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoAllWords(client, verses);
+
+        string filename = "AllWords" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void WordVerbForms(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoWordVerbForms(client, verses);
+
+        string filename = "WordVerbForms" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void VerbForms(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoVerbForms(client, verses);
+
+        string filename = "VerbForms" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void Stopmarks(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoStopmarks(client, verses);
+
+        string filename = "Stopmarks" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void ASCII_Text(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        if (verses != null)
+        {
+            StringBuilder str = new StringBuilder();
+            foreach (Verse verse in verses)
+            {
+                str.AppendLine(verse.Text);
+            }
+            string result = str.ToString().ToBuckwalter();
+
+            string filename = "ASCII_Text" + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.RESEARCH_FOLDER))
+            {
+                string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, result);
+                FileHelper.DisplayFile(path);
+            }
+        }
+    }
+    public static void GenerateSentences(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        if (verses != null)
+        {
+            List<string> words = new List<string>();
+            foreach (Verse verse in verses)
+            {
+                foreach (Word word in verse.Words)
+                {
+                    words.Add(word.Text.SimplifyTo(client.NumerologySystem.TextMode));
+                }
+            }
+
+            int number_of_words = verses.Count;
+            int number_of_letters = words.Count;
+            SentencesGenerator generator = new SentencesGenerator(words);
+            List<string> sentences = generator.GenerateSentences(number_of_words, number_of_letters);
+
+            StringBuilder str = new StringBuilder();
+            foreach (string sentence in sentences)
+            {
+                str.AppendLine(sentence);
+            }
+
+            string filename = "Sentences" + "_" + number_of_words + "_" + number_of_letters + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.RESEARCH_FOLDER))
+            {
+                string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, str.ToString());
+                FileHelper.DisplayFile(path);
+            }
+        }
+    }
+    private static string DoAllahWords(Client client, List<Verse> verses)
+    {
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                try
+                {
+                    str.AppendLine
+                        (
+                            "#" + "\t" +
+                            "inQuran" + "\t" +
+                            "inChap" + "\t" +
+                            "Chapter" + "\t" +
+                            "Verse" + "\t" +
+                            "Word" + "\t" +
+                            "Text" + "\t" +
+                            "Order" + "\t" +
+                            "Total"
+                          );
+
+                    int count = 0;
+                    foreach (Verse verse in verses)
+                    {
+                        foreach (Word word in verse.Words)
+                        {
+                            // always simplify29 for Allah word comparison
+                            string simplified_text = word.Text.Simplify29();
+
+                            if (
+                                (simplified_text == "الله") ||
+                                (simplified_text == "ءالله") ||
+                                (simplified_text == "ابالله") ||
+                                (simplified_text == "اللهم") ||
+                                (simplified_text == "بالله") ||
+                                (simplified_text == "تالله") ||
+                                (simplified_text == "فالله") ||
+                                (simplified_text == "والله") ||
+                                (simplified_text == "وتالله") ||
+                                (simplified_text == "لله") ||
+                                (simplified_text == "فلله") ||
+                                (simplified_text == "ولله")
+                              )
+                            {
+                                count++;
+                                str.AppendLine(
+                                    count + "\t" +
+                                    word.Number + "\t" +
+                                    word.NumberInChapter + "\t" +
+                                    word.Verse.Chapter.SortedNumber + "\t" +
+                                    word.Verse.NumberInChapter + "\t" +
+                                    word.NumberInVerse + "\t" +
+                                    word.Text + "\t" +
+                                    word.Occurrence + "\t" +
+                                    word.Frequency
+                                  );
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    // log exception
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoNonAllahWords(Client client, List<Verse> verses)
+    {
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                try
+                {
+                    str.AppendLine
+                        (
+                            "#" + "\t" +
+                            "inQuran" + "\t" +
+                            "inChap" + "\t" +
+                            "Chapter" + "\t" +
+                            "Verse" + "\t" +
+                            "Word" + "\t" +
+                            "Text" + "\t" +
+                            "Order" + "\t" +
+                            "Total"
+                          );
+
+                    int count = 0;
+                    foreach (Verse verse in verses)
+                    {
+                        foreach (Word word in verse.Words)
+                        {
+                            // always simplify29 for Allah word comparison
+                            string simplified_text = word.Text.Simplify29();
+
+                            if (
+                                (simplified_text == "الضلله") ||
+                                (simplified_text == "الكلله") ||
+                                (simplified_text == "خلله") ||
+                                (simplified_text == "خللها") ||
+                                (simplified_text == "خللهما") ||
+                                (simplified_text == "سلله") ||
+                                (simplified_text == "ضلله") ||
+                                (simplified_text == "ظلله") ||
+                                (simplified_text == "ظللها") ||
+                                (simplified_text == "كلله") ||
+                                (simplified_text == "للهدي") ||
+                                (simplified_text == "وظللهم") ||
+                                (simplified_text == "يضلله") ||
+                                (simplified_text == "اللهب") ||
+                                (simplified_text == "اللهو")
+                              )
+                            {
+                                count++;
+                                str.AppendLine(
+                                    count + "\t" +
+                                    word.Number + "\t" +
+                                    word.NumberInChapter + "\t" +
+                                    word.Verse.Chapter.SortedNumber + "\t" +
+                                    word.Verse.NumberInChapter + "\t" +
+                                    word.NumberInVerse + "\t" +
+                                    word.Text + "\t" +
+                                    word.Occurrence + "\t" +
+                                    word.Frequency
+                                  );
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    // log exception
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoRepeatedWords(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                str.AppendLine
+                (
+                    "#" + "\t" +
+                    "inQuran" + "\t" +
+                    "inChap" + "\t" +
+                    "Chapter" + "\t" +
+                    "Verse" + "\t" +
+                    "Word" + "\t" +
+                    "Text" + "\t" +
+                    "Order" + "\t" +
+                    "Total" + "\t" +
+                    "Verse"
+                );
+
+                List<Word> words = new List<Word>();
+                foreach (Verse verse in verses)
+                {
+                    words.AddRange(verse.Words);
+                }
+
+                int count = 0;
+                for (int i = 0; i < words.Count - 1; i++)
+                {
+                    if (words[i].Text.SimplifyTo(client.NumerologySystem.TextMode)
+                 == words[i + 1].Text.SimplifyTo(client.NumerologySystem.TextMode))
+                    {
+                        count++;
+                        str.AppendLine
+                        (
+                            count + "\t" +
+                            words[i].Number + "\t" +
+                            words[i].NumberInChapter + "\t" +
+                            words[i].Verse.Chapter.SortedNumber + "\t" +
+                            words[i].Verse.NumberInChapter + "\t" +
+                            words[i].NumberInVerse + "\t" +
+                            words[i].Text + "\t" +
+                            words[i].Occurrence + "\t" +
+                            words[i].Frequency + "\t" +
+                            words[i].Verse.Text
+                        );
+                        str.AppendLine
+                        (
+                            count + "\t" +
+                            words[i + 1].Number + "\t" +
+                            words[i + 1].NumberInChapter + "\t" +
+                            words[i + 1].Verse.Chapter.SortedNumber + "\t" +
+                            words[i + 1].Verse.NumberInChapter + "\t" +
+                            words[i + 1].NumberInVerse + "\t" +
+                            words[i + 1].Text + "\t" +
+                            words[i + 1].Occurrence + "\t" +
+                            words[i + 1].Frequency + "\t" +
+                            words[i + 1].Verse.Text
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoAllWords(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                try
+                {
+                    str.AppendLine
+                        (
+                            "#" + "\t" +
+                            "inQuran" + "\t" +
+                            "inChap" + "\t" +
+                            "Chapter" + "\t" +
+                            "Verse" + "\t" +
+                            "Word" + "\t" +
+                            "Text" + "\t" +
+                            "Order" + "\t" +
+                            "Total"
+                          );
+
+                    int count = 0;
+                    foreach (Verse verse in verses)
+                    {
+                        foreach (Word word in verse.Words)
+                        {
+                            count++;
+                            str.AppendLine(
+                                count + "\t" +
+                                word.Number + "\t" +
+                                word.NumberInChapter + "\t" +
+                                word.Verse.Chapter.SortedNumber + "\t" +
+                                word.Verse.NumberInChapter + "\t" +
+                                word.NumberInVerse + "\t" +
+                                word.Text + "\t" +
+                                word.Occurrence + "\t" +
+                                word.Frequency
+                              );
+                        }
+                    }
+                }
+                catch
+                {
+                    // log exception
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoWordVerbForms(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                try
+                {
+                    string word_heading = "Lemma";
+                    str.AppendLine("Word" + "\t" + word_heading + "\t" + "Root" + "\t" + "Form" + "\t" + "Perfect" + "\t" + "Imperfect" + "\t" + "ActiveParticiple" + "\t" + "PassiveParticiple" + "\t" + "VerbalNoun");
+
+                    foreach (Verse verse in verses)
+                    {
+                        foreach (Word word in verse.Words)
+                        {
+                            string word_address = word.Address;
+                            string word_text = word.Text;
+                            string word_lemma = word.Lemma;
+                            string root = client.Book.GetBestRoot(word_text);
+                            if (root != null)
+                            {
+                                if (root.Length == 3)
+                                {
+                                    char Faa = root[0];
+                                    char Ain = root[1];
+                                    char Laam = root[2];
+
+                                    string form1_perfect = Faa + "َ" + Ain + "َ" + Laam + "َ";
+                                    string form1_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُ";
+                                    string form1_active_participle = Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
+                                    string form1_passive_participle = "مَ" + Faa + "ْ" + Ain + "ُ" + Laam + "ٌ";
+                                    string form1_verbal_noun = Faa + "ِ" + Ain + "َ" + Laam + "ٌ";
+
+                                    string form2_perfect = Faa + "َ" + Ain + "َّ" + Laam + "َ";
+                                    string form2_imperfect = "يُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
+                                    string form2_active_participle = "مُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
+                                    string form2_passive_participle = "مُ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
+                                    string form2_verbal_noun = "تَ" + Faa + "ْ" + Ain + "ِ" + "ي" + Laam + "ٌ";
+
+                                    string form3_perfect = Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
+                                    string form3_imperfect = "يُ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ُ";
+                                    string form3_active_participle = "مُ" + Faa + "" + "ا" + Ain + "ِ" + Laam + "ٌ";
+                                    string form3_passive_participle = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "ٌ";
+                                    string form3_verbal_noun = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "َ" + "ة" + " / " + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
+
+                                    string form4_perfect = "اَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
+                                    string form4_imperfect = "يُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
+                                    string form4_active_participle = "مُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
+                                    string form4_passive_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
+                                    string form4_verbal_noun = "اِ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
+
+                                    string form5_perfect = "تَ" + Faa + "َ" + Ain + "َّ" + Laam + "َ";
+                                    string form5_imperfect = "يَتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
+                                    string form5_active_participle = "مُتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
+                                    string form5_passive_participle = "مُتَ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
+                                    string form5_verbal_noun = "تَ" + Faa + "َ" + Ain + "ُّ" + Laam + "ٌ";
+
+                                    string form6_perfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
+                                    string form6_imperfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
+                                    string form6_active_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ٌ";
+                                    string form6_passive_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
+                                    string form6_verbal_noun = "تَ" + Faa + "َ" + "ا" + Ain + "ُ" + Laam + "ٌ";
+
+                                    string form7_perfect = "اِنْ" + Faa + "َ" + Ain + "َ" + Laam + "َ";
+                                    string form7_imperfect = "يَنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ُ";
+                                    string form7_active_participle = "مُنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
+                                    string form7_passive_participle = "مُنْ" + Faa + "َ" + Ain + "َ" + Laam + "ٌ";
+                                    string form7_verbal_noun = "اِنْ" + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
+
+                                    string form8_perfect = "إِ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "َ";
+                                    string form8_imperfect = "يَ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ُ";
+                                    string form8_active_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ٌ";
+                                    string form8_passive_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "ٌ";
+                                    string form8_verbal_noun = "إ" + Faa + "ْ" + "تِ" + Ain + "َ" + Laam + "ٌ";
+
+                                    string form9_perfect = "إِ" + Faa + "ْ" + Ain + "َ" + Laam + "َّ";
+                                    string form9_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُّ";
+                                    string form9_active_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌّ";
+                                    string form9_passive_participle = "";
+                                    string form9_verbal_noun = "إِ" + Faa + "ْ" + Ain + "ِ" + Laam + "ا" + Laam + "ٌ";
+
+                                    string form10_perfect = "إِسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
+                                    string form10_imperfect = "يَسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
+                                    string form10_active_participle = "مُسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
+                                    string form10_passive_participle = "مُسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
+                                    string form10_verbal_noun = "اِسْتِ" + Faa + "ْ" + Ain + "" + "ا" + Laam + "ٌ";
+
+                                    str.AppendLine(root + "\t" + "I" + "\t" + form1_perfect + "\t" + form1_imperfect + "\t" + form1_active_participle + "\t" + form1_passive_participle + "\t" + form1_verbal_noun);
+                                    str.AppendLine(root + "\t" + "II" + "\t" + form2_perfect + "\t" + form2_imperfect + "\t" + form2_active_participle + "\t" + form2_passive_participle + "\t" + form2_verbal_noun);
+                                    str.AppendLine(root + "\t" + "III" + "\t" + form3_perfect + "\t" + form3_imperfect + "\t" + form3_active_participle + "\t" + form3_passive_participle + "\t" + form3_verbal_noun);
+                                    str.AppendLine(root + "\t" + "IV" + "\t" + form4_perfect + "\t" + form4_imperfect + "\t" + form4_active_participle + "\t" + form4_passive_participle + "\t" + form4_verbal_noun);
+                                    str.AppendLine(root + "\t" + "V" + "\t" + form5_perfect + "\t" + form5_imperfect + "\t" + form5_active_participle + "\t" + form5_passive_participle + "\t" + form5_verbal_noun);
+                                    str.AppendLine(root + "\t" + "VI" + "\t" + form6_perfect + "\t" + form6_imperfect + "\t" + form6_active_participle + "\t" + form6_passive_participle + "\t" + form6_verbal_noun);
+                                    str.AppendLine(root + "\t" + "VII" + "\t" + form7_perfect + "\t" + form7_imperfect + "\t" + form7_active_participle + "\t" + form7_passive_participle + "\t" + form7_verbal_noun);
+                                    str.AppendLine(root + "\t" + "VIII" + "\t" + form8_perfect + "\t" + form8_imperfect + "\t" + form8_active_participle + "\t" + form8_passive_participle + "\t" + form8_verbal_noun);
+                                    str.AppendLine(root + "\t" + "IX" + "\t" + form9_perfect + "\t" + form9_imperfect + "\t" + form9_active_participle + "\t" + form9_passive_participle + "\t" + form9_verbal_noun);
+                                    str.AppendLine(root + "\t" + "X" + "\t" + form10_perfect + "\t" + form10_imperfect + "\t" + form10_active_participle + "\t" + form10_passive_participle + "\t" + form10_verbal_noun);
+                                }
+                                else
+                                {
+                                }
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    // log exception
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoVerbForms(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+        if (client.Book == null) return null;
+        if (client.Book.RootWords == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        try
+        {
+            str.AppendLine("Root" + "\t" + "Form" + "\t" + "Perfect" + "\t" + "Imperfect" + "\t" + "ActiveParticiple" + "\t" + "PassiveParticiple" + "\t" + "VerbalNoun");
+            foreach (string root in client.Book.RootWords.Keys)
+            {
+                if (root != null)
+                {
+                    if (root.Length == 3)
+                    {
+                        char Faa = root[0];
+                        char Ain = root[1];
+                        char Laam = root[2];
+
+                        string form1_perfect = Faa + "َ" + Ain + "َ" + Laam + "َ";
+                        string form1_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُ";
+                        string form1_active_participle = Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
+                        string form1_passive_participle = "مَ" + Faa + "ْ" + Ain + "ُ" + Laam + "ٌ";
+                        string form1_verbal_noun = Faa + "ِ" + Ain + "َ" + Laam + "ٌ";
+
+                        string form2_perfect = Faa + "َ" + Ain + "َّ" + Laam + "َ";
+                        string form2_imperfect = "يُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
+                        string form2_active_participle = "مُ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
+                        string form2_passive_participle = "مُ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
+                        string form2_verbal_noun = "تَ" + Faa + "ْ" + Ain + "ِ" + "ي" + Laam + "ٌ";
+
+                        string form3_perfect = Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
+                        string form3_imperfect = "يُ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ُ";
+                        string form3_active_participle = "مُ" + Faa + "" + "ا" + Ain + "ِ" + Laam + "ٌ";
+                        string form3_passive_participle = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "ٌ";
+                        string form3_verbal_noun = "مُ" + Faa + "" + "ا" + Ain + "َ" + Laam + "َ" + "ة" + " / " + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
+
+                        string form4_perfect = "اَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
+                        string form4_imperfect = "يُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
+                        string form4_active_participle = "مُ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
+                        string form4_passive_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
+                        string form4_verbal_noun = "اِ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
+
+                        string form5_perfect = "تَ" + Faa + "َ" + Ain + "َّ" + Laam + "َ";
+                        string form5_imperfect = "يَتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ُ";
+                        string form5_active_participle = "مُتَ" + Faa + "َ" + Ain + "ِّ" + Laam + "ٌ";
+                        string form5_passive_participle = "مُتَ" + Faa + "َ" + Ain + "َّ" + Laam + "ٌ";
+                        string form5_verbal_noun = "تَ" + Faa + "َ" + Ain + "ُّ" + Laam + "ٌ";
+
+                        string form6_perfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "َ";
+                        string form6_imperfect = "تَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
+                        string form6_active_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "ِ" + Laam + "ٌ";
+                        string form6_passive_participle = "مُتَ" + Faa + "َ" + "ا" + Ain + "َ" + Laam + "ٌ";
+                        string form6_verbal_noun = "تَ" + Faa + "َ" + "ا" + Ain + "ُ" + Laam + "ٌ";
+
+                        string form7_perfect = "اِنْ" + Faa + "َ" + Ain + "َ" + Laam + "َ";
+                        string form7_imperfect = "يَنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ُ";
+                        string form7_active_participle = "مُنْ" + Faa + "َ" + Ain + "ِ" + Laam + "ٌ";
+                        string form7_passive_participle = "مُنْ" + Faa + "َ" + Ain + "َ" + Laam + "ٌ";
+                        string form7_verbal_noun = "اِنْ" + Faa + "ِ" + Ain + "" + "ا" + Laam + "ٌ";
+
+                        string form8_perfect = "إِ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "َ";
+                        string form8_imperfect = "يَ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ُ";
+                        string form8_active_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "ِ" + Laam + "ٌ";
+                        string form8_passive_participle = "مُ" + Faa + "ْ" + "تَ" + Ain + "َ" + Laam + "ٌ";
+                        string form8_verbal_noun = "إ" + Faa + "ْ" + "تِ" + Ain + "َ" + Laam + "ٌ";
+
+                        string form9_perfect = "إِ" + Faa + "ْ" + Ain + "َ" + Laam + "َّ";
+                        string form9_imperfect = "يَ" + Faa + "ْ" + Ain + "َ" + Laam + "ُّ";
+                        string form9_active_participle = "مُ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌّ";
+                        string form9_passive_participle = "";
+                        string form9_verbal_noun = "إِ" + Faa + "ْ" + Ain + "ِ" + Laam + "ا" + Laam + "ٌ";
+
+                        string form10_perfect = "إِسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "َ";
+                        string form10_imperfect = "يَسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ُ";
+                        string form10_active_participle = "مُسْتَ" + Faa + "ْ" + Ain + "ِ" + Laam + "ٌ";
+                        string form10_passive_participle = "مُسْتَ" + Faa + "ْ" + Ain + "َ" + Laam + "ٌ";
+                        string form10_verbal_noun = "اِسْتِ" + Faa + "ْ" + Ain + "" + "ا" + Laam + "ٌ";
+
+                        str.AppendLine(root + "\t" + "I" + "\t" + form1_perfect + "\t" + form1_imperfect + "\t" + form1_active_participle + "\t" + form1_passive_participle + "\t" + form1_verbal_noun);
+                        str.AppendLine(root + "\t" + "II" + "\t" + form2_perfect + "\t" + form2_imperfect + "\t" + form2_active_participle + "\t" + form2_passive_participle + "\t" + form2_verbal_noun);
+                        str.AppendLine(root + "\t" + "III" + "\t" + form3_perfect + "\t" + form3_imperfect + "\t" + form3_active_participle + "\t" + form3_passive_participle + "\t" + form3_verbal_noun);
+                        str.AppendLine(root + "\t" + "IV" + "\t" + form4_perfect + "\t" + form4_imperfect + "\t" + form4_active_participle + "\t" + form4_passive_participle + "\t" + form4_verbal_noun);
+                        str.AppendLine(root + "\t" + "V" + "\t" + form5_perfect + "\t" + form5_imperfect + "\t" + form5_active_participle + "\t" + form5_passive_participle + "\t" + form5_verbal_noun);
+                        str.AppendLine(root + "\t" + "VI" + "\t" + form6_perfect + "\t" + form6_imperfect + "\t" + form6_active_participle + "\t" + form6_passive_participle + "\t" + form6_verbal_noun);
+                        str.AppendLine(root + "\t" + "VII" + "\t" + form7_perfect + "\t" + form7_imperfect + "\t" + form7_active_participle + "\t" + form7_passive_participle + "\t" + form7_verbal_noun);
+                        str.AppendLine(root + "\t" + "VIII" + "\t" + form8_perfect + "\t" + form8_imperfect + "\t" + form8_active_participle + "\t" + form8_passive_participle + "\t" + form8_verbal_noun);
+                        str.AppendLine(root + "\t" + "IX" + "\t" + form9_perfect + "\t" + form9_imperfect + "\t" + form9_active_participle + "\t" + form9_passive_participle + "\t" + form9_verbal_noun);
+                        str.AppendLine(root + "\t" + "X" + "\t" + form10_perfect + "\t" + form10_imperfect + "\t" + form10_active_participle + "\t" + form10_passive_participle + "\t" + form10_verbal_noun);
+                    }
+                    else
+                    {
+                    }
+                }
+            }
+        }
+        catch
+        {
+            // log exception
+        }
+        return str.ToString();
+    }
+    private static string DoStopmarks(Client client, List<Verse> verses)
+    {
+        if (client == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses != null)
+        {
+            if (verses.Count > 0)
+            {
+                try
+                {
+                    str.AppendLine
+                        (
+                            "#" + "\t" +
+                            "Chapter" + "\t" +
+                            "Verse" + "\t" +
+                            "Word" + "\t" +
+                            "Stopmark"
+                          );
+
+                    int count = 0;
+                    foreach (Verse verse in verses)
+                    {
+                        foreach (Word word in verse.Words)
+                        {
+                            if (word.Stopmark != Stopmark.None)
+                            {
+                                // skip the artificial stopmark after 112 BismAllah
+                                if (word.Verse.NumberInChapter == 1)
+                                {
+                                    if (word.NumberInVerse == 4)
+                                    {
+                                        if ((word.Text.Simplify29() == "الرحيم") || (word.Text.Simplify29() == "الررحيم"))
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+
+                                // skip the artificial stopmark of last word in verse
+                                if (word.NumberInVerse == word.Verse.Words.Count)
+                                {
+                                    continue;
+                                }
+
+                                // 36:52 has MustPause then ShouldStop
+                                if (word.Verse.Chapter.Number == 36)
+                                {
+                                    if (word.Verse.NumberInChapter == 52)
+                                    {
+                                        count++;
+                                        str.AppendLine(
+                                            count + "\t" +
+                                            word.Verse.Chapter.SortedNumber + "\t" +
+                                            word.Verse.NumberInChapter + "\t" +
+                                            word.NumberInVerse + "\t" +
+                                            StopmarkHelper.GetStopmarkText(Stopmark.MustPause)
+                                          );
+                                    }
+                                }
+
+                                count++;
+                                str.AppendLine(
+                                    count + "\t" +
+                                    word.Verse.Chapter.SortedNumber + "\t" +
+                                    word.Verse.NumberInChapter + "\t" +
+                                    word.NumberInVerse + "\t" +
+                                    StopmarkHelper.GetStopmarkText(word.Stopmark)
+                                  );
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    // log exception
+                }
+            }
+        }
+        return str.ToString();
+    }
+
     public static void ______________________________________(Client client, string param, bool in_search_result)
     {
     }
     public static void RelatedWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWords(client, verses);
@@ -4402,7 +4376,6 @@ public static partial class Research
     public static void RelatedWordsMeanings(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordsMeanings(client, verses);
@@ -4418,7 +4391,6 @@ public static partial class Research
     public static void RelatedWordAddresses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordAddresses(client, verses);
@@ -4434,7 +4406,6 @@ public static partial class Research
     public static void RelatedWordVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordVerses(client, verses);
@@ -4450,7 +4421,6 @@ public static partial class Research
     public static void RelatedWordsVerseMeanings(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordsVerseMeanings(client, verses);
@@ -4466,7 +4436,6 @@ public static partial class Research
     public static void RelatedWordVerseAddresses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
 
         string result = DoRelatedWordVerseAddresses(client, verses);
@@ -4809,13 +4778,13 @@ public static partial class Research
         return str.ToString();
     }
 
-    private static void _______________________________________(Client client, string param, bool in_search_result)
+    private static void ________________________________________(Client client, string param, bool in_search_result)
     {
     }
     private static void ChapterVerseWordLetterFactors(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
 
@@ -4832,7 +4801,7 @@ public static partial class Research
     private static void ChapterVerseSumFactors(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
 
@@ -4849,7 +4818,7 @@ public static partial class Research
     private static void ChapterVerseSquaresSumFactors(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
 
@@ -4866,7 +4835,7 @@ public static partial class Research
     private static void ChapterVerseCubesSumFactors(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
 
@@ -4883,7 +4852,7 @@ public static partial class Research
     private static void ChapterVerseWordLetterSumAZ(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
 
@@ -4900,7 +4869,7 @@ public static partial class Research
     private static void ChapterVerseWordLetterSumZA(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
-        if (client.Selection == null) return;
+        if (client.Book == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         List<Chapter> chapters = client.Book.GetChapters(verses);
 
@@ -5418,7 +5387,7 @@ public static partial class Research
         return str.ToString();
     }
 
-    private static void _________________________________________(Client client, string param, bool in_search_result)
+    private static void ___________________________________________(Client client, string param, bool in_search_result)
     {
     }
     private static void FindVersesWithXValueDigitSum(Client client, string param, bool in_search_result)
@@ -5586,7 +5555,7 @@ public static partial class Research
         return str.ToString();
     }
 
-    private static void ___________________________________________(Client client, string param, bool in_search_result)
+    private static void __________________________________________(Client client, string param, bool in_search_result)
     {
     }
     private class ZeroDifferenceNumerologySystem
