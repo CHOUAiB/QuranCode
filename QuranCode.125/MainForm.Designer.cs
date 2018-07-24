@@ -1430,7 +1430,6 @@ partial class MainForm
             this.ValueTextBox.Location = new System.Drawing.Point(73, 23);
             this.ValueTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.ValueTextBox.Name = "ValueTextBox";
-            this.ValueTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ValueTextBox.Size = new System.Drawing.Size(164, 23);
             this.ValueTextBox.TabIndex = 21;
             this.ValueTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;

@@ -1391,7 +1391,6 @@ partial class MainForm
             this.ValueTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ValueTextBox.Location = new System.Drawing.Point(55, 20);
             this.ValueTextBox.Name = "ValueTextBox";
-            this.ValueTextBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.ValueTextBox.Size = new System.Drawing.Size(124, 20);
             this.ValueTextBox.TabIndex = 21;
             this.ValueTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
