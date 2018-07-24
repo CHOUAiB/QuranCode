@@ -1,32 +1,39 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using Model;
 
-public class SentencesGenerator
+public class WordSubsets
 {
-    private List<string> m_words = null;
-    private List<string> m_sentences = null;
-    public SentencesGenerator(List<string> words)
+    private List<Word> m_words = null;
+    private List<List<Word>> m_sentences = null;
+    public WordSubsets(List<Word> words)
     {
-        m_words = new List<string>(words);
+        m_words = new List<Word>(words);
     }
 
-    public List<string> GenerateSentences(int number_of_words, int number_of_letters)
+    public List<List<Word>> Find(int number_of_words, int number_of_letters)
     {
-        m_sentences = new List<string>();
+        m_sentences = new List<List<Word>>();
 
         long[] word_lengths = new long[m_words.Count];
         for (int i = 0; i < m_words.Count; i++)
         {
-            word_lengths[i] = m_words[i].Length;
+            string simplified_word_text = m_words[i].Text;
+            if (m_words[i].Text.IsArabicWithDiacritics())
+            {
+                simplified_word_text = simplified_word_text.Simplify29();
+            }
+            word_lengths[i] = simplified_word_text.Length;
         }
 
         Subsets subsets = new Subsets(word_lengths);
-        subsets.Find(number_of_words, number_of_letters, OnSentenceGenerated);
+        subsets.Find(number_of_words, number_of_letters, OnFound);
 
         return m_sentences;
     }
-    private void OnSentenceGenerated(Subsets.Item[] items)
+    
+    private void OnFound(Subsets.Item[] items)
     {
         // sort items in ascending order
         List<Subsets.Item> xxx = new List<Subsets.Item>(items);
@@ -45,15 +52,11 @@ public class SentencesGenerator
             xxx.Remove(xxx[min]);
         };
 
-        StringBuilder str = new StringBuilder();
+        List<Word> sentence = new List<Word>();
         foreach (Subsets.Item item in yyy)
         {
-            str.Append(m_words[item.Index] + " ");
+            sentence.Add(m_words[item.Index]);
         }
-        if (str.Length > 0)
-        {
-            str.Remove(str.Length - 1, 1); // " "
-        }
-        m_sentences.Add(str.ToString());
+        m_sentences.Add(sentence);
     }
 }

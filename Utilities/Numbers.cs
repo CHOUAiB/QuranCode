@@ -3751,6 +3751,53 @@ public static class Numbers
             QuickSort(list, lo, max);
     }
 
+    // nCk count method
+    //
+    //          n!       multiply last  k numbers
+    // nCk = --------- = ------------------------
+    //       k! (n-k)!   multiply first k numbers
+    //
+    //       1 2 3         4 5 6 7 8 9
+    // 9C3 = --------------------------
+    //       1 2 3 * 1 2 3 4 5 6      
+    //
+    //                           7 8 9
+    // 9C3 = --------------------------
+    //               1 2 3             
+    //
+    //
+    public static BigInteger NChooseK(int n, int k)
+    {
+        BigInteger result = 0;
+        if ((n > 0) && (k > 0))
+        {
+            if (k <= n)
+            {
+                // multiply last k numbers
+                BigInteger numerator = 1L;
+                int r = n - k + 1;
+                for (int i = r; i <= n; i++)
+                {
+                    numerator *= i;
+                }
+
+                // multiply first k numbers
+                BigInteger denominator = 1L;
+                for (int i = 1; i <= k; i++)
+                {
+                    denominator *= i;
+                }
+
+                result = numerator / denominator;
+            }
+            else // k > n
+            {
+                result = 0;
+            }
+        }
+        return result;
+    }
+
     // DO NOT USE as Microsoft provides a backdoor for the NSA
     // in System.Security.Cryptography for "national security".
     private static void GenerateRSAKeys()

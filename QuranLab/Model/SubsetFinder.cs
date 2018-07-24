@@ -37,7 +37,39 @@ public class SubsetFinder
     }
 
     // find subsets
-    public void FindSubsets(int count, long sum, Action<Chapter[]> callback)
+    /// <summary>
+    /// Find all subsets where the sum of numbers in a subset equals the target sum.
+    /// </summary>
+    /// <param name="count">count of items in subsets to be found</param>
+    /// <param name="sum">target sum</param>
+    /// <param name="subset">subset to evaluate</param>
+    /// <param name="callback">method to call when a new subset is found</param>
+    public void Find(long sum, Action<Chapter[]> callback)
+    {
+        for (int count = 1; count <= Book.CHAPTERS; count++)
+            this.Find(count, sum, callback);
+    }
+    /// <summary>
+    /// Find all subsets with specified count regardless of sum.
+    /// </summary>
+    /// <param name="count">count of items in subsets to be found</param>
+    /// <param name="subset">subset to evaluate</param>
+    /// <param name="callback">method to call when a new subset is found</param>
+    public void Find(int count, Action<Chapter[]> callback)
+    {
+        if (count > Book.CHAPTERS)
+            return;
+
+        this.Scan(0, count, new List<Chapter>(), callback);
+    }
+    /// <summary>
+    /// Find all subsets with specified count where the sum of numbers in a subset equals the target sum.
+    /// </summary>
+    /// <param name="count">count of items in subsets to be found</param>
+    /// <param name="sum">target sum</param>
+    /// <param name="subset">subset to evaluate</param>
+    /// <param name="callback">method to call when a new subset is found</param>
+    public void Find(int count, long sum, Action<Chapter[]> callback)
     {
         if (count > Book.CHAPTERS)
             return;
@@ -187,12 +219,13 @@ public class SubsetFinder
     }
 
     // count subsets
-    public long CountSubsets(int count, long sum)
+    private long m_count = 0L;
+    public long Count(int count, long sum)
     {
-        m_subset_count = 0L;
+        m_count = 0L;
 
         if (count > Book.CHAPTERS)
-            return m_subset_count;
+            return m_count;
 
         if ((count > 0) && (sum > 0))
         {
@@ -220,9 +253,8 @@ public class SubsetFinder
             }
         }
 
-        return m_subset_count;
+        return m_count;
     }
-    private long m_subset_count = 0L;
     private void Scan(int index, int count, long sum, List<Chapter> chapters)
     {
         // No more chapters to add.
@@ -236,7 +268,7 @@ public class SubsetFinder
                 //Application.DoEvents();
                 //if (!MainForm.Running) return;
 
-                m_subset_count++;
+                m_count++;
             }
             return;
         }
@@ -305,7 +337,7 @@ public class SubsetFinder
                 //Application.DoEvents();
                 //if (!MainForm.Running) return;
 
-                m_subset_count++;
+                m_count++;
             }
             return;
         }
@@ -339,53 +371,6 @@ public class SubsetFinder
             // Remove current chapter and continue looping
             chapters.RemoveAt(chapters.Count - 1);
         }
-    }
-
-    // nCk count method
-    //
-    //          n!       multiply last  k numbers
-    // nCk = --------- = ------------------------
-    //       k! (n-k)!   multiply first k numbers
-    //
-    //       1 2 3         4 5 6 7 8 9
-    // 9C3 = --------------------------
-    //       1 2 3 * 1 2 3 4 5 6      
-    //
-    //                           7 8 9
-    // 9C3 = --------------------------
-    //               1 2 3             
-    //
-    //
-    public static BigInteger NChooseK(int k, int n)
-    {
-        BigInteger result = 0;
-        if ((k > 0) && (n > 0))
-        {
-            if (k <= n)
-            {
-                // multiply last k numbers
-                BigInteger numerator = 1L;
-                int r = n - k + 1;
-                for (int i = r; i <= n; i++)
-                {
-                    numerator *= i;
-                }
-
-                // multiply first k numbers
-                BigInteger denominator = 1L;
-                for (int i = 1; i <= k; i++)
-                {
-                    denominator *= i;
-                }
-
-                result = numerator / denominator;
-            }
-            else // k > n
-            {
-                result = 0;
-            }
-        }
-        return result;
     }
 
     // validate query conditions

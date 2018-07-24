@@ -3763,24 +3763,29 @@ public static partial class Research
         List<Verse> verses = GetSourceVerses(client, in_search_result);
         if (verses != null)
         {
-            List<string> words = new List<string>();
+            List<Word> words = new List<Word>();
             foreach (Verse verse in verses)
             {
-                foreach (Word word in verse.Words)
-                {
-                    words.Add(word.Text.SimplifyTo(client.NumerologySystem.TextMode));
-                }
+                words.AddRange(verse.Words);
             }
 
             int number_of_words = verses.Count;
             int number_of_letters = words.Count;
-            SentencesGenerator generator = new SentencesGenerator(words);
-            List<string> sentences = generator.GenerateSentences(number_of_words, number_of_letters);
+            WordSubsets generator = new WordSubsets(words);
+            List<List<Word>> sentences = generator.Find(number_of_words, number_of_letters);
 
             StringBuilder str = new StringBuilder();
-            foreach (string sentence in sentences)
+            foreach (List<Word> sentence in sentences)
             {
-                str.AppendLine(sentence);
+                foreach (Word word in sentence)
+                {
+                    str.Append(word.Text + " ");
+                }
+                if (str.Length > 1)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
             }
 
             string filename = "Sentences" + "_" + number_of_words + "_" + number_of_letters + Globals.OUTPUT_FILE_EXT;

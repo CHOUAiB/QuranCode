@@ -468,12 +468,13 @@ public class Subsets
     }
 
     // count subsets
-    public long CountSubsets(int count, long sum)
+    private long m_count = 0L;
+    public long Count(int count, long sum)
     {
-        m_subset_count = 0L;
+        m_count = 0L;
 
         if (count > m_item_count)
-            return m_subset_count;
+            return m_count;
 
         if ((count > 0) && (sum > 0))
         {
@@ -501,16 +502,15 @@ public class Subsets
             }
         }
 
-        return m_subset_count;
+        return m_count;
     }
-    private long m_subset_count = 0L;
     private void Scan(int index, int count, long sum, List<Item> subset)
     {
         // No more Items to add, and current subset is guranteed to be valid
         if (count == 0)
         {
             // Callback with current subset
-            m_subset_count++;
+            m_count++;
             return;
         }
 
@@ -570,7 +570,7 @@ public class Subsets
         if (count == 0)
         {
             // Callback with current subset
-            m_subset_count++;
+            m_count++;
             return;
         }
 
@@ -606,61 +606,14 @@ public class Subsets
             subset.RemoveAt(subset.Count - 1);
         }
     }
-
-    // nCk count method
-    //
-    //          n!       multiply last  k numbers
-    // nCk = --------- = ------------------------
-    //       k! (n-k)!   multiply first k numbers
-    //
-    //       1 2 3         4 5 6 7 8 9
-    // 9C3 = --------------------------
-    //       1 2 3 * 1 2 3 4 5 6      
-    //
-    //                           7 8 9
-    // 9C3 = --------------------------
-    //               1 2 3             
-    //
-    //
-    public static BigInteger NChooseK(int k, int n)
-    {
-        BigInteger result = 0;
-        if ((k > 0) && (n > 0))
-        {
-            if (k <= n)
-            {
-                // multiply last k numbers
-                BigInteger numerator = 1L;
-                int r = n - k + 1;
-                for (int i = r; i <= n; i++)
-                {
-                    numerator *= i;
-                }
-
-                // multiply first k numbers
-                BigInteger denominator = 1L;
-                for (int i = 1; i <= k; i++)
-                {
-                    denominator *= i;
-                }
-
-                result = numerator / denominator;
-            }
-            else // k > n
-            {
-                result = 0;
-            }
-        }
-        return result;
-    }
 }
 
 public class Test
 {
-    private static long m_subset_count;
-    private static void OnSubsetFound(Subsets.Item[] subset)
+    private static long m_count;
+    private static void OnFound(Subsets.Item[] subset)
     {
-        m_subset_count++;
+        m_count++;
 
         //return; // Skip printing in benchmarking
         foreach (Subsets.Item item in subset)
@@ -671,7 +624,7 @@ public class Test
     }
     private static void Main(string[] args)
     {
-        long[] fatiha_word_lengths = new long[] 
+        long[] word_lengths = new long[] 
         {   
             3, 4, 6, 6,
             5, 3, 2, 7,
@@ -681,23 +634,19 @@ public class Test
             5, 5, 8,
             3, 5, 5, 5, 3, 7, 5, 3, 7
         };
-        Subsets subsets = new Subsets(fatiha_word_lengths);
+        Subsets subsets = new Subsets(word_lengths);
 
         int count = 7;
         long sum = 29;
-        if (args.Length == 2)
-        {
-            int.TryParse(args[0], out count);
-            long.TryParse(args[1], out sum);
-        }
 
         Stopwatch stopwatch = Stopwatch.StartNew();
-        m_subset_count = 0L;
-        subsets.Find(count, sum, OnSubsetFound);
+        
+        m_count = 0L;
+        subsets.Find(count, sum, OnFound);
         stopwatch.Stop();
-        Console.WriteLine("Subsets found: " + m_subset_count);
+        
+        Console.WriteLine("Subsets found: " + m_count);
         Console.WriteLine(stopwatch.Elapsed);
-
         Console.ReadKey();
     }
 }

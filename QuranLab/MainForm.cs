@@ -98,7 +98,7 @@ public partial class MainForm : Form
         if (m_chapter_count >= 0)
         {
             int count = (int)ChapterCountNumericUpDown.Value;
-            BigInteger combinations = SubsetFinder.NChooseK(count, 114);
+            BigInteger combinations = Numbers.NChooseK(Book.CHAPTERS, count);
             MatchCountTextBox.Text = combinations.ToString();
         }
     }
@@ -1347,22 +1347,22 @@ public partial class MainForm : Form
                 {
                     if (m_match_count > 0L)
                     {
-                        m_subset_count = m_dataset_finder.CountSubsets(m_chapter_count, m_chapter_sum);
+                        m_subset_count = m_dataset_finder.Count(m_chapter_count, m_chapter_sum);
                         if (m_match_count == m_subset_count)
                         {
                             m_subset_count = 0L;
-                            m_dataset_finder.FindSubsets(m_chapter_count, m_chapter_sum, OnFound);
+                            m_dataset_finder.Find(m_chapter_count, m_chapter_sum, OnFound);
                         }
                     }
                     else
                     {
                         if (m_count_only)
                         {
-                            m_subset_count = m_dataset_finder.CountSubsets(m_chapter_count, m_chapter_sum);
+                            m_subset_count = m_dataset_finder.Count(m_chapter_count, m_chapter_sum);
                         }
                         else
                         {
-                            m_dataset_finder.FindSubsets(m_chapter_count, m_chapter_sum, OnFound);
+                            m_dataset_finder.Find(m_chapter_count, m_chapter_sum, OnFound);
                         }
                     }
                 }

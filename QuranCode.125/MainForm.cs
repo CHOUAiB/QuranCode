@@ -28185,6 +28185,19 @@ public partial class MainForm : Form, ISubscriber
                 value = (long)Math.Round(m_double_value);
                 FactorizeValue(value, true); // user_text
             }
+            else if ((m_radix == 10) && (expression.ContainsInside("C")))
+            {
+                char[] separators = { 'c', 'C' };
+                string[] parts = expression.Split(separators);
+                if (parts.Length == 2)
+                {
+                    int n = 0; int.TryParse(parts[0], out n);
+                    int k = 0; int.TryParse(parts[1], out k);
+                    BigInteger combinations = Numbers.NChooseK(n, k);
+                    ValueTextBox.Text = combinations.ToString();
+                    FactorizeValue((long)combinations, true);
+                }
+            }
             else
             {
                 m_double_value = DoCalculateExpression(expression, m_radix);

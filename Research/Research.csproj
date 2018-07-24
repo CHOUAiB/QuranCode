@@ -49,6 +49,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordSubsets.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj">
