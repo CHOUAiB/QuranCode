@@ -3757,46 +3757,6 @@ public static partial class Research
             }
         }
     }
-    public static void GenerateSentences(Client client, string param, bool in_search_result)
-    {
-        if (client == null) return;
-        List<Verse> verses = GetSourceVerses(client, in_search_result);
-        if (verses != null)
-        {
-            List<Word> words = new List<Word>();
-            foreach (Verse verse in verses)
-            {
-                words.AddRange(verse.Words);
-            }
-
-            int number_of_words = verses.Count;
-            int number_of_letters = words.Count;
-            WordSubsets generator = new WordSubsets(words);
-            List<List<Word>> sentences = generator.Find(number_of_words, number_of_letters);
-
-            StringBuilder str = new StringBuilder();
-            foreach (List<Word> sentence in sentences)
-            {
-                foreach (Word word in sentence)
-                {
-                    str.Append(word.Text + " ");
-                }
-                if (str.Length > 1)
-                {
-                    str.Remove(str.Length - 1, 1);
-                }
-                str.AppendLine();
-            }
-
-            string filename = "Sentences" + "_" + number_of_words + "_" + number_of_letters + Globals.OUTPUT_FILE_EXT;
-            if (Directory.Exists(Globals.RESEARCH_FOLDER))
-            {
-                string path = Globals.RESEARCH_FOLDER + "/" + filename;
-                FileHelper.SaveText(path, str.ToString());
-                FileHelper.DisplayFile(path);
-            }
-        }
-    }
     private static string DoAllahWords(Client client, List<Verse> verses)
     {
         StringBuilder str = new StringBuilder();
@@ -4358,6 +4318,149 @@ public static partial class Research
             }
         }
         return str.ToString();
+    }
+
+    public static void __________________________(Client client, string param, bool in_search_result)
+    {
+    }
+    public static void ChooseWords(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        if (verses != null)
+        {
+            List<Word> words = new List<Word>();
+            foreach (Verse verse in verses)
+            {
+                words.AddRange(verse.Words);
+            }
+
+            int number_of_words = 0;
+            int number_of_letters = 0;
+            if (!String.IsNullOrEmpty(param))
+            {
+                string[] parts = param.Split(',');
+                if (parts.Length == 2)
+                {
+                    int.TryParse(parts[0], out number_of_words);
+                    int.TryParse(parts[1], out number_of_letters);
+                }
+            }
+            WordSubsetFinder subset_finder = new WordSubsetFinder(words);
+            List<List<Word>> subsets = subset_finder.Find(number_of_words, number_of_letters);
+
+            StringBuilder str = new StringBuilder();
+            foreach (List<Word> subset in subsets)
+            {
+                foreach (Word word in subset)
+                {
+                    str.Append(word.Text + " ");
+                }
+                if (str.Length > 1)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
+            }
+
+            string filename = "ChooseWords" + "_" + number_of_words + "_" + number_of_letters + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.RESEARCH_FOLDER))
+            {
+                string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, str.ToString());
+                FileHelper.DisplayFile(path);
+            }
+        }
+    }
+    public static void ChooseVerses(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        if (verses != null)
+        {
+            int number_of_verses = 0;
+            int number_of_words = 0;
+            if (!String.IsNullOrEmpty(param))
+            {
+                string[] parts = param.Split(',');
+                if (parts.Length == 2)
+                {
+                    int.TryParse(parts[0], out number_of_verses);
+                    int.TryParse(parts[1], out number_of_words);
+                }
+            }
+            VerseSubsetFinder subset_finder = new VerseSubsetFinder(verses);
+            List<List<Verse>> subsets = subset_finder.Find(number_of_verses, number_of_words);
+
+            StringBuilder str = new StringBuilder();
+            foreach (List<Verse> subset in subsets)
+            {
+                foreach (Verse verse in subset)
+                {
+                    str.Append(verse.Address + "." + verse.Words.Count + "\t");
+                }
+                if (str.Length > 1)
+                {
+                    str.Remove(str.Length - 1, 1);
+                }
+                str.AppendLine();
+            }
+
+            string filename = "ChooseVerses" + "_" + number_of_verses + "_" + number_of_words + Globals.OUTPUT_FILE_EXT;
+            if (Directory.Exists(Globals.RESEARCH_FOLDER))
+            {
+                string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                FileHelper.SaveText(path, str.ToString());
+                FileHelper.DisplayFile(path);
+            }
+        }
+    }
+    public static void ChooseChapters(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+        if (verses != null)
+        {
+            List<Chapter> chapters = client.Book.GetChapters(verses);
+            if (chapters != null)
+            {
+                int number_of_chapters = 0;
+                int number_of_verses = 0;
+                if (!String.IsNullOrEmpty(param))
+                {
+                    string[] parts = param.Split(',');
+                    if (parts.Length == 2)
+                    {
+                        int.TryParse(parts[0], out number_of_chapters);
+                        int.TryParse(parts[1], out number_of_verses);
+                    }
+                }
+                ChapterSubsetFinder subset_finder = new ChapterSubsetFinder(chapters);
+                List<List<Chapter>> subsets = subset_finder.Find(number_of_chapters, number_of_verses);
+
+                StringBuilder str = new StringBuilder();
+                foreach (List<Chapter> subset in subsets)
+                {
+                    foreach (Chapter chapter in subset)
+                    {
+                        str.Append(chapter.SortedNumber + "." + chapter.Verses.Count + "\t");
+                    }
+                    if (str.Length > 1)
+                    {
+                        str.Remove(str.Length - 1, 1);
+                    }
+                    str.AppendLine();
+                }
+
+                string filename = "ChooseChapters" + "_" + number_of_chapters + "_" + number_of_verses + Globals.OUTPUT_FILE_EXT;
+                if (Directory.Exists(Globals.RESEARCH_FOLDER))
+                {
+                    string path = Globals.RESEARCH_FOLDER + "/" + filename;
+                    FileHelper.SaveText(path, str.ToString());
+                    FileHelper.DisplayFile(path);
+                }
+            }
+        }
     }
 
     public static void ______________________________________(Client client, string param, bool in_search_result)

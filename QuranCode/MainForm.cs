@@ -3981,10 +3981,28 @@ public partial class MainForm : Form, ISubscriber
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "X,Y,Z");
                 ResearchMethodParameterTextBox.Visible = true;
             }
-            else if (method_name.Contains("Sound"))
+            else if (method_name.StartsWith("ChooseWords"))
             {
-                ResearchMethodParameterTextBox.Text = "0";
-                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Sample rate in Hz");
+                ResearchMethodParameterTextBox.Text = "7,29";
+                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "words,letters");
+                ResearchMethodParameterTextBox.Visible = true;
+            }
+            else if (method_name == "ChooseWords")
+            {
+                ResearchMethodParameterTextBox.Text = "7,29";
+                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "words,letters");
+                ResearchMethodParameterTextBox.Visible = true;
+            }
+            else if (method_name == "ChooseVerses")
+            {
+                ResearchMethodParameterTextBox.Text = "7,29";
+                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "verses,words");
+                ResearchMethodParameterTextBox.Visible = true;
+            }
+            else if (method_name == "ChooseChapters")
+            {
+                ResearchMethodParameterTextBox.Text = "7,29";
+                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "chapters,verses");
                 ResearchMethodParameterTextBox.Visible = true;
             }
             else if (method_name.Contains("Pivot"))
@@ -22795,7 +22813,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitSumNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
 
-        FindByNumbersWordsNumericUpDown.Focus();
+        FindByNumbersVersesNumericUpDown.Focus();
     }
     private void FindByNumbersResultTypeChaptersLabel_Click(object sender, EventArgs e)
     {
@@ -22843,7 +22861,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitSumNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
 
-        FindByNumbersVersesNumericUpDown.Focus();
+        FindByNumbersChaptersNumericUpDown.Focus();
     }
     private void EnableFindByNumbersControls(
                     bool enable_number,
@@ -23045,13 +23063,13 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersUniqueLettersComparisonOperatorLabel.Text = "=";
         FindByNumbersValueComparisonOperatorLabel.Text = "=";
 
-        FindByNumbersNumberComparisonOperatorLabel.Enabled = false;
-        FindByNumbersChaptersComparisonOperatorLabel.Enabled = false;
-        FindByNumbersVersesComparisonOperatorLabel.Enabled = false;
-        FindByNumbersWordsComparisonOperatorLabel.Enabled = false;
-        FindByNumbersLettersComparisonOperatorLabel.Enabled = false;
-        FindByNumbersUniqueLettersComparisonOperatorLabel.Enabled = false;
-        FindByNumbersValueComparisonOperatorLabel.Enabled = false;
+        FindByNumbersNumberComparisonOperatorLabel.Enabled = true;
+        FindByNumbersChaptersComparisonOperatorLabel.Enabled = true;
+        FindByNumbersVersesComparisonOperatorLabel.Enabled = true;
+        FindByNumbersWordsComparisonOperatorLabel.Enabled = true;
+        FindByNumbersLettersComparisonOperatorLabel.Enabled = true;
+        FindByNumbersUniqueLettersComparisonOperatorLabel.Enabled = true;
+        FindByNumbersValueComparisonOperatorLabel.Enabled = true;
     }
     private void UpdateFindByNumbersResultType()
     {
@@ -28185,10 +28203,9 @@ public partial class MainForm : Form, ISubscriber
                 value = (long)Math.Round(m_double_value);
                 FactorizeValue(value, true); // user_text
             }
-            else if ((m_radix == 10) && (expression.ContainsInside("C")))
+            else if ((m_radix == 10) && (expression.ToUpper().ContainsInside("C")))
             {
-                char[] separators = { 'c', 'C' };
-                string[] parts = expression.Split(separators);
+                string[] parts = expression.ToUpper().Split('C');
                 if (parts.Length == 2)
                 {
                     int n = 0; int.TryParse(parts[0], out n);

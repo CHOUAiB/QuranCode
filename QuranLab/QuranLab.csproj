@@ -44,10 +44,10 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Chapter.cs" />
-    <Compile Include="Model\Book.cs" />
-    <Compile Include="Model\NumberQuery.cs" />
-    <Compile Include="Model\SubsetFinder.cs" />
+    <Compile Include="Chapter.cs" />
+    <Compile Include="Book.cs" />
+    <Compile Include="NumberQuery.cs" />
+    <Compile Include="SubsetFinder.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
