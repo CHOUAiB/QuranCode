@@ -63,7 +63,7 @@ public static class DataAccess
     public static List<Stopmark> LoadVerseStopmarks()
     {
         List<Stopmark> result = new List<Stopmark>();
-        string filename = Globals.DATA_FOLDER + "/" + "verse_stopmarks.txt";
+        string filename = Globals.DATA_FOLDER + "/" + "verse-stopmarks.txt";
         if (File.Exists(filename))
         {
             using (StreamReader reader = File.OpenText(filename))
