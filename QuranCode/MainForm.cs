@@ -23021,6 +23021,14 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueComparisonOperatorLabel.Text = "=";
         FindByNumbersValueNumericUpDown.Value = 0;
         FindByNumbersValueNumberTypeLabel.Text = null;
+
+        FindByNumbersValueDigitSumComparisonOperatorLabel.Text = "=";
+        FindByNumbersValueDigitSumNumericUpDown.Value = 0;
+        FindByNumbersValueDigitSumNumberTypeLabel.Text = null;
+
+        FindByNumbersValueDigitalRootComparisonOperatorLabel.Text = "=";
+        FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
+        FindByNumbersValueDigitalRootNumberTypeLabel.Text = null;
     }
     private void ResetFindByNumbersNumberTypeControl(Control control)
     {
@@ -23062,6 +23070,8 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersLettersComparisonOperatorLabel.Text = "=";
         FindByNumbersUniqueLettersComparisonOperatorLabel.Text = "=";
         FindByNumbersValueComparisonOperatorLabel.Text = "=";
+        FindByNumbersValueDigitSumComparisonOperatorLabel.Text = "=";
+        FindByNumbersValueDigitalRootComparisonOperatorLabel.Text = "=";
 
         FindByNumbersNumberComparisonOperatorLabel.Enabled = true;
         FindByNumbersChaptersComparisonOperatorLabel.Enabled = true;
@@ -23070,6 +23080,8 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersLettersComparisonOperatorLabel.Enabled = true;
         FindByNumbersUniqueLettersComparisonOperatorLabel.Enabled = true;
         FindByNumbersValueComparisonOperatorLabel.Enabled = true;
+        FindByNumbersValueDigitSumComparisonOperatorLabel.Enabled = true;
+        FindByNumbersValueDigitalRootComparisonOperatorLabel.Enabled = true;
     }
     private void UpdateFindByNumbersResultType()
     {
@@ -23756,6 +23768,40 @@ public partial class MainForm : Form, ISubscriber
                                 ToolTip.SetToolTip(FindByNumbersValueNumberTypeLabel, null);
                             }
                         }
+                        else if (control == FindByNumbersValueDigitSumComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersValueDigitSumComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersValueDigitSumNumberTypeLabel.Tag = remainder;
+                                FindByNumbersValueDigitSumNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersValueDigitSumNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersValueDigitSumNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersValueDigitSumNumberTypeLabel, L[l]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersValueDigitSumNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersValueDigitSumNumberTypeLabel, null);
+                            }
+                        }
+                        else if (control == FindByNumbersValueDigitalRootComparisonOperatorLabel)
+                        {
+                            if (FindByNumbersValueDigitalRootComparisonOperatorLabel.Text == "÷")
+                            {
+                                int remainder = 0;
+                                FindByNumbersValueDigitalRootNumberTypeLabel.Tag = remainder;
+                                FindByNumbersValueDigitalRootNumberTypeLabel.Text = remainder.ToString();
+                                FindByNumbersValueDigitalRootNumberTypeLabel.ForeColor = Color.Black;
+                                FindByNumbersValueDigitalRootNumberTypeLabel.Enabled = true;
+                                ToolTip.SetToolTip(FindByNumbersValueDigitalRootNumberTypeLabel, L[l]["remainder"]);
+                            }
+                            else
+                            {
+                                FindByNumbersValueDigitalRootNumberTypeLabel.Text = "";
+                                ToolTip.SetToolTip(FindByNumbersValueDigitalRootNumberTypeLabel, null);
+                            }
+                        }
                         else
                         {
                             // do nothing
@@ -23883,6 +23929,34 @@ public partial class MainForm : Form, ISubscriber
                     else
                     {
                         FindByNumbersValueNumericUpDown.Focus();
+                    }
+                }
+                else if (control == FindByNumbersValueDigitSumNumberTypeLabel)
+                {
+                    FindByNumbersValueDigitSumComparisonOperatorLabel.Enabled = (control.Text.Length == 0);
+                    FindByNumbersValueDigitSumNumericUpDown.Enabled = (control.Text == "");
+                    if (control.Text.Length > 0)
+                    {
+                        FindByNumbersValueDigitSumComparisonOperatorLabel.Text = "=";
+                        FindByNumbersValueDigitSumNumericUpDown.Value = 0;
+                    }
+                    else
+                    {
+                        FindByNumbersValueDigitSumNumericUpDown.Focus();
+                    }
+                }
+                else if (control == FindByNumbersValueDigitalRootNumberTypeLabel)
+                {
+                    FindByNumbersValueDigitalRootComparisonOperatorLabel.Enabled = (control.Text.Length == 0);
+                    FindByNumbersValueDigitalRootNumericUpDown.Enabled = (control.Text == "");
+                    if (control.Text.Length > 0)
+                    {
+                        FindByNumbersValueDigitalRootComparisonOperatorLabel.Text = "=";
+                        FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
+                    }
+                    else
+                    {
+                        FindByNumbersValueDigitalRootNumericUpDown.Focus();
                     }
                 }
                 else
