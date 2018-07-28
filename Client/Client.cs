@@ -908,6 +908,91 @@ public class Client : IPublisher, ISubscriber
         return result;
     }
 
+    // helper methods
+    public List<string> GetSimplifiedWords()
+    {
+        List<string> result = null;
+
+        if (this.NumerologySystem != null)
+        {
+            if (this.Book != null)
+            {
+                if (this.Book.Verses != null)
+                {
+                    SortedDictionary<string, int> word_frequencies = new SortedDictionary<string, int>();
+                    if (word_frequencies != null)
+                    {
+                        List<Word> quran_words = new List<Word>();
+                        if (quran_words != null)
+                        {
+                            foreach (Verse verse in this.Book.Verses)
+                            {
+                                quran_words.AddRange(verse.Words);
+                            }
+                        }
+
+                        foreach (Word quran_word in quran_words)
+                        {
+                            string simplified_quran_word_text = quran_word.Text.SimplifyTo(this.NumerologySystem.TextMode);
+                            if (word_frequencies.ContainsKey(simplified_quran_word_text))
+                            {
+                                word_frequencies[simplified_quran_word_text]++;
+                            }
+                            else
+                            {
+                                word_frequencies.Add(simplified_quran_word_text, 1);
+                            }
+                        }
+
+                        result = new List<string>(word_frequencies.Keys);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+    public SortedDictionary<string, int> GetSimplifiedWordFrequencies()
+    {
+        SortedDictionary<string, int> result = new SortedDictionary<string, int>();
+
+        if (this.NumerologySystem != null)
+        {
+            if (this.Book != null)
+            {
+                if (this.Book.Verses != null)
+                {
+                    if (result != null)
+                    {
+                        List<Word> quran_words = new List<Word>();
+                        if (quran_words != null)
+                        {
+                            foreach (Verse verse in this.Book.Verses)
+                            {
+                                quran_words.AddRange(verse.Words);
+                            }
+                        }
+
+                        foreach (Word quran_word in quran_words)
+                        {
+                            string simplified_quran_word_text = quran_word.Text.SimplifyTo(this.NumerologySystem.TextMode);
+                            if (result.ContainsKey(simplified_quran_word_text))
+                            {
+                                result[simplified_quran_word_text]++;
+                            }
+                            else
+                            {
+                                result.Add(simplified_quran_word_text, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     // find by text - Exact
     /// <summary>
     /// Find phrases for given exact text that meet all parameters.

@@ -31089,6 +31089,18 @@ public partial class MainForm : Form, ISubscriber
         {
             text = text.Replace("  ", " ");
         }
+        text = text.Replace(",", "");
+        text = text.Replace(":", "");
+        text = text.Replace("0", "");
+        text = text.Replace("1", "");
+        text = text.Replace("2", "");
+        text = text.Replace("3", "");
+        text = text.Replace("4", "");
+        text = text.Replace("5", "");
+        text = text.Replace("6", "");
+        text = text.Replace("7", "");
+        text = text.Replace("8", "");
+        text = text.Replace("9", "");
         text = text.Trim();
 
         ////////////////////////////////////////////////////
@@ -31191,7 +31203,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     long value = (long)UserTextValueNumericUpDown.Value;
 
-                    SortedDictionary<string, int> matches = new SortedDictionary<string, int>();
+                    SortedDictionary<string, List<Word>> matches = new SortedDictionary<string, List<Word>>();
                     if (matches != null)
                     {
                         List<Word> words = new List<Word>();
@@ -31215,11 +31227,13 @@ public partial class MainForm : Form, ISubscriber
                                     string simplified_word_text = word.Text.SimplifyTo(m_client.NumerologySystem.TextMode);
                                     if (matches.ContainsKey(simplified_word_text))
                                     {
-                                        matches[simplified_word_text]++;
+                                        matches[simplified_word_text].Add(word);
                                     }
                                     else
                                     {
-                                        matches.Add(simplified_word_text, 1);
+                                        List<Word> list = new List<Word>();
+                                        list.Add(word);
+                                        matches.Add(simplified_word_text, list);
                                     }
                                 }
                             }
@@ -31227,10 +31241,28 @@ public partial class MainForm : Form, ISubscriber
                             StringBuilder str = new StringBuilder();
                             if (str != null)
                             {
+                                int count = 0;
+                                int word_count = 0;
+                                int letter_count = 0;
                                 foreach (string key in matches.Keys)
                                 {
-                                    str.AppendLine(key + "\t" + matches[key]);
+                                    count++;
+                                    word_count += matches[key].Count;
+                                    letter_count += key.Length;
+
+                                    StringBuilder addresses = new StringBuilder();
+                                    foreach (Word word in matches[key])
+                                    {
+                                        addresses.Append(word.Address + ",");
+                                    }
+                                    if (addresses.Length > 0)
+                                    {
+                                        addresses.Remove(addresses.Length - 1, 1);
+                                    }
+                                    str.AppendLine(count + "\t" + key + "\t" + matches[key].Count + "\t" + addresses.ToString());
                                 }
+                                str.AppendLine();
+                                str.AppendLine(count + "\t" + letter_count + "\t" + word_count);
 
                                 UserTextTextBox.Text = str.ToString();
                             }
@@ -34051,7 +34083,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersVersesNumericUpDown.Value = 0;
         FindByNumbersWordsNumericUpDown.Value = 0;
         FindByNumbersLettersNumericUpDown.Value = 1;
-        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
         //FindByNumbersValueNumericUpDown.Value = 0;
         //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
         //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
@@ -34098,8 +34130,8 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
         FindByNumbersWordsNumericUpDown.Value = 1;
-        //FindByNumbersLettersNumericUpDown.Value = 0;
-        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        FindByNumbersLettersNumericUpDown.Value = 0;
+        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
         //FindByNumbersValueNumericUpDown.Value = 0;
         //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
         //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
@@ -34146,8 +34178,8 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
         FindByNumbersWordsNumericUpDown.Value = 0; // 0 not 1 for any number of words in sentence
-        //FindByNumbersLettersNumericUpDown.Value = 0;
-        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        FindByNumbersLettersNumericUpDown.Value = 0;
+        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
         //FindByNumbersValueNumericUpDown.Value = 0;
         //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
         //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
@@ -34193,9 +34225,9 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 1;
-        //FindByNumbersWordsNumericUpDown.Value = 0;
-        //FindByNumbersLettersNumericUpDown.Value = 0;
-        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        FindByNumbersWordsNumericUpDown.Value = 0;
+        FindByNumbersLettersNumericUpDown.Value = 0;
+        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
         //FindByNumbersValueNumericUpDown.Value = 0;
         //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
         //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
@@ -34240,10 +34272,10 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 1;
-        //FindByNumbersVersesNumericUpDown.Value = 0;
-        //FindByNumbersWordsNumericUpDown.Value = 0;
-        //FindByNumbersLettersNumericUpDown.Value = 0;
-        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        FindByNumbersVersesNumericUpDown.Value = 0;
+        FindByNumbersWordsNumericUpDown.Value = 0;
+        FindByNumbersLettersNumericUpDown.Value = 0;
+        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
         //FindByNumbersValueNumericUpDown.Value = 0;
         //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
         //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;

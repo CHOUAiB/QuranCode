@@ -144,9 +144,12 @@
   <data name="GenerateWordsButton.ToolTip" xml:space="preserve">
     <value>Generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
 There are 79940 ways of choosing 7 words with 29 letters.
-R2L or L2R interlace or concatenate each letter value with the letter values of the Primalogy system.
+R2L or L2R combine each letter value with the letter values of the Primalogy system.
 If the result is P, AP, XP, C, AC or XC, then add the letter to the candidate word.
-After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.</value>
+After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.
+Results are saved in the Statistics\NumerlogySystem folder.
+
+Click this button with SHIFT key to process all numerology systems for the current settings.</value>
   </data>
   <data name="AutoGenerateWordsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -171,12 +174,12 @@ After processing all 29 letters, if the candidate word is a Quran word, then add
   <data name="AutoGenerateWordsButton.ToolTip" xml:space="preserve">
     <value>Auto generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
 There are 79940 ways of choosing 7 words with 29 letters.
-R2L or L2R interlace or concatenate each letter value with the letter values of the Primalogy system.
+R2L or L2R combine each letter value with the letter values of the Primalogy system.
 If the result is P, AP, XP, C, AC or XC, then add the letter to the candidate word.
 After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.
-Results are saved in the Statistics folder.
+Results are saved in the Statistics\NumerlogySystem folder.
 
-Click this button with SHIFT key to process all numerology systems which may 12 to 24 hours.</value>
+Click this button with SHIFT key to process all numerology systems for all settings.</value>
   </data>
   <data name="InspectButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
