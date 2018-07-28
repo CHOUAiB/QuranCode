@@ -501,10 +501,19 @@ partial class MainForm
         this.DistancesWithinChapterLabel = new System.Windows.Forms.Label();
         this.DistancesWithinBookLabel = new System.Windows.Forms.Label();
         this.UserTextTabPage = new System.Windows.Forms.TabPage();
+        this.UserTextInspectLabel = new System.Windows.Forms.Label();
         this.UserTextValueButton = new System.Windows.Forms.Button();
         this.UserTextValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
         this.UserTextValueLabel = new System.Windows.Forms.Label();
         this.UserTextTextBox = new System.Windows.Forms.TextBox();
+        this.UserTextContent8Label = new System.Windows.Forms.Label();
+        this.UserTextContent7Label = new System.Windows.Forms.Label();
+        this.UserTextContent6Label = new System.Windows.Forms.Label();
+        this.UserTextContent5Label = new System.Windows.Forms.Label();
+        this.UserTextContent4Label = new System.Windows.Forms.Label();
+        this.UserTextContent3Label = new System.Windows.Forms.Label();
+        this.UserTextContent2Label = new System.Windows.Forms.Label();
+        this.UserTextContent1Label = new System.Windows.Forms.Label();
         this.TanzilLabel = new System.Windows.Forms.Label();
         this.EmlaaeiTextLabel = new System.Windows.Forms.Label();
         this.FindByFrequencySumNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -5042,7 +5051,7 @@ partial class MainForm
         this.GenerateSentencesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.GenerateSentencesLabel.ForeColor = System.Drawing.SystemColors.WindowText;
         this.GenerateSentencesLabel.Image = ((System.Drawing.Image)(resources.GetObject("GenerateSentencesLabel.Image")));
-        this.GenerateSentencesLabel.Location = new System.Drawing.Point(716, 0);
+        this.GenerateSentencesLabel.Location = new System.Drawing.Point(727, 4);
         this.GenerateSentencesLabel.Name = "GenerateSentencesLabel";
         this.GenerateSentencesLabel.Size = new System.Drawing.Size(14, 14);
         this.GenerateSentencesLabel.TabIndex = 115;
@@ -5212,7 +5221,7 @@ partial class MainForm
         this.TabControl.Name = "TabControl";
         this.TabControl.SelectedIndex = 0;
         this.TabControl.ShowToolTips = true;
-        this.TabControl.Size = new System.Drawing.Size(816, 193);
+        this.TabControl.Size = new System.Drawing.Size(816, 192);
         this.TabControl.TabIndex = 102;
         this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
         this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -8197,10 +8206,19 @@ partial class MainForm
         // UserTextTabPage
         // 
         this.UserTextTabPage.BackColor = System.Drawing.SystemColors.ControlLight;
+        this.UserTextTabPage.Controls.Add(this.UserTextInspectLabel);
         this.UserTextTabPage.Controls.Add(this.UserTextValueButton);
         this.UserTextTabPage.Controls.Add(this.UserTextValueNumericUpDown);
         this.UserTextTabPage.Controls.Add(this.UserTextValueLabel);
         this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent8Label);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent7Label);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent6Label);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent5Label);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent4Label);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent3Label);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent2Label);
+        this.UserTextTabPage.Controls.Add(this.UserTextContent1Label);
         this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
         this.UserTextTabPage.Name = "UserTextTabPage";
         this.UserTextTabPage.Size = new System.Drawing.Size(808, 167);
@@ -8209,13 +8227,28 @@ partial class MainForm
         this.UserTextTabPage.ToolTipText = "Calculate the value of any given text or find all words with a given value\r\nحساب " +
 "القيمة لنص معين أو إيجاد الكلمات ذوات قيمة معينة";
         // 
+        // UserTextInspectLabel
+        // 
+        this.UserTextInspectLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+        this.UserTextInspectLabel.BackColor = System.Drawing.SystemColors.Control;
+        this.UserTextInspectLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+        this.UserTextInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("UserTextInspectLabel.Image")));
+        this.UserTextInspectLabel.Location = new System.Drawing.Point(790, 147);
+        this.UserTextInspectLabel.Name = "UserTextInspectLabel";
+        this.UserTextInspectLabel.Size = new System.Drawing.Size(18, 18);
+        this.UserTextInspectLabel.TabIndex = 119;
+        this.ToolTip.SetToolTip(this.UserTextInspectLabel, "Inspect");
+        this.UserTextInspectLabel.Click += new System.EventHandler(this.UserTextInspectLabel_Click);
+        // 
         // UserTextValueButton
         // 
         this.UserTextValueButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
         this.UserTextValueButton.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserTextValueButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserTextValueButton.ForeColor = System.Drawing.Color.RoyalBlue;
-        this.UserTextValueButton.Location = new System.Drawing.Point(736, 147);
+        this.UserTextValueButton.Location = new System.Drawing.Point(715, 146);
         this.UserTextValueButton.Name = "UserTextValueButton";
         this.UserTextValueButton.Size = new System.Drawing.Size(69, 20);
         this.UserTextValueButton.TabIndex = 4;
@@ -8228,14 +8261,14 @@ partial class MainForm
         this.UserTextValueNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
         this.UserTextValueNumericUpDown.BackColor = System.Drawing.SystemColors.Window;
         this.UserTextValueNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.UserTextValueNumericUpDown.Location = new System.Drawing.Point(655, 148);
+        this.UserTextValueNumericUpDown.Location = new System.Drawing.Point(650, 147);
         this.UserTextValueNumericUpDown.Maximum = new decimal(new int[] {
             -727379969,
             232,
             0,
             0});
         this.UserTextValueNumericUpDown.Name = "UserTextValueNumericUpDown";
-        this.UserTextValueNumericUpDown.Size = new System.Drawing.Size(80, 20);
+        this.UserTextValueNumericUpDown.Size = new System.Drawing.Size(64, 20);
         this.UserTextValueNumericUpDown.TabIndex = 3;
         this.UserTextValueNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.UserTextValueNumericUpDown, "Value");
@@ -8248,7 +8281,7 @@ partial class MainForm
         this.UserTextValueLabel.BackColor = System.Drawing.SystemColors.ControlLight;
         this.UserTextValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserTextValueLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-        this.UserTextValueLabel.Location = new System.Drawing.Point(586, 150);
+        this.UserTextValueLabel.Location = new System.Drawing.Point(581, 149);
         this.UserTextValueLabel.Name = "UserTextValueLabel";
         this.UserTextValueLabel.Size = new System.Drawing.Size(63, 12);
         this.UserTextValueLabel.TabIndex = 2;
@@ -8265,14 +8298,15 @@ partial class MainForm
         this.UserTextTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserTextTextBox.ForeColor = System.Drawing.Color.Blue;
         this.UserTextTextBox.HideSelection = false;
-        this.UserTextTextBox.Location = new System.Drawing.Point(-3, 0);
+        this.UserTextTextBox.Location = new System.Drawing.Point(3, 0);
         this.UserTextTextBox.MaxLength = 999999999;
         this.UserTextTextBox.Multiline = true;
         this.UserTextTextBox.Name = "UserTextTextBox";
         this.UserTextTextBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
         this.UserTextTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-        this.UserTextTextBox.Size = new System.Drawing.Size(814, 147);
+        this.UserTextTextBox.Size = new System.Drawing.Size(808, 164);
         this.UserTextTextBox.TabIndex = 1;
+        this.UserTextTextBox.WordWrap = false;
         this.UserTextTextBox.TextChanged += new System.EventHandler(this.UserTextTextBox_TextChanged);
         this.UserTextTextBox.Enter += new System.EventHandler(this.UserTextTextBox_Enter);
         this.UserTextTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
@@ -8281,6 +8315,118 @@ partial class MainForm
         this.UserTextTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseDown);
         this.UserTextTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseMove);
         this.UserTextTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseUp);
+        // 
+        // UserTextContent8Label
+        // 
+        this.UserTextContent8Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent8Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent8Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent8Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent8Label.Location = new System.Drawing.Point(3, 140);
+        this.UserTextContent8Label.Name = "UserTextContent8Label";
+        this.UserTextContent8Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent8Label.TabIndex = 118;
+        this.UserTextContent8Label.Text = "8";
+        this.UserTextContent8Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent8Label, "Click to       Save\r\nCtrl+Click to  Load");
+        // 
+        // UserTextContent7Label
+        // 
+        this.UserTextContent7Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent7Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent7Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent7Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent7Label.Location = new System.Drawing.Point(3, 120);
+        this.UserTextContent7Label.Name = "UserTextContent7Label";
+        this.UserTextContent7Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent7Label.TabIndex = 117;
+        this.UserTextContent7Label.Text = "7";
+        this.UserTextContent7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent7Label, "Click to       Save\r\nCtrl+Click to  Load");
+        // 
+        // UserTextContent6Label
+        // 
+        this.UserTextContent6Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent6Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent6Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent6Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent6Label.Location = new System.Drawing.Point(3, 100);
+        this.UserTextContent6Label.Name = "UserTextContent6Label";
+        this.UserTextContent6Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent6Label.TabIndex = 116;
+        this.UserTextContent6Label.Text = "6";
+        this.UserTextContent6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent6Label, "Click to       Save\r\nCtrl+Click to  Load");
+        // 
+        // UserTextContent5Label
+        // 
+        this.UserTextContent5Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent5Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent5Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent5Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent5Label.Location = new System.Drawing.Point(3, 80);
+        this.UserTextContent5Label.Name = "UserTextContent5Label";
+        this.UserTextContent5Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent5Label.TabIndex = 115;
+        this.UserTextContent5Label.Text = "5";
+        this.UserTextContent5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent5Label, "Click to       Save\r\nCtrl+Click to  Load");
+        // 
+        // UserTextContent4Label
+        // 
+        this.UserTextContent4Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent4Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent4Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent4Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent4Label.Location = new System.Drawing.Point(3, 60);
+        this.UserTextContent4Label.Name = "UserTextContent4Label";
+        this.UserTextContent4Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent4Label.TabIndex = 114;
+        this.UserTextContent4Label.Text = "4";
+        this.UserTextContent4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent4Label, "Click to       Save\r\nCtrl+Click to  Load");
+        // 
+        // UserTextContent3Label
+        // 
+        this.UserTextContent3Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent3Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent3Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent3Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent3Label.Location = new System.Drawing.Point(3, 40);
+        this.UserTextContent3Label.Name = "UserTextContent3Label";
+        this.UserTextContent3Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent3Label.TabIndex = 113;
+        this.UserTextContent3Label.Text = "3";
+        this.UserTextContent3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent3Label, "Click to       Save\r\nCtrl+Click to  Load");
+        // 
+        // UserTextContent2Label
+        // 
+        this.UserTextContent2Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent2Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent2Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent2Label.Location = new System.Drawing.Point(3, 20);
+        this.UserTextContent2Label.Name = "UserTextContent2Label";
+        this.UserTextContent2Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent2Label.TabIndex = 112;
+        this.UserTextContent2Label.Text = "2";
+        this.UserTextContent2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent2Label, "Click to       Save\r\nCtrl+Click to  Load");
+        // 
+        // UserTextContent1Label
+        // 
+        this.UserTextContent1Label.BackColor = System.Drawing.Color.Black;
+        this.UserTextContent1Label.Cursor = System.Windows.Forms.Cursors.Hand;
+        this.UserTextContent1Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.UserTextContent1Label.ForeColor = System.Drawing.Color.Lime;
+        this.UserTextContent1Label.Location = new System.Drawing.Point(3, 0);
+        this.UserTextContent1Label.Name = "UserTextContent1Label";
+        this.UserTextContent1Label.Size = new System.Drawing.Size(19, 19);
+        this.UserTextContent1Label.TabIndex = 111;
+        this.UserTextContent1Label.Text = "1";
+        this.UserTextContent1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserTextContent1Label, "Click to       Save\r\nCtrl+Click to  Load");
         // 
         // TanzilLabel
         // 
@@ -11260,4 +11406,13 @@ partial class MainForm
     private System.Windows.Forms.CheckBox ShowToolTipsCheckBox;
     private System.Windows.Forms.Label FindByFrequencySalawaaaaatLabel;
     private System.Windows.Forms.Label FindByFrequencyAhlulBaytLabel;
+    private System.Windows.Forms.Label UserTextContent8Label;
+    private System.Windows.Forms.Label UserTextContent7Label;
+    private System.Windows.Forms.Label UserTextContent6Label;
+    private System.Windows.Forms.Label UserTextContent5Label;
+    private System.Windows.Forms.Label UserTextContent4Label;
+    private System.Windows.Forms.Label UserTextContent3Label;
+    private System.Windows.Forms.Label UserTextContent2Label;
+    private System.Windows.Forms.Label UserTextContent1Label;
+    private System.Windows.Forms.Label UserTextInspectLabel;
 }
