@@ -36525,8 +36525,9 @@ public partial class MainForm : Form, ISubscriber
                 {
                     if (verse.Chapter != null)
                     {
-                        //text = L[l]["Chapter"] + "  " + verse.Chapter.SortedNumber + " " + L[l][verse.Chapter.TransliteratedName] + "   "
-                        text = L[l][verse.Chapter.TransliteratedName] + " " + verse.Chapter.SortedNumber + "   "
+                        //text = L[l]["Chapter"] + "   " + verse.Chapter.SortedNumber + ": " + L[l][verse.Chapter.TransliteratedName] + "   "
+                        text = L[l][verse.Chapter.TransliteratedName] + " "
+                             +((l == "Arabic") ? "     " : verse.Chapter.Name + "     ")
                              + L[l]["Verse"] + " " + verse.NumberInChapter //+ "/" + verse.Chapter.Verses.Count + "   "
                             //+ L[l]["Station"] + " " + ((verse.Station != null) ? verse.Station.Number : -1) + "   "
                             //+ L[l]["Part"] + " " + ((verse.Part != null) ? verse.Part.Number : -1) + "   "

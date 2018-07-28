@@ -870,7 +870,6 @@ public partial class MainForm : Form
         (
             Application.ProductName + "  v" + Application.ProductVersion + "\r\n" +
             "©2009-2018 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي" + "\r\n" + "\r\n" +
-            "Powered by Yet Another Factoring Utility\r\nBenjamin Buhrow <bbuhrow@gmail.com>" + "\r\n" + "\r\n" +
             "God >",
             "About",
             MessageBoxButtons.OK,
