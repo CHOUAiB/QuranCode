@@ -817,10 +817,10 @@ public partial class MainForm : Form
                                             WordCountLabel.Text = m_lines.Count + " (" + m_generated_words.Count + ") words";
                                             WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                                             WordCountLabel.Refresh();
-                                        }
 
-                                        Application.DoEvents();
-                                    } // for m_word_subsets
+                                            Application.DoEvents();
+                                        } // for m_word_subsets
+                                    }
 
                                     if (m_lines.Count == 0)
                                     {
@@ -869,6 +869,7 @@ public partial class MainForm : Form
         NumberTypeLabel.Enabled = false;
         AutoGenerateWordsButton.Enabled = false;
         GenerateWordsButton.Enabled = false;
+        SaveButton.Enabled = false;
 
         // prepare for next state
         m_value_interlace = true;
@@ -939,6 +940,7 @@ public partial class MainForm : Form
             NumberTypeLabel.Enabled = true;
             AutoGenerateWordsButton.Enabled = true;
             GenerateWordsButton.Enabled = true;
+            SaveButton.Enabled = true;
 
             this.Cursor = Cursors.Default;
         }
@@ -1215,7 +1217,7 @@ public partial class MainForm : Form
                     FileHelper.SaveText(path, str.ToString());
                 }
 
-                if (sender != AutoGenerateWordsButton)
+                if (sender != null)
                 {
                     DisplayFile(filename);
                 }
