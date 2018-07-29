@@ -5841,7 +5841,7 @@ partial class MainForm
             this.DNASequenceSystemEditLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DNASequenceSystemEditLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.DNASequenceSystemEditLabel.Image = ((System.Drawing.Image)(resources.GetObject("DNASequenceSystemEditLabel.Image")));
-            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(789, 147);
+            this.DNASequenceSystemEditLabel.Location = new System.Drawing.Point(790, 147);
             this.DNASequenceSystemEditLabel.Name = "DNASequenceSystemEditLabel";
             this.DNASequenceSystemEditLabel.Size = new System.Drawing.Size(18, 18);
             this.DNASequenceSystemEditLabel.TabIndex = 4;
@@ -6011,7 +6011,7 @@ partial class MainForm
             this.MathsInterestingNumbersEditLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsInterestingNumbersEditLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.MathsInterestingNumbersEditLabel.Image = ((System.Drawing.Image)(resources.GetObject("MathsInterestingNumbersEditLabel.Image")));
-            this.MathsInterestingNumbersEditLabel.Location = new System.Drawing.Point(201, 146);
+            this.MathsInterestingNumbersEditLabel.Location = new System.Drawing.Point(218, 146);
             this.MathsInterestingNumbersEditLabel.Name = "MathsInterestingNumbersEditLabel";
             this.MathsInterestingNumbersEditLabel.Size = new System.Drawing.Size(14, 14);
             this.MathsInterestingNumbersEditLabel.TabIndex = 275;
@@ -6024,7 +6024,7 @@ partial class MainForm
             this.MathsUpdateDivisorCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.MathsUpdateDivisorCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsUpdateDivisorCheckBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.MathsUpdateDivisorCheckBox.Location = new System.Drawing.Point(186, 147);
+            this.MathsUpdateDivisorCheckBox.Location = new System.Drawing.Point(203, 147);
             this.MathsUpdateDivisorCheckBox.Name = "MathsUpdateDivisorCheckBox";
             this.MathsUpdateDivisorCheckBox.Size = new System.Drawing.Size(15, 14);
             this.MathsUpdateDivisorCheckBox.TabIndex = 274;
@@ -6036,7 +6036,7 @@ partial class MainForm
             // 
             this.MathsDivisorNumericUpDown.BackColor = System.Drawing.SystemColors.Window;
             this.MathsDivisorNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MathsDivisorNumericUpDown.Location = new System.Drawing.Point(129, 145);
+            this.MathsDivisorNumericUpDown.Location = new System.Drawing.Point(150, 145);
             this.MathsDivisorNumericUpDown.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -6048,7 +6048,7 @@ partial class MainForm
             0,
             0});
             this.MathsDivisorNumericUpDown.Name = "MathsDivisorNumericUpDown";
-            this.MathsDivisorNumericUpDown.Size = new System.Drawing.Size(55, 17);
+            this.MathsDivisorNumericUpDown.Size = new System.Drawing.Size(51, 17);
             this.MathsDivisorNumericUpDown.TabIndex = 273;
             this.MathsDivisorNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.MathsDivisorNumericUpDown.Value = new decimal(new int[] {
@@ -6062,9 +6062,9 @@ partial class MainForm
             // 
             this.MathsDivisorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsDivisorLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.MathsDivisorLabel.Location = new System.Drawing.Point(3, 146);
+            this.MathsDivisorLabel.Location = new System.Drawing.Point(3, 144);
             this.MathsDivisorLabel.Name = "MathsDivisorLabel";
-            this.MathsDivisorLabel.Size = new System.Drawing.Size(128, 17);
+            this.MathsDivisorLabel.Size = new System.Drawing.Size(153, 17);
             this.MathsDivisorLabel.TabIndex = 272;
             this.MathsDivisorLabel.Text = "Colorize numbers divisible by";
             this.MathsDivisorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -7376,7 +7376,7 @@ partial class MainForm
             this.DistancesInterestingNumbersEditLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesInterestingNumbersEditLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.DistancesInterestingNumbersEditLabel.Image = ((System.Drawing.Image)(resources.GetObject("DistancesInterestingNumbersEditLabel.Image")));
-            this.DistancesInterestingNumbersEditLabel.Location = new System.Drawing.Point(201, 146);
+            this.DistancesInterestingNumbersEditLabel.Location = new System.Drawing.Point(218, 146);
             this.DistancesInterestingNumbersEditLabel.Name = "DistancesInterestingNumbersEditLabel";
             this.DistancesInterestingNumbersEditLabel.Size = new System.Drawing.Size(14, 14);
             this.DistancesInterestingNumbersEditLabel.TabIndex = 272;
@@ -7389,7 +7389,7 @@ partial class MainForm
             this.DistancesUpdateDivisorCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.DistancesUpdateDivisorCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesUpdateDivisorCheckBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DistancesUpdateDivisorCheckBox.Location = new System.Drawing.Point(186, 147);
+            this.DistancesUpdateDivisorCheckBox.Location = new System.Drawing.Point(203, 147);
             this.DistancesUpdateDivisorCheckBox.Name = "DistancesUpdateDivisorCheckBox";
             this.DistancesUpdateDivisorCheckBox.Size = new System.Drawing.Size(15, 14);
             this.DistancesUpdateDivisorCheckBox.TabIndex = 271;
@@ -7401,7 +7401,7 @@ partial class MainForm
             // 
             this.DistancesDivisorNumericUpDown.BackColor = System.Drawing.SystemColors.Window;
             this.DistancesDivisorNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DistancesDivisorNumericUpDown.Location = new System.Drawing.Point(129, 145);
+            this.DistancesDivisorNumericUpDown.Location = new System.Drawing.Point(150, 145);
             this.DistancesDivisorNumericUpDown.Maximum = new decimal(new int[] {
             9999999,
             0,
@@ -7413,7 +7413,7 @@ partial class MainForm
             0,
             0});
             this.DistancesDivisorNumericUpDown.Name = "DistancesDivisorNumericUpDown";
-            this.DistancesDivisorNumericUpDown.Size = new System.Drawing.Size(55, 17);
+            this.DistancesDivisorNumericUpDown.Size = new System.Drawing.Size(51, 17);
             this.DistancesDivisorNumericUpDown.TabIndex = 99;
             this.DistancesDivisorNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.DistancesDivisorNumericUpDown.Value = new decimal(new int[] {
@@ -7428,9 +7428,9 @@ partial class MainForm
             // 
             this.DistancesDivisorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesDivisorLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DistancesDivisorLabel.Location = new System.Drawing.Point(3, 146);
+            this.DistancesDivisorLabel.Location = new System.Drawing.Point(3, 144);
             this.DistancesDivisorLabel.Name = "DistancesDivisorLabel";
-            this.DistancesDivisorLabel.Size = new System.Drawing.Size(128, 17);
+            this.DistancesDivisorLabel.Size = new System.Drawing.Size(153, 17);
             this.DistancesDivisorLabel.TabIndex = 0;
             this.DistancesDivisorLabel.Text = "Colorize numbers divisible by";
             this.DistancesDivisorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
