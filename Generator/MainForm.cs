@@ -1000,12 +1000,15 @@ public partial class MainForm : Form
                                         break;
                                 }
 
-                                // generate word from letter value combinations matching the number type
-                                if (Numbers.IsNumberType(number, m_number_type))
+                                if (number != -1)
                                 {
-                                    // mod 29 to select letter
-                                    int index = (int)((long)number % (long)numerology_letters.Count);
-                                    generated_word += numerology_letters[index];
+                                    // generate word from letter value combinations matching the number type
+                                    if (Numbers.IsNumberType(number, m_number_type))
+                                    {
+                                        // mod 29 to select letter
+                                        int index = (int)((long)number % (long)numerology_letters.Count);
+                                        generated_word += numerology_letters[index];
+                                    }
                                 }
                             }
                         }

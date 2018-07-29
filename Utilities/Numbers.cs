@@ -496,7 +496,7 @@ public static class Numbers
     public static long Reverse(long number)
     {
         long result = 0L;
-        while (number > 0)
+        while (number > 0L)
         {
             result = (result * 10L) + (number % 10L);
             number /= 10L;
@@ -523,10 +523,7 @@ public static class Numbers
         {
             return result;
         }
-        else
-        {
-            return -1L;
-        }
+        return -1L;
     }
     public static long Interlace(long number1, long number2, bool a_then_b, Direction direction)
     {
@@ -538,41 +535,42 @@ public static class Numbers
             number2 = Reverse(number2);
         }
 
-        string combination = "";
-        string AAA = number1.ToString();
-        string BBB = number2.ToString();
-        if (!a_then_b)
+        if ((number1 != -1L) && (number2 != -1L))
         {
-            string temp = AAA;
-            AAA = BBB;
-            BBB = temp;
-        }
+            string combination = "";
+            string AAA = number1.ToString();
+            string BBB = number2.ToString();
+            if (!a_then_b)
+            {
+                string temp = AAA;
+                AAA = BBB;
+                BBB = temp;
+            }
 
-        int a = AAA.Length;
-        int b = BBB.Length;
-        int min = Math.Min(a, b);
+            int a = AAA.Length;
+            int b = BBB.Length;
+            int min = Math.Min(a, b);
 
-        for (int d = 0; d < min; d++)
-        {
-            combination += AAA[d].ToString() + BBB[d].ToString();
-        }
-        if (a > min)
-        {
-            combination += AAA.Substring(min);
-        }
-        else
-        {
-            combination += BBB.Substring(min);
-        }
+            for (int d = 0; d < min; d++)
+            {
+                combination += AAA[d].ToString() + BBB[d].ToString();
+            }
+            if (a > min)
+            {
+                combination += AAA.Substring(min);
+            }
+            else
+            {
+                combination += BBB.Substring(min);
+            }
 
-        if (long.TryParse(combination, out result))
-        {
-            return result;
-        }
-        else
-        {
+            if (long.TryParse(combination, out result))
+            {
+                return result;
+            }
             return -1L;
         }
+        return -1L;
     }
     public static long CrossOver(long number1, long number2, bool a_then_b, Direction direction)
     {
@@ -613,10 +611,7 @@ public static class Numbers
             {
                 return result;
             }
-            else
-            {
-                return -1L;
-            }
+            return -1L;
         }
         return -1L;
     }
