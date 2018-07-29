@@ -38,29 +38,32 @@ public class Server : IPublisher
     private FileSystemWatcher m_file_system_watcher = null;
     public void WatchFolder(string folder_name, string filter)
     {
-        m_file_system_watcher = new FileSystemWatcher();
-        if (m_file_system_watcher != null)
+        if (Directory.Exists(folder_name))
         {
-            m_file_system_watcher.Filter = filter;
-            m_file_system_watcher.Path = folder_name;
-            m_file_system_watcher.IncludeSubdirectories = true;
+            m_file_system_watcher = new FileSystemWatcher();
+            if (m_file_system_watcher != null)
+            {
+                m_file_system_watcher.Filter = filter;
+                m_file_system_watcher.Path = folder_name;
+                m_file_system_watcher.IncludeSubdirectories = true;
 
-            m_file_system_watcher.NotifyFilter =
-                NotifyFilters.FileName |
-                NotifyFilters.Attributes |
-                NotifyFilters.CreationTime |
-                NotifyFilters.LastAccess |
-                NotifyFilters.LastWrite |
-                NotifyFilters.Security |
-                NotifyFilters.Size |
-                NotifyFilters.DirectoryName;
+                m_file_system_watcher.NotifyFilter =
+                    NotifyFilters.FileName |
+                    NotifyFilters.Attributes |
+                    NotifyFilters.CreationTime |
+                    NotifyFilters.LastAccess |
+                    NotifyFilters.LastWrite |
+                    NotifyFilters.Security |
+                    NotifyFilters.Size |
+                    NotifyFilters.DirectoryName;
 
-            //m_file_system_watcher.Created += new FileSystemEventHandler(OnFileCreated);
-            m_file_system_watcher.Changed += new FileSystemEventHandler(OnFileChanged);
-            //m_file_system_watcher.Deleted += new FileSystemEventHandler(OnFileDeleted);
-            //m_file_system_watcher.Renamed += new RenamedEventHandler(OnFileRenamed);
+                //m_file_system_watcher.Created += new FileSystemEventHandler(OnFileCreated);
+                m_file_system_watcher.Changed += new FileSystemEventHandler(OnFileChanged);
+                //m_file_system_watcher.Deleted += new FileSystemEventHandler(OnFileDeleted);
+                //m_file_system_watcher.Renamed += new RenamedEventHandler(OnFileRenamed);
 
-            m_file_system_watcher.EnableRaisingEvents = true;
+                m_file_system_watcher.EnableRaisingEvents = true;
+            }
         }
     }
     private void OnFileChanged(object sender, FileSystemEventArgs e)

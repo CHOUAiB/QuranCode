@@ -23821,7 +23821,7 @@ public partial class MainForm : Form, ISubscriber
             (m_numbers_result_type != NumbersResultType.ChapterRanges)
            )
         {
-            FindByNumbers();
+            //FindByNumbers();
         }
     }
     private void FindByNumbersNumberTypeLabel_Click(object sender, EventArgs e)
@@ -23976,7 +23976,7 @@ public partial class MainForm : Form, ISubscriber
             (m_numbers_result_type != NumbersResultType.ChapterRanges)
            )
         {
-            FindByNumbers();
+            //FindByNumbers();
         }
     }
     private void FindByNumbersControl_EnabledChanged(object sender, EventArgs e)

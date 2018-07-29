@@ -42,5 +42,6 @@ rd /S /Q QuranLab\obj
 rd /S /Q InitialLetters\obj
 rd /S /Q Composites\obj
 rd /S /Q Numbers\obj
+rd /S /Q Generator\obj
 
 :END
