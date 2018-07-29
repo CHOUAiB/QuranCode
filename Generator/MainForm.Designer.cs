@@ -39,12 +39,12 @@
             this.WordCountLabel = new System.Windows.Forms.Label();
             this.NumberTypeLabel = new System.Windows.Forms.Label();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.DirectionLabel = new System.Windows.Forms.Label();
+            this.ValueCombinationDirectionLabel = new System.Windows.Forms.Label();
             this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
             this.AddDistancesToNextCheckBox = new System.Windows.Forms.CheckBox();
-            this.InterlaceLabel = new System.Windows.Forms.Label();
+            this.ValueInterlaceLabel = new System.Windows.Forms.Label();
             this.AutoGenerateButton = new System.Windows.Forms.Button();
-            this.AddWordVerseValuesCheckBox = new System.Windows.Forms.CheckBox();
+            this.AddVerseAndWordValuesCheckBox = new System.Windows.Forms.CheckBox();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.NumerologySystemComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -162,21 +162,21 @@
             this.ToolTip.SetToolTip(this.NumberTypeLabel, "use prime concatenated letter values only");
             this.NumberTypeLabel.Click += new System.EventHandler(this.NumberTypeLabel_Click);
             // 
-            // DirectionLabel
+            // ValueCombinationDirectionLabel
             // 
-            this.DirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DirectionLabel.BackColor = System.Drawing.Color.Silver;
-            this.DirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.DirectionLabel.Location = new System.Drawing.Point(331, 309);
-            this.DirectionLabel.Name = "DirectionLabel";
-            this.DirectionLabel.Size = new System.Drawing.Size(25, 17);
-            this.DirectionLabel.TabIndex = 11;
-            this.DirectionLabel.Text = "←";
-            this.DirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.DirectionLabel, "concatenate letter values right to left: BBBAAA");
-            this.DirectionLabel.Click += new System.EventHandler(this.DirectionLabel_Click);
+            this.ValueCombinationDirectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValueCombinationDirectionLabel.BackColor = System.Drawing.Color.Silver;
+            this.ValueCombinationDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ValueCombinationDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValueCombinationDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ValueCombinationDirectionLabel.Location = new System.Drawing.Point(331, 309);
+            this.ValueCombinationDirectionLabel.Name = "ValueCombinationDirectionLabel";
+            this.ValueCombinationDirectionLabel.Size = new System.Drawing.Size(25, 17);
+            this.ValueCombinationDirectionLabel.TabIndex = 11;
+            this.ValueCombinationDirectionLabel.Text = "←";
+            this.ValueCombinationDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.ValueCombinationDirectionLabel, "concatenate letter values right to left: BBBAAA");
+            this.ValueCombinationDirectionLabel.Click += new System.EventHandler(this.ValueCombinationDirectionLabel_Click);
             // 
             // AddDistancesToPreviousCheckBox
             // 
@@ -206,21 +206,21 @@
             this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = true;
             this.AddDistancesToNextCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToNextCheckBox_CheckedChanged);
             // 
-            // InterlaceLabel
+            // ValueInterlaceLabel
             // 
-            this.InterlaceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.InterlaceLabel.BackColor = System.Drawing.Color.Silver;
-            this.InterlaceLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.InterlaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InterlaceLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.InterlaceLabel.Location = new System.Drawing.Point(305, 309);
-            this.InterlaceLabel.Name = "InterlaceLabel";
-            this.InterlaceLabel.Size = new System.Drawing.Size(25, 17);
-            this.InterlaceLabel.TabIndex = 9;
-            this.InterlaceLabel.Text = "- -";
-            this.InterlaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.InterlaceLabel, "interlace letter values");
-            this.InterlaceLabel.Click += new System.EventHandler(this.InterlaceLabel_Click);
+            this.ValueInterlaceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValueInterlaceLabel.BackColor = System.Drawing.Color.Silver;
+            this.ValueInterlaceLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ValueInterlaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValueInterlaceLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ValueInterlaceLabel.Location = new System.Drawing.Point(305, 309);
+            this.ValueInterlaceLabel.Name = "ValueInterlaceLabel";
+            this.ValueInterlaceLabel.Size = new System.Drawing.Size(25, 17);
+            this.ValueInterlaceLabel.TabIndex = 9;
+            this.ValueInterlaceLabel.Text = "- -";
+            this.ValueInterlaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.ValueInterlaceLabel, "interlace letter values");
+            this.ValueInterlaceLabel.Click += new System.EventHandler(this.ValueInterlaceLabel_Click);
             // 
             // AutoGenerateButton
             // 
@@ -237,18 +237,18 @@
             this.AutoGenerateButton.UseVisualStyleBackColor = true;
             this.AutoGenerateButton.Click += new System.EventHandler(this.AutoGenerateButton_Click);
             // 
-            // AddWordVerseValuesCheckBox
+            // AddVerseAndWordValuesCheckBox
             // 
-            this.AddWordVerseValuesCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.AddWordVerseValuesCheckBox.AutoSize = true;
-            this.AddWordVerseValuesCheckBox.Location = new System.Drawing.Point(4, 302);
-            this.AddWordVerseValuesCheckBox.Name = "AddWordVerseValuesCheckBox";
-            this.AddWordVerseValuesCheckBox.Size = new System.Drawing.Size(143, 17);
-            this.AddWordVerseValuesCheckBox.TabIndex = 3;
-            this.AddWordVerseValuesCheckBox.Text = "Add word && verse values";
-            this.ToolTip.SetToolTip(this.AddWordVerseValuesCheckBox, "Add letter\'s word and verse values to each letter value");
-            this.AddWordVerseValuesCheckBox.UseVisualStyleBackColor = true;
-            this.AddWordVerseValuesCheckBox.CheckedChanged += new System.EventHandler(this.AddWordVerseValuesCheckBox_CheckedChanged);
+            this.AddVerseAndWordValuesCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AddVerseAndWordValuesCheckBox.AutoSize = true;
+            this.AddVerseAndWordValuesCheckBox.Location = new System.Drawing.Point(4, 302);
+            this.AddVerseAndWordValuesCheckBox.Name = "AddVerseAndWordValuesCheckBox";
+            this.AddVerseAndWordValuesCheckBox.Size = new System.Drawing.Size(143, 17);
+            this.AddVerseAndWordValuesCheckBox.TabIndex = 3;
+            this.AddVerseAndWordValuesCheckBox.Text = "Add verse && word values";
+            this.ToolTip.SetToolTip(this.AddVerseAndWordValuesCheckBox, "Add letter\'s verse and word values to each letter value");
+            this.AddVerseAndWordValuesCheckBox.UseVisualStyleBackColor = true;
+            this.AddVerseAndWordValuesCheckBox.CheckedChanged += new System.EventHandler(this.AddVerseAndWordValuesCheckBox_CheckedChanged);
             // 
             // ProgressBar
             // 
@@ -279,13 +279,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 331);
-            this.Controls.Add(this.InterlaceLabel);
+            this.Controls.Add(this.ValueInterlaceLabel);
             this.Controls.Add(this.AddDistancesToNextCheckBox);
             this.Controls.Add(this.AddPositionsCheckBox);
             this.Controls.Add(this.AddDistancesToPreviousCheckBox);
             this.Controls.Add(this.NumberTypeLabel);
-            this.Controls.Add(this.DirectionLabel);
-            this.Controls.Add(this.AddWordVerseValuesCheckBox);
+            this.Controls.Add(this.ValueCombinationDirectionLabel);
+            this.Controls.Add(this.AddVerseAndWordValuesCheckBox);
             this.Controls.Add(this.AutoGenerateButton);
             this.Controls.Add(this.NumerologySystemComboBox);
             this.Controls.Add(this.ProgressBar);
@@ -316,13 +316,13 @@
     private System.Windows.Forms.Label WordCountLabel;
     private System.Windows.Forms.Label NumberTypeLabel;
     private System.Windows.Forms.ToolTip ToolTip;
-    private System.Windows.Forms.Label DirectionLabel;
+    private System.Windows.Forms.Label ValueCombinationDirectionLabel;
     private System.Windows.Forms.ColumnHeader IdColumnHeader;
     private System.Windows.Forms.CheckBox AddDistancesToPreviousCheckBox;
     private System.Windows.Forms.ProgressBar ProgressBar;
     private System.Windows.Forms.CheckBox AddDistancesToNextCheckBox;
     private System.Windows.Forms.ComboBox NumerologySystemComboBox;
-    private System.Windows.Forms.Label InterlaceLabel;
+    private System.Windows.Forms.Label ValueInterlaceLabel;
     private System.Windows.Forms.Button AutoGenerateButton;
-    private System.Windows.Forms.CheckBox AddWordVerseValuesCheckBox;
+    private System.Windows.Forms.CheckBox AddVerseAndWordValuesCheckBox;
 }

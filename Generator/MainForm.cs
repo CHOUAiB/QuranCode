@@ -69,7 +69,7 @@ public partial class MainForm : Form
         m_number_type = NumberType.Prime;
         NumberTypeLabel.Text = "P";
         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
     }
     private void PopulateNumerologySystemComboBox()
     {
@@ -124,112 +124,112 @@ public partial class MainForm : Form
         }
     }
 
-    private bool m_add_word_verse_values_to_value = false;
-    private bool m_add_positions_to_value = false;
-    private bool m_add_distances_to_previous_to_value = false;
-    private bool m_add_distances_to_next_to_value = false;
-    private void AddWordVerseValuesCheckBox_CheckedChanged(object sender, EventArgs e)
+    private bool m_add_verse_and_word_values_to_letter_value = false;
+    private bool m_add_positions_to_letter_value = false;
+    private bool m_add_distances_to_previous_to_letter_value = false;
+    private bool m_add_distances_to_next_to_letter_value = false;
+    private void AddVerseAndWordValuesCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_add_word_verse_values_to_value = AddWordVerseValuesCheckBox.Checked;
+        m_add_verse_and_word_values_to_letter_value = AddVerseAndWordValuesCheckBox.Checked;
     }
     private void AddPositionsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_add_positions_to_value = AddPositionsCheckBox.Checked;
+        m_add_positions_to_letter_value = AddPositionsCheckBox.Checked;
         if (m_client != null)
         {
             if (m_client.NumerologySystem != null)
             {
-                m_client.NumerologySystem.AddToLetterLNumber = m_add_positions_to_value;
-                m_client.NumerologySystem.AddToLetterWNumber = m_add_positions_to_value;
-                m_client.NumerologySystem.AddToLetterVNumber = m_add_positions_to_value;
-                m_client.NumerologySystem.AddToWordWNumber = m_add_positions_to_value;
-                m_client.NumerologySystem.AddToWordVNumber = m_add_positions_to_value;
-                m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_value;
+                m_client.NumerologySystem.AddToLetterLNumber = m_add_positions_to_letter_value;
+                m_client.NumerologySystem.AddToLetterWNumber = m_add_positions_to_letter_value;
+                m_client.NumerologySystem.AddToLetterVNumber = m_add_positions_to_letter_value;
+                m_client.NumerologySystem.AddToWordWNumber = m_add_positions_to_letter_value;
+                m_client.NumerologySystem.AddToWordVNumber = m_add_positions_to_letter_value;
+                m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_letter_value;
             }
         }
         AddPositionsCheckBox.Refresh();
     }
     private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_add_distances_to_previous_to_value = AddDistancesToPreviousCheckBox.Checked;
+        m_add_distances_to_previous_to_letter_value = AddDistancesToPreviousCheckBox.Checked;
         if (m_client != null)
         {
             if (m_client.NumerologySystem != null)
             {
-                m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_value;
+                m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_letter_value;
             }
         }
         AddDistancesToPreviousCheckBox.Refresh();
     }
     private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_add_distances_to_next_to_value = AddDistancesToNextCheckBox.Checked;
+        m_add_distances_to_next_to_letter_value = AddDistancesToNextCheckBox.Checked;
         if (m_client != null)
         {
             if (m_client.NumerologySystem != null)
             {
-                m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_value;
+                m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_letter_value;
             }
         }
         AddDistancesToNextCheckBox.Refresh();
     }
 
-    private bool m_interlace = false;
-    private void InterlaceLabel_Click(object sender, EventArgs e)
+    private bool m_value_interlace = false;
+    private RightToLeft m_value_combination_direction = RightToLeft.Yes;
+    private NumberType m_number_type = NumberType.Prime;
+    private void ValueInterlaceLabel_Click(object sender, EventArgs e)
     {
-        m_interlace = !m_interlace;
-        InterlaceLabel.Text = m_interlace ? "§" : "- -";
-        ToolTip.SetToolTip(InterlaceLabel, m_interlace ? "interlace digits of letter values" : "concatenate letter values");
+        m_value_interlace = !m_value_interlace;
+        ValueInterlaceLabel.Text = m_value_interlace ? "§" : "- -";
+        ToolTip.SetToolTip(ValueInterlaceLabel, m_value_interlace ? "interlace digits of letter values" : "concatenate letter values");
 
-        if (m_combination_direction == RightToLeft.Yes)
-            ToolTip.SetToolTip(DirectionLabel, m_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA");
+        if (m_value_combination_direction == RightToLeft.Yes)
+            ToolTip.SetToolTip(ValueCombinationDirectionLabel, m_value_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA");
         else
-            ToolTip.SetToolTip(DirectionLabel, m_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB");
+            ToolTip.SetToolTip(ValueCombinationDirectionLabel, m_value_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB");
 
         switch (m_number_type)
         {
             case NumberType.Prime:
-                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                 break;
             case NumberType.AdditivePrime:
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                 break;
             case NumberType.NonAdditivePrime:
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                 break;
             case NumberType.Composite:
-                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                 break;
             case NumberType.AdditiveComposite:
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                 break;
             case NumberType.NonAdditiveComposite:
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                 break;
         }
 
-        InterlaceLabel.Refresh();
+        ValueInterlaceLabel.Refresh();
     }
-    private RightToLeft m_combination_direction = RightToLeft.Yes;
-    private void DirectionLabel_Click(object sender, EventArgs e)
+    private void ValueCombinationDirectionLabel_Click(object sender, EventArgs e)
     {
         string message = null;
-        if (m_combination_direction == RightToLeft.Yes)
+        if (m_value_combination_direction == RightToLeft.Yes)
         {
-            m_combination_direction = RightToLeft.No;
-            DirectionLabel.Text = "→";
-            message = m_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB";
+            m_value_combination_direction = RightToLeft.No;
+            ValueCombinationDirectionLabel.Text = "→";
+            message = m_value_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB";
         }
         else
         {
-            m_combination_direction = RightToLeft.Yes;
-            DirectionLabel.Text = "←";
-            message = m_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA";
+            m_value_combination_direction = RightToLeft.Yes;
+            ValueCombinationDirectionLabel.Text = "←";
+            message = m_value_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA";
         }
-        ToolTip.SetToolTip(DirectionLabel, message);
-        DirectionLabel.Refresh();
+        ToolTip.SetToolTip(ValueCombinationDirectionLabel, message);
+        ValueCombinationDirectionLabel.Refresh();
     }
-    private NumberType m_number_type = NumberType.Prime;
     private void NumberTypeLabel_Click(object sender, EventArgs e)
     {
         if (ModifierKeys == Keys.Shift)
@@ -241,7 +241,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.AdditiveComposite;
                         NumberTypeLabel.Text = "AC";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.AdditiveComposite:
@@ -249,7 +249,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.Composite;
                         NumberTypeLabel.Text = "C";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.Composite:
@@ -257,7 +257,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.NonAdditivePrime;
                         NumberTypeLabel.Text = "XP";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.NonAdditivePrime:
@@ -265,7 +265,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.AdditivePrime;
                         NumberTypeLabel.Text = "AP";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.AdditivePrime:
@@ -273,7 +273,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.Prime;
                         NumberTypeLabel.Text = "P";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.Prime:
@@ -281,7 +281,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.NonAdditiveComposite;
                         NumberTypeLabel.Text = "XC";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
             }
@@ -295,7 +295,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.AdditivePrime;
                         NumberTypeLabel.Text = "AP";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.AdditivePrime:
@@ -303,7 +303,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.NonAdditivePrime;
                         NumberTypeLabel.Text = "XP";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.NonAdditivePrime:
@@ -311,7 +311,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.Composite;
                         NumberTypeLabel.Text = "C";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.Composite:
@@ -319,7 +319,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.AdditiveComposite;
                         NumberTypeLabel.Text = "AC";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.AdditiveComposite:
@@ -327,7 +327,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.NonAdditiveComposite;
                         NumberTypeLabel.Text = "XC";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
                 case NumberType.NonAdditiveComposite:
@@ -335,7 +335,7 @@ public partial class MainForm : Form
                         m_number_type = NumberType.Prime;
                         NumberTypeLabel.Text = "P";
                         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
                     }
                     break;
             }
@@ -481,11 +481,11 @@ public partial class MainForm : Form
     private void GenerateButton_Click(object sender, EventArgs e)
     {
         NumerologySystemComboBox.Enabled = false;
-        AddWordVerseValuesCheckBox.Enabled = false;
+        AddVerseAndWordValuesCheckBox.Enabled = false;
         AddPositionsCheckBox.Enabled = false;
         AddDistancesToPreviousCheckBox.Enabled = false;
         AddDistancesToNextCheckBox.Enabled = false;
-        DirectionLabel.Enabled = false;
+        ValueCombinationDirectionLabel.Enabled = false;
         NumberTypeLabel.Enabled = false;
         GenerateButton.Enabled = false;
         SaveButton.Enabled = false;
@@ -522,6 +522,7 @@ public partial class MainForm : Form
                                 if (m_word_subsets != null)
                                 {
                                     m_lines.Clear();
+
                                     for (int i = 0; i < m_word_subsets.Count; i++)
                                     {
                                         // calculate word values
@@ -538,7 +539,7 @@ public partial class MainForm : Form
                                             foreach (Letter letter in word.Letters)
                                             {
                                                 long letter_value = m_client.CalculateValue(letter);
-                                                if (m_add_word_verse_values_to_value)
+                                                if (m_add_verse_and_word_values_to_letter_value)
                                                 {
                                                     letter_value += m_client.CalculateValue(letter.Word);
                                                     letter_value += m_client.CalculateValue(letter.Word.Verse);
@@ -576,7 +577,7 @@ public partial class MainForm : Form
                                                     string AAA = numerology_letter_values[j].ToString();
                                                     string BBB = sentence_letter_values[j].ToString();
 
-                                                    if (m_interlace)
+                                                    if (m_value_interlace)
                                                     {
                                                         int a = AAA.Length;
                                                         int b = BBB.Length;
@@ -610,13 +611,13 @@ public partial class MainForm : Form
                                                             BABABA += BBB.Substring(min);
                                                         }
 
-                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
+                                                        combination = (m_value_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
                                                     }
                                                     else
                                                     {
                                                         string AAABBB = AAA + BBB;
                                                         string BBBAAA = BBB + AAA;
-                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
+                                                        combination = (m_value_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
                                                     }
 
                                                     // generate word from letter value combinations matching the number type
@@ -672,11 +673,11 @@ public partial class MainForm : Form
         finally
         {
             NumerologySystemComboBox.Enabled = true;
-            AddWordVerseValuesCheckBox.Enabled = true;
+            AddVerseAndWordValuesCheckBox.Enabled = true;
             AddPositionsCheckBox.Enabled = true;
             AddDistancesToPreviousCheckBox.Enabled = true;
             AddDistancesToNextCheckBox.Enabled = true;
-            DirectionLabel.Enabled = true;
+            ValueCombinationDirectionLabel.Enabled = true;
             NumberTypeLabel.Enabled = true;
             GenerateButton.Enabled = true;
             SaveButton.Enabled = true;
@@ -687,18 +688,18 @@ public partial class MainForm : Form
     private void AutoGenerateButton_Click(object sender, EventArgs e)
     {
         NumerologySystemComboBox.Enabled = false;
-        AddWordVerseValuesCheckBox.Enabled = false;
+        AddVerseAndWordValuesCheckBox.Enabled = false;
         AddPositionsCheckBox.Enabled = false;
         AddDistancesToPreviousCheckBox.Enabled = false;
         AddDistancesToNextCheckBox.Enabled = false;
-        DirectionLabel.Enabled = false;
+        ValueCombinationDirectionLabel.Enabled = false;
         NumberTypeLabel.Enabled = false;
         GenerateButton.Enabled = false;
         SaveButton.Enabled = false;
 
         // prepare for next state
-        m_interlace = true;
-        m_combination_direction = RightToLeft.No;
+        m_value_interlace = true;
+        m_value_combination_direction = RightToLeft.No;
         m_number_type = NumberType.NonAdditiveComposite;
 
         this.Cursor = Cursors.WaitCursor;
@@ -731,9 +732,15 @@ public partial class MainForm : Form
                                 m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
                                 if (m_word_subsets != null)
                                 {
+                                    //foreach (string numerology_system_name in NumerologySystemComboBox.Items)
+                                    //{
+                                    //    NumerologySystemComboBox.SelectedItem = numerology_system_name;
+                                    //    NumerologySystemComboBox.Refresh();
+                                    //    m_client.LoadNumerologySystem(numerology_system_name);
+
                                     for (int h = 0; h < 2; h++)
                                     {
-                                        AddWordVerseValuesCheckBox.Checked = (h == 1);
+                                        AddVerseAndWordValuesCheckBox.Checked = (h == 1);
                                         for (int k = 0; k < 2; k++)
                                         {
                                             AddPositionsCheckBox.Checked = (k == 1);
@@ -745,16 +752,17 @@ public partial class MainForm : Form
                                                     AddDistancesToNextCheckBox.Checked = (m == 1);
                                                     for (int n = 0; n < 2; n++)
                                                     {
-                                                        InterlaceLabel_Click(sender, e);
+                                                        ValueInterlaceLabel_Click(sender, e);
                                                         for (int o = 0; o < 2; o++)
                                                         {
-                                                            DirectionLabel_Click(sender, e);
+                                                            ValueCombinationDirectionLabel_Click(sender, e);
                                                             for (int p = 0; p < 6; p++)
                                                             {
                                                                 NumberTypeLabel_Click(sender, e);
                                                                 if (m_lines != null)
                                                                 {
                                                                     m_lines.Clear();
+
                                                                     for (int i = 0; i < m_word_subsets.Count; i++)
                                                                     {
                                                                         // calculate word values
@@ -771,7 +779,7 @@ public partial class MainForm : Form
                                                                             foreach (Letter letter in word.Letters)
                                                                             {
                                                                                 long letter_value = m_client.CalculateValue(letter);
-                                                                                if (m_add_word_verse_values_to_value)
+                                                                                if (m_add_verse_and_word_values_to_letter_value)
                                                                                 {
                                                                                     letter_value += m_client.CalculateValue(letter.Word);
                                                                                     letter_value += m_client.CalculateValue(letter.Word.Verse);
@@ -809,7 +817,7 @@ public partial class MainForm : Form
                                                                                     string AAA = numerology_letter_values[j].ToString();
                                                                                     string BBB = sentence_letter_values[j].ToString();
 
-                                                                                    if (m_interlace)
+                                                                                    if (m_value_interlace)
                                                                                     {
                                                                                         int a = AAA.Length;
                                                                                         int b = BBB.Length;
@@ -843,13 +851,13 @@ public partial class MainForm : Form
                                                                                             BABABA += BBB.Substring(min);
                                                                                         }
 
-                                                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
+                                                                                        combination = (m_value_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
                                                                                     }
                                                                                     else
                                                                                     {
                                                                                         string AAABBB = AAA + BBB;
                                                                                         string BBBAAA = BBB + AAA;
-                                                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
+                                                                                        combination = (m_value_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
                                                                                     }
 
                                                                                     // generate word from letter value combinations matching the number type
@@ -905,7 +913,8 @@ public partial class MainForm : Form
                                                 } // for AddDistancesToNext
                                             } // for AddDistancesToPrevious
                                         } // for AddPositions
-                                    } // for AddWordVerseValues
+                                    } // for AddVerseAndWordValues
+                                    //} // foreach NumerologySystem
                                 }
                             }
                         }
@@ -916,11 +925,11 @@ public partial class MainForm : Form
         finally
         {
             NumerologySystemComboBox.Enabled = true;
-            AddWordVerseValuesCheckBox.Enabled = true;
+            AddVerseAndWordValuesCheckBox.Enabled = true;
             AddPositionsCheckBox.Enabled = true;
             AddDistancesToPreviousCheckBox.Enabled = true;
             AddDistancesToNextCheckBox.Enabled = true;
-            DirectionLabel.Enabled = true;
+            ValueCombinationDirectionLabel.Enabled = true;
             NumberTypeLabel.Enabled = true;
             GenerateButton.Enabled = true;
             SaveButton.Enabled = true;
@@ -947,17 +956,18 @@ public partial class MainForm : Form
 
                 string filename =
                     m_numerology_system_name
-                    + (m_add_positions_to_value ? "_n" : "__")
-                    + (m_add_distances_to_previous_to_value ? "_-d" : "_-_")
-                    + (m_add_distances_to_next_to_value ? "_d-" : "__-")
-                    + (m_interlace ? "_interlace" : "_concatenate")
-                    + ((m_combination_direction == RightToLeft.Yes) ? "_r" : "_l")
+                    + (m_add_verse_and_word_values_to_letter_value ? "_vw" : "___")
+                    + (m_add_positions_to_letter_value ? "_n" : "__")
+                    + (m_add_distances_to_previous_to_letter_value ? "_-d" : "_-_")
+                    + (m_add_distances_to_next_to_letter_value ? "_d-" : "__-")
+                    + (m_value_interlace ? "_interlace" : "_concatenate")
+                    + ((m_value_combination_direction == RightToLeft.Yes) ? "_r" : "_l")
                     + ((m_number_type != NumberType.None) ? "_" : "")
                     + (
-                        (m_number_type == NumberType.Prime) ? "_P" :
+                        (m_number_type == NumberType.Prime) ? "P" :
                         (m_number_type == NumberType.AdditivePrime) ? "AP" :
                         (m_number_type == NumberType.NonAdditivePrime) ? "XP" :
-                        (m_number_type == NumberType.Composite) ? "_C" :
+                        (m_number_type == NumberType.Composite) ? "C" :
                         (m_number_type == NumberType.AdditiveComposite) ? "AC" :
                         (m_number_type == NumberType.NonAdditiveComposite) ? "XC" : ""
                         )
