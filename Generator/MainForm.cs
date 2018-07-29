@@ -9,8 +9,10 @@ using Model;
 
 public partial class MainForm : Form
 {
-    private Client m_client = null;
+    // Use Simplified29 ONLY because Surat Al-Fatiha is built upon pattern 7-29
     private string m_numerology_system_name = "Simplified29_Alphabet_Primes1";
+
+    private Client m_client = null;
     private List<List<Word>> m_word_subsets = null;
     private List<Line> m_lines = null;
 
@@ -25,7 +27,8 @@ public partial class MainForm : Form
             m_client = new Client(m_numerology_system_name);
             if (m_client != null)
             {
-                m_client.BuildSimplifiedBook(m_client.NumerologySystem.TextMode, true, false, false, false);
+                string default_text_mode = m_client.NumerologySystem.TextMode;
+                m_client.BuildSimplifiedBook(default_text_mode, true, false, false, false);
 
                 if (m_client.NumerologySystem != null)
                 {
@@ -47,19 +50,19 @@ public partial class MainForm : Form
                     m_client.NumerologySystem.AddDistancesToPrevious = false;
                     m_client.NumerologySystem.AddDistancesToNext = false;
                     m_client.NumerologySystem.AddDistancesWithinChapters = true;
-                }
-            }
 
-            PopulateNumerologySystemComboBox();
-            if (NumerologySystemComboBox.Items.Count > 0)
-            {
-                if (NumerologySystemComboBox.Items.Contains(m_numerology_system_name))
-                {
-                    NumerologySystemComboBox.SelectedItem = m_numerology_system_name;
-                }
-                else
-                {
-                    NumerologySystemComboBox.SelectedIndex = 0;
+                    PopulateTextModeComboBox();
+                    if (TextModeComboBox.Items.Count > 0)
+                    {
+                        if (TextModeComboBox.Items.Contains(default_text_mode))
+                        {
+                            TextModeComboBox.SelectedItem = default_text_mode;
+                        }
+                        else
+                        {
+                            TextModeComboBox.SelectedIndex = 0;
+                        }
+                    }
                 }
             }
         }
@@ -71,25 +74,35 @@ public partial class MainForm : Form
         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
         ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
     }
-    private void PopulateNumerologySystemComboBox()
+    private void PopulateTextModeComboBox()
     {
-        NumerologySystemComboBox.SelectedIndexChanged -= new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
         try
         {
+            TextModeComboBox.SelectedIndexChanged -= new EventHandler(TextModeComboBox_SelectedIndexChanged);
+
             if (m_client != null)
             {
                 if (m_client.LoadedNumerologySystems != null)
                 {
-                    NumerologySystemComboBox.Items.Clear();
+                    TextModeComboBox.BeginUpdate();
+
+                    TextModeComboBox.Items.Clear();
                     foreach (NumerologySystem numerology_system in m_client.LoadedNumerologySystems.Values)
                     {
-                        string text_mode = m_client.NumerologySystem.TextMode;
-                        if (numerology_system.Name.StartsWith(text_mode))
-                        {
-                            if (numerology_system.Name.Contains("_N_")) continue;
-                            if (numerology_system.Name.Contains("Zero")) continue;
+                        string default_text_mode = m_client.NumerologySystem.TextMode;
+                        if (!numerology_system.Name.StartsWith(default_text_mode)) continue;
 
-                            NumerologySystemComboBox.Items.Add(numerology_system.Name);
+                        string[] parts = numerology_system.Name.Split('_');
+                        if (parts != null)
+                        {
+                            if (parts.Length == 3)
+                            {
+                                string text_mode = parts[0];
+                                if (!TextModeComboBox.Items.Contains(text_mode))
+                                {
+                                    TextModeComboBox.Items.Add(text_mode);
+                                }
+                            }
                         }
                     }
                 }
@@ -97,12 +110,88 @@ public partial class MainForm : Form
         }
         finally
         {
+            TextModeComboBox.EndUpdate();
+            TextModeComboBox.SelectedIndexChanged += new EventHandler(TextModeComboBox_SelectedIndexChanged);
+        }
+    }
+    private void PopulateNumerologySystemComboBox()
+    {
+        try
+        {
+            NumerologySystemComboBox.SelectedIndexChanged -= new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
+
+            if (m_client != null)
+            {
+                if (m_client.LoadedNumerologySystems != null)
+                {
+                    NumerologySystemComboBox.BeginUpdate();
+
+                    if (TextModeComboBox.SelectedItem != null)
+                    {
+                        string text_mode = TextModeComboBox.SelectedItem.ToString();
+
+                        NumerologySystemComboBox.Items.Clear();
+                        foreach (NumerologySystem numerology_system in m_client.LoadedNumerologySystems.Values)
+                        {
+                            if (numerology_system.Name.Contains("_N_")) continue;
+                            if (numerology_system.Name.Contains("Zero")) continue;
+
+                            string[] parts = numerology_system.Name.Split('_');
+                            if (parts != null)
+                            {
+                                if (parts.Length == 3)
+                                {
+                                    if (parts[0] == text_mode)
+                                    {
+                                        string valuation_system = parts[1] + "_" + parts[2];
+                                        if (!NumerologySystemComboBox.Items.Contains(valuation_system))
+                                        {
+                                            NumerologySystemComboBox.Items.Add(valuation_system);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        finally
+        {
+            NumerologySystemComboBox.EndUpdate();
             NumerologySystemComboBox.SelectedIndexChanged += new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
+        }
+    }
+    private void TextModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (m_client != null)
+        {
+            if (m_client.NumerologySystem != null)
+            {
+                PopulateNumerologySystemComboBox();
+                if (NumerologySystemComboBox.Items.Count > 0)
+                {
+                    int pos = m_client.NumerologySystem.Name.IndexOf("_");
+                    string default_letter_valuation = m_client.NumerologySystem.Name.Substring(pos + 1);
+                    if (NumerologySystemComboBox.Items.Contains(default_letter_valuation))
+                    {
+                        NumerologySystemComboBox.SelectedItem = default_letter_valuation;
+                    }
+                    else
+                    {
+                        NumerologySystemComboBox.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    NumerologySystemComboBox.SelectedIndex = -1;
+                }
+            }
         }
     }
     private void NumerologySystemComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        m_numerology_system_name = NumerologySystemComboBox.SelectedItem.ToString();
+        m_numerology_system_name = TextModeComboBox.SelectedItem.ToString() + "_" + NumerologySystemComboBox.SelectedItem.ToString();
         if (m_client != null)
         {
             m_client.LoadNumerologySystem(m_numerology_system_name);
@@ -480,6 +569,7 @@ public partial class MainForm : Form
 
     private void GenerateButton_Click(object sender, EventArgs e)
     {
+        TextModeComboBox.Enabled = false;
         NumerologySystemComboBox.Enabled = false;
         AddVerseAndWordValuesCheckBox.Enabled = false;
         AddPositionsCheckBox.Enabled = false;
@@ -646,7 +736,7 @@ public partial class MainForm : Form
                                         }
 
                                         // display progress
-                                        this.Text = "Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
+                                        this.Text = "Primalogy(أُمُّ ٱلْكِتَٰبِ) = Al-Fatiha's letters and harakaat = 263       " + (i + 1) + "/" + m_word_subsets.Count + " sentences processed";
                                         ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
                                         WordCountLabel.Text = m_lines.Count + " words";
                                         WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
@@ -672,6 +762,7 @@ public partial class MainForm : Form
         }
         finally
         {
+            TextModeComboBox.Enabled = true;
             NumerologySystemComboBox.Enabled = true;
             AddVerseAndWordValuesCheckBox.Enabled = true;
             AddPositionsCheckBox.Enabled = true;
@@ -687,6 +778,7 @@ public partial class MainForm : Form
     }
     private void AutoGenerateButton_Click(object sender, EventArgs e)
     {
+        TextModeComboBox.Enabled = false;
         NumerologySystemComboBox.Enabled = false;
         AddVerseAndWordValuesCheckBox.Enabled = false;
         AddPositionsCheckBox.Enabled = false;
@@ -924,6 +1016,7 @@ public partial class MainForm : Form
         }
         finally
         {
+            TextModeComboBox.Enabled = true;
             NumerologySystemComboBox.Enabled = true;
             AddVerseAndWordValuesCheckBox.Enabled = true;
             AddPositionsCheckBox.Enabled = true;

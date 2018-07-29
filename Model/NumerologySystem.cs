@@ -351,9 +351,9 @@ namespace Model
                 str.AppendLine();
             }
 
-            str.Append("AddDistancesToPrevious = " + AddDistancesToPrevious);
-            str.Append("AddDistancesToNext     = " + AddDistancesToNext);
-            str.Append("AddDistancesWithinChapters = " + AddDistancesWithinChapters);
+            str.AppendLine("AddDistancesToPrevious = " + AddDistancesToPrevious);
+            str.AppendLine("AddDistancesToNext     = " + AddDistancesToNext);
+            str.AppendLine("AddDistancesWithinChapters = " + AddDistancesWithinChapters);
             str.AppendLine();
 
             str.AppendLine("----------------------------------------");

@@ -10029,6 +10029,7 @@ partial class MainForm
             this.NumerologySystemComboBox.DropDown += new System.EventHandler(this.NumerologySystemComboBox_DropDown);
             this.NumerologySystemComboBox.SelectedIndexChanged += new System.EventHandler(this.NumerologySystemComboBox_SelectedIndexChanged);
             this.NumerologySystemComboBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+            this.NumerologySystemComboBox.MouseHover += new System.EventHandler(this.NumerologySystemComboBox_MouseHover);
             // 
             // AddToVerseVNumberCheckBox
             // 

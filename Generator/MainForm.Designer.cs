@@ -47,6 +47,7 @@
             this.AddVerseAndWordValuesCheckBox = new System.Windows.Forms.CheckBox();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.NumerologySystemComboBox = new System.Windows.Forms.ComboBox();
+            this.TextModeComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // GenerateButton
@@ -55,7 +56,7 @@
             this.GenerateButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.GenerateButton.Image = ((System.Drawing.Image)(resources.GetObject("GenerateButton.Image")));
             this.GenerateButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.GenerateButton.Location = new System.Drawing.Point(384, 307);
+            this.GenerateButton.Location = new System.Drawing.Point(422, 358);
             this.GenerateButton.Name = "GenerateButton";
             this.GenerateButton.Size = new System.Drawing.Size(110, 21);
             this.GenerateButton.TabIndex = 19;
@@ -75,10 +76,10 @@
             this.SentenceColumnHeader,
             this.ValueColumnHeader,
             this.WordColumnHeader});
-            this.ListView.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ListView.Font = new System.Drawing.Font("Courier New", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ListView.Location = new System.Drawing.Point(0, 0);
             this.ListView.Name = "ListView";
-            this.ListView.Size = new System.Drawing.Size(625, 291);
+            this.ListView.Size = new System.Drawing.Size(665, 342);
             this.ListView.TabIndex = 1;
             this.ListView.UseCompatibleStateImageBehavior = false;
             this.ListView.View = System.Windows.Forms.View.Details;
@@ -92,7 +93,7 @@
             // SentenceColumnHeader
             // 
             this.SentenceColumnHeader.Text = "Sentence  ";
-            this.SentenceColumnHeader.Width = 345;
+            this.SentenceColumnHeader.Width = 385;
             // 
             // ValueColumnHeader
             // 
@@ -110,7 +111,7 @@
             // 
             this.AddPositionsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AddPositionsCheckBox.AutoSize = true;
-            this.AddPositionsCheckBox.Location = new System.Drawing.Point(4, 316);
+            this.AddPositionsCheckBox.Location = new System.Drawing.Point(4, 367);
             this.AddPositionsCheckBox.Name = "AddPositionsCheckBox";
             this.AddPositionsCheckBox.Size = new System.Drawing.Size(130, 17);
             this.AddPositionsCheckBox.TabIndex = 4;
@@ -125,7 +126,7 @@
             this.SaveButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
             this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SaveButton.Location = new System.Drawing.Point(562, 307);
+            this.SaveButton.Location = new System.Drawing.Point(602, 358);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(59, 21);
             this.SaveButton.TabIndex = 88;
@@ -138,7 +139,7 @@
             // 
             this.WordCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.WordCountLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.WordCountLabel.Location = new System.Drawing.Point(495, 311);
+            this.WordCountLabel.Location = new System.Drawing.Point(533, 362);
             this.WordCountLabel.Name = "WordCountLabel";
             this.WordCountLabel.Size = new System.Drawing.Size(70, 13);
             this.WordCountLabel.TabIndex = 23;
@@ -153,7 +154,7 @@
             this.NumberTypeLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NumberTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NumberTypeLabel.ForeColor = System.Drawing.Color.Green;
-            this.NumberTypeLabel.Location = new System.Drawing.Point(357, 309);
+            this.NumberTypeLabel.Location = new System.Drawing.Point(395, 360);
             this.NumberTypeLabel.Name = "NumberTypeLabel";
             this.NumberTypeLabel.Size = new System.Drawing.Size(25, 17);
             this.NumberTypeLabel.TabIndex = 12;
@@ -169,7 +170,7 @@
             this.ValueCombinationDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ValueCombinationDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValueCombinationDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValueCombinationDirectionLabel.Location = new System.Drawing.Point(331, 309);
+            this.ValueCombinationDirectionLabel.Location = new System.Drawing.Point(369, 360);
             this.ValueCombinationDirectionLabel.Name = "ValueCombinationDirectionLabel";
             this.ValueCombinationDirectionLabel.Size = new System.Drawing.Size(25, 17);
             this.ValueCombinationDirectionLabel.TabIndex = 11;
@@ -182,13 +183,13 @@
             // 
             this.AddDistancesToPreviousCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AddDistancesToPreviousCheckBox.AutoSize = true;
-            this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(152, 302);
+            this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(159, 353);
             this.AddDistancesToPreviousCheckBox.Name = "AddDistancesToPreviousCheckBox";
-            this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(149, 17);
+            this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(184, 17);
             this.AddDistancesToPreviousCheckBox.TabIndex = 5;
-            this.AddDistancesToPreviousCheckBox.Text = "Add ← distances to value";
-            this.ToolTip.SetToolTip(this.AddDistancesToPreviousCheckBox, "Add letter and word distances to each letter value\r\nto the previous same letter a" +
-        "nd word");
+            this.AddDistancesToPreviousCheckBox.Text = "Add backward distances to value";
+            this.ToolTip.SetToolTip(this.AddDistancesToPreviousCheckBox, "Add letter and word distances to each letter value\r\nbackword to the previous same" +
+        " letter and word");
             this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = true;
             this.AddDistancesToPreviousCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckedChanged);
             // 
@@ -196,13 +197,13 @@
             // 
             this.AddDistancesToNextCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AddDistancesToNextCheckBox.AutoSize = true;
-            this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(152, 316);
+            this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(159, 367);
             this.AddDistancesToNextCheckBox.Name = "AddDistancesToNextCheckBox";
-            this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(149, 17);
+            this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(172, 17);
             this.AddDistancesToNextCheckBox.TabIndex = 6;
-            this.AddDistancesToNextCheckBox.Text = "Add → distances to value";
-            this.ToolTip.SetToolTip(this.AddDistancesToNextCheckBox, "Add letter and word distances to each letter value\r\nto the next same letter and w" +
-        "ord\r\n");
+            this.AddDistancesToNextCheckBox.Text = "Add forward distances to value";
+            this.ToolTip.SetToolTip(this.AddDistancesToNextCheckBox, "Add letter and word distances to each letter value\r\nforward to the next same lett" +
+        "er and word");
             this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = true;
             this.AddDistancesToNextCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToNextCheckBox_CheckedChanged);
             // 
@@ -213,7 +214,7 @@
             this.ValueInterlaceLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ValueInterlaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValueInterlaceLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValueInterlaceLabel.Location = new System.Drawing.Point(305, 309);
+            this.ValueInterlaceLabel.Location = new System.Drawing.Point(343, 360);
             this.ValueInterlaceLabel.Name = "ValueInterlaceLabel";
             this.ValueInterlaceLabel.Size = new System.Drawing.Size(25, 17);
             this.ValueInterlaceLabel.TabIndex = 9;
@@ -227,7 +228,7 @@
             this.AutoGenerateButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.AutoGenerateButton.Image = ((System.Drawing.Image)(resources.GetObject("AutoGenerateButton.Image")));
             this.AutoGenerateButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AutoGenerateButton.Location = new System.Drawing.Point(376, 1);
+            this.AutoGenerateButton.Location = new System.Drawing.Point(416, 1);
             this.AutoGenerateButton.Name = "AutoGenerateButton";
             this.AutoGenerateButton.Size = new System.Drawing.Size(25, 23);
             this.AutoGenerateButton.TabIndex = 89;
@@ -240,11 +241,11 @@
             // 
             this.AddVerseAndWordValuesCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AddVerseAndWordValuesCheckBox.AutoSize = true;
-            this.AddVerseAndWordValuesCheckBox.Location = new System.Drawing.Point(4, 302);
+            this.AddVerseAndWordValuesCheckBox.Location = new System.Drawing.Point(4, 353);
             this.AddVerseAndWordValuesCheckBox.Name = "AddVerseAndWordValuesCheckBox";
-            this.AddVerseAndWordValuesCheckBox.Size = new System.Drawing.Size(143, 17);
+            this.AddVerseAndWordValuesCheckBox.Size = new System.Drawing.Size(155, 17);
             this.AddVerseAndWordValuesCheckBox.TabIndex = 3;
-            this.AddVerseAndWordValuesCheckBox.Text = "Add verse && word values";
+            this.AddVerseAndWordValuesCheckBox.Text = "Add verse and word values";
             this.ToolTip.SetToolTip(this.AddVerseAndWordValuesCheckBox, "Add letter\'s verse and word values to each letter value");
             this.AddVerseAndWordValuesCheckBox.UseVisualStyleBackColor = true;
             this.AddVerseAndWordValuesCheckBox.CheckedChanged += new System.EventHandler(this.AddVerseAndWordValuesCheckBox_CheckedChanged);
@@ -253,9 +254,9 @@
             // 
             this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar.Location = new System.Drawing.Point(-1, 291);
+            this.ProgressBar.Location = new System.Drawing.Point(-1, 342);
             this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(626, 11);
+            this.ProgressBar.Size = new System.Drawing.Size(666, 11);
             this.ProgressBar.TabIndex = 2;
             // 
             // NumerologySystemComboBox
@@ -265,19 +266,36 @@
             this.NumerologySystemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.NumerologySystemComboBox.FormattingEnabled = true;
             this.NumerologySystemComboBox.IntegralHeight = false;
-            this.NumerologySystemComboBox.Location = new System.Drawing.Point(165, 2);
+            this.NumerologySystemComboBox.Location = new System.Drawing.Point(242, 2);
             this.NumerologySystemComboBox.Name = "NumerologySystemComboBox";
-            this.NumerologySystemComboBox.Size = new System.Drawing.Size(212, 21);
+            this.NumerologySystemComboBox.Size = new System.Drawing.Size(176, 21);
             this.NumerologySystemComboBox.TabIndex = 0;
             this.NumerologySystemComboBox.SelectedIndexChanged += new System.EventHandler(this.NumerologySystemComboBox_SelectedIndexChanged);
             this.NumerologySystemComboBox.MouseHover += new System.EventHandler(this.NumerologySystemComboBox_MouseHover);
+            // 
+            // TextModeComboBox
+            // 
+            this.TextModeComboBox.BackColor = System.Drawing.Color.MistyRose;
+            this.TextModeComboBox.DropDownHeight = 1024;
+            this.TextModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TextModeComboBox.FormattingEnabled = true;
+            this.TextModeComboBox.IntegralHeight = false;
+            this.TextModeComboBox.Items.AddRange(new object[] {
+            "SimplifiedDots"});
+            this.TextModeComboBox.Location = new System.Drawing.Point(160, 2);
+            this.TextModeComboBox.Name = "TextModeComboBox";
+            this.TextModeComboBox.Size = new System.Drawing.Size(84, 21);
+            this.TextModeComboBox.TabIndex = 90;
             // 
             // MainForm
             // 
             this.AcceptButton = this.GenerateButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 331);
+            this.ClientSize = new System.Drawing.Size(664, 382);
+            this.Controls.Add(this.AutoGenerateButton);
+            this.Controls.Add(this.NumerologySystemComboBox);
+            this.Controls.Add(this.TextModeComboBox);
             this.Controls.Add(this.ValueInterlaceLabel);
             this.Controls.Add(this.AddDistancesToNextCheckBox);
             this.Controls.Add(this.AddPositionsCheckBox);
@@ -285,18 +303,16 @@
             this.Controls.Add(this.NumberTypeLabel);
             this.Controls.Add(this.ValueCombinationDirectionLabel);
             this.Controls.Add(this.AddVerseAndWordValuesCheckBox);
-            this.Controls.Add(this.AutoGenerateButton);
-            this.Controls.Add(this.NumerologySystemComboBox);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.GenerateButton);
             this.Controls.Add(this.ListView);
             this.Controls.Add(this.WordCountLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(640, 1600);
-            this.MinimumSize = new System.Drawing.Size(640, 369);
+            this.MaximumSize = new System.Drawing.Size(680, 1600);
+            this.MinimumSize = new System.Drawing.Size(680, 420);
             this.Name = "MainForm";
-            this.Text = "Generator";
+            this.Text = "Generator أُمُّ ٱلْكِتَٰبِ";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -324,4 +340,5 @@
     private System.Windows.Forms.Label ValueInterlaceLabel;
     private System.Windows.Forms.Button AutoGenerateButton;
     private System.Windows.Forms.CheckBox AddVerseAndWordValuesCheckBox;
+    private System.Windows.Forms.ComboBox TextModeComboBox;
 }
