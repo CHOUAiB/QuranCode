@@ -68,4 +68,5 @@ public static class Globals
     public static string BOOKMARKS_FOLDER = "Bookmarks";
     public static string HISTORY_FOLDER = "History";
     public static string HELP_FOLDER = "Help";
+    public static string USERTEXT_FOLDER = "UserText";
 }
