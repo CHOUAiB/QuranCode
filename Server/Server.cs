@@ -1403,6 +1403,21 @@ public class Server : IPublisher
             }
             else
             {
+                // adjust value of verse
+                if (letter.Word.Verse.Words.Count == 1)
+                {
+                    if (letter.Word.Letters.Count == 1)
+                    {
+                        result += AdjustValue(letter.Word.Verse);
+                    }
+                }
+
+                // adjust value of word
+                if (letter.Word.Letters.Count == 1)
+                {
+                    result += AdjustValue(letter.Word);
+                }
+
                 // adjust value of letter
                 result += AdjustValue(letter);
 
@@ -1420,18 +1435,20 @@ public class Server : IPublisher
         long result = 0L;
         if (s_numerology_system != null)
         {
-            // adjust value of words
             List<Word> words = GetCompleteWords(letters);
-            if (words != null)
+            List<Verse> verses = GetCompleteVerses(words);
+            List<Chapter> chapters = GetCompleteChapters(verses);
+
+            // adjust value of chapters
+            if (chapters != null)
             {
-                foreach (Word word in words)
+                foreach (Chapter chapter in chapters)
                 {
-                    result += AdjustValue(word);
+                    result += AdjustValue(chapter);
                 }
             }
 
             // adjust value of verses
-            List<Verse> verses = GetCompleteVerses(words);
             if (verses != null)
             {
                 foreach (Verse verse in verses)
@@ -1440,13 +1457,12 @@ public class Server : IPublisher
                 }
             }
 
-            // adjust value of chapters
-            List<Chapter> chapters = GetCompleteChapters(verses);
-            if (chapters != null)
+            // adjust value of words
+            if (words != null)
             {
-                foreach (Chapter chapter in chapters)
+                foreach (Word word in words)
                 {
-                    result += AdjustValue(chapter);
+                    result += AdjustValue(word);
                 }
             }
 
@@ -1515,23 +1531,24 @@ public class Server : IPublisher
         long result = 0L;
         if (s_numerology_system != null)
         {
-            // adjust value of verses
             List<Verse> verses = GetCompleteVerses(words);
-            if (verses != null)
-            {
-                foreach (Verse verse in verses)
-                {
-                    result += AdjustValue(verse);
-                }
-            }
+            List<Chapter> chapters = GetCompleteChapters(verses);
 
             // adjust value of chapters
-            List<Chapter> chapters = GetCompleteChapters(verses);
             if (chapters != null)
             {
                 foreach (Chapter chapter in chapters)
                 {
                     result += AdjustValue(chapter);
+                }
+            }
+
+            // adjust value of verses
+            if (verses != null)
+            {
+                foreach (Verse verse in verses)
+                {
+                    result += AdjustValue(verse);
                 }
             }
 
@@ -1698,7 +1715,7 @@ public class Server : IPublisher
         long result = 0L;
         if (s_numerology_system != null)
         {
-            result = CalculateValue(chapter.Verses);
+            result += CalculateValue(chapter.Verses);
             chapter.Value = result; // update chapter values for ChapterSortMethod.ByValue
         }
         return result;
@@ -1711,12 +1728,6 @@ public class Server : IPublisher
         long result = 0L;
         if (s_numerology_system != null)
         {
-            // adjust value of chapters
-            foreach (Chapter chapter in chapters)
-            {
-                result += AdjustValue(chapter);
-            }
-
             foreach (Chapter chapter in chapters)
             {
                 result += CalculateValue(chapter);
@@ -1731,10 +1742,7 @@ public class Server : IPublisher
         long result = 0L;
         if (s_numerology_system != null)
         {
-            foreach (Chapter chapter in book.Chapters)
-            {
-                result += CalculateValue(chapter.Verses);
-            }
+            result += CalculateValue(book.Chapters);
         }
         return result;
     }

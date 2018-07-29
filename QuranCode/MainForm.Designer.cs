@@ -1557,9 +1557,9 @@ partial class MainForm
             this.NoorsoftLinkLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NoorsoftLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NoorsoftLinkLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.NoorsoftLinkLabel.Location = new System.Drawing.Point(144, 21);
+            this.NoorsoftLinkLabel.Location = new System.Drawing.Point(143, 20);
             this.NoorsoftLinkLabel.Name = "NoorsoftLinkLabel";
-            this.NoorsoftLinkLabel.Size = new System.Drawing.Size(4, 4);
+            this.NoorsoftLinkLabel.Size = new System.Drawing.Size(6, 4);
             this.NoorsoftLinkLabel.TabIndex = 0;
             this.NoorsoftLinkLabel.Tag = "http://noorsoft.org";
             this.NoorsoftLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1818,9 +1818,9 @@ partial class MainForm
             this.PrimalogyARLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PrimalogyARLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PrimalogyARLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.PrimalogyARLabel.Location = new System.Drawing.Point(2, 13);
+            this.PrimalogyARLabel.Location = new System.Drawing.Point(2, 11);
             this.PrimalogyARLabel.Name = "PrimalogyARLabel";
-            this.PrimalogyARLabel.Size = new System.Drawing.Size(4, 4);
+            this.PrimalogyARLabel.Size = new System.Drawing.Size(4, 6);
             this.PrimalogyARLabel.TabIndex = 155;
             this.PrimalogyARLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.PrimalogyARLabel, "نظام الجُمَّل الوتري  - البرايمولوجي\r\n©علي عبد الرزاق عبد الكريم القره غولي 2008");
@@ -1835,7 +1835,7 @@ partial class MainForm
             this.PrimalogyLabel.ForeColor = System.Drawing.SystemColors.Window;
             this.PrimalogyLabel.Location = new System.Drawing.Point(2, 3);
             this.PrimalogyLabel.Name = "PrimalogyLabel";
-            this.PrimalogyLabel.Size = new System.Drawing.Size(4, 4);
+            this.PrimalogyLabel.Size = new System.Drawing.Size(4, 6);
             this.PrimalogyLabel.TabIndex = 154;
             this.PrimalogyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.PrimalogyLabel, "Primalogy System ©2008 Ali Adams");
@@ -5197,7 +5197,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(816, 193);
+            this.TabControl.Size = new System.Drawing.Size(816, 192);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5453,7 +5453,7 @@ partial class MainForm
             this.RelatedWordsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RelatedWordsButton.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.RelatedWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("RelatedWordsButton.Image")));
-            this.RelatedWordsButton.Location = new System.Drawing.Point(789, 146);
+            this.RelatedWordsButton.Location = new System.Drawing.Point(791, 146);
             this.RelatedWordsButton.Name = "RelatedWordsButton";
             this.RelatedWordsButton.Size = new System.Drawing.Size(18, 18);
             this.RelatedWordsButton.TabIndex = 2;
@@ -5533,7 +5533,7 @@ partial class MainForm
             this.SymmetryInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SymmetryInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.SymmetryInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("SymmetryInspectLabel.Image")));
-            this.SymmetryInspectLabel.Location = new System.Drawing.Point(790, 147);
+            this.SymmetryInspectLabel.Location = new System.Drawing.Point(791, 147);
             this.SymmetryInspectLabel.Name = "SymmetryInspectLabel";
             this.SymmetryInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.SymmetryInspectLabel.TabIndex = 9;
@@ -5638,7 +5638,7 @@ partial class MainForm
             this.ValuesSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValuesSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ValuesSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("ValuesSequenceInspectLabel.Image")));
-            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(790, 147);
+            this.ValuesSequenceInspectLabel.Location = new System.Drawing.Point(791, 147);
             this.ValuesSequenceInspectLabel.Name = "ValuesSequenceInspectLabel";
             this.ValuesSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.ValuesSequenceInspectLabel.TabIndex = 4;
@@ -5734,7 +5734,7 @@ partial class MainForm
             this.CVWLSequenceInspectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CVWLSequenceInspectLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.CVWLSequenceInspectLabel.Image = ((System.Drawing.Image)(resources.GetObject("CVWLSequenceInspectLabel.Image")));
-            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(790, 147);
+            this.CVWLSequenceInspectLabel.Location = new System.Drawing.Point(791, 147);
             this.CVWLSequenceInspectLabel.Name = "CVWLSequenceInspectLabel";
             this.CVWLSequenceInspectLabel.Size = new System.Drawing.Size(18, 18);
             this.CVWLSequenceInspectLabel.TabIndex = 6;
@@ -8273,9 +8273,9 @@ partial class MainForm
             this.TanzilLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TanzilLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TanzilLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.TanzilLabel.Location = new System.Drawing.Point(30, 19);
+            this.TanzilLabel.Location = new System.Drawing.Point(32, 19);
             this.TanzilLabel.Name = "TanzilLabel";
-            this.TanzilLabel.Size = new System.Drawing.Size(4, 4);
+            this.TanzilLabel.Size = new System.Drawing.Size(4, 6);
             this.TanzilLabel.TabIndex = 1;
             this.TanzilLabel.Tag = "http://tanzil.net/";
             this.TanzilLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -8370,7 +8370,7 @@ partial class MainForm
             this.StatisticsGroupBox.TabIndex = 4;
             this.StatisticsGroupBox.TabStop = false;
             this.StatisticsGroupBox.Text = "Statistics                                     ";
-            this.ToolTip.SetToolTip(this.StatisticsGroupBox, "114.txt");
+            this.StatisticsGroupBox.Enter += new System.EventHandler(this.StatisticsGroupBox_Enter);
             // 
             // TotalChapterCountsCheckBox
             // 
@@ -9064,7 +9064,7 @@ partial class MainForm
             this.RadixLabel.Cursor = System.Windows.Forms.Cursors.Default;
             this.RadixLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RadixLabel.ForeColor = System.Drawing.Color.Black;
-            this.RadixLabel.Location = new System.Drawing.Point(69, 0);
+            this.RadixLabel.Location = new System.Drawing.Point(70, 0);
             this.RadixLabel.Name = "RadixLabel";
             this.RadixLabel.Size = new System.Drawing.Size(13, 13);
             this.RadixLabel.TabIndex = 184;
@@ -10005,7 +10005,7 @@ partial class MainForm
             this.DivisorLabel.Cursor = System.Windows.Forms.Cursors.Default;
             this.DivisorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DivisorLabel.ForeColor = System.Drawing.Color.Black;
-            this.DivisorLabel.Location = new System.Drawing.Point(123, 0);
+            this.DivisorLabel.Location = new System.Drawing.Point(124, 0);
             this.DivisorLabel.Name = "DivisorLabel";
             this.DivisorLabel.Size = new System.Drawing.Size(17, 14);
             this.DivisorLabel.TabIndex = 250;
@@ -10051,7 +10051,7 @@ partial class MainForm
             this.TextModeLabel.BackColor = System.Drawing.Color.Transparent;
             this.TextModeLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TextModeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TextModeLabel.Location = new System.Drawing.Point(3, 20);
+            this.TextModeLabel.Location = new System.Drawing.Point(3, 19);
             this.TextModeLabel.Name = "TextModeLabel";
             this.TextModeLabel.Size = new System.Drawing.Size(63, 16);
             this.TextModeLabel.TabIndex = 0;
@@ -10313,9 +10313,9 @@ partial class MainForm
             this.EveryAyahLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EveryAyahLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EveryAyahLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.EveryAyahLabel.Location = new System.Drawing.Point(171, 4);
+            this.EveryAyahLabel.Location = new System.Drawing.Point(169, 4);
             this.EveryAyahLabel.Name = "EveryAyahLabel";
-            this.EveryAyahLabel.Size = new System.Drawing.Size(4, 4);
+            this.EveryAyahLabel.Size = new System.Drawing.Size(6, 4);
             this.EveryAyahLabel.TabIndex = 91;
             this.EveryAyahLabel.Tag = "http://everyayah.com";
             this.EveryAyahLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

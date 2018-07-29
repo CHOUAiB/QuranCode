@@ -8826,7 +8826,6 @@ partial class MainForm
             this.StatisticsGroupBox.TabIndex = 4;
             this.StatisticsGroupBox.TabStop = false;
             this.StatisticsGroupBox.Text = "Statistics                                     ";
-            this.ToolTip.SetToolTip(this.StatisticsGroupBox, "114.txt");
             // 
             // ValueNavigatorPanel
             // 

@@ -32423,11 +32423,11 @@ public partial class MainForm : Form, ISubscriber
     }
     private void StatisticsGroupBox_Click(object sender, EventArgs e)
     {
-        string path = Globals.HELP_FOLDER + "/" + "114.txt";
-        if (File.Exists(path))
-        {
-            FileHelper.DisplayFile(path);
-        }
+        //string path = Globals.HELP_FOLDER + "/" + "114.txt";
+        //if (File.Exists(path))
+        //{
+        //    FileHelper.DisplayFile(path);
+        //}
     }
     private void PrimalogyLabel_Click(object sender, EventArgs e)
     {
@@ -32578,6 +32578,11 @@ public partial class MainForm : Form, ISubscriber
                 m_about_box.ShowDialog();
             }
         }
+    }
+
+    private void StatisticsGroupBox_Enter(object sender, EventArgs e)
+    {
+
     }
     /////////////////////////////////////////////////////////////////////////////
     #endregion
