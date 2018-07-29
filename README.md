@@ -50,8 +50,8 @@ AP additive prime     = prime with prime digit sum                      BLUE
 XP non-additive prime = prime with non-prime digit sum                 GREEN
 
 C  composite              = divisible number by self and others
-AC additive composite     = composite with composite digit sum         BROWN
-XC non-additive composite = composite with non-composite digit sum     BLACK
+AC additive composite     = composite with composite digit sum         RED
+XC non-additive composite = composite with non-composite digit sum     BROWN
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------
