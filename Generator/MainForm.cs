@@ -47,7 +47,7 @@ public partial class MainForm : Form
         m_number_type = NumberType.Prime;
         NumberTypeLabel.Text = "P";
         NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
     }
     private void PopulateNumerologySystemComboBox()
     {
@@ -64,6 +64,9 @@ public partial class MainForm : Form
                         string text_mode = m_client.NumerologySystem.TextMode;
                         if (numerology_system.Name.StartsWith(text_mode))
                         {
+                            if (numerology_system.Name.Contains("_N_")) continue;
+                            if (numerology_system.Name.Contains("Zero")) continue;
+
                             NumerologySystemComboBox.Items.Add(numerology_system.Name);
                         }
                     }
@@ -158,34 +161,34 @@ public partial class MainForm : Form
         }
     }
 
-    private bool m_cross_over = false;
-    private void CrossOverLabel_Click(object sender, EventArgs e)
+    private bool m_interlace = false;
+    private void InterlaceLabel_Click(object sender, EventArgs e)
     {
-        m_cross_over = !m_cross_over;
-        CrossOverLabel.Text = m_cross_over ? "§" : "- -";
-        ToolTip.SetToolTip(CrossOverLabel, m_cross_over ? "cross-over digits of letter values" : "concatenate letter values");
+        m_interlace = !m_interlace;
+        InterlaceLabel.Text = m_interlace ? "§" : "- -";
+        ToolTip.SetToolTip(InterlaceLabel, m_interlace ? "interlace digits of letter values" : "concatenate letter values");
 
         if (m_concatenation_direction == RightToLeft.Yes)
-            ToolTip.SetToolTip(ConcatenationDirectionLabel, m_cross_over ? "cross-over digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA");
+            ToolTip.SetToolTip(ConcatenationDirectionLabel, m_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA");
         else
-            ToolTip.SetToolTip(ConcatenationDirectionLabel, m_cross_over ? "cross-over digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB");
+            ToolTip.SetToolTip(ConcatenationDirectionLabel, m_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB");
 
         if (NumberTypeLabel.Text == "P")
-            ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
         else if (NumberTypeLabel.Text == "AP")
-            ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
         else if (NumberTypeLabel.Text == "XP")
-            ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
         else if (NumberTypeLabel.Text == "C")
-            ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
         else if (NumberTypeLabel.Text == "AC")
-            ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
         else if (NumberTypeLabel.Text == "XC")
-            ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
         else if (NumberTypeLabel.Text == "O")
-            ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
         else if (NumberTypeLabel.Text == "E")
-            ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+            ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
     }
     private RightToLeft m_concatenation_direction = RightToLeft.Yes;
     private void ConcatenationDirectionLabel_Click(object sender, EventArgs e)
@@ -195,13 +198,13 @@ public partial class MainForm : Form
         {
             m_concatenation_direction = RightToLeft.No;
             ConcatenationDirectionLabel.Text = "→";
-            message = m_cross_over ? "cross-over digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB";
+            message = m_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB";
         }
         else
         {
             m_concatenation_direction = RightToLeft.Yes;
             ConcatenationDirectionLabel.Text = "←";
-            message = m_cross_over ? "cross-over digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA";
+            message = m_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA";
         }
         ToolTip.SetToolTip(ConcatenationDirectionLabel, message);
     }
@@ -215,56 +218,56 @@ public partial class MainForm : Form
                 m_number_type = NumberType.Odd;
                 NumberTypeLabel.Text = "O";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "O")
             {
                 m_number_type = NumberType.NonAdditiveComposite;
                 NumberTypeLabel.Text = "XC";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "XC")
             {
                 m_number_type = NumberType.AdditiveComposite;
                 NumberTypeLabel.Text = "AC";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "AC")
             {
                 m_number_type = NumberType.Composite;
                 NumberTypeLabel.Text = "C";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "C")
             {
                 m_number_type = NumberType.NonAdditivePrime;
                 NumberTypeLabel.Text = "XP";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "XP")
             {
                 m_number_type = NumberType.AdditivePrime;
                 NumberTypeLabel.Text = "AP";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "AP")
             {
                 m_number_type = NumberType.Prime;
                 NumberTypeLabel.Text = "P";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "P")
             {
                 m_number_type = NumberType.Even;
                 NumberTypeLabel.Text = "E";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
         }
         else
@@ -274,56 +277,56 @@ public partial class MainForm : Form
                 m_number_type = NumberType.AdditivePrime;
                 NumberTypeLabel.Text = "AP";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "AP")
             {
                 m_number_type = NumberType.NonAdditivePrime;
                 NumberTypeLabel.Text = "XP";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "XP")
             {
                 m_number_type = NumberType.Composite;
                 NumberTypeLabel.Text = "C";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "C")
             {
                 m_number_type = NumberType.AdditiveComposite;
                 NumberTypeLabel.Text = "AC";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "AC")
             {
                 m_number_type = NumberType.NonAdditiveComposite;
                 NumberTypeLabel.Text = "XC";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "XC")
             {
                 m_number_type = NumberType.Odd;
                 NumberTypeLabel.Text = "O";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "O")
             {
                 m_number_type = NumberType.Even;
                 NumberTypeLabel.Text = "E";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
             else if (NumberTypeLabel.Text == "E")
             {
                 m_number_type = NumberType.Prime;
                 NumberTypeLabel.Text = "P";
                 NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_cross_over ? "crossed-over" : "concatenated") + " letter values only");
+                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
             }
         }
     }
@@ -562,7 +565,7 @@ public partial class MainForm : Form
                                                         string AAA = numerology_letter_values[j].ToString();
                                                         string BBB = sentence_letter_values[j].ToString();
 
-                                                        if (m_cross_over)
+                                                        if (m_interlace)
                                                         {
                                                             int a = AAA.Length;
                                                             int b = BBB.Length;
@@ -631,7 +634,7 @@ public partial class MainForm : Form
                                             }
 
                                             // display progress
-                                            this.Text = "Book Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
+                                            this.Text = "Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
                                             ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
                                             WordCountLabel.Text = m_lines.Count + " words";
                                             WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);

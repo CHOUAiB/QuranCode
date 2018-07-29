@@ -42,7 +42,7 @@
             this.ConcatenationDirectionLabel = new System.Windows.Forms.Label();
             this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
             this.AddDistancesToNextCheckBox = new System.Windows.Forms.CheckBox();
-            this.CrossOverLabel = new System.Windows.Forms.Label();
+            this.InterlaceLabel = new System.Windows.Forms.Label();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.NumerologySystemComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -204,21 +204,21 @@
             this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = true;
             this.AddDistancesToNextCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToNextCheckBox_CheckedChanged);
             // 
-            // CrossOverLabel
+            // InterlaceLabel
             // 
-            this.CrossOverLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CrossOverLabel.BackColor = System.Drawing.Color.Silver;
-            this.CrossOverLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CrossOverLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CrossOverLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.CrossOverLabel.Location = new System.Drawing.Point(292, 309);
-            this.CrossOverLabel.Name = "CrossOverLabel";
-            this.CrossOverLabel.Size = new System.Drawing.Size(25, 17);
-            this.CrossOverLabel.TabIndex = 9;
-            this.CrossOverLabel.Text = "- -";
-            this.CrossOverLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.CrossOverLabel, "concatenate letter values");
-            this.CrossOverLabel.Click += new System.EventHandler(this.CrossOverLabel_Click);
+            this.InterlaceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.InterlaceLabel.BackColor = System.Drawing.Color.Silver;
+            this.InterlaceLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.InterlaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InterlaceLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.InterlaceLabel.Location = new System.Drawing.Point(292, 309);
+            this.InterlaceLabel.Name = "InterlaceLabel";
+            this.InterlaceLabel.Size = new System.Drawing.Size(25, 17);
+            this.InterlaceLabel.TabIndex = 9;
+            this.InterlaceLabel.Text = "- -";
+            this.InterlaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.InterlaceLabel, "concatenate letter values");
+            this.InterlaceLabel.Click += new System.EventHandler(this.InterlaceLabel_Click);
             // 
             // ProgressBar
             // 
@@ -247,7 +247,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 331);
-            this.Controls.Add(this.CrossOverLabel);
+            this.Controls.Add(this.InterlaceLabel);
             this.Controls.Add(this.NumerologySystemComboBox);
             this.Controls.Add(this.ConcatenationDirectionLabel);
             this.Controls.Add(this.ProgressBar);
@@ -259,11 +259,11 @@
             this.Controls.Add(this.AddDistancesToNextCheckBox);
             this.Controls.Add(this.AddDistancesToPreviousCheckBox);
             this.Controls.Add(this.AddPositionsCheckBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(640, 1600);
+            this.MinimumSize = new System.Drawing.Size(640, 369);
             this.Name = "MainForm";
-            this.Text = "Book Generator";
+            this.Text = "Generator";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -288,5 +288,5 @@
     private System.Windows.Forms.ProgressBar ProgressBar;
     private System.Windows.Forms.CheckBox AddDistancesToNextCheckBox;
     private System.Windows.Forms.ComboBox NumerologySystemComboBox;
-    private System.Windows.Forms.Label CrossOverLabel;
+    private System.Windows.Forms.Label InterlaceLabel;
 }

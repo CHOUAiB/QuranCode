@@ -10401,7 +10401,7 @@ partial class MainForm
             this.AddAllCheckBox.Name = "AddAllCheckBox";
             this.AddAllCheckBox.Size = new System.Drawing.Size(172, 16);
             this.AddAllCheckBox.TabIndex = 140;
-            this.AddAllCheckBox.Text = "█";
+            this.AddAllCheckBox.Text = "√";
             this.AddAllCheckBox.UseVisualStyleBackColor = false;
             this.AddAllCheckBox.CheckedChanged += new System.EventHandler(this.AddAllCheckBox_CheckedChanged);
             // 
