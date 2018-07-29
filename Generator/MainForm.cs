@@ -577,6 +577,7 @@ public partial class MainForm : Form
         AddDistancesToNextCheckBox.Enabled = false;
         ValueCombinationDirectionLabel.Enabled = false;
         NumberTypeLabel.Enabled = false;
+        AutoGenerateButton.Enabled = false;
         GenerateButton.Enabled = false;
         SaveButton.Enabled = false;
         ClearListView();
@@ -770,6 +771,7 @@ public partial class MainForm : Form
             AddDistancesToNextCheckBox.Enabled = true;
             ValueCombinationDirectionLabel.Enabled = true;
             NumberTypeLabel.Enabled = true;
+            AutoGenerateButton.Enabled = true;
             GenerateButton.Enabled = true;
             SaveButton.Enabled = true;
 
@@ -786,6 +788,7 @@ public partial class MainForm : Form
         AddDistancesToNextCheckBox.Enabled = false;
         ValueCombinationDirectionLabel.Enabled = false;
         NumberTypeLabel.Enabled = false;
+        AutoGenerateButton.Enabled = false;
         GenerateButton.Enabled = false;
         SaveButton.Enabled = false;
 
@@ -1024,6 +1027,7 @@ public partial class MainForm : Form
             AddDistancesToNextCheckBox.Enabled = true;
             ValueCombinationDirectionLabel.Enabled = true;
             NumberTypeLabel.Enabled = true;
+            AutoGenerateButton.Enabled = true;
             GenerateButton.Enabled = true;
             SaveButton.Enabled = true;
 
