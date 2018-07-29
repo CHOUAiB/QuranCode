@@ -95,6 +95,13 @@ static class Program
         //IntPtr system_menu_handle = GetSystemMenu(form.Handle, false);
         //DisableCloseIcon(system_menu_handle);
 
-        Application.Run(form);
+        try
+        {
+            Application.Run(form);
+        }
+        catch
+        {
+            // do nothing
+        }
     }
 }

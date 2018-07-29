@@ -652,12 +652,18 @@ public partial class MainForm : Form, ISubscriber
         using (Graphics graphics = this.CreateGraphics())
         {
             m_dpi_x = graphics.DpiX;
-            //if (m_dpi_x == 120.0F)
-            //{
-            //    // adjust GUI to fit into 125%
-            //    MainSplitContainer.Height = (int)(MainSplitContainer.Height / (m_dpi_x / DEFAULT_DPI_X)) + 96;
-            //    MainSplitContainer.SplitterDistance = 215;
-            //}
+
+            // 100% = 96.0F,   125% = 120.0F,   150% = 144.0F
+            if (m_dpi_x != 120.0F)
+            {
+                Close();
+
+                string filename = "QuranCode.exe";
+                if (File.Exists(filename))
+                {
+                    System.Diagnostics.Process.Start(filename);
+                }
+            }
         }
 
         FindByTextButton.Enabled = true;
@@ -2982,6 +2988,8 @@ public partial class MainForm : Form, ISubscriber
                         MathsDivisorNumericUpDown.Value = m_maths_divisor;
                         m_distances_divisor = DEFAULT_DIVISOR;
                         DistancesDivisorNumericUpDown.Value = m_distances_divisor;
+
+                        ShowToolTipCheckBox.Checked = true;
 
                         m_show_add_controls = true;
                         ValueLabel_Click(null, null);
