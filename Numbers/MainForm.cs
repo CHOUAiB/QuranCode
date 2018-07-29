@@ -41,7 +41,7 @@ public partial class MainForm : Form
         InitializeComponent();
         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
-        // build Copy label
+        // Copy label
         {
             Label control = new Label();
             if (control != null)
@@ -62,7 +62,7 @@ public partial class MainForm : Form
             }
         }
 
-        // build Paste label
+        // Paste label
         {
             Label control = new Label();
             if (control != null)
@@ -83,7 +83,7 @@ public partial class MainForm : Form
             }
         }
 
-        // build Row numbers (DeleteRow)
+        // Row numbers (DeleteRow)
         for (int i = 0; i < ROWS; i++)
         {
             Label control = new Label();
@@ -103,7 +103,7 @@ public partial class MainForm : Form
             }
         }
 
-        // build Column headings
+        // Column headings
         for (int j = 0; j < COLS; j++)
         {
             Label control = new Label();
@@ -119,7 +119,7 @@ public partial class MainForm : Form
 
                 switch (j)
                 {
-                    case 0: { control.Text = "i"; ToolTip.SetToolTip(control, "Index"); break; }
+                    case 0: { control.Text = "i"; ToolTip.SetToolTip(control, "\tIndex\r\nDoubleClick to auto-fill rows\r\nShift+DoubleClick to go back"); control.DoubleClick += IndexLabel_DoubleClick; control.Cursor = Cursors.Hand; break; }
                     case 1: { control.Text = "Pi"; ToolTip.SetToolTip(control, "Prime"); break; }
                     case 2: { control.Text = "APi"; ToolTip.SetToolTip(control, "Additive Prime"); break; }
                     case 3: { control.Text = "XPi"; ToolTip.SetToolTip(control, "Non-additive Prime"); break; }
@@ -143,7 +143,7 @@ public partial class MainForm : Form
             }
         }
 
-        // build TextBox cells
+        // TextBox cells
         for (int i = 0; i < ROWS; i++)
         {
             for (int j = 0; j < COLS; j++)
@@ -169,6 +169,7 @@ public partial class MainForm : Form
                     if (j == 0) control.MouseDown += Control_MouseDown;
                     if (j == 0) control.DragEnter += Control_DragEnter;
                     if (j == 0) control.DragDrop += Control_DragDrop;
+                    control.MouseHover += Control_MouseHover;
 
                     switch (j)
                     {
@@ -350,6 +351,27 @@ public partial class MainForm : Form
             this.Cursor = Cursors.Default;
         }
     }
+    private int batch_number = -1;
+    private void IndexLabel_DoubleClick(object sender, EventArgs e)
+    {
+        if (ModifierKeys == Keys.Shift)
+        {
+            batch_number--; if (batch_number < 0) batch_number = 10;
+        }
+        else
+        {
+            batch_number++; if (batch_number > 10) batch_number = 0;
+        }
+
+        if (controls != null)
+        {
+            for (int i = 0; i < ROWS; i++)
+            {
+                controls[i, 0].Text = ((i + 1) + (batch_number * ROWS)).ToString();
+            }
+            controls[0, 0].Focus();
+        }
+    }
 
     private string DataFormatName = Application.ProductName;
     private void Control_MouseDown(object sender, MouseEventArgs e)
@@ -382,6 +404,27 @@ public partial class MainForm : Form
                 string temp = target.Text;
                 target.Text = source.Text;
                 source.Text = temp;
+            }
+        }
+    }
+    private void Control_MouseHover(object sender, EventArgs e)
+    {
+        Control control = sender as Control;
+        if (control != null)
+        {
+            try
+            {
+                string text = control.Text;
+                if (!String.IsNullOrEmpty(text))
+                {
+                    long number = (long)double.Parse(text);
+                    string factors_str = Numbers.FactorizeToString(number);
+                    ToolTip.SetToolTip(control, factors_str);
+                }
+            }
+            catch
+            {
+                ToolTip.SetToolTip(control, null);
             }
         }
     }
