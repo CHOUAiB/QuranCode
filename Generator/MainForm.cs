@@ -50,7 +50,6 @@ public partial class MainForm : Form
             {
                 string default_text_mode = m_client.NumerologySystem.TextMode;
                 m_client.BuildSimplifiedBook(default_text_mode, true, false, false, false);
-                UpdateNumerologySystem();
 
                 PopulateTextModeComboBox();
                 if (TextModeComboBox.Items.Count > 0)
@@ -232,28 +231,28 @@ public partial class MainForm : Form
     {
         if (m_client.NumerologySystem != null)
         {
-            m_client.NumerologySystem.AddToLetterLNumber = true;
-            m_client.NumerologySystem.AddToLetterWNumber = true;
-            m_client.NumerologySystem.AddToLetterVNumber = true;
+            m_client.NumerologySystem.AddToLetterLNumber = m_add_positions_to_letter_value;
+            m_client.NumerologySystem.AddToLetterWNumber = m_add_positions_to_letter_value;
+            m_client.NumerologySystem.AddToLetterVNumber = m_add_positions_to_letter_value;
             m_client.NumerologySystem.AddToLetterCNumber = false;
             m_client.NumerologySystem.AddToLetterLDistance = true;
             m_client.NumerologySystem.AddToLetterWDistance = true;
             m_client.NumerologySystem.AddToLetterVDistance = true;
             m_client.NumerologySystem.AddToLetterCDistance = false;
-            m_client.NumerologySystem.AddToWordWNumber = true;
-            m_client.NumerologySystem.AddToWordVNumber = true;
+            m_client.NumerologySystem.AddToWordWNumber = m_add_positions_to_letter_value;
+            m_client.NumerologySystem.AddToWordVNumber = m_add_positions_to_letter_value;
             m_client.NumerologySystem.AddToWordCNumber = false;
             m_client.NumerologySystem.AddToWordWDistance = true;
             m_client.NumerologySystem.AddToWordVDistance = true;
             m_client.NumerologySystem.AddToWordCDistance = false;
-            m_client.NumerologySystem.AddToVerseVNumber = true;
+            m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_letter_value;
             m_client.NumerologySystem.AddToVerseCNumber = false;
             m_client.NumerologySystem.AddToVerseVDistance = true;
             m_client.NumerologySystem.AddToVerseCDistance = false;
             m_client.NumerologySystem.AddToChapterCNumber = false;
 
-            m_client.NumerologySystem.AddDistancesToPrevious = false;
-            m_client.NumerologySystem.AddDistancesToNext = false;
+            m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_letter_value;
+            m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_letter_value;
             m_client.NumerologySystem.AddDistancesWithinChapters = true;
             if (m_client.Book != null)
             {
@@ -272,43 +271,17 @@ public partial class MainForm : Form
     private void AddPositionsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_add_positions_to_letter_value = AddPositionsCheckBox.Checked;
-        if (m_client != null)
-        {
-            if (m_client.NumerologySystem != null)
-            {
-                m_client.NumerologySystem.AddToLetterLNumber = m_add_positions_to_letter_value;
-                m_client.NumerologySystem.AddToLetterWNumber = m_add_positions_to_letter_value;
-                m_client.NumerologySystem.AddToLetterVNumber = m_add_positions_to_letter_value;
-                m_client.NumerologySystem.AddToWordWNumber = m_add_positions_to_letter_value;
-                m_client.NumerologySystem.AddToWordVNumber = m_add_positions_to_letter_value;
-                m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_letter_value;
-            }
-        }
-        AddPositionsCheckBox.Refresh();
+        UpdateNumerologySystem();
     }
     private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_add_distances_to_previous_to_letter_value = AddDistancesToPreviousCheckBox.Checked;
-        if (m_client != null)
-        {
-            if (m_client.NumerologySystem != null)
-            {
-                m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_letter_value;
-            }
-        }
-        AddDistancesToPreviousCheckBox.Refresh();
+        UpdateNumerologySystem();
     }
     private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_add_distances_to_next_to_letter_value = AddDistancesToNextCheckBox.Checked;
-        if (m_client != null)
-        {
-            if (m_client.NumerologySystem != null)
-            {
-                m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_letter_value;
-            }
-        }
-        AddDistancesToNextCheckBox.Refresh();
+        UpdateNumerologySystem();
     }
 
     private enum CombinationMethod { Concatenate, InterlaceAB, InterlaceBA, CrossOverAB, CrossOverBA };
