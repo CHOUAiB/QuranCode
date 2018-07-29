@@ -523,6 +523,48 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.VerseNumericUpDown, "V, V-V, ...");
             this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
             this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
+            // load UserText lable's tooltips 
+            for (int i = 0; i < 8; i++)
+            {
+                string filename = "UserText" + (i + 1) + ".txt";
+                if (Directory.Exists(Globals.USERTEXT_FOLDER))
+                {
+                    string path = Globals.USERTEXT_FOLDER + "/" + filename;
+                    string text = FileHelper.LoadText(path);
+                    string control_name = "UserText" + (i + 1) + "LoadLabel";
+                    Control[] controls = this.GetControls(control_name);
+                    if (controls != null)
+                    {
+                        if (controls.Length == 1)
+                        {
+                            ToolTip.SetToolTip(controls[0], (text.Length > 0) ? text : L[l]["Load"]);
+
+                            controls = this.GetControls(control_name);
+                            if (controls != null)
+                            {
+                                if (controls.Length == 1)
+                                {
+                                    controls[0].ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
+                                    controls[0].BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // save UserText lable's tooltips 
+            for (int i = 0; i < 8; i++)
+            {
+                string control_name = "UserText" + (i + 1) + "SaveLabel";
+                Control[] controls = this.GetControls(control_name);
+                if (controls != null)
+                {
+                    if (controls.Length == 1)
+                    {
+                        ToolTip.SetToolTip(controls[0], L[l]["Save"]);
+                    }
+                }
+            }
         }
         catch
         {
@@ -12431,37 +12473,6 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
-
-        // load UserText lable's tooltips 
-        for (int i = 0; i < 8; i++)
-        {
-            string filename = "UserText" + (i + 1) + ".txt";
-            if (Directory.Exists(Globals.USERTEXT_FOLDER))
-            {
-                string path = Globals.USERTEXT_FOLDER + "/" + filename;
-                string text = FileHelper.LoadText(path);
-                string load_control_name = "UserText" + (i + 1) + "LoadLabel";
-                Control[] controls = this.GetControls(load_control_name);
-                if (controls != null)
-                {
-                    if (controls.Length == 1)
-                    {
-                        ToolTip.SetToolTip(controls[0], (text.Length > 0) ? text : "Load");
-
-                        string save_control_name = "UserText" + (i + 1) + "SaveLabel";
-                        controls = this.GetControls(save_control_name);
-                        if (controls != null)
-                        {
-                            if (controls.Length == 1)
-                            {
-                                controls[0].BackColor = (text.Length > 0) ? Color.Lime : Color.DarkGreen;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
 
         NotifyIcon.Visible = true;
 
@@ -31475,8 +31486,9 @@ public partial class MainForm : Form, ISubscriber
                     {
                         if (controls.Length == 1)
                         {
-                            ToolTip.SetToolTip(controls[0], (text.Length > 0) ? text : "Load");
-                            control.BackColor = (text.Length > 0) ? Color.Lime : Color.DarkGreen;
+                            ToolTip.SetToolTip(controls[0], (text.Length > 0) ? text : L[l]["Load"]);
+                            controls[0].ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
+                            controls[0].BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
                         }
                     }
                 }
@@ -36465,7 +36477,7 @@ public partial class MainForm : Form, ISubscriber
 
             FindByFrequencySumLabel.BackColor = Color.Pink;
             LetterFrequencyListView.BackColor = Color.Pink;
-            LetterFrequencyListView.FullRowSelect = false;
+            //LetterFrequencyListView.FullRowSelect = true;
             LetterFrequencyPanel.BackColor = Color.Pink;
             LetterFrequencyPanel.Refresh();
         }
@@ -36484,7 +36496,7 @@ public partial class MainForm : Form, ISubscriber
 
             FindByFrequencySumLabel.BackColor = Color.LightSteelBlue;
             LetterFrequencyListView.BackColor = Color.LightSteelBlue;
-            LetterFrequencyListView.FullRowSelect = true;
+            //LetterFrequencyListView.FullRowSelect = false;
             LetterFrequencyPanel.BackColor = Color.LightSteelBlue;
             LetterFrequencyPanel.Refresh();
         }
@@ -36689,6 +36701,9 @@ public partial class MainForm : Form, ISubscriber
         if (FindByFrequencyPhraseTextBox.SelectionLength == 0)
         {
             m_current_phrase = FindByFrequencyPhraseTextBox.Text;
+
+            // to factorize MainText value, not LetterFrequencySum
+            CalculateCurrentValue();
         }
 
         BuildLetterFrequencies();
@@ -40199,6 +40214,95 @@ public partial class MainForm : Form, ISubscriber
             //MessageBox.Show(ex.Message, Application.ProductName);
         }
     }
+    private void FactorizeNumber(Label control)
+    {
+        if (control != null)
+        {
+            long value = 0L;
+            string[] parts = control.Text.Split(' ');
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if ((!m_found_verses_displayed) && (control == HeaderLabel))
+                {
+                    if (parts[i].Contains(L[l]["Verse"]))
+                    {
+                        int pos = parts[i].IndexOf(L[l]["Verse"]);
+                        if ((i + 1) < parts.Length)
+                        {
+                            if (long.TryParse(parts[i + 1], out value))
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (long.TryParse(parts[i], out value))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        double d = 0D;
+                        if (double.TryParse(parts[i + 1], out d))
+                        {
+                            value = (long)d;
+                            break;
+                        }
+                    }
+                }
+            }
+            FactorizeValue(value, false);
+        }
+    }
+    private void FactorizeNumber(TextBox control)
+    {
+        if (control != null)
+        {
+            if (control != ValueTextBox)
+            {
+                long value = 0L;
+                try
+                {
+                    string text = control.Text;
+                    if (!String.IsNullOrEmpty(text))
+                    {
+                        if (control.Name.StartsWith("LetterFrequency"))
+                        {
+                            value = Math.Abs((long)double.Parse(text));
+                        }
+                        else if (control.Name.StartsWith("Decimal"))
+                        {
+                            value = Radix.Decode(text, 10L);
+                        }
+                        else if (text.StartsWith(SUM_SYMBOL))
+                        {
+                            text = text.Substring(SUM_SYMBOL.Length, text.Length - SUM_SYMBOL.Length);
+                            value = Radix.Decode(text, 10L);
+                        }
+                        else if (text.StartsWith("4×")) // 4n+1
+                        {
+                            int start = "4×".Length;
+                            int end = text.IndexOf("+");
+                            text = text.Substring(start, end - start);
+                            value = Radix.Decode(text, 10L);
+                        }
+                        else
+                        {
+                            value = Radix.Decode(text, m_radix);
+                        }
+                    }
+
+                    FactorizeValue(value, false);
+                }
+                catch
+                {
+                    //value = -1L; // error
+                }
+            }
+        }
+    }
     private void UpdateNumberKind(long value)
     {
         m_number_kind = Numbers.GetNumberKind(value);
@@ -40352,8 +40456,6 @@ public partial class MainForm : Form, ISubscriber
         SumOfProperDivisorsTextBox.ForeColor = Numbers.GetNumberTypeColor(sum_of_proper_divisors);
         SumOfProperDivisorsTextBox.Refresh();
         ToolTip.SetToolTip(SumOfProperDivisorsTextBox, L[l]["Sum of proper divisors"] + "\r\n" + proper_divisors + " = " + sum_of_proper_divisors);
-
-        DisplayLetterFrequenciesTotals();
     }
 
     private long DecimalPCIndexChainL2R(long number)
@@ -43674,6 +43776,15 @@ public partial class MainForm : Form, ISubscriber
             LetterFrequencySumLabel.Text = sum.ToString();
             LetterFrequencySumLabel.ForeColor = Numbers.GetNumberTypeColor(sum);
             LetterFrequencySumLabel.Refresh();
+
+            if (m_find_by_phrase_letter_frequency)
+            {
+                if (FindByFrequencyPhraseTextBox.SelectionLength > 0)
+                {
+                    FactorizeValue(sum, true);
+                    ValueLabel.Text = L[l]["Freq"];
+                }
+            }
         }
         catch
         {
@@ -43961,95 +44072,6 @@ public partial class MainForm : Form, ISubscriber
             if (int.TryParse(IndexChainLengthTextBox.Text, out length))
             {
                 NumbersOfIndexChainLength(length);
-            }
-        }
-    }
-    private void FactorizeNumber(Label control)
-    {
-        if (control != null)
-        {
-            long value = 0L;
-            string[] parts = control.Text.Split(' ');
-            for (int i = 0; i < parts.Length; i++)
-            {
-                if ((!m_found_verses_displayed) && (control == HeaderLabel))
-                {
-                    if (parts[i].Contains(L[l]["Verse"]))
-                    {
-                        int pos = parts[i].IndexOf(L[l]["Verse"]);
-                        if ((i + 1) < parts.Length)
-                        {
-                            if (long.TryParse(parts[i + 1], out value))
-                            {
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (long.TryParse(parts[i], out value))
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        double d = 0D;
-                        if (double.TryParse(parts[i + 1], out d))
-                        {
-                            value = (long)d;
-                            break;
-                        }
-                    }
-                }
-            }
-            FactorizeValue(value, false);
-        }
-    }
-    private void FactorizeNumber(TextBox control)
-    {
-        if (control != null)
-        {
-            if (control != ValueTextBox)
-            {
-                long value = 0L;
-                try
-                {
-                    string text = control.Text;
-                    if (!String.IsNullOrEmpty(text))
-                    {
-                        if (control.Name.StartsWith("LetterFrequency"))
-                        {
-                            value = Math.Abs((long)double.Parse(text));
-                        }
-                        else if (control.Name.StartsWith("Decimal"))
-                        {
-                            value = Radix.Decode(text, 10L);
-                        }
-                        else if (text.StartsWith(SUM_SYMBOL))
-                        {
-                            text = text.Substring(SUM_SYMBOL.Length, text.Length - SUM_SYMBOL.Length);
-                            value = Radix.Decode(text, 10L);
-                        }
-                        else if (text.StartsWith("4×")) // 4n+1
-                        {
-                            int start = "4×".Length;
-                            int end = text.IndexOf("+");
-                            text = text.Substring(start, end - start);
-                            value = Radix.Decode(text, 10L);
-                        }
-                        else
-                        {
-                            value = Radix.Decode(text, m_radix);
-                        }
-                    }
-
-                    FactorizeValue(value, false);
-                }
-                catch
-                {
-                    //value = -1L; // error
-                }
             }
         }
     }

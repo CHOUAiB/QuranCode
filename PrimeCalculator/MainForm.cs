@@ -182,6 +182,14 @@ public partial class MainForm : Form
             RestoreLocation();
         }
 
+        PLabel.ForeColor = Numbers.NUMBER_TYPE_COLORS[2];
+        APLabel.ForeColor = Numbers.NUMBER_TYPE_COLORS[3];
+        XPLabel.ForeColor = Numbers.NUMBER_TYPE_COLORS[4];
+        CLabel.ForeColor = Numbers.NUMBER_TYPE_COLORS[5];
+        ACLabel.ForeColor = Numbers.NUMBER_TYPE_COLORS[6];
+        XCLabel.ForeColor = Numbers.NUMBER_TYPE_COLORS[7];
+        //DFLabel.ForeColor = Numbers.NUMBER_KIND_COLORS[0];
+        //ABLabel.ForeColor = Numbers.NUMBER_KIND_COLORS[2];
         DisplayDeficientNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[0];
         DisplayPerfectNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[1];
         DisplayAbundantNumbersLabel.BackColor = Numbers.NUMBER_KIND_COLORS[2];
