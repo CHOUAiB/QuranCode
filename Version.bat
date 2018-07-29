@@ -1,11 +1,11 @@
 IF not exist "NET2" NET2.bat
-Tools\Replace\bin\Release\Replace.exe NET2 Version.bat 000 733
-Tools\Version\bin\Release\Version.exe .               6.19.733.4 6.19.733.4 -Tools
+Tools\Replace\bin\Release\Replace.exe NET2 Version.bat 000 729
+Tools\Version\bin\Release\Version.exe .               6.19.729.4 6.19.729.4 -Tools
 Tools\Touch\bin\Release\Touch.exe Build               6:19                  -Tools
 Tools\Touch\bin\Release\Touch.exe Tools                            2009-07-29 7:29
 
 Tools\Touch\bin\Release\Touch.exe .                   6:19                  -Tools
-COPY QuranCode1433.zip        ..\Backup\QuranCode1433_6.19.733.zip
-COPY QuranCode1433.Source.zip ..\Backup\QuranCode1433_6.19.733.Source.zip
+COPY QuranCode1433.zip        ..\Backup\QuranCode1433_6.19.729.zip
+COPY QuranCode1433.Source.zip ..\Backup\QuranCode1433_6.19.729.Source.zip
 MOVE QuranCode1433.zip        ..\Backup\
 MOVE QuranCode1433.Source.zip ..\Backup\
