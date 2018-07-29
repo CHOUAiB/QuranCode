@@ -457,7 +457,7 @@ namespace Model
 
             SetupPartitions(verses);
 
-            SetupBook();
+            SetupBook(false);
         }
         private void SetupPartitions(List<Verse> verses)
         {
@@ -923,14 +923,14 @@ namespace Model
                 }
             }
         }
-        public void SetupBook()
+        public void SetupBook(bool within_chapters)
         {
             SetupNumbers();
-            SetupDistances();
+            SetupDistances(within_chapters);
             SetupWordOccurrences();
             SetupWordFrequencies();
         }
-        private void SetupNumbers()
+        public void SetupNumbers()
         {
             int chapter_number = 1;
             int verse_number = 1;
@@ -975,12 +975,12 @@ namespace Model
                 }
             }
         }
-        private void SetupDistances()
+        public void SetupDistances(bool within_chapters)
         {
-            SetupDistancesToPrevious();
-            SetupDistancesToNext();
+            SetupDistancesToPrevious(within_chapters);
+            SetupDistancesToNext(within_chapters);
         }
-        private void SetupDistancesToPrevious()
+        private void SetupDistancesToPrevious(bool within_chapters)
         {
             // foreach chapter: no repeated chapters so no distances to previous same chapter
 
@@ -1004,17 +1004,18 @@ namespace Model
                 List<Chapter> chapters = this.chapters;
                 for (int c = 0; c < chapters.Count; c++)
                 {
-                    //// if keep distances within chapters then uncomment these lines
-                    //// there are no repeated chapters so there is no chapter_previous_chapter_numbers to clear
-                    //verse_previous_verse_numbers.Clear();
-                    //verse_previous_chapter_numbers.Clear();
-                    //word_previous_word_numbers.Clear();
-                    //word_previous_verse_numbers.Clear();
-                    //word_previous_chapter_numbers.Clear();
-                    //letter_previous_letter_numbers.Clear();
-                    //letter_previous_word_numbers.Clear();
-                    //letter_previous_verse_numbers.Clear();
-                    //letter_previous_chapter_numbers.Clear();
+                    if (within_chapters)
+                    {
+                        verse_previous_verse_numbers.Clear();
+                        verse_previous_chapter_numbers.Clear();
+                        word_previous_word_numbers.Clear();
+                        word_previous_verse_numbers.Clear();
+                        word_previous_chapter_numbers.Clear();
+                        letter_previous_letter_numbers.Clear();
+                        letter_previous_word_numbers.Clear();
+                        letter_previous_verse_numbers.Clear();
+                        letter_previous_chapter_numbers.Clear();
+                    }
 
                     if (chapters[c].Verses != null)
                     {
@@ -1123,7 +1124,7 @@ namespace Model
                 }
             }
         }
-        private void SetupDistancesToNext()
+        private void SetupDistancesToNext(bool within_chapters)
         {
             // foreach chapter: no repeated chapters so no distances to next same chapter
 
@@ -1147,17 +1148,18 @@ namespace Model
                 List<Chapter> chapters = this.chapters;
                 for (int c = chapters.Count - 1; c >= 0; c--)
                 {
-                    //// if keep distances within chapters then uncomment these lines
-                    //// there are no repeated chapters so there is no chapter_next_chapter_numbers to clear
-                    //verse_next_verse_numbers.Clear();
-                    //verse_next_chapter_numbers.Clear();
-                    //word_next_word_numbers.Clear();
-                    //word_next_verse_numbers.Clear();
-                    //word_next_chapter_numbers.Clear();
-                    //letter_next_letter_numbers.Clear();
-                    //letter_next_word_numbers.Clear();
-                    //letter_next_verse_numbers.Clear();
-                    //letter_next_chapter_numbers.Clear();
+                    if (within_chapters)
+                    {
+                        verse_next_verse_numbers.Clear();
+                        verse_next_chapter_numbers.Clear();
+                        word_next_word_numbers.Clear();
+                        word_next_verse_numbers.Clear();
+                        word_next_chapter_numbers.Clear();
+                        letter_next_letter_numbers.Clear();
+                        letter_next_word_numbers.Clear();
+                        letter_next_verse_numbers.Clear();
+                        letter_next_chapter_numbers.Clear();
+                    }
 
                     if (chapters[c].Verses != null)
                     {
@@ -1704,7 +1706,7 @@ namespace Model
                 }
                 this.verses = verses;
 
-                SetupBook();
+                SetupBook(false);
             }
         }
 

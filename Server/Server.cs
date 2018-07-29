@@ -640,7 +640,7 @@ public class Server : IPublisher
                 }
 
                 // update verses/words/letters numbers and distances
-                book.SetupBook();
+                book.SetupBook(false);
             }
         }
     }

@@ -2435,13 +2435,6 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddDistancesWithinVerses = bool.Parse(parts[1].Trim());
-                                                        }
-
-                                                        line = reader.ReadLine();
-                                                        parts = line.Split('=');
-                                                        if (parts.Length >= 2)
-                                                        {
                                                             m_client.NumerologySystem.AddDistancesWithinChapters = bool.Parse(parts[1].Trim());
                                                         }
 
@@ -3087,7 +3080,6 @@ public partial class MainForm : Form, ISubscriber
                         writer.WriteLine("AddToChapterCNumber" + "=" + m_client.NumerologySystem.AddToChapterCNumber.ToString());
                         writer.WriteLine("AddDistancesToPrevious" + "=" + m_client.NumerologySystem.AddDistancesToPrevious.ToString());
                         writer.WriteLine("AddDistancesToNext" + "=" + m_client.NumerologySystem.AddDistancesToNext.ToString());
-                        writer.WriteLine("AddDistancesWithinVerses" + "=" + m_client.NumerologySystem.AddDistancesWithinVerses.ToString());
                         writer.WriteLine("AddDistancesWithinChapters" + "=" + m_client.NumerologySystem.AddDistancesWithinChapters.ToString());
                         writer.WriteLine("AddAll" + "=" + AddAllCheckBox.Checked.ToString());
                         writer.WriteLine("ShowAll" + "=" + m_show_add_controls.ToString());
@@ -27259,17 +27251,6 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void AddDistancesWithinVersesCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-        if (m_client != null)
-        {
-            if (m_client.NumerologySystem != null)
-            {
-                m_client.NumerologySystem.AddDistancesWithinVerses = AddDistancesWithinVersesCheckBox.Checked;
-                CalculateCurrentValue();
-            }
-        }
-    }
     private void AddDistancesWithinChaptersCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         if (m_client != null)
@@ -27277,6 +27258,7 @@ public partial class MainForm : Form, ISubscriber
             if (m_client.NumerologySystem != null)
             {
                 m_client.NumerologySystem.AddDistancesWithinChapters = AddDistancesWithinChaptersCheckBox.Checked;
+                m_client.Book.SetupDistances(m_client.NumerologySystem.AddDistancesWithinChapters);
                 CalculateCurrentValue();
             }
         }
@@ -27389,8 +27371,6 @@ public partial class MainForm : Form, ISubscriber
 
                 m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
                 m_client.NumerologySystem.AddDistancesToNext = AddDistancesToNextCheckBox.Checked;
-
-                m_client.NumerologySystem.AddDistancesWithinVerses = AddDistancesWithinVersesCheckBox.Checked;
                 m_client.NumerologySystem.AddDistancesWithinChapters = AddDistancesWithinChaptersCheckBox.Checked;
             }
         }
@@ -27446,8 +27426,6 @@ public partial class MainForm : Form, ISubscriber
 
                     AddDistancesToPreviousCheckBox.Checked = m_client.NumerologySystem.AddDistancesToPrevious;
                     AddDistancesToNextCheckBox.Checked = m_client.NumerologySystem.AddDistancesToNext;
-
-                    AddDistancesWithinVersesCheckBox.Checked = m_client.NumerologySystem.AddDistancesWithinVerses;
                     AddDistancesWithinChaptersCheckBox.Checked = m_client.NumerologySystem.AddDistancesWithinChapters;
                 }
                 finally

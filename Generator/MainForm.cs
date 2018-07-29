@@ -52,9 +52,6 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_value;
             m_client.NumerologySystem.AddToVerseCNumber = m_add_positions_to_value;
             m_client.NumerologySystem.AddToChapterCNumber = m_add_distances_to_value;
-
-            m_client.NumerologySystem.AddDistancesWithinVerses = false;
-            m_client.NumerologySystem.AddDistancesWithinChapters = false;
         }
     }
     private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -73,9 +70,7 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_value;
 
             m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_value;
-
-            m_client.NumerologySystem.AddDistancesWithinVerses = false;
-            m_client.NumerologySystem.AddDistancesWithinChapters = false;
+            m_client.NumerologySystem.AddDistancesWithinChapters = true;
         }
     }
     private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -94,9 +89,7 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_value;
 
             m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_value;
-
-            m_client.NumerologySystem.AddDistancesWithinVerses = false;
-            m_client.NumerologySystem.AddDistancesWithinChapters = false;
+            m_client.NumerologySystem.AddDistancesWithinChapters = true;
         }
     }
 
@@ -317,6 +310,14 @@ public partial class MainForm : Form
 
     private void GenerateButton_Click(object sender, EventArgs e)
     {
+        AddPositionsCheckBox.Enabled = false;
+        AddDistancesToPreviousCheckBox.Enabled = false;
+        AddDistancesToNextCheckBox.Enabled = false;
+        ConcatenationDirectionLabel.Enabled = false;
+        NumberTypeLabel.Enabled = false;
+        GenerateButton.Enabled = false;
+        SaveButton.Enabled = false;
+
         this.Cursor = Cursors.WaitCursor;
         try
         {
@@ -464,7 +465,10 @@ public partial class MainForm : Form
                                                 WordCountLabel.Text = m_lines.Count + " words";
                                                 WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                                                 WordCountLabel.Refresh();
+
+                                                Application.DoEvents();
                                             }
+
                                             if (m_lines.Count == 0)
                                             {
                                                 WordCountLabel.Text = "00000 words";
@@ -484,6 +488,14 @@ public partial class MainForm : Form
         }
         finally
         {
+            AddPositionsCheckBox.Enabled = true;
+            AddDistancesToPreviousCheckBox.Enabled = true;
+            AddDistancesToNextCheckBox.Enabled = true;
+            ConcatenationDirectionLabel.Enabled = true;
+            NumberTypeLabel.Enabled = true;
+            GenerateButton.Enabled = true;
+            SaveButton.Enabled = true;
+
             this.Cursor = Cursors.Default;
         }
     }
