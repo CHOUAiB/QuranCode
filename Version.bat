@@ -1,7 +1,3 @@
-CD QuranKey
-CALL Version.bat
-CD ..
-
 IF not exist "NET2" NET2.bat
 Tools\Replace\bin\Release\Replace.exe NET2 Version.bat 000 729
 Tools\Version\bin\Release\Version.exe .               6.19.729.4 6.19.729.4 -Tools
