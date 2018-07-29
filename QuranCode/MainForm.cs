@@ -643,12 +643,6 @@ public partial class MainForm : Form, ISubscriber
         InitializeComponent();
         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
-        InstallLanguages();
-        LoadLanguage(DEFAULT_LANGUAGE);
-
-        InstallFonts();
-        AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
-
         using (Graphics graphics = this.CreateGraphics())
         {
             m_dpi_x = graphics.DpiX;
@@ -665,6 +659,12 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
+
+        InstallLanguages();
+        LoadLanguage(DEFAULT_LANGUAGE);
+
+        InstallFonts();
+        AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
 
         FindByTextButton.Enabled = true;
         FindBySimilarityButton.Enabled = false;
@@ -2444,7 +2444,7 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            AddAllCheckBox.Checked = bool.Parse(parts[1].Trim());
+                                                            AddPositionsCheckBox.Checked = bool.Parse(parts[1].Trim());
                                                         }
 
                                                         line = reader.ReadLine();
@@ -3086,7 +3086,7 @@ public partial class MainForm : Form, ISubscriber
                         writer.WriteLine("AddDistancesToPrevious" + "=" + m_client.NumerologySystem.AddDistancesToPrevious.ToString());
                         writer.WriteLine("AddDistancesToNext" + "=" + m_client.NumerologySystem.AddDistancesToNext.ToString());
                         writer.WriteLine("AddDistancesWithinChapters" + "=" + m_client.NumerologySystem.AddDistancesWithinChapters.ToString());
-                        writer.WriteLine("AddAll" + "=" + AddAllCheckBox.Checked.ToString());
+                        writer.WriteLine("AddAll" + "=" + AddPositionsCheckBox.Checked.ToString());
                         writer.WriteLine("ShowAll" + "=" + m_show_add_controls.ToString());
                     }
                     writer.WriteLine("MathsDivisor" + "=" + m_maths_divisor);
@@ -27008,7 +27008,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     try
                     {
-                        AddAllCheckBox.CheckedChanged -= new EventHandler(AddAllCheckBox_CheckedChanged);
+                        AddPositionsCheckBox.CheckedChanged -= new EventHandler(AddPositionsCheckBox_CheckedChanged);
 
                         bool is_checked = (sender as CheckBox).Enabled && (sender as CheckBox).Checked;
 
@@ -27093,7 +27093,7 @@ public partial class MainForm : Form, ISubscriber
                             m_client.NumerologySystem.AddToChapterCNumber = is_checked;
                         }
 
-                        AddAllCheckBox.Checked =
+                        AddPositionsCheckBox.Checked =
                                 AddToLetterLNumberCheckBox.Checked &&
                                 AddToLetterWNumberCheckBox.Checked &&
                                 AddToLetterVNumberCheckBox.Checked &&
@@ -27118,7 +27118,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                     finally
                     {
-                        AddAllCheckBox.CheckedChanged += new EventHandler(AddAllCheckBox_CheckedChanged);
+                        AddPositionsCheckBox.CheckedChanged += new EventHandler(AddPositionsCheckBox_CheckedChanged);
                     }
                 }
             }
@@ -27128,7 +27128,7 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private void AddAllCheckBox_CheckedChanged(object sender, EventArgs e)
+    private void AddPositionsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         UpdatePositionCheckBoxes();
     }
@@ -27156,7 +27156,7 @@ public partial class MainForm : Form, ISubscriber
             for (int i = 0; i < 3; i++) AddToVerseCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
             for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
 
-            bool is_checked = AddAllCheckBox.Checked;
+            bool is_checked = AddPositionsCheckBox.Checked;
 
             AddToLetterLNumberCheckBox.Checked = is_checked;
             AddToLetterWNumberCheckBox.Checked = is_checked;

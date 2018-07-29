@@ -604,7 +604,7 @@ partial class MainForm
             this.ValueLabel = new System.Windows.Forms.Label();
             this.AddDistancesToNextCheckBox = new System.Windows.Forms.CheckBox();
             this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
-            this.AddAllCheckBox = new System.Windows.Forms.CheckBox();
+            this.AddPositionsCheckBox = new System.Windows.Forms.CheckBox();
             this.AddDistancesWithinChaptersCheckBox = new System.Windows.Forms.CheckBox();
             this.DisplayPerfectNumbersLabel = new System.Windows.Forms.Label();
             this.VersesTextBox = new System.Windows.Forms.TextBox();
@@ -9136,7 +9136,7 @@ partial class MainForm
             this.ValuePanel.Controls.Add(this.ValueLabel);
             this.ValuePanel.Controls.Add(this.AddDistancesToNextCheckBox);
             this.ValuePanel.Controls.Add(this.AddDistancesToPreviousCheckBox);
-            this.ValuePanel.Controls.Add(this.AddAllCheckBox);
+            this.ValuePanel.Controls.Add(this.AddPositionsCheckBox);
             this.ValuePanel.Controls.Add(this.AddDistancesWithinChaptersCheckBox);
             this.ValuePanel.Controls.Add(this.DisplayPerfectNumbersLabel);
             this.ValuePanel.Location = new System.Drawing.Point(4, 133);
@@ -9890,18 +9890,18 @@ partial class MainForm
             this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = false;
             this.AddDistancesToPreviousCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckedChanged);
             // 
-            // AddAllCheckBox
+            // AddPositionsCheckBox
             // 
-            this.AddAllCheckBox.BackColor = System.Drawing.Color.Transparent;
-            this.AddAllCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddAllCheckBox.ForeColor = System.Drawing.Color.Maroon;
-            this.AddAllCheckBox.Location = new System.Drawing.Point(7, 210);
-            this.AddAllCheckBox.Name = "AddAllCheckBox";
-            this.AddAllCheckBox.Size = new System.Drawing.Size(172, 16);
-            this.AddAllCheckBox.TabIndex = 140;
-            this.AddAllCheckBox.Text = "√";
-            this.AddAllCheckBox.UseVisualStyleBackColor = false;
-            this.AddAllCheckBox.CheckedChanged += new System.EventHandler(this.AddAllCheckBox_CheckedChanged);
+            this.AddPositionsCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.AddPositionsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddPositionsCheckBox.ForeColor = System.Drawing.Color.Maroon;
+            this.AddPositionsCheckBox.Location = new System.Drawing.Point(7, 210);
+            this.AddPositionsCheckBox.Name = "AddPositionsCheckBox";
+            this.AddPositionsCheckBox.Size = new System.Drawing.Size(172, 16);
+            this.AddPositionsCheckBox.TabIndex = 140;
+            this.AddPositionsCheckBox.Text = "√";
+            this.AddPositionsCheckBox.UseVisualStyleBackColor = false;
+            this.AddPositionsCheckBox.CheckedChanged += new System.EventHandler(this.AddPositionsCheckBox_CheckedChanged);
             // 
             // AddDistancesWithinChaptersCheckBox
             // 
@@ -10753,7 +10753,7 @@ partial class MainForm
     private System.Windows.Forms.Button BookmarkBackwardButton;
     private System.Windows.Forms.TextBox BookmarkTextBox;
     private System.Windows.Forms.Panel ResearchPanel;
-    private System.Windows.Forms.CheckBox AddAllCheckBox;
+    private System.Windows.Forms.CheckBox AddPositionsCheckBox;
     private System.Windows.Forms.CheckBox AddDistancesToNextCheckBox;
     private System.Windows.Forms.CheckBox AddDistancesToPreviousCheckBox;
     private System.Windows.Forms.CheckBox AddDistancesWithinChaptersCheckBox;

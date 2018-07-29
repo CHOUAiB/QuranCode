@@ -19,6 +19,29 @@ public partial class MainForm : Form
     public MainForm()
     {
         InitializeComponent();
+
+        using (Graphics graphics = this.CreateGraphics())
+        {
+            // 100% = 96.0F,   125% = 120.0F,   150% = 144.0F
+            if (graphics.DpiX == 96.0F)
+            {
+                this.IdColumnHeader.Width = 55;
+                this.SentenceColumnHeader.Width = 385;
+                this.ValueColumnHeader.Width = 94;
+                this.WordColumnHeader.Width = 110;
+                this.AutoGenerateButton.Size = new System.Drawing.Size(25, 23);
+                this.SaveButton.Location = new System.Drawing.Point(603, 358);
+            }
+            else if (graphics.DpiX == 120.0F)
+            {
+                this.IdColumnHeader.Width = 70;
+                this.SentenceColumnHeader.Width = 510;
+                this.ValueColumnHeader.Width = 114;
+                this.WordColumnHeader.Width = 165;
+                this.AutoGenerateButton.Size = new System.Drawing.Size(27, 25);
+                this.SaveButton.Location = new System.Drawing.Point(800, 441);
+            }
+        }
     }
     private void MainForm_Load(object sender, EventArgs e)
     {
