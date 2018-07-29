@@ -51,12 +51,15 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToWordCNumber = m_add_positions_to_value;
             m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_value;
             m_client.NumerologySystem.AddToVerseCNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToChapterCNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToChapterCNumber = m_add_distances_to_value;
+
+            m_client.NumerologySystem.AddDistancesWithinVerses = false;
+            m_client.NumerologySystem.AddDistancesWithinChapters = false;
         }
     }
-    private void AddDistancesCheckBox_CheckedChanged(object sender, EventArgs e)
+    private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_add_distances_to_value = AddDistancesCheckBox.Checked;
+        m_add_distances_to_value = AddDistancesToPreviousCheckBox.Checked;
         if (m_client != null)
         {
             m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_value;
@@ -70,7 +73,30 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_value;
 
             m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_value;
+
+            m_client.NumerologySystem.AddDistancesWithinVerses = false;
+            m_client.NumerologySystem.AddDistancesWithinChapters = false;
+        }
+    }
+    private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        m_add_distances_to_value = AddDistancesToNextCheckBox.Checked;
+        if (m_client != null)
+        {
+            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_value;
+
             m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_value;
+
+            m_client.NumerologySystem.AddDistancesWithinVerses = false;
+            m_client.NumerologySystem.AddDistancesWithinChapters = false;
         }
     }
 
@@ -310,7 +336,7 @@ public partial class MainForm : Form
                         column.Text = column.Text.Replace("▼", " ");
                     }
                 }
-                ListView.Columns[0].Text = ListView.Columns[0].Text = "Id ▲";
+                ListView.Columns[0].Text = ListView.Columns[0].Text = "# ▲";
                 ListView.Refresh();
 
                 if (m_client != null)
