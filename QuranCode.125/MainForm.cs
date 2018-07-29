@@ -25490,7 +25490,7 @@ public partial class MainForm : Form, ISubscriber
                     {
                         //text = L[l]["Chapter"] + "  " + verse.Chapter.SortedNumber + " " + L[l][verse.Chapter.TransliteratedName] + "   "
                         text = L[l][verse.Chapter.TransliteratedName] + " " + verse.Chapter.SortedNumber + "   "
-                             + L[l]["Verse"] + " " + verse.NumberInChapter + "/" + verse.Chapter.Verses.Count + "   "
+                             + L[l]["Verse"] + " " + verse.NumberInChapter //+ "/" + verse.Chapter.Verses.Count + "   "
                             //+ L[l]["Station"] + " " + ((verse.Station != null) ? verse.Station.Number : -1) + "   "
                             //+ L[l]["Part"] + " " + ((verse.Part != null) ? verse.Part.Number : -1) + "   "
                             //+ L[l]["Group"] + " " + ((verse.Group != null) ? verse.Group.Number : -1) + "   "
