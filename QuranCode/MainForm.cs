@@ -14083,9 +14083,15 @@ public partial class MainForm : Form, ISubscriber
                     }
                     else // first Application launch
                     {
-                        this.StartPosition = FormStartPosition.CenterScreen;
-                        this.Width = DEFAULT_WINDOW_WIDTH;
-                        this.Height = DEFAULT_WINDOW_HEIGHT;
+                        //this.StartPosition = FormStartPosition.CenterScreen;
+                        //this.Width = DEFAULT_WINDOW_WIDTH;
+                        //this.Height = DEFAULT_WINDOW_HEIGHT;
+                        this.StartPosition = FormStartPosition.Manual;
+                        this.Top = 0;
+                        this.Left = 79;
+                        this.Width = 1290;
+                        this.Height = 770;
+                        //this.WindowState = FormWindowState.Maximized;
 
                         ApplyFont(DEFAULT_QURAN_FONT_NAME, DEFAULT_QURAN_FONT_SIZE);
                         m_translation_font = new Font(DEFAULT_TRANSALTION_FONT_NAME, DEFAULT_TRANSALTION_FONT_SIZE);
