@@ -1923,7 +1923,7 @@ public class Client : IPublisher, ISubscriber
     public void SortLetterStatistics(StatisticSortMethod sort_method)
     {
         LetterStatistic.SortMethod = sort_method;
-        m_letter_statistics.Sort();
+
         if (LetterStatistic.SortOrder == StatisticSortOrder.Ascending)
         {
             LetterStatistic.SortOrder = StatisticSortOrder.Descending;
@@ -1932,6 +1932,8 @@ public class Client : IPublisher, ISubscriber
         {
             LetterStatistic.SortOrder = StatisticSortOrder.Ascending;
         }
+        
+        m_letter_statistics.Sort();
     }
     /// <summary>
     /// Calculate letter statistics for the given text.

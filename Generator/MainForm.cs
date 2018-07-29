@@ -4,13 +4,16 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Text;
 using System.IO;
+using System.Threading;
 using Model;
 
 public partial class MainForm : Form
 {
+    private string m_numerology_system_name = "Simplified29_Alphabet_Primes1";
+
     private Client m_client = null;
     private List<List<Word>> m_word_subsets = null;
-    private string m_numerology_system_name = "Simplified29_Alphabet_Primes1";
+    private List<Line> m_lines = null;
 
     public MainForm()
     {
@@ -27,32 +30,47 @@ public partial class MainForm : Form
             }
         }
 
+        m_lines = new List<Line>();
+
         UpdateNumberType(NumberTypeLabel);
     }
-    private void AddPositionsAndDistancesCheckBox_CheckedChanged(object sender, EventArgs e)
+
+    private bool m_add_positions_to_value = false;
+    private bool m_add_distances_to_value = false;
+    private void AddPositionsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        bool is_checked = AddPositionsAndDistancesCheckBox.Checked;
+        m_add_positions_to_value = AddPositionsCheckBox.Checked;
         if (m_client != null)
         {
-            m_client.NumerologySystem.AddToLetterLNumber = is_checked;
-            m_client.NumerologySystem.AddToLetterWNumber = is_checked;
-            m_client.NumerologySystem.AddToLetterVNumber = is_checked;
-            m_client.NumerologySystem.AddToLetterCNumber = is_checked;
-            m_client.NumerologySystem.AddToLetterLDistance = is_checked;
-            m_client.NumerologySystem.AddToLetterWDistance = is_checked;
-            m_client.NumerologySystem.AddToLetterVDistance = is_checked;
-            m_client.NumerologySystem.AddToLetterCDistance = is_checked;
-            m_client.NumerologySystem.AddToWordWNumber = is_checked;
-            m_client.NumerologySystem.AddToWordVNumber = is_checked;
-            m_client.NumerologySystem.AddToWordCNumber = is_checked;
-            m_client.NumerologySystem.AddToWordWDistance = is_checked;
-            m_client.NumerologySystem.AddToWordVDistance = is_checked;
-            m_client.NumerologySystem.AddToWordCDistance = is_checked;
-            m_client.NumerologySystem.AddToVerseVNumber = is_checked;
-            m_client.NumerologySystem.AddToVerseCNumber = is_checked;
-            m_client.NumerologySystem.AddToVerseVDistance = is_checked;
-            m_client.NumerologySystem.AddToVerseCDistance = is_checked;
-            m_client.NumerologySystem.AddToChapterCNumber = is_checked;
+            m_client.NumerologySystem.AddToLetterLNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToLetterWNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToLetterVNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToLetterCNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToWordWNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToWordVNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToWordCNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToVerseCNumber = m_add_positions_to_value;
+            m_client.NumerologySystem.AddToChapterCNumber = m_add_positions_to_value;
+        }
+    }
+    private void AddDistancesCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        m_add_distances_to_value = AddDistancesCheckBox.Checked;
+        if (m_client != null)
+        {
+            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_value;
+
+            m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_value;
+            m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_value;
         }
     }
 
@@ -150,145 +168,286 @@ public partial class MainForm : Form
         }
     }
 
+    public enum SortMethod { ById, BySentence, ByValue, ByWord }
+    public enum SortOrder { Ascending, Descending }
+    public class Line : IComparable<Line>
+    {
+        public int Id;
+        public string Sentence;
+        public long Value;
+        public string Word;
+
+        public static SortMethod SortMethod;
+        public static SortOrder SortOrder;
+        public int CompareTo(Line obj)
+        {
+            if (SortOrder == SortOrder.Ascending)
+            {
+                if (SortMethod == SortMethod.ById)
+                {
+                    return this.Id.CompareTo(obj.Id);
+                }
+                else if (SortMethod == SortMethod.BySentence)
+                {
+                    return this.Sentence.CompareTo(obj.Sentence);
+                }
+                else if (SortMethod == SortMethod.ByValue)
+                {
+                    return this.Value.CompareTo(obj.Value);
+                }
+                else if (SortMethod == SortMethod.ByWord)
+                {
+                    return this.Word.CompareTo(obj.Word);
+                }
+                else
+                {
+                    return this.Id.CompareTo(obj.Id);
+                }
+            }
+            else
+            {
+                if (SortMethod == SortMethod.ById)
+                {
+                    return obj.Id.CompareTo(this.Id);
+                }
+                else if (SortMethod == SortMethod.BySentence)
+                {
+                    return obj.Sentence.CompareTo(this.Sentence);
+                }
+                else if (SortMethod == SortMethod.ByValue)
+                {
+                    return obj.Value.CompareTo(this.Value);
+                }
+                else if (SortMethod == SortMethod.ByWord)
+                {
+                    return obj.Word.CompareTo(this.Word);
+                }
+                else
+                {
+                    return obj.Id.CompareTo(this.Id);
+                }
+            }
+        }
+    }
+    private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
+    {
+        if (ListView != null)
+        {
+            try
+            {
+                // sort method
+                Line.SortMethod = (SortMethod)e.Column;
+
+                // sort order
+                if (Line.SortOrder == SortOrder.Ascending)
+                {
+                    Line.SortOrder = SortOrder.Descending;
+                }
+                else
+                {
+                    Line.SortOrder = SortOrder.Ascending;
+                }
+
+                // sort marker
+                string sort_marker = (Line.SortOrder == SortOrder.Ascending) ? "▲" : "▼";
+                foreach (ColumnHeader column in ListView.Columns)
+                {
+                    if (column.Text.EndsWith("▲"))
+                    {
+                        column.Text = column.Text.Replace("▲", " ");
+                    }
+                    else if (column.Text.EndsWith("▼"))
+                    {
+                        column.Text = column.Text.Replace("▼", " ");
+                    }
+                }
+                ListView.Columns[e.Column].Text = ListView.Columns[e.Column].Text.Replace("  ", " " + sort_marker);
+                ListView.Refresh();
+
+                // sort
+                m_lines.Sort();
+
+                DisplayLines();
+            }
+            catch
+            {
+                // log exception
+            }
+        }
+    }
+    private void DisplayLines()
+    {
+        ListView.Items.Clear();
+        for (int i = 0; i < m_lines.Count; i++)
+        {
+            string[] parts = new string[4];
+            parts[0] = m_lines[i].Id.ToString();
+            parts[1] = m_lines[i].Sentence.ToString();
+            parts[2] = m_lines[i].Value.ToString();
+            parts[3] = m_lines[i].Word;
+            ListView.Items.Add(new ListViewItem(parts, i));
+        }
+    }
+
     private void GenerateButton_Click(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            ListView.Items.Clear();
-
-            if (m_client != null)
+            if (ListView != null)
             {
-                if (m_client.Book != null)
+                ListView.Items.Clear();
+                Line.SortMethod = (SortMethod)0;
+                Line.SortOrder = SortOrder.Ascending;
+                foreach (ColumnHeader column in ListView.Columns)
                 {
-                    if (m_client.Book.Chapters[0] != null)
+                    if (column.Text.EndsWith("▲"))
                     {
-                        List<Verse> verses = m_client.Book.Chapters[0].Verses;
-                        if (verses != null)
+                        column.Text = column.Text.Replace("▲", " ");
+                    }
+                    else if (column.Text.EndsWith("▼"))
+                    {
+                        column.Text = column.Text.Replace("▼", " ");
+                    }
+                }
+                ListView.Columns[0].Text = ListView.Columns[0].Text = "Id ▲";
+                ListView.Refresh();
+
+                if (m_client != null)
+                {
+                    if (m_client.NumerologySystem.TextMode == "Simplified29")
+                    {
+                        if (m_client.Book != null)
                         {
-                            string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
-                            if (File.Exists(filename))
+                            if (m_client.Book.Chapters[0] != null)
                             {
-                                // load unique quran words
-                                List<string> quran_word_texts = FileHelper.LoadLines(filename);
-
-                                // setup all quran words from quran verses
-                                List<Word> words = new List<Word>();
-                                foreach (Verse verse in verses)
+                                List<Verse> verses = m_client.Book.Chapters[0].Verses;
+                                if (verses != null)
                                 {
-                                    words.AddRange(verse.Words);
-                                }
-
-                                //// calculate values of first 7 words in the Quran
-                                //List<Word> first_7_words = new List<Word>();
-                                //for (int w = 0; w < 7; w++)
-                                //{
-                                //    first_7_words.Add(words[w]);
-                                //}
-                                //List<long> first_7_word_values = new List<long>();
-                                //foreach (Word word in first_7_words)
-                                //{
-                                //    long word_value = m_client.CalculateValue(words);
-                                //    first_7_word_values.Add(word_value);
-                                //}
-
-                                // find all 7-word 29-letter word subsets
-                                WordSubsetFinder word_subset_finder = new WordSubsetFinder(words);
-                                m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
-                                if (m_word_subsets != null)
-                                {
-                                    for (int i = 0; i < m_word_subsets.Count; i++)
+                                    string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
+                                    if (File.Exists(filename))
                                     {
-                                        // calculate word values
-                                        List<long> sentnece_word_values = new List<long>();
-                                        foreach (Word word in m_word_subsets[i])
+                                        // load unique quran words
+                                        List<string> quran_word_texts = FileHelper.LoadLines(filename);
+
+                                        // setup all quran words from quran verses
+                                        List<Word> words = new List<Word>();
+                                        foreach (Verse verse in verses)
                                         {
-                                            long word_value = m_client.CalculateValue(word);
-                                            sentnece_word_values.Add(word_value);
+                                            words.AddRange(verse.Words);
                                         }
 
-                                        // calculate letter values
-                                        List<long> sentnece_letter_values = new List<long>();
-                                        foreach (Word word in m_word_subsets[i])
+                                        // find all 7-word 29-letter word subsets
+                                        WordSubsetFinder word_subset_finder = new WordSubsetFinder(words);
+                                        m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
+                                        if (m_word_subsets != null)
                                         {
-                                            foreach (Letter letter in word.Letters)
+                                            m_lines.Clear();
+
+                                            for (int i = 0; i < m_word_subsets.Count; i++)
                                             {
-                                                long letter_value = m_client.CalculateValue(letter);
-                                                sentnece_letter_values.Add(letter_value);
-                                            }
-                                        }
-
-                                        // calculate word subset value (for display puroses only)
-                                        long sum = 0L;
-                                        foreach (long value in sentnece_word_values)
-                                        {
-                                            sum += value;
-                                        }
-
-                                        // build sentence from word subset
-                                        StringBuilder str = new StringBuilder();
-                                        foreach (Word word in m_word_subsets[i])
-                                        {
-                                            str.Append(word.Text + " ");
-                                        }
-                                        if (str.Length > 1)
-                                        {
-                                            str.Remove(str.Length - 1, 1);
-                                        }
-
-                                        // generate Quran words
-                                        string generated_word = "";
-                                        if (m_client.NumerologySystem != null)
-                                        {
-                                            Dictionary<char, long> letter_dictionary = m_client.NumerologySystem.LetterValues;
-                                            if (letter_dictionary != null)
-                                            {
-                                                List<char> numerology_letters = new List<char>(letter_dictionary.Keys);
-                                                List<long> numerology_letter_values = new List<long>(letter_dictionary.Values);
-
-                                                // concatenate values of numerology letters with sentence letters
-                                                for (int j = 0; j < numerology_letters.Count; j++)
+                                                // calculate word values
+                                                long sentence_word_value = 0L;
+                                                foreach (Word word in m_word_subsets[i])
                                                 {
-                                                    long number = 0L;
-                                                    string concatenation = "";
-                                                    if (m_concatenation_direction == RightToLeft.Yes)
-                                                    {
-                                                        concatenation = sentnece_letter_values[j].ToString() + numerology_letter_values[j].ToString();
-                                                    }
-                                                    else
-                                                    {
-                                                        concatenation = numerology_letter_values[j].ToString() + sentnece_letter_values[j].ToString();
-                                                    }
+                                                    sentence_word_value += m_client.CalculateValue(word);
+                                                    sentence_word_value += m_client.CalculateValue(word.Verse);
+                                                    sentence_word_value += m_client.CalculateValue(word.Verse.Chapter);
+                                                }
 
-                                                    // generate word from letter value concatenation matching number type
-                                                    if (long.TryParse(concatenation, out number))
+                                                // calculate letter values
+                                                List<long> sentnece_letter_values = new List<long>();
+                                                foreach (Word word in m_word_subsets[i])
+                                                {
+                                                    foreach (Letter letter in word.Letters)
                                                     {
-                                                        if (Numbers.IsNumberType(number, m_number_type))
+                                                        long letter_value = m_client.CalculateValue(letter);
+                                                        if (m_add_distances_to_value)
                                                         {
-                                                            // mod 29 to select letter
-                                                            int index = ((int)number) % numerology_letters.Count;
-                                                            generated_word += numerology_letters[index];
+                                                            letter_value += m_client.CalculateValue(letter.Word);
+                                                            letter_value += m_client.CalculateValue(letter.Word.Verse);
+                                                            letter_value += m_client.CalculateValue(letter.Word.Verse.Chapter);
+                                                        }
+                                                        sentnece_letter_values.Add(letter_value);
+                                                    }
+                                                }
+
+                                                // build sentence from word subset
+                                                StringBuilder str = new StringBuilder();
+                                                foreach (Word word in m_word_subsets[i])
+                                                {
+                                                    str.Append(word.Text + " ");
+                                                }
+                                                if (str.Length > 1)
+                                                {
+                                                    str.Remove(str.Length - 1, 1);
+                                                }
+
+                                                // generate Quran words
+                                                string generated_word = "";
+                                                if (m_client.NumerologySystem != null)
+                                                {
+                                                    Dictionary<char, long> letter_dictionary = m_client.NumerologySystem.LetterValues;
+                                                    if (letter_dictionary != null)
+                                                    {
+                                                        List<char> numerology_letters = new List<char>(letter_dictionary.Keys);
+                                                        List<long> numerology_letter_values = new List<long>(letter_dictionary.Values);
+
+                                                        // concatenate values of numerology letters with sentence letters
+                                                        for (int j = 0; j < numerology_letters.Count; j++)
+                                                        {
+                                                            long number = 0L;
+                                                            string concatenation = "";
+                                                            if (m_concatenation_direction == RightToLeft.Yes)
+                                                            {
+                                                                concatenation = sentnece_letter_values[j].ToString() + numerology_letter_values[j].ToString();
+                                                            }
+                                                            else
+                                                            {
+                                                                concatenation = numerology_letter_values[j].ToString() + sentnece_letter_values[j].ToString();
+                                                            }
+
+                                                            // generate word from letter value concatenation matching number type
+                                                            if (long.TryParse(concatenation, out number))
+                                                            {
+                                                                if (Numbers.IsNumberType(number, m_number_type))
+                                                                {
+                                                                    // mod 29 to select letter
+                                                                    int index = ((int)number) % numerology_letters.Count;
+                                                                    generated_word += numerology_letters[index];
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
+
+                                                // display sentence if it generates a valid quran word
+                                                if (quran_word_texts.Contains(generated_word))
+                                                {
+                                                    Line line = new Line();
+                                                    line.Id = m_lines.Count + 1;
+                                                    line.Sentence = str.ToString();
+                                                    line.Value = sentence_word_value;
+                                                    line.Word = generated_word;
+                                                    m_lines.Add(line);
+                                                }
+
+                                                // display progress
+                                                this.Text = "Book Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
+                                                ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
+                                                WordCountLabel.Text = m_lines.Count + " words";
+                                                WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
+                                                WordCountLabel.Refresh();
                                             }
-                                        }
+                                            if (m_lines.Count == 0)
+                                            {
+                                                WordCountLabel.Text = "00000 words";
+                                                WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(0);
+                                                WordCountLabel.Refresh();
+                                            }
 
-                                        // display sentence if it generates a valid quran word
-                                        if (quran_word_texts.Contains(generated_word))
-                                        {
-                                            string[] parts = new string[3];
-                                            parts[0] = str.ToString();
-                                            parts[1] = sum.ToString();
-                                            parts[2] = generated_word;
-                                            ListView.Items.Add(new ListViewItem(parts, i));
+                                            DisplayLines();
                                         }
-
-                                        // display progress
-                                        this.Text = "Book Generator: " + m_word_subsets.Count + " sentences found";
-                                        WordCountLabel.Text = ListView.Items.Count + " valid words";
-                                        WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(ListView.Items.Count);
-                                        WordCountLabel.Refresh();
                                     }
                                 }
                             }
@@ -307,24 +466,27 @@ public partial class MainForm : Form
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            StringBuilder str = new StringBuilder();
-            foreach (ListViewItem item in ListView.Items)
+            if (ListView != null)
             {
-                if (item != null)
+                StringBuilder str = new StringBuilder();
+                for (int i = 0; i < ListView.Items.Count; i++)
                 {
-                    if ((item.SubItems != null) && (item.SubItems.Count == 3))
+                    if (ListView.Items[i] != null)
                     {
-                        str.AppendLine(item.SubItems[0].Text + "\t" + item.SubItems[1].Text + "\t" + item.SubItems[2].Text);
+                        if ((ListView.Items[i].SubItems != null) && (ListView.Items[i].SubItems.Count == 4))
+                        {
+                            str.AppendLine(ListView.Items[i].SubItems[0].Text + "\t" + ListView.Items[i].SubItems[1].Text + "\t" + ListView.Items[i].SubItems[2].Text + "\t" + ListView.Items[i].SubItems[3].Text);
+                        }
                     }
                 }
-            }
 
-            string filename = "GenerateWords.txt";
-            if (Directory.Exists(Globals.STATISTICS_FOLDER))
-            {
-                string path = Globals.STATISTICS_FOLDER + "/" + filename;
-                FileHelper.SaveText(path, str.ToString());
-                FileHelper.DisplayFile(path);
+                string filename = "GenerateWords.txt";
+                if (Directory.Exists(Globals.STATISTICS_FOLDER))
+                {
+                    string path = Globals.STATISTICS_FOLDER + "/" + filename;
+                    FileHelper.SaveText(path, str.ToString());
+                    FileHelper.DisplayFile(path);
+                }
             }
         }
         finally

@@ -31583,7 +31583,7 @@ public partial class MainForm : Form, ISubscriber
                     DisplayLetterFrequencies();
 
                     // choose sort marker
-                    string sort_marker = (LetterStatistic.SortOrder == StatisticSortOrder.Ascending) ? "▼" : "▲";
+                    string sort_marker = (LetterStatistic.SortOrder == StatisticSortOrder.Ascending) ? "▲" : "▼";
 
                     // remove all sort markers
                     foreach (ColumnHeader column in listview.Columns)

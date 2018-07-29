@@ -138,6 +138,16 @@
         ddFm2fuM1ZEkWnozRHN9kfg5wyx+ffX/dv4bWB/gO97joJ0AAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>12, 6</value>
+  </metadata>
+  <data name="GenerateButton.ToolTip" xml:space="preserve">
+    <value>Generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
+There are 79940 ways of choosing 7 words with 29 letters.
+R2L or L2R concatenate each letter value with the letter values of the Primalogy system.
+If the result is P, AP, XP, C, AC, XC, O,, or E, then add the letter to the candidate word.
+After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.</value>
+  </data>
   <data name="SaveButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -154,9 +164,6 @@
         TkSuQmCC
 </value>
   </data>
-  <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>127, 17</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>52</value>
   </metadata>
