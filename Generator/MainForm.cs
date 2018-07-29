@@ -227,7 +227,9 @@ public partial class MainForm : Form
                                         //    {
                                         //        if (Numbers.IsNumberType(number7, m_number_type))
                                         //        {
-                                        //            text7 += first_7_words[j];
+                                        //            // mod 7 to select word
+                                        //            int index = ((int)number7) % first_7_words.Count;
+                                        //            text7 += first_7_words[index];
                                         //        }
                                         //    }
                                         //}
@@ -286,7 +288,9 @@ public partial class MainForm : Form
                                                     {
                                                         if (Numbers.IsNumberType(number, m_number_type))
                                                         {
-                                                            text += numerology_letters[j];
+                                                            // mod 29 to select letter
+                                                            int index = ((int)number) % numerology_letters.Count;
+                                                            text += numerology_letters[index];
                                                         }
                                                     }
                                                 }
