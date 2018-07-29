@@ -111,7 +111,7 @@ public partial class MainForm : Form
         }
         catch
         {
-            // do nothing
+            // silence exception
         }
     }
     private void PopulateTextModeComboBox()

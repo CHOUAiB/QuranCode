@@ -101,7 +101,7 @@ static class Program
         }
         catch
         {
-            // do nothing
+            // silence exception
         }
     }
 }

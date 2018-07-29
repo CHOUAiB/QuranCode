@@ -23146,20 +23146,6 @@ public partial class MainForm : Form, ISubscriber
     }
     private void TabControl_Enter(object sender, EventArgs e)
     {
-        this.AcceptButton = null;
-
-        FindByTextButton.Enabled = false;
-        FindBySimilarityButton.Enabled = false;
-        FindByNumbersButton.Enabled = false;
-        FindByFrequencyButton.Enabled = false;
-
-        ResetFindByTextSearchBlockSizeLabels();
-        ResetFindByTextSearchTypeLabels();
-        ResetFindBySimilarityResultTypeLabels();
-        ResetFindByNumbersResultTypeLabels();
-        ResetFindByFrequencyResultTypeLabels();
-
-        UpdateFindByNumbersResultType();
     }
     private Font m_translation_font = null;
     private Color m_translation_color = DEFAULT_TRANSALTION_FONT_COLOR;
@@ -32277,18 +32263,20 @@ public partial class MainForm : Form, ISubscriber
     }
     private void SearchGroupBox_Leave(object sender, EventArgs e)
     {
-        if (L != null)
-        {
-            if (!String.IsNullOrEmpty(l))
-            {
-                if (L[l].Count > 0)
-                {
-                    ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
-                    WordsListBoxLabel.Visible = false;
-                    WordsListBox.Visible = false;
-                }
-            }
-        }
+        this.AcceptButton = null;
+
+        //if (L != null)
+        //{
+        //    if (!String.IsNullOrEmpty(l))
+        //    {
+        //        if (L[l].Count > 0)
+        //        {
+        //            ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
+        //            WordsListBoxLabel.Visible = false;
+        //            WordsListBox.Visible = false;
+        //        }
+        //    }
+        //}
     }
     private void ClearFindMatches()
     {
@@ -39587,7 +39575,7 @@ public partial class MainForm : Form, ISubscriber
     private string RemoveVerseEndMarks(string text)
     {
         // RTL script misplaces brackets
-        return text; // do nothing for now
+        return text; // for now
 
         //if (string.IsNullOrEmpty(text)) return null;
         //while (text.Contains(Verse.OPEN_BRACKET) || text.Contains(Verse.CLOSE_BRACKET))
