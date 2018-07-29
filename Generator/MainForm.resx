@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GenerateButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="GenerateWordsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAANFSURBVDhPXZNrTJtVGMePW8dAoYlOk2UxZvJxH0xc
@@ -141,30 +141,15 @@
   <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>12, 6</value>
   </metadata>
-  <data name="GenerateButton.ToolTip" xml:space="preserve">
+  <data name="GenerateWordsButton.ToolTip" xml:space="preserve">
     <value>Generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
 There are 79940 ways of choosing 7 words with 29 letters.
 R2L or L2R interlace or concatenate each letter value with the letter values of the Primalogy system.
 If the result is P, AP, XP, C, AC or XC, then add the letter to the candidate word.
-After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.</value>
+After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.
+Results are saved in the Statistics folder.</value>
   </data>
-  <data name="SaveButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAIvSURBVDhPldHdS1NxGAfw37/QfTdBF93W1BjOxWxwyjWU
-        WcOwIno7kWZpuswXUqxMoy3dIFvi1Emr1UZsppEv4AtSIsbSmrnWTtYmG2dvupnsDE7fNRhi3fjjufx8
-        H57f85BYPLmjImux5PBQHGW3rVst0eemUH9f4Kl+Vaf9pVEz91vdzU3L9XVfaqoXrl9zAJPIGgc6PsZr
-        Ozf5/72NTU5WMn6y5DUKmISjnOVVBIH2tvC/HjoQ2jikeCsQ0MoTZmASjHCmZ0EEmpt82wJp/d0byZLb
-        6255ihUDwIQNJQw9fgRuqr5tDWT0J1dgH2WpqnQWFRqASSCY6HrsRaDi6kImsFXPOLy7JSaanpPL9cDE
-        zyY6O1YQoC/NpQPb9Njsj125fadOTxYU6IBTgQftntERfniIP3v+g/LMNHaCX2JuTILef/XEceU7itKk
-        Al7/7zstrkE7b7XwA8akRh1rvcdiAfgl5i4vc6T1sSKbVNoGTFZ8sYZ6p/kF32vgdNq4rLQyU4pzqtIr
-        jSldaJMeNUskLcDE8zOqqlnsNfAdj+LoDU0IyRJR81/9i26Wrr57WGaFFuUbxeJGYOJiwri5/gmfngQB
-        6Mu1D5eYILMavXFbky0xivL7s/O6Rbm1wGTJzZaXfdSo16H3Ss17DlAvB6fsIzOjE7PT7+ePyJUCcU9O
-        Xvd+YZdQWAVMPi/7bW+YixemcHncEtfBvrFB7AS/xNxojII+mFMBTBxO347qD3GKHZe/W9uaAAAAAElF
-        TkSuQmCC
-</value>
-  </data>
-  <data name="AutoGenerateButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="AutoGenerateWordsButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAANFSURBVDhPXZNrTJtVGMePW8dAoYlOk2UxZvJxH0xc
@@ -184,12 +169,15 @@ After processing all 29 letters, if the candidate word is a Quran word, then add
         ddFm2fuM1ZEkWnozRHN9kfg5wyx+ffX/dv4bWB/gO97joJ0AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="AutoGenerateButton.ToolTip" xml:space="preserve">
+  <data name="AutoGenerateWordsButton.ToolTip" xml:space="preserve">
     <value>Auto generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
 There are 79940 ways of choosing 7 words with 29 letters.
 R2L or L2R interlace or concatenate each letter value with the letter values of the Primalogy system.
 If the result is P, AP, XP, C, AC or XC, then add the letter to the candidate word.
-After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.</value>
+After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.
+Results are saved in the Statistics folder.
+
+Click this button with SHIFT key to process all numerology systems which may 12 to 24 hours.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>52</value>
