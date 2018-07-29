@@ -273,9 +273,6 @@
         nmQ4AAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="WordsListBoxContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>106, 0</value>
-  </metadata>
   <data name="InspectChaptersLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
@@ -293,25 +290,14 @@
         RbqEAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="WordsListBoxContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>106, 0</value>
+  </metadata>
   <data name="GoldenRatioScopeLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAACCAYAAABR7VzxAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAdSURBVBhXY7hw+9V/ZLzhyL3/IEysOAOxCnEZDACBInBp
         J15D6QAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="GoldenRatioTypeLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAACCAYAAABR7VzxAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAUSURBVBhXYxBzb/pPCWagRDNILwD9tDvB8rpAcwAAAABJ
-        RU5ErkJggg==
-</value>
-  </data>
-  <data name="GoldenRatioOrderLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAADCAYAAACasY9UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAdSURBVBhXY3gro/KfGGzvceY/NsxAjGaQGpoZAABqB2rt
-        YyT9IgAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="GenerateSentencesLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -324,6 +310,13 @@
         C4SfIPar7Oq0FS5IPqsr5EnOkpxzfeMgvXEsDqb6t2CGKHOIhrjJ1pSZi0RkiMO2NfrBCtcyxVCr+/QO
         eTOXj11j3DWy0Kl3XgLiG9/p/jrrJbJ4eXWvIB2fiXnbuccKkDBOVIhZG/HXJf5XOJCDQcQS/41f94sP
         IoD+c4YAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="GoldenRatioTypeLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAACCAYAAABR7VzxAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAUSURBVBhXYxBzb/pPCWagRDNILwD9tDvB8rpAcwAAAABJ
+        RU5ErkJggg==
 </value>
   </data>
   <data name="WordWrapLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -378,6 +371,13 @@
         9NBfqO/yxpt0hqjHcB4Jdw98T+phPL2ZfXxyQ0mi+oz7GnZpX13cYRokjiHu0MN5rxb642vYsh6o/YUX
         Z7dou+s2mmwt+xGx3AJxZGX5LagJiuv3a6u1HTWrTPoT1dAdqmz8pwTzm9sPr1jWdnB51d8FVXuglu43
         bbv94d/dlf8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="GoldenRatioOrderLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAADCAYAAACasY9UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAdSURBVBhXY3gro/KfGGzvceY/NsxAjGaQGpoZAABqB2rt
+        YyT9IgAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="ZoomInLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -668,9 +668,6 @@
         RbqEAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="LetterFrequencyContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>109, 27</value>
-  </metadata>
   <data name="ValueInspectLabel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
@@ -917,8 +914,11 @@
   <metadata name="FontDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>639, -1</value>
   </metadata>
+  <metadata name="LetterFrequencyContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>757, -1</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>76</value>
+    <value>43</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

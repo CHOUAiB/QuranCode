@@ -11442,8 +11442,9 @@ public class Server : IPublisher
                 }
                 if (query.Value > 0L)
                 {
-                    limit = (int)(query.Value / 114L);
+                    limit = (int)(query.Value / 7L);
                 }
+                if (limit == 0) limit = 1;
 
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
                 {
@@ -11514,8 +11515,9 @@ public class Server : IPublisher
                 }
                 if (query.Value > 0L)
                 {
-                    limit = (int)(query.Value / 114L);
+                    limit = (int)(query.Value / 7L);
                 }
+                if (limit == 0) limit = 1;
 
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
                 {
@@ -11986,8 +11988,9 @@ public class Server : IPublisher
                 }
                 if (query.Value > 0L)
                 {
-                    limit = (int)(query.Value / 449L);
+                    limit = (int)(query.Value / 114L);
                 }
+                if (limit == 0) limit = 1;
 
                 for (int r = 1; r <= limit; r++) // try all possible range lengths
                 {
@@ -12115,8 +12118,9 @@ public class Server : IPublisher
                             //}
                             //if (query.Value > 0L)
                             //{
-                            //    limit = (int)(query.Value / 10L);
+                            //    limit = (int)(query.Value / 506L);
                             //}
+                            //if (limit == 0) limit = 1;
 
                             for (int r = 1; r <= limit; r++) // try all possible range lengths
                             {

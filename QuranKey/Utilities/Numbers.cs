@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.IO;
-using System.Security.Cryptography;
 
 public enum NumberType
 {
@@ -47,8 +46,8 @@ public static class Numbers
         /* NumberType.AdditivePrime */          Color.Blue,
         /* NumberType.NonAdditivePrime */       Color.Green,
         /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.Brown,
-        /* NumberType.NonAdditiveComposite */   Color.Black,
+        /* NumberType.AdditiveComposite */      Color.FromArgb(240,32,32),
+        /* NumberType.NonAdditiveComposite */   Color.FromArgb(128,32,32),
         /* NumberType.Odd */                    Color.Black,
         /* NumberType.Even */                   Color.Black,
         /* NumberType.Square */                 Color.Black,
@@ -70,8 +69,8 @@ public static class Numbers
         /* NumberType.AdditivePrime */          Color.FromArgb(224, 224, 255),
         /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
         /* NumberType.Composite */              Color.Black,
-        /* NumberType.AdditiveComposite */      Color.FromArgb(224, 192, 192),
-        /* NumberType.NonAdditiveComposite */   Color.FromArgb(208, 208, 208),
+        /* NumberType.AdditiveComposite */      Color.FromArgb(255, 224, 224),
+        /* NumberType.NonAdditiveComposite */   Color.FromArgb(232, 216, 216),
         /* NumberType.Odd */                    Color.Black,
         /* NumberType.Even */                   Color.Black,
         /* NumberType.Square */                 Color.Black,
