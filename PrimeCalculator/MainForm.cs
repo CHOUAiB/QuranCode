@@ -306,11 +306,11 @@ public partial class MainForm : Form
             {
                 HistoryForewardLabel_Click(null, null);
             }
-            else if ((e.KeyCode == Keys.Up) || (e.KeyCode == Keys.Right))
+            else if (e.KeyCode == Keys.Up)
             {
                 NextPrimeNumber();
             }
-            else if ((e.KeyCode == Keys.Down) || (e.KeyCode == Keys.Left))
+            else if (e.KeyCode == Keys.Down)
             {
                 PreviousPrimeNumber();
             }
@@ -343,6 +343,8 @@ public partial class MainForm : Form
         {
             if (value < long.MaxValue) value++;
             ValueTextBox.Text = value.ToString();
+            ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
+            ValueTextBox.Refresh();
             //FactorizeValue(value);
         }
     }
@@ -353,6 +355,8 @@ public partial class MainForm : Form
         {
             if (value > 0) value--;
             ValueTextBox.Text = value.ToString();
+            ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
+            ValueTextBox.Refresh();
             //FactorizeValue(value);
         }
     }

@@ -80,6 +80,7 @@ public partial class MainForm : Form, ISubscriber
     #region Languages
     ///////////////////////////////////////////////////////////////////////////////
     private string l = DEFAULT_LANGUAGE;
+    private string previous_l = null;
     private List<string> m_language_names = null;
     private void LanguageLabel_Click(object sender, EventArgs e)
     {
@@ -89,9 +90,14 @@ public partial class MainForm : Form, ISubscriber
             int pos = control.Name.IndexOf("LanguageLabel");
             if (pos > -1)
             {
+                previous_l = l;
+
                 l = control.Name.Remove(pos);
                 LoadLanguage(l);
+
+                LanguageComboBox.SelectedIndexChanged -= new EventHandler(LanguageComboBox_SelectedIndexChanged);
                 LanguageComboBox.SelectedItem = l;
+                LanguageComboBox.SelectedIndexChanged += new EventHandler(LanguageComboBox_SelectedIndexChanged);
             }
         }
     }
@@ -101,9 +107,6 @@ public partial class MainForm : Form, ISubscriber
         {
             LoadLanguageNames(Globals.LANGUAGES_FOLDER);
             PopulateLanguageComboBox();
-
-            // use the DEFAULT_LANGUAGE during the initialization process
-            LanguageComboBox.SelectedItem = DEFAULT_LANGUAGE;
         }
     }
     private void LoadLanguageNames(string languages_folder)
@@ -179,11 +182,13 @@ public partial class MainForm : Form, ISubscriber
         {
             if ((index >= 0) && (index < m_language_names.Count))
             {
+                previous_l = l;
+
                 l = m_language_names[index];
                 if (l != null)
                 {
                     LoadLanguage(l);
-                    LanguageComboBox.SelectedItem = l;
+                    //LanguageComboBox.SelectedItem = l;
                 }
             }
         }
@@ -336,14 +341,31 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
 
+                int pos = ValueLabel.Text.IndexOf(" ");
+                string text = ValueLabel.Text.Substring(pos + 1).Trim();
+                try
+                {
+                    text = L[l][text];
+                }
+                catch // reverse dictionary
+                {
+                    foreach (string key in L[l].Keys)
+                    {
+                        if (text == L[previous_l][key])
+                        {
+                            text = L[l][key].ToTitleCase();
+                            break;
+                        }
+                    }
+                }
                 if (m_show_add_controls)
                 {
-                    ValueLabel.Text = "-- " + L[l]["Value"];
+                    ValueLabel.Text = "-- " + text;
                     ToolTip.SetToolTip(ValueLabel, L[l]["Hide value-added positions and distances"]);
                 }
                 else
                 {
-                    ValueLabel.Text = "+ " + L[l]["Value"];
+                    ValueLabel.Text = "+ " + text;
                     ToolTip.SetToolTip(ValueLabel, L[l]["Show value-added positions and distances"]);
                 }
 
@@ -673,7 +695,6 @@ public partial class MainForm : Form, ISubscriber
         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
         InstallLanguages();
-        LoadLanguage(DEFAULT_LANGUAGE);
 
         InstallFonts();
         AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
@@ -38235,9 +38256,12 @@ public partial class MainForm : Form, ISubscriber
         int shift = (m_dpi_x == 120.0F) ? 142 : 114;
 
         m_show_add_controls = !m_show_add_controls;
+
+        int pos = ValueLabel.Text.IndexOf(" ");
+        string s = ValueLabel.Text.Substring(pos + 1);
         if (m_show_add_controls)
         {
-            ValueLabel.Text = "-- " + L[l]["Value"];
+            ValueLabel.Text = "-- " + s;
             ToolTip.SetToolTip(ValueLabel, L[l]["Hide value-added positions and distances"]);
             ValuePanel.Height += shift;
             ValueNavigatorPanel.Top += shift;
@@ -38246,7 +38270,7 @@ public partial class MainForm : Form, ISubscriber
         }
         else
         {
-            ValueLabel.Text = "+ " + L[l]["Value"];
+            ValueLabel.Text = "+ " + s;
             ToolTip.SetToolTip(ValueLabel, L[l]["Show value-added positions and distances"]);
             ValuePanel.Height -= shift;
             ValueNavigatorPanel.Top -= shift;
@@ -39416,14 +39440,14 @@ public partial class MainForm : Form, ISubscriber
                     (sender as TextBoxBase).SelectAll();
                 }
             }
-            else if (e.KeyCode == Keys.Up)
-            {
-                IncrementValue();
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                DecrementValue();
-            }
+        }
+        else if (e.KeyCode == Keys.Up)
+        {
+            IncrementValue();
+        }
+        else if (e.KeyCode == Keys.Down)
+        {
+            DecrementValue();
         }
         else if (e.KeyCode == Keys.Enter)
         {
@@ -39442,6 +39466,7 @@ public partial class MainForm : Form, ISubscriber
             if (value < long.MaxValue) value++;
             ValueTextBox.Text = value.ToString();
             FactorizeValue(value, true);
+            ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + "↑";
         }
     }
     private void DecrementValue()
@@ -39452,6 +39477,7 @@ public partial class MainForm : Form, ISubscriber
             if (value > 0) value--;
             ValueTextBox.Text = value.ToString();
             FactorizeValue(value, true);
+            ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + "↓";
         }
     }
     private void CalculateExpression()
@@ -39465,12 +39491,14 @@ public partial class MainForm : Form, ISubscriber
             {
                 m_double_value = (double)value;
                 FactorizeValue(value, true);
+                ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + L[l]["Number"];
             }
             else if (expression.IsArabic() || ((m_radix <= 10) && expression.IsEnglish()))
             {
                 m_double_value = m_client.CalculateValue(expression);
                 value = (long)Math.Round(m_double_value);
-                FactorizeValue(value, true); // user_text
+                FactorizeValue(value, true); // direct text enty
+                ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + L[l]["Text"];
             }
             else if ((m_radix == 10) && (expression.ToUpper().ContainsInside("C")))
             {
@@ -39482,6 +39510,7 @@ public partial class MainForm : Form, ISubscriber
                     BigInteger combinations = Numbers.NChooseK(n, k);
                     ValueTextBox.Text = combinations.ToString();
                     FactorizeValue((long)combinations, true);
+                    ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + L[l]["nCk"];
                 }
             }
             else
@@ -39489,6 +39518,7 @@ public partial class MainForm : Form, ISubscriber
                 m_double_value = DoCalculateExpression(expression, m_radix);
                 value = (long)Math.Round(m_double_value);
                 FactorizeValue(value, true);
+                ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + L[l]["Math"];
             }
 
             // if result has fraction, display it as is
@@ -39705,6 +39735,8 @@ public partial class MainForm : Form, ISubscriber
                 // update the ValueNavigator fields
                 UpdateValueNavigator(value);
             }
+
+            ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + (m_user_text_mode ? L[l]["User"] : L[l]["Value"]);
 
             ////TODO: freeze program if comes from Position
             //ValueTextBox.SelectionLength = 0;
@@ -43417,11 +43449,13 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_active_textbox != null)
             {
-                m_active_textbox.Focus();
-                m_user_text_mode = false;
-                CalculateCurrentValue();
-                BuildLetterFrequencies();
-                DisplayLetterFrequencies();
+                if (sender == HeaderLabel)
+                {
+                    m_user_text_mode = false;
+                    CalculateCurrentValue();
+                    BuildLetterFrequencies();
+                    DisplayLetterFrequencies();
+                }
             }
         }
     }
