@@ -29,7 +29,7 @@ partial class MainForm
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.StatusPanel = new System.Windows.Forms.Panel();
-            this.ShowToolTipCheckBox = new System.Windows.Forms.CheckBox();
+            this.ShowToolTipsCheckBox = new System.Windows.Forms.CheckBox();
             this.ChapterSortPanel = new System.Windows.Forms.Panel();
             this.ChapterSortLabel = new System.Windows.Forms.Label();
             this.ChapterSortComboBox = new System.Windows.Forms.ComboBox();
@@ -741,7 +741,7 @@ partial class MainForm
             // 
             this.StatusPanel.BackColor = System.Drawing.Color.Transparent;
             this.StatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.StatusPanel.Controls.Add(this.ShowToolTipCheckBox);
+            this.StatusPanel.Controls.Add(this.ShowToolTipsCheckBox);
             this.StatusPanel.Controls.Add(this.ChapterSortPanel);
             this.StatusPanel.Controls.Add(this.DrawAdditivePrimesLabel);
             this.StatusPanel.Controls.Add(this.GeneratePrimeDrawingsLabel);
@@ -759,22 +759,22 @@ partial class MainForm
             this.StatusPanel.Size = new System.Drawing.Size(1274, 23);
             this.StatusPanel.TabIndex = 27;
             // 
-            // ShowToolTipCheckBox
+            // ShowToolTipsCheckBox
             // 
-            this.ShowToolTipCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ShowToolTipCheckBox.BackColor = System.Drawing.SystemColors.Control;
-            this.ShowToolTipCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ShowToolTipCheckBox.Checked = true;
-            this.ShowToolTipCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ShowToolTipCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ShowToolTipCheckBox.ForeColor = System.Drawing.Color.Navy;
-            this.ShowToolTipCheckBox.Location = new System.Drawing.Point(1264, 12);
-            this.ShowToolTipCheckBox.Name = "ShowToolTipCheckBox";
-            this.ShowToolTipCheckBox.Size = new System.Drawing.Size(10, 10);
-            this.ShowToolTipCheckBox.TabIndex = 10000;
-            this.ToolTip.SetToolTip(this.ShowToolTipCheckBox, "Show tooltips");
-            this.ShowToolTipCheckBox.UseVisualStyleBackColor = false;
-            this.ShowToolTipCheckBox.CheckedChanged += new System.EventHandler(this.ShowToolTipCheckBox_CheckedChanged);
+            this.ShowToolTipsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ShowToolTipsCheckBox.BackColor = System.Drawing.SystemColors.Control;
+            this.ShowToolTipsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ShowToolTipsCheckBox.Checked = true;
+            this.ShowToolTipsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ShowToolTipsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ShowToolTipsCheckBox.ForeColor = System.Drawing.Color.Navy;
+            this.ShowToolTipsCheckBox.Location = new System.Drawing.Point(1264, 12);
+            this.ShowToolTipsCheckBox.Name = "ShowToolTipsCheckBox";
+            this.ShowToolTipsCheckBox.Size = new System.Drawing.Size(10, 10);
+            this.ShowToolTipsCheckBox.TabIndex = 10000;
+            this.ToolTip.SetToolTip(this.ShowToolTipsCheckBox, "Show tooltips");
+            this.ShowToolTipsCheckBox.UseVisualStyleBackColor = false;
+            this.ShowToolTipsCheckBox.CheckedChanged += new System.EventHandler(this.ShowToolTipsCheckBox_CheckedChanged);
             // 
             // ChapterSortPanel
             // 
@@ -11264,7 +11264,7 @@ partial class MainForm
     private System.Windows.Forms.Label FindByNumbersValueDigitSumLabel;
     private System.Windows.Forms.Label EmlaaeiTextLabel;
     private System.Windows.Forms.Label TextModeLabel;
-    private System.Windows.Forms.CheckBox ShowToolTipCheckBox;
+    private System.Windows.Forms.CheckBox ShowToolTipsCheckBox;
     private System.Windows.Forms.Label FindByFrequencySalawaaaaatLabel;
     private System.Windows.Forms.Label FindByFrequencyAhlulBaytLabel;
 }

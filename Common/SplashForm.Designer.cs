@@ -109,15 +109,15 @@ partial class SplashForm
             this.WordFrequencyLabel.BackColor = System.Drawing.Color.Transparent;
             this.WordFrequencyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WordFrequencyLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 92);
+            this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 90);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
-            this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 17);
+            this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 19);
             this.WordFrequencyLabel.TabIndex = 14;
             this.WordFrequencyLabel.Tag = "http://qurancode.com";
-            this.WordFrequencyLabel.Text = "من    الله    ان    في    ما    لا    الذين    الا    علي";
-            this.WordFrequencyLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.WordFrequencyLabel.Text = "من   الله   ان   في   ما   لا   الذين   الا   علي";
+            this.WordFrequencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.WordFrequencyLabel, resources.GetString("WordFrequencyLabel.ToolTip"));
             this.WordFrequencyLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 
@@ -130,7 +130,7 @@ partial class SplashForm
             this.ProductNameLabel.ForeColor = System.Drawing.Color.MidnightBlue;
             this.ProductNameLabel.Location = new System.Drawing.Point(0, 44);
             this.ProductNameLabel.Name = "ProductNameLabel";
-            this.ProductNameLabel.Size = new System.Drawing.Size(239, 29);
+            this.ProductNameLabel.Size = new System.Drawing.Size(239, 27);
             this.ProductNameLabel.TabIndex = 15;
             this.ProductNameLabel.Tag = "http://qurancode.com";
             this.ProductNameLabel.Text = "QuranCode 1433";
@@ -159,12 +159,12 @@ partial class SplashForm
             this.InitialLettersLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.InitialLettersLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InitialLettersLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 73);
+            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 71);
             this.InitialLettersLabel.Name = "InitialLettersLabel";
             this.InitialLettersLabel.Size = new System.Drawing.Size(239, 19);
             this.InitialLettersLabel.TabIndex = 13;
             this.InitialLettersLabel.Tag = "http://qurancode.com";
-            this.InitialLettersLabel.Text = "علي صراط حق نمسكه  |  نص حكيم له سر قاطع";
+            this.InitialLettersLabel.Text = "علي صراط حق نمسكه | نص حكيم له سر قاطع";
             this.InitialLettersLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ToolTip.SetToolTip(this.InitialLettersLabel, "Ali is a path to the Truth we follow.\r\nPerfect text with a decisive secret.");
             this.InitialLettersLabel.Click += new System.EventHandler(this.LinkLabel_Click);
@@ -175,7 +175,7 @@ partial class SplashForm
             this.CloseLabel.BackColor = System.Drawing.Color.Transparent;
             this.CloseLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CloseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CloseLabel.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.CloseLabel.ForeColor = System.Drawing.Color.Lavender;
             this.CloseLabel.Location = new System.Drawing.Point(225, -2);
             this.CloseLabel.Name = "CloseLabel";
             this.CloseLabel.Size = new System.Drawing.Size(13, 13);

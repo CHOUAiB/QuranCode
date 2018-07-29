@@ -733,7 +733,7 @@ public partial class MainForm : Form, ISubscriber
         this.components = new System.ComponentModel.Container();
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
         this.StatusPanel = new System.Windows.Forms.Panel();
-        this.ShowToolTipCheckBox = new System.Windows.Forms.CheckBox();
+        this.ShowToolTipsCheckBox = new System.Windows.Forms.CheckBox();
         this.ChapterSortPanel = new System.Windows.Forms.Panel();
         this.ChapterSortLabel = new System.Windows.Forms.Label();
         this.ChapterSortComboBox = new System.Windows.Forms.ComboBox();
@@ -1446,7 +1446,7 @@ public partial class MainForm : Form, ISubscriber
         | System.Windows.Forms.AnchorStyles.Right)));
         this.StatusPanel.BackColor = System.Drawing.Color.Transparent;
         this.StatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-        this.StatusPanel.Controls.Add(this.ShowToolTipCheckBox);
+        this.StatusPanel.Controls.Add(this.ShowToolTipsCheckBox);
         this.StatusPanel.Controls.Add(this.ChapterSortPanel);
         this.StatusPanel.Controls.Add(this.DrawAdditivePrimesLabel);
         this.StatusPanel.Controls.Add(this.GeneratePrimeDrawingsLabel);
@@ -1464,22 +1464,22 @@ public partial class MainForm : Form, ISubscriber
         this.StatusPanel.Size = new System.Drawing.Size(1115, 28);
         this.StatusPanel.TabIndex = 27;
         // 
-        // ShowToolTipCheckBox
+        // ShowToolTipsCheckBox
         // 
-        this.ShowToolTipCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        this.ShowToolTipCheckBox.BackColor = System.Drawing.SystemColors.Control;
-        this.ShowToolTipCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.ShowToolTipCheckBox.Checked = true;
-        this.ShowToolTipCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-        this.ShowToolTipCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.ShowToolTipCheckBox.ForeColor = System.Drawing.Color.Navy;
-        this.ShowToolTipCheckBox.Location = new System.Drawing.Point(1104, 17);
-        this.ShowToolTipCheckBox.Name = "ShowToolTipCheckBox";
-        this.ShowToolTipCheckBox.Size = new System.Drawing.Size(8, 8);
-        this.ShowToolTipCheckBox.TabIndex = 10000;
-        this.ToolTip.SetToolTip(this.ShowToolTipCheckBox, "Show tooltips");
-        this.ShowToolTipCheckBox.UseVisualStyleBackColor = false;
-        this.ShowToolTipCheckBox.CheckedChanged += new System.EventHandler(this.ShowToolTipCheckBox_CheckedChanged);
+        this.ShowToolTipsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+        this.ShowToolTipsCheckBox.BackColor = System.Drawing.SystemColors.Control;
+        this.ShowToolTipsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ShowToolTipsCheckBox.Checked = true;
+        this.ShowToolTipsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+        this.ShowToolTipsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.ShowToolTipsCheckBox.ForeColor = System.Drawing.Color.Navy;
+        this.ShowToolTipsCheckBox.Location = new System.Drawing.Point(1104, 17);
+        this.ShowToolTipsCheckBox.Name = "ShowToolTipsCheckBox";
+        this.ShowToolTipsCheckBox.Size = new System.Drawing.Size(8, 8);
+        this.ShowToolTipsCheckBox.TabIndex = 10000;
+        this.ToolTip.SetToolTip(this.ShowToolTipsCheckBox, "Show tooltips");
+        this.ShowToolTipsCheckBox.UseVisualStyleBackColor = false;
+        this.ShowToolTipsCheckBox.CheckedChanged += new System.EventHandler(this.ShowToolTipsCheckBox_CheckedChanged);
         // 
         // ChapterSortPanel
         // 
@@ -11933,9 +11933,9 @@ public partial class MainForm : Form, ISubscriber
         InitializeComponent();
     }
 
-    private void ShowToolTipCheckBox_CheckedChanged(object sender, EventArgs e)
+    private void ShowToolTipsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        ToolTip.Active = ShowToolTipCheckBox.Checked;
+        ToolTip.Active = ShowToolTipsCheckBox.Checked;
     }
     private void MainForm_Load(object sender, EventArgs e)
     {
@@ -13319,11 +13319,11 @@ public partial class MainForm : Form, ISubscriber
                                                 {
                                                     try
                                                     {
-                                                        ShowToolTipCheckBox.Checked = bool.Parse(parts[1].Trim());
+                                                        ShowToolTipsCheckBox.Checked = bool.Parse(parts[1].Trim());
                                                     }
                                                     catch
                                                     {
-                                                        ShowToolTipCheckBox.Checked = true;
+                                                        ShowToolTipsCheckBox.Checked = true;
                                                     }
                                                 }
                                                 break;
@@ -14249,7 +14249,7 @@ public partial class MainForm : Form, ISubscriber
                         m_distances_divisor = DEFAULT_DIVISOR;
                         DistancesDivisorNumericUpDown.Value = m_distances_divisor;
 
-                        ShowToolTipCheckBox.Checked = true;
+                        ShowToolTipsCheckBox.Checked = true;
 
                         m_show_add_controls = true;
                         ValueLabel_Click(null, null);
@@ -14312,7 +14312,7 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine("TranslationBoxWidth" + "=" + m_translation_box_width);
                     writer.WriteLine("Translator" + "=" + this.TranslatorComboBox.SelectedIndex);
                     writer.WriteLine("Translators" + "=" + this.TranslatorsComboBox.SelectedIndex);
-                    writer.WriteLine("ShowToolTip" + "=" + this.ShowToolTipCheckBox.Checked);
+                    writer.WriteLine("ShowToolTip" + "=" + this.ShowToolTipsCheckBox.Checked);
                     writer.WriteLine("ShowAllTranslations" + "=" + m_show_all_translations);
                     writer.WriteLine("SymmetryType" + "=" + this.SymmetryTypeComboBox.SelectedIndex);
                     writer.WriteLine("SymmetryIncludeBoundaryCases" + "=" + m_symmetry_include_boundary_cases);
