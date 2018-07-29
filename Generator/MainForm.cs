@@ -50,43 +50,18 @@ public partial class MainForm : Form
             {
                 string default_text_mode = m_client.NumerologySystem.TextMode;
                 m_client.BuildSimplifiedBook(default_text_mode, true, false, false, false);
+                UpdateNumerologySystem();
 
-                if (m_client.NumerologySystem != null)
+                PopulateTextModeComboBox();
+                if (TextModeComboBox.Items.Count > 0)
                 {
-                    m_client.NumerologySystem.AddToLetterCNumber = false;
-                    m_client.NumerologySystem.AddToWordCNumber = false;
-                    m_client.NumerologySystem.AddToVerseCNumber = false;
-                    m_client.NumerologySystem.AddToChapterCNumber = false;
-
-                    m_client.NumerologySystem.AddToLetterLDistance = true;
-                    m_client.NumerologySystem.AddToLetterWDistance = true;
-                    m_client.NumerologySystem.AddToLetterVDistance = true;
-                    m_client.NumerologySystem.AddToLetterCDistance = false;
-                    m_client.NumerologySystem.AddToWordWDistance = true;
-                    m_client.NumerologySystem.AddToWordVDistance = true;
-                    m_client.NumerologySystem.AddToWordCDistance = false;
-                    m_client.NumerologySystem.AddToVerseVDistance = true;
-                    m_client.NumerologySystem.AddToVerseCDistance = false;
-
-                    m_client.NumerologySystem.AddDistancesToPrevious = false;
-                    m_client.NumerologySystem.AddDistancesToNext = false;
-                    m_client.NumerologySystem.AddDistancesWithinChapters = true;
-                    if (m_client.Book != null)
+                    if (TextModeComboBox.Items.Contains(default_text_mode))
                     {
-                        m_client.Book.SetupDistances(m_client.NumerologySystem.AddDistancesWithinChapters);
+                        TextModeComboBox.SelectedItem = default_text_mode;
                     }
-
-                    PopulateTextModeComboBox();
-                    if (TextModeComboBox.Items.Count > 0)
+                    else
                     {
-                        if (TextModeComboBox.Items.Contains(default_text_mode))
-                        {
-                            TextModeComboBox.SelectedItem = default_text_mode;
-                        }
-                        else
-                        {
-                            TextModeComboBox.SelectedIndex = 0;
-                        }
+                        TextModeComboBox.SelectedIndex = 0;
                     }
                 }
             }
@@ -235,6 +210,7 @@ public partial class MainForm : Form
         if (m_client != null)
         {
             m_client.LoadNumerologySystem(m_numerology_system_name);
+            UpdateNumerologySystem();
         }
     }
     private void NumerologySystemComboBox_MouseHover(object sender, EventArgs e)
@@ -252,7 +228,39 @@ public partial class MainForm : Form
             }
         }
     }
+    private void UpdateNumerologySystem()
+    {
+        if (m_client.NumerologySystem != null)
+        {
+            m_client.NumerologySystem.AddToLetterLNumber = true;
+            m_client.NumerologySystem.AddToLetterWNumber = true;
+            m_client.NumerologySystem.AddToLetterVNumber = true;
+            m_client.NumerologySystem.AddToLetterCNumber = false;
+            m_client.NumerologySystem.AddToLetterLDistance = true;
+            m_client.NumerologySystem.AddToLetterWDistance = true;
+            m_client.NumerologySystem.AddToLetterVDistance = true;
+            m_client.NumerologySystem.AddToLetterCDistance = false;
+            m_client.NumerologySystem.AddToWordWNumber = true;
+            m_client.NumerologySystem.AddToWordVNumber = true;
+            m_client.NumerologySystem.AddToWordCNumber = false;
+            m_client.NumerologySystem.AddToWordWDistance = true;
+            m_client.NumerologySystem.AddToWordVDistance = true;
+            m_client.NumerologySystem.AddToWordCDistance = false;
+            m_client.NumerologySystem.AddToVerseVNumber = true;
+            m_client.NumerologySystem.AddToVerseCNumber = false;
+            m_client.NumerologySystem.AddToVerseVDistance = true;
+            m_client.NumerologySystem.AddToVerseCDistance = false;
+            m_client.NumerologySystem.AddToChapterCNumber = false;
 
+            m_client.NumerologySystem.AddDistancesToPrevious = false;
+            m_client.NumerologySystem.AddDistancesToNext = false;
+            m_client.NumerologySystem.AddDistancesWithinChapters = true;
+            if (m_client.Book != null)
+            {
+                m_client.Book.SetupDistances(m_client.NumerologySystem.AddDistancesWithinChapters);
+            }
+        }
+    }
     private bool m_add_verse_and_word_values_to_letter_value = false;
     private bool m_add_positions_to_letter_value = false;
     private bool m_add_distances_to_previous_to_letter_value = false;
