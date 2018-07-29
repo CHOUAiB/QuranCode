@@ -83,24 +83,16 @@ public partial class MainForm : Form, ISubscriber
     private List<string> m_language_names = null;
     private void LanguageLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        Control control = sender as Control;
+        if (control != null)
         {
-            Control control = sender as Control;
-            if (control != null)
+            int pos = control.Name.IndexOf("LanguageLabel");
+            if (pos > -1)
             {
-                int pos = control.Name.IndexOf("LanguageLabel");
-                if (pos > -1)
-                {
-                    l = control.Name.Remove(pos);
-                    LoadLanguage(l);
-                    LanguageComboBox.SelectedItem = l;
-                }
+                l = control.Name.Remove(pos);
+                LoadLanguage(l);
+                LanguageComboBox.SelectedItem = l;
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void InstallLanguages()
@@ -183,25 +175,17 @@ public partial class MainForm : Form, ISubscriber
     }
     private void ApplyLanguage(int index)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_language_names != null)
         {
-            if (m_language_names != null)
+            if ((index >= 0) && (index < m_language_names.Count))
             {
-                if ((index >= 0) && (index < m_language_names.Count))
+                l = m_language_names[index];
+                if (l != null)
                 {
-                    l = m_language_names[index];
-                    if (l != null)
-                    {
-                        LoadLanguage(l);
-                        LanguageComboBox.SelectedItem = l;
-                    }
+                    LoadLanguage(l);
+                    LanguageComboBox.SelectedItem = l;
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private List<Control> GetDescendentControls(Control control)
@@ -2075,6 +2059,18 @@ public partial class MainForm : Form, ISubscriber
                                                     }
                                                 }
                                                 break;
+                                            case "ShowToolTip":
+                                                {
+                                                    try
+                                                    {
+                                                        ShowToolTipCheckBox.Checked = bool.Parse(parts[1].Trim());
+                                                    }
+                                                    catch
+                                                    {
+                                                        ShowToolTipCheckBox.Checked = true;
+                                                    }
+                                                }
+                                                break;
                                             case "ShowAllTranslations":
                                                 {
                                                     try
@@ -3039,6 +3035,7 @@ public partial class MainForm : Form, ISubscriber
                     writer.WriteLine("TranslationBoxWidth" + "=" + m_translation_box_width);
                     writer.WriteLine("Translator" + "=" + this.TranslatorComboBox.SelectedIndex);
                     writer.WriteLine("Translators" + "=" + this.TranslatorsComboBox.SelectedIndex);
+                    writer.WriteLine("ShowToolTip" + "=" + this.ShowToolTipCheckBox.Checked);
                     writer.WriteLine("ShowAllTranslations" + "=" + m_show_all_translations);
                     writer.WriteLine("SymmetryType" + "=" + this.SymmetryTypeComboBox.SelectedIndex);
                     writer.WriteLine("SymmetryIncludeBoundaryCases" + "=" + m_symmetry_include_boundary_cases);
@@ -3457,32 +3454,24 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DoFindSameHarakat(string text)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            ClearFindMatches();
+
+            m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Any, TextLocationInVerse.Any, TextLocationInWord.Any, TextWordness.Any, false, true, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+            if (m_client.FoundPhrases != null)
             {
-                ClearFindMatches();
-
-                m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Any, TextLocationInVerse.Any, TextLocationInWord.Any, TextWordness.Any, false, true, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
-                if (m_client.FoundPhrases != null)
+                int phrase_count = GetPhraseCount(m_client.FoundPhrases);
+                if (m_client.FoundVerses != null)
                 {
-                    int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                    if (m_client.FoundVerses != null)
-                    {
-                        int verse_count = m_client.FoundVerses.Count;
-                        m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["anywhere"] + " " + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                        DisplayFoundVerses(true, true);
+                    int verse_count = m_client.FoundVerses.Count;
+                    m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["anywhere"] + " " + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                    DisplayFoundVerses(true, true);
 
-                        //SearchResultTextBox.Focus();
-                        //SearchResultTextBox.Refresh();
-                    }
+                    //SearchResultTextBox.Focus();
+                    //SearchResultTextBox.Refresh();
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void DoFindRelatedWords(object sender)
@@ -3509,61 +3498,45 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_emlaaei_text) return;
 
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
-            {
-                ClearFindMatches();
+            ClearFindMatches();
 
-                FindByTextTextBox.Text = text;
-                FindByTextTextBox.Refresh();
+            FindByTextTextBox.Text = text;
+            FindByTextTextBox.Refresh();
 
-                FindByRoot(text);
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
+            FindByRoot(text);
         }
     }
     private void DoFindRelatedVerses(object sender)
     {
         if (m_emlaaei_text) return;
 
-        this.Cursor = Cursors.WaitCursor;
-        try
+        m_search_type = SearchType.Similarity;
+
+        if (m_client != null)
         {
-            m_search_type = SearchType.Similarity;
+            ClearFindMatches();
 
-            if (m_client != null)
+            Verse verse = GetCurrentVerse();
+            if (verse != null)
             {
-                ClearFindMatches();
-
-                Verse verse = GetCurrentVerse();
-                if (verse != null)
+                if (verse.Chapter != null)
                 {
-                    if (verse.Chapter != null)
+                    m_client.FindRelatedVerses(verse);
+                    if (m_client.FoundVerses != null)
                     {
-                        m_client.FindRelatedVerses(verse);
-                        if (m_client.FoundVerses != null)
-                        {
-                            string text = " to verse " + verse.Chapter.Name + " " + verse.NumberInChapter + " ";
-                            int verse_count = m_client.FoundVerses.Count;
-                            m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + L[l]["similar words"] + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                        string text = " to verse " + verse.Chapter.Name + " " + verse.NumberInChapter + " ";
+                        int verse_count = m_client.FoundVerses.Count;
+                        m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + L[l]["similar words"] + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
 
-                            DisplayFoundVerses(true, true);
+                        DisplayFoundVerses(true, true);
 
-                            //SearchResultTextBox.Focus();
-                            //SearchResultTextBox.Refresh();
-                        }
+                        //SearchResultTextBox.Focus();
+                        //SearchResultTextBox.Refresh();
                     }
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void DoFindSameText(object sender)
@@ -3586,32 +3559,24 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DoFindSameText(string text)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            ClearFindMatches();
+
+            m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Any, TextLocationInVerse.Any, TextLocationInWord.Any, TextWordness.WholeWord, false, false, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+            if (m_client.FoundPhrases != null)
             {
-                ClearFindMatches();
-
-                m_client.FindPhrases(TextSearchBlockSize.Verse, text, LanguageType.RightToLeft, null, TextLocationInChapter.Any, TextLocationInVerse.Any, TextLocationInWord.Any, TextWordness.WholeWord, false, false, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
-                if (m_client.FoundPhrases != null)
+                int phrase_count = GetPhraseCount(m_client.FoundPhrases);
+                if (m_client.FoundVerses != null)
                 {
-                    int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                    if (m_client.FoundVerses != null)
-                    {
-                        int verse_count = m_client.FoundVerses.Count;
-                        m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["anywhere"] + " " + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                        DisplayFoundVerses(true, true);
+                    int verse_count = m_client.FoundVerses.Count;
+                    m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["anywhere"] + " " + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                    DisplayFoundVerses(true, true);
 
-                        //SearchResultTextBox.Focus();
-                        //SearchResultTextBox.Refresh();
-                    }
+                    //SearchResultTextBox.Focus();
+                    //SearchResultTextBox.Refresh();
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void DoFindSameVerses(object sender)
@@ -3661,44 +3626,36 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DoFindSameValue(long value)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            ClearFindMatches();
+
+            List<Verse> verses = new List<Verse>();
+            List<Phrase> phrases = new List<Phrase>();
+            string text = "value" + "" + "=" + value.ToString();
+
+            NumberQuery query = new NumberQuery();
+            query.Value = value;
+            query.WithinVerses = false;
+
+            int match_count = m_client.FindWordRanges(query);
+            if (match_count > 0)
             {
-                ClearFindMatches();
-
-                List<Verse> verses = new List<Verse>();
-                List<Phrase> phrases = new List<Phrase>();
-                string text = "value" + "" + "=" + value.ToString();
-
-                NumberQuery query = new NumberQuery();
-                query.Value = value;
-                query.WithinVerses = false;
-
-                int match_count = m_client.FindWordRanges(query);
-                if (match_count > 0)
+                if (m_client.FoundPhrases != null)
                 {
-                    if (m_client.FoundPhrases != null)
-                    {
-                        phrases.InsertRange(0, new List<Phrase>(m_client.FoundPhrases));
-                    }
-                }
-
-                if (m_client.FoundVerses != null)
-                {
-                    m_client.FoundPhrases = phrases;
-                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["match"] : " " + L[l]["matches"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                    DisplayFoundVerses(true, true);
-
-                    //SearchResultTextBox.Focus();
-                    //SearchResultTextBox.Refresh();
+                    phrases.InsertRange(0, new List<Phrase>(m_client.FoundPhrases));
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
+
+            if (m_client.FoundVerses != null)
+            {
+                m_client.FoundPhrases = phrases;
+                m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["match"] : " " + L[l]["matches"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                DisplayFoundVerses(true, true);
+
+                //SearchResultTextBox.Focus();
+                //SearchResultTextBox.Refresh();
+            }
         }
     }
     public static List<Verse> GetVerses(List<Phrase> phrases)
@@ -4058,8 +4015,6 @@ public partial class MainForm : Form, ISubscriber
     }
     private void ResearchMethodsRunButton_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        this.Cursor = Cursors.WaitCursor;
         this.Cursor = Cursors.WaitCursor;
         try
         {
@@ -5142,8 +5097,6 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_active_textbox != null)
             {
-                m_active_textbox.BeginUpdate();
-
                 Verse current_verse = null;
                 if (m_selection_mode == false)
                 {
@@ -5186,7 +5139,6 @@ public partial class MainForm : Form, ISubscriber
         }
         finally
         {
-            m_active_textbox.EndUpdate();
             this.Cursor = Cursors.Default;
         }
     }
@@ -5494,109 +5446,133 @@ public partial class MainForm : Form, ISubscriber
     private double m_golden_ratio_tolerance = 0.05D;
     private void GoldenRatioScopeLabel_Click(object sender, EventArgs e)
     {
-        switch (m_golden_ratio_scope)
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            case GoldenRatioScope.None:
-                {
-                    m_golden_ratio_scope = GoldenRatioScope.Letter;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
+            switch (m_golden_ratio_scope)
+            {
+                case GoldenRatioScope.None:
                     {
-                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
-                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
+                        m_golden_ratio_scope = GoldenRatioScope.Letter;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_letter.png"))
+                        {
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_letter.png");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Letter-level golden ratio"]);
+                        }
                     }
-                }
-                break;
-            case GoldenRatioScope.Letter:
-                {
-                    m_golden_ratio_scope = GoldenRatioScope.Word;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
+                    break;
+                case GoldenRatioScope.Letter:
                     {
-                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
-                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
+                        m_golden_ratio_scope = GoldenRatioScope.Word;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_word.png"))
+                        {
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_word.png");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Word-level golden ratio"]);
+                        }
                     }
-                }
-                break;
-            case GoldenRatioScope.Word:
-                {
-                    m_golden_ratio_scope = GoldenRatioScope.Sentence;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
+                    break;
+                case GoldenRatioScope.Word:
                     {
-                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
-                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
+                        m_golden_ratio_scope = GoldenRatioScope.Sentence;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png"))
+                        {
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sentence.png");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Sentence-level golden ratio"]);
+                        }
                     }
-                }
-                break;
-            case GoldenRatioScope.Sentence:
-                {
-                    m_golden_ratio_scope = GoldenRatioScope.None;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
+                    break;
+                case GoldenRatioScope.Sentence:
                     {
-                        GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
-                        ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
+                        m_golden_ratio_scope = GoldenRatioScope.None;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_none.png"))
+                        {
+                            GoldenRatioScopeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_none.png");
+                            ToolTip.SetToolTip(GoldenRatioScopeLabel, L[l]["Golden ratio colorization"]);
+                        }
                     }
-                }
-                break;
+                    break;
+            }
+
+            GoldenRatioOrderLabel.Enabled = (m_golden_ratio_scope != GoldenRatioScope.None);
+
+            DisplaySelectionText();
         }
-
-        GoldenRatioOrderLabel.Enabled = (m_golden_ratio_scope != GoldenRatioScope.None);
-
-        DisplaySelectionText();
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
     }
     private void GoldenRatioTypeLabel_Click(object sender, EventArgs e)
     {
-        switch (m_golden_ratio_type)
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            case GoldenRatioType.Text:
-                {
-                    m_golden_ratio_type = GoldenRatioType.Value;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_value.png"))
+            switch (m_golden_ratio_type)
+            {
+                case GoldenRatioType.Text:
                     {
-                        GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_value.png");
-                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio colorization"]);
+                        m_golden_ratio_type = GoldenRatioType.Value;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_value.png"))
+                        {
+                            GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_value.png");
+                            ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Value-based golden ratio colorization"]);
+                        }
                     }
-                }
-                break;
-            case GoldenRatioType.Value:
-                {
-                    m_golden_ratio_type = GoldenRatioType.Text;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_text.png"))
+                    break;
+                case GoldenRatioType.Value:
                     {
-                        GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_text.png");
-                        ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio colorization"]);
+                        m_golden_ratio_type = GoldenRatioType.Text;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_text.png"))
+                        {
+                            GoldenRatioTypeLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_text.png");
+                            ToolTip.SetToolTip(GoldenRatioTypeLabel, L[l]["Text-based golden ratio colorization"]);
+                        }
                     }
-                }
-                break;
-        }
+                    break;
+            }
 
-        DisplaySelectionText();
+            DisplaySelectionText();
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
     }
     private void GoldenRatioOrderLabel_Click(object sender, EventArgs e)
     {
-        switch (m_golden_ratio_order)
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            case GoldenRatioOrder.LongShort:
-                {
-                    m_golden_ratio_order = GoldenRatioOrder.ShortLong;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sl.png"))
+            switch (m_golden_ratio_order)
+            {
+                case GoldenRatioOrder.LongShort:
                     {
-                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sl.png");
-                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
+                        m_golden_ratio_order = GoldenRatioOrder.ShortLong;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_sl.png"))
+                        {
+                            GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_sl.png");
+                            ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 1 + 0.618"]);
+                        }
                     }
-                }
-                break;
-            case GoldenRatioOrder.ShortLong:
-                {
-                    m_golden_ratio_order = GoldenRatioOrder.LongShort;
-                    if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_ls.png"))
+                    break;
+                case GoldenRatioOrder.ShortLong:
                     {
-                        GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_ls.png");
-                        ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
+                        m_golden_ratio_order = GoldenRatioOrder.LongShort;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "golden_ls.png"))
+                        {
+                            GoldenRatioOrderLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "golden_ls.png");
+                            ToolTip.SetToolTip(GoldenRatioOrderLabel, L[l]["Golden ratio ~= 0.618 + 1"]);
+                        }
                     }
-                }
-                break;
-        }
+                    break;
+            }
 
-        DisplaySelectionText();
+            DisplaySelectionText();
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
     }
     private void UpdateGoldenRatioScopeLabel()
     {
@@ -5865,16 +5841,16 @@ public partial class MainForm : Form, ISubscriber
                                         MainTextBox.Colorize(start + golden_length, verse.Text.Length - golden_length, Color.Red);
 
                                         // reset color back to Navy for subsequent display
-                                        if (MainTextBox.Text.Length > 0)
-                                        {
-                                            MainTextBox.Colorize(0, 1, Color.Navy);
-                                        }
-
-                                        MainTextBox.AlignToStart();
+                                        //if (MainTextBox.Text.Length > 0)
+                                        //{
+                                        //    MainTextBox.Colorize(0, 1, Color.Navy);
+                                        //}
                                     }
                                 }
                             }
-                        }
+                        } // forech verse
+
+                        MainTextBox.AlignToStart();
                     }
                 }
             }
@@ -6075,7 +6051,7 @@ public partial class MainForm : Form, ISubscriber
                                         MainTextBox.Colorize(0, 1, Color.Navy);
                                     }
 
-                                    MainTextBox.AlignToStart();
+                                    //?????MainTextBox.AlignToStart();
                                 }
                             }
                         }
@@ -8087,220 +8063,196 @@ public partial class MainForm : Form, ISubscriber
     private ChapterSortOrder m_chapter_sort_order = ChapterSortOrder.Ascending;
     private void PinChapter1CheckBox_CheckStateChanged(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            if (m_client.Book != null)
             {
-                if (m_client.Book != null)
+                if (m_client.Selection != null)
                 {
-                    if (m_client.Selection != null)
+                    // backup selection verses
+                    List<Verse> backup_verses = new List<Verse>();
+                    if (m_client.Selection.Scope == SelectionScope.Verse)
                     {
-                        // backup selection verses
-                        List<Verse> backup_verses = new List<Verse>();
-                        if (m_client.Selection.Scope == SelectionScope.Verse)
+                        if (m_client.Selection.Indexes != null)
                         {
-                            if (m_client.Selection.Indexes != null)
+                            foreach (int index in m_client.Selection.Indexes)
                             {
-                                foreach (int index in m_client.Selection.Indexes)
-                                {
-                                    backup_verses.Add(m_client.Book.Verses[index]);
-                                }
+                                backup_verses.Add(m_client.Book.Verses[index]);
                             }
                         }
-
-                        m_pin_chapter1 = PinChapter1CheckBox.Checked;
-                        m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
-
-                        // restore selection verses
-                        if (m_client.Selection.Scope == SelectionScope.Verse)
-                        {
-                            if (m_client.Selection.Indexes != null)
-                            {
-                                List<int> verse_indexes = new List<int>();
-                                foreach (Verse verse in backup_verses)
-                                {
-                                    verse_indexes.Add(verse.Number - 1);
-                                }
-                                m_client.Selection = new Selection(m_client.Book, SelectionScope.Verse, verse_indexes);
-                            }
-                        }
-
-                        // display chapters in new order
-                        DisplaySortedChapters();
                     }
+
+                    m_pin_chapter1 = PinChapter1CheckBox.Checked;
+                    m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
+
+                    // restore selection verses
+                    if (m_client.Selection.Scope == SelectionScope.Verse)
+                    {
+                        if (m_client.Selection.Indexes != null)
+                        {
+                            List<int> verse_indexes = new List<int>();
+                            foreach (Verse verse in backup_verses)
+                            {
+                                verse_indexes.Add(verse.Number - 1);
+                            }
+                            m_client.Selection = new Selection(m_client.Book, SelectionScope.Verse, verse_indexes);
+                        }
+                    }
+
+                    // display chapters in new order
+                    DisplaySortedChapters();
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void ChapterSortComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            if (m_client.Book != null)
             {
-                if (m_client.Book != null)
+                if (m_client.Selection != null)
                 {
-                    if (m_client.Selection != null)
+                    // backup selection
+                    List<Verse> backup_verses = new List<Verse>();
+                    if (m_client.Selection.Scope == SelectionScope.Verse)
                     {
-                        // backup selection
-                        List<Verse> backup_verses = new List<Verse>();
-                        if (m_client.Selection.Scope == SelectionScope.Verse)
+                        if (m_client.Selection.Indexes != null)
                         {
-                            if (m_client.Selection.Indexes != null)
+                            foreach (int index in m_client.Selection.Indexes)
                             {
-                                foreach (int index in m_client.Selection.Indexes)
-                                {
-                                    backup_verses.Add(m_client.Book.Verses[index]);
-                                }
+                                backup_verses.Add(m_client.Book.Verses[index]);
                             }
                         }
-
-                        // do chapter sorting
-                        switch (ChapterSortComboBox.SelectedIndex)
-                        {
-                            case 0:
-                                {
-                                    m_chapter_sort_method = ChapterSortMethod.ByCompilation;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Compilation"]);
-                                    PinChapter1CheckBox.Visible = false;
-                                }
-                                break;
-                            case 1:
-                                {
-                                    m_chapter_sort_method = ChapterSortMethod.ByRevelation;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Revelation"]);
-                                    PinChapter1CheckBox.Visible = false;
-                                }
-                                break;
-                            case 2:
-                                {
-                                    m_chapter_sort_method = ChapterSortMethod.ByVerses;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Verses"]);
-                                    PinChapter1CheckBox.Visible = true;
-                                }
-                                break;
-                            case 3:
-                                {
-                                    m_chapter_sort_method = ChapterSortMethod.ByWords;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Words"]);
-                                    PinChapter1CheckBox.Visible = true;
-                                }
-                                break;
-                            case 4:
-                                {
-                                    m_chapter_sort_method = ChapterSortMethod.ByLetters;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Letters"]);
-                                    PinChapter1CheckBox.Visible = true;
-                                }
-                                break;
-                            case 5:
-                                {
-                                    m_chapter_sort_method = ChapterSortMethod.ByValue;
-                                    ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Value"]);
-                                    PinChapter1CheckBox.Visible = true;
-                                }
-                                break;
-                        }
-                        m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
-
-                        // restore selection
-                        if (m_client.Selection.Scope == SelectionScope.Verse)
-                        {
-                            if (m_client.Selection.Indexes != null)
-                            {
-                                List<int> verse_indexes = new List<int>();
-                                foreach (Verse verse in backup_verses)
-                                {
-                                    verse_indexes.Add(verse.Number - 1);
-                                }
-                                m_client.Selection = new Selection(m_client.Book, SelectionScope.Verse, verse_indexes);
-                            }
-                        }
-
-                        // display chapters in new order
-                        DisplaySortedChapters();
                     }
+
+                    // do chapter sorting
+                    switch (ChapterSortComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            {
+                                m_chapter_sort_method = ChapterSortMethod.ByCompilation;
+                                ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Compilation"]);
+                                PinChapter1CheckBox.Visible = false;
+                            }
+                            break;
+                        case 1:
+                            {
+                                m_chapter_sort_method = ChapterSortMethod.ByRevelation;
+                                ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Revelation"]);
+                                PinChapter1CheckBox.Visible = false;
+                            }
+                            break;
+                        case 2:
+                            {
+                                m_chapter_sort_method = ChapterSortMethod.ByVerses;
+                                ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Verses"]);
+                                PinChapter1CheckBox.Visible = true;
+                            }
+                            break;
+                        case 3:
+                            {
+                                m_chapter_sort_method = ChapterSortMethod.ByWords;
+                                ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Words"]);
+                                PinChapter1CheckBox.Visible = true;
+                            }
+                            break;
+                        case 4:
+                            {
+                                m_chapter_sort_method = ChapterSortMethod.ByLetters;
+                                ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Letters"]);
+                                PinChapter1CheckBox.Visible = true;
+                            }
+                            break;
+                        case 5:
+                            {
+                                m_chapter_sort_method = ChapterSortMethod.ByValue;
+                                ToolTip.SetToolTip(ChapterSortComboBox, L[l]["By Value"]);
+                                PinChapter1CheckBox.Visible = true;
+                            }
+                            break;
+                    }
+                    m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
+
+                    // restore selection
+                    if (m_client.Selection.Scope == SelectionScope.Verse)
+                    {
+                        if (m_client.Selection.Indexes != null)
+                        {
+                            List<int> verse_indexes = new List<int>();
+                            foreach (Verse verse in backup_verses)
+                            {
+                                verse_indexes.Add(verse.Number - 1);
+                            }
+                            m_client.Selection = new Selection(m_client.Book, SelectionScope.Verse, verse_indexes);
+                        }
+                    }
+
+                    // display chapters in new order
+                    DisplaySortedChapters();
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void ChapterSortLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            if (m_client.Book != null)
             {
-                if (m_client.Book != null)
+                if (m_client.Selection != null)
                 {
-                    if (m_client.Selection != null)
+                    // backup selection verses
+                    List<Verse> backup_verses = new List<Verse>();
+                    if (m_client.Selection.Scope == SelectionScope.Verse)
                     {
-                        // backup selection verses
-                        List<Verse> backup_verses = new List<Verse>();
-                        if (m_client.Selection.Scope == SelectionScope.Verse)
+                        if (m_client.Selection.Indexes != null)
                         {
-                            if (m_client.Selection.Indexes != null)
+                            foreach (int index in m_client.Selection.Indexes)
                             {
-                                foreach (int index in m_client.Selection.Indexes)
-                                {
-                                    backup_verses.Add(m_client.Book.Verses[index]);
-                                }
+                                backup_verses.Add(m_client.Book.Verses[index]);
                             }
                         }
-
-                        if (Chapter.SortOrder == ChapterSortOrder.Ascending)
-                        {
-                            m_chapter_sort_order = ChapterSortOrder.Descending;
-                            if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_down.png"))
-                            {
-                                ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_down.png");
-                                ToolTip.SetToolTip(ChapterSortLabel, L[l]["Descending"]);
-                            }
-                        }
-                        else
-                        {
-                            m_chapter_sort_order = ChapterSortOrder.Ascending;
-                            if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_up.png"))
-                            {
-                                ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_up.png");
-                                ToolTip.SetToolTip(ChapterSortLabel, L[l]["Ascending"]);
-                            }
-                        }
-                        m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
-
-                        // restore selection verses
-                        if (m_client.Selection.Scope == SelectionScope.Verse)
-                        {
-                            if (m_client.Selection.Indexes != null)
-                            {
-                                List<int> verse_indexes = new List<int>();
-                                foreach (Verse verse in backup_verses)
-                                {
-                                    verse_indexes.Add(verse.Number - 1);
-                                }
-                                m_client.Selection = new Selection(m_client.Book, SelectionScope.Verse, verse_indexes);
-                            }
-                        }
-
-                        // display chapters in new order
-                        DisplaySortedChapters();
                     }
+
+                    if (Chapter.SortOrder == ChapterSortOrder.Ascending)
+                    {
+                        m_chapter_sort_order = ChapterSortOrder.Descending;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_down.png"))
+                        {
+                            ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_down.png");
+                            ToolTip.SetToolTip(ChapterSortLabel, L[l]["Descending"]);
+                        }
+                    }
+                    else
+                    {
+                        m_chapter_sort_order = ChapterSortOrder.Ascending;
+                        if (File.Exists(Globals.IMAGES_FOLDER + "/" + "arrow_up.png"))
+                        {
+                            ChapterSortLabel.Image = new Bitmap(Globals.IMAGES_FOLDER + "/" + "arrow_up.png");
+                            ToolTip.SetToolTip(ChapterSortLabel, L[l]["Ascending"]);
+                        }
+                    }
+                    m_client.Book.SortChapters(m_chapter_sort_method, m_chapter_sort_order, m_pin_chapter1);
+
+                    // restore selection verses
+                    if (m_client.Selection.Scope == SelectionScope.Verse)
+                    {
+                        if (m_client.Selection.Indexes != null)
+                        {
+                            List<int> verse_indexes = new List<int>();
+                            foreach (Verse verse in backup_verses)
+                            {
+                                verse_indexes.Add(verse.Number - 1);
+                            }
+                            m_client.Selection = new Selection(m_client.Book, SelectionScope.Verse, verse_indexes);
+                        }
+                    }
+
+                    // display chapters in new order
+                    DisplaySortedChapters();
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void UpdateChapterSortControls()
@@ -13392,21 +13344,13 @@ public partial class MainForm : Form, ISubscriber
     }
     private void MathsInterestingNumbersEditLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        // display the interesting.txt file for live editing using ISubscriber
+        string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
+        if (File.Exists(filename))
         {
-            // display the interesting.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
+            FileHelper.WaitForReady(filename);
 
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
+            System.Diagnostics.Process.Start("Notepad.exe", filename);
         }
     }
 
@@ -14484,1158 +14428,1158 @@ public partial class MainForm : Form, ISubscriber
     }
     private void MathsChaptersSumInspectLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            InspectMathsChaptersSums();
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
+        InspectMathsChaptersSums();
     }
     private void MathsVersesSumInspectLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            InspectMathsVersesSums();
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
+        InspectMathsVersesSums();
     }
     private void InspectMathsChaptersSums()
     {
-        if (Directory.Exists(Globals.STATISTICS_FOLDER))
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsChapterSums.txt";
-
-            StringBuilder str = new StringBuilder();
-            str.Append("\t");
-            str.AppendLine("Chapter" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                            "Verses" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C+V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C-V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C×V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C÷V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique");
-
-            if (m_maths_verses != null)
+            if (Directory.Exists(Globals.STATISTICS_FOLDER))
             {
-                if (m_client != null)
+                string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsChapterSums.txt";
+
+                StringBuilder str = new StringBuilder();
+                str.Append("\t");
+                str.AppendLine("Chapter" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                "Verses" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C+V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C-V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C×V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C÷V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique");
+
+                if (m_maths_verses != null)
                 {
-                    if (m_client.Book != null)
+                    if (m_client != null)
                     {
-                        // CHAPTER SUMS
-                        List<Chapter> chapters = m_client.Book.GetChapters(m_maths_verses);
-                        if (chapters != null)
+                        if (m_client.Book != null)
                         {
-                            long dC = 0; // duplicate
-                            long uC = 0; // unique
-                            double duC = 0.0D; // d/u ratio
-                            Dictionary<long, long> c_frequencies = new Dictionary<long, long>();
-                            if (c_frequencies != null)
+                            // CHAPTER SUMS
+                            List<Chapter> chapters = m_client.Book.GetChapters(m_maths_verses);
+                            if (chapters != null)
                             {
-                                foreach (Chapter chapter in chapters)
-                                {
-                                    long n = chapter.SortedNumber;
-                                    if (c_frequencies.ContainsKey(n))
-                                    {
-                                        c_frequencies[n]++;
-                                    }
-                                    else
-                                    {
-                                        c_frequencies.Add(n, 1);
-                                    }
-                                }
-                                foreach (long n in c_frequencies.Keys)
-                                {
-                                    if (c_frequencies[n] > 1)
-                                    {
-                                        dC += n * c_frequencies[n];
-                                    }
-                                    else
-                                    {
-                                        uC += n;
-                                    }
-                                }
-                                if (uC != 0) duC = (double)dC / (double)uC;
-                            }
-
-                            long dV = 0; // duplicate
-                            long uV = 0; // unique
-                            double duV = 0.0D; // d/u ratio
-                            Dictionary<long, long> v_frequencies = new Dictionary<long, long>();
-                            if (v_frequencies != null)
-                            {
-                                foreach (Chapter chapter in chapters)
-                                {
-                                    long n = chapter.Verses.Count;
-                                    if (v_frequencies.ContainsKey(n))
-                                    {
-                                        v_frequencies[n]++;
-                                    }
-                                    else
-                                    {
-                                        v_frequencies.Add(n, 1);
-                                    }
-                                }
-                                foreach (long n in v_frequencies.Keys)
-                                {
-                                    if (v_frequencies[n] > 1)
-                                    {
-                                        dV += n * v_frequencies[n];
-                                    }
-                                    else
-                                    {
-                                        uV += n;
-                                    }
-                                }
-                                if (uV != 0) duV = (double)dV / (double)uV;
-                            }
-
-                            long dCPlusV = 0; // duplicate
-                            long uCPlusV = 0; // unique
-                            double duCPlusV = 0.0D; // d/u ratio
-                            Dictionary<long, long> cplusv_frequencies = new Dictionary<long, long>();
-                            if (cplusv_frequencies != null)
-                            {
-                                foreach (Chapter chapter in chapters)
-                                {
-                                    long n = chapter.SortedNumber + chapter.Verses.Count;
-                                    if (cplusv_frequencies.ContainsKey(n))
-                                    {
-                                        cplusv_frequencies[n]++;
-                                    }
-                                    else
-                                    {
-                                        cplusv_frequencies.Add(n, 1);
-                                    }
-                                }
-                                foreach (long n in cplusv_frequencies.Keys)
-                                {
-                                    if (cplusv_frequencies[n] > 1)
-                                    {
-                                        dCPlusV += n * cplusv_frequencies[n];
-                                    }
-                                    else
-                                    {
-                                        uCPlusV += n;
-                                    }
-                                }
-                                if (uCPlusV != 0) duCPlusV = (double)dCPlusV / (double)uCPlusV;
-                            }
-
-                            long dCMinusV = 0; // duplicate
-                            long uCMinusV = 0; // unique
-                            double duCMinusV = 0.0D; // d/u ratio
-                            Dictionary<long, long> cminusv_frequencies = new Dictionary<long, long>();
-                            if (cminusv_frequencies != null)
-                            {
-                                foreach (Chapter chapter in chapters)
-                                {
-                                    long n = m_maths_abs_cminusv ? Math.Abs(chapter.SortedNumber - chapter.Verses.Count) : (chapter.SortedNumber - chapter.Verses.Count);
-                                    if (cminusv_frequencies.ContainsKey(n))
-                                    {
-                                        cminusv_frequencies[n]++;
-                                    }
-                                    else
-                                    {
-                                        cminusv_frequencies.Add(n, 1);
-                                    }
-                                }
-                                foreach (long n in cminusv_frequencies.Keys)
-                                {
-                                    if (cminusv_frequencies[n] > 1)
-                                    {
-                                        dCMinusV += n * cminusv_frequencies[n];
-                                    }
-                                    else
-                                    {
-                                        uCMinusV += n;
-                                    }
-                                }
-                                if (uCMinusV != 0) duCMinusV = (double)dCMinusV / (double)uCMinusV;
-                            }
-
-                            long dCMultiplyV = 0; // duplicate
-                            long uCMultiplyV = 0; // unique
-                            double duCMultiplyV = 0.0D; // d/u ratio
-                            Dictionary<long, long> cmultiplyv_frequencies = new Dictionary<long, long>();
-                            if (cmultiplyv_frequencies != null)
-                            {
-                                foreach (Chapter chapter in chapters)
-                                {
-                                    long n = chapter.SortedNumber * chapter.Verses.Count;
-                                    if (cmultiplyv_frequencies.ContainsKey(n))
-                                    {
-                                        cmultiplyv_frequencies[n]++;
-                                    }
-                                    else
-                                    {
-                                        cmultiplyv_frequencies.Add(n, 1);
-                                    }
-                                }
-                                foreach (long n in cmultiplyv_frequencies.Keys)
-                                {
-                                    if (cmultiplyv_frequencies[n] > 1)
-                                    {
-                                        dCMultiplyV += n * cmultiplyv_frequencies[n];
-                                    }
-                                    else
-                                    {
-                                        uCMultiplyV += n;
-                                    }
-                                }
-                                if (uCMultiplyV != 0) duCMultiplyV = (double)dCMultiplyV / (double)uCMultiplyV;
-                            }
-
-                            long dCDivideV = 0; // duplicate
-                            long uCDivideV = 0; // unique
-                            double duCDivideV = 0.0D; // d/u ratio
-                            Dictionary<long, long> cdividev_frequencies = new Dictionary<long, long>();
-                            if (cdividev_frequencies != null)
-                            {
-                                foreach (Chapter chapter in chapters)
-                                {
-                                    long n = m_maths_vdividec ? ((long)((double)chapter.Verses.Count / (double)chapter.SortedNumber)) : ((long)((double)chapter.SortedNumber / (double)chapter.Verses.Count));
-                                    if (cdividev_frequencies.ContainsKey(n))
-                                    {
-                                        cdividev_frequencies[n]++;
-                                    }
-                                    else
-                                    {
-                                        cdividev_frequencies.Add(n, 1);
-                                    }
-                                }
-                                foreach (long n in cdividev_frequencies.Keys)
-                                {
-                                    if (cdividev_frequencies[n] > 1)
-                                    {
-                                        dCDivideV += n * cdividev_frequencies[n];
-                                    }
-                                    else
-                                    {
-                                        uCDivideV += n;
-                                    }
-                                }
-                                if (uCDivideV != 0) duCDivideV = (double)dCDivideV / (double)uCDivideV;
-                            }
-
-                            long C = 0;
-                            long oC = 0;
-                            long eC = 0;
-                            long pC = 0;
-                            long cC = 0;
-                            long V = 0;
-                            long oV = 0;
-                            long eV = 0;
-                            long pV = 0;
-                            long cV = 0;
-                            long CPlusV = 0;
-                            long oCPlusV = 0;
-                            long eCPlusV = 0;
-                            long pCPlusV = 0;
-                            long cCPlusV = 0;
-                            long CMinusV = 0;
-                            long oCMinusV = 0;
-                            long eCMinusV = 0;
-                            long pCMinusV = 0;
-                            long cCMinusV = 0;
-                            long CMultiplyV = 0;
-                            long oCMultiplyV = 0;
-                            long eCMultiplyV = 0;
-                            long pCMultiplyV = 0;
-                            long cCMultiplyV = 0;
-                            double CDivideV = 0;
-                            double oCDivideV = 0;
-                            double eCDivideV = 0;
-                            double pCDivideV = 0;
-                            double cCDivideV = 0;
-                            foreach (Chapter chapter in chapters)
-                            {
-                                long chapter_number = chapter.SortedNumber;
-                                long verse_count = chapter.Verses.Count;
-                                long cplusv = chapter_number + verse_count;
-                                long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_count) : (chapter_number - verse_count);
-                                long cmultiplyv = chapter_number * verse_count;
-                                double cdividev = m_maths_vdividec ? ((double)verse_count / (double)chapter_number) : ((double)chapter_number / (double)verse_count);
-
-                                str.Append("\t");
-
-                                C += chapter_number;
-                                str.Append(chapter_number + "\t");
-                                if (Numbers.IsOdd(chapter_number))
-                                {
-                                    oC += chapter_number;
-                                    str.Append(chapter_number + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else
-                                {
-                                    eC += chapter_number;
-                                    str.Append(0 + "\t");
-                                    str.Append(chapter_number + "\t");
-                                }
-                                if (Numbers.IsPrime(chapter_number))
-                                {
-                                    pC += chapter_number;
-                                    str.Append(chapter_number + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else if (Numbers.IsComposite(chapter_number))
-                                {
-                                    cC += chapter_number;
-                                    str.Append(0 + "\t");
-                                    str.Append(chapter_number + "\t");
-                                }
-                                else //if (chapter_number == 1)
-                                {
-                                    str.Append(0 + "\t");
-                                    str.Append(0 + "\t");
-                                }
+                                long dC = 0; // duplicate
+                                long uC = 0; // unique
+                                double duC = 0.0D; // d/u ratio
+                                Dictionary<long, long> c_frequencies = new Dictionary<long, long>();
                                 if (c_frequencies != null)
                                 {
-                                    if (c_frequencies.ContainsKey(chapter_number))
+                                    foreach (Chapter chapter in chapters)
                                     {
-                                        if (c_frequencies[chapter_number] > 1)
+                                        long n = chapter.SortedNumber;
+                                        if (c_frequencies.ContainsKey(n))
                                         {
-                                            str.Append(chapter_number + "\t");
-                                            str.Append(0 + "\t");
+                                            c_frequencies[n]++;
                                         }
                                         else
                                         {
-                                            str.Append(0 + "\t");
-                                            str.Append(chapter_number + "\t");
+                                            c_frequencies.Add(n, 1);
                                         }
                                     }
+                                    foreach (long n in c_frequencies.Keys)
+                                    {
+                                        if (c_frequencies[n] > 1)
+                                        {
+                                            dC += n * c_frequencies[n];
+                                        }
+                                        else
+                                        {
+                                            uC += n;
+                                        }
+                                    }
+                                    if (uC != 0) duC = (double)dC / (double)uC;
                                 }
-                                str.Append("\t");
 
-                                V += verse_count;
-                                str.Append(verse_count + "\t");
-                                if (Numbers.IsOdd(verse_count))
-                                {
-                                    oV += verse_count;
-                                    str.Append(verse_count + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else
-                                {
-                                    eV += verse_count;
-                                    str.Append(0 + "\t");
-                                    str.Append(verse_count + "\t");
-                                }
-                                if (Numbers.IsPrime(verse_count))
-                                {
-                                    pV += verse_count;
-                                    str.Append(verse_count + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else if (Numbers.IsComposite(verse_count))
-                                {
-                                    cV += verse_count;
-                                    str.Append(0 + "\t");
-                                    str.Append(verse_count + "\t");
-                                }
-                                else //if (verse_count == 1)
-                                {
-                                    str.Append(0 + "\t");
-                                    str.Append(0 + "\t");
-                                }
+                                long dV = 0; // duplicate
+                                long uV = 0; // unique
+                                double duV = 0.0D; // d/u ratio
+                                Dictionary<long, long> v_frequencies = new Dictionary<long, long>();
                                 if (v_frequencies != null)
                                 {
-                                    if (v_frequencies.ContainsKey(verse_count))
+                                    foreach (Chapter chapter in chapters)
                                     {
-                                        if (v_frequencies[verse_count] > 1)
+                                        long n = chapter.Verses.Count;
+                                        if (v_frequencies.ContainsKey(n))
                                         {
-                                            str.Append(verse_count + "\t");
-                                            str.Append(0 + "\t");
+                                            v_frequencies[n]++;
                                         }
                                         else
                                         {
-                                            str.Append(0 + "\t");
-                                            str.Append(verse_count + "\t");
+                                            v_frequencies.Add(n, 1);
                                         }
                                     }
+                                    foreach (long n in v_frequencies.Keys)
+                                    {
+                                        if (v_frequencies[n] > 1)
+                                        {
+                                            dV += n * v_frequencies[n];
+                                        }
+                                        else
+                                        {
+                                            uV += n;
+                                        }
+                                    }
+                                    if (uV != 0) duV = (double)dV / (double)uV;
                                 }
-                                str.Append("\t");
 
-                                CPlusV += cplusv;
-                                str.Append(cplusv + "\t");
-                                if (Numbers.IsOdd(cplusv))
-                                {
-                                    oCPlusV += cplusv;
-                                    str.Append(cplusv + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else
-                                {
-                                    eCPlusV += cplusv;
-                                    str.Append(0 + "\t");
-                                    str.Append(cplusv + "\t");
-                                }
-                                if (Numbers.IsPrime(cplusv))
-                                {
-                                    pCPlusV += cplusv;
-                                    str.Append(cplusv + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else if (Numbers.IsComposite(cplusv))
-                                {
-                                    cCPlusV += cplusv;
-                                    str.Append(0 + "\t");
-                                    str.Append(cplusv + "\t");
-                                }
-                                else //if (cplusv == 1)
-                                {
-                                    str.Append(0 + "\t");
-                                    str.Append(0 + "\t");
-                                }
+                                long dCPlusV = 0; // duplicate
+                                long uCPlusV = 0; // unique
+                                double duCPlusV = 0.0D; // d/u ratio
+                                Dictionary<long, long> cplusv_frequencies = new Dictionary<long, long>();
                                 if (cplusv_frequencies != null)
                                 {
-                                    if (cplusv_frequencies.ContainsKey(cplusv))
+                                    foreach (Chapter chapter in chapters)
                                     {
-                                        if (cplusv_frequencies[cplusv] > 1)
+                                        long n = chapter.SortedNumber + chapter.Verses.Count;
+                                        if (cplusv_frequencies.ContainsKey(n))
                                         {
-                                            str.Append(cplusv + "\t");
-                                            str.Append(0 + "\t");
+                                            cplusv_frequencies[n]++;
                                         }
                                         else
                                         {
-                                            str.Append(0 + "\t");
-                                            str.Append(cplusv + "\t");
+                                            cplusv_frequencies.Add(n, 1);
                                         }
                                     }
+                                    foreach (long n in cplusv_frequencies.Keys)
+                                    {
+                                        if (cplusv_frequencies[n] > 1)
+                                        {
+                                            dCPlusV += n * cplusv_frequencies[n];
+                                        }
+                                        else
+                                        {
+                                            uCPlusV += n;
+                                        }
+                                    }
+                                    if (uCPlusV != 0) duCPlusV = (double)dCPlusV / (double)uCPlusV;
                                 }
-                                str.Append("\t");
 
-                                CMinusV += cminusv;
-                                str.Append(cminusv + "\t");
-                                if (Numbers.IsOdd(cminusv))
-                                {
-                                    oCMinusV += cminusv;
-                                    str.Append(cminusv + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else
-                                {
-                                    eCMinusV += cminusv;
-                                    str.Append(0 + "\t");
-                                    str.Append(cminusv + "\t");
-                                }
-                                if (Numbers.IsPrime(cminusv))
-                                {
-                                    pCMinusV += cminusv;
-                                    str.Append(cminusv + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else if (Numbers.IsComposite(cminusv))
-                                {
-                                    cCMinusV += cminusv;
-                                    str.Append(0 + "\t");
-                                    str.Append(cminusv + "\t");
-                                }
-                                else //if (cminusv == 1)
-                                {
-                                    str.Append(0 + "\t");
-                                    str.Append(0 + "\t");
-                                }
+                                long dCMinusV = 0; // duplicate
+                                long uCMinusV = 0; // unique
+                                double duCMinusV = 0.0D; // d/u ratio
+                                Dictionary<long, long> cminusv_frequencies = new Dictionary<long, long>();
                                 if (cminusv_frequencies != null)
                                 {
-                                    if (cminusv_frequencies.ContainsKey(cminusv))
+                                    foreach (Chapter chapter in chapters)
                                     {
-                                        if (cminusv_frequencies[cminusv] > 1)
+                                        long n = m_maths_abs_cminusv ? Math.Abs(chapter.SortedNumber - chapter.Verses.Count) : (chapter.SortedNumber - chapter.Verses.Count);
+                                        if (cminusv_frequencies.ContainsKey(n))
                                         {
-                                            str.Append(cminusv + "\t");
-                                            str.Append(0 + "\t");
+                                            cminusv_frequencies[n]++;
                                         }
                                         else
                                         {
-                                            str.Append(0 + "\t");
-                                            str.Append(cminusv + "\t");
+                                            cminusv_frequencies.Add(n, 1);
                                         }
                                     }
+                                    foreach (long n in cminusv_frequencies.Keys)
+                                    {
+                                        if (cminusv_frequencies[n] > 1)
+                                        {
+                                            dCMinusV += n * cminusv_frequencies[n];
+                                        }
+                                        else
+                                        {
+                                            uCMinusV += n;
+                                        }
+                                    }
+                                    if (uCMinusV != 0) duCMinusV = (double)dCMinusV / (double)uCMinusV;
                                 }
-                                str.Append("\t");
 
-                                CMultiplyV += cmultiplyv;
-                                str.Append(cmultiplyv + "\t");
-                                if (Numbers.IsOdd(cmultiplyv))
-                                {
-                                    oCMultiplyV += cmultiplyv;
-                                    str.Append(cmultiplyv + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else
-                                {
-                                    eCMultiplyV += cmultiplyv;
-                                    str.Append(0 + "\t");
-                                    str.Append(cmultiplyv + "\t");
-                                }
-                                if (Numbers.IsPrime(cmultiplyv))
-                                {
-                                    pCMultiplyV += cmultiplyv;
-                                    str.Append(cmultiplyv + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else if (Numbers.IsComposite(cmultiplyv))
-                                {
-                                    cCMultiplyV += cmultiplyv;
-                                    str.Append(0 + "\t");
-                                    str.Append(cmultiplyv + "\t");
-                                }
-                                else //if (cmultiplyv == 1)
-                                {
-                                    str.Append(0 + "\t");
-                                    str.Append(0 + "\t");
-                                }
+                                long dCMultiplyV = 0; // duplicate
+                                long uCMultiplyV = 0; // unique
+                                double duCMultiplyV = 0.0D; // d/u ratio
+                                Dictionary<long, long> cmultiplyv_frequencies = new Dictionary<long, long>();
                                 if (cmultiplyv_frequencies != null)
                                 {
-                                    if (cmultiplyv_frequencies.ContainsKey(cmultiplyv))
+                                    foreach (Chapter chapter in chapters)
                                     {
-                                        if (cmultiplyv_frequencies[cmultiplyv] > 1)
+                                        long n = chapter.SortedNumber * chapter.Verses.Count;
+                                        if (cmultiplyv_frequencies.ContainsKey(n))
                                         {
-                                            str.Append(cmultiplyv + "\t");
-                                            str.Append(0 + "\t");
+                                            cmultiplyv_frequencies[n]++;
                                         }
                                         else
                                         {
-                                            str.Append(0 + "\t");
-                                            str.Append(cmultiplyv + "\t");
+                                            cmultiplyv_frequencies.Add(n, 1);
                                         }
                                     }
+                                    foreach (long n in cmultiplyv_frequencies.Keys)
+                                    {
+                                        if (cmultiplyv_frequencies[n] > 1)
+                                        {
+                                            dCMultiplyV += n * cmultiplyv_frequencies[n];
+                                        }
+                                        else
+                                        {
+                                            uCMultiplyV += n;
+                                        }
+                                    }
+                                    if (uCMultiplyV != 0) duCMultiplyV = (double)dCMultiplyV / (double)uCMultiplyV;
                                 }
-                                str.Append("\t");
 
-
-                                CDivideV += cdividev;
-                                str.Append(cdividev.ToString("0.0") + "\t");
-                                if (Numbers.IsOdd((long)cdividev))
-                                {
-                                    oCDivideV += cdividev;
-                                    str.Append(cdividev.ToString("0.0") + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else
-                                {
-                                    eCDivideV += cdividev;
-                                    str.Append(0 + "\t");
-                                    str.Append(cdividev.ToString("0.0") + "\t");
-                                }
-                                if (Numbers.IsPrime((long)cdividev))
-                                {
-                                    pCDivideV += cdividev;
-                                    str.Append(cdividev.ToString("0.0") + "\t");
-                                    str.Append(0 + "\t");
-                                }
-                                else if (Numbers.IsComposite((long)cdividev))
-                                {
-                                    cCDivideV += cdividev;
-                                    str.Append(0 + "\t");
-                                    str.Append(cdividev.ToString("0.0") + "\t");
-                                }
-                                else //if (cdividev == 1)
-                                {
-                                    str.Append(0 + "\t");
-                                    str.Append(0 + "\t");
-                                }
+                                long dCDivideV = 0; // duplicate
+                                long uCDivideV = 0; // unique
+                                double duCDivideV = 0.0D; // d/u ratio
+                                Dictionary<long, long> cdividev_frequencies = new Dictionary<long, long>();
                                 if (cdividev_frequencies != null)
                                 {
-                                    if (cdividev_frequencies.ContainsKey((long)cdividev))
+                                    foreach (Chapter chapter in chapters)
                                     {
-                                        if (cdividev_frequencies[(long)cdividev] > 1)
+                                        long n = m_maths_vdividec ? ((long)((double)chapter.Verses.Count / (double)chapter.SortedNumber)) : ((long)((double)chapter.SortedNumber / (double)chapter.Verses.Count));
+                                        if (cdividev_frequencies.ContainsKey(n))
                                         {
-                                            str.Append(cdividev.ToString("0.0") + "\t");
-                                            str.Append(0 + "\t");
+                                            cdividev_frequencies[n]++;
                                         }
                                         else
                                         {
-                                            str.Append(0 + "\t");
-                                            str.Append(cdividev.ToString("0.0") + "\t");
+                                            cdividev_frequencies.Add(n, 1);
                                         }
                                     }
+                                    foreach (long n in cdividev_frequencies.Keys)
+                                    {
+                                        if (cdividev_frequencies[n] > 1)
+                                        {
+                                            dCDivideV += n * cdividev_frequencies[n];
+                                        }
+                                        else
+                                        {
+                                            uCDivideV += n;
+                                        }
+                                    }
+                                    if (uCDivideV != 0) duCDivideV = (double)dCDivideV / (double)uCDivideV;
                                 }
-                                str.Remove(str.Length - 1, 1);
 
-                                str.AppendLine();
+                                long C = 0;
+                                long oC = 0;
+                                long eC = 0;
+                                long pC = 0;
+                                long cC = 0;
+                                long V = 0;
+                                long oV = 0;
+                                long eV = 0;
+                                long pV = 0;
+                                long cV = 0;
+                                long CPlusV = 0;
+                                long oCPlusV = 0;
+                                long eCPlusV = 0;
+                                long pCPlusV = 0;
+                                long cCPlusV = 0;
+                                long CMinusV = 0;
+                                long oCMinusV = 0;
+                                long eCMinusV = 0;
+                                long pCMinusV = 0;
+                                long cCMinusV = 0;
+                                long CMultiplyV = 0;
+                                long oCMultiplyV = 0;
+                                long eCMultiplyV = 0;
+                                long pCMultiplyV = 0;
+                                long cCMultiplyV = 0;
+                                double CDivideV = 0;
+                                double oCDivideV = 0;
+                                double eCDivideV = 0;
+                                double pCDivideV = 0;
+                                double cCDivideV = 0;
+                                foreach (Chapter chapter in chapters)
+                                {
+                                    long chapter_number = chapter.SortedNumber;
+                                    long verse_count = chapter.Verses.Count;
+                                    long cplusv = chapter_number + verse_count;
+                                    long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_count) : (chapter_number - verse_count);
+                                    long cmultiplyv = chapter_number * verse_count;
+                                    double cdividev = m_maths_vdividec ? ((double)verse_count / (double)chapter_number) : ((double)chapter_number / (double)verse_count);
+
+                                    str.Append("\t");
+
+                                    C += chapter_number;
+                                    str.Append(chapter_number + "\t");
+                                    if (Numbers.IsOdd(chapter_number))
+                                    {
+                                        oC += chapter_number;
+                                        str.Append(chapter_number + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else
+                                    {
+                                        eC += chapter_number;
+                                        str.Append(0 + "\t");
+                                        str.Append(chapter_number + "\t");
+                                    }
+                                    if (Numbers.IsPrime(chapter_number))
+                                    {
+                                        pC += chapter_number;
+                                        str.Append(chapter_number + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else if (Numbers.IsComposite(chapter_number))
+                                    {
+                                        cC += chapter_number;
+                                        str.Append(0 + "\t");
+                                        str.Append(chapter_number + "\t");
+                                    }
+                                    else //if (chapter_number == 1)
+                                    {
+                                        str.Append(0 + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    if (c_frequencies != null)
+                                    {
+                                        if (c_frequencies.ContainsKey(chapter_number))
+                                        {
+                                            if (c_frequencies[chapter_number] > 1)
+                                            {
+                                                str.Append(chapter_number + "\t");
+                                                str.Append(0 + "\t");
+                                            }
+                                            else
+                                            {
+                                                str.Append(0 + "\t");
+                                                str.Append(chapter_number + "\t");
+                                            }
+                                        }
+                                    }
+                                    str.Append("\t");
+
+                                    V += verse_count;
+                                    str.Append(verse_count + "\t");
+                                    if (Numbers.IsOdd(verse_count))
+                                    {
+                                        oV += verse_count;
+                                        str.Append(verse_count + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else
+                                    {
+                                        eV += verse_count;
+                                        str.Append(0 + "\t");
+                                        str.Append(verse_count + "\t");
+                                    }
+                                    if (Numbers.IsPrime(verse_count))
+                                    {
+                                        pV += verse_count;
+                                        str.Append(verse_count + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else if (Numbers.IsComposite(verse_count))
+                                    {
+                                        cV += verse_count;
+                                        str.Append(0 + "\t");
+                                        str.Append(verse_count + "\t");
+                                    }
+                                    else //if (verse_count == 1)
+                                    {
+                                        str.Append(0 + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    if (v_frequencies != null)
+                                    {
+                                        if (v_frequencies.ContainsKey(verse_count))
+                                        {
+                                            if (v_frequencies[verse_count] > 1)
+                                            {
+                                                str.Append(verse_count + "\t");
+                                                str.Append(0 + "\t");
+                                            }
+                                            else
+                                            {
+                                                str.Append(0 + "\t");
+                                                str.Append(verse_count + "\t");
+                                            }
+                                        }
+                                    }
+                                    str.Append("\t");
+
+                                    CPlusV += cplusv;
+                                    str.Append(cplusv + "\t");
+                                    if (Numbers.IsOdd(cplusv))
+                                    {
+                                        oCPlusV += cplusv;
+                                        str.Append(cplusv + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else
+                                    {
+                                        eCPlusV += cplusv;
+                                        str.Append(0 + "\t");
+                                        str.Append(cplusv + "\t");
+                                    }
+                                    if (Numbers.IsPrime(cplusv))
+                                    {
+                                        pCPlusV += cplusv;
+                                        str.Append(cplusv + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else if (Numbers.IsComposite(cplusv))
+                                    {
+                                        cCPlusV += cplusv;
+                                        str.Append(0 + "\t");
+                                        str.Append(cplusv + "\t");
+                                    }
+                                    else //if (cplusv == 1)
+                                    {
+                                        str.Append(0 + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    if (cplusv_frequencies != null)
+                                    {
+                                        if (cplusv_frequencies.ContainsKey(cplusv))
+                                        {
+                                            if (cplusv_frequencies[cplusv] > 1)
+                                            {
+                                                str.Append(cplusv + "\t");
+                                                str.Append(0 + "\t");
+                                            }
+                                            else
+                                            {
+                                                str.Append(0 + "\t");
+                                                str.Append(cplusv + "\t");
+                                            }
+                                        }
+                                    }
+                                    str.Append("\t");
+
+                                    CMinusV += cminusv;
+                                    str.Append(cminusv + "\t");
+                                    if (Numbers.IsOdd(cminusv))
+                                    {
+                                        oCMinusV += cminusv;
+                                        str.Append(cminusv + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else
+                                    {
+                                        eCMinusV += cminusv;
+                                        str.Append(0 + "\t");
+                                        str.Append(cminusv + "\t");
+                                    }
+                                    if (Numbers.IsPrime(cminusv))
+                                    {
+                                        pCMinusV += cminusv;
+                                        str.Append(cminusv + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else if (Numbers.IsComposite(cminusv))
+                                    {
+                                        cCMinusV += cminusv;
+                                        str.Append(0 + "\t");
+                                        str.Append(cminusv + "\t");
+                                    }
+                                    else //if (cminusv == 1)
+                                    {
+                                        str.Append(0 + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    if (cminusv_frequencies != null)
+                                    {
+                                        if (cminusv_frequencies.ContainsKey(cminusv))
+                                        {
+                                            if (cminusv_frequencies[cminusv] > 1)
+                                            {
+                                                str.Append(cminusv + "\t");
+                                                str.Append(0 + "\t");
+                                            }
+                                            else
+                                            {
+                                                str.Append(0 + "\t");
+                                                str.Append(cminusv + "\t");
+                                            }
+                                        }
+                                    }
+                                    str.Append("\t");
+
+                                    CMultiplyV += cmultiplyv;
+                                    str.Append(cmultiplyv + "\t");
+                                    if (Numbers.IsOdd(cmultiplyv))
+                                    {
+                                        oCMultiplyV += cmultiplyv;
+                                        str.Append(cmultiplyv + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else
+                                    {
+                                        eCMultiplyV += cmultiplyv;
+                                        str.Append(0 + "\t");
+                                        str.Append(cmultiplyv + "\t");
+                                    }
+                                    if (Numbers.IsPrime(cmultiplyv))
+                                    {
+                                        pCMultiplyV += cmultiplyv;
+                                        str.Append(cmultiplyv + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else if (Numbers.IsComposite(cmultiplyv))
+                                    {
+                                        cCMultiplyV += cmultiplyv;
+                                        str.Append(0 + "\t");
+                                        str.Append(cmultiplyv + "\t");
+                                    }
+                                    else //if (cmultiplyv == 1)
+                                    {
+                                        str.Append(0 + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    if (cmultiplyv_frequencies != null)
+                                    {
+                                        if (cmultiplyv_frequencies.ContainsKey(cmultiplyv))
+                                        {
+                                            if (cmultiplyv_frequencies[cmultiplyv] > 1)
+                                            {
+                                                str.Append(cmultiplyv + "\t");
+                                                str.Append(0 + "\t");
+                                            }
+                                            else
+                                            {
+                                                str.Append(0 + "\t");
+                                                str.Append(cmultiplyv + "\t");
+                                            }
+                                        }
+                                    }
+                                    str.Append("\t");
+
+
+                                    CDivideV += cdividev;
+                                    str.Append(cdividev.ToString("0.0") + "\t");
+                                    if (Numbers.IsOdd((long)cdividev))
+                                    {
+                                        oCDivideV += cdividev;
+                                        str.Append(cdividev.ToString("0.0") + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else
+                                    {
+                                        eCDivideV += cdividev;
+                                        str.Append(0 + "\t");
+                                        str.Append(cdividev.ToString("0.0") + "\t");
+                                    }
+                                    if (Numbers.IsPrime((long)cdividev))
+                                    {
+                                        pCDivideV += cdividev;
+                                        str.Append(cdividev.ToString("0.0") + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    else if (Numbers.IsComposite((long)cdividev))
+                                    {
+                                        cCDivideV += cdividev;
+                                        str.Append(0 + "\t");
+                                        str.Append(cdividev.ToString("0.0") + "\t");
+                                    }
+                                    else //if (cdividev == 1)
+                                    {
+                                        str.Append(0 + "\t");
+                                        str.Append(0 + "\t");
+                                    }
+                                    if (cdividev_frequencies != null)
+                                    {
+                                        if (cdividev_frequencies.ContainsKey((long)cdividev))
+                                        {
+                                            if (cdividev_frequencies[(long)cdividev] > 1)
+                                            {
+                                                str.Append(cdividev.ToString("0.0") + "\t");
+                                                str.Append(0 + "\t");
+                                            }
+                                            else
+                                            {
+                                                str.Append(0 + "\t");
+                                                str.Append(cdividev.ToString("0.0") + "\t");
+                                            }
+                                        }
+                                    }
+                                    str.Remove(str.Length - 1, 1);
+
+                                    str.AppendLine();
+                                }
+
+                                str.Append("Sum" + "\t");
+                                str.AppendLine(C + "\t" + oC + "\t" + eC + "\t" + pC + "\t" + cC + "\t" + dC + "\t" + uC + "\t" + "\t" +
+                                               V + "\t" + oV + "\t" + eV + "\t" + pV + "\t" + cV + "\t" + dV + "\t" + uV + "\t" + "\t" +
+                                               CPlusV + "\t" + oCPlusV + "\t" + eCPlusV + "\t" + pCPlusV + "\t" + cCPlusV + "\t" + dCPlusV + "\t" + uCPlusV + "\t" + "\t" +
+                                               CMinusV + "\t" + oCMinusV + "\t" + eCMinusV + "\t" + pCMinusV + "\t" + cCMinusV + "\t" + dCMinusV + "\t" + uCMinusV + "\t" + "\t" +
+                                               CMultiplyV + "\t" + oCMultiplyV + "\t" + eCMultiplyV + "\t" + pCMultiplyV + "\t" + cCMultiplyV + "\t" + dCMultiplyV + "\t" + uCMultiplyV + "\t" + "\t" +
+                                               CDivideV.ToString("0.0") + "\t" + oCDivideV.ToString("0.0") + "\t" + eCDivideV.ToString("0.0") + "\t" + pCDivideV.ToString("0.0") + "\t" + cCDivideV.ToString("0.0") + "\t" + dCDivideV.ToString("0.0") + "\t" + uCDivideV.ToString("0.0"));
+                                FileHelper.SaveText(filename, str.ToString());
+                                FileHelper.DisplayFile(filename);
                             }
-
-                            str.Append("Sum" + "\t");
-                            str.AppendLine(C + "\t" + oC + "\t" + eC + "\t" + pC + "\t" + cC + "\t" + dC + "\t" + uC + "\t" + "\t" +
-                                           V + "\t" + oV + "\t" + eV + "\t" + pV + "\t" + cV + "\t" + dV + "\t" + uV + "\t" + "\t" +
-                                           CPlusV + "\t" + oCPlusV + "\t" + eCPlusV + "\t" + pCPlusV + "\t" + cCPlusV + "\t" + dCPlusV + "\t" + uCPlusV + "\t" + "\t" +
-                                           CMinusV + "\t" + oCMinusV + "\t" + eCMinusV + "\t" + pCMinusV + "\t" + cCMinusV + "\t" + dCMinusV + "\t" + uCMinusV + "\t" + "\t" +
-                                           CMultiplyV + "\t" + oCMultiplyV + "\t" + eCMultiplyV + "\t" + pCMultiplyV + "\t" + cCMultiplyV + "\t" + dCMultiplyV + "\t" + uCMultiplyV + "\t" + "\t" +
-                                           CDivideV.ToString("0.0") + "\t" + oCDivideV.ToString("0.0") + "\t" + eCDivideV.ToString("0.0") + "\t" + pCDivideV.ToString("0.0") + "\t" + cCDivideV.ToString("0.0") + "\t" + dCDivideV.ToString("0.0") + "\t" + uCDivideV.ToString("0.0"));
-                            FileHelper.SaveText(filename, str.ToString());
-                            FileHelper.DisplayFile(filename);
                         }
                     }
                 }
             }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
         }
     }
     private void InspectMathsVersesSums()
     {
-        if (Directory.Exists(Globals.STATISTICS_FOLDER))
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsVerseSums.txt";
-
-            StringBuilder str = new StringBuilder();
-            str.Append("\t");
-            str.AppendLine("Chapter" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                             "Verse" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C+V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C-V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C×V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
-                               "C÷V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique");
-
-            // VERSE SUMS
-            if (m_maths_verses != null)
+            if (Directory.Exists(Globals.STATISTICS_FOLDER))
             {
-                long dC = 0; // duplicate
-                long uC = 0; // unique
-                double duC = 0.0D; // d/u ratio
-                Dictionary<long, long> c_frequencies = new Dictionary<long, long>();
-                if (c_frequencies != null)
+                string filename = Globals.STATISTICS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "MathsVerseSums.txt";
+
+                StringBuilder str = new StringBuilder();
+                str.Append("\t");
+                str.AppendLine("Chapter" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                 "Verse" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C+V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C-V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C×V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique" + "\t" + "\t" +
+                                   "C÷V" + "\t" + "Odd" + "\t" + "Even" + "\t" + "Prime" + "\t" + "Composi" + "\t" + "Duplica" + "\t" + "Unique");
+
+                // VERSE SUMS
+                if (m_maths_verses != null)
                 {
-                    foreach (Verse verse in m_maths_verses)
-                    {
-                        long n = verse.Chapter.SortedNumber;
-                        if (c_frequencies.ContainsKey(n))
-                        {
-                            c_frequencies[n]++;
-                        }
-                        else
-                        {
-                            c_frequencies.Add(n, 1);
-                        }
-                    }
-                    foreach (long n in c_frequencies.Keys)
-                    {
-                        if (c_frequencies[n] > 1)
-                        {
-                            dC += n * c_frequencies[n];
-                        }
-                        else
-                        {
-                            uC += n;
-                        }
-                    }
-                    if (uC != 0) duC = (double)dC / (double)uC;
-                }
-
-                long dV = 0; // duplicate
-                long uV = 0; // unique
-                double duV = 0.0D; // d/u ratio
-                Dictionary<long, long> v_frequencies = new Dictionary<long, long>();
-                if (v_frequencies != null)
-                {
-                    foreach (Verse verse in m_maths_verses)
-                    {
-                        long n = verse.NumberInChapter;
-                        if (v_frequencies.ContainsKey(n))
-                        {
-                            v_frequencies[n]++;
-                        }
-                        else
-                        {
-                            v_frequencies.Add(n, 1);
-                        }
-                    }
-                    foreach (long n in v_frequencies.Keys)
-                    {
-                        if (v_frequencies[n] > 1)
-                        {
-                            dV += n * v_frequencies[n];
-                        }
-                        else
-                        {
-                            uV += n;
-                        }
-                    }
-                    if (uV != 0) duV = (double)dV / (double)uV;
-                }
-
-                long dCPlusV = 0; // duplicate
-                long uCPlusV = 0; // unique
-                double duCPlusV = 0.0D; // d/u ratio
-                Dictionary<long, long> cplusv_frequencies = new Dictionary<long, long>();
-                if (cplusv_frequencies != null)
-                {
-                    foreach (Verse verse in m_maths_verses)
-                    {
-                        long n = verse.Chapter.SortedNumber + verse.NumberInChapter;
-                        if (cplusv_frequencies.ContainsKey(n))
-                        {
-                            cplusv_frequencies[n]++;
-                        }
-                        else
-                        {
-                            cplusv_frequencies.Add(n, 1);
-                        }
-                    }
-                    foreach (long n in cplusv_frequencies.Keys)
-                    {
-                        if (cplusv_frequencies[n] > 1)
-                        {
-                            dCPlusV += n * cplusv_frequencies[n];
-                        }
-                        else
-                        {
-                            uCPlusV += n;
-                        }
-                    }
-                    if (uCPlusV != 0) duCPlusV = (double)dCPlusV / (double)uCPlusV;
-                }
-
-                long dCMinusV = 0; // duplicate
-                long uCMinusV = 0; // unique
-                double duCMinusV = 0.0D; // d/u ratio
-                Dictionary<long, long> cminusv_frequencies = new Dictionary<long, long>();
-                if (cminusv_frequencies != null)
-                {
-                    foreach (Verse verse in m_maths_verses)
-                    {
-                        long n = m_maths_abs_cminusv ? Math.Abs(verse.Chapter.SortedNumber - verse.NumberInChapter) : (verse.Chapter.SortedNumber - verse.NumberInChapter);
-                        if (cminusv_frequencies.ContainsKey(n))
-                        {
-                            cminusv_frequencies[n]++;
-                        }
-                        else
-                        {
-                            cminusv_frequencies.Add(n, 1);
-                        }
-                    }
-                    foreach (long n in cminusv_frequencies.Keys)
-                    {
-                        if (cminusv_frequencies[n] > 1)
-                        {
-                            dCMinusV += n * cminusv_frequencies[n];
-                        }
-                        else
-                        {
-                            uCMinusV += n;
-                        }
-                    }
-                    if (uCMinusV != 0) duCMinusV = (double)dCMinusV / (double)uCMinusV;
-                }
-
-                long dCMultiplyV = 0; // duplicate
-                long uCMultiplyV = 0; // unique
-                double duCMultiplyV = 0.0D; // d/u ratio
-                Dictionary<long, long> cmultiplyv_frequencies = new Dictionary<long, long>();
-                if (cmultiplyv_frequencies != null)
-                {
-                    foreach (Verse verse in m_maths_verses)
-                    {
-                        long n = verse.Chapter.SortedNumber * verse.NumberInChapter;
-                        if (cmultiplyv_frequencies.ContainsKey(n))
-                        {
-                            cmultiplyv_frequencies[n]++;
-                        }
-                        else
-                        {
-                            cmultiplyv_frequencies.Add(n, 1);
-                        }
-                    }
-                    foreach (long n in cmultiplyv_frequencies.Keys)
-                    {
-                        if (cmultiplyv_frequencies[n] > 1)
-                        {
-                            dCMultiplyV += n * cmultiplyv_frequencies[n];
-                        }
-                        else
-                        {
-                            uCMultiplyV += n;
-                        }
-                    }
-                    if (uCMultiplyV != 0) duCMultiplyV = (double)dCMultiplyV / (double)uCMultiplyV;
-                }
-
-                long dCDivideV = 0; // duplicate
-                long uCDivideV = 0; // unique
-                double duCDivideV = 0.0D; // d/u ratio
-                Dictionary<long, long> cdividev_frequencies = new Dictionary<long, long>();
-                if (cdividev_frequencies != null)
-                {
-                    foreach (Verse verse in m_maths_verses)
-                    {
-                        long n = m_maths_vdividec ? ((long)((double)verse.NumberInChapter / (double)verse.Chapter.SortedNumber)) : ((long)((double)verse.Chapter.SortedNumber / (double)verse.NumberInChapter));
-                        if (cdividev_frequencies.ContainsKey(n))
-                        {
-                            cdividev_frequencies[n]++;
-                        }
-                        else
-                        {
-                            cdividev_frequencies.Add(n, 1);
-                        }
-                    }
-                    foreach (long n in cdividev_frequencies.Keys)
-                    {
-                        if (cdividev_frequencies[n] > 1)
-                        {
-                            dCDivideV += n * cdividev_frequencies[n];
-                        }
-                        else
-                        {
-                            uCDivideV += n;
-                        }
-                    }
-                    if (uCDivideV != 0) duCDivideV = (double)dCDivideV / (double)uCDivideV;
-                }
-
-                long C = 0;
-                long oC = 0;
-                long eC = 0;
-                long pC = 0;
-                long cC = 0;
-                long V = 0;
-                long oV = 0;
-                long eV = 0;
-                long pV = 0;
-                long cV = 0;
-                long CPlusV = 0;
-                long oCPlusV = 0;
-                long eCPlusV = 0;
-                long pCPlusV = 0;
-                long cCPlusV = 0;
-                long CMinusV = 0;
-                long oCMinusV = 0;
-                long eCMinusV = 0;
-                long pCMinusV = 0;
-                long cCMinusV = 0;
-                long CMultiplyV = 0;
-                long oCMultiplyV = 0;
-                long eCMultiplyV = 0;
-                long pCMultiplyV = 0;
-                long cCMultiplyV = 0;
-                double CDivideV = 0;
-                double oCDivideV = 0;
-                double eCDivideV = 0;
-                double pCDivideV = 0;
-                double cCDivideV = 0;
-                foreach (Verse verse in m_maths_verses)
-                {
-                    long chapter_number = verse.Chapter.SortedNumber;
-                    long verse_number = verse.NumberInChapter;
-                    long cplusv = chapter_number + verse_number;
-                    long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_number) : (chapter_number - verse_number);
-                    long cmultiplyv = chapter_number * verse_number;
-                    double cdividev = m_maths_vdividec ? ((double)verse_number / (double)chapter_number) : ((double)chapter_number / (double)verse_number);
-
-                    str.Append("\t");
-
-                    C += chapter_number;
-                    str.Append(chapter_number + "\t");
-                    if (Numbers.IsOdd(chapter_number))
-                    {
-                        oC += chapter_number;
-                        str.Append(chapter_number + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else
-                    {
-                        eC += chapter_number;
-                        str.Append(0 + "\t");
-                        str.Append(chapter_number + "\t");
-                    }
-                    if (Numbers.IsPrime(chapter_number))
-                    {
-                        pC += chapter_number;
-                        str.Append(chapter_number + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else if (Numbers.IsComposite(chapter_number))
-                    {
-                        cC += chapter_number;
-                        str.Append(0 + "\t");
-                        str.Append(chapter_number + "\t");
-                    }
-                    else //if (chapter_number == 1)
-                    {
-                        str.Append(0 + "\t");
-                        str.Append(0 + "\t");
-                    }
+                    long dC = 0; // duplicate
+                    long uC = 0; // unique
+                    double duC = 0.0D; // d/u ratio
+                    Dictionary<long, long> c_frequencies = new Dictionary<long, long>();
                     if (c_frequencies != null)
                     {
-                        if (c_frequencies.ContainsKey(chapter_number))
+                        foreach (Verse verse in m_maths_verses)
                         {
-                            if (c_frequencies[chapter_number] > 1)
+                            long n = verse.Chapter.SortedNumber;
+                            if (c_frequencies.ContainsKey(n))
                             {
-                                str.Append(chapter_number + "\t");
-                                str.Append(0 + "\t");
+                                c_frequencies[n]++;
                             }
                             else
                             {
-                                str.Append(0 + "\t");
-                                str.Append(chapter_number + "\t");
+                                c_frequencies.Add(n, 1);
                             }
                         }
+                        foreach (long n in c_frequencies.Keys)
+                        {
+                            if (c_frequencies[n] > 1)
+                            {
+                                dC += n * c_frequencies[n];
+                            }
+                            else
+                            {
+                                uC += n;
+                            }
+                        }
+                        if (uC != 0) duC = (double)dC / (double)uC;
                     }
-                    str.Append("\t");
 
-                    V += verse_number;
-                    str.Append(verse_number + "\t");
-                    if (Numbers.IsOdd(verse_number))
-                    {
-                        oV += verse_number;
-                        str.Append(verse_number + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else
-                    {
-                        eV += verse_number;
-                        str.Append(0 + "\t");
-                        str.Append(verse_number + "\t");
-                    }
-                    if (Numbers.IsPrime(verse_number))
-                    {
-                        pV += verse_number;
-                        str.Append(verse_number + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else if (Numbers.IsComposite(verse_number))
-                    {
-                        cV += verse_number;
-                        str.Append(0 + "\t");
-                        str.Append(verse_number + "\t");
-                    }
-                    else //if (verse_count == 1)
-                    {
-                        str.Append(0 + "\t");
-                        str.Append(0 + "\t");
-                    }
+                    long dV = 0; // duplicate
+                    long uV = 0; // unique
+                    double duV = 0.0D; // d/u ratio
+                    Dictionary<long, long> v_frequencies = new Dictionary<long, long>();
                     if (v_frequencies != null)
                     {
-                        if (v_frequencies.ContainsKey(verse_number))
+                        foreach (Verse verse in m_maths_verses)
                         {
-                            if (v_frequencies[verse_number] > 1)
+                            long n = verse.NumberInChapter;
+                            if (v_frequencies.ContainsKey(n))
                             {
-                                str.Append(verse_number + "\t");
-                                str.Append(0 + "\t");
+                                v_frequencies[n]++;
                             }
                             else
                             {
-                                str.Append(0 + "\t");
-                                str.Append(verse_number + "\t");
+                                v_frequencies.Add(n, 1);
                             }
                         }
+                        foreach (long n in v_frequencies.Keys)
+                        {
+                            if (v_frequencies[n] > 1)
+                            {
+                                dV += n * v_frequencies[n];
+                            }
+                            else
+                            {
+                                uV += n;
+                            }
+                        }
+                        if (uV != 0) duV = (double)dV / (double)uV;
                     }
-                    str.Append("\t");
 
-                    CPlusV += cplusv;
-                    str.Append(cplusv + "\t");
-                    if (Numbers.IsOdd(cplusv))
-                    {
-                        oCPlusV += cplusv;
-                        str.Append(cplusv + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else
-                    {
-                        eCPlusV += cplusv;
-                        str.Append(0 + "\t");
-                        str.Append(cplusv + "\t");
-                    }
-                    if (Numbers.IsPrime(cplusv))
-                    {
-                        pCPlusV += cplusv;
-                        str.Append(cplusv + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else if (Numbers.IsComposite(cplusv))
-                    {
-                        cCPlusV += cplusv;
-                        str.Append(0 + "\t");
-                        str.Append(cplusv + "\t");
-                    }
-                    else //if (cplusv == 1)
-                    {
-                        str.Append(0 + "\t");
-                        str.Append(0 + "\t");
-                    }
+                    long dCPlusV = 0; // duplicate
+                    long uCPlusV = 0; // unique
+                    double duCPlusV = 0.0D; // d/u ratio
+                    Dictionary<long, long> cplusv_frequencies = new Dictionary<long, long>();
                     if (cplusv_frequencies != null)
                     {
-                        if (cplusv_frequencies.ContainsKey(cplusv))
+                        foreach (Verse verse in m_maths_verses)
                         {
-                            if (cplusv_frequencies[cplusv] > 1)
+                            long n = verse.Chapter.SortedNumber + verse.NumberInChapter;
+                            if (cplusv_frequencies.ContainsKey(n))
                             {
-                                str.Append(cplusv + "\t");
-                                str.Append(0 + "\t");
+                                cplusv_frequencies[n]++;
                             }
                             else
                             {
-                                str.Append(0 + "\t");
-                                str.Append(cplusv + "\t");
+                                cplusv_frequencies.Add(n, 1);
                             }
                         }
+                        foreach (long n in cplusv_frequencies.Keys)
+                        {
+                            if (cplusv_frequencies[n] > 1)
+                            {
+                                dCPlusV += n * cplusv_frequencies[n];
+                            }
+                            else
+                            {
+                                uCPlusV += n;
+                            }
+                        }
+                        if (uCPlusV != 0) duCPlusV = (double)dCPlusV / (double)uCPlusV;
                     }
-                    str.Append("\t");
 
-                    CMinusV += cminusv;
-                    str.Append(cminusv + "\t");
-                    if (Numbers.IsOdd(cminusv))
-                    {
-                        oCMinusV += cminusv;
-                        str.Append(cminusv + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else
-                    {
-                        eCMinusV += cminusv;
-                        str.Append(0 + "\t");
-                        str.Append(cminusv + "\t");
-                    }
-                    if (Numbers.IsPrime(cminusv))
-                    {
-                        pCMinusV += cminusv;
-                        str.Append(cminusv + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else if (Numbers.IsComposite(cminusv))
-                    {
-                        cCMinusV += cminusv;
-                        str.Append(0 + "\t");
-                        str.Append(cminusv + "\t");
-                    }
-                    else //if (cminusv == 1)
-                    {
-                        str.Append(0 + "\t");
-                        str.Append(0 + "\t");
-                    }
+                    long dCMinusV = 0; // duplicate
+                    long uCMinusV = 0; // unique
+                    double duCMinusV = 0.0D; // d/u ratio
+                    Dictionary<long, long> cminusv_frequencies = new Dictionary<long, long>();
                     if (cminusv_frequencies != null)
                     {
-                        if (cminusv_frequencies.ContainsKey(cminusv))
+                        foreach (Verse verse in m_maths_verses)
                         {
-                            if (cminusv_frequencies[cminusv] > 1)
+                            long n = m_maths_abs_cminusv ? Math.Abs(verse.Chapter.SortedNumber - verse.NumberInChapter) : (verse.Chapter.SortedNumber - verse.NumberInChapter);
+                            if (cminusv_frequencies.ContainsKey(n))
                             {
-                                str.Append(cminusv + "\t");
-                                str.Append(0 + "\t");
+                                cminusv_frequencies[n]++;
                             }
                             else
                             {
-                                str.Append(0 + "\t");
-                                str.Append(cminusv + "\t");
+                                cminusv_frequencies.Add(n, 1);
                             }
                         }
+                        foreach (long n in cminusv_frequencies.Keys)
+                        {
+                            if (cminusv_frequencies[n] > 1)
+                            {
+                                dCMinusV += n * cminusv_frequencies[n];
+                            }
+                            else
+                            {
+                                uCMinusV += n;
+                            }
+                        }
+                        if (uCMinusV != 0) duCMinusV = (double)dCMinusV / (double)uCMinusV;
                     }
-                    str.Append("\t");
 
-                    CMultiplyV += cmultiplyv;
-                    str.Append(cmultiplyv + "\t");
-                    if (Numbers.IsOdd(cmultiplyv))
-                    {
-                        oCMultiplyV += cmultiplyv;
-                        str.Append(cmultiplyv + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else
-                    {
-                        eCMultiplyV += cmultiplyv;
-                        str.Append(0 + "\t");
-                        str.Append(cmultiplyv + "\t");
-                    }
-                    if (Numbers.IsPrime(cmultiplyv))
-                    {
-                        pCMultiplyV += cmultiplyv;
-                        str.Append(cmultiplyv + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else if (Numbers.IsComposite(cmultiplyv))
-                    {
-                        cCMultiplyV += cmultiplyv;
-                        str.Append(0 + "\t");
-                        str.Append(cmultiplyv + "\t");
-                    }
-                    else //if (cmultiplyv == 1)
-                    {
-                        str.Append(0 + "\t");
-                        str.Append(0 + "\t");
-                    }
+                    long dCMultiplyV = 0; // duplicate
+                    long uCMultiplyV = 0; // unique
+                    double duCMultiplyV = 0.0D; // d/u ratio
+                    Dictionary<long, long> cmultiplyv_frequencies = new Dictionary<long, long>();
                     if (cmultiplyv_frequencies != null)
                     {
-                        if (cmultiplyv_frequencies.ContainsKey(cmultiplyv))
+                        foreach (Verse verse in m_maths_verses)
                         {
-                            if (cmultiplyv_frequencies[cmultiplyv] > 1)
+                            long n = verse.Chapter.SortedNumber * verse.NumberInChapter;
+                            if (cmultiplyv_frequencies.ContainsKey(n))
                             {
-                                str.Append(cmultiplyv + "\t");
-                                str.Append(0 + "\t");
+                                cmultiplyv_frequencies[n]++;
                             }
                             else
                             {
-                                str.Append(0 + "\t");
-                                str.Append(cmultiplyv + "\t");
+                                cmultiplyv_frequencies.Add(n, 1);
                             }
                         }
+                        foreach (long n in cmultiplyv_frequencies.Keys)
+                        {
+                            if (cmultiplyv_frequencies[n] > 1)
+                            {
+                                dCMultiplyV += n * cmultiplyv_frequencies[n];
+                            }
+                            else
+                            {
+                                uCMultiplyV += n;
+                            }
+                        }
+                        if (uCMultiplyV != 0) duCMultiplyV = (double)dCMultiplyV / (double)uCMultiplyV;
                     }
-                    str.Append("\t");
 
-                    CDivideV += cdividev;
-                    str.Append(cdividev.ToString("0.0") + "\t");
-                    if (Numbers.IsOdd((long)cdividev))
-                    {
-                        oCDivideV += cdividev;
-                        str.Append(cdividev.ToString("0.0") + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else
-                    {
-                        eCDivideV += cdividev;
-                        str.Append(0 + "\t");
-                        str.Append(cdividev.ToString("0.0") + "\t");
-                    }
-                    if (Numbers.IsPrime((long)cdividev))
-                    {
-                        pCDivideV += cdividev;
-                        str.Append(cdividev.ToString("0.0") + "\t");
-                        str.Append(0 + "\t");
-                    }
-                    else if (Numbers.IsComposite((long)cdividev))
-                    {
-                        cCDivideV += cdividev;
-                        str.Append(0 + "\t");
-                        str.Append(cdividev.ToString("0.0") + "\t");
-                    }
-                    else //if (cdividev == 1)
-                    {
-                        str.Append(0 + "\t");
-                        str.Append(0 + "\t");
-                    }
+                    long dCDivideV = 0; // duplicate
+                    long uCDivideV = 0; // unique
+                    double duCDivideV = 0.0D; // d/u ratio
+                    Dictionary<long, long> cdividev_frequencies = new Dictionary<long, long>();
                     if (cdividev_frequencies != null)
                     {
-                        if (cdividev_frequencies.ContainsKey((long)cdividev))
+                        foreach (Verse verse in m_maths_verses)
                         {
-                            if (cdividev_frequencies[(long)cdividev] > 1)
+                            long n = m_maths_vdividec ? ((long)((double)verse.NumberInChapter / (double)verse.Chapter.SortedNumber)) : ((long)((double)verse.Chapter.SortedNumber / (double)verse.NumberInChapter));
+                            if (cdividev_frequencies.ContainsKey(n))
                             {
-                                str.Append(cdividev.ToString("0.0") + "\t");
-                                str.Append(0 + "\t");
+                                cdividev_frequencies[n]++;
                             }
                             else
                             {
-                                str.Append(0 + "\t");
-                                str.Append(cdividev.ToString("0.0") + "\t");
+                                cdividev_frequencies.Add(n, 1);
                             }
                         }
+                        foreach (long n in cdividev_frequencies.Keys)
+                        {
+                            if (cdividev_frequencies[n] > 1)
+                            {
+                                dCDivideV += n * cdividev_frequencies[n];
+                            }
+                            else
+                            {
+                                uCDivideV += n;
+                            }
+                        }
+                        if (uCDivideV != 0) duCDivideV = (double)dCDivideV / (double)uCDivideV;
                     }
-                    str.Remove(str.Length - 1, 1);
 
-                    str.AppendLine();
+                    long C = 0;
+                    long oC = 0;
+                    long eC = 0;
+                    long pC = 0;
+                    long cC = 0;
+                    long V = 0;
+                    long oV = 0;
+                    long eV = 0;
+                    long pV = 0;
+                    long cV = 0;
+                    long CPlusV = 0;
+                    long oCPlusV = 0;
+                    long eCPlusV = 0;
+                    long pCPlusV = 0;
+                    long cCPlusV = 0;
+                    long CMinusV = 0;
+                    long oCMinusV = 0;
+                    long eCMinusV = 0;
+                    long pCMinusV = 0;
+                    long cCMinusV = 0;
+                    long CMultiplyV = 0;
+                    long oCMultiplyV = 0;
+                    long eCMultiplyV = 0;
+                    long pCMultiplyV = 0;
+                    long cCMultiplyV = 0;
+                    double CDivideV = 0;
+                    double oCDivideV = 0;
+                    double eCDivideV = 0;
+                    double pCDivideV = 0;
+                    double cCDivideV = 0;
+                    foreach (Verse verse in m_maths_verses)
+                    {
+                        long chapter_number = verse.Chapter.SortedNumber;
+                        long verse_number = verse.NumberInChapter;
+                        long cplusv = chapter_number + verse_number;
+                        long cminusv = m_maths_abs_cminusv ? Math.Abs(chapter_number - verse_number) : (chapter_number - verse_number);
+                        long cmultiplyv = chapter_number * verse_number;
+                        double cdividev = m_maths_vdividec ? ((double)verse_number / (double)chapter_number) : ((double)chapter_number / (double)verse_number);
+
+                        str.Append("\t");
+
+                        C += chapter_number;
+                        str.Append(chapter_number + "\t");
+                        if (Numbers.IsOdd(chapter_number))
+                        {
+                            oC += chapter_number;
+                            str.Append(chapter_number + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else
+                        {
+                            eC += chapter_number;
+                            str.Append(0 + "\t");
+                            str.Append(chapter_number + "\t");
+                        }
+                        if (Numbers.IsPrime(chapter_number))
+                        {
+                            pC += chapter_number;
+                            str.Append(chapter_number + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else if (Numbers.IsComposite(chapter_number))
+                        {
+                            cC += chapter_number;
+                            str.Append(0 + "\t");
+                            str.Append(chapter_number + "\t");
+                        }
+                        else //if (chapter_number == 1)
+                        {
+                            str.Append(0 + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        if (c_frequencies != null)
+                        {
+                            if (c_frequencies.ContainsKey(chapter_number))
+                            {
+                                if (c_frequencies[chapter_number] > 1)
+                                {
+                                    str.Append(chapter_number + "\t");
+                                    str.Append(0 + "\t");
+                                }
+                                else
+                                {
+                                    str.Append(0 + "\t");
+                                    str.Append(chapter_number + "\t");
+                                }
+                            }
+                        }
+                        str.Append("\t");
+
+                        V += verse_number;
+                        str.Append(verse_number + "\t");
+                        if (Numbers.IsOdd(verse_number))
+                        {
+                            oV += verse_number;
+                            str.Append(verse_number + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else
+                        {
+                            eV += verse_number;
+                            str.Append(0 + "\t");
+                            str.Append(verse_number + "\t");
+                        }
+                        if (Numbers.IsPrime(verse_number))
+                        {
+                            pV += verse_number;
+                            str.Append(verse_number + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else if (Numbers.IsComposite(verse_number))
+                        {
+                            cV += verse_number;
+                            str.Append(0 + "\t");
+                            str.Append(verse_number + "\t");
+                        }
+                        else //if (verse_count == 1)
+                        {
+                            str.Append(0 + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        if (v_frequencies != null)
+                        {
+                            if (v_frequencies.ContainsKey(verse_number))
+                            {
+                                if (v_frequencies[verse_number] > 1)
+                                {
+                                    str.Append(verse_number + "\t");
+                                    str.Append(0 + "\t");
+                                }
+                                else
+                                {
+                                    str.Append(0 + "\t");
+                                    str.Append(verse_number + "\t");
+                                }
+                            }
+                        }
+                        str.Append("\t");
+
+                        CPlusV += cplusv;
+                        str.Append(cplusv + "\t");
+                        if (Numbers.IsOdd(cplusv))
+                        {
+                            oCPlusV += cplusv;
+                            str.Append(cplusv + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else
+                        {
+                            eCPlusV += cplusv;
+                            str.Append(0 + "\t");
+                            str.Append(cplusv + "\t");
+                        }
+                        if (Numbers.IsPrime(cplusv))
+                        {
+                            pCPlusV += cplusv;
+                            str.Append(cplusv + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else if (Numbers.IsComposite(cplusv))
+                        {
+                            cCPlusV += cplusv;
+                            str.Append(0 + "\t");
+                            str.Append(cplusv + "\t");
+                        }
+                        else //if (cplusv == 1)
+                        {
+                            str.Append(0 + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        if (cplusv_frequencies != null)
+                        {
+                            if (cplusv_frequencies.ContainsKey(cplusv))
+                            {
+                                if (cplusv_frequencies[cplusv] > 1)
+                                {
+                                    str.Append(cplusv + "\t");
+                                    str.Append(0 + "\t");
+                                }
+                                else
+                                {
+                                    str.Append(0 + "\t");
+                                    str.Append(cplusv + "\t");
+                                }
+                            }
+                        }
+                        str.Append("\t");
+
+                        CMinusV += cminusv;
+                        str.Append(cminusv + "\t");
+                        if (Numbers.IsOdd(cminusv))
+                        {
+                            oCMinusV += cminusv;
+                            str.Append(cminusv + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else
+                        {
+                            eCMinusV += cminusv;
+                            str.Append(0 + "\t");
+                            str.Append(cminusv + "\t");
+                        }
+                        if (Numbers.IsPrime(cminusv))
+                        {
+                            pCMinusV += cminusv;
+                            str.Append(cminusv + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else if (Numbers.IsComposite(cminusv))
+                        {
+                            cCMinusV += cminusv;
+                            str.Append(0 + "\t");
+                            str.Append(cminusv + "\t");
+                        }
+                        else //if (cminusv == 1)
+                        {
+                            str.Append(0 + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        if (cminusv_frequencies != null)
+                        {
+                            if (cminusv_frequencies.ContainsKey(cminusv))
+                            {
+                                if (cminusv_frequencies[cminusv] > 1)
+                                {
+                                    str.Append(cminusv + "\t");
+                                    str.Append(0 + "\t");
+                                }
+                                else
+                                {
+                                    str.Append(0 + "\t");
+                                    str.Append(cminusv + "\t");
+                                }
+                            }
+                        }
+                        str.Append("\t");
+
+                        CMultiplyV += cmultiplyv;
+                        str.Append(cmultiplyv + "\t");
+                        if (Numbers.IsOdd(cmultiplyv))
+                        {
+                            oCMultiplyV += cmultiplyv;
+                            str.Append(cmultiplyv + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else
+                        {
+                            eCMultiplyV += cmultiplyv;
+                            str.Append(0 + "\t");
+                            str.Append(cmultiplyv + "\t");
+                        }
+                        if (Numbers.IsPrime(cmultiplyv))
+                        {
+                            pCMultiplyV += cmultiplyv;
+                            str.Append(cmultiplyv + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else if (Numbers.IsComposite(cmultiplyv))
+                        {
+                            cCMultiplyV += cmultiplyv;
+                            str.Append(0 + "\t");
+                            str.Append(cmultiplyv + "\t");
+                        }
+                        else //if (cmultiplyv == 1)
+                        {
+                            str.Append(0 + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        if (cmultiplyv_frequencies != null)
+                        {
+                            if (cmultiplyv_frequencies.ContainsKey(cmultiplyv))
+                            {
+                                if (cmultiplyv_frequencies[cmultiplyv] > 1)
+                                {
+                                    str.Append(cmultiplyv + "\t");
+                                    str.Append(0 + "\t");
+                                }
+                                else
+                                {
+                                    str.Append(0 + "\t");
+                                    str.Append(cmultiplyv + "\t");
+                                }
+                            }
+                        }
+                        str.Append("\t");
+
+                        CDivideV += cdividev;
+                        str.Append(cdividev.ToString("0.0") + "\t");
+                        if (Numbers.IsOdd((long)cdividev))
+                        {
+                            oCDivideV += cdividev;
+                            str.Append(cdividev.ToString("0.0") + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else
+                        {
+                            eCDivideV += cdividev;
+                            str.Append(0 + "\t");
+                            str.Append(cdividev.ToString("0.0") + "\t");
+                        }
+                        if (Numbers.IsPrime((long)cdividev))
+                        {
+                            pCDivideV += cdividev;
+                            str.Append(cdividev.ToString("0.0") + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        else if (Numbers.IsComposite((long)cdividev))
+                        {
+                            cCDivideV += cdividev;
+                            str.Append(0 + "\t");
+                            str.Append(cdividev.ToString("0.0") + "\t");
+                        }
+                        else //if (cdividev == 1)
+                        {
+                            str.Append(0 + "\t");
+                            str.Append(0 + "\t");
+                        }
+                        if (cdividev_frequencies != null)
+                        {
+                            if (cdividev_frequencies.ContainsKey((long)cdividev))
+                            {
+                                if (cdividev_frequencies[(long)cdividev] > 1)
+                                {
+                                    str.Append(cdividev.ToString("0.0") + "\t");
+                                    str.Append(0 + "\t");
+                                }
+                                else
+                                {
+                                    str.Append(0 + "\t");
+                                    str.Append(cdividev.ToString("0.0") + "\t");
+                                }
+                            }
+                        }
+                        str.Remove(str.Length - 1, 1);
+
+                        str.AppendLine();
+                    }
+
+                    str.Append("Sum" + "\t");
+                    str.AppendLine(C + "\t" + oC + "\t" + eC + "\t" + pC + "\t" + cC + "\t" + dC + "\t" + uC + "\t" + "\t" +
+                                   V + "\t" + oV + "\t" + eV + "\t" + pV + "\t" + cV + "\t" + dV + "\t" + uV + "\t" + "\t" +
+                                   CPlusV + "\t" + oCPlusV + "\t" + eCPlusV + "\t" + pCPlusV + "\t" + cCPlusV + "\t" + dCPlusV + "\t" + uCPlusV + "\t" + "\t" +
+                                   CMinusV + "\t" + oCMinusV + "\t" + eCMinusV + "\t" + pCMinusV + "\t" + cCMinusV + "\t" + dCMinusV + "\t" + uCMinusV + "\t" + "\t" +
+                                   CMultiplyV + "\t" + oCMultiplyV + "\t" + eCMultiplyV + "\t" + pCMultiplyV + "\t" + cCMultiplyV + "\t" + dCMultiplyV + "\t" + uCMultiplyV + "\t" + "\t" +
+                                   CDivideV.ToString("0.0") + "\t" + oCDivideV.ToString("0.0") + "\t" + eCDivideV.ToString("0.0") + "\t" + pCDivideV.ToString("0.0") + "\t" + cCDivideV.ToString("0.0") + "\t" + dCDivideV.ToString("0.0") + "\t" + uCDivideV.ToString("0.0"));
+
+                    FileHelper.SaveText(filename, str.ToString());
+                    FileHelper.DisplayFile(filename);
                 }
-
-                str.Append("Sum" + "\t");
-                str.AppendLine(C + "\t" + oC + "\t" + eC + "\t" + pC + "\t" + cC + "\t" + dC + "\t" + uC + "\t" + "\t" +
-                               V + "\t" + oV + "\t" + eV + "\t" + pV + "\t" + cV + "\t" + dV + "\t" + uV + "\t" + "\t" +
-                               CPlusV + "\t" + oCPlusV + "\t" + eCPlusV + "\t" + pCPlusV + "\t" + cCPlusV + "\t" + dCPlusV + "\t" + uCPlusV + "\t" + "\t" +
-                               CMinusV + "\t" + oCMinusV + "\t" + eCMinusV + "\t" + pCMinusV + "\t" + cCMinusV + "\t" + dCMinusV + "\t" + uCMinusV + "\t" + "\t" +
-                               CMultiplyV + "\t" + oCMultiplyV + "\t" + eCMultiplyV + "\t" + pCMultiplyV + "\t" + cCMultiplyV + "\t" + dCMultiplyV + "\t" + uCMultiplyV + "\t" + "\t" +
-                               CDivideV.ToString("0.0") + "\t" + oCDivideV.ToString("0.0") + "\t" + eCDivideV.ToString("0.0") + "\t" + pCDivideV.ToString("0.0") + "\t" + cCDivideV.ToString("0.0") + "\t" + dCDivideV.ToString("0.0") + "\t" + uCDivideV.ToString("0.0"));
-
-                FileHelper.SaveText(filename, str.ToString());
-                FileHelper.DisplayFile(filename);
             }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -15674,21 +15618,13 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DistancesInterestingNumbersEditLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        // display the interesting.txt file for live editing using ISubscriber
+        string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
+        if (File.Exists(filename))
         {
-            // display the interesting.txt file for live editing using ISubscriber
-            string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
+            FileHelper.WaitForReady(filename);
 
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
+            System.Diagnostics.Process.Start("Notepad.exe", filename);
         }
     }
 
@@ -19618,30 +19554,21 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DNASequenceSystemEditLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            if (m_client.DNASequenceSystem != null)
             {
-                if (m_client.DNASequenceSystem != null)
+                // display the DNASequenceSystem file for live editing using ISubscriber
+                string filename = Globals.VALUES_FOLDER + "/" + m_client.DNASequenceSystem.Name + ".txt";
+                if (File.Exists(filename))
                 {
-                    // display the DNASequenceSystem file for live editing using ISubscriber
-                    string filename = Globals.VALUES_FOLDER + "/" + m_client.DNASequenceSystem.Name + ".txt";
-                    if (File.Exists(filename))
-                    {
-                        FileHelper.WaitForReady(filename);
+                    FileHelper.WaitForReady(filename);
 
-                        System.Diagnostics.Process.Start("Notepad.exe", filename);
-                    }
+                    System.Diagnostics.Process.Start("Notepad.exe", filename);
                 }
             }
-
-            DNASequenceSystemComboBox.Focus();
         }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
+        DNASequenceSystemComboBox.Focus();
     }
     private void DisplayDNASequence()
     {
@@ -21472,73 +21399,65 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByExact(string text, LanguageType language_type, string translation)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            m_search_type = SearchType.Text;
+        m_search_type = SearchType.Text;
 
-            if (m_client != null)
+        if (m_client != null)
+        {
+            if (!String.IsNullOrEmpty(text))
             {
-                if (!String.IsNullOrEmpty(text))
+                m_client.FindPhrases(m_text_search_block_size, text, language_type, translation, m_text_location_in_chapter, m_text_location_in_verse, m_text_location_in_word, m_text_wordness, m_case_sensitive, m_with_diacritics, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                if (m_client.FoundPhrases != null)
                 {
-                    m_client.FindPhrases(m_text_search_block_size, text, language_type, translation, m_text_location_in_chapter, m_text_location_in_verse, m_text_location_in_word, m_text_wordness, m_case_sensitive, m_with_diacritics, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
-                    if (m_client.FoundPhrases != null)
+                    string multiplicity_text = "";
+                    if (m_multiplicity != -1)
                     {
-                        string multiplicity_text = "";
-                        if (m_multiplicity != -1)
+                        if (m_multiplicity_number_type == NumberType.None)
                         {
-                            if (m_multiplicity_number_type == NumberType.None)
+                            if (m_multiplicity_comparison_operator == ComparisonOperator.DivisibleBy)
                             {
-                                if (m_multiplicity_comparison_operator == ComparisonOperator.DivisibleBy)
+                                multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity + "r" + m_multiplicity_remainder;
+                            }
+                            else
+                            {
+                                if (m_multiplicity_comparison_operator == ComparisonOperator.Equal)
                                 {
-                                    multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity + "r" + m_multiplicity_remainder;
+                                    multiplicity_text = "" + m_multiplicity;
                                 }
                                 else
                                 {
-                                    if (m_multiplicity_comparison_operator == ComparisonOperator.Equal)
-                                    {
-                                        multiplicity_text = "" + m_multiplicity;
-                                    }
-                                    else
-                                    {
-                                        multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity;
-                                    }
+                                    multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity;
                                 }
                             }
-                            else
-                            {
-                                multiplicity_text = m_multiplicity_number_type + " " + m_multiplicity;
-                            }
                         }
-
-                        if (m_client.FoundVerses != null)
+                        else
                         {
-                            int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                            string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
-                            int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
-                            if (m_multiplicity == 0)
-                            {
-                                m_find_result_header = block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name] + "s")) + " " + L[l]["without"] + " " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                            }
-                            else
-                            {
-                                m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + multiplicity_text + " " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                            }
-                            DisplayFoundVerses(true, true);
-
-                            //SearchResultTextBox.Focus();
-                            //SearchResultTextBox.Refresh();
-
-                            WordsListBoxLabel.Visible = false;
-                            WordsListBox.Visible = false;
+                            multiplicity_text = m_multiplicity_number_type + " " + m_multiplicity;
                         }
+                    }
+
+                    if (m_client.FoundVerses != null)
+                    {
+                        int phrase_count = GetPhraseCount(m_client.FoundPhrases);
+                        string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
+                        int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
+                        if (m_multiplicity == 0)
+                        {
+                            m_find_result_header = block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name] + "s")) + " " + L[l]["without"] + " " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                        }
+                        else
+                        {
+                            m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + multiplicity_text + " " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                        }
+                        DisplayFoundVerses(true, true);
+
+                        //SearchResultTextBox.Focus();
+                        //SearchResultTextBox.Refresh();
+
+                        WordsListBoxLabel.Visible = false;
+                        WordsListBox.Visible = false;
                     }
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void FindByProximity()
@@ -21577,42 +21496,34 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByProximity(string text, LanguageType language_type, string translation, TextProximityType text_proximity_type)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        m_search_type = SearchType.Text;
+
+        if (m_client != null)
         {
-            m_search_type = SearchType.Text;
-
-            if (m_client != null)
+            if (!String.IsNullOrEmpty(text))
             {
-                if (!String.IsNullOrEmpty(text))
+                ClearFindMatches();
+
+                m_client.FindPhrases(m_text_search_block_size, text, language_type, translation, text_proximity_type, m_text_wordness, m_case_sensitive, m_with_diacritics);
+                if (m_client.FoundPhrases != null)
                 {
-                    ClearFindMatches();
-
-                    m_client.FindPhrases(m_text_search_block_size, text, language_type, translation, text_proximity_type, m_text_wordness, m_case_sensitive, m_with_diacritics);
-                    if (m_client.FoundPhrases != null)
+                    if (m_client.FoundVerses != null)
                     {
-                        if (m_client.FoundVerses != null)
-                        {
-                            int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                            string block_name = "verse";
-                            //string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
-                            int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
-                            m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + text_proximity_type.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                            DisplayFoundVerses(true, true);
+                        int phrase_count = GetPhraseCount(m_client.FoundPhrases);
+                        string block_name = "verse";
+                        //string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
+                        int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
+                        m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + text_proximity_type.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                        DisplayFoundVerses(true, true);
 
-                            //SearchResultTextBox.Focus();
-                            //SearchResultTextBox.Refresh();
+                        //SearchResultTextBox.Focus();
+                        //SearchResultTextBox.Refresh();
 
-                            WordsListBoxLabel.Visible = false;
-                            WordsListBox.Visible = false;
-                        }
+                        WordsListBoxLabel.Visible = false;
+                        WordsListBox.Visible = false;
                     }
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void FindByRoot()
@@ -21682,71 +21593,63 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_emlaaei_text) return;
 
-        this.Cursor = Cursors.WaitCursor;
-        try
+        m_search_type = SearchType.Text;
+
+        if (m_client != null)
         {
-            m_search_type = SearchType.Text;
+            ClearFindMatches();
 
-            if (m_client != null)
+            if (!String.IsNullOrEmpty(text))
             {
-                ClearFindMatches();
+                text = text.Trim();
 
-                if (!String.IsNullOrEmpty(text))
+                m_client.FindPhrases(m_text_search_block_size, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+                if (m_client.FoundPhrases != null)
                 {
-                    text = text.Trim();
-
-                    m_client.FindPhrases(m_text_search_block_size, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
-                    if (m_client.FoundPhrases != null)
+                    string multiplicity_text = "";
+                    if (m_multiplicity != -1)
                     {
-                        string multiplicity_text = "";
-                        if (m_multiplicity != -1)
+                        if (m_multiplicity_number_type == NumberType.None)
                         {
-                            if (m_multiplicity_number_type == NumberType.None)
+                            if (m_multiplicity_comparison_operator == ComparisonOperator.DivisibleBy)
                             {
-                                if (m_multiplicity_comparison_operator == ComparisonOperator.DivisibleBy)
-                                {
-                                    multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity + "r" + m_multiplicity_remainder;
-                                }
-                                else
-                                {
-                                    if (m_multiplicity_comparison_operator == ComparisonOperator.Equal)
-                                    {
-                                        multiplicity_text = "" + m_multiplicity;
-                                    }
-                                    else
-                                    {
-                                        multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity;
-                                    }
-                                }
+                                multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity + "r" + m_multiplicity_remainder;
                             }
                             else
                             {
-                                multiplicity_text = m_multiplicity_number_type + " " + m_multiplicity;
+                                if (m_multiplicity_comparison_operator == ComparisonOperator.Equal)
+                                {
+                                    multiplicity_text = "" + m_multiplicity;
+                                }
+                                else
+                                {
+                                    multiplicity_text = FindByTextMultiplicityComparisonOperatorLabel.Text + m_multiplicity;
+                                }
                             }
-                        }
-
-                        int phrase_count = GetPhraseCount(m_client.FoundPhrases);
-                        string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
-                        int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
-                        if (m_multiplicity == 0)
-                        {
-                            m_find_result_header = block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["without"] + " " + multiplicity_text + " root " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
                         }
                         else
                         {
-                            m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + multiplicity_text + " " + L[l]["root"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                            multiplicity_text = m_multiplicity_number_type + " " + m_multiplicity;
                         }
-                        DisplayFoundVerses(true, true);
-
-                        //SearchResultTextBox.Focus();
-                        //SearchResultTextBox.Refresh();
                     }
+
+                    int phrase_count = GetPhraseCount(m_client.FoundPhrases);
+                    string block_name = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? m_text_search_block_size.ToString() : "verse";
+                    int block_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
+                    if (m_multiplicity == 0)
+                    {
+                        m_find_result_header = block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["without"] + " " + multiplicity_text + " root " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                    }
+                    else
+                    {
+                        m_find_result_header = phrase_count + " " + L[l]["matches"] + " " + L[l]["in"] + " " + block_count + " " + ((block_count == 1) ? L[l][block_name] : (L[l][block_name + "s"])) + " " + L[l]["with"] + " " + multiplicity_text + " " + L[l]["root"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                    }
+                    DisplayFoundVerses(true, true);
+
+                    //SearchResultTextBox.Focus();
+                    //SearchResultTextBox.Refresh();
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void FindByTextKeyboardLabel_Click(object sender, EventArgs e)
@@ -22222,137 +22125,25 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindRepeatedPhrases()
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            m_client.FilterChapters = null;
+            ClearFindMatches(); // clear m_find_matches for F3 to work correctly in filtered result
+
+            if (m_multiplicity > 0)
             {
-                m_client.FilterChapters = null;
-                ClearFindMatches(); // clear m_find_matches for F3 to work correctly in filtered result
-
-                if (m_multiplicity > 0)
+                int phrase_word_count = m_multiplicity;
+                m_client.FindRepeatedPhrases(phrase_word_count, m_with_diacritics);
+                if (m_client.FoundPhrases != null)
                 {
-                    int phrase_word_count = m_multiplicity;
-                    m_client.FindRepeatedPhrases(phrase_word_count, m_with_diacritics);
-                    if (m_client.FoundPhrases != null)
-                    {
-                        if (m_client.FoundVerses != null)
-                        {
-                            int phrase_count = GetPhraseCount(m_client.FoundPhrases) / 2;
-                            int verse_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
-
-                            m_find_result_header = phrase_count + " " + L[l]["repeated phrases"] + " " + L[l]["in"] + " " + verse_count + " " + ((verse_count == 1) ? L[l]["verse"] : (L[l]["verses"])) + " " + L[l]["with diacritics"];
-
-                            DisplayFoundVerses(true, true);
-
-                            //SearchResultTextBox.Focus();
-                            //SearchResultTextBox.Refresh();
-
-                            WordsListBoxLabel.Visible = false;
-                            WordsListBox.Visible = false;
-                        }
-                    }
-                }
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void FindByTextQuranHealingLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.Hand;
-        try
-        {
-            if (m_client != null)
-            {
-                ClearFindMatches();
-
-                if (FindByTextTextBox.Text.Length > 0)
-                {
-                    // get startup text from FindTextBox
-                    string[] startup_words = FindByTextTextBox.Text.Split();
-                    int count = startup_words.Length;
-
-                    string text = "";
-                    if (m_auto_complete_mode)
-                    {
-                        for (int i = 0; i < count; i++)
-                        {
-                            text += startup_words[i] + " ";
-                        }
-                        text = text.Trim();
-                    }
-
-                    // update m_text_location_in_verse and m_text_location_in_word
-                    UpdateFindByTextOptions();
-
-                    List<Phrase> total_phrases = new List<Phrase>();
-                    List<Verse> total_verses = new List<Verse>();
-                    if (!String.IsNullOrEmpty(text))
-                    {
-                        text = text.Trim();
-
-                        m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
-
-                        total_phrases = total_phrases.Union(m_client.FoundPhrases);
-                        total_verses = total_verses.Union(m_client.FoundVerses);
-
-                        // write final result to m_client
-                        m_client.FoundPhrases = total_phrases;
-                        m_client.FoundVerses = total_verses;
-                    }
-
-                    List<Verse> result = new List<Verse>();
                     if (m_client.FoundVerses != null)
                     {
-                        foreach (Verse v in m_client.FoundVerses)
-                        {
-                            long value = m_client.CalculateValue(v);
+                        int phrase_count = GetPhraseCount(m_client.FoundPhrases) / 2;
+                        int verse_count = ((m_multiplicity_comparison_operator == ComparisonOperator.Equal) && (m_text_search_block_size != TextSearchBlockSize.Verse)) ? phrase_count / Math.Abs(m_multiplicity) : m_client.FoundVerses.Count;
 
-                            Verse verse = m_client.Book.GetVerseByVerseNumber((int)value);
-                            if (verse != null)
-                            {
-                                result.Add(verse);
-                            }
+                        m_find_result_header = phrase_count + " " + L[l]["repeated phrases"] + " " + L[l]["in"] + " " + verse_count + " " + ((verse_count == 1) ? L[l]["verse"] : (L[l]["verses"])) + " " + L[l]["with diacritics"];
 
-                            if (ModifierKeys == Keys.Control)
-                            {
-                                verse = m_client.Book.GetVerseByWordNumber((int)value);
-                                if (verse != null)
-                                {
-                                    result.Add(verse);
-                                }
-                            }
-
-                            if (ModifierKeys == Keys.Shift)
-                            {
-                                verse = m_client.Book.GetVerseByWordNumber((int)value);
-                                if (verse != null)
-                                {
-                                    result.Add(verse);
-                                }
-
-                                verse = m_client.Book.GetVerseByLetterNumber((int)value);
-                                if (verse != null)
-                                {
-                                    result.Add(verse);
-                                }
-                            }
-                        }
-
-                        // overwrite
-                        m_client.FoundVerses = result;
-                        m_client.FoundPhrases = null;
-                    }
-
-                    // display results
-                    if (m_client.FoundVerses != null)
-                    {
-                        int verse_count = m_client.FoundVerses.Count;
-                        m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                        DisplayFoundVerses(false, true);
+                        DisplayFoundVerses(true, true);
 
                         //SearchResultTextBox.Focus();
                         //SearchResultTextBox.Refresh();
@@ -22363,9 +22154,105 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
-        finally
+    }
+    private void FindByTextQuranHealingLabel_Click(object sender, EventArgs e)
+    {
+        if (m_client != null)
         {
-            this.Cursor = Cursors.Default;
+            ClearFindMatches();
+
+            if (FindByTextTextBox.Text.Length > 0)
+            {
+                // get startup text from FindTextBox
+                string[] startup_words = FindByTextTextBox.Text.Split();
+                int count = startup_words.Length;
+
+                string text = "";
+                if (m_auto_complete_mode)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        text += startup_words[i] + " ";
+                    }
+                    text = text.Trim();
+                }
+
+                // update m_text_location_in_verse and m_text_location_in_word
+                UpdateFindByTextOptions();
+
+                List<Phrase> total_phrases = new List<Phrase>();
+                List<Verse> total_verses = new List<Verse>();
+                if (!String.IsNullOrEmpty(text))
+                {
+                    text = text.Trim();
+
+                    m_client.FindPhrases(TextSearchBlockSize.Verse, text, m_multiplicity, m_multiplicity_number_type, m_multiplicity_comparison_operator, m_multiplicity_remainder);
+
+                    total_phrases = total_phrases.Union(m_client.FoundPhrases);
+                    total_verses = total_verses.Union(m_client.FoundVerses);
+
+                    // write final result to m_client
+                    m_client.FoundPhrases = total_phrases;
+                    m_client.FoundVerses = total_verses;
+                }
+
+                List<Verse> result = new List<Verse>();
+                if (m_client.FoundVerses != null)
+                {
+                    foreach (Verse v in m_client.FoundVerses)
+                    {
+                        long value = m_client.CalculateValue(v);
+
+                        Verse verse = m_client.Book.GetVerseByVerseNumber((int)value);
+                        if (verse != null)
+                        {
+                            result.Add(verse);
+                        }
+
+                        if (ModifierKeys == Keys.Control)
+                        {
+                            verse = m_client.Book.GetVerseByWordNumber((int)value);
+                            if (verse != null)
+                            {
+                                result.Add(verse);
+                            }
+                        }
+
+                        if (ModifierKeys == Keys.Shift)
+                        {
+                            verse = m_client.Book.GetVerseByWordNumber((int)value);
+                            if (verse != null)
+                            {
+                                result.Add(verse);
+                            }
+
+                            verse = m_client.Book.GetVerseByLetterNumber((int)value);
+                            if (verse != null)
+                            {
+                                result.Add(verse);
+                            }
+                        }
+                    }
+
+                    // overwrite
+                    m_client.FoundVerses = result;
+                    m_client.FoundPhrases = null;
+                }
+
+                // display results
+                if (m_client.FoundVerses != null)
+                {
+                    int verse_count = m_client.FoundVerses.Count;
+                    m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " C_" + m_text_location_in_chapter.ToString() + " V_" + m_text_location_in_verse.ToString() + " W_" + m_text_location_in_word.ToString() + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                    DisplayFoundVerses(false, true);
+
+                    //SearchResultTextBox.Focus();
+                    //SearchResultTextBox.Refresh();
+
+                    WordsListBoxLabel.Visible = false;
+                    WordsListBox.Visible = false;
+                }
+            }
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -22450,93 +22337,85 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindBySimilarity()
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        m_search_type = SearchType.Similarity;
+
+        if (m_client != null)
         {
-            m_search_type = SearchType.Similarity;
+            ClearFindMatches();
 
-            if (m_client != null)
+            SimilarityMethod find_by_similarity_method = SimilarityMethod.SimilarText;
+            if (FindBySimilarityTextRadioButton.Checked)
             {
-                ClearFindMatches();
+                find_by_similarity_method = SimilarityMethod.SimilarText;
+            }
+            else if (FindBySimilarityWordsRadioButton.Checked)
+            {
+                find_by_similarity_method = SimilarityMethod.SimilarWords;
+            }
+            else if (FindBySimilarityFirstHalfRadioButton.Checked)
+            {
+                find_by_similarity_method = SimilarityMethod.SimilarFirstHalf;
+            }
+            else if (FindBySimilarityLastHalfRadioButton.Checked)
+            {
+                find_by_similarity_method = SimilarityMethod.SimilarLastHalf;
+            }
+            else if (FindBySimilarityFirstWordRadioButton.Checked)
+            {
+                find_by_similarity_method = SimilarityMethod.SimilarFirstWord;
+            }
+            else if (FindBySimilarityLastWordRadioButton.Checked)
+            {
+                find_by_similarity_method = SimilarityMethod.SimilarLastWord;
+            }
+            else
+            {
+                //
+            }
 
-                SimilarityMethod find_by_similarity_method = SimilarityMethod.SimilarText;
-                if (FindBySimilarityTextRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarText;
-                }
-                else if (FindBySimilarityWordsRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarWords;
-                }
-                else if (FindBySimilarityFirstHalfRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarFirstHalf;
-                }
-                else if (FindBySimilarityLastHalfRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarLastHalf;
-                }
-                else if (FindBySimilarityFirstWordRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarFirstWord;
-                }
-                else if (FindBySimilarityLastWordRadioButton.Checked)
-                {
-                    find_by_similarity_method = SimilarityMethod.SimilarLastWord;
-                }
-                else
-                {
-                    //
-                }
+            double similarity_percentage = (double)FindBySimilarityPercentageTrackBar.Value / 100.0D;
 
-                double similarity_percentage = (double)FindBySimilarityPercentageTrackBar.Value / 100.0D;
-
-                string text = null;
-                if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
+            string text = null;
+            if (m_similarity_search_source == SimilaritySearchSource.CurrentVerse)
+            {
+                Verse verse = GetCurrentVerse();
+                if (verse != null)
                 {
-                    Verse verse = GetCurrentVerse();
-                    if (verse != null)
+                    if (verse.Chapter != null)
                     {
-                        if (verse.Chapter != null)
-                        {
-                            m_client.FindVerses(verse, find_by_similarity_method, similarity_percentage);
-                            text = " to verse " + verse.Chapter.Name + " " + verse.NumberInChapter + " ";
-                        }
-
-                        if (m_client.FoundVerses != null)
-                        {
-                            int verse_count = m_client.FoundVerses.Count;
-                            m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + find_by_similarity_method.ToString() + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-
-                            DisplayFoundVerses(true, true);
-                        }
+                        m_client.FindVerses(verse, find_by_similarity_method, similarity_percentage);
+                        text = " to verse " + verse.Chapter.Name + " " + verse.NumberInChapter + " ";
                     }
-                }
-                else if (m_similarity_search_source == SimilaritySearchSource.AllVerses)
-                {
-                    m_client.FindVerses(find_by_similarity_method, similarity_percentage);
-                    text = null;
 
                     if (m_client.FoundVerses != null)
                     {
                         int verse_count = m_client.FoundVerses.Count;
                         m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + find_by_similarity_method.ToString() + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
 
-                        DisplayFoundVerseRanges(true, true);
+                        DisplayFoundVerses(true, true);
                     }
                 }
-                else
-                {
-                    //
-                }
-
-                //SearchResultTextBox.Focus();
-                //SearchResultTextBox.Refresh();
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
+            else if (m_similarity_search_source == SimilaritySearchSource.AllVerses)
+            {
+                m_client.FindVerses(find_by_similarity_method, similarity_percentage);
+                text = null;
+
+                if (m_client.FoundVerses != null)
+                {
+                    int verse_count = m_client.FoundVerses.Count;
+                    m_find_result_header = verse_count + ((verse_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + find_by_similarity_method.ToString() + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+
+                    DisplayFoundVerseRanges(true, true);
+                }
+            }
+            else
+            {
+                //
+            }
+
+            //SearchResultTextBox.Focus();
+            //SearchResultTextBox.Refresh();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -24178,618 +24057,610 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByNumbers()
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        m_search_type = SearchType.Numbers;
+
+        if (m_client != null)
         {
-            m_search_type = SearchType.Numbers;
+            ClearFindMatches();
 
-            if (m_client != null)
-            {
-                ClearFindMatches();
-
-                // 1. number types
-                string number_symbol = FindByNumbersNumberNumberTypeLabel.Enabled ? FindByNumbersNumberNumberTypeLabel.Text : "";
-                NumberType number_number_type =
-                    (number_symbol == "P") ? NumberType.Prime :
-                    (number_symbol == "AP") ? NumberType.AdditivePrime :
-                    (number_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (number_symbol == "C") ? NumberType.Composite :
-                    (number_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (number_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (number_symbol == "O") ? NumberType.Odd :
-                    (number_symbol == "E") ? NumberType.Even :
-                    (number_symbol == "^2") ? NumberType.Square :
-                    (number_symbol == "^3") ? NumberType.Cubic :
-                    (number_symbol == "^4") ? NumberType.Quartic :
-                    (number_symbol == "^5") ? NumberType.Quintic :
-                    (number_symbol == "^6") ? NumberType.Sextic :
-                    (number_symbol == "^7") ? NumberType.Septic :
-                    (number_symbol == "#") ? NumberType.Natural :
-                    (number_symbol == "") ? NumberType.None :
+            // 1. number types
+            string number_symbol = FindByNumbersNumberNumberTypeLabel.Enabled ? FindByNumbersNumberNumberTypeLabel.Text : "";
+            NumberType number_number_type =
+                (number_symbol == "P") ? NumberType.Prime :
+                (number_symbol == "AP") ? NumberType.AdditivePrime :
+                (number_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (number_symbol == "C") ? NumberType.Composite :
+                (number_symbol == "AC") ? NumberType.AdditiveComposite :
+                (number_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (number_symbol == "O") ? NumberType.Odd :
+                (number_symbol == "E") ? NumberType.Even :
+                (number_symbol == "^2") ? NumberType.Square :
+                (number_symbol == "^3") ? NumberType.Cubic :
+                (number_symbol == "^4") ? NumberType.Quartic :
+                (number_symbol == "^5") ? NumberType.Quintic :
+                (number_symbol == "^6") ? NumberType.Sextic :
+                (number_symbol == "^7") ? NumberType.Septic :
+                (number_symbol == "#") ? NumberType.Natural :
+                (number_symbol == "") ? NumberType.None :
+                                        NumberType.None;
+            string chapter_count_symbol = FindByNumbersChaptersNumberTypeLabel.Enabled ? FindByNumbersChaptersNumberTypeLabel.Text : "";
+            NumberType chapter_count_number_type =
+                (chapter_count_symbol == "P") ? NumberType.Prime :
+                (chapter_count_symbol == "AP") ? NumberType.AdditivePrime :
+                (chapter_count_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (chapter_count_symbol == "C") ? NumberType.Composite :
+                (chapter_count_symbol == "AC") ? NumberType.AdditiveComposite :
+                (chapter_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (chapter_count_symbol == "O") ? NumberType.Odd :
+                (chapter_count_symbol == "E") ? NumberType.Even :
+                (chapter_count_symbol == "^2") ? NumberType.Square :
+                (chapter_count_symbol == "^3") ? NumberType.Cubic :
+                (chapter_count_symbol == "^4") ? NumberType.Quartic :
+                (chapter_count_symbol == "^5") ? NumberType.Quintic :
+                (chapter_count_symbol == "^6") ? NumberType.Sextic :
+                (chapter_count_symbol == "^7") ? NumberType.Septic :
+                (chapter_count_symbol == "#") ? NumberType.Natural :
+                (chapter_count_symbol == "") ? NumberType.None :
+                                               NumberType.None;
+            string verse_count_symbol = FindByNumbersVersesNumberTypeLabel.Enabled ? FindByNumbersVersesNumberTypeLabel.Text : "";
+            NumberType verse_count_number_type =
+                (verse_count_symbol == "P") ? NumberType.Prime :
+                (verse_count_symbol == "AP") ? NumberType.AdditivePrime :
+                (verse_count_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (verse_count_symbol == "C") ? NumberType.Composite :
+                (verse_count_symbol == "AC") ? NumberType.AdditiveComposite :
+                (verse_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (verse_count_symbol == "O") ? NumberType.Odd :
+                (verse_count_symbol == "E") ? NumberType.Even :
+                (verse_count_symbol == "^2") ? NumberType.Square :
+                (verse_count_symbol == "^3") ? NumberType.Cubic :
+                (verse_count_symbol == "^4") ? NumberType.Quartic :
+                (verse_count_symbol == "^5") ? NumberType.Quintic :
+                (verse_count_symbol == "^6") ? NumberType.Sextic :
+                (verse_count_symbol == "^7") ? NumberType.Septic :
+                (verse_count_symbol == "#") ? NumberType.Natural :
+                (verse_count_symbol == "") ? NumberType.None :
+                                             NumberType.None;
+            string word_count_symbol = FindByNumbersWordsNumberTypeLabel.Enabled ? FindByNumbersWordsNumberTypeLabel.Text : "";
+            NumberType word_count_number_type =
+                (word_count_symbol == "P") ? NumberType.Prime :
+                (word_count_symbol == "AP") ? NumberType.AdditivePrime :
+                (word_count_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (word_count_symbol == "C") ? NumberType.Composite :
+                (word_count_symbol == "AC") ? NumberType.AdditiveComposite :
+                (word_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (word_count_symbol == "O") ? NumberType.Odd :
+                (word_count_symbol == "E") ? NumberType.Even :
+                (word_count_symbol == "^2") ? NumberType.Square :
+                (word_count_symbol == "^3") ? NumberType.Cubic :
+                (word_count_symbol == "^4") ? NumberType.Quartic :
+                (word_count_symbol == "^5") ? NumberType.Quintic :
+                (word_count_symbol == "^6") ? NumberType.Sextic :
+                (word_count_symbol == "^7") ? NumberType.Septic :
+                (word_count_symbol == "#") ? NumberType.Natural :
+                (word_count_symbol == "") ? NumberType.None :
                                             NumberType.None;
-                string chapter_count_symbol = FindByNumbersChaptersNumberTypeLabel.Enabled ? FindByNumbersChaptersNumberTypeLabel.Text : "";
-                NumberType chapter_count_number_type =
-                    (chapter_count_symbol == "P") ? NumberType.Prime :
-                    (chapter_count_symbol == "AP") ? NumberType.AdditivePrime :
-                    (chapter_count_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (chapter_count_symbol == "C") ? NumberType.Composite :
-                    (chapter_count_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (chapter_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (chapter_count_symbol == "O") ? NumberType.Odd :
-                    (chapter_count_symbol == "E") ? NumberType.Even :
-                    (chapter_count_symbol == "^2") ? NumberType.Square :
-                    (chapter_count_symbol == "^3") ? NumberType.Cubic :
-                    (chapter_count_symbol == "^4") ? NumberType.Quartic :
-                    (chapter_count_symbol == "^5") ? NumberType.Quintic :
-                    (chapter_count_symbol == "^6") ? NumberType.Sextic :
-                    (chapter_count_symbol == "^7") ? NumberType.Septic :
-                    (chapter_count_symbol == "#") ? NumberType.Natural :
-                    (chapter_count_symbol == "") ? NumberType.None :
-                                                   NumberType.None;
-                string verse_count_symbol = FindByNumbersVersesNumberTypeLabel.Enabled ? FindByNumbersVersesNumberTypeLabel.Text : "";
-                NumberType verse_count_number_type =
-                    (verse_count_symbol == "P") ? NumberType.Prime :
-                    (verse_count_symbol == "AP") ? NumberType.AdditivePrime :
-                    (verse_count_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (verse_count_symbol == "C") ? NumberType.Composite :
-                    (verse_count_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (verse_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (verse_count_symbol == "O") ? NumberType.Odd :
-                    (verse_count_symbol == "E") ? NumberType.Even :
-                    (verse_count_symbol == "^2") ? NumberType.Square :
-                    (verse_count_symbol == "^3") ? NumberType.Cubic :
-                    (verse_count_symbol == "^4") ? NumberType.Quartic :
-                    (verse_count_symbol == "^5") ? NumberType.Quintic :
-                    (verse_count_symbol == "^6") ? NumberType.Sextic :
-                    (verse_count_symbol == "^7") ? NumberType.Septic :
-                    (verse_count_symbol == "#") ? NumberType.Natural :
-                    (verse_count_symbol == "") ? NumberType.None :
-                                                 NumberType.None;
-                string word_count_symbol = FindByNumbersWordsNumberTypeLabel.Enabled ? FindByNumbersWordsNumberTypeLabel.Text : "";
-                NumberType word_count_number_type =
-                    (word_count_symbol == "P") ? NumberType.Prime :
-                    (word_count_symbol == "AP") ? NumberType.AdditivePrime :
-                    (word_count_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (word_count_symbol == "C") ? NumberType.Composite :
-                    (word_count_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (word_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (word_count_symbol == "O") ? NumberType.Odd :
-                    (word_count_symbol == "E") ? NumberType.Even :
-                    (word_count_symbol == "^2") ? NumberType.Square :
-                    (word_count_symbol == "^3") ? NumberType.Cubic :
-                    (word_count_symbol == "^4") ? NumberType.Quartic :
-                    (word_count_symbol == "^5") ? NumberType.Quintic :
-                    (word_count_symbol == "^6") ? NumberType.Sextic :
-                    (word_count_symbol == "^7") ? NumberType.Septic :
-                    (word_count_symbol == "#") ? NumberType.Natural :
-                    (word_count_symbol == "") ? NumberType.None :
-                                                NumberType.None;
-                string letter_count_symbol = FindByNumbersLettersNumberTypeLabel.Enabled ? FindByNumbersLettersNumberTypeLabel.Text : "";
-                NumberType letter_count_number_type =
-                    (letter_count_symbol == "P") ? NumberType.Prime :
-                    (letter_count_symbol == "AP") ? NumberType.AdditivePrime :
-                    (letter_count_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (letter_count_symbol == "C") ? NumberType.Composite :
-                    (letter_count_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (letter_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (letter_count_symbol == "O") ? NumberType.Odd :
-                    (letter_count_symbol == "E") ? NumberType.Even :
-                    (letter_count_symbol == "^2") ? NumberType.Square :
-                    (letter_count_symbol == "^3") ? NumberType.Cubic :
-                    (letter_count_symbol == "^4") ? NumberType.Quartic :
-                    (letter_count_symbol == "^5") ? NumberType.Quintic :
-                    (letter_count_symbol == "^6") ? NumberType.Sextic :
-                    (letter_count_symbol == "^7") ? NumberType.Septic :
-                    (letter_count_symbol == "#") ? NumberType.Natural :
-                    (letter_count_symbol == "") ? NumberType.None :
-                                                  NumberType.None;
-                string unique_letter_count_symbol = FindByNumbersUniqueLettersNumberTypeLabel.Enabled ? FindByNumbersUniqueLettersNumberTypeLabel.Text : "";
-                NumberType unique_letter_count_number_type =
-                    (unique_letter_count_symbol == "P") ? NumberType.Prime :
-                    (unique_letter_count_symbol == "AP") ? NumberType.AdditivePrime :
-                    (unique_letter_count_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (unique_letter_count_symbol == "C") ? NumberType.Composite :
-                    (unique_letter_count_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (unique_letter_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (unique_letter_count_symbol == "O") ? NumberType.Odd :
-                    (unique_letter_count_symbol == "E") ? NumberType.Even :
-                    (unique_letter_count_symbol == "^2") ? NumberType.Square :
-                    (unique_letter_count_symbol == "^3") ? NumberType.Cubic :
-                    (unique_letter_count_symbol == "^4") ? NumberType.Quartic :
-                    (unique_letter_count_symbol == "^5") ? NumberType.Quintic :
-                    (unique_letter_count_symbol == "^6") ? NumberType.Sextic :
-                    (unique_letter_count_symbol == "^7") ? NumberType.Septic :
-                    (unique_letter_count_symbol == "#") ? NumberType.Natural :
-                    (unique_letter_count_symbol == "") ? NumberType.None :
-                                                         NumberType.None;
-                string value_symbol = FindByNumbersValueNumberTypeLabel.Enabled ? FindByNumbersValueNumberTypeLabel.Text : "";
-                NumberType value_number_type =
-                    (value_symbol == "P") ? NumberType.Prime :
-                    (value_symbol == "AP") ? NumberType.AdditivePrime :
-                    (value_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (value_symbol == "C") ? NumberType.Composite :
-                    (value_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (value_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (value_symbol == "O") ? NumberType.Odd :
-                    (value_symbol == "E") ? NumberType.Even :
-                    (value_symbol == "^2") ? NumberType.Square :
-                    (value_symbol == "^3") ? NumberType.Cubic :
-                    (value_symbol == "^4") ? NumberType.Quartic :
-                    (value_symbol == "^5") ? NumberType.Quintic :
-                    (value_symbol == "^6") ? NumberType.Sextic :
-                    (value_symbol == "^7") ? NumberType.Septic :
-                    (value_symbol == "#") ? NumberType.Natural :
-                    (value_symbol == "") ? NumberType.None :
-                                           NumberType.None;
-
-                string value_digit_sum_symbol = FindByNumbersValueDigitSumNumberTypeLabel.Enabled ? FindByNumbersValueDigitSumNumberTypeLabel.Text : "";
-                NumberType value_digit_sum_number_type =
-                    (value_digit_sum_symbol == "P") ? NumberType.Prime :
-                    (value_digit_sum_symbol == "AP") ? NumberType.AdditivePrime :
-                    (value_digit_sum_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (value_digit_sum_symbol == "C") ? NumberType.Composite :
-                    (value_digit_sum_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (value_digit_sum_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (value_digit_sum_symbol == "O") ? NumberType.Odd :
-                    (value_digit_sum_symbol == "E") ? NumberType.Even :
-                    (value_digit_sum_symbol == "^2") ? NumberType.Square :
-                    (value_digit_sum_symbol == "^3") ? NumberType.Cubic :
-                    (value_digit_sum_symbol == "^4") ? NumberType.Quartic :
-                    (value_digit_sum_symbol == "^5") ? NumberType.Quintic :
-                    (value_digit_sum_symbol == "^6") ? NumberType.Sextic :
-                    (value_digit_sum_symbol == "^7") ? NumberType.Septic :
-                    (value_digit_sum_symbol == "#") ? NumberType.Natural :
-                    (value_digit_sum_symbol == "") ? NumberType.None :
+            string letter_count_symbol = FindByNumbersLettersNumberTypeLabel.Enabled ? FindByNumbersLettersNumberTypeLabel.Text : "";
+            NumberType letter_count_number_type =
+                (letter_count_symbol == "P") ? NumberType.Prime :
+                (letter_count_symbol == "AP") ? NumberType.AdditivePrime :
+                (letter_count_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (letter_count_symbol == "C") ? NumberType.Composite :
+                (letter_count_symbol == "AC") ? NumberType.AdditiveComposite :
+                (letter_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (letter_count_symbol == "O") ? NumberType.Odd :
+                (letter_count_symbol == "E") ? NumberType.Even :
+                (letter_count_symbol == "^2") ? NumberType.Square :
+                (letter_count_symbol == "^3") ? NumberType.Cubic :
+                (letter_count_symbol == "^4") ? NumberType.Quartic :
+                (letter_count_symbol == "^5") ? NumberType.Quintic :
+                (letter_count_symbol == "^6") ? NumberType.Sextic :
+                (letter_count_symbol == "^7") ? NumberType.Septic :
+                (letter_count_symbol == "#") ? NumberType.Natural :
+                (letter_count_symbol == "") ? NumberType.None :
+                                              NumberType.None;
+            string unique_letter_count_symbol = FindByNumbersUniqueLettersNumberTypeLabel.Enabled ? FindByNumbersUniqueLettersNumberTypeLabel.Text : "";
+            NumberType unique_letter_count_number_type =
+                (unique_letter_count_symbol == "P") ? NumberType.Prime :
+                (unique_letter_count_symbol == "AP") ? NumberType.AdditivePrime :
+                (unique_letter_count_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (unique_letter_count_symbol == "C") ? NumberType.Composite :
+                (unique_letter_count_symbol == "AC") ? NumberType.AdditiveComposite :
+                (unique_letter_count_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (unique_letter_count_symbol == "O") ? NumberType.Odd :
+                (unique_letter_count_symbol == "E") ? NumberType.Even :
+                (unique_letter_count_symbol == "^2") ? NumberType.Square :
+                (unique_letter_count_symbol == "^3") ? NumberType.Cubic :
+                (unique_letter_count_symbol == "^4") ? NumberType.Quartic :
+                (unique_letter_count_symbol == "^5") ? NumberType.Quintic :
+                (unique_letter_count_symbol == "^6") ? NumberType.Sextic :
+                (unique_letter_count_symbol == "^7") ? NumberType.Septic :
+                (unique_letter_count_symbol == "#") ? NumberType.Natural :
+                (unique_letter_count_symbol == "") ? NumberType.None :
                                                      NumberType.None;
-                string value_digital_root_symbol = FindByNumbersValueDigitalRootNumberTypeLabel.Enabled ? FindByNumbersValueDigitalRootNumberTypeLabel.Text : "";
-                NumberType value_digital_root_number_type =
-                    (value_digital_root_symbol == "P") ? NumberType.Prime :
-                    (value_digital_root_symbol == "AP") ? NumberType.AdditivePrime :
-                    (value_digital_root_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (value_digital_root_symbol == "C") ? NumberType.Composite :
-                    (value_digital_root_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (value_digital_root_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (value_digital_root_symbol == "O") ? NumberType.Odd :
-                    (value_digital_root_symbol == "E") ? NumberType.Even :
-                    (value_digital_root_symbol == "^2") ? NumberType.Square :
-                    (value_digital_root_symbol == "^3") ? NumberType.Cubic :
-                    (value_digital_root_symbol == "^4") ? NumberType.Quartic :
-                    (value_digital_root_symbol == "^5") ? NumberType.Quintic :
-                    (value_digital_root_symbol == "^6") ? NumberType.Sextic :
-                    (value_digital_root_symbol == "^7") ? NumberType.Septic :
-                    (value_digital_root_symbol == "#") ? NumberType.Natural :
-                    (value_digital_root_symbol == "") ? NumberType.None :
-                                                        NumberType.None;
+            string value_symbol = FindByNumbersValueNumberTypeLabel.Enabled ? FindByNumbersValueNumberTypeLabel.Text : "";
+            NumberType value_number_type =
+                (value_symbol == "P") ? NumberType.Prime :
+                (value_symbol == "AP") ? NumberType.AdditivePrime :
+                (value_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (value_symbol == "C") ? NumberType.Composite :
+                (value_symbol == "AC") ? NumberType.AdditiveComposite :
+                (value_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (value_symbol == "O") ? NumberType.Odd :
+                (value_symbol == "E") ? NumberType.Even :
+                (value_symbol == "^2") ? NumberType.Square :
+                (value_symbol == "^3") ? NumberType.Cubic :
+                (value_symbol == "^4") ? NumberType.Quartic :
+                (value_symbol == "^5") ? NumberType.Quintic :
+                (value_symbol == "^6") ? NumberType.Sextic :
+                (value_symbol == "^7") ? NumberType.Septic :
+                (value_symbol == "#") ? NumberType.Natural :
+                (value_symbol == "") ? NumberType.None :
+                                       NumberType.None;
 
-                // 2. numbers
-                int number = FindByNumbersNumberNumericUpDown.Enabled ? (int)FindByNumbersNumberNumericUpDown.Value : 0;
-                int chapter_count = FindByNumbersChaptersNumericUpDown.Enabled ? (int)FindByNumbersChaptersNumericUpDown.Value : 0;
-                int verse_count = FindByNumbersVersesNumericUpDown.Enabled ? (int)FindByNumbersVersesNumericUpDown.Value : 0;
-                int word_count = FindByNumbersWordsNumericUpDown.Enabled ? (int)FindByNumbersWordsNumericUpDown.Value : 0;
-                int letter_count = FindByNumbersLettersNumericUpDown.Enabled ? (int)FindByNumbersLettersNumericUpDown.Value : 0;
-                int unique_letter_count = FindByNumbersUniqueLettersNumericUpDown.Enabled ? (int)FindByNumbersUniqueLettersNumericUpDown.Value : 0;
-                long value = FindByNumbersValueNumericUpDown.Enabled ? (int)FindByNumbersValueNumericUpDown.Value : 0;
-                int value_digit_sum = FindByNumbersValueDigitSumNumericUpDown.Enabled ? (int)FindByNumbersValueDigitSumNumericUpDown.Value : 0;
-                int value_digital_root = FindByNumbersValueDigitalRootNumericUpDown.Enabled ? (int)FindByNumbersValueDigitalRootNumericUpDown.Value : 0;
+            string value_digit_sum_symbol = FindByNumbersValueDigitSumNumberTypeLabel.Enabled ? FindByNumbersValueDigitSumNumberTypeLabel.Text : "";
+            NumberType value_digit_sum_number_type =
+                (value_digit_sum_symbol == "P") ? NumberType.Prime :
+                (value_digit_sum_symbol == "AP") ? NumberType.AdditivePrime :
+                (value_digit_sum_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (value_digit_sum_symbol == "C") ? NumberType.Composite :
+                (value_digit_sum_symbol == "AC") ? NumberType.AdditiveComposite :
+                (value_digit_sum_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (value_digit_sum_symbol == "O") ? NumberType.Odd :
+                (value_digit_sum_symbol == "E") ? NumberType.Even :
+                (value_digit_sum_symbol == "^2") ? NumberType.Square :
+                (value_digit_sum_symbol == "^3") ? NumberType.Cubic :
+                (value_digit_sum_symbol == "^4") ? NumberType.Quartic :
+                (value_digit_sum_symbol == "^5") ? NumberType.Quintic :
+                (value_digit_sum_symbol == "^6") ? NumberType.Sextic :
+                (value_digit_sum_symbol == "^7") ? NumberType.Septic :
+                (value_digit_sum_symbol == "#") ? NumberType.Natural :
+                (value_digit_sum_symbol == "") ? NumberType.None :
+                                                 NumberType.None;
+            string value_digital_root_symbol = FindByNumbersValueDigitalRootNumberTypeLabel.Enabled ? FindByNumbersValueDigitalRootNumberTypeLabel.Text : "";
+            NumberType value_digital_root_number_type =
+                (value_digital_root_symbol == "P") ? NumberType.Prime :
+                (value_digital_root_symbol == "AP") ? NumberType.AdditivePrime :
+                (value_digital_root_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (value_digital_root_symbol == "C") ? NumberType.Composite :
+                (value_digital_root_symbol == "AC") ? NumberType.AdditiveComposite :
+                (value_digital_root_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (value_digital_root_symbol == "O") ? NumberType.Odd :
+                (value_digital_root_symbol == "E") ? NumberType.Even :
+                (value_digital_root_symbol == "^2") ? NumberType.Square :
+                (value_digital_root_symbol == "^3") ? NumberType.Cubic :
+                (value_digital_root_symbol == "^4") ? NumberType.Quartic :
+                (value_digital_root_symbol == "^5") ? NumberType.Quintic :
+                (value_digital_root_symbol == "^6") ? NumberType.Sextic :
+                (value_digital_root_symbol == "^7") ? NumberType.Septic :
+                (value_digital_root_symbol == "#") ? NumberType.Natural :
+                (value_digital_root_symbol == "") ? NumberType.None :
+                                                    NumberType.None;
 
-                // 3. comparison operators = ≠ < ≤ > ≥ ÷ !÷ Ʃ
-                string number_operator_symbol = FindByNumbersNumberComparisonOperatorLabel.Text;
-                ComparisonOperator number_comparison_operator =
-                    (number_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (number_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (number_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (number_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (number_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (number_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (number_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (number_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (number_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+            // 2. numbers
+            int number = FindByNumbersNumberNumericUpDown.Enabled ? (int)FindByNumbersNumberNumericUpDown.Value : 0;
+            int chapter_count = FindByNumbersChaptersNumericUpDown.Enabled ? (int)FindByNumbersChaptersNumericUpDown.Value : 0;
+            int verse_count = FindByNumbersVersesNumericUpDown.Enabled ? (int)FindByNumbersVersesNumericUpDown.Value : 0;
+            int word_count = FindByNumbersWordsNumericUpDown.Enabled ? (int)FindByNumbersWordsNumericUpDown.Value : 0;
+            int letter_count = FindByNumbersLettersNumericUpDown.Enabled ? (int)FindByNumbersLettersNumericUpDown.Value : 0;
+            int unique_letter_count = FindByNumbersUniqueLettersNumericUpDown.Enabled ? (int)FindByNumbersUniqueLettersNumericUpDown.Value : 0;
+            long value = FindByNumbersValueNumericUpDown.Enabled ? (int)FindByNumbersValueNumericUpDown.Value : 0;
+            int value_digit_sum = FindByNumbersValueDigitSumNumericUpDown.Enabled ? (int)FindByNumbersValueDigitSumNumericUpDown.Value : 0;
+            int value_digital_root = FindByNumbersValueDigitalRootNumericUpDown.Enabled ? (int)FindByNumbersValueDigitalRootNumericUpDown.Value : 0;
+
+            // 3. comparison operators = ≠ < ≤ > ≥ ÷ !÷ Ʃ
+            string number_operator_symbol = FindByNumbersNumberComparisonOperatorLabel.Text;
+            ComparisonOperator number_comparison_operator =
+                (number_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (number_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (number_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (number_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (number_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (number_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (number_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (number_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (number_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                  ComparisonOperator.Reserved;
+            string chapter_count_operator_symbol = FindByNumbersChaptersComparisonOperatorLabel.Text;
+            ComparisonOperator chapter_count_comparison_operator =
+                (chapter_count_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (chapter_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (chapter_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (chapter_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (chapter_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (chapter_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (chapter_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (chapter_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (chapter_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                         ComparisonOperator.Reserved;
+            string verse_count_operator_symbol = FindByNumbersVersesComparisonOperatorLabel.Text;
+            ComparisonOperator verse_count_comparison_operator =
+                (verse_count_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (verse_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (verse_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (verse_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (verse_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (verse_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (verse_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (verse_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (verse_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                       ComparisonOperator.Reserved;
+            string word_count_operator_symbol = FindByNumbersWordsComparisonOperatorLabel.Text;
+            ComparisonOperator word_count_comparison_operator =
+                (word_count_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (word_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (word_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (word_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (word_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (word_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (word_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (word_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (word_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
                                                       ComparisonOperator.Reserved;
-                string chapter_count_operator_symbol = FindByNumbersChaptersComparisonOperatorLabel.Text;
-                ComparisonOperator chapter_count_comparison_operator =
-                    (chapter_count_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (chapter_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (chapter_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (chapter_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (chapter_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (chapter_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (chapter_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (chapter_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (chapter_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                             ComparisonOperator.Reserved;
-                string verse_count_operator_symbol = FindByNumbersVersesComparisonOperatorLabel.Text;
-                ComparisonOperator verse_count_comparison_operator =
-                    (verse_count_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (verse_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (verse_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (verse_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (verse_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (verse_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (verse_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (verse_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (verse_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                           ComparisonOperator.Reserved;
-                string word_count_operator_symbol = FindByNumbersWordsComparisonOperatorLabel.Text;
-                ComparisonOperator word_count_comparison_operator =
-                    (word_count_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (word_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (word_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (word_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (word_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (word_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (word_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (word_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (word_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                          ComparisonOperator.Reserved;
-                string letter_count_operator_symbol = FindByNumbersLettersComparisonOperatorLabel.Text;
-                ComparisonOperator letter_count_comparison_operator =
-                    (letter_count_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (letter_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (letter_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (letter_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (letter_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (letter_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (letter_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (letter_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (letter_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                            ComparisonOperator.Reserved;
-                string unique_letter_count_operator_symbol = FindByNumbersUniqueLettersComparisonOperatorLabel.Text;
-                ComparisonOperator unique_letter_count_comparison_operator =
-                    (unique_letter_count_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (unique_letter_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (unique_letter_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (unique_letter_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (unique_letter_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (unique_letter_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (unique_letter_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (unique_letter_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (unique_letter_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                                   ComparisonOperator.Reserved;
-                string value_operator_symbol = FindByNumbersValueComparisonOperatorLabel.Text;
-                ComparisonOperator value_comparison_operator =
-                    (value_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (value_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (value_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (value_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (value_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (value_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (value_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (value_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (value_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                     ComparisonOperator.Reserved;
-
-                string value_digit_sum_operator_symbol = FindByNumbersValueDigitSumComparisonOperatorLabel.Text;
-                ComparisonOperator value_digit_sum_comparison_operator =
-                    (value_digit_sum_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (value_digit_sum_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (value_digit_sum_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (value_digit_sum_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (value_digit_sum_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (value_digit_sum_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (value_digit_sum_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (value_digit_sum_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (value_digit_sum_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+            string letter_count_operator_symbol = FindByNumbersLettersComparisonOperatorLabel.Text;
+            ComparisonOperator letter_count_comparison_operator =
+                (letter_count_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (letter_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (letter_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (letter_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (letter_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (letter_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (letter_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (letter_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (letter_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                        ComparisonOperator.Reserved;
+            string unique_letter_count_operator_symbol = FindByNumbersUniqueLettersComparisonOperatorLabel.Text;
+            ComparisonOperator unique_letter_count_comparison_operator =
+                (unique_letter_count_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (unique_letter_count_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (unique_letter_count_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (unique_letter_count_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (unique_letter_count_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (unique_letter_count_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (unique_letter_count_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (unique_letter_count_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (unique_letter_count_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
                                                                ComparisonOperator.Reserved;
+            string value_operator_symbol = FindByNumbersValueComparisonOperatorLabel.Text;
+            ComparisonOperator value_comparison_operator =
+                (value_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (value_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (value_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (value_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (value_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (value_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (value_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (value_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (value_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                 ComparisonOperator.Reserved;
 
-                string value_digital_root_operator_symbol = FindByNumbersValueDigitalRootComparisonOperatorLabel.Text;
-                ComparisonOperator value_digital_root_comparison_operator =
-                    (value_digital_root_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (value_digital_root_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (value_digital_root_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (value_digital_root_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (value_digital_root_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (value_digital_root_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (value_digital_root_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (value_digital_root_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (value_digital_root_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (value_digital_root_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                                  ComparisonOperator.Reserved;
+            string value_digit_sum_operator_symbol = FindByNumbersValueDigitSumComparisonOperatorLabel.Text;
+            ComparisonOperator value_digit_sum_comparison_operator =
+                (value_digit_sum_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (value_digit_sum_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (value_digit_sum_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (value_digit_sum_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (value_digit_sum_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (value_digit_sum_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (value_digit_sum_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (value_digit_sum_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (value_digit_sum_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                           ComparisonOperator.Reserved;
 
-                // 4. remainders for % comparison operator
-                int number_remainder = -1;
-                if (number_comparison_operator == ComparisonOperator.DivisibleBy)
+            string value_digital_root_operator_symbol = FindByNumbersValueDigitalRootComparisonOperatorLabel.Text;
+            ComparisonOperator value_digital_root_comparison_operator =
+                (value_digital_root_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (value_digital_root_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (value_digital_root_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (value_digital_root_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (value_digital_root_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (value_digital_root_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (value_digital_root_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (value_digital_root_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (value_digital_root_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (value_digital_root_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                              ComparisonOperator.Reserved;
+
+            // 4. remainders for % comparison operator
+            int number_remainder = -1;
+            if (number_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
                 {
-                    try
-                    {
-                        number_remainder = int.Parse(FindByNumbersNumberNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    number_remainder = int.Parse(FindByNumbersNumberNumberTypeLabel.Text);
                 }
-                int chapter_count_remainder = -1;
-                if (chapter_count_comparison_operator == ComparisonOperator.DivisibleBy)
+                catch
                 {
-                    try
-                    {
-                        chapter_count_remainder = int.Parse(FindByNumbersChaptersNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    // keep as -1
                 }
-                int verse_count_remainder = -1;
-                if (verse_count_comparison_operator == ComparisonOperator.DivisibleBy)
+            }
+            int chapter_count_remainder = -1;
+            if (chapter_count_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
                 {
-                    try
-                    {
-                        verse_count_remainder = int.Parse(FindByNumbersVersesNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    chapter_count_remainder = int.Parse(FindByNumbersChaptersNumberTypeLabel.Text);
                 }
-                int word_count_remainder = -1;
-                if (word_count_comparison_operator == ComparisonOperator.DivisibleBy)
+                catch
                 {
-                    try
-                    {
-                        word_count_remainder = int.Parse(FindByNumbersWordsNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    // keep as -1
                 }
-                int letter_count_remainder = -1;
-                if (letter_count_comparison_operator == ComparisonOperator.DivisibleBy)
+            }
+            int verse_count_remainder = -1;
+            if (verse_count_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
                 {
-                    try
-                    {
-                        letter_count_remainder = int.Parse(FindByNumbersLettersNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    verse_count_remainder = int.Parse(FindByNumbersVersesNumberTypeLabel.Text);
                 }
-                int unique_letter_count_remainder = -1;
-                if (unique_letter_count_comparison_operator == ComparisonOperator.DivisibleBy)
+                catch
                 {
-                    try
-                    {
-                        unique_letter_count_remainder = int.Parse(FindByNumbersUniqueLettersNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    // keep as -1
                 }
-                int value_remainder = -1;
-                if (value_comparison_operator == ComparisonOperator.DivisibleBy)
+            }
+            int word_count_remainder = -1;
+            if (word_count_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
                 {
-                    try
-                    {
-                        value_remainder = int.Parse(FindByNumbersValueNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    word_count_remainder = int.Parse(FindByNumbersWordsNumberTypeLabel.Text);
                 }
-                int value_digit_sum_remainder = -1;
-                if (value_digit_sum_comparison_operator == ComparisonOperator.DivisibleBy)
+                catch
                 {
-                    try
-                    {
-                        value_digit_sum_remainder = int.Parse(FindByNumbersValueDigitSumNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    // keep as -1
                 }
-                int value_digital_root_remainder = -1;
-                if (value_digital_root_comparison_operator == ComparisonOperator.DivisibleBy)
+            }
+            int letter_count_remainder = -1;
+            if (letter_count_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
                 {
-                    try
-                    {
-                        value_digital_root_remainder = int.Parse(FindByNumbersValueDigitalRootNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    letter_count_remainder = int.Parse(FindByNumbersLettersNumberTypeLabel.Text);
                 }
-
-
-                string text = null;
-                text += L[l]["number"] + number_operator_symbol + ((number > 0) ? number.ToString() : ((number_number_type != NumberType.None) ? FindByNumbersNumberNumberTypeLabel.Text : "*")) + " ";
-
-                if (
-                    (m_numbers_result_type == NumbersResultType.ChapterRanges)
-                   )
+                catch
                 {
-                    text += L[l]["chapters"] + chapter_count_operator_symbol + ((chapter_count > 0) ? chapter_count.ToString() : ((chapter_count_number_type != NumberType.None) ? FindByNumbersChaptersNumberTypeLabel.Text : "*")) + " ";
+                    // keep as -1
                 }
-
-                if (
-                    (m_numbers_result_type == NumbersResultType.Chapters) ||
-                    (m_numbers_result_type == NumbersResultType.ChapterRanges) ||
-                    (m_numbers_result_type == NumbersResultType.VerseRanges)
-                   )
+            }
+            int unique_letter_count_remainder = -1;
+            if (unique_letter_count_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
                 {
-                    text += L[l]["verses"] + verse_count_operator_symbol + ((verse_count > 0) ? verse_count.ToString() : ((verse_count_number_type != NumberType.None) ? FindByNumbersVersesNumberTypeLabel.Text : "*")) + " ";
+                    unique_letter_count_remainder = int.Parse(FindByNumbersUniqueLettersNumberTypeLabel.Text);
                 }
-
-                if (
-                    (m_numbers_result_type == NumbersResultType.Chapters) ||
-                    (m_numbers_result_type == NumbersResultType.ChapterRanges) ||
-                    (m_numbers_result_type == NumbersResultType.Verses) ||
-                    (m_numbers_result_type == NumbersResultType.VerseRanges) ||
-                    (m_numbers_result_type == NumbersResultType.Sentences) ||
-                    (m_numbers_result_type == NumbersResultType.WordRanges)
-                   )
+                catch
                 {
-                    text += L[l]["words"] + word_count_operator_symbol + ((word_count > 0) ? word_count.ToString() : ((word_count_number_type != NumberType.None) ? FindByNumbersWordsNumberTypeLabel.Text : "*")) + " ";
+                    // keep as -1
                 }
-
-                text += L[l]["letters"] + letter_count_operator_symbol + ((letter_count > 0) ? letter_count.ToString() : ((letter_count_number_type != NumberType.None) ? FindByNumbersLettersNumberTypeLabel.Text : "*")) + " ";
-                text += L[l]["unique"] + unique_letter_count_operator_symbol + ((unique_letter_count > 0) ? unique_letter_count.ToString() : ((unique_letter_count_number_type != NumberType.None) ? FindByNumbersUniqueLettersNumberTypeLabel.Text : "*")) + " ";
-                text += L[l]["value"] + value_operator_symbol + ((value > 0) ? value.ToString() : ((value_number_type != NumberType.None) ? FindByNumbersValueNumberTypeLabel.Text : "*"));
-                text += L[l]["digit sum"] + value_digit_sum_operator_symbol + ((value_digit_sum > 0) ? value_digit_sum.ToString() : ((value_digit_sum_number_type != NumberType.None) ? FindByNumbersValueDigitSumNumberTypeLabel.Text : "*")) + " ";
-                text += L[l]["digital root"] + value_digital_root_operator_symbol + ((value_digital_root > 0) ? value_digital_root.ToString() : ((value_digital_root_number_type != NumberType.None) ? FindByNumbersValueDigitalRootNumberTypeLabel.Text : "*")) + "";
-
-                NumberQuery query = new NumberQuery();
-                query.WithinVerses = false;
-
-                query.Number = number;
-                query.ChapterCount = chapter_count;
-                query.VerseCount = verse_count;
-                query.WordCount = word_count;
-                query.LetterCount = letter_count;
-                query.UniqueLetterCount = unique_letter_count;
-                query.Value = value;
-                query.ValueDigitSum = value_digit_sum;
-                query.ValueDigitalRoot = value_digital_root;
-
-                query.NumberNumberType = number_number_type;
-                query.ChapterCountNumberType = chapter_count_number_type;
-                query.VerseCountNumberType = verse_count_number_type;
-                query.WordCountNumberType = word_count_number_type;
-                query.LetterCountNumberType = letter_count_number_type;
-                query.UniqueLetterCountNumberType = unique_letter_count_number_type;
-                query.ValueNumberType = value_number_type;
-                query.ValueDigitSumNumberType = value_digit_sum_number_type;
-                query.ValueDigitalRootNumberType = value_digital_root_number_type;
-
-                query.NumberComparisonOperator = number_comparison_operator;
-                query.ChapterCountComparisonOperator = chapter_count_comparison_operator;
-                query.VerseCountComparisonOperator = verse_count_comparison_operator;
-                query.WordCountComparisonOperator = word_count_comparison_operator;
-                query.LetterCountComparisonOperator = letter_count_comparison_operator;
-                query.UniqueLetterCountComparisonOperator = unique_letter_count_comparison_operator;
-                query.ValueComparisonOperator = value_comparison_operator;
-                query.ValueDigitSumComparisonOperator = value_digit_sum_comparison_operator;
-                query.ValueDigitalRootComparisonOperator = value_digital_root_comparison_operator;
-
-                query.NumberRemainder = number_remainder;
-                query.ChapterCountRemainder = chapter_count_remainder;
-                query.VerseCountRemainder = verse_count_remainder;
-                query.WordCountRemainder = word_count_remainder;
-                query.LetterCountRemainder = letter_count_remainder;
-                query.UniqueLetterCountRemainder = unique_letter_count_remainder;
-                query.ValueRemainder = value_remainder;
-                query.ValueDigitSumRemainder = value_digit_sum_remainder;
-                query.ValueDigitalRootRemainder = value_digital_root_remainder;
-
-                if (query.IsValid(m_numbers_result_type))
+            }
+            int value_remainder = -1;
+            if (value_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
                 {
-                    int match_count = -1;
-                    switch (m_numbers_result_type)
-                    {
-                        case NumbersResultType.Letters:
+                    value_remainder = int.Parse(FindByNumbersValueNumberTypeLabel.Text);
+                }
+                catch
+                {
+                    // keep as -1
+                }
+            }
+            int value_digit_sum_remainder = -1;
+            if (value_digit_sum_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
+                {
+                    value_digit_sum_remainder = int.Parse(FindByNumbersValueDigitSumNumberTypeLabel.Text);
+                }
+                catch
+                {
+                    // keep as -1
+                }
+            }
+            int value_digital_root_remainder = -1;
+            if (value_digital_root_comparison_operator == ComparisonOperator.DivisibleBy)
+            {
+                try
+                {
+                    value_digital_root_remainder = int.Parse(FindByNumbersValueDigitalRootNumberTypeLabel.Text);
+                }
+                catch
+                {
+                    // keep as -1
+                }
+            }
+
+
+            string text = null;
+            text += L[l]["number"] + number_operator_symbol + ((number > 0) ? number.ToString() : ((number_number_type != NumberType.None) ? FindByNumbersNumberNumberTypeLabel.Text : "*")) + " ";
+
+            if (
+                (m_numbers_result_type == NumbersResultType.ChapterRanges)
+               )
+            {
+                text += L[l]["chapters"] + chapter_count_operator_symbol + ((chapter_count > 0) ? chapter_count.ToString() : ((chapter_count_number_type != NumberType.None) ? FindByNumbersChaptersNumberTypeLabel.Text : "*")) + " ";
+            }
+
+            if (
+                (m_numbers_result_type == NumbersResultType.Chapters) ||
+                (m_numbers_result_type == NumbersResultType.ChapterRanges) ||
+                (m_numbers_result_type == NumbersResultType.VerseRanges)
+               )
+            {
+                text += L[l]["verses"] + verse_count_operator_symbol + ((verse_count > 0) ? verse_count.ToString() : ((verse_count_number_type != NumberType.None) ? FindByNumbersVersesNumberTypeLabel.Text : "*")) + " ";
+            }
+
+            if (
+                (m_numbers_result_type == NumbersResultType.Chapters) ||
+                (m_numbers_result_type == NumbersResultType.ChapterRanges) ||
+                (m_numbers_result_type == NumbersResultType.Verses) ||
+                (m_numbers_result_type == NumbersResultType.VerseRanges) ||
+                (m_numbers_result_type == NumbersResultType.Sentences) ||
+                (m_numbers_result_type == NumbersResultType.WordRanges)
+               )
+            {
+                text += L[l]["words"] + word_count_operator_symbol + ((word_count > 0) ? word_count.ToString() : ((word_count_number_type != NumberType.None) ? FindByNumbersWordsNumberTypeLabel.Text : "*")) + " ";
+            }
+
+            text += L[l]["letters"] + letter_count_operator_symbol + ((letter_count > 0) ? letter_count.ToString() : ((letter_count_number_type != NumberType.None) ? FindByNumbersLettersNumberTypeLabel.Text : "*")) + " ";
+            text += L[l]["unique"] + unique_letter_count_operator_symbol + ((unique_letter_count > 0) ? unique_letter_count.ToString() : ((unique_letter_count_number_type != NumberType.None) ? FindByNumbersUniqueLettersNumberTypeLabel.Text : "*")) + " ";
+            text += L[l]["value"] + value_operator_symbol + ((value > 0) ? value.ToString() : ((value_number_type != NumberType.None) ? FindByNumbersValueNumberTypeLabel.Text : "*"));
+            text += L[l]["digit sum"] + value_digit_sum_operator_symbol + ((value_digit_sum > 0) ? value_digit_sum.ToString() : ((value_digit_sum_number_type != NumberType.None) ? FindByNumbersValueDigitSumNumberTypeLabel.Text : "*")) + " ";
+            text += L[l]["digital root"] + value_digital_root_operator_symbol + ((value_digital_root > 0) ? value_digital_root.ToString() : ((value_digital_root_number_type != NumberType.None) ? FindByNumbersValueDigitalRootNumberTypeLabel.Text : "*")) + "";
+
+            NumberQuery query = new NumberQuery();
+            query.WithinVerses = false;
+
+            query.Number = number;
+            query.ChapterCount = chapter_count;
+            query.VerseCount = verse_count;
+            query.WordCount = word_count;
+            query.LetterCount = letter_count;
+            query.UniqueLetterCount = unique_letter_count;
+            query.Value = value;
+            query.ValueDigitSum = value_digit_sum;
+            query.ValueDigitalRoot = value_digital_root;
+
+            query.NumberNumberType = number_number_type;
+            query.ChapterCountNumberType = chapter_count_number_type;
+            query.VerseCountNumberType = verse_count_number_type;
+            query.WordCountNumberType = word_count_number_type;
+            query.LetterCountNumberType = letter_count_number_type;
+            query.UniqueLetterCountNumberType = unique_letter_count_number_type;
+            query.ValueNumberType = value_number_type;
+            query.ValueDigitSumNumberType = value_digit_sum_number_type;
+            query.ValueDigitalRootNumberType = value_digital_root_number_type;
+
+            query.NumberComparisonOperator = number_comparison_operator;
+            query.ChapterCountComparisonOperator = chapter_count_comparison_operator;
+            query.VerseCountComparisonOperator = verse_count_comparison_operator;
+            query.WordCountComparisonOperator = word_count_comparison_operator;
+            query.LetterCountComparisonOperator = letter_count_comparison_operator;
+            query.UniqueLetterCountComparisonOperator = unique_letter_count_comparison_operator;
+            query.ValueComparisonOperator = value_comparison_operator;
+            query.ValueDigitSumComparisonOperator = value_digit_sum_comparison_operator;
+            query.ValueDigitalRootComparisonOperator = value_digital_root_comparison_operator;
+
+            query.NumberRemainder = number_remainder;
+            query.ChapterCountRemainder = chapter_count_remainder;
+            query.VerseCountRemainder = verse_count_remainder;
+            query.WordCountRemainder = word_count_remainder;
+            query.LetterCountRemainder = letter_count_remainder;
+            query.UniqueLetterCountRemainder = unique_letter_count_remainder;
+            query.ValueRemainder = value_remainder;
+            query.ValueDigitSumRemainder = value_digit_sum_remainder;
+            query.ValueDigitalRootRemainder = value_digital_root_remainder;
+
+            if (query.IsValid(m_numbers_result_type))
+            {
+                int match_count = -1;
+                switch (m_numbers_result_type)
+                {
+                    case NumbersResultType.Letters:
+                        {
+                            query.NumberScope = m_letter_number_scope;
+                            match_count = m_client.FindLetters(query);
+                            if (m_client.FoundLetters != null)
                             {
-                                query.NumberScope = m_letter_number_scope;
-                                match_count = m_client.FindLetters(query);
-                                if (m_client.FoundLetters != null)
-                                {
-                                    if (m_client.FoundVerses != null)
-                                    {
-                                        m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["letter"] : " " + L[l]["words"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                        DisplayFoundVerses(true, true);
-                                    }
-                                }
-                            }
-                            break;
-                        case NumbersResultType.Words:
-                            {
-                                query.NumberScope = m_word_number_scope;
-                                match_count = m_client.FindWords(query);
-                                if (m_client.FoundWords != null)
-                                {
-                                    if (m_client.FoundVerses != null)
-                                    {
-                                        m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["word"] : " " + L[l]["words"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                        DisplayFoundVerses(true, true);
-                                    }
-                                }
-                            }
-                            break;
-                        case NumbersResultType.WordRanges:
-                            {
-                                query.NumberScope = m_word_number_scope;
-                                match_count = m_client.FindWordRanges(query);
-                                if (m_client.FoundWordRanges != null)
-                                {
-                                    if (m_client.FoundVerses != null)
-                                    {
-                                        m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["word range"] : " " + L[l]["word ranges"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                        DisplayFoundVerses(true, true);
-                                    }
-                                }
-                            }
-                            break;
-                        case NumbersResultType.Sentences:
-                            {
-                                query.NumberScope = NumberScope.Number;
-                                match_count = m_client.FindSentences(query);
-                                if (m_client.FoundSentences != null)
-                                {
-                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["sentence"] : " " + L[l]["sentences"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                    DisplayFoundVerses(true, true);
-                                }
-                            }
-                            break;
-                        case NumbersResultType.Verses:
-                            {
-                                query.NumberScope = m_verse_number_scope;
-                                match_count = m_client.FindVerses(query);
                                 if (m_client.FoundVerses != null)
                                 {
-                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["letter"] : " " + L[l]["words"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
                                     DisplayFoundVerses(true, true);
                                 }
                             }
-                            break;
-                        case NumbersResultType.VerseRanges:
+                        }
+                        break;
+                    case NumbersResultType.Words:
+                        {
+                            query.NumberScope = m_word_number_scope;
+                            match_count = m_client.FindWords(query);
+                            if (m_client.FoundWords != null)
                             {
-                                query.NumberScope = m_verse_number_scope;
-                                match_count = m_client.FindVerseRanges(query);
-                                if (m_client.FoundVerseRanges != null)
+                                if (m_client.FoundVerses != null)
                                 {
-                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["verse range"] : " " + L[l]["verse ranges"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                    DisplayFoundVerseRanges(true, true);
+                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["word"] : " " + L[l]["words"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                    DisplayFoundVerses(true, true);
                                 }
                             }
-                            break;
-                        case NumbersResultType.Chapters:
+                        }
+                        break;
+                    case NumbersResultType.WordRanges:
+                        {
+                            query.NumberScope = m_word_number_scope;
+                            match_count = m_client.FindWordRanges(query);
+                            if (m_client.FoundWordRanges != null)
                             {
-                                query.NumberScope = m_chapter_number_scope;
-                                match_count = m_client.FindChapters(query);
-                                if (m_client.FoundChapters != null)
+                                if (m_client.FoundVerses != null)
                                 {
-                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["chapter"] : " " + L[l]["chapters"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                    DisplayFoundChapters(true, true);
+                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["word range"] : " " + L[l]["word ranges"]) + " " + L[l]["in"] + " " + m_client.FoundVerses.Count + ((m_client.FoundVerses.Count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                    DisplayFoundVerses(true, true);
                                 }
                             }
-                            break;
-                        case NumbersResultType.ChapterRanges:
+                        }
+                        break;
+                    case NumbersResultType.Sentences:
+                        {
+                            query.NumberScope = NumberScope.Number;
+                            match_count = m_client.FindSentences(query);
+                            if (m_client.FoundSentences != null)
                             {
-                                query.NumberScope = m_chapter_number_scope;
-                                match_count = m_client.FindChapterRanges(query);
-                                if (m_client.FoundChapterRanges != null)
-                                {
-                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["chapter range"] : " " + L[l]["chapter ranges"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                    DisplayFoundChapterRanges(true, true);
-                                }
+                                m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["sentence"] : " " + L[l]["sentences"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                DisplayFoundVerses(true, true);
                             }
-                            break;
-                        default:
-                            break;
-                    }
+                        }
+                        break;
+                    case NumbersResultType.Verses:
+                        {
+                            query.NumberScope = m_verse_number_scope;
+                            match_count = m_client.FindVerses(query);
+                            if (m_client.FoundVerses != null)
+                            {
+                                m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                DisplayFoundVerses(true, true);
+                            }
+                        }
+                        break;
+                    case NumbersResultType.VerseRanges:
+                        {
+                            query.NumberScope = m_verse_number_scope;
+                            match_count = m_client.FindVerseRanges(query);
+                            if (m_client.FoundVerseRanges != null)
+                            {
+                                m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["verse range"] : " " + L[l]["verse ranges"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                DisplayFoundVerseRanges(true, true);
+                            }
+                        }
+                        break;
+                    case NumbersResultType.Chapters:
+                        {
+                            query.NumberScope = m_chapter_number_scope;
+                            match_count = m_client.FindChapters(query);
+                            if (m_client.FoundChapters != null)
+                            {
+                                m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["chapter"] : " " + L[l]["chapters"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                DisplayFoundChapters(true, true);
+                            }
+                        }
+                        break;
+                    case NumbersResultType.ChapterRanges:
+                        {
+                            query.NumberScope = m_chapter_number_scope;
+                            match_count = m_client.FindChapterRanges(query);
+                            if (m_client.FoundChapterRanges != null)
+                            {
+                                m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["chapter range"] : " " + L[l]["chapter ranges"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                DisplayFoundChapterRanges(true, true);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
-
-                //SearchResultTextBox.Focus();
-                //SearchResultTextBox.Refresh();
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
+
+            //SearchResultTextBox.Focus();
+            //SearchResultTextBox.Refresh();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -25163,153 +25034,145 @@ public partial class MainForm : Form, ISubscriber
     }
     private void FindByFrequencySum()
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        m_search_type = SearchType.Frequency;
+
+        if (m_client != null)
         {
-            m_search_type = SearchType.Frequency;
+            ClearFindMatches();
 
-            if (m_client != null)
+            // 1. number types
+            string sum_number_type_symbol = FindByFrequencySumNumberTypeLabel.Enabled ? FindByFrequencySumNumberTypeLabel.Text : "";
+            NumberType sum_number_type =
+                (sum_number_type_symbol == "P") ? NumberType.Prime :
+                (sum_number_type_symbol == "AP") ? NumberType.AdditivePrime :
+                (sum_number_type_symbol == "XP") ? NumberType.NonAdditivePrime :
+                (sum_number_type_symbol == "C") ? NumberType.Composite :
+                (sum_number_type_symbol == "AC") ? NumberType.AdditiveComposite :
+                (sum_number_type_symbol == "XC") ? NumberType.NonAdditiveComposite :
+                (sum_number_type_symbol == "O") ? NumberType.Odd :
+                (sum_number_type_symbol == "E") ? NumberType.Even :
+                (sum_number_type_symbol == "^2") ? NumberType.Square :
+                (sum_number_type_symbol == "^3") ? NumberType.Cubic :
+                (sum_number_type_symbol == "^4") ? NumberType.Quartic :
+                (sum_number_type_symbol == "^5") ? NumberType.Quintic :
+                (sum_number_type_symbol == "^6") ? NumberType.Sextic :
+                (sum_number_type_symbol == "^7") ? NumberType.Septic :
+                (sum_number_type_symbol == "") ? NumberType.None :
+                                             NumberType.Natural;
+
+            // 2. numbers
+            int sum = FindByFrequencySumNumericUpDown.Enabled ? (int)FindByFrequencySumNumericUpDown.Value : 0;
+
+            // 3. comparison operators = ≠ < ≤ > ≥ ÷ !÷ Ʃ
+            string sum_comparison_operator_symbol = FindByFrequencySumComparisonOperatorLabel.Text;
+            ComparisonOperator sum_comparison_operator =
+                (sum_comparison_operator_symbol == "=") ? ComparisonOperator.Equal :
+                (sum_comparison_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
+                (sum_comparison_operator_symbol == "<") ? ComparisonOperator.LessThan :
+                (sum_comparison_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
+                (sum_comparison_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
+                (sum_comparison_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
+                (sum_comparison_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
+                (sum_comparison_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
+                (sum_comparison_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
+                                                          ComparisonOperator.Reserved;
+
+            // 4. remainders for % comparison operator
+            int sum_remainder = -1;
+            if (sum_comparison_operator == ComparisonOperator.DivisibleBy)
             {
-                ClearFindMatches();
-
-                // 1. number types
-                string sum_number_type_symbol = FindByFrequencySumNumberTypeLabel.Enabled ? FindByFrequencySumNumberTypeLabel.Text : "";
-                NumberType sum_number_type =
-                    (sum_number_type_symbol == "P") ? NumberType.Prime :
-                    (sum_number_type_symbol == "AP") ? NumberType.AdditivePrime :
-                    (sum_number_type_symbol == "XP") ? NumberType.NonAdditivePrime :
-                    (sum_number_type_symbol == "C") ? NumberType.Composite :
-                    (sum_number_type_symbol == "AC") ? NumberType.AdditiveComposite :
-                    (sum_number_type_symbol == "XC") ? NumberType.NonAdditiveComposite :
-                    (sum_number_type_symbol == "O") ? NumberType.Odd :
-                    (sum_number_type_symbol == "E") ? NumberType.Even :
-                    (sum_number_type_symbol == "^2") ? NumberType.Square :
-                    (sum_number_type_symbol == "^3") ? NumberType.Cubic :
-                    (sum_number_type_symbol == "^4") ? NumberType.Quartic :
-                    (sum_number_type_symbol == "^5") ? NumberType.Quintic :
-                    (sum_number_type_symbol == "^6") ? NumberType.Sextic :
-                    (sum_number_type_symbol == "^7") ? NumberType.Septic :
-                    (sum_number_type_symbol == "") ? NumberType.None :
-                                                 NumberType.Natural;
-
-                // 2. numbers
-                int sum = FindByFrequencySumNumericUpDown.Enabled ? (int)FindByFrequencySumNumericUpDown.Value : 0;
-
-                // 3. comparison operators = ≠ < ≤ > ≥ ÷ !÷ Ʃ
-                string sum_comparison_operator_symbol = FindByFrequencySumComparisonOperatorLabel.Text;
-                ComparisonOperator sum_comparison_operator =
-                    (sum_comparison_operator_symbol == "=") ? ComparisonOperator.Equal :
-                    (sum_comparison_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
-                    (sum_comparison_operator_symbol == "<") ? ComparisonOperator.LessThan :
-                    (sum_comparison_operator_symbol == "≤") ? ComparisonOperator.LessOrEqual :
-                    (sum_comparison_operator_symbol == ">") ? ComparisonOperator.GreaterThan :
-                    (sum_comparison_operator_symbol == "≥") ? ComparisonOperator.GreaterOrEqual :
-                    (sum_comparison_operator_symbol == "÷") ? ComparisonOperator.DivisibleBy :
-                    (sum_comparison_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
-                    (sum_comparison_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
-                                                              ComparisonOperator.Reserved;
-
-                // 4. remainders for % comparison operator
-                int sum_remainder = -1;
-                if (sum_comparison_operator == ComparisonOperator.DivisibleBy)
+                try
                 {
-                    try
-                    {
-                        sum_remainder = int.Parse(FindByFrequencySumNumberTypeLabel.Text);
-                    }
-                    catch
-                    {
-                        // keep as -1
-                    }
+                    sum_remainder = int.Parse(FindByFrequencySumNumberTypeLabel.Text);
                 }
-
-                bool phrase_search = false;
-                string phrase = "";
-                if (FindByFrequencyPhraseTextBox.Text.Length > 0)
+                catch
                 {
-                    if (FindByFrequencyPhraseTextBox.SelectionLength > 0)
-                    {
-                        phrase = FindByFrequencyPhraseTextBox.SelectedText.Trim();
-                    }
-                    else
-                    {
-                        phrase = FindByFrequencyPhraseTextBox.Text.Trim();
-                    }
-                    phrase_search = true;
+                    // keep as -1
+                }
+            }
+
+            bool phrase_search = false;
+            string phrase = "";
+            if (FindByFrequencyPhraseTextBox.Text.Length > 0)
+            {
+                if (FindByFrequencyPhraseTextBox.SelectionLength > 0)
+                {
+                    phrase = FindByFrequencyPhraseTextBox.SelectedText.Trim();
                 }
                 else
                 {
-                    if (LetterFrequencyListView.SelectedIndices.Count > 0)
-                    {
-                        foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
-                        {
-                            phrase += item.SubItems[1].Text;
-                        }
-                    }
-                    phrase_search = false;
+                    phrase = FindByFrequencyPhraseTextBox.Text.Trim();
                 }
-
-                if (!String.IsNullOrEmpty(phrase))
-                {
-                    if (phrase.IsArabic())
-                    {
-                        string text = null;
-                        text += phrase + " " + L[l]["letters"] + sum_comparison_operator_symbol + ((sum > 0) ? sum.ToString() : ((sum_number_type != NumberType.None) ? FindByFrequencySumNumberTypeLabel.Text : "*"))
-                            + (phrase_search ? ((m_frequency_search_type == FrequencySearchType.DuplicateLetters) ? " " + L[l]["with"] + " " : L[l]["without"] + " ") + L[l]["duplicates"] : "");
-
-                        switch (m_frequency_result_type)
-                        {
-                            case FrequencyResultType.Words:
-                                {
-                                    int match_count = m_client.FindWords(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
-                                    if (m_client.FoundWords != null)
-                                    {
-                                        m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["word"] : " " + L[l]["words"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                        DisplayFoundVerses(true, true);
-                                    }
-                                }
-                                break;
-                            case FrequencyResultType.Sentences:
-                                {
-                                    int match_count = m_client.FindSentences(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
-                                    if (m_client.FoundSentences != null)
-                                    {
-                                        m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["sentence"] : " " + L[l]["sentences"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                        DisplayFoundVerses(true, true);
-                                    }
-                                }
-                                break;
-                            case FrequencyResultType.Verses:
-                                {
-                                    int match_count = m_client.FindVerses(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
-                                    if (m_client.FoundVerses != null)
-                                    {
-                                        m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                        DisplayFoundVerses(true, true);
-                                    }
-                                }
-                                break;
-                            case FrequencyResultType.Chapters:
-                                {
-                                    int match_count = m_client.FindChapters(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
-                                    if (m_client.FoundChapters != null)
-                                    {
-                                        m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["chapter"] : " " + L[l]["chapters"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
-                                        DisplayFoundChapters(true, true);
-                                    }
-                                }
-                                break;
-                        }
-                    }
-                }
-
-                //SearchResultTextBox.Focus();
-                //SearchResultTextBox.Refresh();
+                phrase_search = true;
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
+            else
+            {
+                if (LetterFrequencyListView.SelectedIndices.Count > 0)
+                {
+                    foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
+                    {
+                        phrase += item.SubItems[1].Text;
+                    }
+                }
+                phrase_search = false;
+            }
+
+            if (!String.IsNullOrEmpty(phrase))
+            {
+                if (phrase.IsArabic())
+                {
+                    string text = null;
+                    text += phrase + " " + L[l]["letters"] + sum_comparison_operator_symbol + ((sum > 0) ? sum.ToString() : ((sum_number_type != NumberType.None) ? FindByFrequencySumNumberTypeLabel.Text : "*"))
+                        + (phrase_search ? ((m_frequency_search_type == FrequencySearchType.DuplicateLetters) ? " " + L[l]["with"] + " " : L[l]["without"] + " ") + L[l]["duplicates"] : "");
+
+                    switch (m_frequency_result_type)
+                    {
+                        case FrequencyResultType.Words:
+                            {
+                                int match_count = m_client.FindWords(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
+                                if (m_client.FoundWords != null)
+                                {
+                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["word"] : " " + L[l]["words"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                    DisplayFoundVerses(true, true);
+                                }
+                            }
+                            break;
+                        case FrequencyResultType.Sentences:
+                            {
+                                int match_count = m_client.FindSentences(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
+                                if (m_client.FoundSentences != null)
+                                {
+                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["sentence"] : " " + L[l]["sentences"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                    DisplayFoundVerses(true, true);
+                                }
+                            }
+                            break;
+                        case FrequencyResultType.Verses:
+                            {
+                                int match_count = m_client.FindVerses(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
+                                if (m_client.FoundVerses != null)
+                                {
+                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["verse"] : " " + L[l]["verses"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                    DisplayFoundVerses(true, true);
+                                }
+                            }
+                            break;
+                        case FrequencyResultType.Chapters:
+                            {
+                                int match_count = m_client.FindChapters(phrase, sum, sum_number_type, sum_comparison_operator, sum_remainder, m_frequency_search_type, m_with_diacritics);
+                                if (m_client.FoundChapters != null)
+                                {
+                                    m_find_result_header = match_count + ((match_count == 1) ? " " + L[l]["chapter"] : " " + L[l]["chapters"]) + " " + L[l]["with"] + " " + text + " " + L[l]["in"] + " " + L[l][m_client.SearchScope.ToString()];
+                                    DisplayFoundChapters(true, true);
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+
+            //SearchResultTextBox.Focus();
+            //SearchResultTextBox.Refresh();
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -27392,179 +27255,157 @@ public partial class MainForm : Form, ISubscriber
     }
     private void LoadNumerologySystem(string numerology_system_name)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            m_client.LoadNumerologySystem(numerology_system_name);
+
+            if (m_client.NumerologySystem != null)
             {
-                m_client.LoadNumerologySystem(numerology_system_name);
+                StringBuilder str = new StringBuilder();
+                foreach (char c in m_client.NumerologySystem.Keys)
+                {
+                    str.AppendLine(c.ToString() + "\t" + m_client.NumerologySystem[c].ToString());
+                }
+                ToolTip.SetToolTip(EditNumerologySystemLabel, str.ToString());
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void UpdateNumerologySystem()
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            if (m_client.NumerologySystem != null)
             {
-                if (m_client.NumerologySystem != null)
-                {
-                    // copy from gui controls to client
-                    m_client.NumerologySystem.AddToLetterLNumber = AddToLetterLNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToLetterWNumber = AddToLetterWNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToLetterVNumber = AddToLetterVNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToLetterCNumber = AddToLetterCNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToLetterLDistance = AddToLetterLDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToLetterWDistance = AddToLetterWDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToLetterVDistance = AddToLetterVDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToLetterCDistance = AddToLetterCDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToWordWNumber = AddToWordWNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToWordVNumber = AddToWordVNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToWordCNumber = AddToWordCNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToWordWDistance = AddToWordWDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToWordVDistance = AddToWordVDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToWordCDistance = AddToWordCDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToVerseVNumber = AddToVerseVNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToVerseCNumber = AddToVerseCNumberCheckBox.Checked;
-                    m_client.NumerologySystem.AddToVerseVDistance = AddToVerseVDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToVerseCDistance = AddToVerseCDistanceCheckBox.Checked;
-                    m_client.NumerologySystem.AddToChapterCNumber = AddToChapterCNumberCheckBox.Checked;
+                // copy from gui controls to client
+                m_client.NumerologySystem.AddToLetterLNumber = AddToLetterLNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToLetterWNumber = AddToLetterWNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToLetterVNumber = AddToLetterVNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToLetterCNumber = AddToLetterCNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToLetterLDistance = AddToLetterLDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToLetterWDistance = AddToLetterWDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToLetterVDistance = AddToLetterVDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToLetterCDistance = AddToLetterCDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToWordWNumber = AddToWordWNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToWordVNumber = AddToWordVNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToWordCNumber = AddToWordCNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToWordWDistance = AddToWordWDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToWordVDistance = AddToWordVDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToWordCDistance = AddToWordCDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToVerseVNumber = AddToVerseVNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToVerseCNumber = AddToVerseCNumberCheckBox.Checked;
+                m_client.NumerologySystem.AddToVerseVDistance = AddToVerseVDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToVerseCDistance = AddToVerseCDistanceCheckBox.Checked;
+                m_client.NumerologySystem.AddToChapterCNumber = AddToChapterCNumberCheckBox.Checked;
 
-                    m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
-                    m_client.NumerologySystem.AddDistancesToNext = AddDistancesToNextCheckBox.Checked;
-                    m_client.NumerologySystem.AddDistancesWithinChapters = AddDistancesWithinChaptersCheckBox.Checked;
-                }
+                m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
+                m_client.NumerologySystem.AddDistancesToNext = AddDistancesToNextCheckBox.Checked;
+                m_client.NumerologySystem.AddDistancesWithinChapters = AddDistancesWithinChaptersCheckBox.Checked;
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void UpdateNumerologySystemControls()
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            if (m_client.NumerologySystem != null)
             {
-                if (m_client.NumerologySystem != null)
+                try
                 {
-                    try
-                    {
-                        for (int i = 0; i < 3; i++) AddToLetterLNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToLetterWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToLetterVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToLetterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToLetterLDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToLetterWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToLetterVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToLetterCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToWordWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToWordVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToWordCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToWordWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToWordVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToWordCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToVerseVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToVerseCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToVerseVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterLNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterLDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToLetterCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToWordWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToWordVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToWordCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToWordWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToWordVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToWordCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToVerseVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToVerseCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToVerseVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
 
-                        // copy from client to gui controls
-                        AddToLetterLNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterLNumber;
-                        AddToLetterWNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterWNumber;
-                        AddToLetterVNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterVNumber;
-                        AddToLetterCNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterCNumber;
-                        AddToLetterLDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterLDistance;
-                        AddToLetterWDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterWDistance;
-                        AddToLetterVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterVDistance;
-                        AddToLetterCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterCDistance;
-                        AddToWordWNumberCheckBox.Checked = m_client.NumerologySystem.AddToWordWNumber;
-                        AddToWordVNumberCheckBox.Checked = m_client.NumerologySystem.AddToWordVNumber;
-                        AddToWordCNumberCheckBox.Checked = m_client.NumerologySystem.AddToWordCNumber;
-                        AddToWordWDistanceCheckBox.Checked = m_client.NumerologySystem.AddToWordWDistance;
-                        AddToWordVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToWordVDistance;
-                        AddToWordCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToWordCDistance;
-                        AddToVerseVNumberCheckBox.Checked = m_client.NumerologySystem.AddToVerseVNumber;
-                        AddToVerseCNumberCheckBox.Checked = m_client.NumerologySystem.AddToVerseCNumber;
-                        AddToVerseVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseVDistance;
-                        AddToVerseCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseCDistance;
-                        AddToChapterCNumberCheckBox.Checked = m_client.NumerologySystem.AddToChapterCNumber;
+                    // copy from client to gui controls
+                    AddToLetterLNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterLNumber;
+                    AddToLetterWNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterWNumber;
+                    AddToLetterVNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterVNumber;
+                    AddToLetterCNumberCheckBox.Checked = m_client.NumerologySystem.AddToLetterCNumber;
+                    AddToLetterLDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterLDistance;
+                    AddToLetterWDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterWDistance;
+                    AddToLetterVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterVDistance;
+                    AddToLetterCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToLetterCDistance;
+                    AddToWordWNumberCheckBox.Checked = m_client.NumerologySystem.AddToWordWNumber;
+                    AddToWordVNumberCheckBox.Checked = m_client.NumerologySystem.AddToWordVNumber;
+                    AddToWordCNumberCheckBox.Checked = m_client.NumerologySystem.AddToWordCNumber;
+                    AddToWordWDistanceCheckBox.Checked = m_client.NumerologySystem.AddToWordWDistance;
+                    AddToWordVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToWordVDistance;
+                    AddToWordCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToWordCDistance;
+                    AddToVerseVNumberCheckBox.Checked = m_client.NumerologySystem.AddToVerseVNumber;
+                    AddToVerseCNumberCheckBox.Checked = m_client.NumerologySystem.AddToVerseCNumber;
+                    AddToVerseVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseVDistance;
+                    AddToVerseCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseCDistance;
+                    AddToChapterCNumberCheckBox.Checked = m_client.NumerologySystem.AddToChapterCNumber;
 
-                        AddDistancesToPreviousCheckBox.Checked = m_client.NumerologySystem.AddDistancesToPrevious;
-                        AddDistancesToNextCheckBox.Checked = m_client.NumerologySystem.AddDistancesToNext;
-                        AddDistancesWithinChaptersCheckBox.Checked = m_client.NumerologySystem.AddDistancesWithinChapters;
-                    }
-                    finally
-                    {
-                        AddToLetterLNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToLetterWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToLetterVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToLetterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToLetterLDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToLetterWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToLetterVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToLetterCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToWordWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToWordVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToWordCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToWordWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToWordVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToWordCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToVerseVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToVerseCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToVerseVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToVerseCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                        AddToChapterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                    }
+                    AddDistancesToPreviousCheckBox.Checked = m_client.NumerologySystem.AddDistancesToPrevious;
+                    AddDistancesToNextCheckBox.Checked = m_client.NumerologySystem.AddDistancesToNext;
+                    AddDistancesWithinChaptersCheckBox.Checked = m_client.NumerologySystem.AddDistancesWithinChapters;
+                }
+                finally
+                {
+                    AddToLetterLNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToLetterWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToLetterVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToLetterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToLetterLDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToLetterWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToLetterVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToLetterCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToWordWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToWordVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToWordCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToWordWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToWordVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToWordCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToVerseVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToVerseCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToVerseVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToVerseCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+                    AddToChapterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     private void UpdateNumerologySystemComboBoxs()
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (m_client != null)
         {
-            if (m_client != null)
+            if (m_client.NumerologySystem != null)
             {
-                if (m_client.NumerologySystem != null)
+                try
                 {
-                    try
-                    {
-                        for (int i = 0; i < 3; i++) TextModeComboBox.SelectedIndexChanged -= new EventHandler(TextModeComboBox_SelectedIndexChanged);
-                        for (int i = 0; i < 3; i++) NumerologySystemComboBox.SelectedIndexChanged -= new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
+                    for (int i = 0; i < 3; i++) TextModeComboBox.SelectedIndexChanged -= new EventHandler(TextModeComboBox_SelectedIndexChanged);
+                    for (int i = 0; i < 3; i++) NumerologySystemComboBox.SelectedIndexChanged -= new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
 
-                        TextModeComboBox.SelectedItem = m_client.NumerologySystem.TextMode;
-                        PopulateNumerologySystemComboBox();
+                    TextModeComboBox.SelectedItem = m_client.NumerologySystem.TextMode;
+                    PopulateNumerologySystemComboBox();
 
-                        for (int i = 0; i < 3; i++) NumerologySystemComboBox.SelectedIndexChanged -= new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
-                        NumerologySystemComboBox.SelectedItem = m_client.NumerologySystem.LetterOrder + "_" + m_client.NumerologySystem.LetterValue;
+                    for (int i = 0; i < 3; i++) NumerologySystemComboBox.SelectedIndexChanged -= new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
+                    NumerologySystemComboBox.SelectedItem = m_client.NumerologySystem.LetterOrder + "_" + m_client.NumerologySystem.LetterValue;
 
-                        UpdateKeyboard(m_client.NumerologySystem.TextMode);
-                    }
-                    finally
-                    {
-                        TextModeComboBox.SelectedIndexChanged += new EventHandler(TextModeComboBox_SelectedIndexChanged);
-                        NumerologySystemComboBox.SelectedIndexChanged += new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
-                    }
+                    UpdateKeyboard(m_client.NumerologySystem.TextMode);
+                }
+                finally
+                {
+                    TextModeComboBox.SelectedIndexChanged += new EventHandler(TextModeComboBox_SelectedIndexChanged);
+                    NumerologySystemComboBox.SelectedIndexChanged += new EventHandler(NumerologySystemComboBox_SelectedIndexChanged);
                 }
             }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -27901,20 +27742,17 @@ public partial class MainForm : Form, ISubscriber
                                     }
                                 }
 
-                                if (m_selection_mode)
+                                if (m_golden_ratio_scope != GoldenRatioScope.None)
                                 {
-                                    if (m_golden_ratio_scope != GoldenRatioScope.None)
+                                    if (m_golden_ratio_type == GoldenRatioType.Value)
                                     {
-                                        if (m_golden_ratio_type == GoldenRatioType.Value)
+                                        if (text_mode == "Original")
                                         {
-                                            if (text_mode == "Original")
-                                            {
-                                                ColorizeGoldenRatiosInOriginalText();
-                                            }
-                                            else
-                                            {
-                                                ColorizeGoldenRatiosInSimplifiedText();
-                                            }
+                                            ColorizeGoldenRatiosInOriginalText();
+                                        }
+                                        else
+                                        {
+                                            ColorizeGoldenRatiosInSimplifiedText();
                                         }
                                     }
                                 }
@@ -27934,47 +27772,23 @@ public partial class MainForm : Form, ISubscriber
         NumerologySystemComboBox.DropDownHeight = StatisticsGroupBox.Height - NumerologySystemComboBox.Top - NumerologySystemComboBox.Height - 1;
         //NumerologySystemComboBox.DropDownWidth = StatisticsGroupBox.Width - NumerologySystemComboBox.Left - 1;
     }
-    private void NumerologySystemComboBox_MouseHover(object sender, EventArgs e)
+    private void EditNumerologySystemLabel_Click(object sender, EventArgs e)
     {
         if (m_client != null)
         {
             if (m_client.NumerologySystem != null)
             {
-                StringBuilder str = new StringBuilder();
-                foreach (char c in m_client.NumerologySystem.Keys)
+                // display the NumerologySystem file for live editing using ISubscriber
+                string filename = Globals.VALUES_FOLDER + "/" + m_client.NumerologySystem.Name + ".txt";
+                if (File.Exists(filename))
                 {
-                    str.AppendLine(c.ToString() + "\t" + m_client.NumerologySystem[c].ToString());
-                }
-                ToolTip.SetToolTip(NumerologySystemComboBox, str.ToString());
-            }
-        }
-    }
-    private void EditNumerologySystemLabel_Click(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                if (m_client.NumerologySystem != null)
-                {
-                    // display the NumerologySystem file for live editing using ISubscriber
-                    string filename = Globals.VALUES_FOLDER + "/" + m_client.NumerologySystem.Name + ".txt";
-                    if (File.Exists(filename))
-                    {
-                        FileHelper.WaitForReady(filename);
+                    FileHelper.WaitForReady(filename);
 
-                        System.Diagnostics.Process.Start("Notepad.exe", filename);
-                    }
+                    System.Diagnostics.Process.Start("Notepad.exe", filename);
                 }
             }
-
-            NumerologySystemComboBox.Focus();
         }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
+        NumerologySystemComboBox.Focus();
     }
 
     private void CalculateCurrentValue()
@@ -29189,110 +29003,118 @@ public partial class MainForm : Form, ISubscriber
     }
     private void NumbersOfIndexChainLength(int length)
     {
-        string filename = "PIndexChainLength" + "_" + length + ".txt";
-        StringBuilder str = new StringBuilder();
-        long running_total = 0L;
-        for (int i = 0; i < Numbers.Primes.Count; i++)
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            long number = Numbers.Primes[i];
-            int len = IndexChainLength(number);
-            if (len == length)
+            string filename = "PIndexChainLength" + "_" + length + ".txt";
+            StringBuilder str = new StringBuilder();
+            long running_total = 0L;
+            for (int i = 0; i < Numbers.Primes.Count; i++)
             {
-                running_total += number;
-                str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                long number = Numbers.Primes[i];
+                int len = IndexChainLength(number);
+                if (len == length)
+                {
+                    running_total += number;
+                    str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                }
             }
-        }
-        m_client.SaveIndexChainLength(filename, NumberType.Prime, length, str.ToString());
+            m_client.SaveIndexChainLength(filename, NumberType.Prime, length, str.ToString());
 
-        filename = "APIndexChainLength" + "_" + length + ".txt";
-        str = new StringBuilder();
-        running_total = 0L;
-        for (int i = 0; i < Numbers.AdditivePrimes.Count; i++)
-        {
-            long number = Numbers.AdditivePrimes[i];
-            int len = IndexChainLength(number);
-            if (len == length)
+            filename = "APIndexChainLength" + "_" + length + ".txt";
+            str = new StringBuilder();
+            running_total = 0L;
+            for (int i = 0; i < Numbers.AdditivePrimes.Count; i++)
             {
-                running_total += number;
-                str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                long number = Numbers.AdditivePrimes[i];
+                int len = IndexChainLength(number);
+                if (len == length)
+                {
+                    running_total += number;
+                    str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                }
             }
-        }
-        m_client.SaveIndexChainLength(filename, NumberType.AdditivePrime, length, str.ToString());
+            m_client.SaveIndexChainLength(filename, NumberType.AdditivePrime, length, str.ToString());
 
-        filename = "XPIndexChainLength" + "_" + length + ".txt";
-        str = new StringBuilder();
-        running_total = 0L;
-        for (int i = 0; i < Numbers.NonAdditivePrimes.Count; i++)
-        {
-            long number = Numbers.NonAdditivePrimes[i];
-            int len = IndexChainLength(number);
-            if (len == length)
+            filename = "XPIndexChainLength" + "_" + length + ".txt";
+            str = new StringBuilder();
+            running_total = 0L;
+            for (int i = 0; i < Numbers.NonAdditivePrimes.Count; i++)
             {
-                running_total += number;
-                str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                long number = Numbers.NonAdditivePrimes[i];
+                int len = IndexChainLength(number);
+                if (len == length)
+                {
+                    running_total += number;
+                    str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                }
             }
-        }
-        m_client.SaveIndexChainLength(filename, NumberType.NonAdditivePrime, length, str.ToString());
+            m_client.SaveIndexChainLength(filename, NumberType.NonAdditivePrime, length, str.ToString());
 
-        filename = "CIndexChainLength" + "_" + length + ".txt";
-        str = new StringBuilder();
-        running_total = 0L;
-        for (int i = 0; i < Numbers.Composites.Count; i++)
-        {
-            long number = Numbers.Composites[i];
-            int len = IndexChainLength(number);
-            if (len == length)
+            filename = "CIndexChainLength" + "_" + length + ".txt";
+            str = new StringBuilder();
+            running_total = 0L;
+            for (int i = 0; i < Numbers.Composites.Count; i++)
             {
-                running_total += number;
-                str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                long number = Numbers.Composites[i];
+                int len = IndexChainLength(number);
+                if (len == length)
+                {
+                    running_total += number;
+                    str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                }
             }
-        }
-        m_client.SaveIndexChainLength(filename, NumberType.Composite, length, str.ToString());
+            m_client.SaveIndexChainLength(filename, NumberType.Composite, length, str.ToString());
 
-        filename = "ACIndexChainLength" + "_" + length + ".txt";
-        str = new StringBuilder();
-        running_total = 0L;
-        for (int i = 0; i < Numbers.AdditiveComposites.Count; i++)
-        {
-            long number = Numbers.AdditiveComposites[i];
-            int len = IndexChainLength(number);
-            if (len == length)
+            filename = "ACIndexChainLength" + "_" + length + ".txt";
+            str = new StringBuilder();
+            running_total = 0L;
+            for (int i = 0; i < Numbers.AdditiveComposites.Count; i++)
             {
-                running_total += number;
-                str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                long number = Numbers.AdditiveComposites[i];
+                int len = IndexChainLength(number);
+                if (len == length)
+                {
+                    running_total += number;
+                    str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                }
             }
-        }
-        m_client.SaveIndexChainLength(filename, NumberType.AdditiveComposite, length, str.ToString());
+            m_client.SaveIndexChainLength(filename, NumberType.AdditiveComposite, length, str.ToString());
 
-        filename = "XCIndexChainLength" + "_" + length + ".txt";
-        str = new StringBuilder();
-        running_total = 0L;
-        for (int i = 0; i < Numbers.NonAdditiveComposites.Count; i++)
-        {
-            long number = Numbers.NonAdditiveComposites[i];
-            int len = IndexChainLength(number);
-            if (len == length)
+            filename = "XCIndexChainLength" + "_" + length + ".txt";
+            str = new StringBuilder();
+            running_total = 0L;
+            for (int i = 0; i < Numbers.NonAdditiveComposites.Count; i++)
             {
-                running_total += number;
-                str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                long number = Numbers.NonAdditiveComposites[i];
+                int len = IndexChainLength(number);
+                if (len == length)
+                {
+                    running_total += number;
+                    str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                }
             }
-        }
-        m_client.SaveIndexChainLength(filename, NumberType.NonAdditiveComposite, length, str.ToString());
+            m_client.SaveIndexChainLength(filename, NumberType.NonAdditiveComposite, length, str.ToString());
 
-        filename = "NIndexChainLength" + "_" + length + ".txt";
-        str = new StringBuilder();
-        running_total = 0L;
-        for (int i = 0; i < int.MaxValue / 1024; i++)
-        {
-            int len = IndexChainLength(i);
-            if (len == length)
+            filename = "NIndexChainLength" + "_" + length + ".txt";
+            str = new StringBuilder();
+            running_total = 0L;
+            for (int i = 0; i < int.MaxValue / 1024; i++)
             {
-                long number = i;
-                running_total += number;
-                str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                int len = IndexChainLength(i);
+                if (len == length)
+                {
+                    long number = i;
+                    running_total += number;
+                    str.AppendLine(number.ToString() + "\t" + running_total.ToString() + "\t" + DecimalPCIndexChainL2R(number).ToString() + "\t" + DecimalPCIndexChainR2L(number).ToString() + "\t" + DecimalCPIndexChainL2R(number).ToString() + "\t" + DecimalCPIndexChainR2L(number).ToString() + "\t" + GetPCIndexChainL2R(number));
+                }
             }
+            m_client.SaveIndexChainLength(filename, NumberType.Natural, length, str.ToString());
         }
-        m_client.SaveIndexChainLength(filename, NumberType.Natural, length, str.ToString());
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
     }
 
     private void UpdateValueNavigator(long value)
@@ -32114,204 +31936,204 @@ public partial class MainForm : Form, ISubscriber
 
     private void LetterFrequencyInspectLabel_Click(object sender, EventArgs e)
     {
+        InspectLetterStatistics();
+    }
+    private void InspectLetterStatistics()
+    {
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            InspectLetterStatistics();
+            if (m_client != null)
+            {
+                string text = m_current_text;
+                if (!String.IsNullOrEmpty(text))
+                {
+                    if (!String.IsNullOrEmpty(m_current_phrase))
+                    {
+                        string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
+                        if (m_client.NumerologySystem != null)
+                        {
+                            filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
+                        }
+
+                        m_client.SaveLetterStatistics(filename, text, m_current_phrase);
+                    }
+                    else
+                    {
+                        string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
+                        if (m_client.NumerologySystem != null)
+                        {
+                            filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
+                        }
+
+                        m_client.SaveLetterStatistics(filename, text);
+                    }
+                }
+            }
         }
         finally
         {
             this.Cursor = Cursors.Default;
-        }
-    }
-    private void InspectLetterStatistics()
-    {
-        if (m_client != null)
-        {
-            string text = m_current_text;
-            if (!String.IsNullOrEmpty(text))
-            {
-                if (!String.IsNullOrEmpty(m_current_phrase))
-                {
-                    string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
-                    if (m_client.NumerologySystem != null)
-                    {
-                        filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
-                    }
-
-                    m_client.SaveLetterStatistics(filename, text, m_current_phrase);
-                }
-                else
-                {
-                    string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
-                    if (m_client.NumerologySystem != null)
-                    {
-                        filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
-                    }
-
-                    m_client.SaveLetterStatistics(filename, text);
-                }
-            }
         }
     }
     private void ValueInspectLabel_Click(object sender, EventArgs e)
     {
+        InspectValueCalculations();
+    }
+    private void InspectValueCalculations()
+    {
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            InspectValueCalculations();
+            if (m_client != null)
+            {
+                if (m_client.NumerologySystem != null)
+                {
+                    string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
+
+                    long value = 0;
+                    StringBuilder str = new StringBuilder();
+                    if (long.TryParse(ValueTextBox.Text, out value))
+                    {
+                        str.AppendLine(m_current_text);
+                        str.AppendLine("----------------------------------------");
+                        str.AppendLine();
+                        str.AppendLine("Verses\t\t=\t" + VersesTextBox.Text);
+                        str.AppendLine("Words\t\t=\t" + WordsTextBox.Text);
+                        str.AppendLine("Letters\t\t=\t" + LettersTextBox.Text);
+                        str.AppendLine("Value\t\t=\t" + ValueTextBox.Text + ((m_radix == DEFAULT_RADIX) ? "" : " in base " + m_radix.ToString()));
+
+                        str.AppendLine();
+                        str.AppendLine("Prime Factors\t=\t" + Numbers.FactorizeToString(value));
+                        int nth_number_index = 0;
+                        int nth_additive_number_index = 0;
+                        int nth_non_additive_number_index = 0;
+                        if (Numbers.IsPrime(value))
+                        {
+                            m_index_type = IndexType.Prime;
+                            nth_number_index = Numbers.PrimeIndexOf(value) + 1;
+                            nth_additive_number_index = Numbers.AdditivePrimeIndexOf(value) + 1;
+                            nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(value) + 1;
+                            str.AppendLine("P  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
+                            str.AppendLine("AP Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
+                            str.AppendLine("XP Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
+                        }
+                        else // any other index type will be treated as IndexNumberType.Composite
+                        {
+                            m_index_type = IndexType.Composite;
+                            nth_number_index = Numbers.CompositeIndexOf(value) + 1;
+                            nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(value) + 1;
+                            nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
+                            str.AppendLine("C  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
+                            str.AppendLine("AC Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
+                            str.AppendLine("XC Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
+                        }
+
+                        str.AppendLine();
+                        string divisors = Numbers.GetDivisorsString(value);
+                        long sum_of_divisors = Numbers.SumOfDivisors(value);
+                        str.AppendLine(L[l]["Sum of divisors"] + "\t\t=\t" + sum_of_divisors + " = " + divisors);
+
+                        string proper_divisors = Numbers.GetProperDivisorsString(value);
+                        long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
+                        str.AppendLine(L[l]["Sum of proper divisors"] + "\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
+
+                        m_number_kind = Numbers.GetNumberKind(value);
+                        int number_kind_index = 0;
+                        switch (m_number_kind)
+                        {
+                            case NumberKind.Deficient:
+                                {
+                                    number_kind_index = Numbers.DeficientIndexOf(value) + 1;
+                                }
+                                break;
+                            case NumberKind.Perfect:
+                                {
+                                    number_kind_index = Numbers.PerfectIndexOf(value) + 1;
+                                }
+                                break;
+                            case NumberKind.Abundant:
+                                {
+                                    number_kind_index = Numbers.AbundantIndexOf(value) + 1;
+                                }
+                                break;
+                            default:
+                                {
+                                    number_kind_index = 0;
+                                }
+                                break;
+                        }
+                        str.AppendLine(m_number_kind.ToString() + " Index\t\t=\t" + number_kind_index);
+
+                        str.AppendLine();
+                        string squares1_str = "";
+                        string squares2_str = "";
+                        if (Numbers.IsUnit(value) || Numbers.IsPrime(value))
+                        {
+                            squares1_str = Numbers.Get4nPlus1EqualsSumOfTwoSquares(value);
+                            squares2_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares(value);
+                        }
+                        else //if composite
+                        {
+                            squares1_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares(value);
+                            squares2_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares2(value);
+                        }
+                        str.AppendLine("4n+1 Squares1\t\t=\t" + squares1_str);
+                        str.AppendLine("4n+1 Squares2\t\t=\t" + squares2_str);
+
+                        str.AppendLine();
+                        if (m_client.Book != null)
+                        {
+                            Verse verse = m_client.Book.GetVerseByVerseNumber((int)value);
+                            if (verse != null)
+                            {
+                                str.AppendLine("VerseByVerseNumber\t=\t" + verse.Address);
+                            }
+                            else
+                            {
+                                str.AppendLine("VerseByVerseNumber\t=\t\"---:---\"");
+                            }
+
+                            verse = m_client.Book.GetVerseByWordNumber((int)value);
+                            if (verse != null)
+                            {
+                                str.AppendLine("VerseByWordNumber\t=\t" + verse.Address);
+                            }
+                            else
+                            {
+                                str.AppendLine("VerseByWordNumber\t=\t\"---:---\"");
+                            }
+
+                            verse = m_client.Book.GetVerseByLetterNumber((int)value);
+                            if (verse != null)
+                            {
+                                str.AppendLine("VerseByLetterNumber\t=\t" + verse.Address);
+                            }
+                            else
+                            {
+                                str.AppendLine("VerseByLetterNumber\t=\t\"---:---\"");
+                            }
+                        }
+
+                        str.AppendLine();
+                        str.AppendLine("Left-to-right prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainL2R(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryPCIndexChainL2R(value) + "  =  " + DecimalPCIndexChainL2R(value));
+                        str.AppendLine();
+                        str.AppendLine("Right-to-left prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainR2L(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryPCIndexChainR2L(value) + "  =  " + DecimalPCIndexChainR2L(value));
+                        str.AppendLine();
+                        str.AppendLine("Left-to-right composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainL2R(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryCPIndexChainL2R(value) + "  =  " + DecimalCPIndexChainL2R(value));
+                        str.AppendLine();
+                        str.AppendLine("Right-to-left composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainR2L(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryCPIndexChainR2L(value) + "  =  " + DecimalCPIndexChainR2L(value));
+                        str.AppendLine("----------------------------------------");
+
+                        str.AppendLine();
+                        m_client.SaveValueCalculations(filename, str.ToString());
+                    }
+                }
+            }
         }
         finally
         {
             this.Cursor = Cursors.Default;
-        }
-    }
-    private void InspectValueCalculations()
-    {
-        if (m_client != null)
-        {
-            if (m_client.NumerologySystem != null)
-            {
-                string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
-
-                long value = 0;
-                StringBuilder str = new StringBuilder();
-                if (long.TryParse(ValueTextBox.Text, out value))
-                {
-                    str.AppendLine(m_current_text);
-                    str.AppendLine("----------------------------------------");
-                    str.AppendLine();
-                    str.AppendLine("Verses\t\t=\t" + VersesTextBox.Text);
-                    str.AppendLine("Words\t\t=\t" + WordsTextBox.Text);
-                    str.AppendLine("Letters\t\t=\t" + LettersTextBox.Text);
-                    str.AppendLine("Value\t\t=\t" + ValueTextBox.Text + ((m_radix == DEFAULT_RADIX) ? "" : " in base " + m_radix.ToString()));
-
-                    str.AppendLine();
-                    str.AppendLine("Prime Factors\t=\t" + Numbers.FactorizeToString(value));
-                    int nth_number_index = 0;
-                    int nth_additive_number_index = 0;
-                    int nth_non_additive_number_index = 0;
-                    if (Numbers.IsPrime(value))
-                    {
-                        m_index_type = IndexType.Prime;
-                        nth_number_index = Numbers.PrimeIndexOf(value) + 1;
-                        nth_additive_number_index = Numbers.AdditivePrimeIndexOf(value) + 1;
-                        nth_non_additive_number_index = Numbers.NonAdditivePrimeIndexOf(value) + 1;
-                        str.AppendLine("P  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
-                        str.AppendLine("AP Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
-                        str.AppendLine("XP Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
-                    }
-                    else // any other index type will be treated as IndexNumberType.Composite
-                    {
-                        m_index_type = IndexType.Composite;
-                        nth_number_index = Numbers.CompositeIndexOf(value) + 1;
-                        nth_additive_number_index = Numbers.AdditiveCompositeIndexOf(value) + 1;
-                        nth_non_additive_number_index = Numbers.NonAdditiveCompositeIndexOf(value) + 1;
-                        str.AppendLine("C  Index\t=\t" + ((nth_number_index > 0) ? nth_number_index.ToString() : ""));
-                        str.AppendLine("AC Index\t=\t" + ((nth_additive_number_index > 0) ? nth_additive_number_index.ToString() : ""));
-                        str.AppendLine("XC Index\t=\t" + ((nth_non_additive_number_index > 0) ? nth_non_additive_number_index.ToString() : ""));
-                    }
-
-                    str.AppendLine();
-                    string divisors = Numbers.GetDivisorsString(value);
-                    long sum_of_divisors = Numbers.SumOfDivisors(value);
-                    str.AppendLine(L[l]["Sum of divisors"] + "\t\t=\t" + sum_of_divisors + " = " + divisors);
-
-                    string proper_divisors = Numbers.GetProperDivisorsString(value);
-                    long sum_of_proper_divisors = Numbers.SumOfProperDivisors(value);
-                    str.AppendLine(L[l]["Sum of proper divisors"] + "\t=\t" + sum_of_proper_divisors + " = " + proper_divisors);
-
-                    m_number_kind = Numbers.GetNumberKind(value);
-                    int number_kind_index = 0;
-                    switch (m_number_kind)
-                    {
-                        case NumberKind.Deficient:
-                            {
-                                number_kind_index = Numbers.DeficientIndexOf(value) + 1;
-                            }
-                            break;
-                        case NumberKind.Perfect:
-                            {
-                                number_kind_index = Numbers.PerfectIndexOf(value) + 1;
-                            }
-                            break;
-                        case NumberKind.Abundant:
-                            {
-                                number_kind_index = Numbers.AbundantIndexOf(value) + 1;
-                            }
-                            break;
-                        default:
-                            {
-                                number_kind_index = 0;
-                            }
-                            break;
-                    }
-                    str.AppendLine(m_number_kind.ToString() + " Index\t\t=\t" + number_kind_index);
-
-                    str.AppendLine();
-                    string squares1_str = "";
-                    string squares2_str = "";
-                    if (Numbers.IsUnit(value) || Numbers.IsPrime(value))
-                    {
-                        squares1_str = Numbers.Get4nPlus1EqualsSumOfTwoSquares(value);
-                        squares2_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares(value);
-                    }
-                    else //if composite
-                    {
-                        squares1_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares(value);
-                        squares2_str = Numbers.Get4nPlus1EqualsDiffOfTwoSquares2(value);
-                    }
-                    str.AppendLine("4n+1 Squares1\t\t=\t" + squares1_str);
-                    str.AppendLine("4n+1 Squares2\t\t=\t" + squares2_str);
-
-                    str.AppendLine();
-                    if (m_client.Book != null)
-                    {
-                        Verse verse = m_client.Book.GetVerseByVerseNumber((int)value);
-                        if (verse != null)
-                        {
-                            str.AppendLine("VerseByVerseNumber\t=\t" + verse.Address);
-                        }
-                        else
-                        {
-                            str.AppendLine("VerseByVerseNumber\t=\t\"---:---\"");
-                        }
-
-                        verse = m_client.Book.GetVerseByWordNumber((int)value);
-                        if (verse != null)
-                        {
-                            str.AppendLine("VerseByWordNumber\t=\t" + verse.Address);
-                        }
-                        else
-                        {
-                            str.AppendLine("VerseByWordNumber\t=\t\"---:---\"");
-                        }
-
-                        verse = m_client.Book.GetVerseByLetterNumber((int)value);
-                        if (verse != null)
-                        {
-                            str.AppendLine("VerseByLetterNumber\t=\t" + verse.Address);
-                        }
-                        else
-                        {
-                            str.AppendLine("VerseByLetterNumber\t=\t\"---:---\"");
-                        }
-                    }
-
-                    str.AppendLine();
-                    str.AppendLine("Left-to-right prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainL2R(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryPCIndexChainL2R(value) + "  =  " + DecimalPCIndexChainL2R(value));
-                    str.AppendLine();
-                    str.AppendLine("Right-to-left prime/composite index chain | P=0 C=1\r\n" + GetPCIndexChainR2L(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryPCIndexChainR2L(value) + "  =  " + DecimalPCIndexChainR2L(value));
-                    str.AppendLine();
-                    str.AppendLine("Left-to-right composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainL2R(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryCPIndexChainL2R(value) + "  =  " + DecimalCPIndexChainL2R(value));
-                    str.AppendLine();
-                    str.AppendLine("Right-to-left composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainR2L(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryCPIndexChainR2L(value) + "  =  " + DecimalCPIndexChainR2L(value));
-                    str.AppendLine("----------------------------------------");
-
-                    str.AppendLine();
-                    m_client.SaveValueCalculations(filename, str.ToString());
-                }
-            }
         }
     }
 
@@ -32375,18 +32197,10 @@ public partial class MainForm : Form, ISubscriber
         }
         else
         {
-            this.Cursor = Cursors.WaitCursor;
-            try
+            int length = 0;
+            if (int.TryParse(IndexChainLengthTextBox.Text, out length))
             {
-                int length = 0;
-                if (int.TryParse(IndexChainLengthTextBox.Text, out length))
-                {
-                    NumbersOfIndexChainLength(length);
-                }
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
+                NumbersOfIndexChainLength(length);
             }
         }
     }
@@ -32702,6 +32516,11 @@ public partial class MainForm : Form, ISubscriber
                 m_about_box.ShowDialog();
             }
         }
+    }
+
+    private void ShowToolTipCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        ToolTip.Active = ShowToolTipCheckBox.Checked;
     }
     /////////////////////////////////////////////////////////////////////////////
     #endregion

@@ -69,10 +69,22 @@ public partial class MainForm : Form
 
         m_lines = new List<Line>();
 
-        m_number_type = NumberType.Prime;
-        NumberTypeLabel.Text = "P";
-        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+        m_number_type = NumberType.Natural;
+        NumberTypeLabel.Text = "";
+        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
+        ToolTip.SetToolTip(NumberTypeLabel, "use all " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+    }
+    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        //Application.Exit(); // doesn't close WinForm application immediately
+        try
+        {
+            Environment.Exit(0); // close Console and WinForms applications immediately
+        }
+        catch
+        {
+            // do nothing
+        }
     }
     private void PopulateTextModeComboBox()
     {
@@ -323,113 +335,137 @@ public partial class MainForm : Form
     {
         if (ModifierKeys == Keys.Shift)
         {
-            switch (m_number_type)
-            {
-                case NumberType.NonAdditiveComposite:
-                    {
-                        m_number_type = NumberType.AdditiveComposite;
-                        NumberTypeLabel.Text = "AC";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.AdditiveComposite:
-                    {
-                        m_number_type = NumberType.Composite;
-                        NumberTypeLabel.Text = "C";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.Composite:
-                    {
-                        m_number_type = NumberType.NonAdditivePrime;
-                        NumberTypeLabel.Text = "XP";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.NonAdditivePrime:
-                    {
-                        m_number_type = NumberType.AdditivePrime;
-                        NumberTypeLabel.Text = "AP";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.AdditivePrime:
-                    {
-                        m_number_type = NumberType.Prime;
-                        NumberTypeLabel.Text = "P";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.Prime:
-                    {
-                        m_number_type = NumberType.NonAdditiveComposite;
-                        NumberTypeLabel.Text = "XC";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-            }
+            GotoPreviousNumberType();
         }
         else
         {
-            switch (m_number_type)
-            {
-                case NumberType.Prime:
-                    {
-                        m_number_type = NumberType.AdditivePrime;
-                        NumberTypeLabel.Text = "AP";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.AdditivePrime:
-                    {
-                        m_number_type = NumberType.NonAdditivePrime;
-                        NumberTypeLabel.Text = "XP";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.NonAdditivePrime:
-                    {
-                        m_number_type = NumberType.Composite;
-                        NumberTypeLabel.Text = "C";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.Composite:
-                    {
-                        m_number_type = NumberType.AdditiveComposite;
-                        NumberTypeLabel.Text = "AC";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.AdditiveComposite:
-                    {
-                        m_number_type = NumberType.NonAdditiveComposite;
-                        NumberTypeLabel.Text = "XC";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-                case NumberType.NonAdditiveComposite:
-                    {
-                        m_number_type = NumberType.Prime;
-                        NumberTypeLabel.Text = "P";
-                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
-                    }
-                    break;
-            }
+            GotoNextNumberType();
         }
         NumberTypeLabel.Refresh();
+    }
+    private void GotoPreviousNumberType()
+    {
+        switch (m_number_type)
+        {
+            case NumberType.NonAdditiveComposite:
+                {
+                    m_number_type = NumberType.AdditiveComposite;
+                    NumberTypeLabel.Text = "AC";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.AdditiveComposite:
+                {
+                    m_number_type = NumberType.Composite;
+                    NumberTypeLabel.Text = "C";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.Composite:
+                {
+                    m_number_type = NumberType.NonAdditivePrime;
+                    NumberTypeLabel.Text = "XP";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.NonAdditivePrime:
+                {
+                    m_number_type = NumberType.AdditivePrime;
+                    NumberTypeLabel.Text = "AP";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.AdditivePrime:
+                {
+                    m_number_type = NumberType.Prime;
+                    NumberTypeLabel.Text = "P";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.Prime:
+                {
+                    m_number_type = NumberType.Natural;
+                    NumberTypeLabel.Text = "";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use all " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.Natural:
+                {
+                    m_number_type = NumberType.NonAdditiveComposite;
+                    NumberTypeLabel.Text = "XC";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(12L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+        }
+    }
+    private void GotoNextNumberType()
+    {
+        switch (m_number_type)
+        {
+            case NumberType.Natural:
+                {
+                    m_number_type = NumberType.Prime;
+                    NumberTypeLabel.Text = "P";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.Prime:
+                {
+                    m_number_type = NumberType.AdditivePrime;
+                    NumberTypeLabel.Text = "AP";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.AdditivePrime:
+                {
+                    m_number_type = NumberType.NonAdditivePrime;
+                    NumberTypeLabel.Text = "XP";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.NonAdditivePrime:
+                {
+                    m_number_type = NumberType.Composite;
+                    NumberTypeLabel.Text = "C";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.Composite:
+                {
+                    m_number_type = NumberType.AdditiveComposite;
+                    NumberTypeLabel.Text = "AC";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.AdditiveComposite:
+                {
+                    m_number_type = NumberType.NonAdditiveComposite;
+                    NumberTypeLabel.Text = "XC";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+            case NumberType.NonAdditiveComposite:
+                {
+                    m_number_type = NumberType.Natural;
+                    NumberTypeLabel.Text = "";
+                    NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
+                    ToolTip.SetToolTip(NumberTypeLabel, "use all " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+                }
+                break;
+        }
     }
 
     public enum SortMethod { ById, BySentence, ByValue, ByWord }
@@ -613,7 +649,6 @@ public partial class MainForm : Form
                                 if (m_word_subsets != null)
                                 {
                                     m_lines.Clear();
-
                                     for (int i = 0; i < m_word_subsets.Count; i++)
                                     {
                                         // calculate word values
@@ -726,7 +761,7 @@ public partial class MainForm : Form
                                         }
 
                                         // add sentence if it generates a valid quran word
-                                        if (quran_word_texts.Contains(generated_word))
+                                        if ((m_number_type == NumberType.Natural) || (quran_word_texts.Contains(generated_word)))
                                         {
                                             Line line = new Line();
                                             line.Id = m_lines.Count + 1;
@@ -737,14 +772,14 @@ public partial class MainForm : Form
                                         }
 
                                         // display progress
-                                        this.Text = "Primalogy(أُمُّ ٱلْكِتَٰبِ) = Al-Fatiha's letters and harakaat = 263       " + (i + 1) + "/" + m_word_subsets.Count + " sentences processed";
+                                        this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة الفاتحة | Sentences = " + (i + 1) + "/" + m_word_subsets.Count;
                                         ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
                                         WordCountLabel.Text = m_lines.Count + " words";
                                         WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                                         WordCountLabel.Refresh();
 
                                         Application.DoEvents();
-                                    }
+                                    } // for m_word_subsets
 
                                     if (m_lines.Count == 0)
                                     {
@@ -857,7 +892,6 @@ public partial class MainForm : Form
                                                                 if (m_lines != null)
                                                                 {
                                                                     m_lines.Clear();
-
                                                                     for (int i = 0; i < m_word_subsets.Count; i++)
                                                                     {
                                                                         // calculate word values
@@ -970,7 +1004,7 @@ public partial class MainForm : Form
                                                                         }
 
                                                                         // add sentence if it generates a valid quran word
-                                                                        if (quran_word_texts.Contains(generated_word))
+                                                                        if ((m_number_type == NumberType.Natural) || (quran_word_texts.Contains(generated_word)))
                                                                         {
                                                                             Line line = new Line();
                                                                             line.Id = m_lines.Count + 1;
@@ -981,15 +1015,16 @@ public partial class MainForm : Form
                                                                         }
 
                                                                         //// display progress
-                                                                        //this.Text = "Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
+                                                                        //this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة الفاتحة | Sentences = " + (i + 1) + "/" + m_word_subsets.Count;
                                                                         //ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
                                                                         //ProgressBar.Refresh();
                                                                         //WordCountLabel.Text = m_lines.Count + " words";
                                                                         //WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                                                                         //WordCountLabel.Refresh();
-                                                                    }
+                                                                    } // for m_word_subsets
 
-                                                                    this.Text = "Generator: " + m_word_subsets.Count + " sentences processed";
+
+                                                                    this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة الفاتحة | Sentences = " + m_word_subsets.Count;
                                                                     ProgressBar.Value = 100;
                                                                     ProgressBar.Refresh();
                                                                     WordCountLabel.Text = m_lines.Count + " words";

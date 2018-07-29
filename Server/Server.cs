@@ -223,7 +223,7 @@ public class Server : IPublisher
                     }
                     else
                     {
-                        //throw new Exception("ERROR: No default simplification system was found.");
+                        throw new Exception("ERROR: No default simplification system was found.");
                     }
                 }
             }
@@ -270,7 +270,7 @@ public class Server : IPublisher
                         }
                         else
                         {
-                            //throw new Exception(filename + " file format must be:\r\n\tText TAB Replacement");
+                            throw new Exception(filename + " file format must be:\r\n\tText TAB Replacement");
                         }
                     }
                 }
@@ -685,8 +685,7 @@ public class Server : IPublisher
                                 }
                                 else
                                 {
-                                    // skip invalid filename
-                                    //throw new Exception("ERROR: " + file.FullName + " must contain 3 parts separated by \"_\".");
+                                    throw new Exception("ERROR: " + file.FullName + " must contain 3 parts separated by \"_\".");
                                 }
                             }
                         }
@@ -698,7 +697,7 @@ public class Server : IPublisher
                         }
                         else
                         {
-                            //throw new Exception("ERROR: No default numerology system was found.");
+                            throw new Exception("ERROR: No default numerology system was found.");
                         }
                     }
                 }
@@ -741,12 +740,12 @@ public class Server : IPublisher
                             }
                             catch
                             {
-                                //throw new Exception(filename + " file format must be:\r\n\tLetter TAB Value");
+                                throw new Exception(filename + " file format must be:\r\n\tLetter TAB Value");
                             }
                         }
                         else
                         {
-                            //throw new Exception(filename + " file format must be:\r\n\tLetter TAB Value");
+                            throw new Exception(filename + " file format must be:\r\n\tLetter TAB Value");
                         }
                     }
                 }
@@ -1201,8 +1200,7 @@ public class Server : IPublisher
                                 }
                                 else
                                 {
-                                    // skip invalide filename
-                                    //throw new Exception("ERROR: " + file.FullName + " must contain 3 parts separated by \"_\".");
+                                    throw new Exception("ERROR: " + file.FullName + " must contain 3 parts separated by \"_\".");
                                 }
                             }
                         }
@@ -1215,7 +1213,7 @@ public class Server : IPublisher
                     }
                     else
                     {
-                        //throw new Exception("ERROR: No default dna sequence system was found.");
+                        throw new Exception("ERROR: No default dna sequence system was found.");
                     }
                 }
             }
@@ -1261,7 +1259,7 @@ public class Server : IPublisher
                             }
                             else
                             {
-                                //throw new Exception(filename + " file format must be:\r\n\tLetter TAB Value");
+                                throw new Exception(filename + " file format must be:\r\n\tLetter TAB Value");
                             }
                         }
                     }
