@@ -31048,11 +31048,11 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 foreach (string match in matches)
                                 {
-                                    str.Append(match + "  ");
+                                    str.Append(match + "    ");
                                 }
                                 if (str.Length > 0)
                                 {
-                                    str.Remove(str.Length - 2, 2);
+                                    str.Remove(str.Length - 4, 4);
                                 }
                                 UserTextTextBox.Text = str.ToString();
                             }
@@ -32089,9 +32089,12 @@ public partial class MainForm : Form, ISubscriber
     {
         if (!WordsListBox.Focused)
         {
-            ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
-            WordsListBoxLabel.Visible = false;
-            WordsListBox.Visible = false;
+            if (ToolTip != null)
+            {
+                ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
+                WordsListBoxLabel.Visible = false;
+                WordsListBox.Visible = false;
+            }
         }
     }
     private void ClearFindMatches()
