@@ -4354,7 +4354,7 @@ public static partial class Research
             {
                 foreach (Word word in subset)
                 {
-                    str.Append(word.Text + " ");
+                    str.Append(word.Text + "\t");
                 }
                 if (str.Length > 1)
                 {
