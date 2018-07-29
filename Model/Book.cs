@@ -43,6 +43,12 @@ namespace Model
             set { shadda_as_letter = value; }
         }
 
+        private bool distances_within_chapters = false;
+        public bool DistanceWithinChapters
+        {
+            get { return distances_within_chapters; }
+        }
+
         private List<Chapter> chapters = null;
         public List<Chapter> Chapters
         {
@@ -451,14 +457,13 @@ namespace Model
             return null;
         }
 
-        public Book(string text_mode, List<Verse> verses)
+        public Book(string text_mode, List<Verse> verses, bool distances_within_chapters)
         {
             this.text_mode = text_mode;
-
             SetupPartitions(verses);
-
-            SetupBook(false);
+            SetupNumbersAndDistances(distances_within_chapters);
         }
+
         private void SetupPartitions(List<Verse> verses)
         {
             if (verses != null)
@@ -923,14 +928,16 @@ namespace Model
                 }
             }
         }
-        public void SetupBook(bool within_chapters)
+
+        public void SetupNumbersAndDistances(bool distances_within_chapters)
         {
             SetupNumbers();
-            SetupDistances(within_chapters);
             SetupWordOccurrences();
             SetupWordFrequencies();
+
+            SetupDistances(distances_within_chapters);
         }
-        public void SetupNumbers()
+        private void SetupNumbers()
         {
             int chapter_number = 1;
             int verse_number = 1;
@@ -975,12 +982,87 @@ namespace Model
                 }
             }
         }
-        public void SetupDistances(bool within_chapters)
+        private void SetupWordOccurrences()
         {
-            SetupDistancesToPrevious(within_chapters);
-            SetupDistancesToNext(within_chapters);
+            Dictionary<string, int> frequencies = new Dictionary<string, int>();
+            foreach (Verse verse in this.Verses)
+            {
+                foreach (Word word in verse.Words)
+                {
+                    string word_text = word.Text;
+                    if (text_mode == "Original")
+                    {
+                        word_text = word_text.Simplify29();
+                    }
+
+                    if (frequencies.ContainsKey(word_text))
+                    {
+                        frequencies[word_text]++;
+                        word.Occurrence = frequencies[word_text];
+                    }
+                    else
+                    {
+                        frequencies.Add(word_text, 1);
+                        word.Occurrence = 1;
+                    }
+                }
+            }
         }
-        private void SetupDistancesToPrevious(bool within_chapters)
+        private void SetupWordFrequencies()
+        {
+            Dictionary<string, int> frequencies = new Dictionary<string, int>();
+            foreach (Verse verse in this.Verses)
+            {
+                foreach (Word word in verse.Words)
+                {
+                    string word_text = word.Text;
+                    if (text_mode == "Original")
+                    {
+                        word_text = word_text.Simplify29();
+                    }
+
+                    if (frequencies.ContainsKey(word_text))
+                    {
+                        frequencies[word_text]++;
+                    }
+                    else
+                    {
+                        frequencies.Add(word_text, 1);
+                    }
+                }
+            }
+            foreach (Verse verse in this.Verses)
+            {
+                foreach (Word word in verse.Words)
+                {
+                    string word_text = word.Text;
+                    if (text_mode == "Original")
+                    {
+                        word_text = word_text.Simplify29();
+                    }
+
+                    if (frequencies.ContainsKey(word_text))
+                    {
+                        word.Frequency = frequencies[word_text];
+                    }
+                    else
+                    {
+                        word.Frequency = 0;
+                    }
+                }
+            }
+        }
+        public void SetupDistances(bool distances_within_chapters)
+        {
+            if (this.distances_within_chapters != distances_within_chapters)
+            {
+                this.distances_within_chapters = distances_within_chapters;
+
+                SetupDistancesToPrevious(distances_within_chapters);
+                SetupDistancesToNext(distances_within_chapters);
+            }
+        }
+        private void SetupDistancesToPrevious(bool distances_within_chapters)
         {
             // foreach chapter: no repeated chapters so no distances to previous same chapter
 
@@ -1004,7 +1086,7 @@ namespace Model
                 List<Chapter> chapters = this.chapters;
                 for (int c = 0; c < chapters.Count; c++)
                 {
-                    if (within_chapters)
+                    if (distances_within_chapters)
                     {
                         verse_previous_verse_numbers.Clear();
                         verse_previous_chapter_numbers.Clear();
@@ -1124,7 +1206,7 @@ namespace Model
                 }
             }
         }
-        private void SetupDistancesToNext(bool within_chapters)
+        private void SetupDistancesToNext(bool distances_within_chapters)
         {
             // foreach chapter: no repeated chapters so no distances to next same chapter
 
@@ -1148,7 +1230,7 @@ namespace Model
                 List<Chapter> chapters = this.chapters;
                 for (int c = chapters.Count - 1; c >= 0; c--)
                 {
-                    if (within_chapters)
+                    if (distances_within_chapters)
                     {
                         verse_next_verse_numbers.Clear();
                         verse_next_chapter_numbers.Clear();
@@ -1264,76 +1346,6 @@ namespace Model
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }
-        private void SetupWordOccurrences()
-        {
-            Dictionary<string, int> frequencies = new Dictionary<string, int>();
-            foreach (Verse verse in this.Verses)
-            {
-                foreach (Word word in verse.Words)
-                {
-                    string word_text = word.Text;
-                    if (text_mode == "Original")
-                    {
-                        word_text = word_text.Simplify29();
-                    }
-
-                    if (frequencies.ContainsKey(word_text))
-                    {
-                        frequencies[word_text]++;
-                        word.Occurrence = frequencies[word_text];
-                    }
-                    else
-                    {
-                        frequencies.Add(word_text, 1);
-                        word.Occurrence = 1;
-                    }
-                }
-            }
-        }
-        private void SetupWordFrequencies()
-        {
-            Dictionary<string, int> frequencies = new Dictionary<string, int>();
-            foreach (Verse verse in this.Verses)
-            {
-                foreach (Word word in verse.Words)
-                {
-                    string word_text = word.Text;
-                    if (text_mode == "Original")
-                    {
-                        word_text = word_text.Simplify29();
-                    }
-
-                    if (frequencies.ContainsKey(word_text))
-                    {
-                        frequencies[word_text]++;
-                    }
-                    else
-                    {
-                        frequencies.Add(word_text, 1);
-                    }
-                }
-            }
-            foreach (Verse verse in this.Verses)
-            {
-                foreach (Word word in verse.Words)
-                {
-                    string word_text = word.Text;
-                    if (text_mode == "Original")
-                    {
-                        word_text = word_text.Simplify29();
-                    }
-
-                    if (frequencies.ContainsKey(word_text))
-                    {
-                        word.Frequency = frequencies[word_text];
-                    }
-                    else
-                    {
-                        word.Frequency = 0;
                     }
                 }
             }
@@ -1706,7 +1718,7 @@ namespace Model
                 }
                 this.verses = verses;
 
-                SetupBook(false);
+                SetupNumbersAndDistances(distances_within_chapters);
             }
         }
 

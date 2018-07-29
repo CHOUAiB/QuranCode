@@ -148,7 +148,7 @@ namespace Model
 
         public bool AddDistancesToPrevious;
         public bool AddDistancesToNext;
-        public bool AddDistancesWithinChapters;
+        public bool AddDistancesWithinChapters = true;
 
         public NumerologySystem()
             : this(DEFAULT_NAME)

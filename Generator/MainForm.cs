@@ -71,6 +71,10 @@ public partial class MainForm : Form
                     m_client.NumerologySystem.AddDistancesToPrevious = false;
                     m_client.NumerologySystem.AddDistancesToNext = false;
                     m_client.NumerologySystem.AddDistancesWithinChapters = true;
+                    if (m_client.Book != null)
+                    {
+                        m_client.Book.SetupDistances(m_client.NumerologySystem.AddDistancesWithinChapters);
+                    }
 
                     PopulateTextModeComboBox();
                     if (TextModeComboBox.Items.Count > 0)
@@ -89,7 +93,7 @@ public partial class MainForm : Form
         }
 
         m_lines = new List<Line>();
-        generated_words = new SortedDictionary<string, int>();
+        m_generated_words = new SortedDictionary<string, int>();
 
         m_number_type = NumberType.Prime;
         NumberTypeLabel.Text = "P";
@@ -625,7 +629,7 @@ public partial class MainForm : Form
         ListView.Refresh();
     }
 
-    private SortedDictionary<string, int> generated_words = null;
+    private SortedDictionary<string, int> m_generated_words = null;
     private void GenerateWordsButton_Click(object sender, EventArgs e)
     {
         TextModeComboBox.Enabled = false;
@@ -673,7 +677,7 @@ public partial class MainForm : Form
                                     if (m_lines != null)
                                     {
                                         m_lines.Clear();
-                                        generated_words.Clear();
+                                        m_generated_words.Clear();
 
                                         for (int i = 0; i < m_word_subsets.Count; i++)
                                         {
@@ -796,20 +800,20 @@ public partial class MainForm : Form
                                                 line.Word = generated_word;
                                                 m_lines.Add(line);
 
-                                                if (generated_words.ContainsKey(generated_word))
+                                                if (m_generated_words.ContainsKey(generated_word))
                                                 {
-                                                    generated_words[generated_word]++;
+                                                    m_generated_words[generated_word]++;
                                                 }
                                                 else
                                                 {
-                                                    generated_words.Add(generated_word, 1);
+                                                    m_generated_words.Add(generated_word, 1);
                                                 }
                                             }
 
                                             // display progress
                                             this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة الفاتحة | Sentences = " + (i + 1) + "/" + m_word_subsets.Count;
                                             ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
-                                            WordCountLabel.Text = m_lines.Count + " (" + generated_words.Count + ") words";
+                                            WordCountLabel.Text = m_lines.Count + " (" + m_generated_words.Count + ") words";
                                             WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                                             WordCountLabel.Refresh();
                                         }
@@ -973,7 +977,7 @@ public partial class MainForm : Form
                                             if (m_lines != null)
                                             {
                                                 m_lines.Clear();
-                                                generated_words.Clear();
+                                                m_generated_words.Clear();
 
                                                 for (int i = 0; i < m_word_subsets.Count; i++)
                                                 {
@@ -1096,13 +1100,13 @@ public partial class MainForm : Form
                                                         line.Word = generated_word;
                                                         m_lines.Add(line);
 
-                                                        if (generated_words.ContainsKey(generated_word))
+                                                        if (m_generated_words.ContainsKey(generated_word))
                                                         {
-                                                            generated_words[generated_word]++;
+                                                            m_generated_words[generated_word]++;
                                                         }
                                                         else
                                                         {
-                                                            generated_words.Add(generated_word, 1);
+                                                            m_generated_words.Add(generated_word, 1);
                                                         }
                                                     }
 
@@ -1119,7 +1123,7 @@ public partial class MainForm : Form
                                                 this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة الفاتحة | Sentences = " + m_word_subsets.Count;
                                                 ProgressBar.Value = 100;
                                                 ProgressBar.Refresh();
-                                                WordCountLabel.Text = m_lines.Count + " (" + generated_words.Count + ") words";
+                                                WordCountLabel.Text = m_lines.Count + " (" + m_generated_words.Count + ") words";
                                                 WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                                                 WordCountLabel.Refresh();
 
@@ -1158,15 +1162,15 @@ public partial class MainForm : Form
                     }
 
                     str.AppendLine();
-                    if (generated_words != null)
+                    if (m_generated_words != null)
                     {
                         str.AppendLine("#" + "\t" + "Word" + "\t" + "Frequency");
 
                         int count = 0;
-                        foreach (string key in generated_words.Keys)
+                        foreach (string key in m_generated_words.Keys)
                         {
                             count++;
-                            str.AppendLine(count + "\t" + key + "\t" + generated_words[key]);
+                            str.AppendLine(count + "\t" + key + "\t" + m_generated_words[key]);
                         }
                     }
                 }
@@ -1188,7 +1192,7 @@ public partial class MainForm : Form
                         (m_number_type == NumberType.AdditiveComposite) ? "AC" :
                         (m_number_type == NumberType.NonAdditiveComposite) ? "XC" : ""
                         )
-                    + "_" + generated_words.Count.ToString()
+                    + "_" + m_generated_words.Count.ToString()
                     + ".txt";
 
                 if (Directory.Exists(Globals.STATISTICS_FOLDER))

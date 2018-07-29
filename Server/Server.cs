@@ -478,7 +478,12 @@ public class Server : IPublisher
                         }
                     }
 
-                    s_book = new Book(text_mode, verses);
+                    bool distances_within_chapters = true;
+                    if (s_numerology_system != null)
+                    {
+                        distances_within_chapters = s_numerology_system.AddDistancesWithinChapters;
+                    }
+                    s_book = new Book(text_mode, verses, distances_within_chapters);
                     if (s_book != null)
                     {
                         s_book.WithBismAllah = with_bism_Allah;
@@ -640,7 +645,12 @@ public class Server : IPublisher
                 }
 
                 // update verses/words/letters numbers and distances
-                book.SetupBook(false);
+                bool distances_within_chapters = true;
+                if (s_numerology_system != null)
+                {
+                    distances_within_chapters = s_numerology_system.AddDistancesWithinChapters;
+                }
+                book.SetupNumbersAndDistances(distances_within_chapters);
             }
         }
     }
@@ -11399,95 +11409,9 @@ public class Server : IPublisher
     private static List<List<Word>> DoFindWordRanges(SearchScope search_scope, Selection current_selection, List<Verse> previous_verses, NumberQuery query)
     {
         List<Verse> source = GetSourceVerses(search_scope, current_selection, previous_verses, TextLocationInChapter.Any);
-        if (query.WithinVerses)
-        {
-            return DoFindWordRangesWithinVerses(source, query);
-        }
-        else
-        {
-            return DoFindWordRanges(source, query);
-        }
+        return DoFindWordRanges(source, query);
     }
     private static List<List<Word>> DoFindWordRanges(List<Verse> source, NumberQuery query)
-    {
-        List<List<Word>> result = new List<List<Word>>();
-        if (source != null)
-        {
-            int range_length = query.WordCount;
-            if (range_length == 1)
-            {
-                result.Add(DoFindWords(source, query));
-                return result;
-            }
-
-            List<Word> words = new List<Word>();
-            foreach (Verse verse in source)
-            {
-                words.AddRange(verse.Words);
-            }
-
-            if (range_length == 0) // non-specified range length
-            {
-                // limit range length to minimum
-                int word_count = 0;
-                foreach (Verse verse in source)
-                {
-                    word_count += verse.Words.Count;
-                }
-
-                int limit = word_count - 1;
-                if (query.LetterCount > 0)
-                {
-                    limit = query.LetterCount / 3;
-                }
-                if (query.Value > 0L)
-                {
-                    limit = (int)(query.Value / 7L);
-                }
-                if (limit == 0) limit = 1;
-
-                for (int r = 1; r <= limit; r++) // try all possible range lengths
-                {
-                    for (int i = 0; i < words.Count - r + 1; i++)
-                    {
-                        // build required range
-                        List<Word> range = new List<Word>();
-                        for (int j = i; j < i + r; j++)
-                        {
-                            range.Add(words[j]);
-                        }
-
-                        // check range
-                        if (Compare(range, query))
-                        {
-                            result.Add(range);
-                        }
-                    }
-                }
-            }
-            else // specified range length
-            {
-                int r = range_length;
-                for (int i = 0; i < words.Count - r + 1; i++)
-                {
-                    // build required range
-                    List<Word> range = new List<Word>();
-                    for (int j = i; j < i + r; j++)
-                    {
-                        range.Add(words[j]);
-                    }
-
-                    // check range
-                    if (Compare(range, query))
-                    {
-                        result.Add(range);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-    private static List<List<Word>> DoFindWordRangesWithinVerses(List<Verse> source, NumberQuery query)
     {
         List<List<Word>> result = new List<List<Word>>();
         if (source != null)

@@ -5,8 +5,6 @@ namespace Model
 {
     public struct NumberQuery
     {
-        public bool WithinVerses;
-
         /// <summary>
         /// Number of word/verse/chapter or sum of numbers of a Ws/Vs/Cs range/set
         /// </summary>
