@@ -9551,6 +9551,86 @@ public class Server : IPublisher
                     return false;
                 }
             }
+
+            long value = CalculateValue(letter);
+            if (query.ValueNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(value, query.Value, query.ValueComparisonOperator, query.ValueRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.ValueNumberType == NumberType.None)
+            {
+                if (query.Value != 0)
+                {
+                    if (!Numbers.Compare(value, query.Value, query.ValueComparisonOperator, query.ValueRemainder))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (!Numbers.IsNumberType(value, query.ValueNumberType))
+                {
+                    return false;
+                }
+            }
+
+            if (value == 0L) { value = CalculateValue(letter); }
+            int value_digit_sum = Numbers.DigitSum(value);
+            if (query.ValueDigitSumNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(value_digit_sum, query.ValueDigitSum, query.ValueDigitSumComparisonOperator, query.ValueDigitSumRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.ValueDigitSumNumberType == NumberType.None)
+            {
+                if (query.ValueDigitSum != 0)
+                {
+                    if (!Numbers.Compare(value_digit_sum, query.ValueDigitSum, query.ValueDigitSumComparisonOperator, query.ValueDigitSumRemainder))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (!Numbers.IsNumberType(value_digit_sum, query.ValueDigitSumNumberType))
+                {
+                    return false;
+                }
+            }
+
+            if (value == 0L) { value = CalculateValue(letter); }
+            int value_digital_root = Numbers.DigitalRoot(value);
+            if (query.ValueDigitalRootNumberType == NumberType.Natural)
+            {
+                if (!Numbers.Compare(value_digital_root, query.ValueDigitalRoot, query.ValueDigitalRootComparisonOperator, query.ValueDigitalRootRemainder))
+                {
+                    return false;
+                }
+            }
+            else if (query.ValueDigitalRootNumberType == NumberType.None)
+            {
+                if (query.ValueDigitalRoot != 0)
+                {
+                    if (!Numbers.Compare(value_digital_root, query.ValueDigitalRoot, query.ValueDigitalRootComparisonOperator, query.ValueDigitalRootRemainder))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (!Numbers.IsNumberType(value_digital_root, query.ValueDigitalRootNumberType))
+                {
+                    return false;
+                }
+            }
         }
 
         // passed all tests successfully

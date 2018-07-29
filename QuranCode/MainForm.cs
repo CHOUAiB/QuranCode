@@ -3263,11 +3263,6 @@ public partial class MainForm : Form, ISubscriber
         this.FindByNumbersVersesNumericUpDown.Size = new System.Drawing.Size(75, 23);
         this.FindByNumbersVersesNumericUpDown.TabIndex = 42;
         this.FindByNumbersVersesNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.FindByNumbersVersesNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
         this.FindByNumbersVersesNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
         this.FindByNumbersVersesNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersVersesNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
@@ -31024,31 +31019,49 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_client != null)
             {
-                long value = (long)UserTextValueNumericUpDown.Value;
-                List<string> matches = new List<string>();
-                if (matches != null)
+                if (m_client.NumerologySystem != null)
                 {
-                    string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
-                    if (File.Exists(filename))
+                    long value = (long)UserTextValueNumericUpDown.Value;
+
+                    SortedDictionary<string, int> matches = new SortedDictionary<string, int>();
+                    if (matches != null)
                     {
-                        List<string> lines = FileHelper.LoadLines(filename);
-                        if (lines != null)
+                        List<Word> words = new List<Word>();
+                        if (words != null)
                         {
-                            foreach (string line in lines)
+                            if (m_client.Book != null)
                             {
-                                if (m_client.CalculateValue(line) == value)
+                                if (m_client.Book.Verses != null)
                                 {
-                                    matches.Add(line);
+                                    foreach (Verse verse in m_client.Book.Verses)
+                                    {
+                                        words.AddRange(verse.Words);
+                                    }
                                 }
                             }
-                            matches.Sort();
+
+                            foreach (Word word in words)
+                            {
+                                if (m_client.CalculateValue(word) == value)
+                                {
+                                    string simplified_word_text = word.Text.SimplifyTo(m_client.NumerologySystem.TextMode);
+                                    if (matches.ContainsKey(simplified_word_text))
+                                    {
+                                        matches[simplified_word_text]++;
+                                    }
+                                    else
+                                    {
+                                        matches.Add(simplified_word_text, 1);
+                                    }
+                                }
+                            }
 
                             StringBuilder str = new StringBuilder();
                             if (str != null)
                             {
-                                foreach (string match in matches)
+                                foreach (string key in matches.Keys)
                                 {
-                                    str.Append(match + "    ");
+                                    str.Append(key + "    ");
                                 }
                                 if (str.Length > 0)
                                 {
@@ -31076,6 +31089,9 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UserTextValueNumericUpDown_ValueChanged(object sender, EventArgs e)
     {
+        //long value = (long)UserTextValueNumericUpDown.Value;
+        //UserTextValueNumericUpDown.ForeColor = Numbers.GetNumberTypeColor((int)value);
+        //UserTextValueNumericUpDown.Refresh();
         UserTextValueButton_Click(null, null);
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -32087,13 +32103,16 @@ public partial class MainForm : Form, ISubscriber
     }
     private void SearchGroupBox_Leave(object sender, EventArgs e)
     {
-        if (!WordsListBox.Focused)
+        if (L != null)
         {
-            if (ToolTip != null)
+            if (!String.IsNullOrEmpty(l))
             {
-                ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
-                WordsListBoxLabel.Visible = false;
-                WordsListBox.Visible = false;
+                if (L[l].Count > 0)
+                {
+                    ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
+                    WordsListBoxLabel.Visible = false;
+                    WordsListBox.Visible = false;
+                }
             }
         }
     }
@@ -33750,9 +33769,9 @@ public partial class MainForm : Form, ISubscriber
     {
         FindByNumbersControls_Enter(null, null);
     }
-    private NumberScope m_letter_number_scope = NumberScope.NumberInWord;
-    private NumberScope m_word_number_scope = NumberScope.NumberInVerse;
-    private NumberScope m_verse_number_scope = NumberScope.NumberInChapter;
+    private NumberScope m_letter_number_scope = NumberScope.Number;
+    private NumberScope m_word_number_scope = NumberScope.Number;
+    private NumberScope m_verse_number_scope = NumberScope.Number;
     private NumberScope m_chapter_number_scope = NumberScope.Number;
     private void FindByNumbersNumberLabel_Click(object sender, EventArgs e)
     {
@@ -33842,7 +33861,7 @@ public partial class MainForm : Form, ISubscriber
     {
         m_numbers_result_type = NumbersResultType.Letters;
         //                          num   Cs     Vs     Ws    Ls    uLs   value dsum  droot
-        EnableFindByNumbersControls(true, false, false, false, false, false, false, false, false);
+        EnableFindByNumbersControls(true, false, false, false, false, false, true, true, true);
         FindByNumbersControls_Enter(null, null);
         //ResetFindByNumbersResultTypeLabels(); // already called on FindByNumbersControls_Enter
         ResetFindByNumbersComparisonOperatorLabels();
@@ -33865,15 +33884,15 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersNumberNumericUpDown.Value = 1;
+        FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
         FindByNumbersWordsNumericUpDown.Value = 0;
-        FindByNumbersLettersNumericUpDown.Value = 0;
-        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
-        FindByNumbersValueNumericUpDown.Value = 0;
-        FindByNumbersValueDigitSumNumericUpDown.Value = 0;
-        FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
+        FindByNumbersLettersNumericUpDown.Value = 1;
+        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        //FindByNumbersValueNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
         FindByNumbersNumberNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersVersesNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -33884,7 +33903,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitSumNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
 
-        FindByNumbersNumberNumericUpDown.Focus();
+        FindByNumbersValueNumericUpDown.Focus();
     }
     private void FindByNumbersResultTypeWordsLabel_Click(object sender, EventArgs e)
     {
@@ -33917,11 +33936,11 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
         FindByNumbersWordsNumericUpDown.Value = 1;
-        FindByNumbersLettersNumericUpDown.Value = 0;
-        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
-        FindByNumbersValueNumericUpDown.Value = 0;
-        FindByNumbersValueDigitSumNumericUpDown.Value = 0;
-        FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
+        //FindByNumbersLettersNumericUpDown.Value = 0;
+        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        //FindByNumbersValueNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
         FindByNumbersNumberNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersVersesNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -33964,12 +33983,12 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
-        FindByNumbersWordsNumericUpDown.Value = 0; // must be 0 for any sentence length
-        FindByNumbersLettersNumericUpDown.Value = 0;
-        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
-        FindByNumbersValueNumericUpDown.Value = 0;
-        FindByNumbersValueDigitSumNumericUpDown.Value = 0;
-        FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
+        FindByNumbersWordsNumericUpDown.Value = 0; // 0 not 1 for any number of words in sentence
+        //FindByNumbersLettersNumericUpDown.Value = 0;
+        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        //FindByNumbersValueNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
         FindByNumbersNumberNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersVersesNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -34012,12 +34031,12 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 1;
-        FindByNumbersWordsNumericUpDown.Value = 0;
-        FindByNumbersLettersNumericUpDown.Value = 0;
-        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
-        FindByNumbersValueNumericUpDown.Value = 0;
-        FindByNumbersValueDigitSumNumericUpDown.Value = 0;
-        FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
+        //FindByNumbersWordsNumericUpDown.Value = 0;
+        //FindByNumbersLettersNumericUpDown.Value = 0;
+        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        //FindByNumbersValueNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
         FindByNumbersNumberNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersVersesNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -34028,7 +34047,7 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitSumNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
 
-        FindByNumbersVersesNumericUpDown.Focus();
+        FindByNumbersWordsNumericUpDown.Focus();
     }
     private void FindByNumbersResultTypeChaptersLabel_Click(object sender, EventArgs e)
     {
@@ -34059,13 +34078,13 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 1;
-        FindByNumbersVersesNumericUpDown.Value = 0;
-        FindByNumbersWordsNumericUpDown.Value = 0;
-        FindByNumbersLettersNumericUpDown.Value = 0;
-        FindByNumbersUniqueLettersNumericUpDown.Value = 0;
-        FindByNumbersValueNumericUpDown.Value = 0;
-        FindByNumbersValueDigitSumNumericUpDown.Value = 0;
-        FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
+        //FindByNumbersVersesNumericUpDown.Value = 0;
+        //FindByNumbersWordsNumericUpDown.Value = 0;
+        //FindByNumbersLettersNumericUpDown.Value = 0;
+        //FindByNumbersUniqueLettersNumericUpDown.Value = 0;
+        //FindByNumbersValueNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitSumNumericUpDown.Value = 0;
+        //FindByNumbersValueDigitalRootNumericUpDown.Value = 0;
         FindByNumbersNumberNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersChaptersNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersVersesNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
@@ -34076,8 +34095,9 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueDigitSumNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
 
-        FindByNumbersChaptersNumericUpDown.Focus();
+        FindByNumbersVersesNumericUpDown.Focus();
     }
+
     private void EnableFindByNumbersControls(
                     bool enable_number,
                     bool enable_chapters,
@@ -34287,16 +34307,6 @@ public partial class MainForm : Form, ISubscriber
         FindByNumbersValueComparisonOperatorLabel.Text = "=";
         FindByNumbersValueDigitSumComparisonOperatorLabel.Text = "=";
         FindByNumbersValueDigitalRootComparisonOperatorLabel.Text = "=";
-
-        FindByNumbersNumberComparisonOperatorLabel.Enabled = true;
-        FindByNumbersChaptersComparisonOperatorLabel.Enabled = true;
-        FindByNumbersVersesComparisonOperatorLabel.Enabled = true;
-        FindByNumbersWordsComparisonOperatorLabel.Enabled = true;
-        FindByNumbersLettersComparisonOperatorLabel.Enabled = true;
-        FindByNumbersUniqueLettersComparisonOperatorLabel.Enabled = true;
-        FindByNumbersValueComparisonOperatorLabel.Enabled = true;
-        FindByNumbersValueDigitSumComparisonOperatorLabel.Enabled = true;
-        FindByNumbersValueDigitalRootComparisonOperatorLabel.Enabled = true;
     }
     private void UpdateFindByNumbersResultType()
     {
@@ -35285,6 +35295,8 @@ public partial class MainForm : Form, ISubscriber
         // some operations take too long and may frustrate user
         if (
             (sender is NumericUpDown) &&
+            ((sender as NumericUpDown).Value > 0) &&
+            (m_numbers_result_type != NumbersResultType.Letters) &&
             (m_numbers_result_type != NumbersResultType.WordRanges) &&
             (m_numbers_result_type != NumbersResultType.VerseRanges) &&
             (m_numbers_result_type != NumbersResultType.ChapterRanges)

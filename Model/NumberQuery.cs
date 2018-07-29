@@ -57,6 +57,8 @@ namespace Model
                         return
                         (
                             IsValidNumberSearch()
+                            ||
+                            IsValidLetterSearch()
                         );
                     }
                 case NumbersResultType.Words:
@@ -149,6 +151,12 @@ namespace Model
             return (
                     (LetterCount > 0) ||
                     (UniqueLetterCount > 0) ||
+                    IsValidLetterSearch()
+                   );
+        }
+        private bool IsValidLetterSearch()
+        {
+            return (
                     (Value > 0) ||
                     (ValueDigitSum > 0) ||
                     (ValueDigitalRoot > 0) ||
