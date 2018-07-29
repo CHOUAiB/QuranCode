@@ -44,10 +44,10 @@
             this.ValueInterlaceLabel = new System.Windows.Forms.Label();
             this.AutoGenerateWordsButton = new System.Windows.Forms.Button();
             this.AddVerseAndWordValuesCheckBox = new System.Windows.Forms.CheckBox();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.NumerologySystemComboBox = new System.Windows.Forms.ComboBox();
             this.TextModeComboBox = new System.Windows.Forms.ComboBox();
-            this.SaveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // GenerateWordsButton
@@ -56,7 +56,7 @@
             this.GenerateWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.GenerateWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("GenerateWordsButton.Image")));
             this.GenerateWordsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.GenerateWordsButton.Location = new System.Drawing.Point(425, 358);
+            this.GenerateWordsButton.Location = new System.Drawing.Point(426, 358);
             this.GenerateWordsButton.Name = "GenerateWordsButton";
             this.GenerateWordsButton.Size = new System.Drawing.Size(110, 21);
             this.GenerateWordsButton.TabIndex = 19;
@@ -131,7 +131,7 @@
             this.WordCountLabel.TabIndex = 23;
             this.WordCountLabel.Text = "00000 (0000) words";
             this.WordCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.WordCountLabel, "Valid Quran words");
+            this.ToolTip.SetToolTip(this.WordCountLabel, "Quran words");
             // 
             // NumberTypeLabel
             // 
@@ -140,13 +140,13 @@
             this.NumberTypeLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NumberTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NumberTypeLabel.ForeColor = System.Drawing.Color.Green;
-            this.NumberTypeLabel.Location = new System.Drawing.Point(397, 360);
+            this.NumberTypeLabel.Location = new System.Drawing.Point(399, 360);
             this.NumberTypeLabel.Name = "NumberTypeLabel";
             this.NumberTypeLabel.Size = new System.Drawing.Size(25, 17);
             this.NumberTypeLabel.TabIndex = 12;
             this.NumberTypeLabel.Text = "P";
             this.NumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.NumberTypeLabel, "use prime concatenated letter values only");
+            this.ToolTip.SetToolTip(this.NumberTypeLabel, "allow prime concatenated letter values only");
             this.NumberTypeLabel.Click += new System.EventHandler(this.NumberTypeLabel_Click);
             // 
             // ValueCombinationDirectionLabel
@@ -156,13 +156,13 @@
             this.ValueCombinationDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ValueCombinationDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValueCombinationDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValueCombinationDirectionLabel.Location = new System.Drawing.Point(370, 360);
+            this.ValueCombinationDirectionLabel.Location = new System.Drawing.Point(372, 360);
             this.ValueCombinationDirectionLabel.Name = "ValueCombinationDirectionLabel";
             this.ValueCombinationDirectionLabel.Size = new System.Drawing.Size(25, 17);
             this.ValueCombinationDirectionLabel.TabIndex = 11;
             this.ValueCombinationDirectionLabel.Text = "←";
             this.ValueCombinationDirectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.ValueCombinationDirectionLabel, "concatenate letter values right to left: BBBAAA");
+            this.ToolTip.SetToolTip(this.ValueCombinationDirectionLabel, "combine right to left");
             this.ValueCombinationDirectionLabel.Click += new System.EventHandler(this.ValueCombinationDirectionLabel_Click);
             // 
             // AddDistancesToPreviousCheckBox
@@ -202,11 +202,11 @@
             this.ValueInterlaceLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ValueInterlaceLabel.Location = new System.Drawing.Point(343, 360);
             this.ValueInterlaceLabel.Name = "ValueInterlaceLabel";
-            this.ValueInterlaceLabel.Size = new System.Drawing.Size(25, 17);
+            this.ValueInterlaceLabel.Size = new System.Drawing.Size(27, 17);
             this.ValueInterlaceLabel.TabIndex = 9;
             this.ValueInterlaceLabel.Text = "- -";
             this.ValueInterlaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.ValueInterlaceLabel, "interlace letter values");
+            this.ToolTip.SetToolTip(this.ValueInterlaceLabel, "concatenate letter values");
             this.ValueInterlaceLabel.Click += new System.EventHandler(this.ValueInterlaceLabel_Click);
             // 
             // AutoGenerateWordsButton
@@ -235,6 +235,21 @@
             this.ToolTip.SetToolTip(this.AddVerseAndWordValuesCheckBox, "Add letter\'s verse and word values to each letter value");
             this.AddVerseAndWordValuesCheckBox.UseVisualStyleBackColor = true;
             this.AddVerseAndWordValuesCheckBox.CheckedChanged += new System.EventHandler(this.AddVerseAndWordValuesCheckBox_CheckedChanged);
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+            this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SaveButton.Location = new System.Drawing.Point(638, 358);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(23, 21);
+            this.SaveButton.TabIndex = 91;
+            this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ToolTip.SetToolTip(this.SaveButton, "Save and View");
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // ProgressBar
             // 
@@ -272,21 +287,6 @@
             this.TextModeComboBox.Name = "TextModeComboBox";
             this.TextModeComboBox.Size = new System.Drawing.Size(84, 21);
             this.TextModeComboBox.TabIndex = 90;
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SaveButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
-            this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SaveButton.Location = new System.Drawing.Point(638, 358);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(23, 21);
-            this.SaveButton.TabIndex = 91;
-            this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ToolTip.SetToolTip(this.SaveButton, "View");
-            this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // MainForm
             // 

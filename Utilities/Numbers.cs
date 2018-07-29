@@ -6,6 +6,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 
+public enum Direction { LeftToRight, RightToLeft };
 public enum NumberType
 {
     None,                   // not a number (eg infinity, -infinity)
@@ -494,7 +495,7 @@ public static class Numbers
     }
     public static long Reverse(long number)
     {
-        long result = 0;
+        long result = 0L;
         while (number > 0)
         {
             result = (result * 10L) + (number % 10L);
@@ -502,7 +503,124 @@ public static class Numbers
         }
         return result;
     }
-    public static bool IsReverse(long number1, long number2)
+    public static long Concatenate(long number1, long number2, Direction direction)
+    {
+        long result;
+
+        string combination = "";
+        string AAA = number1.ToString();
+        string BBB = number2.ToString();
+        if (direction == Direction.LeftToRight)
+        {
+            combination = AAA + BBB;
+        }
+        else
+        {
+            combination = BBB + AAA;
+        }
+
+        if (long.TryParse(combination, out result))
+        {
+            return result;
+        }
+        else
+        {
+            return -1L;
+        }
+    }
+    public static long Interlace(long number1, long number2, bool a_then_b, Direction direction)
+    {
+        long result;
+
+        if (direction == Direction.RightToLeft)
+        {
+            number1 = Reverse(number1);
+            number2 = Reverse(number2);
+        }
+
+        string combination = "";
+        string AAA = number1.ToString();
+        string BBB = number2.ToString();
+        if (!a_then_b)
+        {
+            string temp = AAA;
+            AAA = BBB;
+            BBB = temp;
+        }
+
+        int a = AAA.Length;
+        int b = BBB.Length;
+        int min = Math.Min(a, b);
+
+        for (int d = 0; d < min; d++)
+        {
+            combination += AAA[d].ToString() + BBB[d].ToString();
+        }
+        if (a > min)
+        {
+            combination += AAA.Substring(min);
+        }
+        else
+        {
+            combination += BBB.Substring(min);
+        }
+
+        if (long.TryParse(combination, out result))
+        {
+            return result;
+        }
+        else
+        {
+            return -1L;
+        }
+    }
+    public static long CrossOver(long number1, long number2, bool a_then_b, Direction direction)
+    {
+        long result;
+
+        string combination = "";
+        string AAA = number1.ToString();
+        string BBB = number2.ToString();
+        if (!a_then_b)
+        {
+            string temp = AAA;
+            AAA = BBB;
+            BBB = temp;
+        }
+
+        int a = AAA.Length;
+        int b = BBB.Length;
+        if ((a > 1) && (b > 1))
+        {
+            int mid_a = a / 2;
+            string AAAHalf1 = AAA.Substring(0, mid_a);
+            string AAAHalf2 = AAA.Substring(mid_a);
+
+            int mid_b = b / 2;
+            string BBBHalf1 = AAA.Substring(0, mid_b);
+            string BBBHalf2 = AAA.Substring(mid_b);
+
+            if (direction == Direction.LeftToRight)
+            {
+                combination = AAAHalf1 + BBBHalf2 + AAAHalf2 + BBBHalf1;
+            }
+            else
+            {
+                combination = BBBHalf1 + AAAHalf2 + BBBHalf2 + AAAHalf1;
+            }
+
+            if (long.TryParse(combination, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return -1L;
+            }
+        }
+        return -1L;
+    }
+    public static bool AreReverse(long number1, long number2)
     {
         return (number1 == Reverse(number2));
     }
@@ -521,6 +639,7 @@ public static class Numbers
         }
         return false;
     }
+
 
     // pi = circumference / diameter ~= 355/113
     private static string s_pi_filename = "pi.txt";
