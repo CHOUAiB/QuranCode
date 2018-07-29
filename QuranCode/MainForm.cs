@@ -343,18 +343,21 @@ public partial class MainForm : Form, ISubscriber
 
                 int pos = ValueLabel.Text.IndexOf(" ");
                 string text = ValueLabel.Text.Substring(pos + 1).Trim();
-                try
+                if (L[l].ContainsKey(text))
                 {
                     text = L[l][text];
                 }
-                catch // reverse dictionary
+                else // reverse dictionary
                 {
                     foreach (string key in L[l].Keys)
                     {
-                        if (text == L[previous_l][key])
+                        if (L[previous_l].ContainsKey(key))
                         {
-                            text = L[l][key].ToTitleCase();
-                            break;
+                            if (text == L[previous_l][key])
+                            {
+                                text = L[l][key].ToTitleCase();
+                                break;
+                            }
                         }
                     }
                 }
