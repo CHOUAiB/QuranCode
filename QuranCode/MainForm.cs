@@ -409,22 +409,22 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.PlayerSelectionSilenceGapTrackBar, L[l]["Silence between selections"]);
             this.ToolTip.SetToolTip(this.UndoValueNavigationLabel, L[l]["Back"]);
             this.ToolTip.SetToolTip(this.RedoValueNavigationLabel, L[l]["Forward"]);
-            this.ToolTip.SetToolTip(this.TextModeComboBox, L[l]["Letter simplification system"]);
-            this.ToolTip.SetToolTip(this.NumerologySystemComboBox, L[l]["Letter valuation system"]);
-            this.ToolTip.SetToolTip(this.ChaptersTextBox, L[l]["Chapters in selection"]);
-            this.ToolTip.SetToolTip(this.VersesTextBox, L[l]["Verses in selection"]);
-            this.ToolTip.SetToolTip(this.WordsTextBox, L[l]["Words in selection"]);
-            this.ToolTip.SetToolTip(this.LettersTextBox, L[l]["Letters in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalChaptersTextBox, L[l]["Chapters in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalVersesTextBox, L[l]["Verses in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalWordsTextBox, L[l]["Words in selection"]);
-            this.ToolTip.SetToolTip(this.DecimalLettersTextBox, L[l]["Letters in selection"]);
+            //this.ToolTip.SetToolTip(this.TextModeComboBox, L[l]["Letter simplification system"]);
+            //this.ToolTip.SetToolTip(this.NumerologySystemComboBox, L[l]["Letter valuation system"]);
+            //this.ToolTip.SetToolTip(this.ChaptersTextBox, L[l]["Chapters in selection"]);
+            //this.ToolTip.SetToolTip(this.VersesTextBox, L[l]["Verses in selection"]);
+            //this.ToolTip.SetToolTip(this.WordsTextBox, L[l]["Words in selection"]);
+            //this.ToolTip.SetToolTip(this.LettersTextBox, L[l]["Letters in selection"]);
+            //this.ToolTip.SetToolTip(this.DecimalChaptersTextBox, L[l]["Chapters in selection"]);
+            //this.ToolTip.SetToolTip(this.DecimalVersesTextBox, L[l]["Verses in selection"]);
+            //this.ToolTip.SetToolTip(this.DecimalWordsTextBox, L[l]["Words in selection"]);
+            //this.ToolTip.SetToolTip(this.DecimalLettersTextBox, L[l]["Letters in selection"]);
             this.ToolTip.SetToolTip(this.ChapterNumberSumTextBox, L[l]["Sum of chapter numbers"]);
             this.ToolTip.SetToolTip(this.VerseNumberSumTextBox, L[l]["Sum of verse numbers in their chapters"]);
             this.ToolTip.SetToolTip(this.WordNumberSumTextBox, L[l]["Sum of word numbers in their verses"]);
             this.ToolTip.SetToolTip(this.LetterNumberSumTextBox, L[l]["Sum of letter numbers in their words"]);
-            this.ToolTip.SetToolTip(this.ValueTextBox, L[l]["Value of selection"]);
-            this.ToolTip.SetToolTip(this.PrimeFactorsTextBox, L[l]["Prime factors of Value"]);
+            //this.ToolTip.SetToolTip(this.ValueTextBox, L[l]["Value of selection"]);
+            //this.ToolTip.SetToolTip(this.PrimeFactorsTextBox, L[l]["Prime factors of Value"]);
             this.ToolTip.SetToolTip(this.TranslationFontLabel, L[l]["Font"]);
             this.ToolTip.SetToolTip(this.SearchScopeBookLabel, L[l]["Search in entire book"]);
             this.ToolTip.SetToolTip(this.SearchScopeSelectionLabel, L[l]["Search in current selection"]);
@@ -754,6 +754,33 @@ public partial class MainForm : Form, ISubscriber
 
         // must initialize here as it is null
         m_active_textbox = MainTextBox;
+
+        //this.ChapterComboBox.MouseHover += new EventHandler(Control_MouseHover);
+        //this.ChapterVerseNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.ChapterWordNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.ChapterLetterNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.PageNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.StationNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.PartNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.GroupNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.HalfNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.QuarterNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+        //this.BowingNumericUpDown.MouseHover += new EventHandler(Control_MouseHover);
+
+        this.ChaptersTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.VersesTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.WordsTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.LettersTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        //this.ValueTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.DecimalChaptersTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.DecimalVersesTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.DecimalWordsTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.DecimalLettersTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        //this.DecimalValueTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.ChapterDiffTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.VerseDiffTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.WordDiffTextBox.MouseHover += new EventHandler(Control_MouseHover);
+        this.LetterDiffTextBox.MouseHover += new EventHandler(Control_MouseHover);
 
         this.MainTextBox.HideSelection = false; // this won't shift the text to the left
         //this.MainTextBox.HideSelection = true; // this WILL shift the text to the left
@@ -12471,6 +12498,19 @@ public partial class MainForm : Form, ISubscriber
                         }
                     }
                 }
+            }
+        }
+
+        if (m_client != null)
+        {
+            if (m_client.NumerologySystem != null)
+            {
+                StringBuilder str = new StringBuilder();
+                foreach (char c in m_client.NumerologySystem.Keys)
+                {
+                    str.AppendLine(c.ToString() + "\t" + m_client.NumerologySystem[c].ToString());
+                }
+                ToolTip.SetToolTip(EditNumerologySystemLabel, str.ToString());
             }
         }
 
