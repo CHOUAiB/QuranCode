@@ -26,6 +26,28 @@ public partial class MainForm : Form
             if (m_client != null)
             {
                 m_client.BuildSimplifiedBook(m_client.NumerologySystem.TextMode, true, false, false, false);
+
+                if (m_client.NumerologySystem != null)
+                {
+                    m_client.NumerologySystem.AddToLetterCNumber = false;
+                    m_client.NumerologySystem.AddToWordCNumber = false;
+                    m_client.NumerologySystem.AddToVerseCNumber = false;
+                    m_client.NumerologySystem.AddToChapterCNumber = false;
+
+                    m_client.NumerologySystem.AddToLetterLDistance = true;
+                    m_client.NumerologySystem.AddToLetterWDistance = true;
+                    m_client.NumerologySystem.AddToLetterVDistance = true;
+                    m_client.NumerologySystem.AddToLetterCDistance = false;
+                    m_client.NumerologySystem.AddToWordWDistance = true;
+                    m_client.NumerologySystem.AddToWordVDistance = true;
+                    m_client.NumerologySystem.AddToWordCDistance = false;
+                    m_client.NumerologySystem.AddToVerseVDistance = true;
+                    m_client.NumerologySystem.AddToVerseCDistance = false;
+
+                    m_client.NumerologySystem.AddDistancesToPrevious = false;
+                    m_client.NumerologySystem.AddDistancesToNext = false;
+                    m_client.NumerologySystem.AddDistancesWithinChapters = true;
+                }
             }
 
             PopulateNumerologySystemComboBox();
@@ -102,24 +124,28 @@ public partial class MainForm : Form
         }
     }
 
+    private bool m_add_word_verse_values_to_value = false;
     private bool m_add_positions_to_value = false;
     private bool m_add_distances_to_previous_to_value = false;
     private bool m_add_distances_to_next_to_value = false;
+    private void AddWordVerseValuesCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        m_add_word_verse_values_to_value = AddWordVerseValuesCheckBox.Checked;
+    }
     private void AddPositionsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_add_positions_to_value = AddPositionsCheckBox.Checked;
         if (m_client != null)
         {
-            m_client.NumerologySystem.AddToLetterLNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToLetterWNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToLetterVNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToLetterCNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToWordWNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToWordVNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToWordCNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToVerseCNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToChapterCNumber = m_add_distances_to_previous_to_value;
+            if (m_client.NumerologySystem != null)
+            {
+                m_client.NumerologySystem.AddToLetterLNumber = m_add_positions_to_value;
+                m_client.NumerologySystem.AddToLetterWNumber = m_add_positions_to_value;
+                m_client.NumerologySystem.AddToLetterVNumber = m_add_positions_to_value;
+                m_client.NumerologySystem.AddToWordWNumber = m_add_positions_to_value;
+                m_client.NumerologySystem.AddToWordVNumber = m_add_positions_to_value;
+                m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_value;
+            }
         }
         AddPositionsCheckBox.Refresh();
     }
@@ -128,18 +154,10 @@ public partial class MainForm : Form
         m_add_distances_to_previous_to_value = AddDistancesToPreviousCheckBox.Checked;
         if (m_client != null)
         {
-            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_previous_to_value;
-
-            m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_value;
-            m_client.NumerologySystem.AddDistancesWithinChapters = true;
+            if (m_client.NumerologySystem != null)
+            {
+                m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_value;
+            }
         }
         AddDistancesToPreviousCheckBox.Refresh();
     }
@@ -148,18 +166,10 @@ public partial class MainForm : Form
         m_add_distances_to_next_to_value = AddDistancesToNextCheckBox.Checked;
         if (m_client != null)
         {
-            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_next_to_value;
-
-            m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_value;
-            m_client.NumerologySystem.AddDistancesWithinChapters = true;
+            if (m_client.NumerologySystem != null)
+            {
+                m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_value;
+            }
         }
         AddDistancesToNextCheckBox.Refresh();
     }
@@ -471,6 +481,7 @@ public partial class MainForm : Form
     private void GenerateButton_Click(object sender, EventArgs e)
     {
         NumerologySystemComboBox.Enabled = false;
+        AddWordVerseValuesCheckBox.Enabled = false;
         AddPositionsCheckBox.Enabled = false;
         AddDistancesToPreviousCheckBox.Enabled = false;
         AddDistancesToNextCheckBox.Enabled = false;
@@ -511,7 +522,6 @@ public partial class MainForm : Form
                                 if (m_word_subsets != null)
                                 {
                                     m_lines.Clear();
-
                                     for (int i = 0; i < m_word_subsets.Count; i++)
                                     {
                                         // calculate word values
@@ -528,6 +538,11 @@ public partial class MainForm : Form
                                             foreach (Letter letter in word.Letters)
                                             {
                                                 long letter_value = m_client.CalculateValue(letter);
+                                                if (m_add_word_verse_values_to_value)
+                                                {
+                                                    letter_value += m_client.CalculateValue(letter.Word);
+                                                    letter_value += m_client.CalculateValue(letter.Word.Verse);
+                                                }
                                                 sentence_letter_values.Add(letter_value);
                                             }
                                         }
@@ -657,6 +672,7 @@ public partial class MainForm : Form
         finally
         {
             NumerologySystemComboBox.Enabled = true;
+            AddWordVerseValuesCheckBox.Enabled = true;
             AddPositionsCheckBox.Enabled = true;
             AddDistancesToPreviousCheckBox.Enabled = true;
             AddDistancesToNextCheckBox.Enabled = true;
@@ -671,6 +687,7 @@ public partial class MainForm : Form
     private void AutoGenerateButton_Click(object sender, EventArgs e)
     {
         NumerologySystemComboBox.Enabled = false;
+        AddWordVerseValuesCheckBox.Enabled = false;
         AddPositionsCheckBox.Enabled = false;
         AddDistancesToPreviousCheckBox.Enabled = false;
         AddDistancesToNextCheckBox.Enabled = false;
@@ -678,7 +695,6 @@ public partial class MainForm : Form
         NumberTypeLabel.Enabled = false;
         GenerateButton.Enabled = false;
         SaveButton.Enabled = false;
-        //ClearListView();
 
         // prepare for next state
         m_interlace = true;
@@ -715,40 +731,30 @@ public partial class MainForm : Form
                                 m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
                                 if (m_word_subsets != null)
                                 {
-                                    foreach (string numerology_system_name in NumerologySystemComboBox.Items)
+                                    for (int h = 0; h < 2; h++)
                                     {
-                                        NumerologySystemComboBox.SelectedItem = numerology_system_name;
-                                        NumerologySystemComboBox.Refresh();
-                                        m_client.LoadNumerologySystem(numerology_system_name);
-
+                                        AddWordVerseValuesCheckBox.Checked = (h == 1);
                                         for (int k = 0; k < 2; k++)
                                         {
                                             AddPositionsCheckBox.Checked = (k == 1);
-
                                             for (int l = 0; l < 2; l++)
                                             {
                                                 AddDistancesToPreviousCheckBox.Checked = (l == 1);
-
                                                 for (int m = 0; m < 2; m++)
                                                 {
                                                     AddDistancesToNextCheckBox.Checked = (m == 1);
-
                                                     for (int n = 0; n < 2; n++)
                                                     {
                                                         InterlaceLabel_Click(sender, e);
-
                                                         for (int o = 0; o < 2; o++)
                                                         {
                                                             DirectionLabel_Click(sender, e);
-
                                                             for (int p = 0; p < 6; p++)
                                                             {
                                                                 NumberTypeLabel_Click(sender, e);
-
                                                                 if (m_lines != null)
                                                                 {
                                                                     m_lines.Clear();
-
                                                                     for (int i = 0; i < m_word_subsets.Count; i++)
                                                                     {
                                                                         // calculate word values
@@ -765,6 +771,11 @@ public partial class MainForm : Form
                                                                             foreach (Letter letter in word.Letters)
                                                                             {
                                                                                 long letter_value = m_client.CalculateValue(letter);
+                                                                                if (m_add_word_verse_values_to_value)
+                                                                                {
+                                                                                    letter_value += m_client.CalculateValue(letter.Word);
+                                                                                    letter_value += m_client.CalculateValue(letter.Word.Verse);
+                                                                                }
                                                                                 sentence_letter_values.Add(letter_value);
                                                                             }
                                                                         }
@@ -888,13 +899,13 @@ public partial class MainForm : Form
 
                                                                     Application.DoEvents();
                                                                 }
-                                                            } // foreach NumberType
-                                                        } // foreach Direction
-                                                    } // foreach Interlace
-                                                } // foreach DistancesToNext
-                                            } // foreach DistancesToPrevious
-                                        } // foreach Positions
-                                    } // foreach NumerologySystem
+                                                            } // for NumberType
+                                                        } // for Direction
+                                                    } // for Interlace
+                                                } // for AddDistancesToNext
+                                            } // for AddDistancesToPrevious
+                                        } // for AddPositions
+                                    } // for AddWordVerseValues
                                 }
                             }
                         }
@@ -905,6 +916,7 @@ public partial class MainForm : Form
         finally
         {
             NumerologySystemComboBox.Enabled = true;
+            AddWordVerseValuesCheckBox.Enabled = true;
             AddPositionsCheckBox.Enabled = true;
             AddDistancesToPreviousCheckBox.Enabled = true;
             AddDistancesToNextCheckBox.Enabled = true;
