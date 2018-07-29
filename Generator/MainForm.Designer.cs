@@ -142,6 +142,7 @@
             this.NumberTypeLabel.Name = "NumberTypeLabel";
             this.NumberTypeLabel.Size = new System.Drawing.Size(25, 17);
             this.NumberTypeLabel.TabIndex = 12;
+            this.NumberTypeLabel.Text = "P";
             this.NumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.NumberTypeLabel, "use prime concatenated letter values only");
             this.NumberTypeLabel.Click += new System.EventHandler(this.NumberTypeLabel_Click);

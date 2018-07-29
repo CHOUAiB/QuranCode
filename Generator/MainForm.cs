@@ -89,12 +89,12 @@ public partial class MainForm : Form
         }
 
         m_lines = new List<Line>();
-        generated_words = new Dictionary<string, int>();
+        generated_words = new SortedDictionary<string, int>();
 
-        m_number_type = NumberType.Natural;
-        NumberTypeLabel.Text = "";
-        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-        ToolTip.SetToolTip(NumberTypeLabel, "use all " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
+        m_number_type = NumberType.Prime;
+        NumberTypeLabel.Text = "P";
+        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_value_interlace ? "interlaced" : "concatenated") + " letter values only");
     }
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
@@ -625,7 +625,7 @@ public partial class MainForm : Form
         ListView.Refresh();
     }
 
-    private Dictionary<string, int> generated_words = null;
+    private SortedDictionary<string, int> generated_words = null;
     private void GenerateWordsButton_Click(object sender, EventArgs e)
     {
         TextModeComboBox.Enabled = false;
@@ -670,146 +670,149 @@ public partial class MainForm : Form
                                 m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
                                 if (m_word_subsets != null)
                                 {
-                                    generated_words = new Dictionary<string, int>();
-
-                                    m_lines.Clear();
-                                    for (int i = 0; i < m_word_subsets.Count; i++)
+                                    if (m_lines != null)
                                     {
-                                        // calculate word values
-                                        long sentence_word_value = 0L;
-                                        foreach (Word word in m_word_subsets[i])
-                                        {
-                                            sentence_word_value += m_client.CalculateValue(word);
-                                        }
+                                        m_lines.Clear();
+                                        generated_words.Clear();
 
-                                        // calculate letter values
-                                        List<long> sentence_letter_values = new List<long>();
-                                        foreach (Word word in m_word_subsets[i])
+                                        for (int i = 0; i < m_word_subsets.Count; i++)
                                         {
-                                            foreach (Letter letter in word.Letters)
+                                            // calculate word values
+                                            long sentence_word_value = 0L;
+                                            foreach (Word word in m_word_subsets[i])
                                             {
-                                                long letter_value = m_client.CalculateValue(letter);
-                                                if (m_add_verse_and_word_values_to_letter_value)
-                                                {
-                                                    letter_value += m_client.CalculateValue(letter.Word);
-                                                    letter_value += m_client.CalculateValue(letter.Word.Verse);
-                                                }
-                                                sentence_letter_values.Add(letter_value);
+                                                sentence_word_value += m_client.CalculateValue(word);
                                             }
-                                        }
 
-                                        // build sentence from word subset
-                                        StringBuilder str = new StringBuilder();
-                                        foreach (Word word in m_word_subsets[i])
-                                        {
-                                            str.Append(word.Text + " ");
-                                        }
-                                        if (str.Length > 1)
-                                        {
-                                            str.Remove(str.Length - 1, 1);
-                                        }
-
-                                        // generate Quran words
-                                        string generated_word = "";
-                                        if (m_client.NumerologySystem != null)
-                                        {
-                                            Dictionary<char, long> letter_dictionary = m_client.NumerologySystem.LetterValues;
-                                            if (letter_dictionary != null)
+                                            // calculate letter values
+                                            List<long> sentence_letter_values = new List<long>();
+                                            foreach (Word word in m_word_subsets[i])
                                             {
-                                                List<char> numerology_letters = new List<char>(letter_dictionary.Keys);
-                                                List<long> numerology_letter_values = new List<long>(letter_dictionary.Values);
-
-                                                // interlace or concatenate values of numerology letters with sentence letters
-                                                for (int j = 0; j < numerology_letters.Count; j++)
+                                                foreach (Letter letter in word.Letters)
                                                 {
-                                                    long number = 0L;
-                                                    string combination = "";
-                                                    string AAA = numerology_letter_values[j].ToString();
-                                                    string BBB = sentence_letter_values[j].ToString();
-
-                                                    if (m_value_interlace)
+                                                    long letter_value = m_client.CalculateValue(letter);
+                                                    if (m_add_verse_and_word_values_to_letter_value)
                                                     {
-                                                        int a = AAA.Length;
-                                                        int b = BBB.Length;
-                                                        int min = Math.Min(a, b);
+                                                        letter_value += m_client.CalculateValue(letter.Word);
+                                                        letter_value += m_client.CalculateValue(letter.Word.Verse);
+                                                    }
+                                                    sentence_letter_values.Add(letter_value);
+                                                }
+                                            }
 
-                                                        string ABABAB = null;
-                                                        for (int d = 0; d < min; d++)
+                                            // build sentence from word subset
+                                            StringBuilder str = new StringBuilder();
+                                            foreach (Word word in m_word_subsets[i])
+                                            {
+                                                str.Append(word.Text + " ");
+                                            }
+                                            if (str.Length > 1)
+                                            {
+                                                str.Remove(str.Length - 1, 1);
+                                            }
+
+                                            // generate Quran words
+                                            string generated_word = "";
+                                            if (m_client.NumerologySystem != null)
+                                            {
+                                                Dictionary<char, long> letter_dictionary = m_client.NumerologySystem.LetterValues;
+                                                if (letter_dictionary != null)
+                                                {
+                                                    List<char> numerology_letters = new List<char>(letter_dictionary.Keys);
+                                                    List<long> numerology_letter_values = new List<long>(letter_dictionary.Values);
+
+                                                    // interlace or concatenate values of numerology letters with sentence letters
+                                                    for (int j = 0; j < numerology_letters.Count; j++)
+                                                    {
+                                                        long number = 0L;
+                                                        string combination = "";
+                                                        string AAA = numerology_letter_values[j].ToString();
+                                                        string BBB = sentence_letter_values[j].ToString();
+
+                                                        if (m_value_interlace)
                                                         {
-                                                            ABABAB += AAA[d].ToString() + BBB[d].ToString();
-                                                        }
-                                                        if (a > min)
-                                                        {
-                                                            ABABAB += AAA.Substring(min);
+                                                            int a = AAA.Length;
+                                                            int b = BBB.Length;
+                                                            int min = Math.Min(a, b);
+
+                                                            string ABABAB = null;
+                                                            for (int d = 0; d < min; d++)
+                                                            {
+                                                                ABABAB += AAA[d].ToString() + BBB[d].ToString();
+                                                            }
+                                                            if (a > min)
+                                                            {
+                                                                ABABAB += AAA.Substring(min);
+                                                            }
+                                                            else
+                                                            {
+                                                                ABABAB += BBB.Substring(min);
+                                                            }
+
+                                                            string BABABA = null;
+                                                            for (int d = 0; d < min; d++)
+                                                            {
+                                                                BABABA += BBB[d].ToString() + AAA[d].ToString();
+                                                            }
+                                                            if (a > min)
+                                                            {
+                                                                BABABA += AAA.Substring(min);
+                                                            }
+                                                            else
+                                                            {
+                                                                BABABA += BBB.Substring(min);
+                                                            }
+
+                                                            combination = (m_value_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
                                                         }
                                                         else
                                                         {
-                                                            ABABAB += BBB.Substring(min);
+                                                            string AAABBB = AAA + BBB;
+                                                            string BBBAAA = BBB + AAA;
+                                                            combination = (m_value_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
                                                         }
 
-                                                        string BABABA = null;
-                                                        for (int d = 0; d < min; d++)
+                                                        // generate word from letter value combinations matching the number type
+                                                        if (long.TryParse(combination, out number))
                                                         {
-                                                            BABABA += BBB[d].ToString() + AAA[d].ToString();
-                                                        }
-                                                        if (a > min)
-                                                        {
-                                                            BABABA += AAA.Substring(min);
-                                                        }
-                                                        else
-                                                        {
-                                                            BABABA += BBB.Substring(min);
-                                                        }
-
-                                                        combination = (m_value_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
-                                                    }
-                                                    else
-                                                    {
-                                                        string AAABBB = AAA + BBB;
-                                                        string BBBAAA = BBB + AAA;
-                                                        combination = (m_value_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
-                                                    }
-
-                                                    // generate word from letter value combinations matching the number type
-                                                    if (long.TryParse(combination, out number))
-                                                    {
-                                                        if (Numbers.IsNumberType(number, m_number_type))
-                                                        {
-                                                            // mod 29 to select letter
-                                                            int index = (int)((long)number % (long)numerology_letters.Count);
-                                                            generated_word += numerology_letters[index];
+                                                            if (Numbers.IsNumberType(number, m_number_type))
+                                                            {
+                                                                // mod 29 to select letter
+                                                                int index = (int)((long)number % (long)numerology_letters.Count);
+                                                                generated_word += numerology_letters[index];
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
-                                        }
 
-                                        // add sentence if it generates a valid quran word
-                                        if ((m_number_type == NumberType.Natural) || (quran_word_texts.Contains(generated_word)))
-                                        {
-                                            Line line = new Line();
-                                            line.Id = m_lines.Count + 1;
-                                            line.Sentence = str.ToString();
-                                            line.Value = sentence_word_value;
-                                            line.Word = generated_word;
-                                            m_lines.Add(line);
-
-                                            if (generated_words.ContainsKey(generated_word))
+                                            // add sentence if it generates a valid quran word
+                                            if ((m_number_type == NumberType.Natural) || (quran_word_texts.Contains(generated_word)))
                                             {
-                                                generated_words[generated_word]++;
-                                            }
-                                            else
-                                            {
-                                                generated_words.Add(generated_word, 1);
-                                            }
-                                        }
+                                                Line line = new Line();
+                                                line.Id = m_lines.Count + 1;
+                                                line.Sentence = str.ToString();
+                                                line.Value = sentence_word_value;
+                                                line.Word = generated_word;
+                                                m_lines.Add(line);
 
-                                        // display progress
-                                        this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة الفاتحة | Sentences = " + (i + 1) + "/" + m_word_subsets.Count;
-                                        ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
-                                        WordCountLabel.Text = m_lines.Count + " (" + generated_words.Count + ") words";
-                                        WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
-                                        WordCountLabel.Refresh();
+                                                if (generated_words.ContainsKey(generated_word))
+                                                {
+                                                    generated_words[generated_word]++;
+                                                }
+                                                else
+                                                {
+                                                    generated_words.Add(generated_word, 1);
+                                                }
+                                            }
+
+                                            // display progress
+                                            this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة الفاتحة | Sentences = " + (i + 1) + "/" + m_word_subsets.Count;
+                                            ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
+                                            WordCountLabel.Text = m_lines.Count + " (" + generated_words.Count + ") words";
+                                            WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
+                                            WordCountLabel.Refresh();
+                                        }
 
                                         Application.DoEvents();
                                     } // for m_word_subsets

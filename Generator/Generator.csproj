@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <Content Include="Radiation.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Client\Client.csproj">
