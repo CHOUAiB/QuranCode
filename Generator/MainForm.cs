@@ -121,6 +121,7 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToVerseCNumber = m_add_positions_to_value;
             m_client.NumerologySystem.AddToChapterCNumber = m_add_distances_to_previous_to_value;
         }
+        AddPositionsCheckBox.Refresh();
     }
     private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
     {
@@ -140,6 +141,7 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_value;
             m_client.NumerologySystem.AddDistancesWithinChapters = true;
         }
+        AddDistancesToPreviousCheckBox.Refresh();
     }
     private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
     {
@@ -159,6 +161,7 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_value;
             m_client.NumerologySystem.AddDistancesWithinChapters = true;
         }
+        AddDistancesToNextCheckBox.Refresh();
     }
 
     private bool m_interlace = false;
@@ -168,167 +171,166 @@ public partial class MainForm : Form
         InterlaceLabel.Text = m_interlace ? "§" : "- -";
         ToolTip.SetToolTip(InterlaceLabel, m_interlace ? "interlace digits of letter values" : "concatenate letter values");
 
-        if (m_concatenation_direction == RightToLeft.Yes)
-            ToolTip.SetToolTip(ConcatenationDirectionLabel, m_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA");
+        if (m_combination_direction == RightToLeft.Yes)
+            ToolTip.SetToolTip(DirectionLabel, m_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA");
         else
-            ToolTip.SetToolTip(ConcatenationDirectionLabel, m_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB");
+            ToolTip.SetToolTip(DirectionLabel, m_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB");
 
-        if (NumberTypeLabel.Text == "P")
-            ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-        else if (NumberTypeLabel.Text == "AP")
-            ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-        else if (NumberTypeLabel.Text == "XP")
-            ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-        else if (NumberTypeLabel.Text == "C")
-            ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-        else if (NumberTypeLabel.Text == "AC")
-            ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-        else if (NumberTypeLabel.Text == "XC")
-            ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-        else if (NumberTypeLabel.Text == "O")
-            ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-        else if (NumberTypeLabel.Text == "E")
-            ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+        switch (m_number_type)
+        {
+            case NumberType.Prime:
+                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                break;
+            case NumberType.AdditivePrime:
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                break;
+            case NumberType.NonAdditivePrime:
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                break;
+            case NumberType.Composite:
+                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                break;
+            case NumberType.AdditiveComposite:
+                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                break;
+            case NumberType.NonAdditiveComposite:
+                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                break;
+        }
+
+        InterlaceLabel.Refresh();
     }
-    private RightToLeft m_concatenation_direction = RightToLeft.Yes;
-    private void ConcatenationDirectionLabel_Click(object sender, EventArgs e)
+    private RightToLeft m_combination_direction = RightToLeft.Yes;
+    private void DirectionLabel_Click(object sender, EventArgs e)
     {
         string message = null;
-        if (m_concatenation_direction == RightToLeft.Yes)
+        if (m_combination_direction == RightToLeft.Yes)
         {
-            m_concatenation_direction = RightToLeft.No;
-            ConcatenationDirectionLabel.Text = "→";
+            m_combination_direction = RightToLeft.No;
+            DirectionLabel.Text = "→";
             message = m_interlace ? "interlace digits of letter values: ABABAB" : "concatenate letter values left to right: AAABBB";
         }
         else
         {
-            m_concatenation_direction = RightToLeft.Yes;
-            ConcatenationDirectionLabel.Text = "←";
+            m_combination_direction = RightToLeft.Yes;
+            DirectionLabel.Text = "←";
             message = m_interlace ? "interlace digits of letter values: BABABA" : "concatenate letter values right to left: BBBAAA";
         }
-        ToolTip.SetToolTip(ConcatenationDirectionLabel, message);
+        ToolTip.SetToolTip(DirectionLabel, message);
+        DirectionLabel.Refresh();
     }
     private NumberType m_number_type = NumberType.Prime;
     private void NumberTypeLabel_Click(object sender, EventArgs e)
     {
         if (ModifierKeys == Keys.Shift)
         {
-            if (NumberTypeLabel.Text == "E")
+            switch (m_number_type)
             {
-                m_number_type = NumberType.Odd;
-                NumberTypeLabel.Text = "O";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "O")
-            {
-                m_number_type = NumberType.NonAdditiveComposite;
-                NumberTypeLabel.Text = "XC";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "XC")
-            {
-                m_number_type = NumberType.AdditiveComposite;
-                NumberTypeLabel.Text = "AC";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "AC")
-            {
-                m_number_type = NumberType.Composite;
-                NumberTypeLabel.Text = "C";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "C")
-            {
-                m_number_type = NumberType.NonAdditivePrime;
-                NumberTypeLabel.Text = "XP";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "XP")
-            {
-                m_number_type = NumberType.AdditivePrime;
-                NumberTypeLabel.Text = "AP";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "AP")
-            {
-                m_number_type = NumberType.Prime;
-                NumberTypeLabel.Text = "P";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "P")
-            {
-                m_number_type = NumberType.Even;
-                NumberTypeLabel.Text = "E";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                case NumberType.NonAdditiveComposite:
+                    {
+                        m_number_type = NumberType.AdditiveComposite;
+                        NumberTypeLabel.Text = "AC";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.AdditiveComposite:
+                    {
+                        m_number_type = NumberType.Composite;
+                        NumberTypeLabel.Text = "C";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.Composite:
+                    {
+                        m_number_type = NumberType.NonAdditivePrime;
+                        NumberTypeLabel.Text = "XP";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.NonAdditivePrime:
+                    {
+                        m_number_type = NumberType.AdditivePrime;
+                        NumberTypeLabel.Text = "AP";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.AdditivePrime:
+                    {
+                        m_number_type = NumberType.Prime;
+                        NumberTypeLabel.Text = "P";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.Prime:
+                    {
+                        m_number_type = NumberType.NonAdditiveComposite;
+                        NumberTypeLabel.Text = "XC";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
             }
         }
         else
         {
-            if (NumberTypeLabel.Text == "P")
+            switch (m_number_type)
             {
-                m_number_type = NumberType.AdditivePrime;
-                NumberTypeLabel.Text = "AP";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "AP")
-            {
-                m_number_type = NumberType.NonAdditivePrime;
-                NumberTypeLabel.Text = "XP";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "XP")
-            {
-                m_number_type = NumberType.Composite;
-                NumberTypeLabel.Text = "C";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "C")
-            {
-                m_number_type = NumberType.AdditiveComposite;
-                NumberTypeLabel.Text = "AC";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "AC")
-            {
-                m_number_type = NumberType.NonAdditiveComposite;
-                NumberTypeLabel.Text = "XC";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "XC")
-            {
-                m_number_type = NumberType.Odd;
-                NumberTypeLabel.Text = "O";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use odd " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "O")
-            {
-                m_number_type = NumberType.Even;
-                NumberTypeLabel.Text = "E";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use even " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
-            }
-            else if (NumberTypeLabel.Text == "E")
-            {
-                m_number_type = NumberType.Prime;
-                NumberTypeLabel.Text = "P";
-                NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-                ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                case NumberType.Prime:
+                    {
+                        m_number_type = NumberType.AdditivePrime;
+                        NumberTypeLabel.Text = "AP";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(47L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.AdditivePrime:
+                    {
+                        m_number_type = NumberType.NonAdditivePrime;
+                        NumberTypeLabel.Text = "XP";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.NonAdditivePrime:
+                    {
+                        m_number_type = NumberType.Composite;
+                        NumberTypeLabel.Text = "C";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(14L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.Composite:
+                    {
+                        m_number_type = NumberType.AdditiveComposite;
+                        NumberTypeLabel.Text = "AC";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(114L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.AdditiveComposite:
+                    {
+                        m_number_type = NumberType.NonAdditiveComposite;
+                        NumberTypeLabel.Text = "XC";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(25L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use non-additive composite " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
+                case NumberType.NonAdditiveComposite:
+                    {
+                        m_number_type = NumberType.Prime;
+                        NumberTypeLabel.Text = "P";
+                        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+                        ToolTip.SetToolTip(NumberTypeLabel, "use prime " + (m_interlace ? "interlaced" : "concatenated") + " letter values only");
+                    }
+                    break;
             }
         }
+        NumberTypeLabel.Refresh();
     }
 
     public enum SortMethod { ById, BySentence, ByValue, ByWord }
@@ -429,10 +431,29 @@ public partial class MainForm : Form
             m_lines.Sort();
 
             // display items
-            DisplayLines();
+            UpdateListView();
         }
     }
-    private void DisplayLines()
+    private void ClearListView()
+    {
+        ListView.Items.Clear();
+        Line.SortMethod = (SortMethod)0;
+        Line.SortOrder = SortOrder.Ascending;
+        foreach (ColumnHeader column in ListView.Columns)
+        {
+            if (column.Text.EndsWith("▲"))
+            {
+                column.Text = column.Text.Replace("▲", " ");
+            }
+            else if (column.Text.EndsWith("▼"))
+            {
+                column.Text = column.Text.Replace("▼", " ");
+            }
+        }
+        ListView.Columns[0].Text = ListView.Columns[0].Text = "# ▲";
+        ListView.Refresh();
+    }
+    private void UpdateListView()
     {
         ListView.Items.Clear();
         for (int i = 0; i < m_lines.Count; i++)
@@ -444,6 +465,7 @@ public partial class MainForm : Form
             parts[3] = m_lines[i].Word;
             ListView.Items.Add(new ListViewItem(parts, i));
         }
+        ListView.Refresh();
     }
 
     private void GenerateButton_Click(object sender, EventArgs e)
@@ -452,206 +474,179 @@ public partial class MainForm : Form
         AddPositionsCheckBox.Enabled = false;
         AddDistancesToPreviousCheckBox.Enabled = false;
         AddDistancesToNextCheckBox.Enabled = false;
-        ConcatenationDirectionLabel.Enabled = false;
+        DirectionLabel.Enabled = false;
         NumberTypeLabel.Enabled = false;
         GenerateButton.Enabled = false;
         SaveButton.Enabled = false;
+        ClearListView();
 
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            if (ListView != null)
+            if (m_client != null)
             {
-                ListView.Items.Clear();
-                Line.SortMethod = (SortMethod)0;
-                Line.SortOrder = SortOrder.Ascending;
-                foreach (ColumnHeader column in ListView.Columns)
+                if (m_client.Book != null)
                 {
-                    if (column.Text.EndsWith("▲"))
+                    if (m_client.Book.Chapters[0] != null)
                     {
-                        column.Text = column.Text.Replace("▲", " ");
-                    }
-                    else if (column.Text.EndsWith("▼"))
-                    {
-                        column.Text = column.Text.Replace("▼", " ");
-                    }
-                }
-                ListView.Columns[0].Text = ListView.Columns[0].Text = "# ▲";
-                ListView.Refresh();
-
-                if (m_client != null)
-                {
-                    if (m_client.Book != null)
-                    {
-                        if (m_client.Book.Chapters[0] != null)
+                        List<Verse> verses = m_client.Book.Chapters[0].Verses;
+                        if (verses != null)
                         {
-                            List<Verse> verses = m_client.Book.Chapters[0].Verses;
-                            if (verses != null)
+                            string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
+                            if (File.Exists(filename))
                             {
-                                string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
-                                if (File.Exists(filename))
+                                // load unique quran words
+                                List<string> quran_word_texts = FileHelper.LoadLines(filename);
+
+                                // setup all quran words from quran verses
+                                List<Word> words = new List<Word>();
+                                foreach (Verse verse in verses)
                                 {
-                                    // load unique quran words
-                                    List<string> quran_word_texts = FileHelper.LoadLines(filename);
+                                    words.AddRange(verse.Words);
+                                }
 
-                                    // setup all quran words from quran verses
-                                    List<Word> words = new List<Word>();
-                                    foreach (Verse verse in verses)
+                                // find all 7-word 29-letter word subsets
+                                WordSubsetFinder word_subset_finder = new WordSubsetFinder(words);
+                                m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
+                                if (m_word_subsets != null)
+                                {
+                                    m_lines.Clear();
+
+                                    for (int i = 0; i < m_word_subsets.Count; i++)
                                     {
-                                        words.AddRange(verse.Words);
-                                    }
-
-                                    // find all 7-word 29-letter word subsets
-                                    WordSubsetFinder word_subset_finder = new WordSubsetFinder(words);
-                                    m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
-                                    if (m_word_subsets != null)
-                                    {
-                                        m_lines.Clear();
-
-                                        for (int i = 0; i < m_word_subsets.Count; i++)
+                                        // calculate word values
+                                        long sentence_word_value = 0L;
+                                        foreach (Word word in m_word_subsets[i])
                                         {
-                                            // calculate word values
-                                            long sentence_word_value = 0L;
-                                            foreach (Word word in m_word_subsets[i])
-                                            {
-                                                sentence_word_value += m_client.CalculateValue(word);
-                                                sentence_word_value += m_client.CalculateValue(word.Verse);
-                                                sentence_word_value += m_client.CalculateValue(word.Verse.Chapter);
-                                            }
+                                            sentence_word_value += m_client.CalculateValue(word);
+                                        }
 
-                                            // calculate letter values
-                                            List<long> sentence_letter_values = new List<long>();
-                                            foreach (Word word in m_word_subsets[i])
+                                        // calculate letter values
+                                        List<long> sentence_letter_values = new List<long>();
+                                        foreach (Word word in m_word_subsets[i])
+                                        {
+                                            foreach (Letter letter in word.Letters)
                                             {
-                                                foreach (Letter letter in word.Letters)
+                                                long letter_value = m_client.CalculateValue(letter);
+                                                sentence_letter_values.Add(letter_value);
+                                            }
+                                        }
+
+                                        // build sentence from word subset
+                                        StringBuilder str = new StringBuilder();
+                                        foreach (Word word in m_word_subsets[i])
+                                        {
+                                            str.Append(word.Text + " ");
+                                        }
+                                        if (str.Length > 1)
+                                        {
+                                            str.Remove(str.Length - 1, 1);
+                                        }
+
+                                        // generate Quran words
+                                        string generated_word = "";
+                                        if (m_client.NumerologySystem != null)
+                                        {
+                                            Dictionary<char, long> letter_dictionary = m_client.NumerologySystem.LetterValues;
+                                            if (letter_dictionary != null)
+                                            {
+                                                List<char> numerology_letters = new List<char>(letter_dictionary.Keys);
+                                                List<long> numerology_letter_values = new List<long>(letter_dictionary.Values);
+
+                                                // interlace or concatenate values of numerology letters with sentence letters
+                                                for (int j = 0; j < numerology_letters.Count; j++)
                                                 {
-                                                    long letter_value = m_client.CalculateValue(letter);
-                                                    if (m_add_distances_to_previous_to_value)
+                                                    long number = 0L;
+                                                    string combination = "";
+                                                    string AAA = numerology_letter_values[j].ToString();
+                                                    string BBB = sentence_letter_values[j].ToString();
+
+                                                    if (m_interlace)
                                                     {
-                                                        letter_value += m_client.CalculateValue(letter.Word);
-                                                        letter_value += m_client.CalculateValue(letter.Word.Verse);
-                                                        letter_value += m_client.CalculateValue(letter.Word.Verse.Chapter);
-                                                    }
-                                                    sentence_letter_values.Add(letter_value);
-                                                }
-                                            }
+                                                        int a = AAA.Length;
+                                                        int b = BBB.Length;
+                                                        int min = Math.Min(a, b);
 
-                                            // build sentence from word subset
-                                            StringBuilder str = new StringBuilder();
-                                            foreach (Word word in m_word_subsets[i])
-                                            {
-                                                str.Append(word.Text + " ");
-                                            }
-                                            if (str.Length > 1)
-                                            {
-                                                str.Remove(str.Length - 1, 1);
-                                            }
-
-                                            // generate Quran words
-                                            string generated_word = "";
-                                            if (m_client.NumerologySystem != null)
-                                            {
-                                                Dictionary<char, long> letter_dictionary = m_client.NumerologySystem.LetterValues;
-                                                if (letter_dictionary != null)
-                                                {
-                                                    List<char> numerology_letters = new List<char>(letter_dictionary.Keys);
-                                                    List<long> numerology_letter_values = new List<long>(letter_dictionary.Values);
-
-                                                    // concatenate values of numerology letters with sentence letters
-                                                    for (int j = 0; j < numerology_letters.Count; j++)
-                                                    {
-                                                        long number = 0L;
-                                                        string combination = "";
-                                                        string AAA = numerology_letter_values[j].ToString();
-                                                        string BBB = sentence_letter_values[j].ToString();
-
-                                                        if (m_interlace)
+                                                        string ABABAB = null;
+                                                        for (int d = 0; d < min; d++)
                                                         {
-                                                            int a = AAA.Length;
-                                                            int b = BBB.Length;
-                                                            int min = Math.Min(a, b);
-
-                                                            string ABABAB = null;
-                                                            for (int d = 0; d < min; d++)
-                                                            {
-                                                                ABABAB += AAA[d].ToString() + BBB[d].ToString();
-                                                            }
-                                                            if (a > min)
-                                                            {
-                                                                ABABAB += AAA.Substring(min);
-                                                            }
-                                                            else
-                                                            {
-                                                                ABABAB += BBB.Substring(min);
-                                                            }
-
-                                                            string BABABA = null;
-                                                            for (int d = 0; d < min; d++)
-                                                            {
-                                                                BABABA += BBB[d].ToString() + AAA[d].ToString();
-                                                            }
-                                                            if (a > min)
-                                                            {
-                                                                BABABA += AAA.Substring(min);
-                                                            }
-                                                            else
-                                                            {
-                                                                BABABA += BBB.Substring(min);
-                                                            }
-
-                                                            combination = (m_concatenation_direction == RightToLeft.Yes) ? BABABA : ABABAB;
+                                                            ABABAB += AAA[d].ToString() + BBB[d].ToString();
+                                                        }
+                                                        if (a > min)
+                                                        {
+                                                            ABABAB += AAA.Substring(min);
                                                         }
                                                         else
                                                         {
-                                                            string AAABBB = AAA + BBB;
-                                                            string BBBAAA = BBB + AAA;
-                                                            combination = (m_concatenation_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
+                                                            ABABAB += BBB.Substring(min);
                                                         }
 
-                                                        // generate word from letter value concatenation matching number type
-                                                        if (long.TryParse(combination, out number))
+                                                        string BABABA = null;
+                                                        for (int d = 0; d < min; d++)
                                                         {
-                                                            if (Numbers.IsNumberType(number, m_number_type))
-                                                            {
-                                                                // mod 29 to select letter
-                                                                int index = (int)((long)number % (long)numerology_letters.Count);
-                                                                generated_word += numerology_letters[index];
-                                                            }
+                                                            BABABA += BBB[d].ToString() + AAA[d].ToString();
+                                                        }
+                                                        if (a > min)
+                                                        {
+                                                            BABABA += AAA.Substring(min);
+                                                        }
+                                                        else
+                                                        {
+                                                            BABABA += BBB.Substring(min);
+                                                        }
+
+                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
+                                                    }
+                                                    else
+                                                    {
+                                                        string AAABBB = AAA + BBB;
+                                                        string BBBAAA = BBB + AAA;
+                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
+                                                    }
+
+                                                    // generate word from letter value combinations matching the number type
+                                                    if (long.TryParse(combination, out number))
+                                                    {
+                                                        if (Numbers.IsNumberType(number, m_number_type))
+                                                        {
+                                                            // mod 29 to select letter
+                                                            int index = (int)((long)number % (long)numerology_letters.Count);
+                                                            generated_word += numerology_letters[index];
                                                         }
                                                     }
                                                 }
                                             }
-
-                                            // display sentence if it generates a valid quran word
-                                            if (quran_word_texts.Contains(generated_word))
-                                            {
-                                                Line line = new Line();
-                                                line.Id = m_lines.Count + 1;
-                                                line.Sentence = str.ToString();
-                                                line.Value = sentence_word_value;
-                                                line.Word = generated_word;
-                                                m_lines.Add(line);
-                                            }
-
-                                            // display progress
-                                            this.Text = "Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
-                                            ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
-                                            WordCountLabel.Text = m_lines.Count + " words";
-                                            WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
-                                            WordCountLabel.Refresh();
-
-                                            Application.DoEvents();
                                         }
 
-                                        if (m_lines.Count == 0)
+                                        // add sentence if it generates a valid quran word
+                                        if (quran_word_texts.Contains(generated_word))
                                         {
-                                            WordCountLabel.Text = "00000 words";
-                                            WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(0);
-                                            WordCountLabel.Refresh();
+                                            Line line = new Line();
+                                            line.Id = m_lines.Count + 1;
+                                            line.Sentence = str.ToString();
+                                            line.Value = sentence_word_value;
+                                            line.Word = generated_word;
+                                            m_lines.Add(line);
                                         }
 
-                                        DisplayLines();
+                                        // display progress
+                                        this.Text = "Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
+                                        ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
+                                        WordCountLabel.Text = m_lines.Count + " words";
+                                        WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
+                                        WordCountLabel.Refresh();
+
+                                        Application.DoEvents();
                                     }
+
+                                    if (m_lines.Count == 0)
+                                    {
+                                        WordCountLabel.Text = "00000 words";
+                                        WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(0);
+                                        WordCountLabel.Refresh();
+                                    }
+
+                                    UpdateListView();
                                 }
                             }
                         }
@@ -665,7 +660,7 @@ public partial class MainForm : Form
             AddPositionsCheckBox.Enabled = true;
             AddDistancesToPreviousCheckBox.Enabled = true;
             AddDistancesToNextCheckBox.Enabled = true;
-            ConcatenationDirectionLabel.Enabled = true;
+            DirectionLabel.Enabled = true;
             NumberTypeLabel.Enabled = true;
             GenerateButton.Enabled = true;
             SaveButton.Enabled = true;
@@ -673,41 +668,317 @@ public partial class MainForm : Form
             this.Cursor = Cursors.Default;
         }
     }
+    private void AutoGenerateButton_Click(object sender, EventArgs e)
+    {
+        NumerologySystemComboBox.Enabled = false;
+        AddPositionsCheckBox.Enabled = false;
+        AddDistancesToPreviousCheckBox.Enabled = false;
+        AddDistancesToNextCheckBox.Enabled = false;
+        DirectionLabel.Enabled = false;
+        NumberTypeLabel.Enabled = false;
+        GenerateButton.Enabled = false;
+        SaveButton.Enabled = false;
+        //ClearListView();
+
+        // prepare for next state
+        m_interlace = true;
+        m_combination_direction = RightToLeft.No;
+        m_number_type = NumberType.NonAdditiveComposite;
+
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (m_client != null)
+            {
+                if (m_client.Book != null)
+                {
+                    if (m_client.Book.Chapters[0] != null)
+                    {
+                        List<Verse> verses = m_client.Book.Chapters[0].Verses;
+                        if (verses != null)
+                        {
+                            string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
+                            if (File.Exists(filename))
+                            {
+                                // load unique quran words
+                                List<string> quran_word_texts = FileHelper.LoadLines(filename);
+
+                                // setup all quran words from quran verses
+                                List<Word> words = new List<Word>();
+                                foreach (Verse verse in verses)
+                                {
+                                    words.AddRange(verse.Words);
+                                }
+
+                                // find all 7-word 29-letter word subsets
+                                WordSubsetFinder word_subset_finder = new WordSubsetFinder(words);
+                                m_word_subsets = word_subset_finder.Find(verses.Count, words.Count);
+                                if (m_word_subsets != null)
+                                {
+                                    foreach (string numerology_system_name in NumerologySystemComboBox.Items)
+                                    {
+                                        NumerologySystemComboBox.SelectedItem = numerology_system_name;
+                                        NumerologySystemComboBox.Refresh();
+                                        m_client.LoadNumerologySystem(numerology_system_name);
+
+                                        for (int k = 0; k < 2; k++)
+                                        {
+                                            AddPositionsCheckBox.Checked = (k == 1);
+
+                                            for (int l = 0; l < 2; l++)
+                                            {
+                                                AddDistancesToPreviousCheckBox.Checked = (l == 1);
+
+                                                for (int m = 0; m < 2; m++)
+                                                {
+                                                    AddDistancesToNextCheckBox.Checked = (m == 1);
+
+                                                    for (int n = 0; n < 2; n++)
+                                                    {
+                                                        InterlaceLabel_Click(sender, e);
+
+                                                        for (int o = 0; o < 2; o++)
+                                                        {
+                                                            DirectionLabel_Click(sender, e);
+
+                                                            for (int p = 0; p < 6; p++)
+                                                            {
+                                                                NumberTypeLabel_Click(sender, e);
+
+                                                                if (m_lines != null)
+                                                                {
+                                                                    m_lines.Clear();
+
+                                                                    for (int i = 0; i < m_word_subsets.Count; i++)
+                                                                    {
+                                                                        // calculate word values
+                                                                        long sentence_word_value = 0L;
+                                                                        foreach (Word word in m_word_subsets[i])
+                                                                        {
+                                                                            sentence_word_value += m_client.CalculateValue(word);
+                                                                        }
+
+                                                                        // calculate letter values
+                                                                        List<long> sentence_letter_values = new List<long>();
+                                                                        foreach (Word word in m_word_subsets[i])
+                                                                        {
+                                                                            foreach (Letter letter in word.Letters)
+                                                                            {
+                                                                                long letter_value = m_client.CalculateValue(letter);
+                                                                                sentence_letter_values.Add(letter_value);
+                                                                            }
+                                                                        }
+
+                                                                        // build sentence from word subset
+                                                                        StringBuilder str = new StringBuilder();
+                                                                        foreach (Word word in m_word_subsets[i])
+                                                                        {
+                                                                            str.Append(word.Text + " ");
+                                                                        }
+                                                                        if (str.Length > 1)
+                                                                        {
+                                                                            str.Remove(str.Length - 1, 1);
+                                                                        }
+
+                                                                        // generate Quran words
+                                                                        string generated_word = "";
+                                                                        if (m_client.NumerologySystem != null)
+                                                                        {
+                                                                            Dictionary<char, long> letter_dictionary = m_client.NumerologySystem.LetterValues;
+                                                                            if (letter_dictionary != null)
+                                                                            {
+                                                                                List<char> numerology_letters = new List<char>(letter_dictionary.Keys);
+                                                                                List<long> numerology_letter_values = new List<long>(letter_dictionary.Values);
+
+                                                                                // interlace or concatenate values of numerology letters with sentence letters
+                                                                                for (int j = 0; j < numerology_letters.Count; j++)
+                                                                                {
+                                                                                    long number = 0L;
+                                                                                    string combination = "";
+                                                                                    string AAA = numerology_letter_values[j].ToString();
+                                                                                    string BBB = sentence_letter_values[j].ToString();
+
+                                                                                    if (m_interlace)
+                                                                                    {
+                                                                                        int a = AAA.Length;
+                                                                                        int b = BBB.Length;
+                                                                                        int min = Math.Min(a, b);
+
+                                                                                        string ABABAB = null;
+                                                                                        for (int d = 0; d < min; d++)
+                                                                                        {
+                                                                                            ABABAB += AAA[d].ToString() + BBB[d].ToString();
+                                                                                        }
+                                                                                        if (a > min)
+                                                                                        {
+                                                                                            ABABAB += AAA.Substring(min);
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            ABABAB += BBB.Substring(min);
+                                                                                        }
+
+                                                                                        string BABABA = null;
+                                                                                        for (int d = 0; d < min; d++)
+                                                                                        {
+                                                                                            BABABA += BBB[d].ToString() + AAA[d].ToString();
+                                                                                        }
+                                                                                        if (a > min)
+                                                                                        {
+                                                                                            BABABA += AAA.Substring(min);
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            BABABA += BBB.Substring(min);
+                                                                                        }
+
+                                                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BABABA : ABABAB;
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        string AAABBB = AAA + BBB;
+                                                                                        string BBBAAA = BBB + AAA;
+                                                                                        combination = (m_combination_direction == RightToLeft.Yes) ? BBBAAA : AAABBB;
+                                                                                    }
+
+                                                                                    // generate word from letter value combinations matching the number type
+                                                                                    if (long.TryParse(combination, out number))
+                                                                                    {
+                                                                                        if (Numbers.IsNumberType(number, m_number_type))
+                                                                                        {
+                                                                                            // mod 29 to select letter
+                                                                                            int index = (int)((long)number % (long)numerology_letters.Count);
+                                                                                            generated_word += numerology_letters[index];
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                        // add sentence if it generates a valid quran word
+                                                                        if (quran_word_texts.Contains(generated_word))
+                                                                        {
+                                                                            Line line = new Line();
+                                                                            line.Id = m_lines.Count + 1;
+                                                                            line.Sentence = str.ToString();
+                                                                            line.Value = sentence_word_value;
+                                                                            line.Word = generated_word;
+                                                                            m_lines.Add(line);
+                                                                        }
+
+                                                                        //// display progress
+                                                                        //this.Text = "Generator: " + (i + 1) + " / " + m_word_subsets.Count + " sentences processed";
+                                                                        //ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
+                                                                        //ProgressBar.Refresh();
+                                                                        //WordCountLabel.Text = m_lines.Count + " words";
+                                                                        //WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
+                                                                        //WordCountLabel.Refresh();
+                                                                    }
+
+                                                                    this.Text = "Generator: " + m_word_subsets.Count + " sentences processed";
+                                                                    ProgressBar.Value = 100;
+                                                                    ProgressBar.Refresh();
+                                                                    WordCountLabel.Text = m_lines.Count + " words";
+                                                                    WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
+                                                                    WordCountLabel.Refresh();
+
+                                                                    UpdateListView();
+
+                                                                    SaveButton_Click(sender, e);
+
+                                                                    Application.DoEvents();
+                                                                }
+                                                            } // foreach NumberType
+                                                        } // foreach Direction
+                                                    } // foreach Interlace
+                                                } // foreach DistancesToNext
+                                            } // foreach DistancesToPrevious
+                                        } // foreach Positions
+                                    } // foreach NumerologySystem
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        finally
+        {
+            NumerologySystemComboBox.Enabled = true;
+            AddPositionsCheckBox.Enabled = true;
+            AddDistancesToPreviousCheckBox.Enabled = true;
+            AddDistancesToNextCheckBox.Enabled = true;
+            DirectionLabel.Enabled = true;
+            NumberTypeLabel.Enabled = true;
+            GenerateButton.Enabled = true;
+            SaveButton.Enabled = true;
+
+            this.Cursor = Cursors.Default;
+        }
+    }
+
     private void SaveButton_Click(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            if (ListView != null)
+            if (m_lines != null)
             {
                 StringBuilder str = new StringBuilder();
-                for (int i = 0; i < ListView.Items.Count; i++)
+                for (int i = 0; i < m_lines.Count; i++)
                 {
-                    if (ListView.Items[i] != null)
+                    if (m_lines[i] != null)
                     {
-                        if ((ListView.Items[i].SubItems != null) && (ListView.Items[i].SubItems.Count == 4))
-                        {
-                            str.AppendLine(ListView.Items[i].SubItems[0].Text + "\t" + ListView.Items[i].SubItems[1].Text + "\t" + ListView.Items[i].SubItems[2].Text + "\t" + ListView.Items[i].SubItems[3].Text);
-                        }
+                        str.AppendLine(m_lines[i].Id + "\t" + m_lines[i].Sentence + "\t" + m_lines[i].Value + "\t" + m_lines[i].Word);
                     }
                 }
 
-                string filename = m_numerology_system_name
-                                + (m_add_positions_to_value ? "_Pos" : "")
-                                + (m_add_distances_to_previous_to_value ? "_DistP" : "")
-                                + (m_add_distances_to_next_to_value ? "_DistN" : "")
-                                + "Concatenate" + ((m_concatenation_direction == RightToLeft.Yes) ? "_R2L" : "_L2R")
-                                + ((m_number_type != NumberType.None) ? "_" : "") + m_number_type.ToString()
-                                + "_" + Line.SortOrder.ToString()
-                                + "_" + Line.SortMethod.ToString()
-                                + ".txt";
+                string filename =
+                    m_numerology_system_name
+                    + (m_add_positions_to_value ? "_n" : "__")
+                    + (m_add_distances_to_previous_to_value ? "_-d" : "_-_")
+                    + (m_add_distances_to_next_to_value ? "_d-" : "__-")
+                    + (m_interlace ? "_interlace" : "_concatenate")
+                    + ((m_combination_direction == RightToLeft.Yes) ? "_r" : "_l")
+                    + ((m_number_type != NumberType.None) ? "_" : "")
+                    + (
+                        (m_number_type == NumberType.Prime) ? "_P" :
+                        (m_number_type == NumberType.AdditivePrime) ? "AP" :
+                        (m_number_type == NumberType.NonAdditivePrime) ? "XP" :
+                        (m_number_type == NumberType.Composite) ? "_C" :
+                        (m_number_type == NumberType.AdditiveComposite) ? "AC" :
+                        (m_number_type == NumberType.NonAdditiveComposite) ? "XC" : ""
+                        )
+                    + ((sender == SaveButton) ? ((Line.SortOrder == SortOrder.Ascending) ? "_asc" : "_desc") : "")
+                    + ((sender == SaveButton) ? Line.SortMethod.ToString().Substring(2) : "")
+                    + ".txt";
 
                 if (Directory.Exists(Globals.STATISTICS_FOLDER))
                 {
                     string path = Globals.STATISTICS_FOLDER + "/" + filename;
                     FileHelper.SaveText(path, str.ToString());
-                    FileHelper.DisplayFile(path);
                 }
+
+                if (sender == SaveButton)
+                {
+                    ViewInNotpad(filename);
+                }
+            }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void ViewInNotpad(string filename)
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (Directory.Exists(Globals.STATISTICS_FOLDER))
+            {
+                string path = Globals.STATISTICS_FOLDER + "/" + filename;
+                FileHelper.DisplayFile(path);
             }
         }
         finally
