@@ -44,7 +44,7 @@
             this.ValueInterlaceLabel = new System.Windows.Forms.Label();
             this.AutoGenerateWordsButton = new System.Windows.Forms.Button();
             this.AddVerseAndWordValuesCheckBox = new System.Windows.Forms.CheckBox();
-            this.SaveButton = new System.Windows.Forms.Button();
+            this.InspectButton = new System.Windows.Forms.Button();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.NumerologySystemComboBox = new System.Windows.Forms.ComboBox();
             this.TextModeComboBox = new System.Windows.Forms.ComboBox();
@@ -236,20 +236,20 @@
             this.AddVerseAndWordValuesCheckBox.UseVisualStyleBackColor = true;
             this.AddVerseAndWordValuesCheckBox.CheckedChanged += new System.EventHandler(this.AddVerseAndWordValuesCheckBox_CheckedChanged);
             // 
-            // SaveButton
+            // InspectButton
             // 
-            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SaveButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
-            this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SaveButton.Location = new System.Drawing.Point(638, 358);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(23, 21);
-            this.SaveButton.TabIndex = 91;
-            this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ToolTip.SetToolTip(this.SaveButton, "Save and View");
-            this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            this.InspectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.InspectButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.InspectButton.Image = ((System.Drawing.Image)(resources.GetObject("InspectButton.Image")));
+            this.InspectButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.InspectButton.Location = new System.Drawing.Point(638, 358);
+            this.InspectButton.Name = "InspectButton";
+            this.InspectButton.Size = new System.Drawing.Size(23, 21);
+            this.InspectButton.TabIndex = 91;
+            this.InspectButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ToolTip.SetToolTip(this.InspectButton, "View");
+            this.InspectButton.UseVisualStyleBackColor = true;
+            this.InspectButton.Click += new System.EventHandler(this.InspectButton_Click);
             // 
             // ProgressBar
             // 
@@ -294,7 +294,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(664, 382);
-            this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.InspectButton);
             this.Controls.Add(this.AutoGenerateWordsButton);
             this.Controls.Add(this.NumerologySystemComboBox);
             this.Controls.Add(this.TextModeComboBox);
@@ -343,5 +343,5 @@
     private System.Windows.Forms.Button AutoGenerateWordsButton;
     private System.Windows.Forms.CheckBox AddVerseAndWordValuesCheckBox;
     private System.Windows.Forms.ComboBox TextModeComboBox;
-    private System.Windows.Forms.Button SaveButton;
+    private System.Windows.Forms.Button InspectButton;
 }

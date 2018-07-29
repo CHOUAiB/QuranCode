@@ -719,7 +719,7 @@ public partial class MainForm : Form
         NumberTypeLabel.Enabled = false;
         AutoGenerateWordsButton.Enabled = false;
         GenerateWordsButton.Enabled = false;
-        SaveButton.Enabled = false;
+        InspectButton.Enabled = false;
 
         this.Cursor = Cursors.WaitCursor;
         try
@@ -775,7 +775,7 @@ public partial class MainForm : Form
             NumberTypeLabel.Enabled = true;
             AutoGenerateWordsButton.Enabled = true;
             GenerateWordsButton.Enabled = true;
-            SaveButton.Enabled = true;
+            InspectButton.Enabled = true;
 
             this.Cursor = Cursors.Default;
         }
@@ -792,7 +792,7 @@ public partial class MainForm : Form
         NumberTypeLabel.Enabled = false;
         AutoGenerateWordsButton.Enabled = false;
         GenerateWordsButton.Enabled = false;
-        SaveButton.Enabled = false;
+        InspectButton.Enabled = false;
 
         this.Cursor = Cursors.WaitCursor;
         try
@@ -862,7 +862,7 @@ public partial class MainForm : Form
             NumberTypeLabel.Enabled = true;
             AutoGenerateWordsButton.Enabled = true;
             GenerateWordsButton.Enabled = true;
-            SaveButton.Enabled = true;
+            InspectButton.Enabled = true;
 
             this.Cursor = Cursors.Default;
         }
@@ -1056,13 +1056,13 @@ public partial class MainForm : Form
                 WordCountLabel.Refresh();
 
                 UpdateListView();
-                SaveButton_Click(null, null);
+                InspectButton_Click(null, null);
 
                 Application.DoEvents();
             }
         }
     }
-    private void SaveButton_Click(object sender, EventArgs e)
+    private void InspectButton_Click(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
         try
@@ -1112,7 +1112,7 @@ public partial class MainForm : Form
                 }
 
                 string filename = null;
-                if (sender == SaveButton)
+                if (sender == InspectButton)
                 {
                     string sort_method = Line.SortMethod.ToString().Substring(2);
                     string sort_order = (Line.SortOrder == SortOrder.Ascending) ? "asc" : "desc";
@@ -1146,7 +1146,7 @@ public partial class MainForm : Form
                     string path = Globals.STATISTICS_FOLDER + "/" + filename;
                     FileHelper.SaveText(path, str.ToString());
 
-                    if (sender == SaveButton)
+                    if (sender == InspectButton)
                     {
                         FileHelper.DisplayFile(path);
                     }
