@@ -27,13 +27,19 @@ public partial class MainForm : Form
         }
     }
 
-    private static int ROWS = 32;
+    private static int ROWS = 30;
     private static int COLS = 19;
     private TextBox[,] controls = new TextBox[ROWS, COLS];
 
+    private float m_dpi = 0F;
     public MainForm()
     {
+        using (Graphics graphics = this.CreateGraphics())
+        {
+            m_dpi = graphics.DpiX;    // 100% = 96.0F,   125% = 120.0F,   150% = 144.0F
+        }
         InitializeComponent();
+        this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
         // build Copy label
         {
@@ -83,9 +89,9 @@ public partial class MainForm : Form
             Label control = new Label();
             if (control != null)
             {
-                control.Width = 20;
-                control.Height = 21;
-                control.Top = 21 + (i * 22);
+                control.Width = (m_dpi == 96.0F) ? 20 : 24;
+                control.Height = 19;
+                control.Top = ((m_dpi == 96.0F) ? 23 : 27) + (i * (control.Height + ((m_dpi == 96.0F) ? 1 : 3)));
                 control.Left = 0;
                 control.TextAlign = ContentAlignment.MiddleRight;
                 control.Font = new Font("Arial", 8);
@@ -103,10 +109,10 @@ public partial class MainForm : Form
             Label control = new Label();
             if (control != null)
             {
-                control.Width = 53;
+                control.Width = (m_dpi == 96.0F) ? 53 : 65;
                 control.Height = 19;
                 control.Top = 0;
-                control.Left = 19 + (j * 55);
+                control.Left = 19 + (j * control.Width + 2);
                 control.TextAlign = ContentAlignment.MiddleCenter;
                 control.Font = new Font("Arial", 8);
                 MainPanel.Controls.Add(control);
@@ -145,10 +151,10 @@ public partial class MainForm : Form
                 TextBox control = new TextBox();
                 if (control != null)
                 {
-                    control.Width = 53;
+                    control.Width = (m_dpi == 96.0F) ? 53 : 65;
                     control.Height = 21;
-                    control.Top = 19 + (i * 22);
-                    control.Left = 19 + (j * 55);
+                    control.Top = 19 + (i * control.Height + 1);
+                    control.Left = 19 + (j * control.Width + 2);
                     control.TextAlign = HorizontalAlignment.Center;
                     control.Font = new Font("Arial", 11);
                     control.MaxLength = 7;
@@ -167,64 +173,42 @@ public partial class MainForm : Form
                     switch (j)
                     {
                         case 0:
-                            {
-                                control.BackColor = Color.Ivory;
-                            }
+                            control.BackColor = Color.Snow;
                             break;
                         case 1:
                         case 2:
                         case 3:
-                            {
-                                control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[3];
-                                control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[3];
-                                control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[3];
-                            }
+                            control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[3];
                             break;
                         case 4:
                         case 5:
                         case 6:
-                            {
-                                control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[6];
-                                control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[6];
-                                control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[6];
-                            }
+                            control.BackColor = Numbers.NUMBER_TYPE_BACKCOLORS[6];
                             break;
                         case 7:
-                            {
-                                control.BackColor = Numbers.NUMBER_KIND_COLORS[0];
-                            }
+                            control.BackColor = Numbers.NUMBER_KIND_COLORS[0];
                             break;
                         case 8:
-                            {
-                                control.BackColor = Numbers.NUMBER_KIND_COLORS[2];
-                            }
+                            control.BackColor = Numbers.NUMBER_KIND_COLORS[2];
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            {
-                                control.BackColor = Color.Lavender;
-                            }
+                            control.BackColor = Color.FromArgb(240, 240, 255);
                             break;
                         case 12:
                         case 13:
                         case 14:
-                            {
-                                control.BackColor = Color.SeaShell;
-                            }
+                            control.BackColor = Color.FromArgb(255, 240, 240);
                             break;
                         case 15:
                         case 16:
                         case 17:
                         case 18:
-                            {
-                                control.BackColor = Color.AliceBlue;
-                            }
+                            control.BackColor = Color.Snow;
                             break;
                         default:
-                            {
-                                control.BackColor = SystemColors.Window;
-                            }
+                            control.BackColor = SystemColors.Window;
                             break;
                     }
 
@@ -445,8 +429,7 @@ public partial class MainForm : Form
                 }
                 catch
                 {
-                    this.Top = 0;
-                    this.Left = 0;
+                    RestoreLocation();
                 }
             }
         }
@@ -475,8 +458,10 @@ public partial class MainForm : Form
     }
     private void RestoreLocation()
     {
-        this.Top = (Screen.PrimaryScreen.Bounds.Height / 2) - (this.Height / 2);
-        this.Left = (Screen.PrimaryScreen.Bounds.Width / 2) - (this.Width / 2);
+        this.Top = Screen.PrimaryScreen.WorkingArea.Top;
+        this.Left = Screen.PrimaryScreen.WorkingArea.Left;
+        this.Width = (m_dpi == 96.0F) ? 1053 : 1281;
+        this.Height = (m_dpi == 96.0F) ? 681 : 752;
     }
 
     private void MainForm_Load(object sender, EventArgs e)

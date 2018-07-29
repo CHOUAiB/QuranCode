@@ -124,7 +124,7 @@ public static class Numbers
     { 
         /* NumberType.None */                   Color.Black,
         /* NumberType.Unit */                   Color.DarkViolet,
-        /* NumberType.Prime */                  Color.Green,
+        /* NumberType.Prime */                  Color.Black,
         /* NumberType.AdditivePrime */          Color.FromArgb(224, 224, 255),
         /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
         /* NumberType.Composite */              Color.Black,

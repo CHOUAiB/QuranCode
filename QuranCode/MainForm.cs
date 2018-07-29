@@ -676,16 +676,10 @@ public partial class MainForm : Form, ISubscriber
     private string m_current_text = null;
     public MainForm()
     {
-        Graphics graphics = this.CreateGraphics();
-        try
+        using (Graphics graphics = this.CreateGraphics())
         {
             m_dpi_x = graphics.DpiX;    // 100% = 96.0F,   125% = 120.0F,   150% = 144.0F
         }
-        finally
-        {
-            graphics.Dispose();
-        }
-
         if (m_dpi_x == 96.0F)
         {
             InitializeComponent();

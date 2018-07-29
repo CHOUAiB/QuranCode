@@ -45,7 +45,7 @@
             // 
             this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar.Location = new System.Drawing.Point(0, 835);
+            this.ProgressBar.Location = new System.Drawing.Point(0, 851);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(988, 6);
             this.ProgressBar.TabIndex = 0;
@@ -58,14 +58,13 @@
             this.WebsiteLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WebsiteLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.WebsiteLabel.ForeColor = System.Drawing.Color.Purple;
-            this.WebsiteLabel.Location = new System.Drawing.Point(0, 736);
+            this.WebsiteLabel.Location = new System.Drawing.Point(0, 595);
             this.WebsiteLabel.Name = "WebsiteLabel";
-            this.WebsiteLabel.Size = new System.Drawing.Size(1068, 14);
+            this.WebsiteLabel.Size = new System.Drawing.Size(1028, 14);
             this.WebsiteLabel.TabIndex = 999;
             this.WebsiteLabel.Tag = "http://qurancode.com";
             this.WebsiteLabel.Text = "©2018 Ali Adams      www.qurancode.com";
             this.WebsiteLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ToolTip.SetToolTip(this.WebsiteLabel, "Quran 89:3 \"By the composites and the primes\".");
             this.WebsiteLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 
             // NotifyIconContextMenuStrip
@@ -105,7 +104,7 @@
             this.VersionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VersionLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VersionLabel.ForeColor = System.Drawing.Color.Purple;
-            this.VersionLabel.Location = new System.Drawing.Point(1002, 844);
+            this.VersionLabel.Location = new System.Drawing.Point(1002, 860);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(63, 14);
             this.VersionLabel.TabIndex = 32;
@@ -129,14 +128,14 @@
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1068, 736);
+            this.MainPanel.Size = new System.Drawing.Size(1028, 595);
             this.MainPanel.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1068, 750);
+            this.ClientSize = new System.Drawing.Size(1028, 609);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.VersionLabel);
             this.Controls.Add(this.WebsiteLabel);

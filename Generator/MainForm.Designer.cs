@@ -47,6 +47,7 @@
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.NumerologySystemComboBox = new System.Windows.Forms.ComboBox();
             this.TextModeComboBox = new System.Windows.Forms.ComboBox();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // GenerateWordsButton
@@ -55,7 +56,7 @@
             this.GenerateWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.GenerateWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("GenerateWordsButton.Image")));
             this.GenerateWordsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.GenerateWordsButton.Location = new System.Drawing.Point(432, 358);
+            this.GenerateWordsButton.Location = new System.Drawing.Point(425, 358);
             this.GenerateWordsButton.Name = "GenerateWordsButton";
             this.GenerateWordsButton.Size = new System.Drawing.Size(110, 21);
             this.GenerateWordsButton.TabIndex = 19;
@@ -122,13 +123,14 @@
             // WordCountLabel
             // 
             this.WordCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.WordCountLabel.AutoSize = true;
             this.WordCountLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.WordCountLabel.Location = new System.Drawing.Point(553, 362);
+            this.WordCountLabel.Location = new System.Drawing.Point(537, 362);
             this.WordCountLabel.Name = "WordCountLabel";
-            this.WordCountLabel.Size = new System.Drawing.Size(107, 13);
+            this.WordCountLabel.Size = new System.Drawing.Size(101, 13);
             this.WordCountLabel.TabIndex = 23;
-            this.WordCountLabel.Text = "00000 (00000) words";
-            this.WordCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.WordCountLabel.Text = "00000 (0000) words";
+            this.WordCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.WordCountLabel, "Valid Quran words");
             // 
             // NumberTypeLabel
@@ -271,12 +273,28 @@
             this.TextModeComboBox.Size = new System.Drawing.Size(84, 21);
             this.TextModeComboBox.TabIndex = 90;
             // 
+            // SaveButton
+            // 
+            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SaveButton.Image = ((System.Drawing.Image)(resources.GetObject("SaveButton.Image")));
+            this.SaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.SaveButton.Location = new System.Drawing.Point(638, 358);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(23, 21);
+            this.SaveButton.TabIndex = 91;
+            this.SaveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ToolTip.SetToolTip(this.SaveButton, "View");
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.GenerateWordsButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(664, 382);
+            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.AutoGenerateWordsButton);
             this.Controls.Add(this.NumerologySystemComboBox);
             this.Controls.Add(this.TextModeComboBox);
@@ -325,4 +343,5 @@
     private System.Windows.Forms.Button AutoGenerateWordsButton;
     private System.Windows.Forms.CheckBox AddVerseAndWordValuesCheckBox;
     private System.Windows.Forms.ComboBox TextModeComboBox;
+    private System.Windows.Forms.Button SaveButton;
 }

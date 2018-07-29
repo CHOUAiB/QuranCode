@@ -38,9 +38,15 @@ public partial class MainForm : Form
         set { m_sleep_time = value; }
     }
 
+    private float m_dpi = 0F;
     public MainForm()
     {
+        using (Graphics graphics = this.CreateGraphics())
+        {
+            m_dpi = graphics.DpiX;    // 100% = 96.0F,   125% = 120.0F,   150% = 144.0F
+        }
         InitializeComponent();
+        this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
         AboutToolStripMenuItem.Font = new Font(AboutToolStripMenuItem.Font, AboutToolStripMenuItem.Font.Style | FontStyle.Bold);
 
@@ -110,8 +116,7 @@ public partial class MainForm : Form
                 }
                 catch
                 {
-                    this.Top = 0;
-                    this.Left = 0;
+                    RestoreLocation();
                 }
             }
         }
@@ -152,8 +157,12 @@ public partial class MainForm : Form
     }
     private void RestoreLocation()
     {
-        this.Top = (Screen.PrimaryScreen.Bounds.Height / 2) - (this.Height / 2);
-        this.Left = (Screen.PrimaryScreen.Bounds.Width / 2) - (this.Width / 2);
+        this.Top = Screen.PrimaryScreen.WorkingArea.Top;
+        this.Left = Screen.PrimaryScreen.WorkingArea.Left;
+        this.Width = (m_dpi == 96.0F) ? 256 : 338;
+        this.Height = (m_dpi == 96.0F) ? 416 : 507;
+        MultithreadingCheckBox.Top = (m_dpi == 96.0F) ? 363 : 444;
+        VersionLabel.Top = (m_dpi == 96.0F) ? 360 : 442;
     }
 
     private void MainForm_Load(object sender, EventArgs e)
@@ -345,7 +354,7 @@ public partial class MainForm : Form
             ValueTextBox.Text = value.ToString();
             ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
             ValueTextBox.Refresh();
-            //FactorizeValue(value);
+            FactorizeValue(value);
         }
     }
     private void DecrementValue()
@@ -357,7 +366,7 @@ public partial class MainForm : Form
             ValueTextBox.Text = value.ToString();
             ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
             ValueTextBox.Refresh();
-            //FactorizeValue(value);
+            FactorizeValue(value);
         }
     }
     private void NextPrimeNumber()
@@ -2162,22 +2171,22 @@ public partial class MainForm : Form
     {
         this.AcceptButton = null;
 
-        if (MainTabControl.SelectedIndex == 1)
+        if (MainTabControl.SelectedIndex == 1)      // Index
         {
             IndexTextBox.Focus();
         }
-        else if (MainTabControl.SelectedIndex == 2) // Circle
-        {
-            rCircleTextBox.Focus();
-        }
-        else if (MainTabControl.SelectedIndex == 3) // Sphere
-        {
-            rSphereTextBox.Focus();
-        }
-        else if (MainTabControl.SelectedIndex == 4) // Triangle
+        else if (MainTabControl.SelectedIndex == 2) // Triangle
         {
             this.AcceptButton = CalculateTriangleButton;
             aTriangleTextBox.Focus();
+        }
+        else if (MainTabControl.SelectedIndex == 3) // Circle
+        {
+            rCircleTextBox.Focus();
+        }
+        else if (MainTabControl.SelectedIndex == 4) // Sphere
+        {
+            rSphereTextBox.Focus();
         }
     }
 

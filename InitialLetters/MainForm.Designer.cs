@@ -128,18 +128,19 @@ namespace InitialLetters
             // InitialLettersToolStripMenuItem
             // 
             this.InitialLettersToolStripMenuItem.Name = "InitialLettersToolStripMenuItem";
-            this.InitialLettersToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.InitialLettersToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.InitialLettersToolStripMenuItem.Text = "&Initial Letters";
+            this.InitialLettersToolStripMenuItem.Click += new System.EventHandler(this.InitialLettersToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(172, 6);
             // 
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(163, 24);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
             this.AboutToolStripMenuItem.Text = "&About...";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 

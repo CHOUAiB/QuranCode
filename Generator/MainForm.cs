@@ -642,6 +642,7 @@ public partial class MainForm : Form
         NumberTypeLabel.Enabled = false;
         AutoGenerateWordsButton.Enabled = false;
         GenerateWordsButton.Enabled = false;
+        SaveButton.Enabled = false;
         ClearListView();
 
         this.Cursor = Cursors.WaitCursor;
@@ -849,6 +850,7 @@ public partial class MainForm : Form
             NumberTypeLabel.Enabled = true;
             AutoGenerateWordsButton.Enabled = true;
             GenerateWordsButton.Enabled = true;
+            SaveButton.Enabled = true;
 
             this.Cursor = Cursors.Default;
         }
@@ -1142,6 +1144,10 @@ public partial class MainForm : Form
             }
         }
     }
+    private void SaveButton_Click(object sender, EventArgs e)
+    {
+        SaveGeneratedWords(sender, e);
+    }
     private void SaveGeneratedWords(object sender, EventArgs e)
     {
         this.Cursor = Cursors.WaitCursor;
@@ -1175,25 +1181,33 @@ public partial class MainForm : Form
                     }
                 }
 
-                string filename =
-                    m_numerology_system_name
-                    + (m_add_verse_and_word_values_to_letter_value ? "_vw" : "___")
-                    + (m_add_positions_to_letter_value ? "_n" : "__")
-                    + (m_add_distances_to_previous_to_letter_value ? "_-d" : "_-_")
-                    + (m_add_distances_to_next_to_letter_value ? "_d-" : "__-")
-                    + (m_value_interlace ? "_interlace" : "_concatenate")
-                    + ((m_value_combination_direction == RightToLeft.Yes) ? "_r" : "_l")
-                    + ((m_number_type != NumberType.None) ? "_" : "")
-                    + (
-                        (m_number_type == NumberType.Prime) ? "P" :
-                        (m_number_type == NumberType.AdditivePrime) ? "AP" :
-                        (m_number_type == NumberType.NonAdditivePrime) ? "XP" :
-                        (m_number_type == NumberType.Composite) ? "C" :
-                        (m_number_type == NumberType.AdditiveComposite) ? "AC" :
-                        (m_number_type == NumberType.NonAdditiveComposite) ? "XC" : ""
-                        )
-                    + "_" + m_generated_words.Count.ToString()
-                    + ".txt";
+                string filename = null;
+                if (sender == SaveButton)
+                {
+                    filename = "WordGenerator.txt";
+                }
+                else // GenerateWordsButton
+                {
+                    filename =
+                        m_numerology_system_name
+                        + (m_add_verse_and_word_values_to_letter_value ? "_vw" : "___")
+                        + (m_add_positions_to_letter_value ? "_n" : "__")
+                        + (m_add_distances_to_previous_to_letter_value ? "_-d" : "_-_")
+                        + (m_add_distances_to_next_to_letter_value ? "_d-" : "__-")
+                        + (m_value_interlace ? "_interlace" : "_concatenate")
+                        + ((m_value_combination_direction == RightToLeft.Yes) ? "_r" : "_l")
+                        + ((m_number_type != NumberType.None) ? "_" : "")
+                        + (
+                            (m_number_type == NumberType.Prime) ? "P" :
+                            (m_number_type == NumberType.AdditivePrime) ? "AP" :
+                            (m_number_type == NumberType.NonAdditivePrime) ? "XP" :
+                            (m_number_type == NumberType.Composite) ? "C" :
+                            (m_number_type == NumberType.AdditiveComposite) ? "AC" :
+                            (m_number_type == NumberType.NonAdditiveComposite) ? "XC" : ""
+                            )
+                        + "_" + m_generated_words.Count.ToString()
+                        + ".txt";
+                }
 
                 if (Directory.Exists(Globals.STATISTICS_FOLDER))
                 {
@@ -1201,7 +1215,7 @@ public partial class MainForm : Form
                     FileHelper.SaveText(path, str.ToString());
                 }
 
-                if (sender == GenerateWordsButton)
+                if (sender != AutoGenerateWordsButton)
                 {
                     DisplayFile(filename);
                 }

@@ -269,6 +269,15 @@ namespace InitialLetters
                 System.Diagnostics.Process.Start("Notepad.exe", filename);
             }
         }
+        private void InitialLettersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string filename = "InitialLetters.html";
+            string path = Application.StartupPath + "/" + "Help" + "/" + filename;
+            if (File.Exists(path))
+            {
+                System.Diagnostics.Process.Start(path);
+            }
+        }
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(String.Format(
