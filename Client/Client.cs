@@ -1204,38 +1204,35 @@ public class Client : IPublisher, ISubscriber
                 {
                     if (range.Count > 0)
                     {
-                        // prepare found phrase verse
-                        Verse verse = range[0].Verse;
-
-                        // build found verses // prevent duplicate verses in case more than 1 range is found in same verse
-                        if (!m_found_verses.Contains(verse))
-                        {
-                            m_found_verses.Add(verse);
-                        }
-
-                        // prepare found phrase text
                         string range_text = null;
                         foreach (Word word in range)
                         {
                             if (word != null)
                             {
+                                // prepare found phrase verse
+                                Verse verse = word.Verse;
+
+                                // build found verses // prevent duplicate verses in case more than 1 range is found in same verse
+                                if (!m_found_verses.Contains(verse))
+                                {
+                                    m_found_verses.Add(verse);
+                                }
+
+                                // prepare found phrase text
                                 range_text += word.Text + " ";
-                                //if (NumerologySystem.TextMode == "Original")
-                                //{
-                                //    if (word.Stopmark != Stopmark.None)
-                                //    {
-                                //        range_text += StopmarkHelper.GetStopmarkText(word.Stopmark) + ";
-                                //    }
-                                //}
+                                if (NumerologySystem.TextMode == "Original")
+                                {
+                                    if (word.Stopmark != Stopmark.None)
+                                    {
+                                        range_text += StopmarkHelper.GetStopmarkText(word.Stopmark) + " ";
+                                    }
+                                }
                             }
                         }
                         range_text = range_text.Remove(range_text.Length - 1, 1);
 
-                        // prepare found phrase position
-                        int range_position = range[0].Position;
-
                         // build found phrases // allow multiple phrases even if overlapping inside same verse
-                        Phrase phrase = new Phrase(verse, range_position, range_text);
+                        Phrase phrase = new Phrase(range[0].Verse, range[0].Position, range_text);
                         if (phrase != null)
                         {
                             m_found_phrases.Add(phrase);
@@ -1932,7 +1929,7 @@ public class Client : IPublisher, ISubscriber
         {
             LetterStatistic.SortOrder = StatisticSortOrder.Ascending;
         }
-        
+
         m_letter_statistics.Sort();
     }
     /// <summary>

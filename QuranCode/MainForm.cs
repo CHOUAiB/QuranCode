@@ -3674,7 +3674,7 @@ public partial class MainForm : Form, ISubscriber
 
                 NumberQuery query = new NumberQuery();
                 query.Value = value;
-                query.WithinVerses = true;
+                query.WithinVerses = false;
 
                 int match_count = m_client.FindWordRanges(query);
                 if (match_count > 0)
@@ -24629,7 +24629,7 @@ public partial class MainForm : Form, ISubscriber
                 text += L[l]["digital root"] + value_digital_root_operator_symbol + ((value_digital_root > 0) ? value_digital_root.ToString() : ((value_digital_root_number_type != NumberType.None) ? FindByNumbersValueDigitalRootNumberTypeLabel.Text : "*")) + "";
 
                 NumberQuery query = new NumberQuery();
-                query.WithinVerses = true;
+                query.WithinVerses = false;
 
                 query.Number = number;
                 query.ChapterCount = chapter_count;
