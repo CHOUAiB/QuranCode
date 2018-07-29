@@ -191,9 +191,9 @@ public static class Numbers
 
     public static Color[] NUMBER_KIND_COLORS =
     { 
-        /* NumberKind.Deficient */          Color.FromArgb(240, 208, 255),
-        /* NumberKind.Perfect */            Color.FromArgb(240, 128, 255),
-        /* NumberKind.Abundant */           Color.FromArgb(240, 178, 255)
+        /* NumberKind.Deficient */          Color.FromArgb(255, 240, 255),
+        /* NumberKind.Perfect */            Color.FromArgb(255, 128, 255),
+        /* NumberKind.Abundant */           Color.FromArgb(255, 192, 255)
     };
 
     public static int MAX_NUMBER = int.MaxValue / (Globals.EDITION == Edition.Standard ? 1024 : 64);
@@ -2262,7 +2262,6 @@ public static class Numbers
             }
         }
     }
-
 
     private static int s_series_limit = 114;
     //http://en.wikipedia.org/wiki/Polygon_number

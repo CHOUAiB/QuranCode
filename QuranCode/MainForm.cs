@@ -19792,7 +19792,6 @@ public partial class MainForm : Form, ISubscriber
                 if (File.Exists(filename))
                 {
                     List<string> lines = FileHelper.LoadLines(filename);
-
                     foreach (string line in lines)
                     {
                         if (m_client.CalculateValue(line) == value)
@@ -19803,9 +19802,13 @@ public partial class MainForm : Form, ISubscriber
                     matches.Sort();
 
                     StringBuilder str = new StringBuilder();
-                    foreach (string line in matches)
+                    foreach (string match in matches)
                     {
-                        str.AppendLine(line);
+                        str.Append(match + "\t");
+                    }
+                    if (str.Length > 0)
+                    {
+                        str.Remove(str.Length - 1, 1);
                     }
                     UserTextTextBox.Text = str.ToString();
                 }

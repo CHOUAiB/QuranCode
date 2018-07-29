@@ -561,7 +561,6 @@ partial class MainForm
             this.SquareSumTextBox = new System.Windows.Forms.TextBox();
             this.ValueInspectLabel = new System.Windows.Forms.Label();
             this.NthNonAdditiveNumberTextBox = new System.Windows.Forms.TextBox();
-            this.DisplayPerfectNumbersLabel = new System.Windows.Forms.Label();
             this.DisplayAbundantNumbersLabel = new System.Windows.Forms.Label();
             this.DisplayDeficientNumbersLabel = new System.Windows.Forms.Label();
             this.DecimalValueTextBox = new System.Windows.Forms.TextBox();
@@ -606,6 +605,7 @@ partial class MainForm
             this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
             this.AddAllCheckBox = new System.Windows.Forms.CheckBox();
             this.AddDistancesWithinChaptersCheckBox = new System.Windows.Forms.CheckBox();
+            this.DisplayPerfectNumbersLabel = new System.Windows.Forms.Label();
             this.VersesTextBox = new System.Windows.Forms.TextBox();
             this.LettersTextBox = new System.Windows.Forms.TextBox();
             this.WordsTextBox = new System.Windows.Forms.TextBox();
@@ -1815,13 +1815,13 @@ partial class MainForm
             // PrimalogyARLabel
             // 
             this.PrimalogyARLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PrimalogyARLabel.BackColor = System.Drawing.Color.Pink;
+            this.PrimalogyARLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.PrimalogyARLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PrimalogyARLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PrimalogyARLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.PrimalogyARLabel.Location = new System.Drawing.Point(2, 11);
+            this.PrimalogyARLabel.Location = new System.Drawing.Point(2, 10);
             this.PrimalogyARLabel.Name = "PrimalogyARLabel";
-            this.PrimalogyARLabel.Size = new System.Drawing.Size(4, 6);
+            this.PrimalogyARLabel.Size = new System.Drawing.Size(4, 9);
             this.PrimalogyARLabel.TabIndex = 155;
             this.PrimalogyARLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.PrimalogyARLabel, "نظام الجُمَّل الوتري  - البرايمولوجي\r\n©علي عبد الرزاق عبد الكريم القره غولي 2008");
@@ -1830,13 +1830,13 @@ partial class MainForm
             // PrimalogyLabel
             // 
             this.PrimalogyLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PrimalogyLabel.BackColor = System.Drawing.Color.Pink;
+            this.PrimalogyLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.PrimalogyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PrimalogyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PrimalogyLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.PrimalogyLabel.Location = new System.Drawing.Point(2, 3);
+            this.PrimalogyLabel.Location = new System.Drawing.Point(2, 1);
             this.PrimalogyLabel.Name = "PrimalogyLabel";
-            this.PrimalogyLabel.Size = new System.Drawing.Size(4, 6);
+            this.PrimalogyLabel.Size = new System.Drawing.Size(4, 9);
             this.PrimalogyLabel.TabIndex = 154;
             this.PrimalogyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.PrimalogyLabel, "Primalogy System ©2008 Ali Adams");
@@ -8192,7 +8192,6 @@ partial class MainForm
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any given text or find all words with a given value\r\nحساب " +
     "القيمة لنص معين أو إيجاد الكلمات ذوات قيمة معينة";
-            this.UserTextTabPage.UseVisualStyleBackColor = true;
             // 
             // UserTextValueButton
             // 
@@ -8202,7 +8201,7 @@ partial class MainForm
             this.UserTextValueButton.ForeColor = System.Drawing.Color.RoyalBlue;
             this.UserTextValueButton.Location = new System.Drawing.Point(736, 147);
             this.UserTextValueButton.Name = "UserTextValueButton";
-            this.UserTextValueButton.Size = new System.Drawing.Size(52, 20);
+            this.UserTextValueButton.Size = new System.Drawing.Size(69, 20);
             this.UserTextValueButton.TabIndex = 4;
             this.UserTextValueButton.Text = "Find";
             this.UserTextValueButton.UseVisualStyleBackColor = true;
@@ -8230,7 +8229,7 @@ partial class MainForm
             // UserTextValueLabel
             // 
             this.UserTextValueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UserTextValueLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.UserTextValueLabel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.UserTextValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UserTextValueLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.UserTextValueLabel.Location = new System.Drawing.Point(586, 150);
@@ -8255,9 +8254,8 @@ partial class MainForm
             this.UserTextTextBox.Name = "UserTextTextBox";
             this.UserTextTextBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.UserTextTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.UserTextTextBox.Size = new System.Drawing.Size(814, 166);
+            this.UserTextTextBox.Size = new System.Drawing.Size(814, 147);
             this.UserTextTextBox.TabIndex = 1;
-            this.UserTextTextBox.WordWrap = false;
             this.UserTextTextBox.TextChanged += new System.EventHandler(this.UserTextTextBox_TextChanged);
             this.UserTextTextBox.Enter += new System.EventHandler(this.UserTextTextBox_Enter);
             this.UserTextTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
@@ -9082,7 +9080,6 @@ partial class MainForm
             this.ValuePanel.Controls.Add(this.SquareSumTextBox);
             this.ValuePanel.Controls.Add(this.ValueInspectLabel);
             this.ValuePanel.Controls.Add(this.NthNonAdditiveNumberTextBox);
-            this.ValuePanel.Controls.Add(this.DisplayPerfectNumbersLabel);
             this.ValuePanel.Controls.Add(this.DisplayAbundantNumbersLabel);
             this.ValuePanel.Controls.Add(this.DisplayDeficientNumbersLabel);
             this.ValuePanel.Controls.Add(this.DecimalValueTextBox);
@@ -9122,6 +9119,7 @@ partial class MainForm
             this.ValuePanel.Controls.Add(this.AddDistancesToPreviousCheckBox);
             this.ValuePanel.Controls.Add(this.AddAllCheckBox);
             this.ValuePanel.Controls.Add(this.AddDistancesWithinChaptersCheckBox);
+            this.ValuePanel.Controls.Add(this.DisplayPerfectNumbersLabel);
             this.ValuePanel.Location = new System.Drawing.Point(4, 133);
             this.ValuePanel.Name = "ValuePanel";
             this.ValuePanel.Size = new System.Drawing.Size(181, 276);
@@ -9208,28 +9206,13 @@ partial class MainForm
             this.NthNonAdditiveNumberTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NthNonAdditiveNumberTextBox_KeyDown);
             this.NthNonAdditiveNumberTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
             // 
-            // DisplayPerfectNumbersLabel
-            // 
-            this.DisplayPerfectNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.DisplayPerfectNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DisplayPerfectNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DisplayPerfectNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.DisplayPerfectNumbersLabel.Location = new System.Drawing.Point(2, 134);
-            this.DisplayPerfectNumbersLabel.Name = "DisplayPerfectNumbersLabel";
-            this.DisplayPerfectNumbersLabel.Size = new System.Drawing.Size(5, 6);
-            this.DisplayPerfectNumbersLabel.TabIndex = 257;
-            this.DisplayPerfectNumbersLabel.Tag = "";
-            this.DisplayPerfectNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.DisplayPerfectNumbersLabel, "Display perfect numbers");
-            this.DisplayPerfectNumbersLabel.Click += new System.EventHandler(this.DisplayPerfectNumbersLabel_Click);
-            // 
             // DisplayAbundantNumbersLabel
             // 
-            this.DisplayAbundantNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.DisplayAbundantNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.DisplayAbundantNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DisplayAbundantNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisplayAbundantNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.DisplayAbundantNumbersLabel.Location = new System.Drawing.Point(2, 127);
+            this.DisplayAbundantNumbersLabel.Location = new System.Drawing.Point(2, 133);
             this.DisplayAbundantNumbersLabel.Name = "DisplayAbundantNumbersLabel";
             this.DisplayAbundantNumbersLabel.Size = new System.Drawing.Size(5, 7);
             this.DisplayAbundantNumbersLabel.TabIndex = 256;
@@ -9240,7 +9223,7 @@ partial class MainForm
             // 
             // DisplayDeficientNumbersLabel
             // 
-            this.DisplayDeficientNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.DisplayDeficientNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.DisplayDeficientNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DisplayDeficientNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisplayDeficientNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
@@ -9909,11 +9892,26 @@ partial class MainForm
             this.AddDistancesWithinChaptersCheckBox.ForeColor = System.Drawing.Color.Maroon;
             this.AddDistancesWithinChaptersCheckBox.Location = new System.Drawing.Point(7, 257);
             this.AddDistancesWithinChaptersCheckBox.Name = "AddDistancesWithinChaptersCheckBox";
-            this.AddDistancesWithinChaptersCheckBox.Size = new System.Drawing.Size(172, 16);
+            this.AddDistancesWithinChaptersCheckBox.Size = new System.Drawing.Size(172, 18);
             this.AddDistancesWithinChaptersCheckBox.TabIndex = 143;
             this.AddDistancesWithinChaptersCheckBox.Text = "∆ within chapters";
             this.AddDistancesWithinChaptersCheckBox.UseVisualStyleBackColor = false;
             this.AddDistancesWithinChaptersCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesWithinChaptersCheckBox_CheckedChanged);
+            // 
+            // DisplayPerfectNumbersLabel
+            // 
+            this.DisplayPerfectNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.DisplayPerfectNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DisplayPerfectNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayPerfectNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
+            this.DisplayPerfectNumbersLabel.Location = new System.Drawing.Point(2, 127);
+            this.DisplayPerfectNumbersLabel.Name = "DisplayPerfectNumbersLabel";
+            this.DisplayPerfectNumbersLabel.Size = new System.Drawing.Size(5, 6);
+            this.DisplayPerfectNumbersLabel.TabIndex = 257;
+            this.DisplayPerfectNumbersLabel.Tag = "";
+            this.DisplayPerfectNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolTip.SetToolTip(this.DisplayPerfectNumbersLabel, "Display perfect numbers");
+            this.DisplayPerfectNumbersLabel.Click += new System.EventHandler(this.DisplayPerfectNumbersLabel_Click);
             // 
             // VersesTextBox
             // 
