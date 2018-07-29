@@ -224,7 +224,6 @@
             // 
             // AutoGenerateButton
             // 
-            this.AutoGenerateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AutoGenerateButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.AutoGenerateButton.Image = ((System.Drawing.Image)(resources.GetObject("AutoGenerateButton.Image")));
             this.AutoGenerateButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
