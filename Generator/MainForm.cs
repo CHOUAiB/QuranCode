@@ -36,7 +36,8 @@ public partial class MainForm : Form
     }
 
     private bool m_add_positions_to_value = false;
-    private bool m_add_distances_to_value = false;
+    private bool m_add_distances_to_previous_to_value = false;
+    private bool m_add_distances_to_next_to_value = false;
     private void AddPositionsCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         m_add_positions_to_value = AddPositionsCheckBox.Checked;
@@ -51,44 +52,44 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToWordCNumber = m_add_positions_to_value;
             m_client.NumerologySystem.AddToVerseVNumber = m_add_positions_to_value;
             m_client.NumerologySystem.AddToVerseCNumber = m_add_positions_to_value;
-            m_client.NumerologySystem.AddToChapterCNumber = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToChapterCNumber = m_add_distances_to_previous_to_value;
         }
     }
     private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_add_distances_to_value = AddDistancesToPreviousCheckBox.Checked;
+        m_add_distances_to_previous_to_value = AddDistancesToPreviousCheckBox.Checked;
         if (m_client != null)
         {
-            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_previous_to_value;
+            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_previous_to_value;
 
-            m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_value;
+            m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_value;
             m_client.NumerologySystem.AddDistancesWithinChapters = true;
         }
     }
     private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_add_distances_to_value = AddDistancesToNextCheckBox.Checked;
+        m_add_distances_to_next_to_value = AddDistancesToNextCheckBox.Checked;
         if (m_client != null)
         {
-            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_value;
-            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_value;
+            m_client.NumerologySystem.AddToLetterLDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToLetterWDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToLetterVDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToLetterCDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToWordWDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToWordVDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToWordCDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToVerseVDistance = m_add_distances_to_next_to_value;
+            m_client.NumerologySystem.AddToVerseCDistance = m_add_distances_to_next_to_value;
 
-            m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_value;
+            m_client.NumerologySystem.AddDistancesToNext = m_add_distances_to_next_to_value;
             m_client.NumerologySystem.AddDistancesWithinChapters = true;
         }
     }
@@ -389,7 +390,7 @@ public partial class MainForm : Form
                                                     foreach (Letter letter in word.Letters)
                                                     {
                                                         long letter_value = m_client.CalculateValue(letter);
-                                                        if (m_add_distances_to_value)
+                                                        if (m_add_distances_to_previous_to_value)
                                                         {
                                                             letter_value += m_client.CalculateValue(letter.Word);
                                                             letter_value += m_client.CalculateValue(letter.Word.Verse);
@@ -518,7 +519,17 @@ public partial class MainForm : Form
                     }
                 }
 
-                string filename = "GenerateWords.txt";
+                //Simplified29_Alphabet_Primes1_Pos_DistP_DistN_ConcatR2L_AP_Words_Asc_ById.txt
+                string filename = m_numerology_system_name 
+                                + (m_add_positions_to_value ? "_Pos" : "")
+                                + (m_add_distances_to_previous_to_value ? "_DistP" : "")
+                                + (m_add_distances_to_next_to_value ? "_DistN" : "")
+                                + "Concatenate" + ((m_concatenation_direction == RightToLeft.Yes) ? "_R2L" : "_L2R")
+                                + ((m_number_type != NumberType.None) ? "_" : "") + m_number_type.ToString()
+                                + "_" + Line.SortOrder.ToString()
+                                + "_" + Line.SortMethod.ToString()
+                                + ".txt";
+
                 if (Directory.Exists(Globals.STATISTICS_FOLDER))
                 {
                     string path = Globals.STATISTICS_FOLDER + "/" + filename;
