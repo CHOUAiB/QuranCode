@@ -62,13 +62,13 @@ public partial class MainForm : Form
         if (m_concatenation_direction == RightToLeft.Yes)
         {
             m_concatenation_direction = RightToLeft.No;
-            ConcatenationDirectionLabel.Text = "-->";
+            ConcatenationDirectionLabel.Text = "→";
             ToolTip.SetToolTip(ConcatenationDirectionLabel, "concatenate letter values left to right");
         }
         else
         {
             m_concatenation_direction = RightToLeft.Yes;
-            ConcatenationDirectionLabel.Text = "<--";
+            ConcatenationDirectionLabel.Text = "←";
             ToolTip.SetToolTip(ConcatenationDirectionLabel, "concatenate letter values right to left");
         }
     }
@@ -308,7 +308,7 @@ public partial class MainForm : Form
                                         }
 
                                         // display progress
-                                        this.Text = "Generator: " + m_word_subsets.Count + " sentences found";
+                                        this.Text = "Book Generator: " + m_word_subsets.Count + " sentences found";
                                         ValidWordCountLabel.Text = ListView.Items.Count + " valid words";
                                         ValidWordCountLabel.Refresh();
                                     }

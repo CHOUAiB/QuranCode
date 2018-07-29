@@ -89,13 +89,13 @@ partial class MainForm
             this.BrowseHistoryCounterLabel = new System.Windows.Forms.Label();
             this.BrowseGroupBox = new System.Windows.Forms.GroupBox();
             this.ArabicLanguageLabel = new System.Windows.Forms.Label();
-            this.PrimalogyARLabel = new System.Windows.Forms.Label();
             this.EnglishLanguageLabel = new System.Windows.Forms.Label();
-            this.PrimalogyLabel = new System.Windows.Forms.Label();
             this.BrowseHistoryClearLabel = new System.Windows.Forms.Label();
             this.BrowseHistoryForwardButton = new System.Windows.Forms.Button();
             this.BrowseHistoryBackwardButton = new System.Windows.Forms.Button();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
+            this.PrimalogyARLabel = new System.Windows.Forms.Label();
+            this.PrimalogyLabel = new System.Windows.Forms.Label();
             this.FindByNumbersWordsNumberTypeLabel = new System.Windows.Forms.Label();
             this.FindByNumbersLettersNumberTypeLabel = new System.Windows.Forms.Label();
             this.FindByNumbersValueNumberTypeLabel = new System.Windows.Forms.Label();
@@ -226,7 +226,6 @@ partial class MainForm
             this.FindByTextTtaaLabel = new System.Windows.Forms.Label();
             this.FindByTextSearchBlockSizeHalfLabel = new System.Windows.Forms.Label();
             this.FindByTextProximitySearchTypeLabel = new System.Windows.Forms.Label();
-            this.TanzilLabel = new System.Windows.Forms.Label();
             this.FindByTextSearchBlockSizeGroupLabel = new System.Windows.Forms.Label();
             this.FindByTextExactSearchTypeLabel = new System.Windows.Forms.Label();
             this.FindByTextSearchBlockSizePageLabel = new System.Windows.Forms.Label();
@@ -505,6 +504,7 @@ partial class MainForm
             this.UserTextValueNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.UserTextValueLabel = new System.Windows.Forms.Label();
             this.UserTextTextBox = new System.Windows.Forms.TextBox();
+            this.TanzilLabel = new System.Windows.Forms.Label();
             this.EmlaaeiTextLabel = new System.Windows.Forms.Label();
             this.FindByFrequencySumNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.StatisticsGroupBox = new System.Windows.Forms.GroupBox();
@@ -1557,9 +1557,9 @@ partial class MainForm
             this.NoorsoftLinkLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NoorsoftLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NoorsoftLinkLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.NoorsoftLinkLabel.Location = new System.Drawing.Point(142, 21);
+            this.NoorsoftLinkLabel.Location = new System.Drawing.Point(144, 21);
             this.NoorsoftLinkLabel.Name = "NoorsoftLinkLabel";
-            this.NoorsoftLinkLabel.Size = new System.Drawing.Size(6, 4);
+            this.NoorsoftLinkLabel.Size = new System.Drawing.Size(4, 4);
             this.NoorsoftLinkLabel.TabIndex = 0;
             this.NoorsoftLinkLabel.Tag = "http://noorsoft.org";
             this.NoorsoftLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1695,9 +1695,7 @@ partial class MainForm
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BrowseGroupBox.BackColor = System.Drawing.SystemColors.WindowText;
             this.BrowseGroupBox.Controls.Add(this.ArabicLanguageLabel);
-            this.BrowseGroupBox.Controls.Add(this.PrimalogyARLabel);
             this.BrowseGroupBox.Controls.Add(this.EnglishLanguageLabel);
-            this.BrowseGroupBox.Controls.Add(this.PrimalogyLabel);
             this.BrowseGroupBox.Controls.Add(this.BrowseHistoryClearLabel);
             this.BrowseGroupBox.Controls.Add(this.BrowseHistoryForwardButton);
             this.BrowseGroupBox.Controls.Add(this.BrowseHistoryBackwardButton);
@@ -1706,7 +1704,7 @@ partial class MainForm
             this.BrowseGroupBox.Controls.Add(this.LanguageComboBox);
             this.BrowseGroupBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BrowseGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BrowseGroupBox.ForeColor = System.Drawing.Color.Pink;
+            this.BrowseGroupBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.BrowseGroupBox.Location = new System.Drawing.Point(0, 0);
             this.BrowseGroupBox.Name = "BrowseGroupBox";
             this.BrowseGroupBox.Size = new System.Drawing.Size(161, 38);
@@ -1725,28 +1723,13 @@ partial class MainForm
             this.ArabicLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ArabicLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ArabicLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("ArabicLanguageLabel.Image")));
-            this.ArabicLanguageLabel.Location = new System.Drawing.Point(131, 0);
+            this.ArabicLanguageLabel.Location = new System.Drawing.Point(138, 0);
             this.ArabicLanguageLabel.Name = "ArabicLanguageLabel";
             this.ArabicLanguageLabel.Size = new System.Drawing.Size(16, 14);
             this.ArabicLanguageLabel.TabIndex = 2;
             this.ArabicLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.ArabicLanguageLabel, "عربي");
             this.ArabicLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
-            // 
-            // PrimalogyARLabel
-            // 
-            this.PrimalogyARLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PrimalogyARLabel.BackColor = System.Drawing.Color.Pink;
-            this.PrimalogyARLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PrimalogyARLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PrimalogyARLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.PrimalogyARLabel.Location = new System.Drawing.Point(149, 9);
-            this.PrimalogyARLabel.Name = "PrimalogyARLabel";
-            this.PrimalogyARLabel.Size = new System.Drawing.Size(6, 4);
-            this.PrimalogyARLabel.TabIndex = 155;
-            this.PrimalogyARLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.PrimalogyARLabel, "نظام الجُمَّل الوتري  - البرايمولوجي\r\n©علي عبد الرزاق عبد الكريم القره غولي 2008");
-            this.PrimalogyARLabel.Click += new System.EventHandler(this.PrimalogyARLabel_Click);
             // 
             // EnglishLanguageLabel
             // 
@@ -1757,28 +1740,13 @@ partial class MainForm
             this.EnglishLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EnglishLanguageLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.EnglishLanguageLabel.Image = ((System.Drawing.Image)(resources.GetObject("EnglishLanguageLabel.Image")));
-            this.EnglishLanguageLabel.Location = new System.Drawing.Point(113, 0);
+            this.EnglishLanguageLabel.Location = new System.Drawing.Point(117, 0);
             this.EnglishLanguageLabel.Name = "EnglishLanguageLabel";
             this.EnglishLanguageLabel.Size = new System.Drawing.Size(16, 14);
             this.EnglishLanguageLabel.TabIndex = 1;
             this.EnglishLanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ToolTip.SetToolTip(this.EnglishLanguageLabel, "English");
             this.EnglishLanguageLabel.Click += new System.EventHandler(this.LanguageLabel_Click);
-            // 
-            // PrimalogyLabel
-            // 
-            this.PrimalogyLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PrimalogyLabel.BackColor = System.Drawing.Color.Pink;
-            this.PrimalogyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PrimalogyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PrimalogyLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.PrimalogyLabel.Location = new System.Drawing.Point(149, 1);
-            this.PrimalogyLabel.Name = "PrimalogyLabel";
-            this.PrimalogyLabel.Size = new System.Drawing.Size(6, 4);
-            this.PrimalogyLabel.TabIndex = 154;
-            this.PrimalogyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.PrimalogyLabel, "Primalogy System ©2008 Ali Adams");
-            this.PrimalogyLabel.Click += new System.EventHandler(this.PrimalogyLabel_Click);
             // 
             // BrowseHistoryClearLabel
             // 
@@ -1842,6 +1810,36 @@ partial class MainForm
             this.LanguageComboBox.Size = new System.Drawing.Size(107, 20);
             this.LanguageComboBox.TabIndex = 1;
             this.LanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_SelectedIndexChanged);
+            // 
+            // PrimalogyARLabel
+            // 
+            this.PrimalogyARLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PrimalogyARLabel.BackColor = System.Drawing.Color.Pink;
+            this.PrimalogyARLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PrimalogyARLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PrimalogyARLabel.ForeColor = System.Drawing.SystemColors.Window;
+            this.PrimalogyARLabel.Location = new System.Drawing.Point(2, 13);
+            this.PrimalogyARLabel.Name = "PrimalogyARLabel";
+            this.PrimalogyARLabel.Size = new System.Drawing.Size(4, 4);
+            this.PrimalogyARLabel.TabIndex = 155;
+            this.PrimalogyARLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolTip.SetToolTip(this.PrimalogyARLabel, "نظام الجُمَّل الوتري  - البرايمولوجي\r\n©علي عبد الرزاق عبد الكريم القره غولي 2008");
+            this.PrimalogyARLabel.Click += new System.EventHandler(this.PrimalogyARLabel_Click);
+            // 
+            // PrimalogyLabel
+            // 
+            this.PrimalogyLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PrimalogyLabel.BackColor = System.Drawing.Color.Pink;
+            this.PrimalogyLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.PrimalogyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PrimalogyLabel.ForeColor = System.Drawing.SystemColors.Window;
+            this.PrimalogyLabel.Location = new System.Drawing.Point(2, 3);
+            this.PrimalogyLabel.Name = "PrimalogyLabel";
+            this.PrimalogyLabel.Size = new System.Drawing.Size(4, 4);
+            this.PrimalogyLabel.TabIndex = 154;
+            this.PrimalogyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolTip.SetToolTip(this.PrimalogyLabel, "Primalogy System ©2008 Ali Adams");
+            this.PrimalogyLabel.Click += new System.EventHandler(this.PrimalogyLabel_Click);
             // 
             // FindByNumbersWordsNumberTypeLabel
             // 
@@ -2898,7 +2896,6 @@ partial class MainForm
             this.FindByTextPanel.Controls.Add(this.KeyboardPanel);
             this.FindByTextPanel.Controls.Add(this.FindByTextSearchBlockSizeHalfLabel);
             this.FindByTextPanel.Controls.Add(this.FindByTextProximitySearchTypeLabel);
-            this.FindByTextPanel.Controls.Add(this.TanzilLabel);
             this.FindByTextPanel.Controls.Add(this.FindByTextSearchBlockSizeGroupLabel);
             this.FindByTextPanel.Controls.Add(this.FindByTextExactSearchTypeLabel);
             this.FindByTextPanel.Controls.Add(this.FindByTextSearchBlockSizePageLabel);
@@ -4092,23 +4089,6 @@ partial class MainForm
             this.FindByTextProximitySearchTypeLabel.Click += new System.EventHandler(this.FindByTextProximitySearchTypeLabel_Click);
             this.FindByTextProximitySearchTypeLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
             // 
-            // TanzilLabel
-            // 
-            this.TanzilLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TanzilLabel.BackColor = System.Drawing.Color.Pink;
-            this.TanzilLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TanzilLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TanzilLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.TanzilLabel.Location = new System.Drawing.Point(44, 21);
-            this.TanzilLabel.Name = "TanzilLabel";
-            this.TanzilLabel.Size = new System.Drawing.Size(6, 4);
-            this.TanzilLabel.TabIndex = 153;
-            this.TanzilLabel.Tag = "http://tanzil.net/";
-            this.TanzilLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.TanzilLabel, "©2008 Tanzil Quran Text");
-            this.TanzilLabel.Click += new System.EventHandler(this.LinkLabel_Click);
-            this.TanzilLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-            // 
             // FindByTextSearchBlockSizeGroupLabel
             // 
             this.FindByTextSearchBlockSizeGroupLabel.BackColor = System.Drawing.Color.DarkGray;
@@ -5217,7 +5197,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(816, 195);
+            this.TabControl.Size = new System.Drawing.Size(816, 193);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -5230,7 +5210,7 @@ partial class MainForm
             this.TranslationTabPage.Location = new System.Drawing.Point(4, 22);
             this.TranslationTabPage.Name = "TranslationTabPage";
             this.TranslationTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TranslationTabPage.Size = new System.Drawing.Size(808, 169);
+            this.TranslationTabPage.Size = new System.Drawing.Size(808, 167);
             this.TranslationTabPage.TabIndex = 190;
             this.TranslationTabPage.Text = "Translation";
             this.TranslationTabPage.ToolTipText = "Translations for current selection/verse\r\nترجمة الءاية أو الءايات المظللة";
@@ -5422,7 +5402,7 @@ partial class MainForm
             this.GrammarTabPage.Controls.Add(this.GrammarTextBox);
             this.GrammarTabPage.Location = new System.Drawing.Point(4, 22);
             this.GrammarTabPage.Name = "GrammarTabPage";
-            this.GrammarTabPage.Size = new System.Drawing.Size(808, 169);
+            this.GrammarTabPage.Size = new System.Drawing.Size(808, 167);
             this.GrammarTabPage.TabIndex = 193;
             this.GrammarTabPage.Text = " Grammar";
             this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English\r\nإعراب الكلمة بالعربي و" +
@@ -5456,7 +5436,7 @@ partial class MainForm
             this.RelatedWordsTabPage.Controls.Add(this.RelatedWordsTextBox);
             this.RelatedWordsTabPage.Location = new System.Drawing.Point(4, 22);
             this.RelatedWordsTabPage.Name = "RelatedWordsTabPage";
-            this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 169);
+            this.RelatedWordsTabPage.Size = new System.Drawing.Size(808, 167);
             this.RelatedWordsTabPage.TabIndex = 192;
             this.RelatedWordsTabPage.Text = "Related Words";
             this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word\r\nالكلمات المشتقة من نفس جذر " +
@@ -5511,7 +5491,7 @@ partial class MainForm
             this.SymmetryTabPage.Controls.Add(this.SymmetryTextBox);
             this.SymmetryTabPage.Location = new System.Drawing.Point(4, 22);
             this.SymmetryTabPage.Name = "SymmetryTabPage";
-            this.SymmetryTabPage.Size = new System.Drawing.Size(808, 169);
+            this.SymmetryTabPage.Size = new System.Drawing.Size(808, 167);
             this.SymmetryTabPage.TabIndex = 201;
             this.SymmetryTabPage.Text = "Symmetry";
             this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]\r\nتناظر النص من ال" +
@@ -5591,7 +5571,7 @@ partial class MainForm
             this.ValuesSequenceTabPage.Controls.Add(this.ValuesSequenceTextBox);
             this.ValuesSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.ValuesSequenceTabPage.Name = "ValuesSequenceTabPage";
-            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 169);
+            this.ValuesSequenceTabPage.Size = new System.Drawing.Size(808, 167);
             this.ValuesSequenceTabPage.TabIndex = 198;
             this.ValuesSequenceTabPage.Text = "Values";
             this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36\r\nقيم الحروف والكلمات " +
@@ -5712,7 +5692,7 @@ partial class MainForm
             this.CVWLSequenceTabPage.Controls.Add(this.CVWLSequenceTextBox);
             this.CVWLSequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.CVWLSequenceTabPage.Name = "CVWLSequenceTabPage";
-            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 169);
+            this.CVWLSequenceTabPage.Size = new System.Drawing.Size(808, 167);
             this.CVWLSequenceTabPage.TabIndex = 200;
             this.CVWLSequenceTabPage.Text = "CVWL";
             this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts\r\nرصف أرقام وأعداد الحرو" +
@@ -5807,7 +5787,7 @@ partial class MainForm
             this.DNASequenceTabPage.Controls.Add(this.DNASequenceTextBox);
             this.DNASequenceTabPage.Location = new System.Drawing.Point(4, 22);
             this.DNASequenceTabPage.Name = "DNASequenceTabPage";
-            this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 169);
+            this.DNASequenceTabPage.Size = new System.Drawing.Size(808, 167);
             this.DNASequenceTabPage.TabIndex = 195;
             this.DNASequenceTabPage.Text = "DNA";
             this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to compare with the human genome [Belkacem Meghz" +
@@ -5885,7 +5865,7 @@ partial class MainForm
             this.MathsTabPage.Controls.Add(this.MathsPanel);
             this.MathsTabPage.Location = new System.Drawing.Point(4, 22);
             this.MathsTabPage.Name = "MathsTabPage";
-            this.MathsTabPage.Size = new System.Drawing.Size(808, 169);
+            this.MathsTabPage.Size = new System.Drawing.Size(808, 167);
             this.MathsTabPage.TabIndex = 197;
             this.MathsTabPage.Text = "C+V";
             this.MathsTabPage.ToolTipText = "Chapter +/- Verse calculations\r\nحسابات مجاميع وفروق الءايات والسُوَر";
@@ -5999,7 +5979,7 @@ partial class MainForm
             this.MathsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MathsPanel.Location = new System.Drawing.Point(0, 0);
             this.MathsPanel.Name = "MathsPanel";
-            this.MathsPanel.Size = new System.Drawing.Size(808, 169);
+            this.MathsPanel.Size = new System.Drawing.Size(808, 167);
             this.MathsPanel.TabIndex = 0;
             // 
             // MathsInterestingNumbersEditLabel
@@ -7287,7 +7267,7 @@ partial class MainForm
             this.DistancesTabPage.Controls.Add(this.DistancesPanel);
             this.DistancesTabPage.Location = new System.Drawing.Point(4, 22);
             this.DistancesTabPage.Name = "DistancesTabPage";
-            this.DistancesTabPage.Size = new System.Drawing.Size(808, 169);
+            this.DistancesTabPage.Size = new System.Drawing.Size(808, 167);
             this.DistancesTabPage.TabIndex = 199;
             this.DistancesTabPage.Text = "Distances";
             this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word\r\nالمسافات الى " +
@@ -7364,7 +7344,7 @@ partial class MainForm
             this.DistancesPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DistancesPanel.Location = new System.Drawing.Point(0, 0);
             this.DistancesPanel.Name = "DistancesPanel";
-            this.DistancesPanel.Size = new System.Drawing.Size(808, 169);
+            this.DistancesPanel.Size = new System.Drawing.Size(808, 167);
             this.DistancesPanel.TabIndex = 1;
             // 
             // DistancesInterestingNumbersEditLabel
@@ -8206,7 +8186,7 @@ partial class MainForm
             this.UserTextTabPage.Controls.Add(this.UserTextTextBox);
             this.UserTextTabPage.Location = new System.Drawing.Point(4, 22);
             this.UserTextTabPage.Name = "UserTextTabPage";
-            this.UserTextTabPage.Size = new System.Drawing.Size(808, 169);
+            this.UserTextTabPage.Size = new System.Drawing.Size(808, 167);
             this.UserTextTabPage.TabIndex = 194;
             this.UserTextTabPage.Text = " User Text ";
             this.UserTextTabPage.ToolTipText = "Calculate the value of any given text or find all words with a given value\r\nحساب " +
@@ -8286,6 +8266,23 @@ partial class MainForm
             this.UserTextTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseMove);
             this.UserTextTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseUp);
             // 
+            // TanzilLabel
+            // 
+            this.TanzilLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TanzilLabel.BackColor = System.Drawing.Color.Pink;
+            this.TanzilLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TanzilLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TanzilLabel.ForeColor = System.Drawing.SystemColors.Window;
+            this.TanzilLabel.Location = new System.Drawing.Point(30, 19);
+            this.TanzilLabel.Name = "TanzilLabel";
+            this.TanzilLabel.Size = new System.Drawing.Size(4, 4);
+            this.TanzilLabel.TabIndex = 1;
+            this.TanzilLabel.Tag = "http://tanzil.net/";
+            this.TanzilLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolTip.SetToolTip(this.TanzilLabel, "©2008 Tanzil Quran Text");
+            this.TanzilLabel.Click += new System.EventHandler(this.LinkLabel_Click);
+            this.TanzilLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+            // 
             // EmlaaeiTextLabel
             // 
             this.EmlaaeiTextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -8330,6 +8327,7 @@ partial class MainForm
             this.StatisticsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.StatisticsGroupBox.Controls.Add(this.TanzilLabel);
             this.StatisticsGroupBox.Controls.Add(this.TotalChapterCountsCheckBox);
             this.StatisticsGroupBox.Controls.Add(this.ShaddaAsLetterCheckBox);
             this.StatisticsGroupBox.Controls.Add(this.WawAsWordCheckBox);
@@ -9077,6 +9075,8 @@ partial class MainForm
             // 
             this.ValuePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ValuePanel.Controls.Add(this.PrimalogyARLabel);
+            this.ValuePanel.Controls.Add(this.PrimalogyLabel);
             this.ValuePanel.Controls.Add(this.SumOfDivisorsTextBox);
             this.ValuePanel.Controls.Add(this.SquareDiffTextBox);
             this.ValuePanel.Controls.Add(this.SquareSumTextBox);
@@ -9537,9 +9537,9 @@ partial class MainForm
             this.NumerologySystemComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NumerologySystemComboBox.FormattingEnabled = true;
             this.NumerologySystemComboBox.IntegralHeight = false;
-            this.NumerologySystemComboBox.Location = new System.Drawing.Point(0, 0);
+            this.NumerologySystemComboBox.Location = new System.Drawing.Point(7, 0);
             this.NumerologySystemComboBox.Name = "NumerologySystemComboBox";
-            this.NumerologySystemComboBox.Size = new System.Drawing.Size(180, 20);
+            this.NumerologySystemComboBox.Size = new System.Drawing.Size(173, 20);
             this.NumerologySystemComboBox.TabIndex = 7;
             this.NumerologySystemComboBox.DropDown += new System.EventHandler(this.NumerologySystemComboBox_DropDown);
             this.NumerologySystemComboBox.SelectedIndexChanged += new System.EventHandler(this.NumerologySystemComboBox_SelectedIndexChanged);
@@ -10313,9 +10313,9 @@ partial class MainForm
             this.EveryAyahLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EveryAyahLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.EveryAyahLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.EveryAyahLabel.Location = new System.Drawing.Point(169, 4);
+            this.EveryAyahLabel.Location = new System.Drawing.Point(171, 4);
             this.EveryAyahLabel.Name = "EveryAyahLabel";
-            this.EveryAyahLabel.Size = new System.Drawing.Size(6, 4);
+            this.EveryAyahLabel.Size = new System.Drawing.Size(4, 4);
             this.EveryAyahLabel.TabIndex = 91;
             this.EveryAyahLabel.Tag = "http://everyayah.com";
             this.EveryAyahLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
