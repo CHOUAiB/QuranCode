@@ -36737,24 +36737,8 @@ public partial class MainForm : Form, ISubscriber
     {
         if (FindByFrequencyPhraseTextBox.SelectionLength == 0)
         {
-            // current line text
-            int char_index = FindByFrequencyPhraseTextBox.SelectionStart;
-            int line_index = FindByFrequencyPhraseTextBox.GetLineFromCharIndex(char_index);
-            if ((line_index >= 0) && (line_index < FindByFrequencyPhraseTextBox.Lines.Length))
-            {
-                m_current_phrase = FindByFrequencyPhraseTextBox.Lines[line_index].ToString();
-            }
-            else
-            {
-                m_current_phrase = FindByFrequencyPhraseTextBox.Text;
-            }
-
-            // to factorize MainText value, not LetterFrequencySum
+            // factorize MainText value, not LetterFrequencySum
             CalculateCurrentValue();
-        }
-        else
-        {
-            m_current_phrase = FindByFrequencyPhraseTextBox.SelectedText;
         }
 
         BuildLetterFrequencies();
@@ -43721,6 +43705,24 @@ public partial class MainForm : Form, ISubscriber
             {
                 if (m_find_by_phrase_letter_frequency)
                 {
+                    if (FindByFrequencyPhraseTextBox.SelectionLength > 0)
+                    {
+                        m_current_phrase = FindByFrequencyPhraseTextBox.SelectedText;
+                    }
+                    else
+                    {
+                        // current line text
+                        int char_index = FindByFrequencyPhraseTextBox.SelectionStart;
+                        int line_index = FindByFrequencyPhraseTextBox.GetLineFromCharIndex(char_index);
+                        if ((line_index >= 0) && (line_index < FindByFrequencyPhraseTextBox.Lines.Length))
+                        {
+                            m_current_phrase = FindByFrequencyPhraseTextBox.Lines[line_index].ToString();
+                        }
+                        else
+                        {
+                            m_current_phrase = FindByFrequencyPhraseTextBox.Text;
+                        }
+                    }
                     if (m_current_phrase.Length > 0)
                     {
                         m_client.BuildLetterStatistics(m_current_text, m_current_phrase, m_frequency_search_type, m_with_diacritics);
@@ -43746,53 +43748,65 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DisplayLetterFrequencies()
     {
-        if (m_client != null)
+        try
         {
-            if (m_client.LetterStatistics != null)
-            {
-                LetterFrequencyListView.Items.Clear();
-                if (m_client.LetterStatistics.Count > 0)
-                {
-                    List<int> selected_indexes = new List<int>();
-                    for (int i = 0; i < m_client.LetterStatistics.Count; i++)
-                    {
-                        string[] item_parts = new string[3];
-                        item_parts[0] = m_client.LetterStatistics[i].Order.ToString();
-                        item_parts[1] = m_client.LetterStatistics[i].Letter.ToString();
-                        item_parts[2] = m_client.LetterStatistics[i].Frequency.ToString();
-                        LetterFrequencyListView.Items.Add(new ListViewItem(item_parts, i));
+            for (int i = 0; i < 3; i++) LetterFrequencyListView.SelectedIndexChanged -= new EventHandler(LetterFrequencyListView_SelectedIndexChanged);
 
-                        // re-select user items if any were selected for previous selection
-                        if (m_selected_letters.Contains(m_client.LetterStatistics[i].Letter))
+            if (m_client != null)
+            {
+                if (m_client.LetterStatistics != null)
+                {
+                    LetterFrequencyListView.Items.Clear();
+                    if (m_client.LetterStatistics.Count > 0)
+                    {
+                        List<int> selected_indexes = new List<int>();
+                        for (int i = 0; i < m_client.LetterStatistics.Count; i++)
                         {
-                            selected_indexes.Add(i);
+                            string[] item_parts = new string[3];
+                            item_parts[0] = m_client.LetterStatistics[i].Order.ToString();
+                            item_parts[1] = m_client.LetterStatistics[i].Letter.ToString();
+                            item_parts[2] = m_client.LetterStatistics[i].Frequency.ToString();
+                            LetterFrequencyListView.Items.Add(new ListViewItem(item_parts, i));
+
+                            // re-select user items if any were selected for previous selection
+                            if (m_selected_letters != null)
+                            {
+                                if (m_selected_letters.Contains(m_client.LetterStatistics[i].Letter))
+                                {
+                                    selected_indexes.Add(i);
+                                }
+                            }
+                        }
+                        // must be done after adding all items
+                        foreach (int index in selected_indexes)
+                        {
+                            LetterFrequencyListView.SelectedIndices.Add(index);
+                            LetterFrequencyListView.EnsureVisible(index);
                         }
                     }
-                    // must be done after adding all items
-                    foreach (int index in selected_indexes)
-                    {
-                        LetterFrequencyListView.SelectedIndices.Add(index);
-                        LetterFrequencyListView.EnsureVisible(index);
-                    }
-                }
 
-                DisplayLetterFrequenciesTotals();
+                    DisplayLetterFrequenciesTotals();
 
-                // reset sort-markers
-                foreach (ColumnHeader column in LetterFrequencyListView.Columns)
-                {
-                    if (column.Text.EndsWith("▲"))
+                    // reset sort-markers
+                    foreach (ColumnHeader column in LetterFrequencyListView.Columns)
                     {
-                        column.Text = column.Text.Replace("▲", " ");
+                        if (column.Text.EndsWith("▲"))
+                        {
+                            column.Text = column.Text.Replace("▲", " ");
+                        }
+                        else if (column.Text.EndsWith("▼"))
+                        {
+                            column.Text = column.Text.Replace("▼", " ");
+                        }
                     }
-                    else if (column.Text.EndsWith("▼"))
-                    {
-                        column.Text = column.Text.Replace("▼", " ");
-                    }
+                    LetterFrequencyListView.Columns[0].Text = LetterFrequencyListView.Columns[0].Text.Replace("  ", " ▲");
+                    LetterFrequencyListView.Refresh();
                 }
-                LetterFrequencyListView.Columns[0].Text = LetterFrequencyListView.Columns[0].Text.Replace("  ", " ▲");
-                LetterFrequencyListView.Refresh();
             }
+        }
+        finally
+        {
+            LetterFrequencyListView.SelectedIndexChanged += new EventHandler(LetterFrequencyListView_SelectedIndexChanged);
         }
     }
     private void DisplayLetterFrequenciesTotals()
