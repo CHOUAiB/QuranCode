@@ -422,9 +422,9 @@ namespace Model
         public Word(Verse verse, int number_in_verse, int position, string text)
         {
             this.verse = verse;
-            //this.number = number; // to be filled by book.SetupNumbers
+            //this.number = number;                         // to be filled by book.SetupNumbers
             this.number_in_verse = number_in_verse;
-            //this.number_in_chapter = number_in_chapter; // to be filled by book.SetupNumbers
+            //this.number_in_chapter = number_in_chapter;   // to be filled by book.SetupNumbers
             this.position = position;
             this.text = text;
 
@@ -450,6 +450,7 @@ namespace Model
                 foreach (char character in simplified_text)
                 {
                     if (character == '_') continue;
+                    // SimplifiedDots.txt
 
                     letter_number_in_word++;
 

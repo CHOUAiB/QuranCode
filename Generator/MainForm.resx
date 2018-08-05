@@ -144,7 +144,7 @@
   <data name="GenerateButton.ToolTip" xml:space="preserve">
     <value>Generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
 There are 79940 ways of choosing 7 words with 29 letters.
-R2L or L2R concatenate each letter value with the letter values of the Primalogy system.
+R2L or L2R interlace or concatenate each letter value with the letter values of the Primalogy system.
 If the result is P, AP, XP, C, AC or XC, then add the letter to the candidate word.
 After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.</value>
   </data>
@@ -187,7 +187,7 @@ After processing all 29 letters, if the candidate word is a Quran word, then add
   <data name="AutoGenerateButton.ToolTip" xml:space="preserve">
     <value>Auto generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
 There are 79940 ways of choosing 7 words with 29 letters.
-R2L or L2R concatenate each letter value with the letter values of the Primalogy system.
+R2L or L2R interlace or concatenate each letter value with the letter values of the Primalogy system.
 If the result is P, AP, XP, C, AC or XC, then add the letter to the candidate word.
 After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.</value>
   </data>

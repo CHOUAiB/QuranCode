@@ -325,8 +325,8 @@ namespace Model
                     if (
                          (word_text.Length == 1)
                          &&
-                         !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ن") || (word_text == "و"))
-                       )
+                         !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ٯ") || (word_text == "ن") || (word_text == "ں") || (word_text == "و"))
+                       ) // SimplifiedDots.txt
                     {
                         if ((Constants.STOPMARKS.Contains(word_text[0])) || (Constants.QURANMARKS.Contains(word_text[0])))
                         {
@@ -378,8 +378,8 @@ namespace Model
                     else if (
                          (word_text.Length == 1)
                          &&
-                         !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ن") || (word_text == "و"))
-                       )
+                         !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ٯ") || (word_text == "ن") || (word_text == "ں") || (word_text == "و"))
+                       ) // SimplifiedDots.txt
                     {
                         continue; // skip stopmarks/quranmarks
                     }
@@ -468,8 +468,8 @@ namespace Model
                     else if (
                          (word_text.Length == 1)
                          &&
-                         !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ن") || (word_text == "و"))
-                       )
+                         !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ٯ") || (word_text == "ن") || (word_text == "ں") || (word_text == "و"))
+                       ) // SimplifiedDots.txt
                     {
                         if ((Constants.STOPMARKS.Contains(word_text[0])) || (Constants.QURANMARKS.Contains(word_text[0])))
                         {

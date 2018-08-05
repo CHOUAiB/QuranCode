@@ -129,7 +129,7 @@ public static class Numbers
         /* NumberType.NonAdditivePrime */       Color.FromArgb(240, 255, 240),
         /* NumberType.Composite */              Color.Black,
         /* NumberType.AdditiveComposite */      Color.FromArgb(255, 224, 224),
-        /* NumberType.NonAdditiveComposite */   Color.FromArgb(232, 208, 208),
+        /* NumberType.NonAdditiveComposite */   Color.FromArgb(232, 216, 216),
         /* NumberType.Odd */                    Color.Black,
         /* NumberType.Even */                   Color.Black,
         /* NumberType.Square */                 Color.Black,
@@ -2021,14 +2021,13 @@ public static class Numbers
                     string line = "";
                     while (!reader.EndOfStream)
                     {
-                        try
+                        line = reader.ReadLine();
+                        if (line.Length == 0) break;
+
+                        long number;
+                        if (long.TryParse(line, out number))
                         {
-                            line = reader.ReadLine();
-                            PrimeRepunits.Add(long.Parse(line));
-                        }
-                        catch
-                        {
-                            // ignore non-long line
+                            PrimeRepunits.Add(number);
                         }
                     }
                 }
@@ -2171,14 +2170,13 @@ public static class Numbers
                 string line = "";
                 while (!reader.EndOfStream)
                 {
-                    try
+                    line = reader.ReadLine();
+                    if (line.Length == 0) break;
+
+                    long number;
+                    if (long.TryParse(line, out number))
                     {
-                        line = reader.ReadLine();
-                        PerfectNumbers.Add(long.Parse(line));
-                    }
-                    catch
-                    {
-                        break;
+                        PerfectNumbers.Add(number);
                     }
                 }
             }

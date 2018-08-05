@@ -400,7 +400,7 @@ public static class DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception("LoadWordMeanings: " + ex.Message);
+                //throw new Exception("LoadWordMeanings: " + ex.Message);
             }
         }
     }
@@ -462,7 +462,7 @@ public static class DataAccess
                                                     }
                                                     else
                                                     {
-                                                        throw new Exception("Invalid file format.");
+                                                        //throw new Exception("Invalid file format.");
                                                     }
                                                 }
                                             }
@@ -476,7 +476,7 @@ public static class DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception("LoadWordRoots: " + ex.Message);
+                //throw new Exception("LoadWordRoots: " + ex.Message);
             }
         }
     }
@@ -517,7 +517,7 @@ public static class DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception("SaveWordRoots: " + ex.Message);
+                //throw new Exception("SaveWordRoots: " + ex.Message);
             }
         }
     }
@@ -681,20 +681,20 @@ public static class DataAccess
                                                         }
                                                         else
                                                         {
-                                                            throw new Exception("Grammar field is missing.\r\n" + filename);
+                                                            //throw new Exception("Grammar field is missing.\r\n" + filename);
                                                         }
                                                     }
                                                 }
                                             }
                                             else
                                             {
-                                                throw new Exception("Invalid Location Format.\r\n" + filename);
+                                                //throw new Exception("Invalid Location Format.\r\n" + filename);
                                             }
                                         }
                                     }
                                     else
                                     {
-                                        throw new Exception("Invalid File Format.\r\n" + filename);
+                                        //throw new Exception("Invalid File Format.\r\n" + filename);
                                     }
                                 }
                             }
@@ -704,7 +704,7 @@ public static class DataAccess
             }
             catch (Exception ex)
             {
-                throw new Exception("LoadWordParts: " + ex.Message);
+                //throw new Exception("LoadWordParts: " + ex.Message);
             }
         }
     }

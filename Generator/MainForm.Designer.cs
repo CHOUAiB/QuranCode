@@ -219,7 +219,7 @@
             this.InterlaceLabel.TabIndex = 9;
             this.InterlaceLabel.Text = "- -";
             this.InterlaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.ToolTip.SetToolTip(this.InterlaceLabel, "concatenate letter values");
+            this.ToolTip.SetToolTip(this.InterlaceLabel, "interlace letter values");
             this.InterlaceLabel.Click += new System.EventHandler(this.InterlaceLabel_Click);
             // 
             // AutoGenerateButton

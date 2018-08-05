@@ -6384,8 +6384,8 @@ public partial class MainForm : Form, ISubscriber
                 if (
                      (word_text.Length == 1)
                      &&
-                     !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ن") || (word_text == "و"))
-                   )
+                     !((word_text == "_") || (word_text == "ص") || (word_text == "ق") || (word_text == "ٯ") || (word_text == "ن") || (word_text == "ں") || (word_text == "و"))
+                   ) // SimplifiedDots.txt
                 {
                     // skip stopmark words
                     char_index -= word_text.Length + 1; // 1 for stopmark
@@ -22100,7 +22100,8 @@ public partial class MainForm : Form, ISubscriber
         FindByTextHamzaBelowElfLabel.Visible = false;
         FindByTextHamzaAboveWawLabel.Visible = false;
         FindByTextHamzaAboveYaaLabel.Visible = false;
-        LetterFrequencyWithDiacriticsCheckBox.Visible = m_find_by_phrase;
+        FindByTextWithDiacriticsCheckBox.Visible = false;
+        LetterFrequencyWithDiacriticsCheckBox.Visible = m_find_by_phrase_letter_frequency;
 
         if (text_mode == "Simplified28")
         {
@@ -22146,6 +22147,7 @@ public partial class MainForm : Form, ISubscriber
             FindByTextHamzaBelowElfLabel.Visible = true;
             FindByTextHamzaAboveWawLabel.Visible = true;
             FindByTextHamzaAboveYaaLabel.Visible = true;
+            FindByTextWithDiacriticsCheckBox.Visible = true;
             LetterFrequencyWithDiacriticsCheckBox.Visible = true;
         }
         else
@@ -24837,19 +24839,19 @@ public partial class MainForm : Form, ISubscriber
     }
 
     private string m_phrase_text = "";
-    private bool m_find_by_phrase = false;
+    private bool m_find_by_phrase_letter_frequency = false;
     private void FindByFrequencyPhraseCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        m_find_by_phrase = !m_find_by_phrase;
+        m_find_by_phrase_letter_frequency = !m_find_by_phrase_letter_frequency;
         UpdateKeyboard(m_client.NumerologySystem.TextMode);
 
         ResetFindByFrequencyResultTypeLabels();
-        m_frequency_result_type = (m_find_by_phrase) ? FrequencyResultType.Sentences : FrequencyResultType.Chapters;
+        m_frequency_result_type = (m_find_by_phrase_letter_frequency) ? FrequencyResultType.Sentences : FrequencyResultType.Chapters;
         FindByFrequencyControls_Enter(null, null);
 
         int shift = (m_dpi_x == 120.0F) ? 40 : 46;
 
-        if (m_find_by_phrase)
+        if (m_find_by_phrase_letter_frequency)
         {
             for (int i = 0; i < 3; i++) FindByFrequencyPhraseTextBox.TextChanged -= new EventHandler(FindByFrequencyPhraseTextBox_TextChanged);
             FindByFrequencyPhraseTextBox.Text = m_phrase_text;
@@ -24888,11 +24890,11 @@ public partial class MainForm : Form, ISubscriber
             LetterFrequencyPanel.Refresh();
         }
 
-        FindByFrequencyLinkLabel.Visible = m_find_by_phrase;
+        FindByFrequencyLinkLabel.Visible = m_find_by_phrase_letter_frequency;
         UpdateFindByFrequencyButtonToolTip();
-        FindByFrequencyButton.Enabled = ((m_find_by_phrase) && (m_phrase_text.Length > 0))
+        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0))
                                         ||
-                                        ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+                                        ((!m_find_by_phrase_letter_frequency) && (LetterFrequencyListView.SelectedIndices.Count > 0));
 
         RebuildLetterFrequencies();
     }
@@ -24994,9 +24996,9 @@ public partial class MainForm : Form, ISubscriber
         FindByTextButton.Enabled = false;
         FindBySimilarityButton.Enabled = false;
         FindByNumbersButton.Enabled = false;
-        FindByFrequencyButton.Enabled = ((m_find_by_phrase) && (m_phrase_text.Length > 0))
+        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0))
                                         ||
-                                        ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+                                        ((!m_find_by_phrase_letter_frequency) && (LetterFrequencyListView.SelectedIndices.Count > 0));
 
         ToolTip.SetToolTip(InspectChaptersLabel, L[l]["Inspect chapters"]);
         WordsListBoxLabel.Visible = false;
@@ -25073,9 +25075,9 @@ public partial class MainForm : Form, ISubscriber
     private void FindByFrequencyPhraseTextBox_TextChanged(object sender, EventArgs e)
     {
         m_phrase_text = FindByFrequencyPhraseTextBox.Text;
-        FindByFrequencyButton.Enabled = ((m_find_by_phrase) && (m_phrase_text.Length > 0))
+        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0))
                                         ||
-                                        ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+                                        ((!m_find_by_phrase_letter_frequency) && (LetterFrequencyListView.SelectedIndices.Count > 0));
 
         BuildLetterFrequencies();
         DisplayLetterFrequencies();
@@ -25137,7 +25139,7 @@ public partial class MainForm : Form, ISubscriber
         string tooltip = ToolTip.GetToolTip(FindByFrequencyButton);
         if (tooltip != null)
         {
-            if (m_find_by_phrase)
+            if (m_find_by_phrase_letter_frequency)
             {
                 tooltip = tooltip.Replace("selected", "phrase");
             }
@@ -31649,9 +31651,9 @@ public partial class MainForm : Form, ISubscriber
 
         DisplayLetterFrequenciesTotals();
 
-        FindByFrequencyButton.Enabled = ((m_find_by_phrase) && (m_phrase_text.Length > 0))
+        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0))
                                         ||
-                                        ((!m_find_by_phrase) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+                                        ((!m_find_by_phrase_letter_frequency) && (LetterFrequencyListView.SelectedIndices.Count > 0));
     }
     private void LetterFrequencyListView_DoubleClick(object sender, EventArgs e)
     {
