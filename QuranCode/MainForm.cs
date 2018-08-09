@@ -27128,41 +27128,108 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
+    private void AddAllCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        UpdatePositionCheckBoxes();
+    }
     private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            if (m_client != null)
-            {
-                if (m_client.NumerologySystem != null)
-                {
-                    m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
-                    CalculateCurrentValue();
-                }
-            }
-        }
-        finally
-        {
-            this.Cursor = Cursors.Default;
-        }
+        UpdateDistanceCheckBoxes();
     }
     private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
     {
+        UpdateDistanceCheckBoxes();
+    }
+    private void UpdatePositionCheckBoxes()
+    {
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            if (m_client != null)
-            {
-                if (m_client.NumerologySystem != null)
-                {
-                    m_client.NumerologySystem.AddDistancesToNext = AddDistancesToNextCheckBox.Checked;
-                    CalculateCurrentValue();
-                }
-            }
+            for (int i = 0; i < 3; i++) AddToLetterLNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToLetterWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToLetterVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToLetterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToWordWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToWordVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToWordCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToVerseVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToVerseCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+
+            bool is_checked = AddAllCheckBox.Checked;
+
+            AddToLetterLNumberCheckBox.Checked = is_checked;
+            AddToLetterWNumberCheckBox.Checked = is_checked;
+            AddToLetterVNumberCheckBox.Checked = is_checked;
+            AddToLetterCNumberCheckBox.Checked = is_checked;
+            AddToWordWNumberCheckBox.Checked = is_checked;
+            AddToWordVNumberCheckBox.Checked = is_checked;
+            AddToWordCNumberCheckBox.Checked = is_checked;
+            AddToVerseVNumberCheckBox.Checked = is_checked;
+            AddToVerseCNumberCheckBox.Checked = is_checked;
+            AddToChapterCNumberCheckBox.Checked = is_checked;
+
+            UpdateNumerologySystem();
+            CalculateCurrentValue();
         }
         finally
         {
+            AddToLetterLNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToLetterWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToLetterVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToLetterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToWordWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToWordVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToWordCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToVerseVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToVerseCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToChapterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void UpdateDistanceCheckBoxes()
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            for (int i = 0; i < 3; i++) AddToLetterLDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToLetterWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToLetterVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToLetterCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToWordWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToWordVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToWordCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToVerseVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+            for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
+
+            bool is_checked = AddDistancesToPreviousCheckBox.Checked || AddDistancesToNextCheckBox.Checked;
+
+            AddToLetterLDistanceCheckBox.Checked = is_checked;
+            AddToLetterWDistanceCheckBox.Checked = is_checked;
+            AddToLetterVDistanceCheckBox.Checked = is_checked;
+            AddToLetterCDistanceCheckBox.Checked = is_checked;
+            AddToWordWDistanceCheckBox.Checked = is_checked;
+            AddToWordVDistanceCheckBox.Checked = is_checked;
+            AddToWordCDistanceCheckBox.Checked = is_checked;
+            AddToVerseVDistanceCheckBox.Checked = is_checked;
+            AddToVerseCDistanceCheckBox.Checked = is_checked;
+
+            UpdateNumerologySystem();
+            CalculateCurrentValue();
+        }
+        finally
+        {
+            AddToLetterLDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToLetterWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToLetterVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToLetterCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToWordWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToWordVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToWordCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToVerseVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+            AddToVerseCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
+
             this.Cursor = Cursors.Default;
         }
     }
@@ -27183,81 +27250,6 @@ public partial class MainForm : Form, ISubscriber
         }
         finally
         {
-            this.Cursor = Cursors.Default;
-        }
-    }
-    private void AddAllCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-        this.Cursor = Cursors.WaitCursor;
-        try
-        {
-            for (int i = 0; i < 3; i++) AddToLetterLNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToLetterWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToLetterVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToLetterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToLetterLDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToLetterWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToLetterVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToLetterCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToWordWNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToWordVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToWordCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToWordWDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToWordVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToWordCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToVerseVNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToVerseCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToVerseVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-            for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-
-            bool is_checked = AddAllCheckBox.Checked;
-
-            AddToLetterLNumberCheckBox.Checked = is_checked;
-            AddToLetterWNumberCheckBox.Checked = is_checked;
-            AddToLetterVNumberCheckBox.Checked = is_checked;
-            AddToLetterCNumberCheckBox.Checked = is_checked;
-            AddToLetterLDistanceCheckBox.Checked = is_checked;
-            AddToLetterWDistanceCheckBox.Checked = is_checked;
-            AddToLetterVDistanceCheckBox.Checked = is_checked;
-            AddToLetterCDistanceCheckBox.Checked = is_checked;
-            AddToWordWNumberCheckBox.Checked = is_checked;
-            AddToWordVNumberCheckBox.Checked = is_checked;
-            AddToWordCNumberCheckBox.Checked = is_checked;
-            AddToWordWDistanceCheckBox.Checked = is_checked;
-            AddToWordVDistanceCheckBox.Checked = is_checked;
-            AddToWordCDistanceCheckBox.Checked = is_checked;
-            AddToVerseVNumberCheckBox.Checked = is_checked;
-            AddToVerseCNumberCheckBox.Checked = is_checked;
-            AddToVerseVDistanceCheckBox.Checked = is_checked;
-            AddToVerseCDistanceCheckBox.Checked = is_checked;
-            AddToChapterCNumberCheckBox.Checked = is_checked;
-
-            UpdateNumerologySystem();
-            CalculateCurrentValue();
-        }
-        finally
-        {
-            AddToLetterLNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToLetterWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToLetterVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToLetterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToLetterLDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToLetterWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToLetterVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToLetterCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToWordWNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToWordVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToWordCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToWordWDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToWordVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToWordCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToVerseVNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToVerseCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToVerseVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToVerseCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-            AddToChapterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-
             this.Cursor = Cursors.Default;
         }
     }
