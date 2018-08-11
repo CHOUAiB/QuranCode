@@ -179,7 +179,7 @@
             this.ElapsedTimeLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ElapsedTimeLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.ElapsedTimeLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.ElapsedTimeLabel.Location = new System.Drawing.Point(57, 321);
+            this.ElapsedTimeLabel.Location = new System.Drawing.Point(57, 363);
             this.ElapsedTimeLabel.Name = "ElapsedTimeLabel";
             this.ElapsedTimeLabel.Size = new System.Drawing.Size(180, 16);
             this.ElapsedTimeLabel.TabIndex = 26;
@@ -194,7 +194,7 @@
             this.ProgressLabel.BackColor = System.Drawing.SystemColors.Info;
             this.ProgressLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.ProgressLabel.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.ProgressLabel.Location = new System.Drawing.Point(0, 321);
+            this.ProgressLabel.Location = new System.Drawing.Point(0, 363);
             this.ProgressLabel.Name = "ProgressLabel";
             this.ProgressLabel.Size = new System.Drawing.Size(56, 16);
             this.ProgressLabel.TabIndex = 25;
@@ -209,7 +209,7 @@
             this.ElapsedTimeValueLabel.BackColor = System.Drawing.SystemColors.ControlText;
             this.ElapsedTimeValueLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
             this.ElapsedTimeValueLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.ElapsedTimeValueLabel.Location = new System.Drawing.Point(57, 335);
+            this.ElapsedTimeValueLabel.Location = new System.Drawing.Point(57, 377);
             this.ElapsedTimeValueLabel.Name = "ElapsedTimeValueLabel";
             this.ElapsedTimeValueLabel.Size = new System.Drawing.Size(180, 17);
             this.ElapsedTimeValueLabel.TabIndex = 28;
@@ -223,7 +223,7 @@
             this.MilliSecondsLabel.BackColor = System.Drawing.SystemColors.ControlText;
             this.MilliSecondsLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.MilliSecondsLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.MilliSecondsLabel.Location = new System.Drawing.Point(180, 338);
+            this.MilliSecondsLabel.Location = new System.Drawing.Point(180, 380);
             this.MilliSecondsLabel.Name = "MilliSecondsLabel";
             this.MilliSecondsLabel.Size = new System.Drawing.Size(37, 12);
             this.MilliSecondsLabel.TabIndex = 29;
@@ -236,7 +236,7 @@
             this.ProgressValueLabel.BackColor = System.Drawing.SystemColors.ControlText;
             this.ProgressValueLabel.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
             this.ProgressValueLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.ProgressValueLabel.Location = new System.Drawing.Point(0, 335);
+            this.ProgressValueLabel.Location = new System.Drawing.Point(0, 377);
             this.ProgressValueLabel.Name = "ProgressValueLabel";
             this.ProgressValueLabel.Size = new System.Drawing.Size(56, 17);
             this.ProgressValueLabel.TabIndex = 27;
@@ -255,7 +255,7 @@
             this.OutputTextBox.Name = "OutputTextBox";
             this.OutputTextBox.ReadOnly = true;
             this.OutputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputTextBox.Size = new System.Drawing.Size(226, 186);
+            this.OutputTextBox.Size = new System.Drawing.Size(226, 228);
             this.OutputTextBox.TabIndex = 24;
             this.OutputTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ToolTip.SetToolTip(this.OutputTextBox, "Factorization result");
@@ -266,7 +266,7 @@
             // 
             this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar.Location = new System.Drawing.Point(0, 356);
+            this.ProgressBar.Location = new System.Drawing.Point(0, 398);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(240, 6);
             this.ProgressBar.TabIndex = 0;
@@ -279,7 +279,7 @@
             this.WebsiteLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.WebsiteLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.WebsiteLabel.ForeColor = System.Drawing.Color.Purple;
-            this.WebsiteLabel.Location = new System.Drawing.Point(0, 364);
+            this.WebsiteLabel.Location = new System.Drawing.Point(0, 406);
             this.WebsiteLabel.Name = "WebsiteLabel";
             this.WebsiteLabel.Size = new System.Drawing.Size(240, 16);
             this.WebsiteLabel.TabIndex = 31;
@@ -373,7 +373,7 @@
             this.VersionLabel.BackColor = System.Drawing.SystemColors.Control;
             this.VersionLabel.Font = new System.Drawing.Font("Tahoma", 8F);
             this.VersionLabel.ForeColor = System.Drawing.Color.Purple;
-            this.VersionLabel.Location = new System.Drawing.Point(177, 362);
+            this.VersionLabel.Location = new System.Drawing.Point(177, 404);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(63, 17);
             this.VersionLabel.TabIndex = 32;
@@ -397,7 +397,7 @@
             this.MultithreadingCheckBox.Checked = true;
             this.MultithreadingCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MultithreadingCheckBox.ForeColor = System.Drawing.Color.Purple;
-            this.MultithreadingCheckBox.Location = new System.Drawing.Point(3, 364);
+            this.MultithreadingCheckBox.Location = new System.Drawing.Point(3, 406);
             this.MultithreadingCheckBox.Name = "MultithreadingCheckBox";
             this.MultithreadingCheckBox.Size = new System.Drawing.Size(15, 14);
             this.MultithreadingCheckBox.TabIndex = 30;
@@ -424,14 +424,13 @@
             // 
             // DisplayPerfectNumbersLabel
             // 
-            this.DisplayPerfectNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.DisplayPerfectNumbersLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.DisplayPerfectNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.DisplayPerfectNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DisplayPerfectNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisplayPerfectNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.DisplayPerfectNumbersLabel.Location = new System.Drawing.Point(2, 115);
+            this.DisplayPerfectNumbersLabel.Location = new System.Drawing.Point(2, 109);
             this.DisplayPerfectNumbersLabel.Name = "DisplayPerfectNumbersLabel";
-            this.DisplayPerfectNumbersLabel.Size = new System.Drawing.Size(5, 5);
+            this.DisplayPerfectNumbersLabel.Size = new System.Drawing.Size(5, 6);
             this.DisplayPerfectNumbersLabel.TabIndex = 16;
             this.DisplayPerfectNumbersLabel.Tag = "";
             this.DisplayPerfectNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -440,14 +439,13 @@
             // 
             // DisplayAbundantNumbersLabel
             // 
-            this.DisplayAbundantNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.DisplayAbundantNumbersLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.DisplayAbundantNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.DisplayAbundantNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DisplayAbundantNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisplayAbundantNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.DisplayAbundantNumbersLabel.Location = new System.Drawing.Point(2, 109);
+            this.DisplayAbundantNumbersLabel.Location = new System.Drawing.Point(2, 115);
             this.DisplayAbundantNumbersLabel.Name = "DisplayAbundantNumbersLabel";
-            this.DisplayAbundantNumbersLabel.Size = new System.Drawing.Size(5, 5);
+            this.DisplayAbundantNumbersLabel.Size = new System.Drawing.Size(5, 6);
             this.DisplayAbundantNumbersLabel.TabIndex = 17;
             this.DisplayAbundantNumbersLabel.Tag = "";
             this.DisplayAbundantNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -456,14 +454,13 @@
             // 
             // DisplayDeficientNumbersLabel
             // 
-            this.DisplayDeficientNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.DisplayDeficientNumbersLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.DisplayDeficientNumbersLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(255)))));
             this.DisplayDeficientNumbersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DisplayDeficientNumbersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DisplayDeficientNumbersLabel.ForeColor = System.Drawing.SystemColors.Window;
-            this.DisplayDeficientNumbersLabel.Location = new System.Drawing.Point(2, 103);
+            this.DisplayDeficientNumbersLabel.Location = new System.Drawing.Point(2, 102);
             this.DisplayDeficientNumbersLabel.Name = "DisplayDeficientNumbersLabel";
-            this.DisplayDeficientNumbersLabel.Size = new System.Drawing.Size(5, 5);
+            this.DisplayDeficientNumbersLabel.Size = new System.Drawing.Size(5, 7);
             this.DisplayDeficientNumbersLabel.TabIndex = 15;
             this.DisplayDeficientNumbersLabel.Tag = "";
             this.DisplayDeficientNumbersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -507,8 +504,7 @@
             // 
             // PCIndexChainLabel
             // 
-            this.PCIndexChainLabel.BackColor = System.Drawing.Color.Wheat;
-            this.PCIndexChainLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PCIndexChainLabel.BackColor = System.Drawing.Color.LightSteelBlue;
             this.PCIndexChainLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.PCIndexChainLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PCIndexChainLabel.ForeColor = System.Drawing.SystemColors.Window;
@@ -1168,6 +1164,7 @@
             // 
             // ValuePanel
             // 
+            this.ValuePanel.Controls.Add(this.DisplayAbundantNumbersLabel);
             this.ValuePanel.Controls.Add(this.ValueInspectLabel);
             this.ValuePanel.Controls.Add(this.HistoryClearLabel);
             this.ValuePanel.Controls.Add(this.HistoryDeleteLabel);
@@ -1180,7 +1177,6 @@
             this.ValuePanel.Controls.Add(this.DigitsLabel);
             this.ValuePanel.Controls.Add(this.CPIndexChainL2RTextBox);
             this.ValuePanel.Controls.Add(this.DisplayPerfectNumbersLabel);
-            this.ValuePanel.Controls.Add(this.DisplayAbundantNumbersLabel);
             this.ValuePanel.Controls.Add(this.PCIndexChainR2LTextBox);
             this.ValuePanel.Controls.Add(this.HistoryForewardLabel);
             this.ValuePanel.Controls.Add(this.HistoryBackwardLabel);
@@ -1464,7 +1460,7 @@
             this.IndexPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.IndexPanel.Location = new System.Drawing.Point(3, 3);
             this.IndexPanel.Name = "IndexPanel";
-            this.IndexPanel.Size = new System.Drawing.Size(226, 186);
+            this.IndexPanel.Size = new System.Drawing.Size(226, 207);
             this.IndexPanel.TabIndex = 33;
             // 
             // EditionLabel
@@ -1594,7 +1590,7 @@
             this.MainTabControl.Location = new System.Drawing.Point(0, 146);
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.SelectedIndex = 0;
-            this.MainTabControl.Size = new System.Drawing.Size(240, 218);
+            this.MainTabControl.Size = new System.Drawing.Size(240, 260);
             this.MainTabControl.TabIndex = 34;
             this.MainTabControl.SelectedIndexChanged += new System.EventHandler(this.MainTabControl_SelectedIndexChanged);
             // 
@@ -1604,8 +1600,8 @@
             this.FactorsTabPage.Controls.Add(this.OutputTextBox);
             this.FactorsTabPage.Location = new System.Drawing.Point(4, 22);
             this.FactorsTabPage.Name = "FactorsTabPage";
-            this.FactorsTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.FactorsTabPage.Size = new System.Drawing.Size(232, 192);
+            this.FactorsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.FactorsTabPage.Size = new System.Drawing.Size(232, 234);
             this.FactorsTabPage.TabIndex = 0;
             this.FactorsTabPage.Text = "Factors";
             // 
@@ -1615,8 +1611,8 @@
             this.IndexTabPage.Controls.Add(this.IndexPanel);
             this.IndexTabPage.Location = new System.Drawing.Point(4, 22);
             this.IndexTabPage.Name = "IndexTabPage";
-            this.IndexTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.IndexTabPage.Size = new System.Drawing.Size(232, 192);
+            this.IndexTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.IndexTabPage.Size = new System.Drawing.Size(232, 213);
             this.IndexTabPage.TabIndex = 1;
             this.IndexTabPage.Text = "Index";
             // 
@@ -1654,7 +1650,7 @@
             this.TriangleTabPage.Controls.Add(this.aTriangleTextBox);
             this.TriangleTabPage.Location = new System.Drawing.Point(4, 22);
             this.TriangleTabPage.Name = "TriangleTabPage";
-            this.TriangleTabPage.Size = new System.Drawing.Size(232, 192);
+            this.TriangleTabPage.Size = new System.Drawing.Size(232, 213);
             this.TriangleTabPage.TabIndex = 3;
             this.TriangleTabPage.Text = "Triangle";
             // 
@@ -1857,7 +1853,7 @@
             this.CircleTabPage.Controls.Add(this.piCircleTextBox);
             this.CircleTabPage.Location = new System.Drawing.Point(4, 22);
             this.CircleTabPage.Name = "CircleTabPage";
-            this.CircleTabPage.Size = new System.Drawing.Size(232, 192);
+            this.CircleTabPage.Size = new System.Drawing.Size(232, 213);
             this.CircleTabPage.TabIndex = 2;
             this.CircleTabPage.Text = "Circle";
             // 
@@ -1951,7 +1947,7 @@
             this.SphereTabPage.Controls.Add(this.vEqSphereLabel);
             this.SphereTabPage.Location = new System.Drawing.Point(4, 22);
             this.SphereTabPage.Name = "SphereTabPage";
-            this.SphereTabPage.Size = new System.Drawing.Size(232, 192);
+            this.SphereTabPage.Size = new System.Drawing.Size(232, 213);
             this.SphereTabPage.TabIndex = 4;
             this.SphereTabPage.Text = "Sphere";
             // 
@@ -2028,7 +2024,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(240, 380);
+            this.ClientSize = new System.Drawing.Size(240, 422);
             this.Controls.Add(this.MainTabControl);
             this.Controls.Add(this.ValuePanel);
             this.Controls.Add(this.MultithreadingCheckBox);
