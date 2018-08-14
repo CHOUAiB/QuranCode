@@ -17313,8 +17313,6 @@ public partial class MainForm : Form, ISubscriber
                                     {
                                         MainTextBox.Colorize(0, 1, Color.Navy);
                                     }
-
-                                    //?????MainTextBox.AlignToStart();
                                 }
                             }
                         }
@@ -42009,6 +42007,7 @@ public partial class MainForm : Form, ISubscriber
                     ShowPictureBox();
                     m_current_drawing_type = DrawingType.LetterValues;
                     HeaderLabel.Text = m_current_drawing_type.ToString();
+                    HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
                     HeaderLabel.Refresh();
 
                     m_bitmap = new Bitmap(PictureBox.Width, PictureBox.Height, PixelFormat.Format24bppRgb);
@@ -42090,6 +42089,7 @@ public partial class MainForm : Form, ISubscriber
                     ShowPictureBox();
                     m_current_drawing_type = DrawingType.WordValues;
                     HeaderLabel.Text = m_current_drawing_type.ToString();
+                    HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
                     HeaderLabel.Refresh();
 
                     m_bitmap = new Bitmap(PictureBox.Width, PictureBox.Height, PixelFormat.Format24bppRgb);
@@ -42281,6 +42281,7 @@ public partial class MainForm : Form, ISubscriber
                         StringBuilder str = new StringBuilder();
                         str.Append(text + " words = " + given_word_count);
                         HeaderLabel.Text = str.ToString();
+                        HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(given_word_count);
                         HeaderLabel.Refresh();
 
                         str.Length = 0;
@@ -42369,6 +42370,7 @@ public partial class MainForm : Form, ISubscriber
                         StringBuilder str = new StringBuilder();
                         str.Append("Allah words = " + Allah_word_count);
                         HeaderLabel.Text = str.ToString();
+                        HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(Allah_word_count);
                         HeaderLabel.Refresh();
 
                         str.Length = 0;
@@ -42500,6 +42502,7 @@ public partial class MainForm : Form, ISubscriber
                         str.Append("+Lillah+ = " + with_lillah_word_count + " | ");
                         str.Append("Total = " + (Allah_word_count + with_Allah_word_count + with_lillah_word_count));
                         HeaderLabel.Text = str.ToString();
+                        HeaderLabel.ForeColor = Numbers.GetNumberTypeColor((Allah_word_count + with_Allah_word_count + with_lillah_word_count));
                         HeaderLabel.Refresh();
 
                         str.Length = 0;
@@ -42592,6 +42595,7 @@ public partial class MainForm : Form, ISubscriber
             ShowPictureBox();
             m_current_drawing_type = DrawingType.Primes;
             HeaderLabel.Text = m_current_drawing_type.ToString();
+            HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
             HeaderLabel.Refresh();
 
             m_bitmap = new Bitmap(PictureBox.Width, PictureBox.Height, PixelFormat.Format24bppRgb);
@@ -42644,6 +42648,7 @@ public partial class MainForm : Form, ISubscriber
             ShowPictureBox();
             m_current_drawing_type = DrawingType.AdditivePrimes;
             HeaderLabel.Text = m_current_drawing_type.ToString();
+            HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
             HeaderLabel.Refresh();
 
             m_bitmap = new Bitmap(PictureBox.Width, PictureBox.Height, PixelFormat.Format24bppRgb);
@@ -42692,6 +42697,7 @@ public partial class MainForm : Form, ISubscriber
             ShowPictureBox();
             m_current_drawing_type = DrawingType.NonAdditivePrimes;
             HeaderLabel.Text = m_current_drawing_type.ToString();
+            HeaderLabel.ForeColor = Numbers.GetNumberTypeColor(0L);
             HeaderLabel.Refresh();
 
             m_bitmap = new Bitmap(PictureBox.Width, PictureBox.Height, PixelFormat.Format24bppRgb);
