@@ -31027,30 +31027,37 @@ public partial class MainForm : Form, ISubscriber
             {
                 long value = (long)UserTextValueNumericUpDown.Value;
                 List<string> matches = new List<string>();
-
-                string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
-                if (File.Exists(filename))
+                if (matches != null)
                 {
-                    List<string> lines = FileHelper.LoadLines(filename);
-                    foreach (string line in lines)
+                    string filename = Globals.DATA_FOLDER + "/" + "quran-words.txt";
+                    if (File.Exists(filename))
                     {
-                        if (m_client.CalculateValue(line) == value)
+                        List<string> lines = FileHelper.LoadLines(filename);
+                        if (lines != null)
                         {
-                            matches.Add(line);
+                            foreach (string line in lines)
+                            {
+                                if (m_client.CalculateValue(line) == value)
+                                {
+                                    matches.Add(line);
+                                }
+                            }
+                            matches.Sort();
+
+                            StringBuilder str = new StringBuilder();
+                            if (str != null)
+                            {
+                                foreach (string match in matches)
+                                {
+                                    str.AppendLine(match);
+                                }
+                                UserTextTextBox.Text = str.ToString();
+                                //UserTextTextBox.SelectionStart = 0;
+                                //UserTextTextBox.SelectionLength = 0;
+                                UserTextTextBox.Focus();
+                            }
                         }
                     }
-                    matches.Sort();
-
-                    StringBuilder str = new StringBuilder();
-                    foreach (string match in matches)
-                    {
-                        str.Append(match + "\t");
-                    }
-                    if (str.Length > 0)
-                    {
-                        str.Remove(str.Length - 1, 1);
-                    }
-                    UserTextTextBox.Text = str.ToString();
                 }
             }
         }
