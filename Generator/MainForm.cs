@@ -1084,14 +1084,30 @@ public partial class MainForm : Form
                     str.AppendLine();
                     if (m_generated_words != null)
                     {
-                        str.AppendLine("#" + "\t" + "Word" + "\t" + "Frequency");
+                        str.AppendLine("#" + "\t" + "Word" + "\t" + "Frequency" + "\t" + "Length" + "\t" + "Value");
 
                         int count = 0;
+                        int frequency_sum = 0;
+                        int length_sum = 0;
+                        long value_sum = 0L;
                         foreach (string key in m_generated_words.Keys)
                         {
                             count++;
-                            str.AppendLine(count + "\t" + key + "\t" + m_generated_words[key]);
+
+                            int frequency = m_generated_words[key];
+                            frequency_sum += frequency;
+
+                            int length = key.Length;
+                            length_sum += length;
+
+                            long value = m_client.CalculateValue(key);
+                            value_sum += value;
+
+                            str.AppendLine(count + "\t" + key + "\t" + frequency + "\t" + length + "\t" + value);
                         }
+
+                        str.AppendLine();
+                        str.AppendLine(count + "\t" + "Sum" + "\t" + frequency_sum + "\t" + length_sum + "\t" + value_sum);
                     }
                 }
 

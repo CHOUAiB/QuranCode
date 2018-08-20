@@ -9415,7 +9415,6 @@ public partial class MainForm : Form, ISubscriber
         // UserTextTextBox
         // 
         this.UserTextTextBox.AcceptsReturn = true;
-        this.UserTextTextBox.AcceptsTab = true;
         this.UserTextTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
         | System.Windows.Forms.AnchorStyles.Left)
         | System.Windows.Forms.AnchorStyles.Right)));
@@ -10012,7 +10011,6 @@ public partial class MainForm : Form, ISubscriber
         // FindByFrequencyPhraseTextBox
         // 
         this.FindByFrequencyPhraseTextBox.AcceptsReturn = true;
-        this.FindByFrequencyPhraseTextBox.AcceptsTab = true;
         this.FindByFrequencyPhraseTextBox.BackColor = System.Drawing.Color.LavenderBlush;
         this.FindByFrequencyPhraseTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.FindByFrequencyPhraseTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -30949,7 +30947,6 @@ public partial class MainForm : Form, ISubscriber
             m_current_text = RemoveVerseAddresses(m_current_text);
             m_current_text = RemoveVerseEndMarks(m_current_text);
             m_current_text = m_current_text.Trim();
-            m_current_text = m_current_text.Replace("\n", "\r\n");
         }
 
         // calculate Letters value
@@ -31017,6 +31014,8 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UserTextTextBox_TextChanged(object sender, EventArgs e)
     {
+        m_user_text_mode = true;
+        CalculateUserTextValue(m_caret_position);
     }
     private void UserTextValueButton_Click(object sender, EventArgs e)
     {
@@ -31049,12 +31048,13 @@ public partial class MainForm : Form, ISubscriber
                             {
                                 foreach (string match in matches)
                                 {
-                                    str.AppendLine(match);
+                                    str.Append(match + "  ");
+                                }
+                                if (str.Length > 0)
+                                {
+                                    str.Remove(str.Length - 2, 2);
                                 }
                                 UserTextTextBox.Text = str.ToString();
-                                //UserTextTextBox.SelectionStart = 0;
-                                //UserTextTextBox.SelectionLength = 0;
-                                UserTextTextBox.Focus();
                             }
                         }
                     }
