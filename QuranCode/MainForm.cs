@@ -456,7 +456,7 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.FindByTextAtWordStartRadioButton, L[l]["find at the beginning of words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordMiddleRadioButton, L[l]["find in the middle of words"]);
             this.ToolTip.SetToolTip(this.FindByTextAtWordEndRadioButton, L[l]["find at the end of words"]);
-            this.ToolTip.SetToolTip(this.FindByTextMultiplicityCheckBox, L[l]["find blocks with N repetitions"]);
+            this.ToolTip.SetToolTip(this.FindByTextMultiplicityCheckBox, L[l]["find with repetitions"]);
             this.ToolTip.SetToolTip(this.FindByTextAllWordsRadioButton, L[l]["find verses with all words in any order"]);
             this.ToolTip.SetToolTip(this.FindByTextAnyWordRadioButton, L[l]["find verses with at least one word"]);
             this.ToolTip.SetToolTip(this.FindBySimilarityCurrentVerseTypeLabel, L[l]["find similar verses to the current verse"]);
