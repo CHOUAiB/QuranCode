@@ -947,7 +947,7 @@ public partial class MainForm : Form
                                 // display progress
                                 this.Text = "WordGenerator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters+diacritics of سورة الفاتحة | Sentence " + (i + 1) + "/" + m_word_subsets.Count;
                                 ProgressBar.Value = ((i + 1) * 100) / m_word_subsets.Count;
-                                WordCountLabel.Text = m_lines.Count + " (" + m_generated_words.Count + ") words";
+                                WordCountLabel.Text = m_lines.Count + " (" + m_generated_words.Count;
                                 WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                                 WordCountLabel.Refresh();
 
@@ -960,7 +960,7 @@ public partial class MainForm : Form
                     this.Text = "WordGenerator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters+diacritics of سورة الفاتحة | Sentences = " + m_word_subsets.Count;
                     ProgressBar.Value = 100;
                     ProgressBar.Refresh();
-                    WordCountLabel.Text = m_lines.Count + " (" + m_generated_words.Count + ") words";
+                    WordCountLabel.Text = m_lines.Count + " (" + m_generated_words.Count;
                     WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                     WordCountLabel.Refresh();
 

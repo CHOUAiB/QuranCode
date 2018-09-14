@@ -8,8 +8,8 @@
     <ProjectGuid>{976E0235-3DDB-4B63-9DE4-11DA51C82775}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AhlulNayt</RootNamespace>
-    <AssemblyName>AhlulNayt</AssemblyName>
+    <RootNamespace>AhlulBayt</RootNamespace>
+    <AssemblyName>AhlulBayt</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>App.ico</ApplicationIcon>

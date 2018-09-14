@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGenerator", "WordGenerator\WordGenerator.csproj", "{40E583CA-1D55-4519-9B8D-5E1A5FD27A8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AhlulNayt", "AhlulNayt\AhlulNayt.csproj", "{976E0235-3DDB-4B63-9DE4-11DA51C82775}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AhlulBayt", "AhlulBayt\AhlulBayt.csproj", "{976E0235-3DDB-4B63-9DE4-11DA51C82775}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

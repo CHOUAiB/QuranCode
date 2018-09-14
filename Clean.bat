@@ -42,6 +42,6 @@ rd /S /Q InitialLetters\obj
 rd /S /Q Composites\obj
 rd /S /Q Numbers\obj
 rd /S /Q WordGenerator\obj
-rd /S /Q AhlulNayt\obj
+rd /S /Q AhlulBayt\obj
 
 :END

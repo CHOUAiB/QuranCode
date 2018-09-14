@@ -197,7 +197,7 @@
             this.InspectButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.InspectButton.Image = ((System.Drawing.Image)(resources.GetObject("InspectButton.Image")));
             this.InspectButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.InspectButton.Location = new System.Drawing.Point(651, 332);
+            this.InspectButton.Location = new System.Drawing.Point(650, 332);
             this.InspectButton.Name = "InspectButton";
             this.InspectButton.Size = new System.Drawing.Size(23, 21);
             this.InspectButton.TabIndex = 91;
@@ -211,7 +211,7 @@
             this.AutoGenerateWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.AutoGenerateWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("AutoGenerateWordsButton.Image")));
             this.AutoGenerateWordsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AutoGenerateWordsButton.Location = new System.Drawing.Point(457, -1);
+            this.AutoGenerateWordsButton.Location = new System.Drawing.Point(457, 0);
             this.AutoGenerateWordsButton.Name = "AutoGenerateWordsButton";
             this.AutoGenerateWordsButton.Size = new System.Drawing.Size(25, 23);
             this.AutoGenerateWordsButton.TabIndex = 89;
@@ -223,7 +223,7 @@
             // 
             this.ProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ProgressBar.Location = new System.Drawing.Point(-1, 316);
+            this.ProgressBar.Location = new System.Drawing.Point(-1, 315);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(679, 11);
             this.ProgressBar.TabIndex = 2;
@@ -235,7 +235,7 @@
             this.NumerologySystemComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.NumerologySystemComboBox.FormattingEnabled = true;
             this.NumerologySystemComboBox.IntegralHeight = false;
-            this.NumerologySystemComboBox.Location = new System.Drawing.Point(283, 0);
+            this.NumerologySystemComboBox.Location = new System.Drawing.Point(283, 1);
             this.NumerologySystemComboBox.Name = "NumerologySystemComboBox";
             this.NumerologySystemComboBox.Size = new System.Drawing.Size(176, 21);
             this.NumerologySystemComboBox.TabIndex = 0;
@@ -251,7 +251,7 @@
             this.TextModeComboBox.IntegralHeight = false;
             this.TextModeComboBox.Items.AddRange(new object[] {
             "SimplifiedDots"});
-            this.TextModeComboBox.Location = new System.Drawing.Point(201, 0);
+            this.TextModeComboBox.Location = new System.Drawing.Point(201, 1);
             this.TextModeComboBox.Name = "TextModeComboBox";
             this.TextModeComboBox.Size = new System.Drawing.Size(84, 21);
             this.TextModeComboBox.TabIndex = 90;
@@ -402,7 +402,7 @@
             // 
             this.label13.BackColor = System.Drawing.Color.Black;
             this.label13.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label13.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.label13.Location = new System.Drawing.Point(462, 36);
             this.label13.Name = "label13";
             this.label13.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -428,7 +428,7 @@
             // 
             this.label15.BackColor = System.Drawing.Color.Black;
             this.label15.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.LightCoral;
+            this.label15.ForeColor = System.Drawing.Color.MistyRose;
             this.label15.Location = new System.Drawing.Point(2, 36);
             this.label15.Name = "label15";
             this.label15.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
