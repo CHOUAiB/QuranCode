@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordGenerator", "WordGenerator\WordGenerator.csproj", "{40E583CA-1D55-4519-9B8D-5E1A5FD27A8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AhlulNayt", "AhlulNayt\AhlulNayt.csproj", "{976E0235-3DDB-4B63-9DE4-11DA51C82775}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -192,6 +194,16 @@ Global
 		{40E583CA-1D55-4519-9B8D-5E1A5FD27A8A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{40E583CA-1D55-4519-9B8D-5E1A5FD27A8A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{40E583CA-1D55-4519-9B8D-5E1A5FD27A8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{976E0235-3DDB-4B63-9DE4-11DA51C82775}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

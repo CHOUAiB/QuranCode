@@ -16,6 +16,7 @@ XCOPY /E /EXCLUDE:exclude.txt InitialLetters\*.* NET2\InitialLetters\
 XCOPY /E /EXCLUDE:exclude.txt Composites\*.* NET2\Composites\
 XCOPY /E /EXCLUDE:exclude.txt Numbers\*.* NET2\Numbers\
 XCOPY /E /EXCLUDE:exclude.txt WordGenerator\*.* NET2\WordGenerator\
+XCOPY /E /EXCLUDE:exclude.txt AhlulNayt\*.* NET2\AhlulNayt\
 
 DEL exclude.txt
 Tools\Replace\bin\Release\Replace.exe NET2 *.Designer.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)

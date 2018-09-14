@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WordGenerator")]
-[assembly: AssemblyDescription("WordGenerator")]
+[assembly: AssemblyTitle("AhlulNayt")]
+[assembly: AssemblyDescription("AhlulNayt")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَءَالِ مُحَمَّدٍ")]
 [assembly: AssemblyProduct("QuranCode")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a73d226c-3669-42fd-9095-d142ccc12345")]
+[assembly: Guid("a73d226c-3669-42fd-9095-d142ccc10014")]
 
 // Version information for an assembly consists of the following four values:
 //

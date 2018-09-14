@@ -9,7 +9,6 @@ using Model;
 
 public partial class MainForm : Form
 {
-    // Use Simplified29 ONLY because Surat Al-Fatiha is built upon pattern 7-29
     private string m_numerology_system_name = "Simplified29_Alphabet_Primes1";
 
     private Client m_client = null;
@@ -25,19 +24,9 @@ public partial class MainForm : Form
             // 100% = 96.0F,   125% = 120.0F,   150% = 144.0F
             if (graphics.DpiX == 96.0F)
             {
-                this.IdColumnHeader.Width = 55;
-                this.SentenceColumnHeader.Width = 385;
-                this.ValueColumnHeader.Width = 94;
-                this.WordColumnHeader.Width = 110;
-                this.AutoGenerateWordsButton.Size = new System.Drawing.Size(25, 23);
             }
             else if (graphics.DpiX == 120.0F)
             {
-                this.IdColumnHeader.Width = 70;
-                this.SentenceColumnHeader.Width = 510;
-                this.ValueColumnHeader.Width = 114;
-                this.WordColumnHeader.Width = 165;
-                this.AutoGenerateWordsButton.Size = new System.Drawing.Size(27, 25);
             }
         }
     }
@@ -103,9 +92,6 @@ public partial class MainForm : Form
                     TextModeComboBox.Items.Clear();
                     foreach (NumerologySystem numerology_system in m_client.LoadedNumerologySystems.Values)
                     {
-                        string default_text_mode = m_client.NumerologySystem.TextMode;
-                        if (!numerology_system.Name.StartsWith(default_text_mode)) continue;
-
                         string[] parts = numerology_system.Name.Split('_');
                         if (parts != null)
                         {
@@ -600,94 +586,6 @@ public partial class MainForm : Form
             }
         }
     }
-    private void ListView_ColumnClick(object sender, ColumnClickEventArgs e)
-    {
-        if (ListView != null)
-        {
-            if (ListView.Columns != null)
-            {
-                // sort method
-                Line.SortMethod = (SortMethod)e.Column;
-
-                // sort order
-                if (Line.SortOrder == SortOrder.Ascending)
-                {
-                    Line.SortOrder = SortOrder.Descending;
-                }
-                else
-                {
-                    Line.SortOrder = SortOrder.Ascending;
-                }
-
-                // sort marker
-                string sort_marker = (Line.SortOrder == SortOrder.Ascending) ? "▲" : "▼";
-                foreach (ColumnHeader column in ListView.Columns)
-                {
-                    if (column.Text.EndsWith("▲"))
-                    {
-                        column.Text = column.Text.Replace("▲", " ");
-                    }
-                    else if (column.Text.EndsWith("▼"))
-                    {
-                        column.Text = column.Text.Replace("▼", " ");
-                    }
-                }
-                ListView.Columns[e.Column].Text = ListView.Columns[e.Column].Text.Replace("  ", " " + sort_marker);
-                ListView.Refresh();
-
-                // sort items
-                m_lines.Sort();
-
-                // display items
-                UpdateListView();
-            }
-        }
-    }
-    private void ClearListView()
-    {
-        if (ListView != null)
-        {
-            if (ListView.Items != null)
-            {
-                ListView.Items.Clear();
-                Line.SortMethod = (SortMethod)0;
-                Line.SortOrder = SortOrder.Ascending;
-                foreach (ColumnHeader column in ListView.Columns)
-                {
-                    if (column.Text.EndsWith("▲"))
-                    {
-                        column.Text = column.Text.Replace("▲", " ");
-                    }
-                    else if (column.Text.EndsWith("▼"))
-                    {
-                        column.Text = column.Text.Replace("▼", " ");
-                    }
-                }
-                ListView.Columns[0].Text = ListView.Columns[0].Text = "# ▲";
-                ListView.Refresh();
-            }
-        }
-    }
-    private void UpdateListView()
-    {
-        if (ListView != null)
-        {
-            if (ListView.Items != null)
-            {
-                ListView.Items.Clear();
-                for (int i = 0; i < m_lines.Count; i++)
-                {
-                    string[] parts = new string[4];
-                    parts[0] = m_lines[i].Id.ToString();
-                    parts[1] = m_lines[i].Sentence.ToString();
-                    parts[2] = m_lines[i].Value.ToString();
-                    parts[3] = m_lines[i].Word;
-                    ListView.Items.Add(new ListViewItem(parts, i));
-                }
-                ListView.Refresh();
-            }
-        }
-    }
 
     private SortedDictionary<string, int> m_generated_words = null;
     private void GenerateWordsButton_Click(object sender, EventArgs e)
@@ -718,8 +616,6 @@ public partial class MainForm : Form
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            ClearListView();
-
             if (m_client != null)
             {
                 if (m_client.Book != null)
@@ -806,8 +702,6 @@ public partial class MainForm : Form
         this.Cursor = Cursors.WaitCursor;
         try
         {
-            ClearListView();
-
             if (m_client != null)
             {
                 if (m_client.Book != null)
@@ -831,13 +725,19 @@ public partial class MainForm : Form
                             {
                                 if (ModifierKeys == Keys.Shift)
                                 {
-                                    foreach (string numerology_system_name in NumerologySystemComboBox.Items)
+                                    foreach (string text_mode in TextModeComboBox.Items)
                                     {
-                                        NumerologySystemComboBox.SelectedItem = numerology_system_name;
-                                        NumerologySystemComboBox.Refresh();
+                                        TextModeComboBox.SelectedItem = text_mode;
+                                        TextModeComboBox.Refresh();
 
-                                        ProcessNumerologySystem();
-                                    } // foreach NumerologySystem
+                                        foreach (string numerology_system_name in NumerologySystemComboBox.Items)
+                                        {
+                                            NumerologySystemComboBox.SelectedItem = numerology_system_name;
+                                            NumerologySystemComboBox.Refresh();
+
+                                            ProcessNumerologySystem();
+                                        } // foreach NumerologySystem
+                                    } // foreach TextMode
                                 }
                                 else
                                 {
@@ -921,6 +821,8 @@ public partial class MainForm : Form
     }
     private void DoGenerateWords(bool display_progress)
     {
+        return; //?????
+
         if (m_lines != null)
         {
             m_lines.Clear();
@@ -1062,7 +964,6 @@ public partial class MainForm : Form
                     WordCountLabel.ForeColor = Numbers.GetNumberTypeColor(m_lines.Count);
                     WordCountLabel.Refresh();
 
-                    UpdateListView();
                     InspectButton_Click(null, null);
 
                     Application.DoEvents();
