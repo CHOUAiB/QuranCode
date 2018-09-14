@@ -313,7 +313,7 @@
             this.MaximumSize = new System.Drawing.Size(680, 1599);
             this.MinimumSize = new System.Drawing.Size(680, 419);
             this.Name = "MainForm";
-            this.Text = "Generator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters and diacritics of سورة " +
+            this.Text = "WordGenerator | Primalogy value of أُمُّ ٱلْكِتَٰبِ = letters+diacritics of سورة " +
     "لفاتحة";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
