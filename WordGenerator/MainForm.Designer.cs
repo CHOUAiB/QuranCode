@@ -287,7 +287,7 @@
             this.TextModeComboBox.Name = "TextModeComboBox";
             this.TextModeComboBox.Size = new System.Drawing.Size(84, 21);
             this.TextModeComboBox.TabIndex = 90;
-            this.TextModeComboBox.SelectedIndexChanged += new System.EventHandler(this.TextModeComboBox_SelectedIndexChanged_1);
+            this.TextModeComboBox.SelectedIndexChanged += new System.EventHandler(this.TextModeComboBox_SelectedIndexChanged);
             // 
             // MainForm
             // 

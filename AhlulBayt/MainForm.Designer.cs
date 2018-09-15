@@ -52,9 +52,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.Line3Label = new System.Windows.Forms.Label();
+            this.Line2Label = new System.Windows.Forms.Label();
+            this.Line1Label = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -96,9 +96,9 @@
             this.WordCountLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.WordCountLabel.Location = new System.Drawing.Point(573, 337);
             this.WordCountLabel.Name = "WordCountLabel";
-            this.WordCountLabel.Size = new System.Drawing.Size(67, 13);
+            this.WordCountLabel.Size = new System.Drawing.Size(65, 13);
             this.WordCountLabel.TabIndex = 23;
-            this.WordCountLabel.Text = "00000 (0000";
+            this.WordCountLabel.Text = "00000 Lines";
             this.WordCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ToolTip.SetToolTip(this.WordCountLabel, "Quran words");
             // 
@@ -255,7 +255,7 @@
             this.TextModeComboBox.Name = "TextModeComboBox";
             this.TextModeComboBox.Size = new System.Drawing.Size(84, 21);
             this.TextModeComboBox.TabIndex = 90;
-            this.TextModeComboBox.SelectedIndexChanged += new System.EventHandler(this.TextModeComboBox_SelectedIndexChanged_1);
+            this.TextModeComboBox.SelectedIndexChanged += new System.EventHandler(this.TextModeComboBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -365,38 +365,38 @@
             this.label9.Text = "ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن ن" +
     " ن ن";
             // 
-            // label10
+            // Line3Label
             // 
-            this.label10.BackColor = System.Drawing.Color.Silver;
-            this.label10.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(2, 289);
-            this.label10.Name = "label10";
-            this.label10.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label10.Size = new System.Drawing.Size(672, 16);
-            this.label10.TabIndex = 103;
+            this.Line3Label.BackColor = System.Drawing.Color.Silver;
+            this.Line3Label.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Line3Label.ForeColor = System.Drawing.Color.Black;
+            this.Line3Label.Location = new System.Drawing.Point(2, 289);
+            this.Line3Label.Name = "Line3Label";
+            this.Line3Label.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.Line3Label.Size = new System.Drawing.Size(672, 16);
+            this.Line3Label.TabIndex = 103;
             // 
-            // label11
+            // Line2Label
             // 
-            this.label11.BackColor = System.Drawing.Color.Silver;
-            this.label11.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(2, 206);
-            this.label11.Name = "label11";
-            this.label11.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label11.Size = new System.Drawing.Size(672, 16);
-            this.label11.TabIndex = 102;
+            this.Line2Label.BackColor = System.Drawing.Color.Silver;
+            this.Line2Label.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Line2Label.ForeColor = System.Drawing.Color.Black;
+            this.Line2Label.Location = new System.Drawing.Point(2, 206);
+            this.Line2Label.Name = "Line2Label";
+            this.Line2Label.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.Line2Label.Size = new System.Drawing.Size(672, 16);
+            this.Line2Label.TabIndex = 102;
             // 
-            // label12
+            // Line1Label
             // 
-            this.label12.BackColor = System.Drawing.Color.Silver;
-            this.label12.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(2, 124);
-            this.label12.Name = "label12";
-            this.label12.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label12.Size = new System.Drawing.Size(672, 16);
-            this.label12.TabIndex = 101;
+            this.Line1Label.BackColor = System.Drawing.Color.Silver;
+            this.Line1Label.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Line1Label.ForeColor = System.Drawing.Color.Black;
+            this.Line1Label.Location = new System.Drawing.Point(2, 124);
+            this.Line1Label.Name = "Line1Label";
+            this.Line1Label.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.Line1Label.Size = new System.Drawing.Size(672, 16);
+            this.Line1Label.TabIndex = 101;
             // 
             // label13
             // 
@@ -447,9 +447,9 @@
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label12);
+            this.Controls.Add(this.Line3Label);
+            this.Controls.Add(this.Line2Label);
+            this.Controls.Add(this.Line1Label);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -509,9 +509,9 @@
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.Label label8;
     private System.Windows.Forms.Label label9;
-    private System.Windows.Forms.Label label10;
-    private System.Windows.Forms.Label label11;
-    private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.Label Line3Label;
+    private System.Windows.Forms.Label Line2Label;
+    private System.Windows.Forms.Label Line1Label;
     private System.Windows.Forms.Label label13;
     private System.Windows.Forms.Label label14;
     private System.Windows.Forms.Label label15;

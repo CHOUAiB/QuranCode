@@ -39,6 +39,14 @@ public partial class MainForm : Form
                 this.WordColumnHeader.Width = 165;
                 this.AutoGenerateWordsButton.Size = new System.Drawing.Size(27, 25);
             }
+            else if (graphics.DpiX == 144.0F)
+            {
+                //this.IdColumnHeader.Width = 70;
+                //this.SentenceColumnHeader.Width = 510;
+                //this.ValueColumnHeader.Width = 114;
+                //this.WordColumnHeader.Width = 165;
+                //this.AutoGenerateWordsButton.Size = new System.Drawing.Size(27, 25);
+            }
         }
     }
     private void MainForm_Load(object sender, EventArgs e)
@@ -202,9 +210,6 @@ public partial class MainForm : Form
             }
         }
     }
-    private void TextModeComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
-    {
-    }
     private void NumerologySystemComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         m_numerology_system_name = TextModeComboBox.SelectedItem.ToString() + "_" + NumerologySystemComboBox.SelectedItem.ToString();
@@ -329,7 +334,7 @@ public partial class MainForm : Form
             case CombinationMethod.InterlaceAB:
                 {
                     m_combination_method = CombinationMethod.Concatenate;
-                    ValueInterlaceLabel.Text = "--";
+                    ValueInterlaceLabel.Text = "- -";
                     ToolTip.SetToolTip(ValueInterlaceLabel, "concatenate letter values, aaaaabbbb");
                 }
                 break;
@@ -378,7 +383,7 @@ public partial class MainForm : Form
             case CombinationMethod.CrossOverBA:
                 {
                     m_combination_method = CombinationMethod.Concatenate;
-                    ValueInterlaceLabel.Text = "--";
+                    ValueInterlaceLabel.Text = "- -";
                     ToolTip.SetToolTip(ValueInterlaceLabel, "concatenate letter values, aaaaabbbb");
                 }
                 break;

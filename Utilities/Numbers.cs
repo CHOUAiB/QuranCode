@@ -591,12 +591,12 @@ public static class Numbers
         if ((a > 1) && (b > 1))
         {
             int mid_a = a / 2;
-            string AAAHalf1 = AAA.Substring(0, mid_a);
-            string AAAHalf2 = AAA.Substring(mid_a);
+            string AAAHalf1 = AAA.Substring(0, mid_a - 1);
+            string AAAHalf2 = AAA.Substring(mid_a - 1);
 
             int mid_b = b / 2;
-            string BBBHalf1 = AAA.Substring(0, mid_b);
-            string BBBHalf2 = AAA.Substring(mid_b);
+            string BBBHalf1 = AAA.Substring(0, mid_b - 1);
+            string BBBHalf2 = AAA.Substring(mid_b - 1);
 
             if (direction == Direction.LeftToRight)
             {
