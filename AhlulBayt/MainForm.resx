@@ -142,14 +142,9 @@
     <value>12, 1</value>
   </metadata>
   <data name="GenerateWordsButton.ToolTip" xml:space="preserve">
-    <value>Generate Quran words from surat Al-Fatiha's 7 verses and 29 words.
-There are 79940 ways of choosing 7 words with 29 letters.
-R2L or L2R combine each letter value with the letter values of the Primalogy system.
-If the result is P, AP, XP, C, AC or XC, then add the letter to the candidate word.
-After processing all 29 letters, if the candidate word is a Quran word, then add it to the result.
-Results are saved in the Statistics\NumerlogySystem folder.
-
-Click this button with SHIFT key to process all numerology systems for the current settings.</value>
+    <value>Generate letters from surat Al-Fatiha and the names of the 14 infallibles with current setting combinations
+Add and subtract Ya Husein values to letters of Al-Fatiha and the 14 infallibles respectively.
+Click+SHIFT key to process all text modes and numerology systems for current setting combinations.</value>
   </data>
   <data name="InspectButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -187,6 +182,11 @@ Click this button with SHIFT key to process all numerology systems for the curre
         zKanzCRecUULVZ8hWtXvToyfID/5MdWZy9xIX8KSNMXNuF5ubrBO3xJ1qTZh2vCUmZ606GZhf+1lcTvv
         ddFm2fuM1ZEkWnozRHN9kfg5wyx+ffX/dv4bWB/gO97joJ0AAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="AutoGenerateWordsButton.ToolTip" xml:space="preserve">
+    <value>Auto generate letters from surat Al-Fatiha and the names of the 14 infallibles with all setting combinations
+Add and subtract Ya Husein values to letters of Al-Fatiha and the 14 infallibles respectively.
+Click+SHIFT key to process all text modes and numerology systems for all setting combinations.</value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>

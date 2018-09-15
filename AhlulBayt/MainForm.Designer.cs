@@ -40,6 +40,7 @@
             this.AddVerseAndWordValuesCheckBox = new System.Windows.Forms.CheckBox();
             this.InspectButton = new System.Windows.Forms.Button();
             this.AutoGenerateWordsButton = new System.Windows.Forms.Button();
+            this.YaHuseinCheckBox = new System.Windows.Forms.CheckBox();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.NumerologySystemComboBox = new System.Windows.Forms.ComboBox();
             this.TextModeComboBox = new System.Windows.Forms.ComboBox();
@@ -66,11 +67,11 @@
             this.GenerateWordsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.GenerateWordsButton.Image = ((System.Drawing.Image)(resources.GetObject("GenerateWordsButton.Image")));
             this.GenerateWordsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.GenerateWordsButton.Location = new System.Drawing.Point(462, 333);
+            this.GenerateWordsButton.Location = new System.Drawing.Point(445, 332);
             this.GenerateWordsButton.Name = "GenerateWordsButton";
-            this.GenerateWordsButton.Size = new System.Drawing.Size(105, 21);
+            this.GenerateWordsButton.Size = new System.Drawing.Size(121, 21);
             this.GenerateWordsButton.TabIndex = 19;
-            this.GenerateWordsButton.Text = "&Generate     ";
+            this.GenerateWordsButton.Text = "&Generate        ";
             this.GenerateWordsButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.ToolTip.SetToolTip(this.GenerateWordsButton, resources.GetString("GenerateWordsButton.ToolTip"));
             this.GenerateWordsButton.UseVisualStyleBackColor = true;
@@ -94,13 +95,13 @@
             this.WordCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.WordCountLabel.AutoSize = true;
             this.WordCountLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.WordCountLabel.Location = new System.Drawing.Point(573, 337);
+            this.WordCountLabel.Location = new System.Drawing.Point(570, 337);
             this.WordCountLabel.Name = "WordCountLabel";
             this.WordCountLabel.Size = new System.Drawing.Size(65, 13);
             this.WordCountLabel.TabIndex = 23;
             this.WordCountLabel.Text = "00000 Lines";
             this.WordCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.WordCountLabel, "Quran words");
+            this.ToolTip.SetToolTip(this.WordCountLabel, "Lines generated");
             // 
             // NumberTypeLabel
             // 
@@ -109,7 +110,7 @@
             this.NumberTypeLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NumberTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NumberTypeLabel.ForeColor = System.Drawing.Color.Green;
-            this.NumberTypeLabel.Location = new System.Drawing.Point(412, 334);
+            this.NumberTypeLabel.Location = new System.Drawing.Point(409, 334);
             this.NumberTypeLabel.Name = "NumberTypeLabel";
             this.NumberTypeLabel.Size = new System.Drawing.Size(25, 17);
             this.NumberTypeLabel.TabIndex = 12;
@@ -125,7 +126,7 @@
             this.ValueCombinationDirectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ValueCombinationDirectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValueCombinationDirectionLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValueCombinationDirectionLabel.Location = new System.Drawing.Point(385, 334);
+            this.ValueCombinationDirectionLabel.Location = new System.Drawing.Point(382, 334);
             this.ValueCombinationDirectionLabel.Name = "ValueCombinationDirectionLabel";
             this.ValueCombinationDirectionLabel.Size = new System.Drawing.Size(25, 17);
             this.ValueCombinationDirectionLabel.TabIndex = 11;
@@ -169,7 +170,7 @@
             this.ValueInterlaceLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ValueInterlaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ValueInterlaceLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ValueInterlaceLabel.Location = new System.Drawing.Point(356, 334);
+            this.ValueInterlaceLabel.Location = new System.Drawing.Point(353, 334);
             this.ValueInterlaceLabel.Name = "ValueInterlaceLabel";
             this.ValueInterlaceLabel.Size = new System.Drawing.Size(27, 17);
             this.ValueInterlaceLabel.TabIndex = 9;
@@ -197,7 +198,7 @@
             this.InspectButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.InspectButton.Image = ((System.Drawing.Image)(resources.GetObject("InspectButton.Image")));
             this.InspectButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.InspectButton.Location = new System.Drawing.Point(650, 332);
+            this.InspectButton.Location = new System.Drawing.Point(650, 331);
             this.InspectButton.Name = "InspectButton";
             this.InspectButton.Size = new System.Drawing.Size(23, 21);
             this.InspectButton.TabIndex = 91;
@@ -216,8 +217,26 @@
             this.AutoGenerateWordsButton.Size = new System.Drawing.Size(25, 23);
             this.AutoGenerateWordsButton.TabIndex = 89;
             this.AutoGenerateWordsButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ToolTip.SetToolTip(this.AutoGenerateWordsButton, resources.GetString("AutoGenerateWordsButton.ToolTip"));
             this.AutoGenerateWordsButton.UseVisualStyleBackColor = true;
             this.AutoGenerateWordsButton.Click += new System.EventHandler(this.AutoGenerateWordsButton_Click);
+            // 
+            // YaHuseinCheckBox
+            // 
+            this.YaHuseinCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.YaHuseinCheckBox.AutoSize = true;
+            this.YaHuseinCheckBox.Checked = true;
+            this.YaHuseinCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.YaHuseinCheckBox.ForeColor = System.Drawing.Color.LightCoral;
+            this.YaHuseinCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.YaHuseinCheckBox.Name = "YaHuseinCheckBox";
+            this.YaHuseinCheckBox.Size = new System.Drawing.Size(157, 17);
+            this.YaHuseinCheckBox.TabIndex = 107;
+            this.YaHuseinCheckBox.Text = "Use Ya Husein letter values";
+            this.ToolTip.SetToolTip(this.YaHuseinCheckBox, "Add/Subruct Ya Husein letter values from Al-Fatiha and the 14 Infallibles repecti" +
+        "vely");
+            this.YaHuseinCheckBox.UseVisualStyleBackColor = true;
+            this.YaHuseinCheckBox.CheckedChanged += new System.EventHandler(this.YaHuseinCheckBox_CheckedChanged);
             // 
             // ProgressBar
             // 
@@ -473,9 +492,10 @@
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.GenerateWordsButton);
             this.Controls.Add(this.WordCountLabel);
+            this.Controls.Add(this.YaHuseinCheckBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "AhlulNayt";
+            this.Text = "Ahlul-Bayt";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
@@ -515,4 +535,5 @@
     private System.Windows.Forms.Label label13;
     private System.Windows.Forms.Label label14;
     private System.Windows.Forms.Label label15;
+    private System.Windows.Forms.CheckBox YaHuseinCheckBox;
 }

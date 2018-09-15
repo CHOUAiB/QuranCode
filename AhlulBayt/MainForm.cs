@@ -12,7 +12,8 @@ public partial class MainForm : Form
     private Client m_client = null;
     private string m_numerology_system_name = null;
     private List<Letter> m_fatiha_letters = null;
-    private string m_infallable_letters = null;
+    private string m_infallible_letters = null;
+    private bool m_use_ya_husein = true;
     private string m_ya_husein_letters = null;
     private long[] m_ya_husein_letter_values = null;
     private List<string> m_generated_lines = null;
@@ -40,7 +41,8 @@ public partial class MainForm : Form
     }
     private void MainForm_Load(object sender, EventArgs e)
     {
-        if (m_client == null)
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
             m_client = new Client(NumerologySystem.DEFAULT_NAME);
             if (m_client != null)
@@ -92,7 +94,7 @@ public partial class MainForm : Form
                         }
                     }
 
-                    m_infallable_letters = "محمدالمصطفىعليالمرتضىفاطمةالزهراءحسنالمجتبىحسينالشهيدعليالسجادمحمدالباقرجعفرالصادقموسىالكاظمعليالرضامحمدالجوادعليالهاديحسنالعسكريمحمدالمهدي";
+                    m_infallible_letters = "محمدالمصطفىعليالمرتضىفاطمةالزهراءحسنالمجتبىحسينالشهيدعليالسجادمحمدالباقرجعفرالصادقموسىالكاظمعليالرضامحمدالجوادعليالهاديحسنالعسكريمحمدالمهدي";
 
                     m_ya_husein_letters = "يييييييييياححححححححسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسسيييييييييينننننننننننننننننننننننننننننننننننننننننننننننننن";
                     m_ya_husein_letter_values = new long[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1, 8, 8, 8, 8, 8, 8, 8, 8, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60 };
@@ -100,14 +102,18 @@ public partial class MainForm : Form
                     m_generated_lines = new List<string>();
                 }
             }
-        }
 
-        m_number_type = NumberType.Prime;
-        NumberTypeLabel.Text = "P";
-        NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
-        ToolTip.SetToolTip(ValueInterlaceLabel, "concatenate letter values");
-        ToolTip.SetToolTip(ValueCombinationDirectionLabel, "combine letter values right to left");
-        ToolTip.SetToolTip(NumberTypeLabel, "allow prime combined letter values only");
+            m_number_type = NumberType.Prime;
+            NumberTypeLabel.Text = "P";
+            NumberTypeLabel.ForeColor = Numbers.GetNumberTypeColor(19L);
+            ToolTip.SetToolTip(ValueInterlaceLabel, "concatenate letter values");
+            ToolTip.SetToolTip(ValueCombinationDirectionLabel, "combine letter values right to left");
+            ToolTip.SetToolTip(NumberTypeLabel, "allow prime combined letter values only");
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
+        }
     }
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
@@ -311,6 +317,13 @@ public partial class MainForm : Form
     {
         m_add_distances_to_next_to_letter_value = AddDistancesToNextCheckBox.Checked;
         UpdateNumerologySystem();
+    }
+    private void YaHuseinCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        m_use_ya_husein = YaHuseinCheckBox.Checked;
+        label7.Visible = m_use_ya_husein;
+        label8.Visible = m_use_ya_husein;
+        label9.Visible = m_use_ya_husein;
     }
 
     private enum CombinationMethod { Concatenate, InterlaceAB, InterlaceBA, CrossOverAB, CrossOverBA };
@@ -856,7 +869,7 @@ public partial class MainForm : Form
             if (m_fatiha_letters != null)
             {
                 List<long> fatiha_letter_values = new List<long>();
-                List<long> infallable_letter_values = new List<long>();
+                List<long> infallible_letter_values = new List<long>();
                 for (int i = 0; i < m_fatiha_letters.Count; i++)
                 {
                     long value = m_client.CalculateValue(m_fatiha_letters[i]);
@@ -865,12 +878,12 @@ public partial class MainForm : Form
                         value += m_client.CalculateValue(m_fatiha_letters[i].Word);
                         value += m_client.CalculateValue(m_fatiha_letters[i].Word.Verse);
                     }
-                    value += m_ya_husein_letter_values[i];
+                    if (m_use_ya_husein) value += m_ya_husein_letter_values[i];
                     fatiha_letter_values.Add(value);
 
-                    value = m_client.CalculateValue(m_infallable_letters[i]);
-                    value -= m_ya_husein_letter_values[i];
-                    infallable_letter_values.Add(Math.Abs(value));
+                    value = m_client.CalculateValue(m_infallible_letters[i]);
+                    if (m_use_ya_husein) value -= m_ya_husein_letter_values[i];
+                    infallible_letter_values.Add(Math.Abs(value));
                 }
 
                 StringBuilder str = new StringBuilder();
@@ -883,7 +896,7 @@ public partial class MainForm : Form
                         {
                             long number = 0L;
                             long AAA = fatiha_letter_values[j];
-                            long BBB = infallable_letter_values[j];
+                            long BBB = infallible_letter_values[j];
                             switch (m_combination_method)
                             {
                                 case CombinationMethod.Concatenate:
@@ -929,7 +942,25 @@ public partial class MainForm : Form
                         Line2Label.Text = generated_line.Substring(96, 96);
                         Line3Label.Text = generated_line.Substring(192);
 
-                        m_generated_lines.Add(generated_line);
+                        string parameters =
+                        m_numerology_system_name + "_"
+                        + (m_add_verse_and_word_values_to_letter_value ? "vw" : "__")
+                        + (m_add_positions_to_letter_value ? "_n" : "__")
+                        + (m_add_distances_to_previous_to_letter_value ? "_-d" : "_-_")
+                        + (m_add_distances_to_next_to_letter_value ? "_d-" : "__-")
+                        + ("_" + m_combination_method.ToString().ToLower())
+                        + ((m_value_combination_direction == Direction.RightToLeft) ? "_r" : "_l")
+                        + ((m_number_type != NumberType.None) ? "_" : "")
+                        + (
+                            (m_number_type == NumberType.Prime) ? "P" :
+                            (m_number_type == NumberType.AdditivePrime) ? "AP" :
+                            (m_number_type == NumberType.NonAdditivePrime) ? "XP" :
+                            (m_number_type == NumberType.Composite) ? "C" :
+                            (m_number_type == NumberType.AdditiveComposite) ? "AC" :
+                            (m_number_type == NumberType.NonAdditiveComposite) ? "XC" : ""
+                            )
+                        ;
+                        m_generated_lines.Add(generated_line + "\t" + parameters);
                     }
                 }
             }
@@ -956,8 +987,7 @@ public partial class MainForm : Form
                 }
             }
 
-            string assembly_name = typeof(MainForm).Assembly.GetName().Name;
-            string filename = assembly_name + ".txt";
+            string filename = "AlFatiha+AhlulBaytLetterMix" + (m_use_ya_husein ? "_YaHusein" : "") + ".txt";
             if (!Directory.Exists(Globals.STATISTICS_FOLDER))
             {
                 Directory.CreateDirectory(Globals.STATISTICS_FOLDER);
