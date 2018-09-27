@@ -396,9 +396,6 @@
     <Content Include="Values\Simplified36_Appearance_Linear.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Values\Original_Appearance_NonAdditiveComposites.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Values\Simplified36_Appearance_NonAdditiveComposites.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
