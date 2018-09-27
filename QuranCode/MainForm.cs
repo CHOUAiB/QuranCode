@@ -524,7 +524,7 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
             this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
 
-            // load UserText lable's tooltips 
+            // UserText labels' tooltips 
             for (int i = 0; i < 8; i++)
             {
                 string filename = "UserText" + (i + 1) + ".txt";
@@ -546,7 +546,7 @@ public partial class MainForm : Form, ISubscriber
                     control = GetControl(save_control_name);
                     if (control != null)
                     {
-                        ToolTip.SetToolTip(control, L[l]["Save"]);
+                        ToolTip.SetToolTip(control, (control == UserText1SaveLabel) ? "" : L[l]["Save"]);
                         control.ForeColor = (text.Length > 0) ? Color.DarkGreen : Color.Lime;
                         control.BackColor = (text.Length > 0) ? Color.Lime : Color.DarkGreen;
                     }
@@ -9550,6 +9550,7 @@ public partial class MainForm : Form, ISubscriber
         this.UserText2SaveLabel.Size = new System.Drawing.Size(11, 19);
         this.UserText2SaveLabel.TabIndex = 121;
         this.UserText2SaveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.ToolTip.SetToolTip(this.UserText2SaveLabel, "Save");
         this.UserText2SaveLabel.Click += new System.EventHandler(this.UserTextSaveLabel_Click);
         // 
         // UserText1SaveLabel

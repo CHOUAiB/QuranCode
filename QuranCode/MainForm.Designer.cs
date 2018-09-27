@@ -8456,6 +8456,7 @@ partial class MainForm
             this.UserText2SaveLabel.Size = new System.Drawing.Size(11, 19);
             this.UserText2SaveLabel.TabIndex = 121;
             this.UserText2SaveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ToolTip.SetToolTip(this.UserText2SaveLabel, "Save");
             this.UserText2SaveLabel.Click += new System.EventHandler(this.UserTextSaveLabel_Click);
             // 
             // UserText1SaveLabel
