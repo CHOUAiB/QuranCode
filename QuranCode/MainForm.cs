@@ -39539,6 +39539,8 @@ public partial class MainForm : Form, ISubscriber
                                         }
                                     }
                                 }
+
+                                RedrawImage();
                             }
                         }
                     }
