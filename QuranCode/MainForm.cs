@@ -523,6 +523,7 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.VerseNumericUpDown, "V, V-V, ...");
             this.ToolTip.SetToolTip(this.WordNumericUpDown, "W, W-W, ...");
             this.ToolTip.SetToolTip(this.LetterNumericUpDown, "L, L-L, ...");
+
             // load UserText lable's tooltips 
             for (int i = 0; i < 8; i++)
             {
@@ -531,37 +532,23 @@ public partial class MainForm : Form, ISubscriber
                 {
                     string path = Globals.USERTEXT_FOLDER + "/" + filename;
                     string text = FileHelper.LoadText(path);
-                    string control_name = "UserText" + (i + 1) + "LoadLabel";
-                    Control[] controls = this.GetControls(control_name);
-                    if (controls != null)
-                    {
-                        if (controls.Length == 1)
-                        {
-                            ToolTip.SetToolTip(controls[0], (text.Length > 0) ? text : L[l]["Load"]);
 
-                            controls = this.GetControls(control_name);
-                            if (controls != null)
-                            {
-                                if (controls.Length == 1)
-                                {
-                                    controls[0].ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
-                                    controls[0].BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            // save UserText lable's tooltips 
-            for (int i = 2; i < 8; i++)
-            {
-                string control_name = "UserText" + (i + 1) + "SaveLabel";
-                Control[] controls = this.GetControls(control_name);
-                if (controls != null)
-                {
-                    if (controls.Length == 1)
+                    string load_control_name = "UserText" + (i + 1) + "LoadLabel";
+                    Control control = GetControl(load_control_name);
+                    if (control != null)
                     {
-                        ToolTip.SetToolTip(controls[0], L[l]["Save"]);
+                        ToolTip.SetToolTip(control, (text.Length > 0) ? text : L[l]["Load"]);
+                        control.ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
+                        control.BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
+                    }
+
+                    string save_control_name = "UserText" + (i + 1) + "SaveLabel";
+                    control = GetControl(save_control_name);
+                    if (control != null)
+                    {
+                        ToolTip.SetToolTip(control, L[l]["Save"]);
+                        control.ForeColor = (text.Length > 0) ? Color.DarkGreen : Color.Lime;
+                        control.BackColor = (text.Length > 0) ? Color.Lime : Color.DarkGreen;
                     }
                 }
             }
@@ -666,9 +653,14 @@ public partial class MainForm : Form, ISubscriber
         }
         return result;
     }
-    private Control[] GetControls(string name)
+    private Control GetControl(string name)
     {
-        return this.Controls.Find(name, true);
+        Control[] controls = this.Controls.Find(name, true);
+        if (controls.Length > 0)
+        {
+            return controls[0];
+        }
+        return null;
     }
     ///////////////////////////////////////////////////////////////////////////////
     #endregion
@@ -9549,7 +9541,8 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText2SaveLabel
         // 
-        this.UserText2SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText2SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
+        this.UserText2SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserText2SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText2SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
         this.UserText2SaveLabel.Location = new System.Drawing.Point(19, 20);
@@ -31506,7 +31499,6 @@ public partial class MainForm : Form, ISubscriber
             Control control = (sender as Label);
             string control_name = control.Name;
             if (control_name == "UserText1SaveLabel") return;
-            if (control_name == "UserText2SaveLabel") return;
             int pos = control_name.IndexOf("SaveLabel");
             if (pos > -1)
             {
@@ -31517,16 +31509,14 @@ public partial class MainForm : Form, ISubscriber
                     string text = UserTextTextBox.Text;
                     FileHelper.SaveText(path, text);
                     UserTextTextBox.Focus();
+
                     string load_control_name = control_name.Replace("Save", "Load");
-                    Control[] controls = this.GetControls(load_control_name);
-                    if (controls != null)
+                    control = GetControl(load_control_name);
+                    if (control != null)
                     {
-                        if (controls.Length == 1)
-                        {
-                            ToolTip.SetToolTip(controls[0], (text.Length > 0) ? text : L[l]["Load"]);
-                            controls[0].ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
-                            controls[0].BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
-                        }
+                        ToolTip.SetToolTip(control, (text.Length > 0) ? text : L[l]["Load"]);
+                        control.ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
+                        control.BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
                     }
                 }
             }

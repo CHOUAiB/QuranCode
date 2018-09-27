@@ -165,6 +165,7 @@ public partial class MainForm : Form
                                             }
                                             else
                                             {
+                                                if (control.Name.Contains("PositionLabel")) continue;
                                                 ToolTip.SetToolTip(control, parts[4]);
                                             }
                                         }

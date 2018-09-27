@@ -5227,7 +5227,7 @@ partial class MainForm
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.ShowToolTips = true;
-            this.TabControl.Size = new System.Drawing.Size(816, 192);
+            this.TabControl.Size = new System.Drawing.Size(816, 193);
             this.TabControl.TabIndex = 102;
             this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
@@ -8447,10 +8447,10 @@ partial class MainForm
             // 
             // UserText2SaveLabel
             // 
-            this.UserText2SaveLabel.BackColor = System.Drawing.Color.Lime;
-            this.UserText2SaveLabel.Enabled = false;
+            this.UserText2SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
+            this.UserText2SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.UserText2SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UserText2SaveLabel.ForeColor = System.Drawing.Color.Lime;
+            this.UserText2SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.UserText2SaveLabel.Location = new System.Drawing.Point(21, 22);
             this.UserText2SaveLabel.Name = "UserText2SaveLabel";
             this.UserText2SaveLabel.Size = new System.Drawing.Size(11, 19);
@@ -8460,7 +8460,7 @@ partial class MainForm
             // 
             // UserText1SaveLabel
             // 
-            this.UserText1SaveLabel.BackColor = System.Drawing.Color.Lime;
+            this.UserText1SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
             this.UserText1SaveLabel.Enabled = false;
             this.UserText1SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UserText1SaveLabel.ForeColor = System.Drawing.Color.Lime;
