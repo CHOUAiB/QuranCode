@@ -96,7 +96,7 @@ public partial class MainForm : Form
                 control.TextAlign = ContentAlignment.MiddleRight;
                 control.Font = new Font("Arial", 8);
                 control.Text = (i + 1).ToString();
-                ToolTip.SetToolTip(control, "Delete");
+                ToolTip.SetToolTip(control, "Delete, Control to Clear");
                 control.Cursor = Cursors.PanEast;
                 control.Click += DeleteRowLabel_Click;
                 MainPanel.Controls.Add(control);
@@ -119,19 +119,19 @@ public partial class MainForm : Form
 
                 switch (j)
                 {
-                    case 0: { control.Text = "i"; ToolTip.SetToolTip(control, "\tIndex\r\nDoubleClick to auto-fill rows\r\nShift+DoubleClick to go back"); control.DoubleClick += IndexLabel_DoubleClick; control.Cursor = Cursors.Hand; break; }
-                    case 1: { control.Text = "Pi"; ToolTip.SetToolTip(control, "Prime"); break; }
-                    case 2: { control.Text = "APi"; ToolTip.SetToolTip(control, "Additive Prime"); break; }
-                    case 3: { control.Text = "XPi"; ToolTip.SetToolTip(control, "Non-additive Prime"); break; }
-                    case 4: { control.Text = "Ci"; ToolTip.SetToolTip(control, "Composite"); break; }
-                    case 5: { control.Text = "ACi"; ToolTip.SetToolTip(control, "Additive Composite"); break; }
-                    case 6: { control.Text = "XCi"; ToolTip.SetToolTip(control, "Non-additive Composite"); break; }
-                    case 7: { control.Text = "DFi"; ToolTip.SetToolTip(control, "Deficient Number"); break; }
-                    case 8: { control.Text = "ABi"; ToolTip.SetToolTip(control, "Abundant Number"); break; }
-                    case 9: { control.Text = "Pi=4n+1"; ToolTip.SetToolTip(control, "n of Fermat's 4n+1 Prime = a^2 + b^2"); break; }
+                    case 0: { control.Text = "i"; ToolTip.SetToolTip(control, "\tIndex\r\nAuto-fill, Shift to go back"); control.Click += IndexLabel_Click; control.Cursor = Cursors.PanSouth; break; }
+                    case 1: { control.Text = "P"; ToolTip.SetToolTip(control, "Prime"); break; }
+                    case 2: { control.Text = "AP"; ToolTip.SetToolTip(control, "Additive Prime"); break; }
+                    case 3: { control.Text = "XP"; ToolTip.SetToolTip(control, "Non-additive Prime"); break; }
+                    case 4: { control.Text = "C"; ToolTip.SetToolTip(control, "Composite"); break; }
+                    case 5: { control.Text = "AC"; ToolTip.SetToolTip(control, "Additive Composite"); break; }
+                    case 6: { control.Text = "XC"; ToolTip.SetToolTip(control, "Non-additive Composite"); break; }
+                    case 7: { control.Text = "DF"; ToolTip.SetToolTip(control, "Deficient Number"); break; }
+                    case 8: { control.Text = "AB"; ToolTip.SetToolTip(control, "Abundant Number"); break; }
+                    case 9: { control.Text = "P=4n+1"; ToolTip.SetToolTip(control, "n of Fermat's 4n+1 Prime = a^2 + b^2"); break; }
                     case 10: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Prime = a^2 + b^2"); break; }
                     case 11: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Prime = a^2 + b^2"); break; }
-                    case 12: { control.Text = "Ci=4n+1"; ToolTip.SetToolTip(control, "n of Ali Adams' 4n+1 Composite = a^2 - b^2"); break; }
+                    case 12: { control.Text = "C=4n+1"; ToolTip.SetToolTip(control, "n of Ali Adams' 4n+1 Composite = a^2 - b^2"); break; }
                     case 13: { control.Text = "a"; ToolTip.SetToolTip(control, "a of 4n+1 Composite = a^2 - b^2"); break; }
                     case 14: { control.Text = "b"; ToolTip.SetToolTip(control, "b of 4n+1 Composite = a^2 - b^2"); break; }
                     case 15: { control.Text = "Sum"; ToolTip.SetToolTip(control, "Sum(1..i) = (i*(i+1))/2"); break; }
@@ -226,18 +226,36 @@ public partial class MainForm : Form
 
     private void DeleteRowLabel_Click(object sender, EventArgs e)
     {
-        Control control = (sender as Label);
-        if (control != null)
+        if (ModifierKeys == Keys.Control)
         {
-            int i = int.Parse(control.Text) - 1;
-            if (controls != null)
+            ClearLabel_Click(sender, e);
+        }
+        else
+        {
+            Control control = (sender as Label);
+            if (control != null)
             {
-                for (int j = 0; j < COLS; j++)
+                int i = int.Parse(control.Text) - 1;
+                if (controls != null)
                 {
-                    controls[i, j].Text = "";
+                    for (int j = 0; j < COLS; j++)
+                    {
+                        controls[i, j].Text = "";
+                    }
+                    controls[i, 0].Focus();
                 }
-                controls[i, 0].Focus();
             }
+        }
+    }
+    private void ClearLabel_Click(object sender, EventArgs e)
+    {
+        if (controls != null)
+        {
+            for (int i = 0; i < ROWS; i++)
+            {
+                controls[i, 0].Text = "";
+            }
+            controls[0, 0].Focus();
         }
     }
     private void Label_MouseEnter(object sender, EventArgs e)
@@ -267,7 +285,7 @@ public partial class MainForm : Form
 
                 StringBuilder str = new StringBuilder();
                 str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
-                str.AppendLine("i" + "\t" + "Pi" + "\t" + "APi" + "\t" + "XPi" + "\t" + "Ci" + "\t" + "ACi" + "\t" + "XCi" + "\t" + "DFi" + "\t" + "ABi" + "\t" + "Pi=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Ci=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Sum" + "\t" + "Half" + "\t" + "Median" + "\t" + "Product");
+                str.AppendLine("i" + "\t" + "P" + "\t" + "AP" + "\t" + "XP" + "\t" + "C" + "\t" + "AC" + "\t" + "XC" + "\t" + "DF" + "\t" + "AB" + "\t" + "P=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "C=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Sum" + "\t" + "Half" + "\t" + "Median" + "\t" + "Product");
                 str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
                 for (int i = 0; i < ROWS; i++)
                 {
@@ -352,15 +370,24 @@ public partial class MainForm : Form
         }
     }
     private int batch_number = -1;
-    private void IndexLabel_DoubleClick(object sender, EventArgs e)
+    private void IndexLabel_Click(object sender, EventArgs e)
     {
         if (ModifierKeys == Keys.Shift)
         {
-            batch_number--; if (batch_number < 0) batch_number = 10;
+            if (batch_number > 0)
+            {
+                batch_number--;
+            }
+            else
+            {
+                batch_number = -1;
+                ClearLabel_Click(sender, e);
+                return;
+            }
         }
         else
         {
-            batch_number++; if (batch_number > 10) batch_number = 0;
+            batch_number++;
         }
 
         if (controls != null)
@@ -914,31 +941,86 @@ public partial class MainForm : Form
     }
     private void LinkLabel_Click(object sender, EventArgs e)
     {
-        this.Cursor = Cursors.WaitCursor;
-        try
+        if (ModifierKeys == Keys.Control)
         {
-            Control control = (sender as Control);
-            if (control != null)
+            GenerateSomeRows();
+        }
+        else
+        {
+            this.Cursor = Cursors.WaitCursor;
+            try
             {
-                if (control.Tag != null)
+                Control control = (sender as Control);
+                if (control != null)
                 {
-                    if (!String.IsNullOrEmpty(control.Tag.ToString()))
+                    if (control.Tag != null)
                     {
-                        try
+                        if (!String.IsNullOrEmpty(control.Tag.ToString()))
                         {
-                            System.Diagnostics.Process.Start(control.Tag.ToString());
-                        }
-                        catch (Exception ex)
-                        {
-                            while (ex != null)
+                            try
                             {
-                                //Console.WriteLine(ex.Message);
-                                MessageBox.Show(ex.Message, Application.ProductName);
-                                ex = ex.InnerException;
+                                System.Diagnostics.Process.Start(control.Tag.ToString());
+                            }
+                            catch (Exception ex)
+                            {
+                                while (ex != null)
+                                {
+                                    //Console.WriteLine(ex.Message);
+                                    MessageBox.Show(ex.Message, Application.ProductName);
+                                    ex = ex.InnerException;
+                                }
                             }
                         }
                     }
                 }
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+    }
+    private void GenerateSomeRows()
+    {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            if (Directory.Exists(Globals.NUMBERS_FOLDER))
+            {
+                string filename = Globals.NUMBERS_FOLDER + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + "Numbers.txt";
+
+                StringBuilder str = new StringBuilder();
+                str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                str.AppendLine("i" + "\t" + "P" + "\t" + "AP" + "\t" + "XP" + "\t" + "C" + "\t" + "AC" + "\t" + "XC" + "\t" + "DF" + "\t" + "AB" + "\t" + "P=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "C=4n+1" + "\t" + "a" + "\t" + "b" + "\t" + "Sum" + "\t" + "Half" + "\t" + "Median" + "\t" + "Product");
+                str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                if (controls != null)
+                {
+                    for (int n = 0; n < 1005; n++)
+                    {
+                        for (int i = 0; i < ROWS; i++)
+                        {
+                            controls[i, 0].Text = ((i + 1) + (n * ROWS)).ToString();
+                        }
+
+                        for (int i = 0; i < ROWS; i++)
+                        {
+                            for (int j = 0; j < COLS; j++)
+                            {
+                                str.Append(controls[i, j].Text + "\t");
+                            }
+                            if (str.Length > 0)
+                            {
+                                str.Remove(str.Length - 1, 1);
+                            }
+                            str.AppendLine();
+                        }
+                    }
+                }
+
+                str.AppendLine("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                FileHelper.SaveText(filename, str.ToString());
+                FileHelper.DisplayFile(filename);
             }
         }
         finally
