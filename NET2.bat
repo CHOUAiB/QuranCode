@@ -19,7 +19,7 @@ XCOPY /E /EXCLUDE:exclude.txt WordGenerator\*.* NET2\WordGenerator\
 XCOPY /E /EXCLUDE:exclude.txt AhlulBayt\*.* NET2\AhlulBayt\
 
 DEL exclude.txt
-Tools\Replace\bin\Release\Replace.exe NET2 *.Designer.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)
+Tools\Replace\bin\Release\Replace.exe NET2 *.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)
 CALL Version.bat
 CD NET2
 CALL Version.bat
