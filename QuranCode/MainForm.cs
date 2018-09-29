@@ -16300,6 +16300,9 @@ public partial class MainForm : Form, ISubscriber
             if (ModifierKeys == Keys.Control)
             {
                 word_info += "\r\n\r\n";
+                word_info += GetGrammarInformation(word);
+
+                word_info += "\r\n\r\n";
                 word_info += GetRelatedWordsInformation(word);
             }
             ToolTip.SetToolTip(m_active_textbox, word_info);
