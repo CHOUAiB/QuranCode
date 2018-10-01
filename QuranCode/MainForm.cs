@@ -533,6 +533,11 @@ public partial class MainForm : Form, ISubscriber
                     string path = Globals.USERTEXT_FOLDER + "/" + filename;
                     string text = FileHelper.LoadText(path);
 
+                    if ((text == "\r\n") || (text == "\n") || (text == "\r"))
+                    {
+                        text = "";
+                    }
+
                     string load_control_name = "UserText" + (i + 1) + "LoadLabel";
                     Control control = GetControl(load_control_name);
                     if (control != null)
@@ -547,7 +552,6 @@ public partial class MainForm : Form, ISubscriber
                     if (control != null)
                     {
                         ToolTip.SetToolTip(control, (control == UserText1SaveLabel) ? "" : L[l]["Save"]);
-                        control.BackColor = (text.Length > 0) ? Color.Lime : Color.DarkGreen;
                     }
                 }
             }
@@ -31514,6 +31518,12 @@ public partial class MainForm : Form, ISubscriber
                     {
                         string path = Globals.USERTEXT_FOLDER + "/" + filename;
                         string text = UserTextTextBox.Text;
+
+                        if ((text == "\r\n") || (text == "\n") || (text == "\r"))
+                        {
+                            text = "";
+                        }
+
                         FileHelper.SaveText(path, text);
                         UserTextTextBox.Focus();
 

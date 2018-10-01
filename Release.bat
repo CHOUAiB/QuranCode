@@ -33,13 +33,36 @@ CD NET2
 CALL Version.bat
 CD ..
 
+CD Build\Release
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Audio\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Data\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Fonts\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Help\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Images\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Languages\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Numbers\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Rules\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Tools\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Translations\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip UserText\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Values\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Readme.txt
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Features.txt
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Clean.bat
+MOVE QuranCode1433.zip ..\..\QuranCode1433.zip
+CD ..\..
+
+MD Setup
+CD Setup
 MD Win7
 MD Win10
-XCOPY /E NET2\Build\Release\*.* Win7\
-XCOPY /E      Build\Release\*.* Win10\
-"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Win7\*.*
-"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Win10\*.*
-RD /S /Q Win7
-RD /S /Q Win10
+CD ..
+COPY /Y NET2\Build\Release\*.exe Setup\Win7\
+COPY /Y NET2\Build\Release\*.dll Setup\Win7\
+COPY /Y      Build\Release\*.exe Setup\Win10\
+COPY /Y      Build\Release\*.dll Setup\Win10\
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Setup\*.*
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Setup.Win7.bat
+"%PROGRAMFILES%\7-Zip\7z.exe" a -tzip -r -mx5 QuranCode1433.zip Setup.Win10.bat
 
 CALL Version.bat
