@@ -8464,7 +8464,7 @@ partial class MainForm
             this.UserText1SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
             this.UserText1SaveLabel.Enabled = false;
             this.UserText1SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UserText1SaveLabel.ForeColor = System.Drawing.Color.Lime;
+            this.UserText1SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.UserText1SaveLabel.Location = new System.Drawing.Point(21, 2);
             this.UserText1SaveLabel.Name = "UserText1SaveLabel";
             this.UserText1SaveLabel.Size = new System.Drawing.Size(11, 19);

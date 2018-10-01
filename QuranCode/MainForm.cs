@@ -547,7 +547,6 @@ public partial class MainForm : Form, ISubscriber
                     if (control != null)
                     {
                         ToolTip.SetToolTip(control, (control == UserText1SaveLabel) ? "" : L[l]["Save"]);
-                        control.ForeColor = (text.Length > 0) ? Color.DarkGreen : Color.Lime;
                         control.BackColor = (text.Length > 0) ? Color.Lime : Color.DarkGreen;
                     }
                 }
@@ -9457,7 +9456,7 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText8SaveLabel
         // 
-        this.UserText8SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText8SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
         this.UserText8SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserText8SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText8SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -9471,7 +9470,7 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText7SaveLabel
         // 
-        this.UserText7SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText7SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
         this.UserText7SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserText7SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText7SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -9485,7 +9484,7 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText6SaveLabel
         // 
-        this.UserText6SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText6SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
         this.UserText6SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserText6SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText6SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -9499,7 +9498,7 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText5SaveLabel
         // 
-        this.UserText5SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText5SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
         this.UserText5SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserText5SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText5SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -9513,7 +9512,7 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText4SaveLabel
         // 
-        this.UserText4SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText4SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
         this.UserText4SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserText4SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText4SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -9527,7 +9526,7 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText3SaveLabel
         // 
-        this.UserText3SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText3SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
         this.UserText3SaveLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.UserText3SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText3SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -9555,7 +9554,7 @@ public partial class MainForm : Form, ISubscriber
         // 
         // UserText1SaveLabel
         // 
-        this.UserText1SaveLabel.BackColor = System.Drawing.Color.Lime;
+        this.UserText1SaveLabel.BackColor = System.Drawing.Color.DarkGreen;
         this.UserText1SaveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserText1SaveLabel.ForeColor = System.Drawing.SystemColors.WindowText;
         this.UserText1SaveLabel.Location = new System.Drawing.Point(19, 0);
@@ -9647,7 +9646,7 @@ public partial class MainForm : Form, ISubscriber
         this.UserTextTextBox.Name = "UserTextTextBox";
         this.UserTextTextBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
         this.UserTextTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-        this.UserTextTextBox.Size = new System.Drawing.Size(718, 210);
+        this.UserTextTextBox.Size = new System.Drawing.Size(715, 210);
         this.UserTextTextBox.TabIndex = 1;
         this.UserTextTextBox.WordWrap = false;
         this.UserTextTextBox.TextChanged += new System.EventHandler(this.UserTextTextBox_TextChanged);
@@ -31489,7 +31488,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     string path = Globals.USERTEXT_FOLDER + "/" + filename;
                     string text = FileHelper.LoadText(path);
-                    UserTextTextBox.Text = text;
+                    UserTextTextBox.Text = ((text == "\r\n") || (text == "\n") || (text == "\r")) ? "" : text;
                     UserTextTextBox.Refresh();
                     UserTextTextBox.Focus();
                 }
@@ -31498,32 +31497,41 @@ public partial class MainForm : Form, ISubscriber
     }
     private void UserTextSaveLabel_Click(object sender, EventArgs e)
     {
-        if (sender is Label)
+        this.Cursor = Cursors.WaitCursor;
+        try
         {
-            Control control = (sender as Label);
-            string control_name = control.Name;
-            if (control_name == "UserText1SaveLabel") return;
-            int pos = control_name.IndexOf("SaveLabel");
-            if (pos > -1)
+            if (sender is Label)
             {
-                string filename = control_name.Remove(pos) + ".txt";
-                if (Directory.Exists(Globals.USERTEXT_FOLDER))
-                {
-                    string path = Globals.USERTEXT_FOLDER + "/" + filename;
-                    string text = UserTextTextBox.Text;
-                    FileHelper.SaveText(path, text);
-                    UserTextTextBox.Focus();
+                Control control = (sender as Label);
+                string control_name = control.Name;
+                if (control_name == "UserText1SaveLabel") return;
 
-                    string load_control_name = control_name.Replace("Save", "Load");
-                    control = GetControl(load_control_name);
-                    if (control != null)
+                int pos = control_name.IndexOf("SaveLabel");
+                if (pos > -1)
+                {
+                    string filename = control_name.Remove(pos) + ".txt";
+                    if (Directory.Exists(Globals.USERTEXT_FOLDER))
                     {
-                        ToolTip.SetToolTip(control, (text.Length > 0) ? text : L[l]["Load"]);
-                        control.ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
-                        control.BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
+                        string path = Globals.USERTEXT_FOLDER + "/" + filename;
+                        string text = UserTextTextBox.Text;
+                        FileHelper.SaveText(path, text);
+                        UserTextTextBox.Focus();
+
+                        string load_control_name = control_name.Replace("Save", "Load");
+                        control = GetControl(load_control_name);
+                        if (control != null)
+                        {
+                            ToolTip.SetToolTip(control, (text.Length > 0) ? text : L[l]["Load"]);
+                            control.ForeColor = (text.Length > 0) ? Color.Black : Color.Lime;
+                            control.BackColor = (text.Length > 0) ? Color.Lime : Color.Black;
+                        }
                     }
                 }
             }
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
