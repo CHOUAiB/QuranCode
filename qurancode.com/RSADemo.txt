@@ -1,0 +1,167 @@
+﻿<pre>
+----------------------------------------------------------
+Download RSA Demo from http://www.heliwave.com/RSADemo.zip
+----------------------------------------------------------
+
+
+The RSA Algorithm - [http://www.claymath.org/posters/primes/]
+--------------------------------------------------------------------------------
+The task of cryptography (Greek kryptos hidden, graphein to write) is to turn messages
+into gibberish so that they cannot be read by persons other than the intended recipient.
+
+If I send my credit card number and PIN over the internet to an online bookstore,
+the bookstore should be able to read it, but no one else should.
+
+A cryptographer starts with plain text such as m="ATTACKATDAWN" and produces cipher text
+such as c="OTMMGKLHDTIR." This is encryption.
+
+Decryption is the reverse: it produces plain text from cipher text. 
+
+In the old days, to send a secret message, you first had to send a key secretly to the recipient.
+This you did by meeting in person, or through a trusted courier.
+In the example above, the key was "OATMEAL" and the encryption method is due to Vigenère. 
+
+But the internet is not a trusted medium, so how do you get started?
+
+You can't use the internet to send the key, then your financial information.
+A bad person could capture your internet traffic with the bookstore.
+He would use the key to read your credit card number and PIN,
+and would then charge expensive travel to exotic places to your account. 
+
+This dilemma was solved in 1978 by Rivest, Shamir, and Adelman.
+Their method, now known as RSA, depends on some marvelous properties of prime numbers.
+One of these is that it is rather easy to generate large prime numbers,
+but much harder to factor large numbers into primes. Another is Fermat's little theorem. 
+
+
+----------------------------------------
+Note: "a mod N" is the remainder of a/N.
+----------------------------------------
+
+RSA starts first with translating the message letters into blocks of numbers and back again.
+We can do this using a random table like the one below,
+where A corresponds to 11, B to 12, etc.
+
+Conversion Table
+-------------------------------
+  0  1  2  3  4  5  6  7  8  9
+ |-----------------------------
+1|SP A  B  C  D  E  F  G  H  I
+2|J  K  L  M  N  O  P  Q  R  S
+3|T  U  V  W  X  Y  Z  a  b  c
+4|d  e  f  g  h  i  j  k  l  m
+5|n  o  p  q  r  s  t  u  v  w
+6|x  y  z  .  ,  :  ;  '  "  `
+7|!  @  #  $  %  ^  &  *  -  +
+8|(  )  [  ]  {  }  ?  /  <  >
+9|0  1  2  3  4  5  6  7  8  9
+-------------------------------
+
+Thus the word Attack! becomes 115656373947 = message = m.
+
+From now on encrypting and decrypting becomes a matter of computing with large integers.
+
+Let p and q be large prime numbers
+Let N = p*q.
+
+For encryption use: c = f(m) = m^e mod N,
+
+where e is a positive integer which has no factor in common with (p-1)(q-1).
+
+For decryption use: m = g(c) = c^d mod N,
+
+where d is a positive integer such that (e*d - 1) is divisible by (p-1)(q-1). 
+
+What makes RSA so hard to break?
+Well, think first about what Alice, the person who designs the code, does.
+First she generates the large primes p and q, then she chooses e.
+Finally she solves an equation to find d: 
+
+d*e + (p-1)(q-1)*c = 1, where all the letters are integers.
+
+Alice makes e and N public. This is all anyone needs to send secret messages to her.
+
+Now think about what Bob the spy, who wants to intercept and decrypt messages sent to Alice, needs to know.
+First he must factor N to find p and q so as to set up the equation:
+
+d*e + (p-1)(q-1)y = 1.
+
+Then he solves the equation to find d and decrypt Alice's messages using g(x) = x^d mod N.
+
+The problem is that the factoring problem takes huge amounts of computer time,
+for large enough p and q so much time that it would take millions of years,
+given current mathematical theory and current computer technology, to crack the code. 
+
+The fact that g decrypts messages encrypted by f, is a consequence of Fermat's little theorem: 
+
+If a is not divisible by p, where p is prime, then a^(p-1) - 1 is divisible by p. 
+
+Fermat (1605-1661) was a French mathematician whose work is the foundation of modern number theory.
+See the historical references and the notes on Fermat's last theorem.
+
+Some time around 1630 Fermat wrote in the margin of his copy of Diophantus' Arithmetica that
+he had a wonderful proof of the fact that the equation
+
+x^n + y^n = z^n
+
+has no solutions in the positive integers for n > 2.
+
+This statement was finally proved by Andrew Wiles in 1994. 
+
+
+EXAMPLE from http://en.wikipedia.org/wiki/RSA:
+----------------------------------------------
+Here is an example of RSA encryption and decryption.
+The parameters used here are artificially small,
+but one can also use OpenSSL to generate and examine a real keypair.
+
+1.Choose two distinct prime numbers, such as 
+
+p = 61 and q = 53.
+
+
+2.Compute n = pq giving 
+
+n = 61 · 53 = 3233.
+
+
+3.Compute the totient of the product as φ(n) = (p − 1)(q − 1) giving 
+
+φ(3233) = (61 − 1)(53 − 1) = 3120.
+
+
+4.Choose any number 1 < e < 3120 that is coprime to 3120.
+
+Choosing a prime number for e leaves us only to check that e is not a divisor of 3120.
+
+Let e = 17.
+
+
+5.Compute d, the modular multiplicative inverse of e(mod φ(n)) yielding 
+
+d = 2753.
+
+The public key is (n = 3233, e = 17).
+For a padded plaintext message m, the encryption function is m^17(mod 3233).
+
+The private key is (n = 3233, d = 2753).
+For an encrypted ciphertext c, the decryption function is c^2753(mod 3233).
+
+For instance, in order to encrypt m = 65, we calculate:
+c = 65^17(mod 3233) = 2790.
+
+To decrypt c = 2790, we calculate:
+m = 2790^2753(mod 3233) = 65.
+
+Both of these calculations can be computed efficiently using the square-and-multiply algorithm
+for modular exponentiation. In real life situations the primes selected would be much larger;
+in our example it would be relatively trivial to factor n (3233) found in the public key back to
+the secret primes p and q. Given e, also from the public key, we could then compute the private key d.
+
+--------------------------------------------------------------------------------
+
+
+----------------------------------------------------------
+Download RSA Demo from http://www.heliwave.com/RSADemo.zip
+----------------------------------------------------------
+</pre>
