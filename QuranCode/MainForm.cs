@@ -34221,9 +34221,9 @@ public partial class MainForm : Form, ISubscriber
     {
         FindByNumbersControls_Enter(null, null);
     }
-    private NumberScope m_letter_number_scope = NumberScope.Number;
-    private NumberScope m_word_number_scope = NumberScope.Number;
-    private NumberScope m_verse_number_scope = NumberScope.Number;
+    private NumberScope m_letter_number_scope = NumberScope.NumberInWord;
+    private NumberScope m_word_number_scope = NumberScope.NumberInVerse;
+    private NumberScope m_verse_number_scope = NumberScope.NumberInChapter;
     private NumberScope m_chapter_number_scope = NumberScope.Number;
     private void FindByNumbersNumberLabel_Click(object sender, EventArgs e)
     {
@@ -36120,7 +36120,6 @@ public partial class MainForm : Form, ISubscriber
                 (value_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
                 (value_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
                                                  ComparisonOperator.Reserved;
-
             string value_digit_sum_operator_symbol = FindByNumbersValueDigitSumComparisonOperatorLabel.Text;
             ComparisonOperator value_digit_sum_comparison_operator =
                 (value_digit_sum_operator_symbol == "=") ? ComparisonOperator.Equal :
@@ -36133,10 +36132,8 @@ public partial class MainForm : Form, ISubscriber
                 (value_digit_sum_operator_symbol == "!÷") ? ComparisonOperator.IndivisibleBy :
                 (value_digit_sum_operator_symbol == "Ʃ") ? ComparisonOperator.EqualSum :
                                                            ComparisonOperator.Reserved;
-
             string value_digital_root_operator_symbol = FindByNumbersValueDigitalRootComparisonOperatorLabel.Text;
             ComparisonOperator value_digital_root_comparison_operator =
-                (value_digital_root_operator_symbol == "=") ? ComparisonOperator.Equal :
                 (value_digital_root_operator_symbol == "=") ? ComparisonOperator.Equal :
                 (value_digital_root_operator_symbol == "≠") ? ComparisonOperator.NotEqual :
                 (value_digital_root_operator_symbol == "<") ? ComparisonOperator.LessThan :
