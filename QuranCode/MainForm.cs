@@ -3346,6 +3346,7 @@ public partial class MainForm : Form, ISubscriber
         this.FindByNumbersVersesNumericUpDown.Size = new System.Drawing.Size(75, 23);
         this.FindByNumbersVersesNumericUpDown.TabIndex = 42;
         this.FindByNumbersVersesNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+        this.FindByNumbersVersesNumericUpDown.Value = 1;
         this.FindByNumbersVersesNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
         this.FindByNumbersVersesNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersVersesNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
