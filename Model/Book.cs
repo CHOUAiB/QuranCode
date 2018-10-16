@@ -321,34 +321,40 @@ namespace Model
         {
             if (this.verses != null)
             {
-                number %= verses.Count;
-                if ((number > 0) && (number <= this.verses.Count))
+                if (this.verses.Count > 0)
                 {
-                    return this.verses[number - 1];
+                    number %= verses.Count;
+                    if ((number > 0) && (number <= this.verses.Count))
+                    {
+                        return this.verses[number - 1];
+                    }
                 }
             }
             return null;
         }
         public Verse GetVerseByWordNumber(int number)
         {
-            number %= WordCount;
-            if ((number > 0) && (number <= this.WordCount))
+            if (WordCount > 0)
             {
-                if (this.chapters != null)
+                number %= WordCount;
+                if ((number > 0) && (number <= this.WordCount))
                 {
-                    foreach (Chapter chapter in this.chapters)
+                    if (this.chapters != null)
                     {
-                        if (chapter.Verses != null)
+                        foreach (Chapter chapter in this.chapters)
                         {
-                            foreach (Verse verse in chapter.Verses)
+                            if (chapter.Verses != null)
                             {
-                                if (number > verse.Words.Count)
+                                foreach (Verse verse in chapter.Verses)
                                 {
-                                    number -= verse.Words.Count;
-                                }
-                                else
-                                {
-                                    return verse;
+                                    if (number > verse.Words.Count)
+                                    {
+                                        number -= verse.Words.Count;
+                                    }
+                                    else
+                                    {
+                                        return verse;
+                                    }
                                 }
                             }
                         }
@@ -359,25 +365,28 @@ namespace Model
         }
         public Verse GetVerseByLetterNumber(int number)
         {
-            number %= LetterCount;
-            if ((number > 0) && (number <= this.LetterCount))
+            if (LetterCount > 0)
             {
-                if (this.chapters != null)
+                number %= LetterCount;
+                if ((number > 0) && (number <= this.LetterCount))
                 {
-                    foreach (Chapter chapter in this.chapters)
+                    if (this.chapters != null)
                     {
-                        if (chapter.Verses != null)
+                        foreach (Chapter chapter in this.chapters)
                         {
-                            foreach (Verse verse in chapter.Verses)
+                            if (chapter.Verses != null)
                             {
-                                int letter_count = verse.LetterCount;
-                                if (number > letter_count)
+                                foreach (Verse verse in chapter.Verses)
                                 {
-                                    number -= letter_count;
-                                }
-                                else
-                                {
-                                    return verse;
+                                    int letter_count = verse.LetterCount;
+                                    if (number > letter_count)
+                                    {
+                                        number -= letter_count;
+                                    }
+                                    else
+                                    {
+                                        return verse;
+                                    }
                                 }
                             }
                         }
@@ -388,27 +397,30 @@ namespace Model
         }
         public Word GetWordByWordNumber(int number)
         {
-            number %= WordCount;
-            if ((number > 0) && (number <= this.WordCount))
+            if (WordCount > 0)
             {
-                if (this.chapters != null)
+                number %= WordCount;
+                if ((number > 0) && (number <= this.WordCount))
                 {
-                    foreach (Chapter chapter in this.chapters)
+                    if (this.chapters != null)
                     {
-                        if (chapter.Verses != null)
+                        foreach (Chapter chapter in this.chapters)
                         {
-                            foreach (Verse verse in chapter.Verses)
+                            if (chapter.Verses != null)
                             {
-                                if (verse.Words != null)
+                                foreach (Verse verse in chapter.Verses)
                                 {
-                                    int word_count = verse.Words.Count;
-                                    if (number > word_count)
+                                    if (verse.Words != null)
                                     {
-                                        number -= word_count;
-                                    }
-                                    else
-                                    {
-                                        return verse.Words[number - 1];
+                                        int word_count = verse.Words.Count;
+                                        if (number > word_count)
+                                        {
+                                            number -= word_count;
+                                        }
+                                        else
+                                        {
+                                            return verse.Words[number - 1];
+                                        }
                                     }
                                 }
                             }
@@ -420,31 +432,34 @@ namespace Model
         }
         public Word GetWordByLetterNumber(int number)
         {
-            number %= LetterCount;
-            if ((number > 0) && (number <= this.LetterCount))
+            if (LetterCount > 0)
             {
-                if (this.chapters != null)
+                number %= LetterCount;
+                if ((number > 0) && (number <= this.LetterCount))
                 {
-                    foreach (Chapter chapter in this.chapters)
+                    if (this.chapters != null)
                     {
-                        if (chapter.Verses != null)
+                        foreach (Chapter chapter in this.chapters)
                         {
-                            foreach (Verse verse in chapter.Verses)
+                            if (chapter.Verses != null)
                             {
-                                if (verse.Words != null)
+                                foreach (Verse verse in chapter.Verses)
                                 {
-                                    foreach (Word word in verse.Words)
+                                    if (verse.Words != null)
                                     {
-                                        if ((word.Letters != null) && (word.Letters.Count > 0))
+                                        foreach (Word word in verse.Words)
                                         {
-                                            int letter_count = word.Letters.Count;
-                                            if (number > letter_count)
+                                            if ((word.Letters != null) && (word.Letters.Count > 0))
                                             {
-                                                number -= letter_count;
-                                            }
-                                            else
-                                            {
-                                                return word;
+                                                int letter_count = word.Letters.Count;
+                                                if (number > letter_count)
+                                                {
+                                                    number -= letter_count;
+                                                }
+                                                else
+                                                {
+                                                    return word;
+                                                }
                                             }
                                         }
                                     }

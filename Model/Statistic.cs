@@ -22,6 +22,10 @@ namespace Model
         public int Order;
         public char Letter;
         public int Frequency;
+        public List<int> Positions = new List<int>();
+        public int PositionSum;
+        public List<int> Distances = new List<int>();
+        public int DistanceSum;
 
         public static StatisticSortMethod SortMethod;
         public static StatisticSortOrder SortOrder;
@@ -82,6 +86,10 @@ namespace Model
         public int Order;
         public Word Word;
         public int Frequency;
+        public List<int> Positions = new List<int>();
+        public int PositionSum;
+        public List<int> Distances = new List<int>();
+        public int DistanceSum;
 
         public static StatisticSortMethod SortMethod;
         public static StatisticSortOrder SortOrder;
@@ -145,4 +153,3 @@ namespace Model
         }
     }
 }
-

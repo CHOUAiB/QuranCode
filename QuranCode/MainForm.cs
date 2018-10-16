@@ -43475,14 +43475,15 @@ public partial class MainForm : Form, ISubscriber
     }
     private void LetterFrequencyListView_DoubleClick(object sender, EventArgs e)
     {
-        char character = '\0';
+        char letter = '\0';
+
         Dictionary<char, List<int>> letter_positions = new Dictionary<char, List<int>>();
         Dictionary<char, List<int>> letter_distances = new Dictionary<char, List<int>>();
         foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
         {
-            character = item.SubItems[1].Text[0];
-            letter_positions.Add(character, new List<int>());
-            letter_distances.Add(character, new List<int>());
+            letter = item.SubItems[1].Text[0];
+            letter_positions.Add(letter, new List<int>());
+            letter_distances.Add(letter, new List<int>());
         }
 
         if (!String.IsNullOrEmpty(m_current_text))
@@ -43500,22 +43501,22 @@ public partial class MainForm : Form, ISubscriber
                 text = text.Replace(c.ToString(), "");
             }
 
-            foreach (char c in letter_positions.Keys)
+            foreach (char key in letter_positions.Keys)
             {
-                int pos = text.IndexOf(c);
+                int pos = text.IndexOf(key);
                 if (pos > -1)
                 {
-                    letter_positions[c].Add(pos + 1);
+                    letter_positions[key].Add(pos + 1);
                     for (int i = pos + 1; i < text.Length; i++)
                     {
-                        if (text[i] == c)
+                        if (text[i] == key)
                         {
-                            letter_positions[c].Add(i + 1);
+                            letter_positions[key].Add(i + 1);
 
                             int letter_distance = i - pos;
-                            if (letter_distances.ContainsKey(c))
+                            if (letter_distances.ContainsKey(key))
                             {
-                                letter_distances[c].Add(letter_distance);
+                                letter_distances[key].Add(letter_distance);
                             }
                             pos = i;
                         }
@@ -43523,11 +43524,33 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
 
+            Dictionary<char, int> letter_position_sums = new Dictionary<char, int>();
+            foreach (char key in letter_positions.Keys)
+            {
+                int sum = 0;
+                foreach (int n in letter_positions[key])
+                {
+                    sum += n;
+                }
+                letter_position_sums.Add(key, sum);
+            }
+            Dictionary<char, int> letter_distance_sums = new Dictionary<char, int>();
+            foreach (char key in letter_distances.Keys)
+            {
+                int sum = 0;
+                foreach (int n in letter_distances[key])
+                {
+                    sum += n;
+                }
+                letter_distance_sums.Add(key, sum);
+            }
+
             StringBuilder str = new StringBuilder();
-            foreach (char c in letter_positions.Keys)
+            foreach (char key in letter_positions.Keys)
             {
-                str.Append(c.ToString() + " positions" + "\t");
-                foreach (int ld in letter_positions[c])
+                str.Append("Positions" + "\t" + key.ToString() + "\t");
+                str.Append(letter_position_sums[key].ToString() + "\t");
+                foreach (int ld in letter_positions[key])
                 {
                     str.Append(ld.ToString() + ",");
                 }
@@ -43538,11 +43561,11 @@ public partial class MainForm : Form, ISubscriber
                 str.AppendLine();
             }
 
-            str.AppendLine();
-            foreach (char c in letter_distances.Keys)
+            foreach (char key in letter_distances.Keys)
             {
-                str.Append(c.ToString() + " distances" + "\t");
-                foreach (int ld in letter_distances[c])
+                str.Append("Distances" + "\t" + key.ToString() + "\t");
+                str.Append(letter_distance_sums[key].ToString() + "\t");
+                foreach (int ld in letter_distances[key])
                 {
                     str.Append(ld.ToString() + ",");
                 }
@@ -43553,7 +43576,7 @@ public partial class MainForm : Form, ISubscriber
                 str.AppendLine();
             }
 
-            string filename = character.ToString() + "_" + "LetterPositionsAndDistances" + Globals.OUTPUT_FILE_EXT;
+            string filename = letter.ToString() + "_" + "LetterPositionsAndDistances" + Globals.OUTPUT_FILE_EXT;
             if (Directory.Exists(Globals.RESEARCH_FOLDER))
             {
                 string path = Globals.RESEARCH_FOLDER + "/" + filename;
@@ -43561,15 +43584,14 @@ public partial class MainForm : Form, ISubscriber
                 FileHelper.DisplayFile(path);
             }
         }
-
     }
     private void PositionsToolStripMenuItem_Click(object sender, EventArgs e)
     {
         Dictionary<char, List<int>> letter_positions = new Dictionary<char, List<int>>();
         foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
         {
-            char character = item.SubItems[1].Text[0];
-            letter_positions.Add(character, new List<int>());
+            char key = item.SubItems[1].Text[0];
+            letter_positions.Add(key, new List<int>());
         }
 
         if (!String.IsNullOrEmpty(m_current_text))
@@ -43587,27 +43609,39 @@ public partial class MainForm : Form, ISubscriber
                 text = text.Replace(c.ToString(), "");
             }
 
-            foreach (char character in letter_positions.Keys)
+            foreach (char key in letter_positions.Keys)
             {
-                int pos = text.IndexOf(character);
+                int pos = text.IndexOf(key);
                 if (pos > -1)
                 {
-                    letter_positions[character].Add(pos + 1);
+                    letter_positions[key].Add(pos + 1);
                     for (int i = pos + 1; i < text.Length; i++)
                     {
-                        if (text[i] == character)
+                        if (text[i] == key)
                         {
-                            letter_positions[character].Add(i + 1);
+                            letter_positions[key].Add(i + 1);
                         }
                     }
                 }
             }
 
-            StringBuilder str = new StringBuilder();
-            foreach (char character in letter_positions.Keys)
+            Dictionary<char, int> letter_position_sums = new Dictionary<char, int>();
+            foreach (char key in letter_positions.Keys)
             {
-                str.Append(character.ToString() + " positions" + "\t");
-                foreach (int ld in letter_positions[character])
+                int sum = 0;
+                foreach (int n in letter_positions[key])
+                {
+                    sum += n;
+                }
+                letter_position_sums.Add(key, sum);
+            }
+
+            StringBuilder str = new StringBuilder();
+            foreach (char key in letter_positions.Keys)
+            {
+                str.Append("Positions" + "\t" + key.ToString() + "\t");
+                str.Append(letter_position_sums[key].ToString() + "\t");
+                foreach (int ld in letter_positions[key])
                 {
                     str.Append(ld.ToString() + ",");
                 }
@@ -43632,8 +43666,8 @@ public partial class MainForm : Form, ISubscriber
         Dictionary<char, List<int>> letter_distances = new Dictionary<char, List<int>>();
         foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
         {
-            char character = item.SubItems[1].Text[0];
-            letter_distances.Add(character, new List<int>());
+            char key = item.SubItems[1].Text[0];
+            letter_distances.Add(key, new List<int>());
         }
 
         if (!String.IsNullOrEmpty(m_current_text))
@@ -43651,19 +43685,19 @@ public partial class MainForm : Form, ISubscriber
                 text = text.Replace(c.ToString(), "");
             }
 
-            foreach (char character in letter_distances.Keys)
+            foreach (char key in letter_distances.Keys)
             {
-                int pos = text.IndexOf(character);
+                int pos = text.IndexOf(key);
                 if (pos > -1)
                 {
                     for (int i = pos + 1; i < text.Length; i++)
                     {
-                        if (text[i] == character)
+                        if (text[i] == key)
                         {
                             int letter_distance = i - pos;
-                            if (letter_distances.ContainsKey(character))
+                            if (letter_distances.ContainsKey(key))
                             {
-                                letter_distances[character].Add(letter_distance);
+                                letter_distances[key].Add(letter_distance);
                             }
                             pos = i;
                         }
@@ -43671,11 +43705,23 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
 
-            StringBuilder str = new StringBuilder();
-            foreach (char character in letter_distances.Keys)
+            Dictionary<char, int> letter_distance_sums = new Dictionary<char, int>();
+            foreach (char key in letter_distances.Keys)
             {
-                str.Append(character.ToString() + " distances" + "\t");
-                foreach (int ld in letter_distances[character])
+                int sum = 0;
+                foreach (int n in letter_distances[key])
+                {
+                    sum += n;
+                }
+                letter_distance_sums.Add(key, sum);
+            }
+
+            StringBuilder str = new StringBuilder();
+            foreach (char key in letter_distances.Keys)
+            {
+                str.Append("Distances" + "\t" + key.ToString() + "\t");
+                str.Append(letter_distance_sums[key].ToString() + "\t");
+                foreach (int ld in letter_distances[key])
                 {
                     str.Append(ld.ToString() + ",");
                 }
@@ -43888,28 +43934,21 @@ public partial class MainForm : Form, ISubscriber
         {
             if (m_client != null)
             {
-                string text = m_current_text;
-                if (!String.IsNullOrEmpty(text))
+                if (m_client.NumerologySystem != null)
                 {
-                    if (!String.IsNullOrEmpty(m_current_phrase))
-                    {
-                        string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
-                        if (m_client.NumerologySystem != null)
-                        {
-                            filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
-                        }
+                    string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
 
-                        m_client.SaveLetterStatistics(filename, text, m_current_phrase);
-                    }
-                    else
+                    string text = m_current_text;
+                    if (!String.IsNullOrEmpty(text))
                     {
-                        string filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
-                        if (m_client.NumerologySystem != null)
+                        if (m_find_by_phrase_letter_frequency)
                         {
-                            filename = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + "_" + m_client.NumerologySystem.Name + ".txt";
+                            m_client.SaveLetterStatistics(filename, text, m_current_phrase);
                         }
-
-                        m_client.SaveLetterStatistics(filename, text);
+                        else
+                        {
+                            m_client.SaveLetterStatistics(filename, text);
+                        }
                     }
                 }
             }

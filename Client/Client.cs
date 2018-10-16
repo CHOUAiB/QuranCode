@@ -2057,15 +2057,27 @@ public class Client : IPublisher, ISubscriber
                             {
                                 is_found = true;
                                 m_letter_statistics[j].Frequency++;
+                                int pos = i + 1;
+                                int last_pos = m_letter_statistics[j].Positions[m_letter_statistics[j].Positions.Count - 1];
+                                m_letter_statistics[j].Positions.Add(pos);
+                                m_letter_statistics[j].PositionSum += pos;
+                                int distance = pos - last_pos;
+                                m_letter_statistics[j].Distances.Add(distance);
+                                m_letter_statistics[j].DistanceSum += distance;
                             }
                         }
 
                         if (!is_found)
                         {
                             LetterStatistic letter_statistic = new LetterStatistic();
+
                             letter_statistic.Order = m_letter_statistics.Count + 1;
                             letter_statistic.Letter = text[i];
                             letter_statistic.Frequency = 1;
+                            int pos = i + 1;
+                            letter_statistic.Positions.Add(pos);
+                            letter_statistic.PositionSum += pos;
+
                             m_letter_statistics.Add(letter_statistic);
                         }
                     }
@@ -2099,27 +2111,58 @@ public class Client : IPublisher, ISubscriber
                         }
                         writer.WriteLine(NumerologySystem.Name);
                         writer.WriteLine("Selection = " + Selection.Scope.ToString() + " " + numbers.ToString());
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------");
                         writer.WriteLine();
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------");
                         writer.WriteLine("Text");
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------");
                         writer.WriteLine(text);
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------");
                         writer.WriteLine();
-                        writer.WriteLine("----------------------------------------");
-                        writer.WriteLine("Order" + "\t" + "Letter" + "\t" + "Frequency");
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------");
+                        writer.WriteLine("Order" + "\t" + "Letter" + "\t" + "Freq" + "\t" + "Positions" + "\t" + "..." + "\t" + "Distances" + "\t" + "...");
+                        writer.WriteLine("-------------------------------------------------");
                         int count = 0;
-                        int sum = 0;
+                        int running_sum = 0;
+                        int frequence_sum = 0;
+                        int positionsum_sum = 0;
+                        int distancesum_sum = 0;
                         foreach (LetterStatistic letter_statistic in m_letter_statistics)
                         {
-                            writer.WriteLine(letter_statistic.Order.ToString() + "\t" + letter_statistic.Letter.ToString() + '\t' + letter_statistic.Frequency.ToString());
+                            StringBuilder positions = new StringBuilder();
+                            foreach (int value in letter_statistic.Positions)
+                            {
+                                positions.Append(value.ToString() + ",");
+                            }
+                            if (positions.Length > 0)
+                            {
+                                positions.Remove(positions.Length - 1, 1);
+                            }
+
+                            StringBuilder distances = new StringBuilder();
+                            foreach (int value in letter_statistic.Distances)
+                            {
+                                distances.Append(value.ToString() + ",");
+                            }
+                            if (distances.Length > 0)
+                            {
+                                distances.Remove(distances.Length - 1, 1);
+                            }
+
+                            writer.WriteLine(letter_statistic.Order.ToString() + "\t" +
+                                             letter_statistic.Letter.ToString() + '\t' +
+                                             letter_statistic.Frequency.ToString() + "\t" +
+                                             letter_statistic.PositionSum.ToString() + "\t" + positions.ToString() + "\t" +
+                                             letter_statistic.DistanceSum.ToString() + "\t" + distances.ToString()
+                                             );
                             count++;
-                            sum += letter_statistic.Frequency;
+                            running_sum += count;
+                            frequence_sum += letter_statistic.Frequency;
+                            positionsum_sum += letter_statistic.PositionSum;
+                            distancesum_sum += letter_statistic.DistanceSum;
                         }
                         writer.WriteLine("----------------------------------------");
-                        writer.WriteLine("Total" + "\t" + count.ToString() + "\t" + sum.ToString());
+                        writer.WriteLine(running_sum + "\t" + "Sum" + "\t" + frequence_sum.ToString() + "\t" + positionsum_sum.ToString() + "\t" + "\t" + distancesum_sum.ToString());
                         writer.WriteLine("----------------------------------------");
                     }
                 }

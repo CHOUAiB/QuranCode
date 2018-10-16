@@ -46,9 +46,9 @@ partial class SplashForm
             this.InformationLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.InformationLabel.Font = new System.Drawing.Font("Arial", 6.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InformationLabel.ForeColor = System.Drawing.Color.Lavender;
-            this.InformationLabel.Location = new System.Drawing.Point(0, 130);
+            this.InformationLabel.Location = new System.Drawing.Point(0, 132);
             this.InformationLabel.Name = "InformationLabel";
-            this.InformationLabel.Size = new System.Drawing.Size(239, 19);
+            this.InformationLabel.Size = new System.Drawing.Size(239, 15);
             this.InformationLabel.TabIndex = 7;
             this.InformationLabel.Tag = "http://heliwave.com";
             this.InformationLabel.Text = "help yourself by helping others ... be a guiding light";
@@ -58,7 +58,7 @@ partial class SplashForm
             // ProgressBar
             // 
             this.ProgressBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ProgressBar.Location = new System.Drawing.Point(0, 126);
+            this.ProgressBar.Location = new System.Drawing.Point(0, 128);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(239, 4);
             this.ProgressBar.TabIndex = 6;
@@ -111,7 +111,7 @@ partial class SplashForm
             this.WordFrequencyLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.WordFrequencyLabel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WordFrequencyLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 90);
+            this.WordFrequencyLabel.Location = new System.Drawing.Point(0, 92);
             this.WordFrequencyLabel.Name = "WordFrequencyLabel";
             this.WordFrequencyLabel.Size = new System.Drawing.Size(239, 19);
             this.WordFrequencyLabel.TabIndex = 14;
@@ -130,7 +130,7 @@ partial class SplashForm
             this.ProductNameLabel.ForeColor = System.Drawing.Color.MidnightBlue;
             this.ProductNameLabel.Location = new System.Drawing.Point(0, 44);
             this.ProductNameLabel.Name = "ProductNameLabel";
-            this.ProductNameLabel.Size = new System.Drawing.Size(239, 27);
+            this.ProductNameLabel.Size = new System.Drawing.Size(239, 29);
             this.ProductNameLabel.TabIndex = 15;
             this.ProductNameLabel.Tag = "http://qurancode.com";
             this.ProductNameLabel.Text = "QuranCode 1433";
@@ -143,7 +143,7 @@ partial class SplashForm
             this.VersionLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.VersionLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.VersionLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.VersionLabel.Location = new System.Drawing.Point(0, 109);
+            this.VersionLabel.Location = new System.Drawing.Point(0, 111);
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(239, 17);
             this.VersionLabel.TabIndex = 16;
@@ -158,8 +158,8 @@ partial class SplashForm
             this.InitialLettersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.InitialLettersLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.InitialLettersLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InitialLettersLabel.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 71);
+            this.InitialLettersLabel.ForeColor = System.Drawing.Color.RosyBrown;
+            this.InitialLettersLabel.Location = new System.Drawing.Point(0, 73);
             this.InitialLettersLabel.Name = "InitialLettersLabel";
             this.InitialLettersLabel.Size = new System.Drawing.Size(239, 19);
             this.InitialLettersLabel.TabIndex = 13;
