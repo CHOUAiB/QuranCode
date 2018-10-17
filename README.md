@@ -8,12 +8,16 @@ QuranCode Editions:
 	Ultimate Edition	Private research methods and big numbers.	[Start with Shift]
 ------------------------------------------------------------------------------
 
-QuranCode is a numerical and similarity research tool for the Final Book of God, Al-Quran (القرءان)
-which is Readable despite being encrypted, hence the name Quran  (قرءان).
-See http://heliwave.com/EncryptedQuran.pdf
+QuranCode جفر القرءان is a numerical research tool for the Final Book of God, Al-Quran (القرءان).
 
-As per Quran 56:75-80, the ever-revealing Quran (القرءان الكريم) is hidden within
-the Grand Quran (القرءان العظيم). God knows all.
+QuranCode جفر القرءان is the #1 numerical research tool for Quran researchers with support for
+hundreds of letter-value systems, translations, reciters, word-by-word grammar,
+search by text, by numbers, by similarity or by letter frequency sum,
+full live letter and word frequency statistics as you highlight text,
+plus binary and DNA converters.
+
+The Quran is a Readable Ciphertext and is therefore named Al-Quran (قرءان) and its first chapter
+is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (القرءان الكريم) as per Quran 56:75-80
 
 بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 56:75	I swear by the positions of the stars (or bookmarkers)!		۞ فَلَآ أُقْسِمُ بِمَوَٰقِعِ ٱلنُّجُومِ
