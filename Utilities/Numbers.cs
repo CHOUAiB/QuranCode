@@ -197,7 +197,7 @@ public static class Numbers
         /* NumberKind.Abundant */           Color.FromArgb(255, 192, 255)
     };
 
-    public static int MAX_NUMBER = int.MaxValue / (Globals.EDITION == Edition.Standard ? 1024 : 64);
+    public static int MAX_NUMBER = int.MaxValue / (Globals.EDITION == Edition.Standard ? 1024 : 16);
 
     // pi = circumference / diameter ~= 355/113
     public const double PI = 3.141592653589793238462643383279D;
