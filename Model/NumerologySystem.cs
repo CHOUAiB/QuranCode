@@ -294,7 +294,7 @@ namespace Model
                  AddToLetterCDistance
                )
             {
-                str.Append("Add to each letter value");
+                str.Append("Add to each letter  value");
                 if (AddToLetterLNumber) str.Append("\t" + "L");
                 if (AddToLetterWNumber) str.Append("\t" + "W");
                 if (AddToLetterVNumber) str.Append("\t" + "V");
@@ -316,7 +316,7 @@ namespace Model
                  AddToWordCDistance
                )
             {
-                str.Append("Add to each word value");
+                str.Append("Add to each word    value");
                 if (AddToWordWNumber) str.Append("\t" + "W");
                 if (AddToWordVNumber) str.Append("\t" + "V");
                 if (AddToWordCNumber) str.Append("\t" + "C");
@@ -334,7 +334,7 @@ namespace Model
                  AddToVerseCDistance
                )
             {
-                str.Append("Add to each verse value");
+                str.Append("Add to each verse   value");
                 if (AddToVerseVNumber) str.Append("\t" + "V");
                 if (AddToVerseCNumber) str.Append("\t" + "C");
                 if (AddToVerseVDistance) str.Append("\t" + "∆V");

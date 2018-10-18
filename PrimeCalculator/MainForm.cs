@@ -269,6 +269,27 @@ public partial class MainForm : Form
 
         SaveSettings();
     }
+    private void Control_MouseHover(object sender, EventArgs e)
+    {
+        Control control = sender as Control;
+        if (control != null)
+        {
+            try
+            {
+                string text = control.Text;
+                if (!String.IsNullOrEmpty(text))
+                {
+                    long number = (long)double.Parse(text);
+                    string factors_str = Numbers.FactorizeToString(number);
+                    ToolTip.SetToolTip(control, factors_str);
+                }
+            }
+            catch
+            {
+                ToolTip.SetToolTip(control, null);
+            }
+        }
+    }
 
     private void ValueTextBox_TextChanged(object sender, EventArgs e)
     {

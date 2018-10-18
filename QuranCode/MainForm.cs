@@ -38255,7 +38255,7 @@ public partial class MainForm : Form, ISubscriber
 
         StringBuilder str = new StringBuilder();
 
-        str.Append("#" + "\t" + "Number" + "\t" + "Chapter" + "\t" + "Verse" + "\t" + "Words" + "\t" + "Letters" + "\t" + "Value" + "\t");
+        str.Append("#" + "\t" + "Number" + "\t" + "Name" + "\t" + "Chapter" + "\t" + "Verse" + "\t" + "Words" + "\t" + "Letters" + "\t" + "Value" + "\t");
 
         NumerologySystem numerology_system = m_client.NumerologySystem;
         if (numerology_system != null)
@@ -38289,6 +38289,7 @@ public partial class MainForm : Form, ISubscriber
 
                 str.Append(count.ToString() + "\t");
                 str.Append(verse.Number.ToString() + "\t");
+                str.Append(verse.Chapter.Name.ToString() + "\t");
                 str.Append(verse.Chapter.SortedNumber.ToString() + "\t");
                 str.Append(verse.NumberInChapter.ToString() + "\t");
                 str.Append(verse.Words.Count.ToString() + "\t");
@@ -38315,7 +38316,7 @@ public partial class MainForm : Form, ISubscriber
             }
 
             str.Append("\r\n");
-            str.AppendLine(sum + "\t" + verse_sum + "\t" + chapter_sum + "\t" + chapter_verse_sum + "\t" + word_sum + "\t" + letter_sum + "\t" + value_sum);
+            str.AppendLine(sum + "\t" + verse_sum + "\t" + "Sum" + "\t" + chapter_sum + "\t" + chapter_verse_sum + "\t" + word_sum + "\t" + letter_sum + "\t" + value_sum);
         }
         return str.ToString();
     }
@@ -38329,6 +38330,7 @@ public partial class MainForm : Form, ISubscriber
             str.Append
             (
                 "Address" + "\t" +
+                "Name" + "\t" +
                 "Chapter" + "\t" +
                 "Verse" + "\t" +
                 "Word" + "\t" +
@@ -38357,6 +38359,7 @@ public partial class MainForm : Form, ISubscriber
                 str.Append
                 (
                     word.Address + "\t" +
+                    word.Verse.Chapter.Name.ToString() + "\t" +
                     word.Verse.Chapter.SortedNumber.ToString() + "\t" +
                     word.Verse.NumberInChapter.ToString() + "\t" +
                     word.NumberInVerse.ToString() + "\t" +
@@ -38382,6 +38385,7 @@ public partial class MainForm : Form, ISubscriber
             str.Append
             (
                 "Address" + "\t" +
+                "Name" + "\t" +
                 "Chapter" + "\t" +
                 "Verse" + "\t" +
                 "Word" + "\t" +
@@ -38394,6 +38398,7 @@ public partial class MainForm : Form, ISubscriber
                 str.Append
                 (
                     letter.Address + "\t" +
+                    letter.Word.Verse.Chapter.Name.ToString() + "\t" +
                     letter.Word.Verse.Chapter.SortedNumber.ToString() + "\t" +
                     letter.Word.Verse.NumberInChapter.ToString() + "\t" +
                     letter.Word.NumberInVerse.ToString() + "\t" +
@@ -43977,7 +43982,7 @@ public partial class MainForm : Form, ISubscriber
                     StringBuilder str = new StringBuilder();
                     if (long.TryParse(ValueTextBox.Text, out value))
                     {
-                        str.AppendLine(m_current_text);
+                        str.AppendLine(m_current_text); //?????
                         str.AppendLine("----------------------------------------");
                         str.AppendLine();
                         str.AppendLine("Verses\t\t=\t" + VersesTextBox.Text);
@@ -44108,7 +44113,7 @@ public partial class MainForm : Form, ISubscriber
                         str.AppendLine("----------------------------------------");
 
                         str.AppendLine();
-                        m_client.SaveValueCalculations(filename, str.ToString());
+                        m_client.SaveValueCalculations(filename, str.ToString()); //?????
                     }
                 }
             }
