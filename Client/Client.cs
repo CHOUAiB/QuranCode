@@ -391,6 +391,14 @@ public class Client : IPublisher, ISubscriber
             return result;
         }
     }
+    public void SaveValueCalculations(string filename, string text, List<Letter> letters)
+    {
+        //?????
+        // display letter  value positions distances ...
+        // display word    value positions distances ...
+        // display verse   value positions distances ...
+        // display chapter value positions           ...
+    }
     public void SaveValueCalculations(string filename, string text)
     {
         if (Directory.Exists(Globals.STATISTICS_FOLDER))
@@ -421,9 +429,9 @@ public class Client : IPublisher, ISubscriber
                         writer.WriteLine("Text");
                         writer.WriteLine("----------------------------------------");
                         writer.WriteLine(text);
-                        writer.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-                        writer.WriteLine("Letter" + "\t" + "Value" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "∆L" + "\t" + "∆W" + "\t" + "∆V" + "\t" + "∆C" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "∆W" + "\t" + "∆V" + "\t" + "∆C" + "\t" + "V" + "\t" + "C" + "\t" + "∆V" + "\t" + "∆C" + "\t" + "C");
-                        writer.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
+                        writer.WriteLine("Letter" + "\t" + "Value" + "\t" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "L◄" + "\t" + "W◄" + "\t" + "V◄" + "\t" + "◄C" + "\t" + "►L" + "\t" + "►W" + "\t" + "►V" + "\t" + "►C");
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
 
                         int pos = text.IndexOf("----------------------------------------"); ;
                         text = text.Substring(0, pos);
@@ -435,9 +443,17 @@ public class Client : IPublisher, ISubscriber
                             {
                                 break;
                             }
-                            else if ((character == ' ') || (character == '\r') || (character == '\n'))
+                            else if (character == ' ')
                             {
-                                writer.WriteLine(" " + "\t" + "");
+                                writer.WriteLine();
+                            }
+                            else if (character == '\r')
+                            {
+                                writer.WriteLine();
+                            }
+                            else if (character == '\n')
+                            {
+                                writer.WriteLine();
                             }
                             else
                             {
@@ -449,9 +465,9 @@ public class Client : IPublisher, ISubscriber
                         {
                             text = text.ToUpper();
                         }
-                        writer.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
                         writer.WriteLine("Total" + "\t" + CalculateValue(text));
-                        writer.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
                     }
                 }
             }

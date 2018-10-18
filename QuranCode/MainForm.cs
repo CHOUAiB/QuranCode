@@ -39644,7 +39644,7 @@ public partial class MainForm : Form, ISubscriber
                                     CalculateValueAndDisplayFactors(m_current_text);
                                 }
                             }
-                            else // some text is selected
+                            else // some text is highlighted
                             {
                                 CalculateSelectedTextValue();
                             }
@@ -39886,17 +39886,15 @@ public partial class MainForm : Form, ISubscriber
     }
     private void CalculateValueAndDisplayFactors()
     {
-        List<Verse> verses = null;
-        if (m_found_verses_displayed)
+        if (m_client != null)
         {
-            if (m_client != null)
+            List<Verse> verses = null;
+
+            if (m_found_verses_displayed)
             {
                 verses = m_client.FoundVerses;
             }
-        }
-        else
-        {
-            if (m_client != null)
+            else
             {
                 if (m_client.Selection != null)
                 {
@@ -39906,10 +39904,7 @@ public partial class MainForm : Form, ISubscriber
                     }
                 }
             }
-        }
 
-        if (m_client != null)
-        {
             long value = m_client.CalculateValue(verses);
             FactorizeValue(value, false);
         }
@@ -43982,7 +43977,7 @@ public partial class MainForm : Form, ISubscriber
                     StringBuilder str = new StringBuilder();
                     if (long.TryParse(ValueTextBox.Text, out value))
                     {
-                        str.AppendLine(m_current_text); //?????
+                        str.AppendLine(m_current_text);
                         str.AppendLine("----------------------------------------");
                         str.AppendLine();
                         str.AppendLine("Verses\t\t=\t" + VersesTextBox.Text);
@@ -44214,21 +44209,26 @@ public partial class MainForm : Form, ISubscriber
         Control control = sender as Control;
         if (control != null)
         {
-            try
+            string text = control.Text;
+            if (!String.IsNullOrEmpty(text))
             {
-                string text = control.Text;
-                if (!String.IsNullOrEmpty(text))
+                if (text.StartsWith(SUM_SYMBOL))
                 {
-                    if (text.StartsWith(SUM_SYMBOL))
-                    {
-                        text = text.Substring(1);
-                    }
-                    long number = (long)double.Parse(text);
-                    string factors_str = Numbers.FactorizeToString(number);
+                    text = text.Substring(1);
+                }
+
+                double number;
+                if (double.TryParse(text, out number))
+                {
+                    string factors_str = Numbers.FactorizeToString((long)number);
                     ToolTip.SetToolTip(control, factors_str);
                 }
+                else
+                {
+                    ToolTip.SetToolTip(control, null);
+                }
             }
-            catch
+            else
             {
                 ToolTip.SetToolTip(control, null);
             }

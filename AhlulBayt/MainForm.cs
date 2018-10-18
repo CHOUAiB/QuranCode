@@ -148,6 +148,8 @@ public partial class MainForm : Form
                             if (parts.Length == 3)
                             {
                                 string text_mode = parts[0];
+                                if (text_mode == "Original") continue;
+
                                 if (!TextModeComboBox.Items.Contains(text_mode))
                                 {
                                     TextModeComboBox.Items.Add(text_mode);
@@ -928,12 +930,12 @@ public partial class MainForm : Form
                                 }
                                 else
                                 {
-                                    generated_line += "- ";
+                                    generated_line += "  ";
                                 }
                             }
                             else
                             {
-                                generated_line += "- ";
+                                generated_line += "  ";
                             }
                             generated_line.Remove(generated_line.Length - 1, 1);
                         }
@@ -978,16 +980,21 @@ public partial class MainForm : Form
                 {
                     for (int i = 0; i < m_generated_lines.Count; i++)
                     {
-                        if (m_generated_lines[i] != null)
+                        string xxx = m_generated_lines[i];
+                        if (xxx != null)
                         {
-                            str.AppendLine(m_generated_lines[i]);
+                            while (xxx.Contains("  "))
+                            {
+                                xxx = xxx.Replace("  ", " ");
+                            }
+                            str.AppendLine(xxx);
                         }
                     }
                     str.AppendLine();
                 }
             }
 
-            string filename = "AlFatiha+AhlulBaytLetterMix" + (m_use_ya_husein ? "_YaHusein" : "") + ".txt";
+            string filename = "AlFatiha_AhlulBayt" + (m_use_ya_husein ? "_YaHusein" : "") + ".txt";
             if (!Directory.Exists(Globals.STATISTICS_FOLDER))
             {
                 Directory.CreateDirectory(Globals.STATISTICS_FOLDER);

@@ -274,17 +274,21 @@ public partial class MainForm : Form
         Control control = sender as Control;
         if (control != null)
         {
-            try
+            string text = control.Text;
+            if (!String.IsNullOrEmpty(text))
             {
-                string text = control.Text;
-                if (!String.IsNullOrEmpty(text))
+                double number;
+                if (double.TryParse(text, out number))
                 {
-                    long number = (long)double.Parse(text);
-                    string factors_str = Numbers.FactorizeToString(number);
+                    string factors_str = Numbers.FactorizeToString((long)number);
                     ToolTip.SetToolTip(control, factors_str);
                 }
+                else
+                {
+                    ToolTip.SetToolTip(control, null);
+                }
             }
-            catch
+            else
             {
                 ToolTip.SetToolTip(control, null);
             }
