@@ -364,7 +364,7 @@ public partial class MainForm : Form, ISubscriber
 
                 UpdateEmlaaeiLabel();
 
-                LetterFrequencyColumnHeader.Text = L[l]["Frequency"] + "  "; // + 2 spaces for sort marker after them
+                LetterFrequencyColumnHeader.Text = L[l]["Freq"] + "  "; // + 2 spaces for sort marker after them
 
                 m_note_writing_instruction = L[l]["write a note for"];
                 DisplayNoteWritingInstruction();
@@ -1307,10 +1307,9 @@ public partial class MainForm : Form, ISubscriber
         this.LetterFrequencySumLabel = new System.Windows.Forms.Label();
         this.LetterFrequencyCountLabel = new System.Windows.Forms.Label();
         this.LetterFrequencyInspectLabel = new System.Windows.Forms.Label();
-        this.LetterFrequencyTotalLabel = new System.Windows.Forms.Label();
         this.LetterFrequencyListView = new System.Windows.Forms.ListView();
         this.LetterOrderColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-        this.LetterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+        this.LetterCharacterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
         this.LetterFrequencyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
         this.FindByFrequncyPanel = new System.Windows.Forms.Panel();
         this.FindByFrequencyLinkLabel = new System.Windows.Forms.Label();
@@ -10084,7 +10083,6 @@ public partial class MainForm : Form, ISubscriber
         this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencySumLabel);
         this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyCountLabel);
         this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyInspectLabel);
-        this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyTotalLabel);
         this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyListView);
         this.LetterFrequencyPanel.Controls.Add(this.FindByFrequncyPanel);
         this.LetterFrequencyPanel.Location = new System.Drawing.Point(5, 517);
@@ -10161,22 +10159,6 @@ public partial class MainForm : Form, ISubscriber
         this.LetterFrequencyInspectLabel.Click += new System.EventHandler(this.LetterFrequencyInspectLabel_Click);
         this.LetterFrequencyInspectLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
         // 
-        // LetterFrequencyTotalLabel
-        // 
-        this.LetterFrequencyTotalLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-        this.LetterFrequencyTotalLabel.BackColor = System.Drawing.Color.Transparent;
-        this.LetterFrequencyTotalLabel.Cursor = System.Windows.Forms.Cursors.Default;
-        this.LetterFrequencyTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.LetterFrequencyTotalLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-        this.LetterFrequencyTotalLabel.Location = new System.Drawing.Point(3, 143);
-        this.LetterFrequencyTotalLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-        this.LetterFrequencyTotalLabel.Name = "LetterFrequencyTotalLabel";
-        this.LetterFrequencyTotalLabel.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-        this.LetterFrequencyTotalLabel.Size = new System.Drawing.Size(229, 22);
-        this.LetterFrequencyTotalLabel.TabIndex = 13;
-        this.LetterFrequencyTotalLabel.Text = "Sum";
-        this.LetterFrequencyTotalLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-        // 
         // LetterFrequencyListView
         // 
         this.LetterFrequencyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -10185,7 +10167,7 @@ public partial class MainForm : Form, ISubscriber
         this.LetterFrequencyListView.BackColor = System.Drawing.Color.LightSteelBlue;
         this.LetterFrequencyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.LetterOrderColumnHeader,
-            this.LetterColumnHeader,
+            this.LetterCharacterColumnHeader,
             this.LetterFrequencyColumnHeader});
         this.LetterFrequencyListView.Cursor = System.Windows.Forms.Cursors.Hand;
         this.LetterFrequencyListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -10208,15 +10190,15 @@ public partial class MainForm : Form, ISubscriber
         this.LetterOrderColumnHeader.Text = "# ▲";
         this.LetterOrderColumnHeader.Width = 50;
         // 
-        // LetterColumnHeader
+        // LetterCharacterColumnHeader
         // 
-        this.LetterColumnHeader.Text = "L  ";
-        this.LetterColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.LetterColumnHeader.Width = 55;
+        this.LetterCharacterColumnHeader.Text = "L  ";
+        this.LetterCharacterColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+        this.LetterCharacterColumnHeader.Width = 55;
         // 
         // LetterFrequencyColumnHeader
         // 
-        this.LetterFrequencyColumnHeader.Text = "Frequency  ";
+        this.LetterFrequencyColumnHeader.Text = "Freq  ";
         this.LetterFrequencyColumnHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.LetterFrequencyColumnHeader.Width = 90;
         // 
@@ -12970,6 +12952,10 @@ public partial class MainForm : Form, ISubscriber
         else if (PictureBox.Visible)
         {
             HidePictureBox();
+        }
+        else if ((LetterFrequencyListView.Focused) && (LetterFrequencyListView.SelectedIndices.Count > 0))
+        {
+            LetterFrequencyListView.SelectedIndices.Clear();
         }
         else
         {
@@ -32788,15 +32774,11 @@ public partial class MainForm : Form, ISubscriber
 
                 PopulateWordsListBox();
 
-                LetterFrequencyWithDiacriticsCheckBox.Checked = m_with_diacritics;
+                LetterFrequencyWithDiacriticsCheckBox.Checked = FindByTextWithDiacriticsCheckBox.Checked;
                 BuildLetterFrequencies();
                 DisplayLetterFrequencies();
             }
         }
-    }
-    private void LetterFrequencyWithDiacriticsCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-        FindByTextWithDiacriticsCheckBox.Checked = LetterFrequencyWithDiacriticsCheckBox.Checked;
     }
     private void FindByTextWordnessCheckBox_CheckStateChanged(object sender, EventArgs e)
     {
@@ -43820,10 +43802,12 @@ public partial class MainForm : Form, ISubscriber
                         List<int> selected_indexes = new List<int>();
                         for (int i = 0; i < m_client.LetterStatistics.Count; i++)
                         {
-                            string[] item_parts = new string[3];
+                            string[] item_parts = new string[5];
                             item_parts[0] = m_client.LetterStatistics[i].Order.ToString();
                             item_parts[1] = m_client.LetterStatistics[i].Letter.ToString();
                             item_parts[2] = m_client.LetterStatistics[i].Frequency.ToString();
+                            item_parts[3] = m_client.LetterStatistics[i].PositionSum.ToString();
+                            item_parts[4] = m_client.LetterStatistics[i].DistanceSum.ToString();
                             LetterFrequencyListView.Items.Add(new ListViewItem(item_parts, i));
 
                             // re-select user items if any were selected for previous selection
@@ -43872,13 +43856,17 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             int count = 0;
-            long sum = 0L;
+            long frequency_sum = 0L;
+            long position_sum = 0L;
+            long distance_sum = 0L;
             if (LetterFrequencyListView.SelectedIndices.Count > 0)
             {
                 count = LetterFrequencyListView.SelectedIndices.Count;
                 foreach (ListViewItem item in LetterFrequencyListView.SelectedItems)
                 {
-                    sum += long.Parse(item.SubItems[2].Text);
+                    frequency_sum += long.Parse(item.SubItems[2].Text);
+                    position_sum += long.Parse(item.SubItems[3].Text);
+                    distance_sum += long.Parse(item.SubItems[4].Text);
                 }
             }
             else
@@ -43886,7 +43874,9 @@ public partial class MainForm : Form, ISubscriber
                 count = LetterFrequencyListView.Items.Count;
                 foreach (ListViewItem item in LetterFrequencyListView.Items)
                 {
-                    sum += long.Parse(item.SubItems[2].Text);
+                    frequency_sum += long.Parse(item.SubItems[2].Text);
+                    position_sum += long.Parse(item.SubItems[3].Text);
+                    distance_sum += long.Parse(item.SubItems[4].Text);
                 }
             }
 
@@ -43894,15 +43884,23 @@ public partial class MainForm : Form, ISubscriber
             LetterFrequencyCountLabel.ForeColor = Numbers.GetNumberTypeColor(count);
             LetterFrequencyCountLabel.Refresh();
 
-            LetterFrequencySumLabel.Text = sum.ToString();
-            LetterFrequencySumLabel.ForeColor = Numbers.GetNumberTypeColor(sum);
+            LetterFrequencySumLabel.Text = frequency_sum.ToString();
+            LetterFrequencySumLabel.ForeColor = Numbers.GetNumberTypeColor(frequency_sum);
             LetterFrequencySumLabel.Refresh();
+
+            LetterFrequencyPositionSumSumLabel.Text = position_sum.ToString();
+            LetterFrequencyPositionSumSumLabel.ForeColor = Numbers.GetNumberTypeColor(position_sum);
+            LetterFrequencyPositionSumSumLabel.Refresh();
+
+            LetterFrequencyDistanceSumSumLabel.Text = distance_sum.ToString();
+            LetterFrequencyDistanceSumSumLabel.ForeColor = Numbers.GetNumberTypeColor(distance_sum);
+            LetterFrequencyDistanceSumSumLabel.Refresh();
 
             if (m_find_by_phrase_letter_frequency)
             {
                 if (FindByFrequencyPhraseTextBox.SelectionLength > 0)
                 {
-                    FactorizeValue(sum, true);
+                    FactorizeValue(frequency_sum, true);
 
                     if (m_show_add_controls)
                     {
@@ -44117,6 +44115,34 @@ public partial class MainForm : Form, ISubscriber
         {
             this.Cursor = Cursors.Default;
         }
+    }
+    //private void LetterFrequencyWithDiacriticsCheckBox_CheckStateChanged(object sender, EventArgs e)
+    //{
+    //    switch (LetterFrequencyWithDiacriticsCheckBox.CheckState)
+    //    {
+    //        case CheckState.Checked:
+    //            {
+    //                LetterPositionSumColumnHeader.Width = 0;
+    //                LetterDistanceSumColumnHeader.Width = 56;
+    //            }
+    //            break;
+    //        case CheckState.Indeterminate:
+    //            {
+    //                LetterPositionSumColumnHeader.Width = 80;
+    //                LetterDistanceSumColumnHeader.Width = 56;
+    //            }
+    //            break;
+    //        case CheckState.Unchecked:
+    //            {
+    //                LetterPositionSumColumnHeader.Width = 80;
+    //                LetterDistanceSumColumnHeader.Width = 0;
+    //            }
+    //            break;
+    //    }
+    //}
+    private void LetterFrequencyWithDiacriticsCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        FindByTextWithDiacriticsCheckBox.Checked = LetterFrequencyWithDiacriticsCheckBox.Checked;
     }
 
     private void StatisticsControls_Enter(object sender, EventArgs e)

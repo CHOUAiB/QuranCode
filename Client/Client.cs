@@ -2073,10 +2073,10 @@ public class Client : IPublisher, ISubscriber
                                 is_found = true;
                                 m_letter_statistics[j].Frequency++;
                                 int pos = i + 1;
-                                int last_pos = m_letter_statistics[j].Positions[m_letter_statistics[j].Positions.Count - 1];
+                                long last_pos = m_letter_statistics[j].Positions[m_letter_statistics[j].Positions.Count - 1];
                                 m_letter_statistics[j].Positions.Add(pos);
                                 m_letter_statistics[j].PositionSum += pos;
-                                int distance = pos - last_pos;
+                                long distance = pos - last_pos;
                                 m_letter_statistics[j].Distances.Add(distance);
                                 m_letter_statistics[j].DistanceSum += distance;
                             }
@@ -2114,7 +2114,7 @@ public class Client : IPublisher, ISubscriber
                 {
                     using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
                     {
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         StringBuilder numbers = new StringBuilder();
                         foreach (int index in Selection.Indexes)
                         {
@@ -2126,22 +2126,22 @@ public class Client : IPublisher, ISubscriber
                         }
                         writer.WriteLine(NumerologySystem.Name);
                         writer.WriteLine("Selection = " + Selection.Scope.ToString() + " " + numbers.ToString());
-                        writer.WriteLine("-------------------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         writer.WriteLine();
-                        writer.WriteLine("-------------------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         writer.WriteLine("Text");
-                        writer.WriteLine("-------------------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         writer.WriteLine(text);
-                        writer.WriteLine("-------------------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         writer.WriteLine();
-                        writer.WriteLine("-------------------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         writer.WriteLine("Order" + "\t" + "Letter" + "\t" + "Freq" + "\t" + "Positions" + "\t" + "..." + "\t" + "Distances" + "\t" + "...");
-                        writer.WriteLine("-------------------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         int count = 0;
                         int running_sum = 0;
                         int frequence_sum = 0;
-                        int positionsum_sum = 0;
-                        int distancesum_sum = 0;
+                        long positionsum_sum = 0;
+                        long distancesum_sum = 0;
                         foreach (LetterStatistic letter_statistic in m_letter_statistics)
                         {
                             StringBuilder positions = new StringBuilder();
@@ -2176,9 +2176,9 @@ public class Client : IPublisher, ISubscriber
                             positionsum_sum += letter_statistic.PositionSum;
                             distancesum_sum += letter_statistic.DistanceSum;
                         }
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                         writer.WriteLine(running_sum + "\t" + "Sum" + "\t" + frequence_sum.ToString() + "\t" + positionsum_sum.ToString() + "\t" + "\t" + distancesum_sum.ToString());
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine("-------------------------------------------------------------------");
                     }
                 }
             }
@@ -2289,7 +2289,7 @@ public class Client : IPublisher, ISubscriber
                     {
                         using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
                         {
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             StringBuilder numbers = new StringBuilder();
                             foreach (int index in Selection.Indexes)
                             {
@@ -2301,23 +2301,23 @@ public class Client : IPublisher, ISubscriber
                             }
                             writer.WriteLine(NumerologySystem.Name);
                             writer.WriteLine("Selection = " + Selection.Scope.ToString() + " " + numbers.ToString());
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine();
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine("Text");
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine(text);
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine();
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine("Phrase");
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine(phrase);
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine();
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine("Order" + "\t" + "Letter" + "\t" + "Frequency");
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             int count = m_letter_statistics.Count;
                             int sum = 0;
                             for (int i = 0; i < count; i++)
@@ -2325,9 +2325,9 @@ public class Client : IPublisher, ISubscriber
                                 writer.WriteLine(m_letter_statistics[i].Order.ToString() + "\t" + m_letter_statistics[i].Letter.ToString() + '\t' + m_letter_statistics[i].Frequency.ToString());
                                 sum += m_letter_statistics[i].Frequency;
                             }
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                             writer.WriteLine("Total" + "\t" + count.ToString() + "\t" + sum.ToString());
-                            writer.WriteLine("----------------------------------------");
+                            writer.WriteLine("-------------------------------------------------------------------");
                         }
                     }
                 }

@@ -57,7 +57,7 @@
     <Compile Include="NumerologySystem.cs" />
     <Compile Include="Distance.cs" />
     <Compile Include="Letter.cs" />
-    <Compile Include="Statistic.cs" />
+    <Compile Include="LetterStatistic.cs" />
     <Compile Include="TranslationInfo.cs" />
     <Compile Include="RecitationInfo.cs" />
     <Compile Include="Selection.cs" />
