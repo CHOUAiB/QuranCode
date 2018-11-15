@@ -38311,6 +38311,9 @@ public partial class MainForm : Form, ISubscriber
         {
             str.Append
             (
+                "Number" + "\t" +
+                "InChap" + "\t" +
+                "InVerse" + "\t" +
                 "Address" + "\t" +
                 "Name" + "\t" +
                 "Chapter" + "\t" +
@@ -38340,6 +38343,9 @@ public partial class MainForm : Form, ISubscriber
 
                 str.Append
                 (
+                    word.Number.ToString() + "\t" +
+                    word.NumberInChapter.ToString() + "\t" +
+                    word.NumberInVerse.ToString() + "\t" +
                     word.Address + "\t" +
                     word.Verse.Chapter.Name.ToString() + "\t" +
                     word.Verse.Chapter.SortedNumber.ToString() + "\t" +

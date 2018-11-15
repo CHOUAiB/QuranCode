@@ -143,7 +143,7 @@ partial class SplashForm
             this.InitialLettersLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.InitialLettersLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.InitialLettersLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InitialLettersLabel.ForeColor = System.Drawing.Color.Firebrick;
+            this.InitialLettersLabel.ForeColor = System.Drawing.Color.Lavender;
             this.InitialLettersLabel.Location = new System.Drawing.Point(0, 91);
             this.InitialLettersLabel.Name = "InitialLettersLabel";
             this.InitialLettersLabel.Size = new System.Drawing.Size(239, 19);
