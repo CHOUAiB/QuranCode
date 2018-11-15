@@ -2747,6 +2747,10 @@ public static partial class Research
         {
             str.AppendLine
             (
+                "#" + "\t" +
+                "Number" + "\t" +
+                "InChap" + "\t" +
+                "InVerse" + "\t" +
                 "Address" + "\t" +
                 "Chapter" + "\t" +
                 "Verse" + "\t" +
@@ -2763,6 +2767,7 @@ public static partial class Research
                 "Value" + "\t" + "Factors" + "\t" + "P" + "\t" + "AP" + "\t" + "XP" + "\t" + "C" + "\t" + "AC" + "\t" + "XC"
             );
 
+            int count = 0;
             foreach (Word word in words)
             {
                 List<string> roots = word.Roots;
@@ -2808,8 +2813,13 @@ public static partial class Research
                     parts_english_grammar_str.Replace("  ", " ");
                 }
 
+                count++;
                 str.Append
                 (
+                    count + "\t" +
+                    word.Number + "\t" +
+                    word.NumberInChapter + "\t" +
+                    word.NumberInVerse + "\t" +
                     word.Address + "\t" +
                     word.Verse.Chapter.SortedNumber + "\t" +
                     word.Verse.NumberInChapter + "\t" +
@@ -3769,8 +3779,8 @@ public static partial class Research
                     str.AppendLine
                         (
                             "#" + "\t" +
-                            "inQuran" + "\t" +
-                            "inChap" + "\t" +
+                            "Number" + "\t" +
+                            "InChap" + "\t" +
                             "Chapter" + "\t" +
                             "Verse" + "\t" +
                             "Word" + "\t" +
@@ -3838,8 +3848,8 @@ public static partial class Research
                     str.AppendLine
                         (
                             "#" + "\t" +
-                            "inQuran" + "\t" +
-                            "inChap" + "\t" +
+                            "Number" + "\t" +
+                            "InChap" + "\t" +
                             "Chapter" + "\t" +
                             "Verse" + "\t" +
                             "Word" + "\t" +
@@ -3980,8 +3990,8 @@ public static partial class Research
                     str.AppendLine
                         (
                             "#" + "\t" +
-                            "inQuran" + "\t" +
-                            "inChap" + "\t" +
+                            "Number" + "\t" +
+                            "InChap" + "\t" +
                             "Chapter" + "\t" +
                             "Verse" + "\t" +
                             "Word" + "\t" +

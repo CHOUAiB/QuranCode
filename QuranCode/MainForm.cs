@@ -15556,6 +15556,12 @@ public partial class MainForm : Form, ISubscriber
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "X,Y,Z");
                 ResearchMethodParameterTextBox.Visible = true;
             }
+            else if (method_name.EndsWith("Sound"))
+            {
+                ResearchMethodParameterTextBox.Text = "1433";
+                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Hz");
+                ResearchMethodParameterTextBox.Visible = true;
+            }
             else if (method_name.StartsWith("ChooseWords"))
             {
                 ResearchMethodParameterTextBox.Text = "7,29";
@@ -38311,9 +38317,6 @@ public partial class MainForm : Form, ISubscriber
         {
             str.Append
             (
-                "Number" + "\t" +
-                "InChap" + "\t" +
-                "InVerse" + "\t" +
                 "Address" + "\t" +
                 "Name" + "\t" +
                 "Chapter" + "\t" +
@@ -38343,21 +38346,18 @@ public partial class MainForm : Form, ISubscriber
 
                 str.Append
                 (
-                    word.Number.ToString() + "\t" +
-                    word.NumberInChapter.ToString() + "\t" +
-                    word.NumberInVerse.ToString() + "\t" +
                     word.Address + "\t" +
-                    word.Verse.Chapter.Name.ToString() + "\t" +
-                    word.Verse.Chapter.SortedNumber.ToString() + "\t" +
-                    word.Verse.NumberInChapter.ToString() + "\t" +
-                    word.NumberInVerse.ToString() + "\t" +
+                    word.Verse.Chapter.Name + "\t" +
+                    word.Verse.Chapter.SortedNumber + "\t" +
+                    word.Verse.NumberInChapter + "\t" +
+                    word.NumberInVerse + "\t" +
                     word.Text + "\t" +
                     word.Transliteration + "\t" +
-                    roots_str.ToString() + "\t" +
+                    roots_str + "\t" +
                     word.Meaning + "\t" +
-                    word.Occurrence.ToString() + "\t" +
-                    word.Frequency.ToString() + "\t" +
-                    word.Letters.Count.ToString() + "\r\n"
+                    word.Occurrence + "\t" +
+                    word.Frequency + "\t" +
+                    word.Letters.Count + "\r\n"
                 );
             }
         }
