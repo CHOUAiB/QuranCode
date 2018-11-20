@@ -32139,6 +32139,11 @@ public partial class MainForm : Form, ISubscriber
                     }
                     text = text.Trim();
 
+                    if (!m_with_diacritics)
+                    {
+                        text = text.SimplifyTo(m_client.NumerologySystem.TextMode);
+                    }
+
                     string[] words = text.Split();
                     m_word_frequency_dictionary = new Dictionary<string, int>();
                     if (m_word_frequency_dictionary != null)
@@ -32779,6 +32784,7 @@ public partial class MainForm : Form, ISubscriber
                 m_client.Book.WithDiacritics = m_with_diacritics;
 
                 PopulateWordsListBox();
+                DisplayWordFrequencies();
 
                 LetterFrequencyWithDiacriticsCheckBox.Checked = FindByTextWithDiacriticsCheckBox.Checked;
                 BuildLetterFrequencies();
