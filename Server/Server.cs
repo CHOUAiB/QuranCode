@@ -569,7 +569,6 @@ public class Server : IPublisher
                                                     if (verses != null)
                                                     {
                                                         verses.Add(verse);
-                                                        non_exception_words_in_verses.Add(exception_word, verses);
                                                     }
                                                 }
                                                 else
@@ -11474,16 +11473,13 @@ public class Server : IPublisher
         List<Word> result = new List<Word>();
         if (source != null)
         {
-            if (query.WordCount == 1) // ensure no range search
+            foreach (Verse verse in source)
             {
-                foreach (Verse verse in source)
+                foreach (Word word in verse.Words)
                 {
-                    foreach (Word word in verse.Words)
+                    if (Compare(word, query))
                     {
-                        if (Compare(word, query))
-                        {
-                            result.Add(word);
-                        }
+                        result.Add(word);
                     }
                 }
             }
@@ -11949,14 +11945,11 @@ public class Server : IPublisher
         List<Verse> result = new List<Verse>();
         if (source != null)
         {
-            if (query.VerseCount == 1) // ensure no range search
+            foreach (Verse verse in source)
             {
-                foreach (Verse verse in source)
+                if (Compare(verse, query))
                 {
-                    if (Compare(verse, query))
-                    {
-                        result.Add(verse);
-                    }
+                    result.Add(verse);
                 }
             }
         }
@@ -12068,14 +12061,11 @@ public class Server : IPublisher
                     List<Chapter> chapters = s_book.GetChapters(source);
                     if (chapters != null)
                     {
-                        if (query.ChapterCount == 1) // ensure no range search
+                        foreach (Chapter chapter in chapters)
                         {
-                            foreach (Chapter chapter in chapters)
+                            if (Compare(chapter, query))
                             {
-                                if (Compare(chapter, query))
-                                {
-                                    result.Add(chapter);
-                                }
+                                result.Add(chapter);
                             }
                         }
                     }

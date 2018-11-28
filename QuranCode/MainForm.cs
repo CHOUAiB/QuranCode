@@ -15588,7 +15588,7 @@ public partial class MainForm : Form, ISubscriber
             }
             else if (method_name.Contains("Pivot"))
             {
-                ResearchMethodParameterTextBox.Text = "0";
+                ResearchMethodParameterTextBox.Text = "16";
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Pivot");
                 ResearchMethodParameterTextBox.Visible = true;
             }

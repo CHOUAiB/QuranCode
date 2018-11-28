@@ -116,10 +116,6 @@
       <Project>{DE7B4FCD-CE16-4C71-B59B-A2B4CEADBA08}</Project>
       <Name>Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Research\Research.csproj">
-      <Project>{c5b10851-ddcc-4336-a1d2-56b31feabafc}</Project>
-      <Name>Research</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{B0138CBF-A11A-4F54-AD14-2D9217D90F27}</Project>
       <Name>Utilities</Name>
