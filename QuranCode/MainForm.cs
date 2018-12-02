@@ -37378,48 +37378,54 @@ public partial class MainForm : Form, ISubscriber
     }
     private void CalcLaatePhraseStatistics()
     {
-        StringBuilder phrase_str = new StringBuilder();
-        int word_count = 0;
-        int letter_count = 0;
-        long value = 0L;
-        foreach (Phrase phrase in m_client.FoundPhrases)
+        if (m_client != null)
         {
-            if (phrase != null)
+            if (m_client.FoundPhrases != null)
             {
-                phrase_str.AppendLine(phrase.Text);
-                word_count += phrase.Text.Split(' ').Length;
-                string phrase_nospaces = phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Replace(" ", "");
-                letter_count += phrase_nospaces.Length;
-                value += m_client.CalculateValue(phrase.Text);
+                StringBuilder phrase_str = new StringBuilder();
+                int word_count = 0;
+                int letter_count = 0;
+                long value = 0L;
+                foreach (Phrase phrase in m_client.FoundPhrases)
+                {
+                    if (phrase != null)
+                    {
+                        phrase_str.AppendLine(phrase.Text);
+                        word_count += phrase.Text.Split(' ').Length;
+                        string phrase_nospaces = phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Replace(" ", "");
+                        letter_count += phrase_nospaces.Length;
+                        value += m_client.CalculateValue(phrase.Text);
+                    }
+                }
+
+                WordsTextBox.Text = Radix.Encode(word_count, m_radix);
+                WordsTextBox.ForeColor = Numbers.GetNumberTypeColor(WordsTextBox.Text, m_radix);
+                WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+                WordsTextBox.Refresh();
+                DecimalWordsTextBox.Text = word_count.ToString();
+                DecimalWordsTextBox.ForeColor = Numbers.GetNumberTypeColor(word_count);
+                DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                DecimalWordsTextBox.Refresh();
+                LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
+                LettersTextBox.ForeColor = Numbers.GetNumberTypeColor(LettersTextBox.Text, m_radix);
+                LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
+                LettersTextBox.Refresh();
+                DecimalLettersTextBox.Text = letter_count.ToString();
+                DecimalLettersTextBox.ForeColor = Numbers.GetNumberTypeColor(letter_count);
+                DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                DecimalLettersTextBox.Refresh();
+                ValueTextBox.Text = Radix.Encode(value, m_radix);
+                ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
+                ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
+                ValueTextBox.SelectionLength = 0;
+                ValueTextBox.Refresh();
+                DecimalValueTextBox.Text = value.ToString();
+                DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
+                DecimalValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
+                DecimalValueTextBox.Refresh();
+                FactorizeValue(value, true);
             }
         }
-
-        WordsTextBox.Text = Radix.Encode(word_count, m_radix);
-        WordsTextBox.ForeColor = Numbers.GetNumberTypeColor(WordsTextBox.Text, m_radix);
-        WordsTextBox.BackColor = (Numbers.Compare(word_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
-        WordsTextBox.Refresh();
-        DecimalWordsTextBox.Text = word_count.ToString();
-        DecimalWordsTextBox.ForeColor = Numbers.GetNumberTypeColor(word_count);
-        DecimalWordsTextBox.Visible = (m_radix != DEFAULT_RADIX);
-        DecimalWordsTextBox.Refresh();
-        LettersTextBox.Text = Radix.Encode(letter_count, m_radix);
-        LettersTextBox.ForeColor = Numbers.GetNumberTypeColor(LettersTextBox.Text, m_radix);
-        LettersTextBox.BackColor = (Numbers.Compare(letter_count, m_divisor, ComparisonOperator.DivisibleBy, 0)) ? DIVISOR_COLOR : SystemColors.ControlLight;
-        LettersTextBox.Refresh();
-        DecimalLettersTextBox.Text = letter_count.ToString();
-        DecimalLettersTextBox.ForeColor = Numbers.GetNumberTypeColor(letter_count);
-        DecimalLettersTextBox.Visible = (m_radix != DEFAULT_RADIX);
-        DecimalLettersTextBox.Refresh();
-        ValueTextBox.Text = Radix.Encode(value, m_radix);
-        ValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
-        ValueTextBox.SelectionStart = ValueTextBox.Text.Length;
-        ValueTextBox.SelectionLength = 0;
-        ValueTextBox.Refresh();
-        DecimalValueTextBox.Text = value.ToString();
-        DecimalValueTextBox.Visible = (m_radix != DEFAULT_RADIX);
-        DecimalValueTextBox.ForeColor = Numbers.GetNumberTypeColor(value);
-        DecimalValueTextBox.Refresh();
-        FactorizeValue(value, true);
     }
     private void DisplayFoundVerseRanges(bool add_to_history, bool colorize_chapters_by_matches)
     {

@@ -118,7 +118,7 @@
 // [6] R. Baillie and S. S. Wagstaff Jr, "Lucas Pseudoprimes", Mathematics of Computation,
 //     Vol. 35, No. 152, Oct 1980, pp. 1391-1417.
 //
-// [7] H. C. Williams, "Édouard Lucas and Primality Testing", Canadian Mathematical
+// [7] H. C. Williams, "Edouard Lucas and Primality Testing", Canadian Mathematical
 //     Society Series of Monographs and Advance Texts, vol. 22, John Wiley & Sons, New York,
 //     NY, 1998.
 //
@@ -3669,6 +3669,6 @@ Console.WriteLine("Not prime!  Divisible by {0}\n",
     }
 
 }
-//TODO: use Fürer algorithm for multiplication
+//TODO: use Furer algorithm for multiplication
 // http://en.wikipedia.org/wiki/F%C3%BCrer%27s_algorithm
 // Maybe it's better to use faster multiplication algorithm like multiplication using FFT (or FHT)? Take a look at my library IntX: http://contest2005.gotdotnet.ru/Request/Tools/UtilitiesLib/Downloads_GetFile.aspx?id=169728[^] (there is also a description in Russian: http://contest2005.gotdotnet.ru/Request/Tools/UtilitiesLib/169728.aspx[^]) - it multiplies using FFT which takes O(N*log N) instead of classic O(N^2).

@@ -1201,7 +1201,7 @@ public class Client : IPublisher, ISubscriber
     public int FindVerses(SimilarityMethod similarity_method, double similarity_percentage)
     {
         ClearSearchResults();
-        m_found_verse_ranges = Server.FindVerses(m_search_scope, m_selection, m_found_verses, similarity_method, similarity_percentage);
+        m_found_verse_ranges = Server.FindVersess(m_search_scope, m_selection, m_found_verses, similarity_method, similarity_percentage);
         if (m_found_verse_ranges != null)
         {
             m_found_verses = new List<Verse>();

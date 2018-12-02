@@ -1,4 +1,4 @@
-RD /S /Q NET2
+﻿RD /S /Q NET2
 "%PROGRAMFILES%\7-Zip\7z.exe" x Tools\NET2.zip
 echo .csproj > exclude.txt
 XCOPY /E /Y /EXCLUDE:exclude.txt Globals\*.* NET2\Globals\
@@ -20,7 +20,7 @@ XCOPY /E /Y /EXCLUDE:exclude.txt AhlulBayt\*.* NET2\AhlulBayt\
 
 DEL exclude.txt
 Tools\Replace\bin\Release\Replace.exe NET2 *.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)
-CALL Version.bat
+
 CD NET2
 CALL Version.bat
 CD ..

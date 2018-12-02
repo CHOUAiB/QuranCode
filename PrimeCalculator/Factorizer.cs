@@ -195,7 +195,7 @@ class Factorizer
                             m_process_output += m_number + " = ";
                             foreach (string f in m_factors)
                             {
-                                m_process_output += f + "×";
+                                m_process_output += f + "*";
                             }
                             m_process_output = m_process_output.Remove(m_process_output.Length - "×".Length);
                         }
