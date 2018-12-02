@@ -21,6 +21,7 @@ XCOPY /E /Y /EXCLUDE:exclude.txt AhlulBayt\*.* NET2\AhlulBayt\
 DEL exclude.txt
 Tools\Replace\bin\Release\Replace.exe NET2 *.cs ((System.ComponentModel.ISupportInitialize) //((System.ComponentModel.ISupportInitialize)
 
+Version.bat
 CD NET2
 CALL Version.bat
 CD ..
