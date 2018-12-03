@@ -12420,7 +12420,7 @@ public partial class MainForm : Form, ISubscriber
                         }
                         else
                         {
-                            ApplyFont("Courier New", DEFAULT_QURAN_FONT_SIZE);
+                            ApplyFont("Courier New", 12.0F);
                             FontLabel.Enabled = false;
                         }
 
@@ -36544,9 +36544,7 @@ public partial class MainForm : Form, ISubscriber
 
         FindByFrequencyLinkLabel.Visible = m_find_by_phrase_letter_frequency;
         UpdateFindByFrequencyButtonToolTip();
-        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0))
-                                        ||
-                                        ((!m_find_by_phrase_letter_frequency) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0));
 
         RebuildLetterFrequencies();
     }
@@ -36727,9 +36725,7 @@ public partial class MainForm : Form, ISubscriber
     private void FindByFrequencyPhraseTextBox_TextChanged(object sender, EventArgs e)
     {
         m_phrase_text = FindByFrequencyPhraseTextBox.Text;
-        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0))
-                                        ||
-                                        ((!m_find_by_phrase_letter_frequency) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+        FindByFrequencyButton.Enabled = (m_phrase_text.Length > 0);
 
         BuildLetterFrequencies();
         DisplayLetterFrequencies();
@@ -39488,7 +39484,7 @@ public partial class MainForm : Form, ISubscriber
                             }
                             else
                             {
-                                ApplyFont("Courier New", DEFAULT_QURAN_FONT_SIZE);
+                                ApplyFont("Courier New", 12.0F);
                                 FontLabel.Enabled = false;
                             }
                         }
@@ -43469,9 +43465,7 @@ public partial class MainForm : Form, ISubscriber
 
         DisplayLetterFrequenciesTotals();
 
-        FindByFrequencyButton.Enabled = ((m_find_by_phrase_letter_frequency) && (m_phrase_text.Length > 0))
-                                        ||
-                                        ((!m_find_by_phrase_letter_frequency) && (LetterFrequencyListView.SelectedIndices.Count > 0));
+        FindByFrequencyButton.Enabled = (LetterFrequencyListView.SelectedIndices.Count > 0);
     }
     private void LetterFrequencyListView_DoubleClick(object sender, EventArgs e)
     {
