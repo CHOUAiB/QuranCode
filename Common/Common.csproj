@@ -581,11 +581,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Help\Symmetry.pdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Help\Primalogy.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
