@@ -1030,8 +1030,6 @@ public partial class MainForm : Form, ISubscriber
         this.ChapterGroupBox = new System.Windows.Forms.GroupBox();
         this.InspectChaptersLabel = new System.Windows.Forms.Label();
         this.WordsListBox = new System.Windows.Forms.ListBox();
-        this.WordsListBoxContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-        this.FindSelectedWordsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.PinChapter1CheckBox = new System.Windows.Forms.CheckBox();
         this.ChaptersListBox = new ListBoxEx();
         this.FontComboBox = new System.Windows.Forms.ComboBox();
@@ -1470,7 +1468,6 @@ public partial class MainForm : Form, ISubscriber
         ((System.ComponentModel.ISupportInitialize)(this.ChapterWordNumericUpDown)).BeginInit();
         ((System.ComponentModel.ISupportInitialize)(this.ChapterVerseNumericUpDown)).BeginInit();
         this.ChapterGroupBox.SuspendLayout();
-        this.WordsListBoxContextMenuStrip.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)(this.ClientSplitContainer)).BeginInit();
         this.ClientSplitContainer.Panel1.SuspendLayout();
         this.ClientSplitContainer.Panel2.SuspendLayout();
@@ -5763,7 +5760,6 @@ public partial class MainForm : Form, ISubscriber
         // 
         this.WordsListBox.BackColor = System.Drawing.Color.LightSteelBlue;
         this.WordsListBox.ColumnWidth = 63;
-        this.WordsListBox.ContextMenuStrip = this.WordsListBoxContextMenuStrip;
         this.WordsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
         this.WordsListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.WordsListBox.FormattingEnabled = true;
@@ -5782,20 +5778,6 @@ public partial class MainForm : Form, ISubscriber
         this.WordsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WordsListBox_KeyDown);
         this.WordsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WordsListBox_MouseDown);
         this.WordsListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WordsListBox_MouseMove);
-        // 
-        // WordsListBoxContextMenuStrip
-        // 
-        this.WordsListBoxContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FindSelectedWordsMenuItem});
-        this.WordsListBoxContextMenuStrip.Name = "WordsListBoxContextMenuStrip";
-        this.WordsListBoxContextMenuStrip.Size = new System.Drawing.Size(107, 28);
-        // 
-        // FindSelectedWordsMenuItem
-        // 
-        this.FindSelectedWordsMenuItem.Name = "FindSelectedWordsMenuItem";
-        this.FindSelectedWordsMenuItem.Size = new System.Drawing.Size(106, 24);
-        this.FindSelectedWordsMenuItem.Text = "Find";
-        this.FindSelectedWordsMenuItem.Click += new System.EventHandler(this.FindSelectedWordsMenuItem_Click);
         // 
         // PinChapter1CheckBox
         // 
@@ -12148,7 +12130,6 @@ public partial class MainForm : Form, ISubscriber
         ((System.ComponentModel.ISupportInitialize)(this.ChapterVerseNumericUpDown)).EndInit();
         this.ChapterGroupBox.ResumeLayout(false);
         this.ChapterGroupBox.PerformLayout();
-        this.WordsListBoxContextMenuStrip.ResumeLayout(false);
         this.ClientSplitContainer.Panel1.ResumeLayout(false);
         this.ClientSplitContainer.Panel2.ResumeLayout(false);
         ((System.ComponentModel.ISupportInitialize)(this.ClientSplitContainer)).EndInit();
@@ -33118,7 +33099,7 @@ public partial class MainForm : Form, ISubscriber
         {
             case TextSearchType.Exact:
                 {
-                    if (WordsListBox.SelectedIndices.Count > 1)
+                    if (WordsListBox.SelectedIndices.Count > 0)
                     {
                         FindSelectedWordsMenuItem_Click(null, null);
                     }

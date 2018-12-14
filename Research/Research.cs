@@ -4959,7 +4959,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void AP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void AP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -4975,7 +4975,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void XP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void XP_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -4991,7 +4991,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -5007,7 +5007,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -5023,7 +5023,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -5050,10 +5050,11 @@ public static partial class Research
         int pivot = 0;
         if (param.Length > 0)
         {
+            int min = 16;
+            int max = 16;
+
             if (int.TryParse(param, out pivot))
             {
-                int min = 0;
-                int max = 0;
                 if (pivot == 0)
                 {
                     min = 1;
@@ -5064,48 +5065,57 @@ public static partial class Research
                     min = pivot;
                     max = pivot;
                 }
-
-                for (int i = min; i <= max; i++)
+            }
+            else
+            {
+                string[] parts = param.Split('-');
+                if (parts.Length == 2)
                 {
-                    int M = 1;
-                    int N = (i * 2) - 1;
-
-                    do
-                    {
-                        long MN = M * N;
-                        long P = Numbers.Primes[M - 1];
-                        long MN_P = MN + P;
-
-                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
-                        string text2 = GetConsecutiveVerses(client, MN, MN_P, true);
-                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
-                        string text4 = "";
-                        if ((Numbers.Primes.Count >= 0) && (Numbers.Primes.Count < (M - 2)))
-                        {
-                            text4 = GetConsecutiveVerses(client, MN_P, ((M - 1) * (N + 1)) + Numbers.Primes[M - 2], false);
-                        }
-                        string text5 = "";
-                        if ((Numbers.Primes.Count >= 0) && (Numbers.Primes.Count < M))
-                        {
-                            text5 = GetConsecutiveVerses(client, MN_P, ((M + 1) * (N - 1)) + Numbers.Primes[M], false);
-                        }
-
-                        string text = "";
-                        if (!text.Contains(text1)) text += text1;
-                        if (!text.Contains(text2)) text += text2;
-                        if (!text.Contains(text3)) text += text3;
-                        if (!text.Contains(text4)) text += text4;
-                        if (!text.Contains(text5)) text += text5;
-
-                        str.Append(M + "\t" + N + "\t" + MN + "\t" + P + "\t" + MN_P + "\t" + text + "\r\n");
-
-                        M++;
-                        N--;
-                    } while (N > 0);
-
-                    str.AppendLine();
-                    str.AppendLine();
+                    int.TryParse(parts[0], out min);
+                    int.TryParse(parts[1], out max);
                 }
+            }
+
+            for (int i = min; i <= max; i++)
+            {
+                int M = 1;
+                int N = (i * 2) - 1;
+
+                do
+                {
+                    long MN = M * N;
+                    long P = Numbers.Primes[M - 1];
+                    long MN_P = MN + P;
+
+                    string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                    string text2 = GetConsecutiveVerses(client, MN, MN_P, true);
+                    string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                    string text4 = "";
+                    if ((Numbers.Primes.Count >= 0) && (Numbers.Primes.Count < (M - 2)))
+                    {
+                        text4 = GetConsecutiveVerses(client, MN_P, ((M - 1) * (N + 1)) + Numbers.Primes[M - 2], false);
+                    }
+                    string text5 = "";
+                    if ((Numbers.Primes.Count >= 0) && (Numbers.Primes.Count < M))
+                    {
+                        text5 = GetConsecutiveVerses(client, MN_P, ((M + 1) * (N - 1)) + Numbers.Primes[M], false);
+                    }
+
+                    string text = "";
+                    if (!text.Contains(text1)) text += text1;
+                    if (!text.Contains(text2)) text += text2;
+                    if (!text.Contains(text3)) text += text3;
+                    if (!text.Contains(text4)) text += text4;
+                    if (!text.Contains(text5)) text += text5;
+
+                    str.Append(M + "\t" + N + "\t" + MN + "\t" + P + "\t" + MN_P + "\t" + text + "\r\n");
+
+                    M++;
+                    N--;
+                } while (N > 0);
+
+                str.AppendLine();
+                str.AppendLine();
             }
         }
         return str.ToString();
@@ -5121,10 +5131,11 @@ public static partial class Research
         int pivot = 0;
         if (param.Length > 0)
         {
+            int min = 16;
+            int max = 16;
+
             if (int.TryParse(param, out pivot))
             {
-                int min = 0;
-                int max = 0;
                 if (pivot == 0)
                 {
                     min = 1;
@@ -5135,48 +5146,57 @@ public static partial class Research
                     min = pivot;
                     max = pivot;
                 }
-
-                for (int i = min; i <= max; i++)
+            }
+            else
+            {
+                string[] parts = param.Split('-');
+                if (parts.Length == 2)
                 {
-                    int M = 1;
-                    int N = (i * 2) - 1;
-
-                    do
-                    {
-                        long MN = M * N;
-                        long AP = Numbers.AdditivePrimes[M - 1];
-                        long MN_AP = MN + AP;
-
-                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
-                        string text2 = GetConsecutiveVerses(client, MN, MN_AP, true);
-                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
-                        string text4 = "";
-                        if ((Numbers.AdditivePrimes.Count >= 0) && (Numbers.AdditivePrimes.Count < (M - 2)))
-                        {
-                            text4 = GetConsecutiveVerses(client, MN_AP, ((M - 1) * (N + 1)) + Numbers.AdditivePrimes[M - 2], false);
-                        }
-                        string text5 = "";
-                        if ((Numbers.AdditivePrimes.Count >= 0) && (Numbers.AdditivePrimes.Count < M))
-                        {
-                            text5 = GetConsecutiveVerses(client, MN_AP, ((M + 1) * (N - 1)) + Numbers.AdditivePrimes[M], false);
-                        }
-
-                        string text = "";
-                        if (!text.Contains(text1)) text += text1;
-                        if (!text.Contains(text2)) text += text2;
-                        if (!text.Contains(text3)) text += text3;
-                        if (!text.Contains(text4)) text += text4;
-                        if (!text.Contains(text5)) text += text5;
-
-                        str.Append(M + "\t" + N + "\t" + MN + "\t" + AP + "\t" + MN_AP + "\t" + text + "\r\n");
-
-                        M++;
-                        N--;
-                    } while (N > 0);
-
-                    str.AppendLine();
-                    str.AppendLine();
+                    int.TryParse(parts[0], out min);
+                    int.TryParse(parts[1], out max);
                 }
+            }
+
+            for (int i = min; i <= max; i++)
+            {
+                int M = 1;
+                int N = (i * 2) - 1;
+
+                do
+                {
+                    long MN = M * N;
+                    long AP = Numbers.AdditivePrimes[M - 1];
+                    long MN_AP = MN + AP;
+
+                    string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                    string text2 = GetConsecutiveVerses(client, MN, MN_AP, true);
+                    string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                    string text4 = "";
+                    if ((Numbers.AdditivePrimes.Count >= 0) && (Numbers.AdditivePrimes.Count < (M - 2)))
+                    {
+                        text4 = GetConsecutiveVerses(client, MN_AP, ((M - 1) * (N + 1)) + Numbers.AdditivePrimes[M - 2], false);
+                    }
+                    string text5 = "";
+                    if ((Numbers.AdditivePrimes.Count >= 0) && (Numbers.AdditivePrimes.Count < M))
+                    {
+                        text5 = GetConsecutiveVerses(client, MN_AP, ((M + 1) * (N - 1)) + Numbers.AdditivePrimes[M], false);
+                    }
+
+                    string text = "";
+                    if (!text.Contains(text1)) text += text1;
+                    if (!text.Contains(text2)) text += text2;
+                    if (!text.Contains(text3)) text += text3;
+                    if (!text.Contains(text4)) text += text4;
+                    if (!text.Contains(text5)) text += text5;
+
+                    str.Append(M + "\t" + N + "\t" + MN + "\t" + AP + "\t" + MN_AP + "\t" + text + "\r\n");
+
+                    M++;
+                    N--;
+                } while (N > 0);
+
+                str.AppendLine();
+                str.AppendLine();
             }
         }
         return str.ToString();
@@ -5192,10 +5212,11 @@ public static partial class Research
         int pivot = 0;
         if (param.Length > 0)
         {
+            int min = 16;
+            int max = 16;
+
             if (int.TryParse(param, out pivot))
             {
-                int min = 0;
-                int max = 0;
                 if (pivot == 0)
                 {
                     min = 1;
@@ -5206,48 +5227,57 @@ public static partial class Research
                     min = pivot;
                     max = pivot;
                 }
-
-                for (int i = min; i <= max; i++)
+            }
+            else
+            {
+                string[] parts = param.Split('-');
+                if (parts.Length == 2)
                 {
-                    int M = 1;
-                    int N = (i * 2) - 1;
-
-                    do
-                    {
-                        long MN = M * N;
-                        long XP = Numbers.NonAdditivePrimes[M - 1];
-                        long MN_XP = MN + XP;
-
-                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
-                        string text2 = GetConsecutiveVerses(client, MN, MN_XP, true);
-                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
-                        string text4 = "";
-                        if ((Numbers.NonAdditivePrimes.Count >= 0) && (Numbers.NonAdditivePrimes.Count < (M - 2)))
-                        {
-                            text4 = GetConsecutiveVerses(client, MN_XP, ((M - 1) * (N + 1)) + Numbers.NonAdditivePrimes[M - 2], false);
-                        }
-                        string text5 = "";
-                        if ((Numbers.NonAdditivePrimes.Count >= 0) && (Numbers.NonAdditivePrimes.Count < M))
-                        {
-                            text5 = GetConsecutiveVerses(client, MN_XP, ((M + 1) * (N - 1)) + Numbers.NonAdditivePrimes[M], false);
-                        }
-
-                        string text = "";
-                        if (!text.Contains(text1)) text += text1;
-                        if (!text.Contains(text2)) text += text2;
-                        if (!text.Contains(text3)) text += text3;
-                        if (!text.Contains(text4)) text += text4;
-                        if (!text.Contains(text5)) text += text5;
-
-                        str.Append(M + "\t" + N + "\t" + MN + "\t" + XP + "\t" + MN_XP + "\t" + text + "\r\n");
-
-                        M++;
-                        N--;
-                    } while (N > 0);
-
-                    str.AppendLine();
-                    str.AppendLine();
+                    int.TryParse(parts[0], out min);
+                    int.TryParse(parts[1], out max);
                 }
+            }
+
+            for (int i = min; i <= max; i++)
+            {
+                int M = 1;
+                int N = (i * 2) - 1;
+
+                do
+                {
+                    long MN = M * N;
+                    long XP = Numbers.NonAdditivePrimes[M - 1];
+                    long MN_XP = MN + XP;
+
+                    string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                    string text2 = GetConsecutiveVerses(client, MN, MN_XP, true);
+                    string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                    string text4 = "";
+                    if ((Numbers.NonAdditivePrimes.Count >= 0) && (Numbers.NonAdditivePrimes.Count < (M - 2)))
+                    {
+                        text4 = GetConsecutiveVerses(client, MN_XP, ((M - 1) * (N + 1)) + Numbers.NonAdditivePrimes[M - 2], false);
+                    }
+                    string text5 = "";
+                    if ((Numbers.NonAdditivePrimes.Count >= 0) && (Numbers.NonAdditivePrimes.Count < M))
+                    {
+                        text5 = GetConsecutiveVerses(client, MN_XP, ((M + 1) * (N - 1)) + Numbers.NonAdditivePrimes[M], false);
+                    }
+
+                    string text = "";
+                    if (!text.Contains(text1)) text += text1;
+                    if (!text.Contains(text2)) text += text2;
+                    if (!text.Contains(text3)) text += text3;
+                    if (!text.Contains(text4)) text += text4;
+                    if (!text.Contains(text5)) text += text5;
+
+                    str.Append(M + "\t" + N + "\t" + MN + "\t" + XP + "\t" + MN_XP + "\t" + text + "\r\n");
+
+                    M++;
+                    N--;
+                } while (N > 0);
+
+                str.AppendLine();
+                str.AppendLine();
             }
         }
         return str.ToString();
@@ -5263,10 +5293,11 @@ public static partial class Research
         int pivot = 0;
         if (param.Length > 0)
         {
+            int min = 16;
+            int max = 16;
+
             if (int.TryParse(param, out pivot))
             {
-                int min = 0;
-                int max = 0;
                 if (pivot == 0)
                 {
                     min = 1;
@@ -5277,48 +5308,57 @@ public static partial class Research
                     min = pivot;
                     max = pivot;
                 }
-
-                for (int i = min; i <= max; i++)
+            }
+            else
+            {
+                string[] parts = param.Split('-');
+                if (parts.Length == 2)
                 {
-                    int M = 1;
-                    int N = (i * 2) - 1;
-
-                    do
-                    {
-                        long MN = M * N;
-                        long C = Numbers.Composites[M - 1];
-                        long MN_C = MN + C;
-
-                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
-                        string text2 = GetConsecutiveVerses(client, MN, MN_C, true);
-                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
-                        string text4 = "";
-                        if ((Numbers.Composites.Count >= 0) && (Numbers.Composites.Count < (M - 2)))
-                        {
-                            text4 = GetConsecutiveVerses(client, MN_C, ((M - 1) * (N + 1)) + Numbers.Composites[M - 2], false);
-                        }
-                        string text5 = "";
-                        if ((Numbers.Composites.Count >= 0) && (Numbers.Composites.Count < M))
-                        {
-                            text5 = GetConsecutiveVerses(client, MN_C, ((M + 1) * (N - 1)) + Numbers.Composites[M], false);
-                        }
-
-                        string text = "";
-                        if (!text.Contains(text1)) text += text1;
-                        if (!text.Contains(text2)) text += text2;
-                        if (!text.Contains(text3)) text += text3;
-                        if (!text.Contains(text4)) text += text4;
-                        if (!text.Contains(text5)) text += text5;
-
-                        str.Append(M + "\t" + N + "\t" + MN + "\t" + C + "\t" + MN_C + "\t" + text + "\r\n");
-
-                        M++;
-                        N--;
-                    } while (N > 0);
-
-                    str.AppendLine();
-                    str.AppendLine();
+                    int.TryParse(parts[0], out min);
+                    int.TryParse(parts[1], out max);
                 }
+            }
+
+            for (int i = min; i <= max; i++)
+            {
+                int M = 1;
+                int N = (i * 2) - 1;
+
+                do
+                {
+                    long MN = M * N;
+                    long C = Numbers.Composites[M - 1];
+                    long MN_C = MN + C;
+
+                    string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                    string text2 = GetConsecutiveVerses(client, MN, MN_C, true);
+                    string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                    string text4 = "";
+                    if ((Numbers.Composites.Count >= 0) && (Numbers.Composites.Count < (M - 2)))
+                    {
+                        text4 = GetConsecutiveVerses(client, MN_C, ((M - 1) * (N + 1)) + Numbers.Composites[M - 2], false);
+                    }
+                    string text5 = "";
+                    if ((Numbers.Composites.Count >= 0) && (Numbers.Composites.Count < M))
+                    {
+                        text5 = GetConsecutiveVerses(client, MN_C, ((M + 1) * (N - 1)) + Numbers.Composites[M], false);
+                    }
+
+                    string text = "";
+                    if (!text.Contains(text1)) text += text1;
+                    if (!text.Contains(text2)) text += text2;
+                    if (!text.Contains(text3)) text += text3;
+                    if (!text.Contains(text4)) text += text4;
+                    if (!text.Contains(text5)) text += text5;
+
+                    str.Append(M + "\t" + N + "\t" + MN + "\t" + C + "\t" + MN_C + "\t" + text + "\r\n");
+
+                    M++;
+                    N--;
+                } while (N > 0);
+
+                str.AppendLine();
+                str.AppendLine();
             }
         }
         return str.ToString();
@@ -5334,10 +5374,11 @@ public static partial class Research
         int pivot = 0;
         if (param.Length > 0)
         {
+            int min = 16;
+            int max = 16;
+
             if (int.TryParse(param, out pivot))
             {
-                int min = 0;
-                int max = 0;
                 if (pivot == 0)
                 {
                     min = 1;
@@ -5348,48 +5389,57 @@ public static partial class Research
                     min = pivot;
                     max = pivot;
                 }
-
-                for (int i = min; i <= max; i++)
+            }
+            else
+            {
+                string[] parts = param.Split('-');
+                if (parts.Length == 2)
                 {
-                    int M = 1;
-                    int N = (i * 2) - 1;
-
-                    do
-                    {
-                        long MN = M * N;
-                        long AC = Numbers.AdditiveComposites[M - 1];
-                        long MN_AC = MN + AC;
-
-                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
-                        string text2 = GetConsecutiveVerses(client, MN, MN_AC, true);
-                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
-                        string text4 = "";
-                        if ((Numbers.AdditiveComposites.Count >= 0) && (Numbers.AdditiveComposites.Count < (M - 2)))
-                        {
-                            text4 = GetConsecutiveVerses(client, MN_AC, ((M - 1) * (N + 1)) + Numbers.AdditiveComposites[M - 2], false);
-                        }
-                        string text5 = "";
-                        if ((Numbers.AdditiveComposites.Count >= 0) && (Numbers.AdditiveComposites.Count < M))
-                        {
-                            text5 = GetConsecutiveVerses(client, MN_AC, ((M + 1) * (N - 1)) + Numbers.AdditiveComposites[M], false);
-                        }
-
-                        string text = "";
-                        if (!text.Contains(text1)) text += text1;
-                        if (!text.Contains(text2)) text += text2;
-                        if (!text.Contains(text3)) text += text3;
-                        if (!text.Contains(text4)) text += text4;
-                        if (!text.Contains(text5)) text += text5;
-
-                        str.Append(M + "\t" + N + "\t" + MN + "\t" + AC + "\t" + MN_AC + "\t" + text + "\r\n");
-
-                        M++;
-                        N--;
-                    } while (N > 0);
-
-                    str.AppendLine();
-                    str.AppendLine();
+                    int.TryParse(parts[0], out min);
+                    int.TryParse(parts[1], out max);
                 }
+            }
+
+            for (int i = min; i <= max; i++)
+            {
+                int M = 1;
+                int N = (i * 2) - 1;
+
+                do
+                {
+                    long MN = M * N;
+                    long AC = Numbers.AdditiveComposites[M - 1];
+                    long MN_AC = MN + AC;
+
+                    string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                    string text2 = GetConsecutiveVerses(client, MN, MN_AC, true);
+                    string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                    string text4 = "";
+                    if ((Numbers.AdditiveComposites.Count >= 0) && (Numbers.AdditiveComposites.Count < (M - 2)))
+                    {
+                        text4 = GetConsecutiveVerses(client, MN_AC, ((M - 1) * (N + 1)) + Numbers.AdditiveComposites[M - 2], false);
+                    }
+                    string text5 = "";
+                    if ((Numbers.AdditiveComposites.Count >= 0) && (Numbers.AdditiveComposites.Count < M))
+                    {
+                        text5 = GetConsecutiveVerses(client, MN_AC, ((M + 1) * (N - 1)) + Numbers.AdditiveComposites[M], false);
+                    }
+
+                    string text = "";
+                    if (!text.Contains(text1)) text += text1;
+                    if (!text.Contains(text2)) text += text2;
+                    if (!text.Contains(text3)) text += text3;
+                    if (!text.Contains(text4)) text += text4;
+                    if (!text.Contains(text5)) text += text5;
+
+                    str.Append(M + "\t" + N + "\t" + MN + "\t" + AC + "\t" + MN_AC + "\t" + text + "\r\n");
+
+                    M++;
+                    N--;
+                } while (N > 0);
+
+                str.AppendLine();
+                str.AppendLine();
             }
         }
         return str.ToString();
@@ -5405,10 +5455,11 @@ public static partial class Research
         int pivot = 0;
         if (param.Length > 0)
         {
+            int min = 16;
+            int max = 16;
+
             if (int.TryParse(param, out pivot))
             {
-                int min = 0;
-                int max = 0;
                 if (pivot == 0)
                 {
                     min = 1;
@@ -5419,48 +5470,57 @@ public static partial class Research
                     min = pivot;
                     max = pivot;
                 }
-
-                for (int i = min; i <= max; i++)
+            }
+            else
+            {
+                string[] parts = param.Split('-');
+                if (parts.Length == 2)
                 {
-                    int M = 1;
-                    int N = (i * 2) - 1;
-
-                    do
-                    {
-                        long MN = M * N;
-                        long XC = Numbers.NonAdditiveComposites[M - 1];
-                        long MN_XC = MN + XC;
-
-                        string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
-                        string text2 = GetConsecutiveVerses(client, MN, MN_XC, true);
-                        string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
-                        string text4 = "";
-                        if ((Numbers.NonAdditiveComposites.Count >= 0) && (Numbers.NonAdditiveComposites.Count < (M - 2)))
-                        {
-                            text4 = GetConsecutiveVerses(client, MN_XC, ((M - 1) * (N + 1)) + Numbers.NonAdditiveComposites[M - 2], false);
-                        }
-                        string text5 = "";
-                        if ((Numbers.NonAdditiveComposites.Count >= 0) && (Numbers.NonAdditiveComposites.Count < M))
-                        {
-                            text5 = GetConsecutiveVerses(client, MN_XC, ((M + 1) * (N - 1)) + Numbers.NonAdditiveComposites[M], false);
-                        }
-
-                        string text = "";
-                        if (!text.Contains(text1)) text += text1;
-                        if (!text.Contains(text2)) text += text2;
-                        if (!text.Contains(text3)) text += text3;
-                        if (!text.Contains(text4)) text += text4;
-                        if (!text.Contains(text5)) text += text5;
-
-                        str.Append(M + "\t" + N + "\t" + MN + "\t" + XC + "\t" + MN_XC + "\t" + text + "\r\n");
-
-                        M++;
-                        N--;
-                    } while (N > 0);
-
-                    str.AppendLine();
-                    str.AppendLine();
+                    int.TryParse(parts[0], out min);
+                    int.TryParse(parts[1], out max);
                 }
+            }
+
+            for (int i = min; i <= max; i++)
+            {
+                int M = 1;
+                int N = (i * 2) - 1;
+
+                do
+                {
+                    long MN = M * N;
+                    long XC = Numbers.NonAdditiveComposites[M - 1];
+                    long MN_XC = MN + XC;
+
+                    string text1 = GetConsecutiveVerses(client, MN, (M - 1) * (N + 1), false);
+                    string text2 = GetConsecutiveVerses(client, MN, MN_XC, true);
+                    string text3 = GetConsecutiveVerses(client, MN, (M + 1) * (N - 1), false);
+                    string text4 = "";
+                    if ((Numbers.NonAdditiveComposites.Count >= 0) && (Numbers.NonAdditiveComposites.Count < (M - 2)))
+                    {
+                        text4 = GetConsecutiveVerses(client, MN_XC, ((M - 1) * (N + 1)) + Numbers.NonAdditiveComposites[M - 2], false);
+                    }
+                    string text5 = "";
+                    if ((Numbers.NonAdditiveComposites.Count >= 0) && (Numbers.NonAdditiveComposites.Count < M))
+                    {
+                        text5 = GetConsecutiveVerses(client, MN_XC, ((M + 1) * (N - 1)) + Numbers.NonAdditiveComposites[M], false);
+                    }
+
+                    string text = "";
+                    if (!text.Contains(text1)) text += text1;
+                    if (!text.Contains(text2)) text += text2;
+                    if (!text.Contains(text3)) text += text3;
+                    if (!text.Contains(text4)) text += text4;
+                    if (!text.Contains(text5)) text += text5;
+
+                    str.Append(M + "\t" + N + "\t" + MN + "\t" + XC + "\t" + MN_XC + "\t" + text + "\r\n");
+
+                    M++;
+                    N--;
+                } while (N > 0);
+
+                str.AppendLine();
+                str.AppendLine();
             }
         }
         return str.ToString();
