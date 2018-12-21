@@ -4991,7 +4991,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    public static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    private static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -5007,7 +5007,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    public static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    private static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -5023,7 +5023,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    public static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    private static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
