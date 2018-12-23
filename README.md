@@ -1,5 +1,4 @@
-﻿<pre>
-
+﻿
                          بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 
 QuranCode جفر القرءان is a numerical research tool for the Final Book of God, Al-Quran (القرءان).
@@ -230,4 +229,3 @@ Be a guiding light!
 Ali Adams
 heliwave.com
 God >
-</pre>
