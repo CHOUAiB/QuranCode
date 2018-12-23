@@ -1,4 +1,4 @@
-﻿
+﻿<pre>
                          بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 
 QuranCode جفر القرءان is a numerical research tool for the Final Book of God, Al-Quran (القرءان).
@@ -18,11 +18,13 @@ Ali is a path to the Truth we follow.		علي صراط حق نمسكه
 Perfect text with a decisive secret.		نص حكيم له سر قاطع
 ------------------------------------------------------------------------------
 
-![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/blob/master/Common/Images/1.png?raw=true "Search Results as Text")
+</pre>
+![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
 ![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/blob/master/Common/Images/2.png?raw=true "Search Results as Graph")
 ![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/blob/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
 ![114 Amazing Numbers                   ](https://raw.githubusercontent.com/heliwave/QuranCode/blob/master/Common/Images/4.png?raw=true "Quran's 114 Amazing Numbers")
 
+<pre>
 ![QuranCode1433](http://heliwave.com/QuranCode1433.png)
 
 بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
@@ -229,3 +231,4 @@ Be a guiding light!
 Ali Adams
 heliwave.com
 God >
+</pre>
