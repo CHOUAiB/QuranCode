@@ -3,18 +3,16 @@
 
 QuranCode جفر القرءان is a numerical research tool for the Final Book of God, Al-Quran (القرءان).
 
+</pre>
+![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
+![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/2.png?raw=true "Search Results as Graph")
+<pre>
+
 QuranCode جفر القرءان is the #1 numerical research tool for Quran researchers with support for
 hundreds of letter-value systems, translations, reciters, word-by-word grammar,
 search by text, by numbers, by similarity or by letter frequency sum,
 full live letter and word frequency statistics as you highlight text,
 plus binary and DNA converters.
-
-</pre>
-![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
-![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/2.png?raw=true "Search Results as Graph")
-![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
-![114 Amazing Numbers                   ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/4.png?raw=true "Quran's 114 Amazing Numbers")
-<pre>
 
 The Quran is a Readable Ciphertext and is therefore named Al-Quran (قرءان) and its first chapter
 is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (القرءان الكريم) as per Quran 56:75-80
@@ -34,6 +32,9 @@ Perfect text with a decisive secret.		نص حكيم له سر قاطع
 56:79	none can access it except the purified,				لَّا يَمَسُّهُۥٓ إِلَّا ٱلْمُطَهَّرُونَ
 56:80	sent down gradually from the Lord of the worlds.		تَنزِيلٌۭ مِّن رَّبِّ ٱلْعَٰلَمِينَ
 
+</pre>
+![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
+<pre>
 
 ------------------------------------------------------------------------------
 QuranCode Editions:
@@ -75,6 +76,10 @@ Key = 7 verses = 29 words = 139 letters                      additive primes
       729139 left-to-right concatenation                     additive prime
       139297 right-to-left concatenation                     additive prime
 ------------------------------------------------------------------------------
+
+</pre>
+![114 Amazing Numbers                   ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/4.png?raw=true "Quran's 114 Amazing Numbers")
+<pre>
 
 ------------------------------------------------------------------------------
 First 7 verses in the Quran = 29 words
