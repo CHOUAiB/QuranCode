@@ -3,6 +3,12 @@
 
 QuranCode جفر القرءان is a numerical research tool for the Final Book of God, Al-Quran (القرءان).
 
+Initial Letter Sentences (جمل الحروف المقطعة)
+------------------------------------------------------------------------------
+Ali is a path to the Truth we follow.		علي صراط حق نمسكه
+Perfect text with a decisive secret.		نص حكيم له سر قاطع
+------------------------------------------------------------------------------
+
 </pre>
 ![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
 ![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/2.png?raw=true "Search Results as Graph")
@@ -20,12 +26,6 @@ plus binary and DNA converters.
 
 The Quran is a Readable Ciphertext and is therefore named Al-Quran (قرءان) and its first chapter
 is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (القرءان الكريم) as per Quran 56:75-80
-
-Initial Letter Sentences (جمل الحروف المقطعة)
-------------------------------------------------------------------------------
-Ali is a path to the Truth we follow.		علي صراط حق نمسكه
-Perfect text with a decisive secret.		نص حكيم له سر قاطع
-------------------------------------------------------------------------------
 
 بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 
