@@ -12,8 +12,10 @@ Ali is a path to the Truth we hold fast to.	علي صراط حق نمسكه
 ![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
 ![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/2.png?raw=true "Search Results as Graph")
 <pre>
-QuranCode جفر القرءان is the #1 numerical research tool for Quran researchers with support for any letter-value systems, any translation, any reciter, word-by-word grammar,
-search by text, numbers, similarity or letter frequency sum, and live letter and word frequency statistics.
+QuranCode جفر القرءان is a comprehensive numerical Quran research tool with support for any letter-value system,
+any translation, any reciter, search by text, numbers, similarity or letter frequency sum, letter/word statistics,
+word-by-word grammar, and CTRL+Click a word to display all verses with it related words.
+QuranCode also supports text-to-binary and text-to-DNA converters.
 </pre>
 ![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
 <pre>
