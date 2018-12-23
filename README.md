@@ -9,6 +9,13 @@ search by text, by numbers, by similarity or by letter frequency sum,
 full live letter and word frequency statistics as you highlight text,
 plus binary and DNA converters.
 
+</pre>
+![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
+![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/2.png?raw=true "Search Results as Graph")
+![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
+![114 Amazing Numbers                   ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/4.png?raw=true "Quran's 114 Amazing Numbers")
+<pre>
+
 The Quran is a Readable Ciphertext and is therefore named Al-Quran (قرءان) and its first chapter
 is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (القرءان الكريم) as per Quran 56:75-80
 
@@ -18,16 +25,8 @@ Ali is a path to the Truth we follow.		علي صراط حق نمسكه
 Perfect text with a decisive secret.		نص حكيم له سر قاطع
 ------------------------------------------------------------------------------
 
-</pre>
-![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
-![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/blob/master/Common/Images/2.png?raw=true "Search Results as Graph")
-![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/blob/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
-![114 Amazing Numbers                   ](https://raw.githubusercontent.com/heliwave/QuranCode/blob/master/Common/Images/4.png?raw=true "Quran's 114 Amazing Numbers")
-
-<pre>
-![QuranCode1433](http://heliwave.com/QuranCode1433.png)
-
 بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+
 56:75	I swear by the positions of the stars (or bookmarkers)!		۞ فَلَآ أُقْسِمُ بِمَوَٰقِعِ ٱلنُّجُومِ
 56:76	And indeed it is a great oath, if you only knew.		وَإِنَّهُۥ لَقَسَمٌۭ لَّوْ تَعْلَمُونَ عَظِيمٌ
 56:77	It is indeed an ever-revealing Quran,				إِنَّهُۥ لَقُرْءَانٌۭ كَرِيمٌۭ
