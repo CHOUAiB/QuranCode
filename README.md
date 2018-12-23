@@ -14,6 +14,10 @@ search by text, by numbers, by similarity or by letter frequency sum,
 full live letter and word frequency statistics as you highlight text,
 plus binary and DNA converters.
 
+</pre>
+![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
+<pre>
+
 The Quran is a Readable Ciphertext and is therefore named Al-Quran (قرءان) and its first chapter
 is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (القرءان الكريم) as per Quran 56:75-80
 
@@ -31,10 +35,6 @@ Perfect text with a decisive secret.		نص حكيم له سر قاطع
 56:78	within a guarded Book,						فِى كِتَٰبٍۢ مَّكْنُونٍۢ
 56:79	none can access it except the purified,				لَّا يَمَسُّهُۥٓ إِلَّا ٱلْمُطَهَّرُونَ
 56:80	sent down gradually from the Lord of the worlds.		تَنزِيلٌۭ مِّن رَّبِّ ٱلْعَٰلَمِينَ
-
-</pre>
-![QuranCode: Similarity Search          ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/3.png?raw=true "Letters of Similar Verses = Sum of chapter numbers")
-<pre>
 
 ------------------------------------------------------------------------------
 QuranCode Editions:
