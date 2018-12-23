@@ -8,7 +8,6 @@ Initial Letter Sentences (جمل الحروف المقطعة)
 Perfect text with a decisive secret.		نص حكيم له سر قاطع
 Ali is a path to the Truth we hold fast to.	علي صراط حق نمسكه
 ------------------------------------------------------------------------------
-
 </pre>
 ![QuranCode: Ctrl+Click the word "Allah"](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/1.png?raw=true "Search Results as Text")
 ![QuranCode: Search by Text as Graph    ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/2.png?raw=true "Search Results as Graph")
