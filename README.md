@@ -3,6 +3,12 @@
 
 QuranCode جفر القرءان is a numerical research tool for the Final Book of God, Al-Quran (القرءان).
 
+------------------------------------------------------------------------------
+QuranCode Editions:
+	Standard Edition	Editable value systems with 19 add options.	[Start normally]
+	Ultimate Edition	Private research methods and big numbers.	[Start with Shift]
+------------------------------------------------------------------------------
+
 Initial Letter Sentences (جمل الحروف المقطعة)
 ------------------------------------------------------------------------------
 Perfect text with a decisive secret.		نص حكيم له سر قاطع
@@ -33,11 +39,9 @@ is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (الق�
 56:79	none can access it except the purified,				لَّا يَمَسُّهُۥٓ إِلَّا ٱلْمُطَهَّرُونَ
 56:80	sent down gradually from the Lord of the worlds.		تَنزِيلٌۭ مِّن رَّبِّ ٱلْعَٰلَمِينَ
 
-------------------------------------------------------------------------------
-QuranCode Editions:
-	Standard Edition	Editable value systems with 19 add options.	[Start normally]
-	Ultimate Edition	Private research methods and big numbers.	[Start with Shift]
-------------------------------------------------------------------------------
+</pre>
+![114 Amazing Numbers                   ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/4.png?raw=true "Quran's 114 Amazing Numbers")
+<pre>
 
 Primalogy is a new numerology system that assigns prime values to the Arabic alphabet.
 It is derived from surat Al-Fatiha which is built upon prime numbers (7 verses, 29 words, 139 letters)
@@ -73,10 +77,6 @@ Key = 7 verses = 29 words = 139 letters                      additive primes
       729139 left-to-right concatenation                     additive prime
       139297 right-to-left concatenation                     additive prime
 ------------------------------------------------------------------------------
-
-</pre>
-![114 Amazing Numbers                   ](https://raw.githubusercontent.com/heliwave/QuranCode/master/Common/Images/4.png?raw=true "Quran's 114 Amazing Numbers")
-<pre>
 
 ------------------------------------------------------------------------------
 First 7 verses in the Quran = 29 words
