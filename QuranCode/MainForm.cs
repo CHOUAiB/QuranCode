@@ -15543,25 +15543,19 @@ public partial class MainForm : Form, ISubscriber
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Hz");
                 ResearchMethodParameterTextBox.Visible = true;
             }
-            else if (method_name.StartsWith("ChooseWords"))
+            else if (method_name == "nWords_kLetters")
             {
                 ResearchMethodParameterTextBox.Text = "7,29";
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "words,letters");
                 ResearchMethodParameterTextBox.Visible = true;
             }
-            else if (method_name == "ChooseWords")
-            {
-                ResearchMethodParameterTextBox.Text = "7,29";
-                ToolTip.SetToolTip(ResearchMethodParameterTextBox, "words,letters");
-                ResearchMethodParameterTextBox.Visible = true;
-            }
-            else if (method_name == "ChooseVerses")
+            else if (method_name == "nVerses_kWords")
             {
                 ResearchMethodParameterTextBox.Text = "7,29";
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "verses,words");
                 ResearchMethodParameterTextBox.Visible = true;
             }
-            else if (method_name == "ChooseChapters")
+            else if (method_name == "nChapters_kVerses")
             {
                 ResearchMethodParameterTextBox.Text = "7,29";
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "chapters,verses");
@@ -15573,7 +15567,7 @@ public partial class MainForm : Form, ISubscriber
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "Pivot");
                 ResearchMethodParameterTextBox.Visible = true;
             }
-            else if (method_name.Contains("Equals"))
+            else if (method_name.Contains("Index"))
             {
                 ResearchMethodParameterTextBox.Text = "0";
                 ToolTip.SetToolTip(ResearchMethodParameterTextBox, "to within");

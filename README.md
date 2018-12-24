@@ -33,7 +33,7 @@ is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (الق�
 
 بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
 
-56:75	I swear by the positions of the stars (or bookmarkers)!		۞ فَلَآ أُقْسِمُ بِمَوَٰقِعِ ٱلنُّجُومِ
+56:75	I swear by the positions of the stars (or bookmarks)!		۞ فَلَآ أُقْسِمُ بِمَوَٰقِعِ ٱلنُّجُومِ
 56:76	And indeed it is a great oath, if you only knew.		وَإِنَّهُۥ لَقَسَمٌۭ لَّوْ تَعْلَمُونَ عَظِيمٌ
 56:77	It is indeed an ever-revealing Quran,				إِنَّهُۥ لَقُرْءَانٌۭ كَرِيمٌۭ
 56:78	within a guarded Book,						فِى كِتَٰبٍۢ مَّكْنُونٍۢ

@@ -3768,7 +3768,7 @@ public static partial class Research
     public static void __________________________(Client client, string param, bool in_search_result)
     {
     }
-    public static void ChooseWords(Client client, string param, bool in_search_result)
+    public static void nWords_kLetters(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
@@ -3817,7 +3817,7 @@ public static partial class Research
             }
         }
     }
-    public static void ChooseVerses(Client client, string param, bool in_search_result)
+    public static void nVerses_kWords(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
@@ -3860,7 +3860,7 @@ public static partial class Research
             }
         }
     }
-    public static void ChooseChapters(Client client, string param, bool in_search_result)
+    public static void nChapters_kVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         List<Verse> verses = GetSourceVerses(client, in_search_result);
@@ -4940,6 +4940,142 @@ public static partial class Research
         return str.ToString();
     }
 
+    public static void _____________________________________________________(Client client, string param, bool in_search_result)
+    {
+    }
+    public static void FirstWordFrequencyEqualsVerseNumber(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoFirstWordFrequencyEqualsVerseNumber(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "FirstWordFrequencyEqualsVerseNumber" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    public static void LastWordFrequencyEqualsVerseNumber(Client client, string param, bool in_search_result)
+    {
+        if (client == null) return;
+        if (client.NumerologySystem == null) return;
+        List<Verse> verses = GetSourceVerses(client, in_search_result);
+
+        string result = DoLastWordFrequencyEqualsVerseNumber(client, verses, param);
+
+        string filename = client.NumerologySystem.Name + "_" + "LastWordFrequencyEqualsVerseNumber" + Globals.OUTPUT_FILE_EXT;
+        if (Directory.Exists(Globals.RESEARCH_FOLDER))
+        {
+            string path = Globals.RESEARCH_FOLDER + "/" + filename;
+            FileHelper.SaveText(path, result);
+            FileHelper.DisplayFile(path);
+        }
+    }
+    private static string DoFirstWordFrequencyEqualsVerseNumber(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses.Count > 0)
+        {
+            str.AppendLine
+            (
+                "#" + "\t" +
+                "Word" + "\t" +
+                "Text" + "\t" +
+                "Frequency"
+            );
+
+            int count = 0;
+            foreach (Verse verse in verses)
+            {
+                Word word = verse.Words[0];
+                if (word != null)
+                {
+                    int frequency = 0;
+                    foreach (Verse v in verses)
+                    {
+                        foreach (Word w in v.Words)
+                        {
+                            if (word.Text == w.Text)
+                            {
+                                frequency++;
+                            }
+                        }
+                    }
+
+                    if (frequency == verse.NumberInChapter)
+                    {
+                        count++;
+                        str.AppendLine
+                        (
+                            count.ToString() + "\t" +
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            frequency.ToString()
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+    private static string DoLastWordFrequencyEqualsVerseNumber(Client client, List<Verse> verses, string param)
+    {
+        if (client == null) return null;
+        if (verses == null) return null;
+
+        StringBuilder str = new StringBuilder();
+        if (verses.Count > 0)
+        {
+            str.AppendLine
+            (
+                "#" + "\t" +
+                "Word" + "\t" +
+                "Text" + "\t" +
+                "Frequency"
+            );
+
+            int count = 0;
+            foreach (Verse verse in verses)
+            {
+                Word word = verse.Words[verse.Words.Count - 1];
+                if (word != null)
+                {
+                    int frequency = 0;
+                    foreach (Verse v in verses)
+                    {
+                        foreach (Word w in v.Words)
+                        {
+                            if (word.Text == w.Text)
+                            {
+                                frequency++;
+                            }
+                        }
+                    }
+
+                    if (frequency == verse.NumberInChapter)
+                    {
+                        count++;
+                        str.AppendLine
+                        (
+                            count.ToString() + "\t" +
+                            word.Address + "\t" +
+                            word.Text + "\t" +
+                            frequency.ToString()
+                        );
+                    }
+                }
+            }
+        }
+        return str.ToString();
+    }
+
     public static void __________________________________________________(Client client, string param, bool in_search_result)
     {
     }
@@ -4991,7 +5127,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void C_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -5007,7 +5143,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void AC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
@@ -5023,7 +5159,7 @@ public static partial class Research
             FileHelper.DisplayFile(path);
         }
     }
-    private static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
+    public static void XC_PivotConsecutiveVerses(Client client, string param, bool in_search_result)
     {
         if (client == null) return;
         if (client.NumerologySystem == null) return;
