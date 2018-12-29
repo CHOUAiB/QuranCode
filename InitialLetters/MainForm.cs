@@ -283,10 +283,10 @@ namespace InitialLetters
             MessageBox.Show(String.Format(
                 "Initial Letters - v{0}", Application.ProductVersion + "\r\n"
                 + "\r\n"
-                + "©2007 Eric Hanchrow - Anagrams" + "\r\n"
+                + "Copyright ©2007 Eric Hanchrow - Anagrams" + "\r\n"
                 + "http://github.com/offby1/anagrams" + "\r\n"
                 + "\r\n"
-                + "©2012 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي" + "\r\n"
+                + "Copyright ©2012 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي" + "\r\n"
                 + "http://www.qurancode.com" + "\r\n"
                 ),
                 Application.ProductName);

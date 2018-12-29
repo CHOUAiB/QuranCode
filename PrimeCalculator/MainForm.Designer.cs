@@ -517,7 +517,7 @@
             this.PCIndexChainLabel.Tag = "http://eng.bu.ac.th/bucroccs/index.php/research/14-people-detail/19-dr-waleed-s-m" +
     "ohammed";
             this.PCIndexChainLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ToolTip.SetToolTip(this.PCIndexChainLabel, "©2016 Dr Waleed S. Mohammed");
+            this.ToolTip.SetToolTip(this.PCIndexChainLabel, "Copyright ©2016 Dr Waleed S. Mohammed");
             this.PCIndexChainLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 
             // HistoryClearLabel

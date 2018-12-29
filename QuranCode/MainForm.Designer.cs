@@ -1599,7 +1599,7 @@ partial class MainForm
         this.NoorsoftLinkLabel.TabIndex = 0;
         this.NoorsoftLinkLabel.Tag = "http://noorsoft.org";
         this.NoorsoftLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "©2005 Noorsoft Root List");
+        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "Copyright ©2005 Noorsoft Root List");
         this.NoorsoftLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.NoorsoftLinkLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -8599,7 +8599,7 @@ partial class MainForm
         this.TanzilLabel.TabIndex = 1;
         this.TanzilLabel.Tag = "http://tanzil.net/";
         this.TanzilLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.TanzilLabel, "©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TanzilLabel, "Copyright ©2008 Tanzil Quran Text");
         this.TanzilLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.TanzilLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -8785,7 +8785,7 @@ partial class MainForm
         this.ValueNavigatorLinkLabel.Size = new System.Drawing.Size(6, 4);
         this.ValueNavigatorLinkLabel.TabIndex = 0;
         this.ValueNavigatorLinkLabel.Tag = "http://quran-2012.ir";
-        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "©2009 Aminreza Ebrahimi Saba");
+        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "Copyright ©2009 Aminreza Ebrahimi Saba");
         this.ValueNavigatorLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.ValueNavigatorLinkLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
@@ -9126,7 +9126,7 @@ partial class MainForm
         this.FindByFrequencyLinkLabel.TabIndex = 110;
         this.FindByFrequencyLinkLabel.Tag = "http://www.facebook.com/hadyalthahaby";
         this.FindByFrequencyLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "©2005 Hadi Al-Thehabi");
+        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "Copyright ©2005 Hadi Al-Thehabi");
         this.FindByFrequencyLinkLabel.Visible = false;
         this.FindByFrequencyLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
@@ -9701,7 +9701,7 @@ partial class MainForm
         this.PCIndexChainLabel.Tag = "http://eng.bu.ac.th/bucroccs/index.php/research/14-people-detail/19-dr-waleed-s-m" +
             "ohammed";
         this.PCIndexChainLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "©2016 Dr Waleed S. Mohammed");
+        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "Copyright ©2016 Dr Waleed S. Mohammed");
         this.PCIndexChainLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // IndexChainLengthTextBox
@@ -10440,7 +10440,7 @@ partial class MainForm
         this.TextModeLabel.TabIndex = 0;
         this.TextModeLabel.Tag = "http://tanzil.net/";
         this.TextModeLabel.Text = "Text";
-        this.ToolTip.SetToolTip(this.TextModeLabel, "©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TextModeLabel, "Copyright ©2008 Tanzil Quran Text");
         this.TextModeLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // RecitationsCheckedListBox
@@ -10702,7 +10702,7 @@ partial class MainForm
         this.EveryAyahLabel.TabIndex = 91;
         this.EveryAyahLabel.Tag = "http://everyayah.com";
         this.EveryAyahLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.EveryAyahLabel, "©2009 Quran Audio Server");
+        this.ToolTip.SetToolTip(this.EveryAyahLabel, "Copyright ©2009 Quran Audio Server");
         this.EveryAyahLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.EveryAyahLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 

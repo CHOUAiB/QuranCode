@@ -32,7 +32,6 @@ The Quran is a Readable Ciphertext and is therefore named Al-Quran (قرءان) 
 is The Key (الفاتحة) to unlocking the inner ever-revealing Quran (القرءان الكريم) as per Quran 56:75-80
 
 بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-
 56:75	I swear by the positions of the stars (or bookmarks)!		۞ فَلَآ أُقْسِمُ بِمَوَٰقِعِ ٱلنُّجُومِ
 56:76	And indeed it is a great oath, if you only knew.		وَإِنَّهُۥ لَقَسَمٌۭ لَّوْ تَعْلَمُونَ عَظِيمٌ
 56:77	It is indeed an ever-revealing Quran,				إِنَّهُۥ لَقُرْءَانٌۭ كَرِيمٌۭ

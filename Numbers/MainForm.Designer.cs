@@ -63,7 +63,7 @@
             this.WebsiteLabel.Size = new System.Drawing.Size(1028, 14);
             this.WebsiteLabel.TabIndex = 999;
             this.WebsiteLabel.Tag = "http://qurancode.com";
-            this.WebsiteLabel.Text = "©2018 Ali Adams      www.qurancode.com";
+            this.WebsiteLabel.Text = "Copyright ©2019 Ali Adams      www.qurancode.com";
             this.WebsiteLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.WebsiteLabel.Click += new System.EventHandler(this.LinkLabel_Click);
             // 

@@ -2384,7 +2384,7 @@ public partial class MainForm : Form, ISubscriber
         this.NoorsoftLinkLabel.TabIndex = 0;
         this.NoorsoftLinkLabel.Tag = "http://noorsoft.org";
         this.NoorsoftLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "©2005 Noorsoft Root List");
+        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "Copyright ©2005 Noorsoft Root List");
         this.NoorsoftLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.NoorsoftLinkLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -9778,7 +9778,7 @@ public partial class MainForm : Form, ISubscriber
         this.TanzilLabel.TabIndex = 153;
         this.TanzilLabel.Tag = "http://tanzil.net/";
         this.TanzilLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.TanzilLabel, "©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TanzilLabel, "Copyright ©2008 Tanzil Quran Text");
         this.TanzilLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.TanzilLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -9902,7 +9902,7 @@ public partial class MainForm : Form, ISubscriber
         this.ValueNavigatorLinkLabel.Size = new System.Drawing.Size(8, 5);
         this.ValueNavigatorLinkLabel.TabIndex = 0;
         this.ValueNavigatorLinkLabel.Tag = "http://quran-2012.ir";
-        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "©2009 Aminreza Ebrahimi Saba");
+        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "Copyright ©2009 Aminreza Ebrahimi Saba");
         this.ValueNavigatorLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.ValueNavigatorLinkLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
@@ -10222,7 +10222,7 @@ public partial class MainForm : Form, ISubscriber
         this.FindByFrequencyLinkLabel.TabIndex = 110;
         this.FindByFrequencyLinkLabel.Tag = "http://www.facebook.com/hadyalthahaby";
         this.FindByFrequencyLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "©2005 Hadi Al-Thehabi");
+        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "Copyright ©2005 Hadi Al-Thehabi");
         this.FindByFrequencyLinkLabel.Visible = false;
         this.FindByFrequencyLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
@@ -10850,7 +10850,7 @@ public partial class MainForm : Form, ISubscriber
         this.PCIndexChainLabel.Tag = "http://eng.bu.ac.th/bucroccs/index.php/research/14-people-detail/19-dr-waleed-s-m" +
 "ohammed";
         this.PCIndexChainLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "©2016 Dr Waleed S. Mohammed");
+        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "Copyright ©2016 Dr Waleed S. Mohammed");
         this.PCIndexChainLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // IndexChainLengthTextBox
@@ -11631,7 +11631,7 @@ public partial class MainForm : Form, ISubscriber
         this.TextModeLabel.TabIndex = 0;
         this.TextModeLabel.Tag = "http://tanzil.net";
         this.TextModeLabel.Text = "Text";
-        this.ToolTip.SetToolTip(this.TextModeLabel, "©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TextModeLabel, "Copyright ©2008 Tanzil Quran Text");
         this.TextModeLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // RecitationsCheckedListBox
@@ -11909,7 +11909,7 @@ public partial class MainForm : Form, ISubscriber
         this.EveryAyahLabel.TabIndex = 91;
         this.EveryAyahLabel.Tag = "http://everyayah.com";
         this.EveryAyahLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.EveryAyahLabel, "©2009 Quran Audio Server");
+        this.ToolTip.SetToolTip(this.EveryAyahLabel, "Copyright ©2009 Quran Audio Server");
         this.EveryAyahLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.EveryAyahLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
@@ -39562,6 +39562,10 @@ public partial class MainForm : Form, ISubscriber
         NumerologySystemComboBox.Focus();
     }
 
+    private bool m_user_text_mode = false;
+    private List<Verse> m_highlighted_verses = null;
+    private int m_first_verse_letter_index = -1;
+    private int m_last_verse_letter_index = -1;
     private void CalculateCurrentValue()
     {
         if (m_active_textbox != null)
@@ -39625,7 +39629,6 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private bool m_user_text_mode = false;
     private void CalculateCurrentText()
     {
         if (m_active_textbox != null)
@@ -39733,7 +39736,7 @@ public partial class MainForm : Form, ISubscriber
                     last_char--;
                 }
 
-                List<Verse> highlighted_verses = new List<Verse>();
+                m_highlighted_verses = new List<Verse>();
                 Verse first_verse = GetVerseAtChar(first_char);
                 if (first_verse != null)
                 {
@@ -39759,24 +39762,24 @@ public partial class MainForm : Form, ISubscriber
                             int last_verse_index = GetVerseIndex(last_verse);
                             for (int i = first_verse_index; i <= last_verse_index; i++)
                             {
-                                highlighted_verses.Add(verses[i]);
+                                m_highlighted_verses.Add(verses[i]);
                             }
 
                             Letter letter1 = GetLetterAtChar(first_char);
                             if (letter1 != null)
                             {
-                                int first_verse_letter_index = letter1.NumberInVerse - 1;
+                                m_first_verse_letter_index = letter1.NumberInVerse - 1;
 
                                 Letter letter2 = GetLetterAtChar(last_char);
                                 if (letter2 != null)
                                 {
-                                    int last_verse_letter_index = letter2.NumberInVerse - 1;
+                                    m_last_verse_letter_index = letter2.NumberInVerse - 1;
 
                                     // calculate and display verse_number_sum, word_number_sum, letter_number_sum
-                                    CalculateAndDisplayCounts(highlighted_verses, first_verse_letter_index, last_verse_letter_index);
+                                    CalculateAndDisplayCounts(m_highlighted_verses, m_first_verse_letter_index, m_last_verse_letter_index);
 
                                     // calculate Letters value
-                                    CalculateValueAndDisplayFactors(highlighted_verses, first_verse_letter_index, last_verse_letter_index);
+                                    CalculateValueAndDisplayFactors(m_highlighted_verses, m_first_verse_letter_index, m_last_verse_letter_index);
                                 }
                             }
                         }
