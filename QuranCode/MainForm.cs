@@ -2384,7 +2384,7 @@ public partial class MainForm : Form, ISubscriber
         this.NoorsoftLinkLabel.TabIndex = 0;
         this.NoorsoftLinkLabel.Tag = "http://noorsoft.org";
         this.NoorsoftLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "Copyright ©2005 Noorsoft Root List");
+        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "©2005 Noorsoft Root List");
         this.NoorsoftLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.NoorsoftLinkLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -9778,7 +9778,7 @@ public partial class MainForm : Form, ISubscriber
         this.TanzilLabel.TabIndex = 153;
         this.TanzilLabel.Tag = "http://tanzil.net/";
         this.TanzilLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.TanzilLabel, "Copyright ©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TanzilLabel, "©2008 Tanzil Quran Text");
         this.TanzilLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.TanzilLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -9902,7 +9902,7 @@ public partial class MainForm : Form, ISubscriber
         this.ValueNavigatorLinkLabel.Size = new System.Drawing.Size(8, 5);
         this.ValueNavigatorLinkLabel.TabIndex = 0;
         this.ValueNavigatorLinkLabel.Tag = "http://quran-2012.ir";
-        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "Copyright ©2009 Aminreza Ebrahimi Saba");
+        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "©2009 Aminreza Ebrahimi Saba");
         this.ValueNavigatorLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.ValueNavigatorLinkLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
@@ -10222,7 +10222,7 @@ public partial class MainForm : Form, ISubscriber
         this.FindByFrequencyLinkLabel.TabIndex = 110;
         this.FindByFrequencyLinkLabel.Tag = "http://www.facebook.com/hadyalthahaby";
         this.FindByFrequencyLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "Copyright ©2005 Hadi Al-Thehabi");
+        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "©2005 Hadi Al-Thehabi");
         this.FindByFrequencyLinkLabel.Visible = false;
         this.FindByFrequencyLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
@@ -10850,7 +10850,7 @@ public partial class MainForm : Form, ISubscriber
         this.PCIndexChainLabel.Tag = "http://eng.bu.ac.th/bucroccs/index.php/research/14-people-detail/19-dr-waleed-s-m" +
 "ohammed";
         this.PCIndexChainLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "Copyright ©2016 Dr Waleed S. Mohammed");
+        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "©2016 Dr Waleed S. Mohammed");
         this.PCIndexChainLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // IndexChainLengthTextBox
@@ -11413,9 +11413,9 @@ public partial class MainForm : Form, ISubscriber
         this.AddDistancesToNextCheckBox.BackColor = System.Drawing.Color.Transparent;
         this.AddDistancesToNextCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.AddDistancesToNextCheckBox.ForeColor = System.Drawing.Color.Maroon;
-        this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(9, 289);
+        this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(7, 243);
         this.AddDistancesToNextCheckBox.Name = "AddDistancesToNextCheckBox";
-        this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(172, 18);
+        this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(172, 16);
         this.AddDistancesToNextCheckBox.TabIndex = 142;
         this.AddDistancesToNextCheckBox.Text = "∆ →";
         this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = false;
@@ -11426,9 +11426,9 @@ public partial class MainForm : Form, ISubscriber
         this.AddDistancesToPreviousCheckBox.BackColor = System.Drawing.Color.Transparent;
         this.AddDistancesToPreviousCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.AddDistancesToPreviousCheckBox.ForeColor = System.Drawing.Color.Maroon;
-        this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(9, 271);
+        this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(7, 243);
         this.AddDistancesToPreviousCheckBox.Name = "AddDistancesToPreviousCheckBox";
-        this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(172, 18);
+        this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(172, 16);
         this.AddDistancesToPreviousCheckBox.TabIndex = 141;
         this.AddDistancesToPreviousCheckBox.Text = "∆ ←";
         this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = false;
@@ -11439,11 +11439,11 @@ public partial class MainForm : Form, ISubscriber
         this.AddPositionsCheckBox.BackColor = System.Drawing.Color.Transparent;
         this.AddPositionsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.AddPositionsCheckBox.ForeColor = System.Drawing.Color.Maroon;
-        this.AddPositionsCheckBox.Location = new System.Drawing.Point(9, 253);
+        this.AddPositionsCheckBox.Location = new System.Drawing.Point(7, 228);
         this.AddPositionsCheckBox.Name = "AddPositionsCheckBox";
         this.AddPositionsCheckBox.Size = new System.Drawing.Size(172, 16);
         this.AddPositionsCheckBox.TabIndex = 140;
-        this.AddPositionsCheckBox.Text = "√";
+        this.AddPositionsCheckBox.Text = "Pos";
         this.AddPositionsCheckBox.UseVisualStyleBackColor = false;
         this.AddPositionsCheckBox.CheckedChanged += new System.EventHandler(this.AddPositionsCheckBox_CheckedChanged);
         // 
@@ -11631,7 +11631,7 @@ public partial class MainForm : Form, ISubscriber
         this.TextModeLabel.TabIndex = 0;
         this.TextModeLabel.Tag = "http://tanzil.net";
         this.TextModeLabel.Text = "Text";
-        this.ToolTip.SetToolTip(this.TextModeLabel, "Copyright ©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TextModeLabel, "©2008 Tanzil Quran Text");
         this.TextModeLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // RecitationsCheckedListBox
@@ -11909,7 +11909,7 @@ public partial class MainForm : Form, ISubscriber
         this.EveryAyahLabel.TabIndex = 91;
         this.EveryAyahLabel.Tag = "http://everyayah.com";
         this.EveryAyahLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.EveryAyahLabel, "Copyright ©2009 Quran Audio Server");
+        this.ToolTip.SetToolTip(this.EveryAyahLabel, "©2009 Quran Audio Server");
         this.EveryAyahLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.EveryAyahLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
@@ -39563,9 +39563,9 @@ public partial class MainForm : Form, ISubscriber
     }
 
     private bool m_user_text_mode = false;
-    private List<Verse> m_highlighted_verses = null;
-    private int m_first_verse_letter_index = -1;
-    private int m_last_verse_letter_index = -1;
+    private List<Verse> m_current_verses = null;
+    private Letter m_current_start_letter = null;
+    private Letter m_current_end_letter = null;
     private void CalculateCurrentValue()
     {
         if (m_active_textbox != null)
@@ -39736,7 +39736,7 @@ public partial class MainForm : Form, ISubscriber
                     last_char--;
                 }
 
-                m_highlighted_verses = new List<Verse>();
+                m_current_verses = new List<Verse>();
                 Verse first_verse = GetVerseAtChar(first_char);
                 if (first_verse != null)
                 {
@@ -39762,24 +39762,20 @@ public partial class MainForm : Form, ISubscriber
                             int last_verse_index = GetVerseIndex(last_verse);
                             for (int i = first_verse_index; i <= last_verse_index; i++)
                             {
-                                m_highlighted_verses.Add(verses[i]);
+                                m_current_verses.Add(verses[i]);
                             }
 
-                            Letter letter1 = GetLetterAtChar(first_char);
-                            if (letter1 != null)
+                            m_current_start_letter = GetLetterAtChar(first_char);
+                            if (m_current_start_letter != null)
                             {
-                                m_first_verse_letter_index = letter1.NumberInVerse - 1;
-
-                                Letter letter2 = GetLetterAtChar(last_char);
-                                if (letter2 != null)
+                                m_current_end_letter = GetLetterAtChar(last_char);
+                                if (m_current_end_letter != null)
                                 {
-                                    m_last_verse_letter_index = letter2.NumberInVerse - 1;
-
                                     // calculate and display verse_number_sum, word_number_sum, letter_number_sum
-                                    CalculateAndDisplayCounts(m_highlighted_verses, m_first_verse_letter_index, m_last_verse_letter_index);
+                                    CalculateAndDisplayCounts(m_current_verses, m_current_start_letter, m_current_end_letter);
 
                                     // calculate Letters value
-                                    CalculateValueAndDisplayFactors(m_highlighted_verses, m_first_verse_letter_index, m_last_verse_letter_index);
+                                    CalculateValueAndDisplayFactors(m_current_verses, m_current_start_letter, m_current_end_letter);
                                 }
                             }
                         }
@@ -39891,11 +39887,11 @@ public partial class MainForm : Form, ISubscriber
             FactorizeValue(value, false);
         }
     }
-    private void CalculateValueAndDisplayFactors(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2)
+    private void CalculateValueAndDisplayFactors(List<Verse> verses, Letter start_letter, Letter end_letter)
     {
         if (m_client != null)
         {
-            long value = m_client.CalculateValue(verses, letter_index_in_verse1, letter_index_in_verse2);
+            long value = m_client.CalculateValue(verses, start_letter, end_letter);
             FactorizeValue(value, false);
         }
     }
@@ -41753,11 +41749,11 @@ public partial class MainForm : Form, ISubscriber
             }
         }
     }
-    private void CalculateAndDisplayCounts(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2)
+    private void CalculateAndDisplayCounts(List<Verse> verses, Letter start_letter, Letter end_letter)
     {
-        CalculateAndDisplayCounts(verses, letter_index_in_verse1, letter_index_in_verse2, 0, 0);
+        CalculateAndDisplayCounts(verses, start_letter, end_letter, 0, 0);
     }
-    private void CalculateAndDisplayCounts(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2, int stopmarks, int quranmarks)
+    private void CalculateAndDisplayCounts(List<Verse> verses, Letter start_letter, Letter end_letter, int stopmarks, int quranmarks)
     {
         if (verses != null)
         {
@@ -41784,26 +41780,26 @@ public partial class MainForm : Form, ISubscriber
                             }
                         }
 
-                        ///////////////////////////
-                        // Middle Verse Part (verse1, letter_index_in_verse1, letter_index_in_verse2);
-                        ///////////////////////////
                         if (verses.Count == 1)
                         {
-                            Verse verse1 = verses[0];
-                            if (verse1 != null)
+                            ///////////////////////////
+                            // Verse's Middle Part
+                            ///////////////////////////
+                            Verse verse = verses[0];
+                            if (verse != null)
                             {
-                                verse_number_sum += verse1.NumberInChapter;
+                                verse_number_sum += verse.NumberInChapter;
 
-                                if (verse1.Words != null)
+                                if (verse.Words != null)
                                 {
-                                    foreach (Word word in verse1.Words)
+                                    foreach (Word word in verse.Words)
                                     {
                                         if (word != null)
                                         {
                                             if ((word.Letters != null) && (word.Letters.Count > 0))
                                             {
-                                                if ((word.Letters[word.Letters.Count - 1].NumberInVerse - 1) < letter_index_in_verse1) continue;
-                                                if ((word.Letters[0].NumberInVerse - 1) > letter_index_in_verse2) break;
+                                                if (word.Letters[word.Letters.Count - 1].NumberInVerse < start_letter.NumberInVerse) continue;
+                                                if (word.Letters[0].NumberInVerse > end_letter.NumberInVerse) break;
                                                 word_count++;
                                                 word_number_sum += word.NumberInVerse;
 
@@ -41811,8 +41807,8 @@ public partial class MainForm : Form, ISubscriber
                                                 {
                                                     if (letter != null)
                                                     {
-                                                        if ((letter.NumberInVerse - 1) < letter_index_in_verse1) continue;
-                                                        if ((letter.NumberInVerse - 1) > letter_index_in_verse2) break;
+                                                        if (letter.NumberInVerse < start_letter.NumberInVerse) continue;
+                                                        if (letter.NumberInVerse > end_letter.NumberInVerse) break;
                                                         letter_count++;
                                                         letter_number_sum += letter.NumberInWord;
                                                     }
@@ -41826,22 +41822,22 @@ public partial class MainForm : Form, ISubscriber
                         else if (verses.Count == 2)
                         {
                             ///////////////////////////
-                            // End Verse Part (verse1, letter_index_in_verse1);
+                            // First Verse's Last Part
                             ///////////////////////////
-                            Verse verse1 = verses[0];
-                            if (verse1 != null)
+                            Verse first_verse = verses[0];
+                            if (first_verse != null)
                             {
-                                verse_number_sum += verse1.NumberInChapter;
+                                verse_number_sum += first_verse.NumberInChapter;
 
-                                if (verse1.Words != null)
+                                if (first_verse.Words != null)
                                 {
-                                    foreach (Word word in verse1.Words)
+                                    foreach (Word word in first_verse.Words)
                                     {
                                         if (word != null)
                                         {
                                             if ((word.Letters != null) && (word.Letters.Count > 0))
                                             {
-                                                if ((word.Letters[word.Letters.Count - 1].NumberInVerse - 1) < letter_index_in_verse1) continue;
+                                                if (word.Letters[word.Letters.Count - 1].NumberInVerse < start_letter.NumberInVerse) continue;
                                                 word_count++;
                                                 word_number_sum += word.NumberInVerse;
 
@@ -41849,7 +41845,7 @@ public partial class MainForm : Form, ISubscriber
                                                 {
                                                     if (letter != null)
                                                     {
-                                                        if ((letter.NumberInVerse - 1) < letter_index_in_verse1) continue;
+                                                        if (letter.NumberInVerse < start_letter.NumberInVerse) continue;
                                                         letter_count++;
                                                         letter_number_sum += letter.NumberInWord;
                                                     }
@@ -41860,23 +41856,23 @@ public partial class MainForm : Form, ISubscriber
                                 }
                             }
 
-                            ///////////////////////////
-                            // Beginning Verse Part (verse2, letter_index_in_verse2);
-                            ///////////////////////////
-                            Verse verse2 = verses[1];
-                            if (verse2 != null)
+                            /////////////////////////////
+                            // Final Verse's Start Part
+                            /////////////////////////////
+                            Verse final_verse = verses[1];
+                            if (final_verse != null)
                             {
-                                verse_number_sum += verse2.NumberInChapter;
+                                verse_number_sum += final_verse.NumberInChapter;
 
-                                if (verse2.Words != null)
+                                if (final_verse.Words != null)
                                 {
-                                    foreach (Word word in verse2.Words)
+                                    foreach (Word word in final_verse.Words)
                                     {
                                         if (word != null)
                                         {
                                             if ((word.Letters != null) && (word.Letters.Count > 0))
                                             {
-                                                if ((word.Letters[0].NumberInVerse - 1) > letter_index_in_verse2) break;
+                                                if (word.Letters[0].NumberInVerse > end_letter.NumberInVerse) break;
                                                 word_count++;
                                                 word_number_sum += word.NumberInVerse;
 
@@ -41884,7 +41880,7 @@ public partial class MainForm : Form, ISubscriber
                                                 {
                                                     if (letter != null)
                                                     {
-                                                        if ((letter.NumberInVerse - 1) > letter_index_in_verse2) break;
+                                                        if (letter.NumberInVerse > end_letter.NumberInVerse) break;
                                                         letter_count++;
                                                         letter_number_sum += letter.NumberInWord;
                                                     }
@@ -41898,22 +41894,22 @@ public partial class MainForm : Form, ISubscriber
                         else if (verses.Count > 2)
                         {
                             ///////////////////////////
-                            // End Verse Part (verse1, letter_index_in_verse1);
+                            // First Verse's Last Part
                             ///////////////////////////
-                            Verse verse1 = verses[0];
-                            if (verse1 != null)
+                            Verse first_verse = verses[0];
+                            if (first_verse != null)
                             {
-                                verse_number_sum += verse1.NumberInChapter;
+                                verse_number_sum += first_verse.NumberInChapter;
 
-                                if (verse1.Words != null)
+                                if (first_verse.Words != null)
                                 {
-                                    foreach (Word word in verse1.Words)
+                                    foreach (Word word in first_verse.Words)
                                     {
                                         if (word != null)
                                         {
                                             if ((word.Letters != null) && (word.Letters.Count > 0))
                                             {
-                                                if ((word.Letters[word.Letters.Count - 1].NumberInVerse - 1) < letter_index_in_verse1) continue;
+                                                if (word.Letters[word.Letters.Count - 1].NumberInVerse < start_letter.NumberInVerse) continue;
                                                 word_count++;
                                                 word_number_sum += word.NumberInVerse;
 
@@ -41921,7 +41917,7 @@ public partial class MainForm : Form, ISubscriber
                                                 {
                                                     if (letter != null)
                                                     {
-                                                        if ((letter.NumberInVerse - 1) < letter_index_in_verse1) continue;
+                                                        if (letter.NumberInVerse < start_letter.NumberInVerse) continue;
                                                         letter_count++;
                                                         letter_number_sum += letter.NumberInWord;
                                                     }
@@ -41969,22 +41965,22 @@ public partial class MainForm : Form, ISubscriber
                             }
 
                             ///////////////////////////
-                            // Beginning Verse Part (verse2, letter_index_in_verse2);
+                            // Final Verse's Start Part
                             ///////////////////////////
-                            Verse verse2 = verses[verses.Count - 1];
-                            if (verse2 != null)
+                            Verse final_verse = verses[verses.Count - 1];
+                            if (final_verse != null)
                             {
-                                verse_number_sum += verse2.NumberInChapter;
+                                verse_number_sum += final_verse.NumberInChapter;
 
-                                if (verse2.Words != null)
+                                if (final_verse.Words != null)
                                 {
-                                    foreach (Word word in verse2.Words)
+                                    foreach (Word word in final_verse.Words)
                                     {
                                         if (word != null)
                                         {
                                             if ((word.Letters != null) && (word.Letters.Count > 0))
                                             {
-                                                if ((word.Letters[0].NumberInVerse - 1) > letter_index_in_verse2) break;
+                                                if (word.Letters[0].NumberInVerse > end_letter.NumberInVerse) break;
                                                 word_count++;
                                                 word_number_sum += word.NumberInVerse;
 
@@ -41992,7 +41988,7 @@ public partial class MainForm : Form, ISubscriber
                                                 {
                                                     if (letter != null)
                                                     {
-                                                        if ((letter.NumberInVerse - 1) > letter_index_in_verse2) break;
+                                                        if (letter.NumberInVerse > end_letter.NumberInVerse) break;
                                                         letter_count++;
                                                         letter_number_sum += letter.NumberInWord;
                                                     }

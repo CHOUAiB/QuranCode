@@ -543,11 +543,11 @@ partial class MainForm
         this.FindByFrequencyTotalLabel = new System.Windows.Forms.Label();
         this.LetterFrequencyInspectLabel = new System.Windows.Forms.Label();
         this.LetterFrequencyListView = new System.Windows.Forms.ListView();
-        this.LetterOrderColumnHeader = new System.Windows.Forms.ColumnHeader();
-        this.LetterCharacterColumnHeader = new System.Windows.Forms.ColumnHeader();
-        this.LetterFrequencyColumnHeader = new System.Windows.Forms.ColumnHeader();
-        this.LetterPositionSumColumnHeader = new System.Windows.Forms.ColumnHeader();
-        this.LetterDistanceSumColumnHeader = new System.Windows.Forms.ColumnHeader();
+        this.LetterOrderColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+        this.LetterCharacterColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+        this.LetterFrequencyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+        this.LetterPositionSumColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+        this.LetterDistanceSumColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
         this.LetterFrequencyContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
         this.PositionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
         this.DistancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -672,6 +672,7 @@ partial class MainForm
         this.ResearchPanel.SuspendLayout();
         this.BrowseGroupBox.SuspendLayout();
         this.ToolbarPanel.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).BeginInit();
         this.MainSplitContainer.Panel1.SuspendLayout();
         this.MainSplitContainer.Panel2.SuspendLayout();
         this.MainSplitContainer.SuspendLayout();
@@ -709,12 +710,14 @@ partial class MainForm
         ((System.ComponentModel.ISupportInitialize)(this.ChapterWordNumericUpDown)).BeginInit();
         ((System.ComponentModel.ISupportInitialize)(this.ChapterVerseNumericUpDown)).BeginInit();
         this.ChapterGroupBox.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)(this.ClientSplitContainer)).BeginInit();
         this.ClientSplitContainer.Panel1.SuspendLayout();
         this.ClientSplitContainer.Panel2.SuspendLayout();
         this.ClientSplitContainer.SuspendLayout();
         this.HeaderPanel.SuspendLayout();
         this.TabControl.SuspendLayout();
         this.TranslationTabPage.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)(this.TranslationSplitContainer)).BeginInit();
         this.TranslationSplitContainer.Panel1.SuspendLayout();
         this.TranslationSplitContainer.Panel2.SuspendLayout();
         this.TranslationSplitContainer.SuspendLayout();
@@ -741,6 +744,7 @@ partial class MainForm
         this.FindByFrequncyPanel.SuspendLayout();
         this.ValuePanel.SuspendLayout();
         this.PCIndexChainPanel.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)(this.StatisticsSplitContainer)).BeginInit();
         this.StatisticsSplitContainer.Panel1.SuspendLayout();
         this.StatisticsSplitContainer.SuspendLayout();
         this.RecitationGroupBox.SuspendLayout();
@@ -1006,8 +1010,8 @@ partial class MainForm
         // BookmarkPanel
         // 
         this.BookmarkPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.BookmarkPanel.BackColor = System.Drawing.Color.LightSteelBlue;
         this.BookmarkPanel.Controls.Add(this.DeleteBookmarkLabel);
         this.BookmarkPanel.Controls.Add(this.ClearBookmarksLabel);
@@ -1114,8 +1118,8 @@ partial class MainForm
         // BookmarkTextBox
         // 
         this.BookmarkTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.BookmarkTextBox.BackColor = System.Drawing.SystemColors.Window;
         this.BookmarkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.BookmarkTextBox.ForeColor = System.Drawing.Color.DarkGray;
@@ -1125,10 +1129,10 @@ partial class MainForm
         this.BookmarkTextBox.TabIndex = 99;
         this.BookmarkTextBox.Text = "write a note";
         this.BookmarkTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.BookmarkTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BookmarkTextBox_KeyDown);
-        this.BookmarkTextBox.Leave += new System.EventHandler(this.BookmarkTextBox_Leave);
-        this.BookmarkTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.BookmarkTextBox.Enter += new System.EventHandler(this.BookmarkTextBox_Enter);
+        this.BookmarkTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BookmarkTextBox_KeyDown);
+        this.BookmarkTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+        this.BookmarkTextBox.Leave += new System.EventHandler(this.BookmarkTextBox_Leave);
         // 
         // ResearchPanel
         // 
@@ -1159,9 +1163,9 @@ partial class MainForm
         this.ToolTip.SetToolTip(this.ResearchMethodParameterTextBox, "Parameter");
         this.ResearchMethodParameterTextBox.Visible = false;
         this.ResearchMethodParameterTextBox.WordWrap = false;
+        this.ResearchMethodParameterTextBox.Enter += new System.EventHandler(this.StatusControls_Enter);
         this.ResearchMethodParameterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ResearchMethodParameterTextBox_KeyDown);
         this.ResearchMethodParameterTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.ResearchMethodParameterTextBox.Enter += new System.EventHandler(this.StatusControls_Enter);
         // 
         // ResearchMethodsRunButton
         // 
@@ -1185,7 +1189,7 @@ partial class MainForm
         // ResearchMethodsComboBox
         // 
         this.ResearchMethodsComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ResearchMethodsComboBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.ResearchMethodsComboBox.DropDownHeight = 100;
         this.ResearchMethodsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1200,10 +1204,10 @@ partial class MainForm
         this.ResearchMethodsComboBox.Size = new System.Drawing.Size(160, 21);
         this.ResearchMethodsComboBox.TabIndex = 100;
         this.ToolTip.SetToolTip(this.ResearchMethodsComboBox, "بحوث إضافية");
+        this.ResearchMethodsComboBox.DropDown += new System.EventHandler(this.ResearchMethodsComboBox_DropDown);
         this.ResearchMethodsComboBox.SelectedIndexChanged += new System.EventHandler(this.ResearchMethodsComboBox_SelectedIndexChanged);
         this.ResearchMethodsComboBox.Enter += new System.EventHandler(this.StatusControls_Enter);
         this.ResearchMethodsComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ResearchMethodsComboBox_KeyDown);
-        this.ResearchMethodsComboBox.DropDown += new System.EventHandler(this.ResearchMethodsComboBox_DropDown);
         // 
         // PrimeNumbersLabel
         // 
@@ -1261,8 +1265,8 @@ partial class MainForm
         // HelpMessageLabel
         // 
         this.HelpMessageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.HelpMessageLabel.BackColor = System.Drawing.Color.Transparent;
         this.HelpMessageLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.HelpMessageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -1307,8 +1311,8 @@ partial class MainForm
         this.VerseDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.VerseDiffTextBox, "Verses between mouse clicks");
         this.VerseDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.VerseDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.VerseDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
+        this.VerseDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // LetterDiffTextBox
         // 
@@ -1324,8 +1328,8 @@ partial class MainForm
         this.LetterDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.LetterDiffTextBox, "Letters between mouse clicks");
         this.LetterDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.LetterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.LetterDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
+        this.LetterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // WordDiffTextBox
         // 
@@ -1341,8 +1345,8 @@ partial class MainForm
         this.WordDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.WordDiffTextBox, "Words between mouse clicks");
         this.WordDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.WordDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.WordDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
+        this.WordDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // VerseByVerseNumberLabel
         // 
@@ -1421,7 +1425,7 @@ partial class MainForm
         // ValueTextBox
         // 
         this.ValueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ValueTextBox.BackColor = System.Drawing.SystemColors.Window;
         this.ValueTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.ValueTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -1430,11 +1434,11 @@ partial class MainForm
         this.ValueTextBox.Size = new System.Drawing.Size(124, 20);
         this.ValueTextBox.TabIndex = 21;
         this.ValueTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-        this.ValueTextBox.TextChanged += new System.EventHandler(this.ValueTextBox_TextChanged);
         this.ValueTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.ValueTextBox.TextChanged += new System.EventHandler(this.ValueTextBox_TextChanged);
+        this.ValueTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.ValueTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ValueTextBox_KeyDown);
         this.ValueTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.ValueTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // FindByTextAtVerseEndRadioButton
         // 
@@ -1448,8 +1452,8 @@ partial class MainForm
         this.FindByTextAtVerseEndRadioButton.TabStop = true;
         this.FindByTextAtVerseEndRadioButton.Text = "end";
         this.FindByTextAtVerseEndRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtVerseEndRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtVerseEndRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtVerseEndRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtVerseStartRadioButton
         // 
@@ -1463,8 +1467,8 @@ partial class MainForm
         this.FindByTextAtVerseStartRadioButton.TabStop = true;
         this.FindByTextAtVerseStartRadioButton.Text = "start";
         this.FindByTextAtVerseStartRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtVerseStartRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtVerseStartRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtVerseStartRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtVerseAnyRadioButton
         // 
@@ -1480,8 +1484,8 @@ partial class MainForm
         this.FindByTextAtVerseAnyRadioButton.Text = "any";
         this.FindByTextAtVerseAnyRadioButton.UseCompatibleTextRendering = true;
         this.FindByTextAtVerseAnyRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtVerseAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtVerseAnyRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtVerseAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtVerseMiddleRadioButton
         // 
@@ -1495,8 +1499,8 @@ partial class MainForm
         this.FindByTextAtVerseMiddleRadioButton.TabStop = true;
         this.FindByTextAtVerseMiddleRadioButton.Text = "mid";
         this.FindByTextAtVerseMiddleRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtVerseMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtVerseMiddleRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtVerseMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextCaseSensitiveCheckBox
         // 
@@ -1510,8 +1514,8 @@ partial class MainForm
         this.FindByTextCaseSensitiveCheckBox.Text = "case aware";
         this.ToolTip.SetToolTip(this.FindByTextCaseSensitiveCheckBox, "case sensitive (English)");
         this.FindByTextCaseSensitiveCheckBox.UseVisualStyleBackColor = false;
-        this.FindByTextCaseSensitiveCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextCaseSensitiveCheckBox.CheckedChanged += new System.EventHandler(this.FindByTextCaseSensitiveCheckBox_CheckedChanged);
+        this.FindByTextCaseSensitiveCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextWordnessCheckBox
         // 
@@ -1531,7 +1535,7 @@ partial class MainForm
         // SearchScopeBookLabel
         // 
         this.SearchScopeBookLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.SearchScopeBookLabel.BackColor = System.Drawing.Color.DarkGray;
         this.SearchScopeBookLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.SearchScopeBookLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1599,7 +1603,7 @@ partial class MainForm
         this.NoorsoftLinkLabel.TabIndex = 0;
         this.NoorsoftLinkLabel.Tag = "http://noorsoft.org";
         this.NoorsoftLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "Copyright ©2005 Noorsoft Root List");
+        this.ToolTip.SetToolTip(this.NoorsoftLinkLabel, "©2005 Noorsoft Root List");
         this.NoorsoftLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.NoorsoftLinkLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -1616,8 +1620,8 @@ partial class MainForm
         this.FindByTextMultiplicityCheckBox.Text = "count";
         this.ToolTip.SetToolTip(this.FindByTextMultiplicityCheckBox, "number of times repeated in verse");
         this.FindByTextMultiplicityCheckBox.UseVisualStyleBackColor = false;
-        this.FindByTextMultiplicityCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextMultiplicityCheckBox.CheckedChanged += new System.EventHandler(this.FindByTextMultiplicityCheckBox_CheckedChanged);
+        this.FindByTextMultiplicityCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // BrowseHistoryDeleteLabel
         // 
@@ -1662,8 +1666,8 @@ partial class MainForm
         this.FindByTextAllWordsRadioButton.TabStop = true;
         this.FindByTextAllWordsRadioButton.Text = "all  words";
         this.FindByTextAllWordsRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAllWordsRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAllWordsRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAllWordsRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAnyWordRadioButton
         // 
@@ -1678,8 +1682,8 @@ partial class MainForm
         this.FindByTextAnyWordRadioButton.TabStop = true;
         this.FindByTextAnyWordRadioButton.Text = "any word";
         this.FindByTextAnyWordRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAnyWordRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAnyWordRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAnyWordRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByNumbersResultTypeWordsLabel
         // 
@@ -1728,7 +1732,7 @@ partial class MainForm
         // BrowseGroupBox
         // 
         this.BrowseGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.BrowseGroupBox.BackColor = System.Drawing.SystemColors.WindowText;
         this.BrowseGroupBox.Controls.Add(this.RussianLanguageLabel);
         this.BrowseGroupBox.Controls.Add(this.ChineseLanguageLabel);
@@ -1750,12 +1754,12 @@ partial class MainForm
         this.BrowseGroupBox.TabStop = false;
         this.BrowseGroupBox.Text = "Book = Key + Message    ";
         this.ToolTip.SetToolTip(this.BrowseGroupBox, "Book              = Key + Message\r\n114 chapters =    1   +      113\r\n6236 verses " +
-                "  =    7   +    6229");
+    "  =    7   +    6229");
         // 
         // RussianLanguageLabel
         // 
         this.RussianLanguageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.RussianLanguageLabel.BackColor = System.Drawing.Color.Transparent;
         this.RussianLanguageLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.RussianLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1772,7 +1776,7 @@ partial class MainForm
         // ChineseLanguageLabel
         // 
         this.ChineseLanguageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ChineseLanguageLabel.BackColor = System.Drawing.Color.Transparent;
         this.ChineseLanguageLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.ChineseLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1789,7 +1793,7 @@ partial class MainForm
         // ArabicLanguageLabel
         // 
         this.ArabicLanguageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ArabicLanguageLabel.BackColor = System.Drawing.Color.Transparent;
         this.ArabicLanguageLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.ArabicLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1806,7 +1810,7 @@ partial class MainForm
         // EnglishLanguageLabel
         // 
         this.EnglishLanguageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.EnglishLanguageLabel.BackColor = System.Drawing.Color.Transparent;
         this.EnglishLanguageLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.EnglishLanguageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1925,9 +1929,9 @@ partial class MainForm
         this.FindByNumbersWordsNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersWordsNumberTypeLabel.TabIndex = 46;
         this.FindByNumbersWordsNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersWordsNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersWordsNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersWordsNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersWordsNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersLettersNumberTypeLabel
         // 
@@ -1941,9 +1945,9 @@ partial class MainForm
         this.FindByNumbersLettersNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersLettersNumberTypeLabel.TabIndex = 49;
         this.FindByNumbersLettersNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersLettersNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersLettersNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersLettersNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersLettersNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersValueNumberTypeLabel
         // 
@@ -1957,9 +1961,9 @@ partial class MainForm
         this.FindByNumbersValueNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersValueNumberTypeLabel.TabIndex = 55;
         this.FindByNumbersValueNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersValueNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersValueNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersValueNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersValueNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // ToolbarPanel
         // 
@@ -1981,14 +1985,14 @@ partial class MainForm
         this.ProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
         this.ProgressBar.TabIndex = 0;
         this.ProgressBar.Value = 83;
-        this.ProgressBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ProgressBar_MouseMove);
         this.ProgressBar.Click += new System.EventHandler(this.ProgressBar_Click);
+        this.ProgressBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ProgressBar_MouseMove);
         // 
         // MainSplitContainer
         // 
         this.MainSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.MainSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
         this.MainSplitContainer.IsSplitterFixed = true;
         this.MainSplitContainer.Location = new System.Drawing.Point(0, 9);
@@ -2018,7 +2022,7 @@ partial class MainForm
         // SearchGroupBox
         // 
         this.SearchGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)));
+        | System.Windows.Forms.AnchorStyles.Left)));
         this.SearchGroupBox.Controls.Add(this.FindByNumbersPanel);
         this.SearchGroupBox.Controls.Add(this.SearchScopeResultLabel);
         this.SearchGroupBox.Controls.Add(this.SearchScopeSelectionLabel);
@@ -2032,13 +2036,13 @@ partial class MainForm
         this.SearchGroupBox.TabIndex = 0;
         this.SearchGroupBox.TabStop = false;
         this.SearchGroupBox.Text = "Search in";
-        this.SearchGroupBox.Leave += new System.EventHandler(this.SearchGroupBox_Leave);
         this.SearchGroupBox.Enter += new System.EventHandler(this.SearchGroupBox_Enter);
+        this.SearchGroupBox.Leave += new System.EventHandler(this.SearchGroupBox_Leave);
         // 
         // FindByNumbersPanel
         // 
         this.FindByNumbersPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.FindByNumbersPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
         this.FindByNumbersPanel.Controls.Add(this.FindByNumbersValueDigitalRootComparisonOperatorLabel);
         this.FindByNumbersPanel.Controls.Add(this.FindByNumbersValueDigitalRootNumberTypeLabel);
@@ -2104,9 +2108,9 @@ partial class MainForm
         this.FindByNumbersValueDigitalRootComparisonOperatorLabel.Text = "=";
         this.FindByNumbersValueDigitalRootComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersValueDigitalRootComparisonOperatorLabel, "equals to");
+        this.FindByNumbersValueDigitalRootComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersValueDigitalRootComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersValueDigitalRootComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersValueDigitalRootComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersValueDigitalRootNumberTypeLabel
         // 
@@ -2120,9 +2124,9 @@ partial class MainForm
         this.FindByNumbersValueDigitalRootNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersValueDigitalRootNumberTypeLabel.TabIndex = 71;
         this.FindByNumbersValueDigitalRootNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersValueDigitalRootNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersValueDigitalRootNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersValueDigitalRootNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersValueDigitalRootNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersValueDigitalRootNumericUpDown
         // 
@@ -2139,9 +2143,9 @@ partial class MainForm
         this.FindByNumbersValueDigitalRootNumericUpDown.TabIndex = 70;
         this.FindByNumbersValueDigitalRootNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersValueDigitalRootNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersValueDigitalRootNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersValueDigitalRootNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersValueDigitalRootNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersValueDigitalRootNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersValueDigitalRootNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersValueDigitalRootLabel
         // 
@@ -2168,9 +2172,9 @@ partial class MainForm
         this.FindByNumbersValueDigitSumComparisonOperatorLabel.Text = "=";
         this.FindByNumbersValueDigitSumComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersValueDigitSumComparisonOperatorLabel, "equals to");
+        this.FindByNumbersValueDigitSumComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersValueDigitSumComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersValueDigitSumComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersValueDigitSumComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersValueDigitSumNumberTypeLabel
         // 
@@ -2184,9 +2188,9 @@ partial class MainForm
         this.FindByNumbersValueDigitSumNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersValueDigitSumNumberTypeLabel.TabIndex = 68;
         this.FindByNumbersValueDigitSumNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersValueDigitSumNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersValueDigitSumNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersValueDigitSumNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersValueDigitSumNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersValueDigitSumNumericUpDown
         // 
@@ -2203,9 +2207,9 @@ partial class MainForm
         this.FindByNumbersValueDigitSumNumericUpDown.TabIndex = 67;
         this.FindByNumbersValueDigitSumNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersValueDigitSumNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersValueDigitSumNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersValueDigitSumNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersValueDigitSumNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersValueDigitSumNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersValueDigitSumNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersValueDigitSumLabel
         // 
@@ -2293,9 +2297,9 @@ partial class MainForm
         this.FindByNumbersChaptersComparisonOperatorLabel.Text = "=";
         this.FindByNumbersChaptersComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersChaptersComparisonOperatorLabel, "equals to");
+        this.FindByNumbersChaptersComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersChaptersComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersChaptersComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersChaptersComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersChaptersNumberTypeLabel
         // 
@@ -2310,9 +2314,9 @@ partial class MainForm
         this.FindByNumbersChaptersNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersChaptersNumberTypeLabel.TabIndex = 40;
         this.FindByNumbersChaptersNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersChaptersNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersChaptersNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersChaptersNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersChaptersNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersChaptersNumericUpDown
         // 
@@ -2331,9 +2335,9 @@ partial class MainForm
         this.FindByNumbersChaptersNumericUpDown.TabIndex = 39;
         this.FindByNumbersChaptersNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersChaptersNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersChaptersNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersChaptersNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersChaptersNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersChaptersNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersChaptersNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersChaptersLabel
         // 
@@ -2364,9 +2368,9 @@ partial class MainForm
         this.FindByNumbersNumberComparisonOperatorLabel.Text = "=";
         this.FindByNumbersNumberComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersNumberComparisonOperatorLabel, "equals to");
+        this.FindByNumbersNumberComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersNumberComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersNumberComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersNumberComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersNumberNumberTypeLabel
         // 
@@ -2380,9 +2384,9 @@ partial class MainForm
         this.FindByNumbersNumberNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersNumberNumberTypeLabel.TabIndex = 37;
         this.FindByNumbersNumberNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersNumberNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersNumberNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersNumberNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersNumberNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersNumberNumericUpDown
         // 
@@ -2405,9 +2409,9 @@ partial class MainForm
         this.FindByNumbersNumberNumericUpDown.TabIndex = 36;
         this.FindByNumbersNumberNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersNumberNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersNumberNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersNumberNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersNumberNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersNumberNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersNumberNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersNumberLabel
         // 
@@ -2435,9 +2439,9 @@ partial class MainForm
         this.FindByNumbersUniqueLettersNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersUniqueLettersNumberTypeLabel.TabIndex = 52;
         this.FindByNumbersUniqueLettersNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersUniqueLettersNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersUniqueLettersNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersUniqueLettersNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersUniqueLettersNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersUniqueLettersComparisonOperatorLabel
         // 
@@ -2454,9 +2458,9 @@ partial class MainForm
         this.FindByNumbersUniqueLettersComparisonOperatorLabel.Text = "=";
         this.FindByNumbersUniqueLettersComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersUniqueLettersComparisonOperatorLabel, "equals to");
+        this.FindByNumbersUniqueLettersComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersUniqueLettersComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersUniqueLettersComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersUniqueLettersComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersVersesComparisonOperatorLabel
         // 
@@ -2474,9 +2478,9 @@ partial class MainForm
         this.FindByNumbersVersesComparisonOperatorLabel.Text = "=";
         this.FindByNumbersVersesComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersVersesComparisonOperatorLabel, "equals to");
+        this.FindByNumbersVersesComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersVersesComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersVersesComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersVersesComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersValueComparisonOperatorLabel
         // 
@@ -2493,9 +2497,9 @@ partial class MainForm
         this.FindByNumbersValueComparisonOperatorLabel.Text = "=";
         this.FindByNumbersValueComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersValueComparisonOperatorLabel, "equals to");
+        this.FindByNumbersValueComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersValueComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersValueComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersValueComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersUniqueLettersNumericUpDown
         // 
@@ -2512,9 +2516,9 @@ partial class MainForm
         this.FindByNumbersUniqueLettersNumericUpDown.TabIndex = 51;
         this.FindByNumbersUniqueLettersNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersUniqueLettersNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersUniqueLettersNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersUniqueLettersNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersUniqueLettersNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersUniqueLettersNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersUniqueLettersNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersLettersComparisonOperatorLabel
         // 
@@ -2531,9 +2535,9 @@ partial class MainForm
         this.FindByNumbersLettersComparisonOperatorLabel.Text = "=";
         this.FindByNumbersLettersComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersLettersComparisonOperatorLabel, "equals to");
+        this.FindByNumbersLettersComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersLettersComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersLettersComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersLettersComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersWordsComparisonOperatorLabel
         // 
@@ -2550,9 +2554,9 @@ partial class MainForm
         this.FindByNumbersWordsComparisonOperatorLabel.Text = "=";
         this.FindByNumbersWordsComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByNumbersWordsComparisonOperatorLabel, "equals to");
+        this.FindByNumbersWordsComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersWordsComparisonOperatorLabel.Click += new System.EventHandler(this.FindByNumbersComparisonOperatorLabel_Click);
         this.FindByNumbersWordsComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersWordsComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersVersesNumberTypeLabel
         // 
@@ -2567,9 +2571,9 @@ partial class MainForm
         this.FindByNumbersVersesNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByNumbersVersesNumberTypeLabel.TabIndex = 43;
         this.FindByNumbersVersesNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByNumbersVersesNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         this.FindByNumbersVersesNumberTypeLabel.Click += new System.EventHandler(this.FindByNumbersNumberTypeLabel_Click);
         this.FindByNumbersVersesNumberTypeLabel.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
-        this.FindByNumbersVersesNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
         // 
         // FindByNumbersVersesNumericUpDown
         // 
@@ -2592,9 +2596,9 @@ partial class MainForm
             0,
             0});
         this.FindByNumbersVersesNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersVersesNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersVersesNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersVersesNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersVersesNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersVersesNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersValueNumericUpDown
         // 
@@ -2612,9 +2616,9 @@ partial class MainForm
         this.FindByNumbersValueNumericUpDown.TabIndex = 54;
         this.FindByNumbersValueNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersValueNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersValueNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersValueNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersValueNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersValueNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersValueNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersLettersNumericUpDown
         // 
@@ -2632,9 +2636,9 @@ partial class MainForm
         this.FindByNumbersLettersNumericUpDown.TabIndex = 48;
         this.FindByNumbersLettersNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersLettersNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersLettersNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersLettersNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersLettersNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersLettersNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersLettersNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersWordsNumericUpDown
         // 
@@ -2652,9 +2656,9 @@ partial class MainForm
         this.FindByNumbersWordsNumericUpDown.TabIndex = 45;
         this.FindByNumbersWordsNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.FindByNumbersWordsNumericUpDown.ValueChanged += new System.EventHandler(this.FindByNumbersNumericUpDown_ValueChanged);
-        this.FindByNumbersWordsNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
-        this.FindByNumbersWordsNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
         this.FindByNumbersWordsNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByNumbersControl_EnabledChanged);
+        this.FindByNumbersWordsNumericUpDown.Enter += new System.EventHandler(this.FindByNumbersControls_Enter);
+        this.FindByNumbersWordsNumericUpDown.Leave += new System.EventHandler(this.FindByNumbersNumericUpDown_Leave);
         // 
         // FindByNumbersVersesLabel
         // 
@@ -2710,7 +2714,7 @@ partial class MainForm
         // SearchScopeResultLabel
         // 
         this.SearchScopeResultLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.SearchScopeResultLabel.BackColor = System.Drawing.Color.DarkGray;
         this.SearchScopeResultLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.SearchScopeResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2727,7 +2731,7 @@ partial class MainForm
         // SearchScopeSelectionLabel
         // 
         this.SearchScopeSelectionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.SearchScopeSelectionLabel.BackColor = System.Drawing.Color.DarkGray;
         this.SearchScopeSelectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.SearchScopeSelectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2744,8 +2748,8 @@ partial class MainForm
         // FindBySimilarityPanel
         // 
         this.FindBySimilarityPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.FindBySimilarityPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
         this.FindBySimilarityPanel.Controls.Add(this.FindBySimilarityCurrentVerseTypeLabel);
         this.FindBySimilarityPanel.Controls.Add(this.FindBySimilarityAllVersesTypeLabel);
@@ -2820,8 +2824,8 @@ partial class MainForm
         this.FindBySimilarityLastWordRadioButton.TabStop = true;
         this.FindBySimilarityLastWordRadioButton.Text = "last word";
         this.FindBySimilarityLastWordRadioButton.UseVisualStyleBackColor = false;
-        this.FindBySimilarityLastWordRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         this.FindBySimilarityLastWordRadioButton.CheckedChanged += new System.EventHandler(this.FindBySimilarityRadioButton_CheckedChanged);
+        this.FindBySimilarityLastWordRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         // 
         // FindBySimilarityWordsRadioButton
         // 
@@ -2834,8 +2838,8 @@ partial class MainForm
         this.FindBySimilarityWordsRadioButton.TabStop = true;
         this.FindBySimilarityWordsRadioButton.Text = "words";
         this.FindBySimilarityWordsRadioButton.UseVisualStyleBackColor = false;
-        this.FindBySimilarityWordsRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         this.FindBySimilarityWordsRadioButton.CheckedChanged += new System.EventHandler(this.FindBySimilarityRadioButton_CheckedChanged);
+        this.FindBySimilarityWordsRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         // 
         // FindBySimilarityFirstWordRadioButton
         // 
@@ -2848,8 +2852,8 @@ partial class MainForm
         this.FindBySimilarityFirstWordRadioButton.TabStop = true;
         this.FindBySimilarityFirstWordRadioButton.Text = "first word";
         this.FindBySimilarityFirstWordRadioButton.UseVisualStyleBackColor = false;
-        this.FindBySimilarityFirstWordRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         this.FindBySimilarityFirstWordRadioButton.CheckedChanged += new System.EventHandler(this.FindBySimilarityRadioButton_CheckedChanged);
+        this.FindBySimilarityFirstWordRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         // 
         // FindBySimilarityLastHalfRadioButton
         // 
@@ -2862,8 +2866,8 @@ partial class MainForm
         this.FindBySimilarityLastHalfRadioButton.TabStop = true;
         this.FindBySimilarityLastHalfRadioButton.Text = "last half";
         this.FindBySimilarityLastHalfRadioButton.UseVisualStyleBackColor = false;
-        this.FindBySimilarityLastHalfRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         this.FindBySimilarityLastHalfRadioButton.CheckedChanged += new System.EventHandler(this.FindBySimilarityRadioButton_CheckedChanged);
+        this.FindBySimilarityLastHalfRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         // 
         // FindBySimilarityButton
         // 
@@ -2892,8 +2896,8 @@ partial class MainForm
         this.FindBySimilarityFirstHalfRadioButton.TabStop = true;
         this.FindBySimilarityFirstHalfRadioButton.Text = "first half";
         this.FindBySimilarityFirstHalfRadioButton.UseVisualStyleBackColor = false;
-        this.FindBySimilarityFirstHalfRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         this.FindBySimilarityFirstHalfRadioButton.CheckedChanged += new System.EventHandler(this.FindBySimilarityRadioButton_CheckedChanged);
+        this.FindBySimilarityFirstHalfRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         // 
         // FindBySimilarityLabel
         // 
@@ -2920,8 +2924,8 @@ partial class MainForm
         this.FindBySimilarityTextRadioButton.TabStop = true;
         this.FindBySimilarityTextRadioButton.Text = "text";
         this.FindBySimilarityTextRadioButton.UseVisualStyleBackColor = false;
-        this.FindBySimilarityTextRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         this.FindBySimilarityTextRadioButton.CheckedChanged += new System.EventHandler(this.FindBySimilarityRadioButton_CheckedChanged);
+        this.FindBySimilarityTextRadioButton.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         // 
         // FindBySimilarityPercentageTrackBar
         // 
@@ -2938,14 +2942,14 @@ partial class MainForm
         this.FindBySimilarityPercentageTrackBar.TickFrequency = 10;
         this.FindBySimilarityPercentageTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
         this.FindBySimilarityPercentageTrackBar.Value = 73;
-        this.FindBySimilarityPercentageTrackBar.ValueChanged += new System.EventHandler(this.FindBySimilarityPercentageTrackBar_ValueChanged);
         this.FindBySimilarityPercentageTrackBar.Scroll += new System.EventHandler(this.FindBySimilarityPercentageTrackBar_ValueChanged);
+        this.FindBySimilarityPercentageTrackBar.ValueChanged += new System.EventHandler(this.FindBySimilarityPercentageTrackBar_ValueChanged);
         this.FindBySimilarityPercentageTrackBar.Enter += new System.EventHandler(this.FindBySimilarityControls_Enter);
         // 
         // FindByTextPanel
         // 
         this.FindByTextPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.FindByTextPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
         this.FindByTextPanel.Controls.Add(this.DrawSearchTermsLabel);
         this.FindByTextPanel.Controls.Add(this.NoorsoftLinkLabel);
@@ -2982,8 +2986,8 @@ partial class MainForm
         this.FindByTextPanel.Size = new System.Drawing.Size(156, 293);
         this.FindByTextPanel.TabIndex = 1;
         this.FindByTextPanel.TabStop = true;
-        this.FindByTextPanel.Leave += new System.EventHandler(this.FindByTextPanel_Leave);
         this.FindByTextPanel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+        this.FindByTextPanel.Leave += new System.EventHandler(this.FindByTextPanel_Leave);
         // 
         // DrawSearchTermsLabel
         // 
@@ -3014,8 +3018,8 @@ partial class MainForm
         this.FindByTextWithDiacriticsCheckBox.TabIndex = 21;
         this.ToolTip.SetToolTip(this.FindByTextWithDiacriticsCheckBox, "with diacritics  مع الحركات");
         this.FindByTextWithDiacriticsCheckBox.UseVisualStyleBackColor = false;
-        this.FindByTextWithDiacriticsCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextWithDiacriticsCheckBox.CheckedChanged += new System.EventHandler(this.FindByTextWithDiacriticsCheckBox_CheckedChanged);
+        this.FindByTextWithDiacriticsCheckBox.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextSearchBlockSizeBowingLabel
         // 
@@ -3044,9 +3048,9 @@ partial class MainForm
         this.FindByTextMultiplicityNumberTypeLabel.Size = new System.Drawing.Size(24, 19);
         this.FindByTextMultiplicityNumberTypeLabel.TabIndex = 20;
         this.FindByTextMultiplicityNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByTextMultiplicityNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByTextControl_EnabledChanged);
         this.FindByTextMultiplicityNumberTypeLabel.Click += new System.EventHandler(this.FindByTextMultiplicityNumberTypeLabel_Click);
         this.FindByTextMultiplicityNumberTypeLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextMultiplicityNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByTextControl_EnabledChanged);
         // 
         // FindByTextMultiplicityComparisonOperatorLabel
         // 
@@ -3063,9 +3067,9 @@ partial class MainForm
         this.FindByTextMultiplicityComparisonOperatorLabel.Text = "=";
         this.FindByTextMultiplicityComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByTextMultiplicityComparisonOperatorLabel, "equals to");
+        this.FindByTextMultiplicityComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByTextControl_EnabledChanged);
         this.FindByTextMultiplicityComparisonOperatorLabel.Click += new System.EventHandler(this.FindByTextMultiplicityComparisonOperatorLabel_Click);
         this.FindByTextMultiplicityComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextMultiplicityComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByTextControl_EnabledChanged);
         // 
         // FindByTextSearchBlockSizeVerseLabel
         // 
@@ -3117,8 +3121,8 @@ partial class MainForm
         this.FindByTextAtChapterStartRadioButton.TabStop = true;
         this.FindByTextAtChapterStartRadioButton.Text = "start";
         this.FindByTextAtChapterStartRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtChapterStartRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtChapterStartRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtChapterStartRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtChapterMiddleRadioButton
         // 
@@ -3132,8 +3136,8 @@ partial class MainForm
         this.FindByTextAtChapterMiddleRadioButton.TabStop = true;
         this.FindByTextAtChapterMiddleRadioButton.Text = "mid";
         this.FindByTextAtChapterMiddleRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtChapterMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtChapterMiddleRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtChapterMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtChapterAnyRadioButton
         // 
@@ -3149,8 +3153,8 @@ partial class MainForm
         this.FindByTextAtChapterAnyRadioButton.Text = "any";
         this.FindByTextAtChapterAnyRadioButton.UseCompatibleTextRendering = true;
         this.FindByTextAtChapterAnyRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtChapterAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtChapterAnyRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtChapterAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtChapterEndRadioButton
         // 
@@ -3164,8 +3168,8 @@ partial class MainForm
         this.FindByTextAtChapterEndRadioButton.TabStop = true;
         this.FindByTextAtChapterEndRadioButton.Text = "end";
         this.FindByTextAtChapterEndRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtChapterEndRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtChapterEndRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtChapterEndRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextSearchBlockSizeChapterLabel
         // 
@@ -3220,8 +3224,8 @@ partial class MainForm
         this.FindByTextAtWordStartRadioButton.TabStop = true;
         this.FindByTextAtWordStartRadioButton.Text = "start";
         this.FindByTextAtWordStartRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtWordStartRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtWordStartRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtWordStartRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtWordEndRadioButton
         // 
@@ -3235,8 +3239,8 @@ partial class MainForm
         this.FindByTextAtWordEndRadioButton.TabStop = true;
         this.FindByTextAtWordEndRadioButton.Text = "end";
         this.FindByTextAtWordEndRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtWordEndRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtWordEndRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtWordEndRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtWordMiddleRadioButton
         // 
@@ -3250,8 +3254,8 @@ partial class MainForm
         this.FindByTextAtWordMiddleRadioButton.TabStop = true;
         this.FindByTextAtWordMiddleRadioButton.Text = "mid";
         this.FindByTextAtWordMiddleRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtWordMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtWordMiddleRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtWordMiddleRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextAtWordAnyRadioButton
         // 
@@ -3267,8 +3271,8 @@ partial class MainForm
         this.FindByTextAtWordAnyRadioButton.Text = "any";
         this.FindByTextAtWordAnyRadioButton.UseCompatibleTextRendering = true;
         this.FindByTextAtWordAnyRadioButton.UseVisualStyleBackColor = false;
-        this.FindByTextAtWordAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextAtWordAnyRadioButton.CheckedChanged += new System.EventHandler(this.FindByTextRadioButton_CheckedChanged);
+        this.FindByTextAtWordAnyRadioButton.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
         // FindByTextSearchBlockSizeQuarterLabel
         // 
@@ -3378,10 +3382,10 @@ partial class MainForm
         this.FindByTextQuranHealingLabel.Text = "♥";
         this.FindByTextQuranHealingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByTextQuranHealingLabel, "Value Navigator");
-        this.FindByTextQuranHealingLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextQuranHealingLabel.Click += new System.EventHandler(this.FindByTextQuranHealingLabel_Click);
         this.FindByTextQuranHealingLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextQuranHealingLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextQuranHealingLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         // 
         // FindByTextRaaLabel
         // 
@@ -3394,11 +3398,11 @@ partial class MainForm
         this.FindByTextRaaLabel.TabIndex = 0;
         this.FindByTextRaaLabel.Text = "ر";
         this.FindByTextRaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextRaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextRaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextRaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextRaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextRaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextRaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextRaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextOrLabel
         // 
@@ -3412,11 +3416,11 @@ partial class MainForm
         this.FindByTextOrLabel.Text = "|";
         this.FindByTextOrLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.FindByTextOrLabel.Visible = false;
-        this.FindByTextOrLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
         this.FindByTextOrLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextOrLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextOrLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextOrLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextOrLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
+        this.FindByTextOrLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextAndLabel
         // 
@@ -3430,11 +3434,11 @@ partial class MainForm
         this.FindByTextAndLabel.Text = "&&";
         this.FindByTextAndLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.FindByTextAndLabel.Visible = false;
-        this.FindByTextAndLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
         this.FindByTextAndLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextAndLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextAndLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextAndLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextAndLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
+        this.FindByTextAndLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextPlusLabel
         // 
@@ -3447,11 +3451,11 @@ partial class MainForm
         this.FindByTextPlusLabel.TabIndex = 0;
         this.FindByTextPlusLabel.Text = "+";
         this.FindByTextPlusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextPlusLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
         this.FindByTextPlusLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextPlusLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextPlusLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextPlusLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextPlusLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
+        this.FindByTextPlusLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextMinusLabel
         // 
@@ -3464,11 +3468,11 @@ partial class MainForm
         this.FindByTextMinusLabel.TabIndex = 0;
         this.FindByTextMinusLabel.Text = "-";
         this.FindByTextMinusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextMinusLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
         this.FindByTextMinusLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextMinusLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextMinusLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextMinusLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextMinusLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
+        this.FindByTextMinusLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextDoubleQuoteLabel
         // 
@@ -3482,11 +3486,11 @@ partial class MainForm
         this.FindByTextDoubleQuoteLabel.Text = "\"";
         this.FindByTextDoubleQuoteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.FindByTextDoubleQuoteLabel.Visible = false;
-        this.FindByTextDoubleQuoteLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
         this.FindByTextDoubleQuoteLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextDoubleQuoteLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextDoubleQuoteLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextDoubleQuoteLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextDoubleQuoteLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
+        this.FindByTextDoubleQuoteLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextElfWaslLabel
         // 
@@ -3499,11 +3503,11 @@ partial class MainForm
         this.FindByTextElfWaslLabel.TabIndex = 0;
         this.FindByTextElfWaslLabel.Text = "ٱ";
         this.FindByTextElfWaslLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextElfWaslLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextElfWaslLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextElfWaslLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextElfWaslLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextElfWaslLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextElfWaslLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextElfWaslLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextSpaceLabel
         // 
@@ -3516,11 +3520,11 @@ partial class MainForm
         this.FindByTextSpaceLabel.TabIndex = 0;
         this.FindByTextSpaceLabel.Text = " ";
         this.FindByTextSpaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextSpaceLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
         this.FindByTextSpaceLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextSpaceLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextSpaceLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextSpaceLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextSpaceLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
+        this.FindByTextSpaceLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextBackspaceLabel
         // 
@@ -3533,11 +3537,11 @@ partial class MainForm
         this.FindByTextBackspaceLabel.TabIndex = 0;
         this.FindByTextBackspaceLabel.Text = "►";
         this.FindByTextBackspaceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.FindByTextBackspaceLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
         this.FindByTextBackspaceLabel.Click += new System.EventHandler(this.FindByTextBackspaceLabel_Click);
         this.FindByTextBackspaceLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextBackspaceLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextBackspaceLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextBackspaceLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardModifierLabel_MouseLeave);
+        this.FindByTextBackspaceLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextHamzaAboveYaaLabel
         // 
@@ -3550,11 +3554,11 @@ partial class MainForm
         this.FindByTextHamzaAboveYaaLabel.TabIndex = 0;
         this.FindByTextHamzaAboveYaaLabel.Text = "ئ";
         this.FindByTextHamzaAboveYaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextHamzaAboveYaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextHamzaAboveYaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextHamzaAboveYaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextHamzaAboveYaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextHamzaAboveYaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextHamzaAboveYaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextHamzaAboveYaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextElfLabel
         // 
@@ -3567,11 +3571,11 @@ partial class MainForm
         this.FindByTextElfLabel.TabIndex = 0;
         this.FindByTextElfLabel.Text = "ا";
         this.FindByTextElfLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextElfLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextElfLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextElfLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextElfLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextElfLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextElfLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextElfLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextTextBox
         // 
@@ -3583,9 +3587,9 @@ partial class MainForm
         this.FindByTextTextBox.Size = new System.Drawing.Size(127, 20);
         this.FindByTextTextBox.TabIndex = 4;
         this.FindByTextTextBox.TextChanged += new System.EventHandler(this.FindByTextTextBox_TextChanged);
+        this.FindByTextTextBox.Enter += new System.EventHandler(this.FindByTextTextBox_Enter);
         this.FindByTextTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FindByTextTextBox_KeyDown);
         this.FindByTextTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FindByTextTextBox_KeyPress);
-        this.FindByTextTextBox.Enter += new System.EventHandler(this.FindByTextTextBox_Enter);
         // 
         // FindByTextYaaLabel
         // 
@@ -3598,11 +3602,11 @@ partial class MainForm
         this.FindByTextYaaLabel.TabIndex = 0;
         this.FindByTextYaaLabel.Text = "ي";
         this.FindByTextYaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextYaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextYaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextYaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextYaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextYaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextYaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextYaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextKaafLabel
         // 
@@ -3615,11 +3619,11 @@ partial class MainForm
         this.FindByTextKaafLabel.TabIndex = 0;
         this.FindByTextKaafLabel.Text = "ك";
         this.FindByTextKaafLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextKaafLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextKaafLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextKaafLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextKaafLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextKaafLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextKaafLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextKaafLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextHamzaAboveWawLabel
         // 
@@ -3632,11 +3636,11 @@ partial class MainForm
         this.FindByTextHamzaAboveWawLabel.TabIndex = 0;
         this.FindByTextHamzaAboveWawLabel.Text = "ؤ";
         this.FindByTextHamzaAboveWawLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextHamzaAboveWawLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextHamzaAboveWawLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextHamzaAboveWawLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextHamzaAboveWawLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextHamzaAboveWawLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextHamzaAboveWawLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextHamzaAboveWawLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextAinLabel
         // 
@@ -3649,11 +3653,11 @@ partial class MainForm
         this.FindByTextAinLabel.TabIndex = 0;
         this.FindByTextAinLabel.Text = "ع";
         this.FindByTextAinLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextAinLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextAinLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextAinLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextAinLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextAinLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextAinLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextAinLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextWawLabel
         // 
@@ -3666,11 +3670,11 @@ partial class MainForm
         this.FindByTextWawLabel.TabIndex = 0;
         this.FindByTextWawLabel.Text = "و";
         this.FindByTextWawLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextWawLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextWawLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextWawLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextWawLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextWawLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextWawLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextWawLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextHhaaLabel
         // 
@@ -3683,11 +3687,11 @@ partial class MainForm
         this.FindByTextHhaaLabel.TabIndex = 0;
         this.FindByTextHhaaLabel.Text = "ح";
         this.FindByTextHhaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextHhaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextHhaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextHhaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextHhaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextHhaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextHhaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextHhaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextHamzaLabel
         // 
@@ -3700,11 +3704,11 @@ partial class MainForm
         this.FindByTextHamzaLabel.TabIndex = 0;
         this.FindByTextHamzaLabel.Text = "ء";
         this.FindByTextHamzaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextHamzaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextHamzaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextHamzaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextHamzaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextHamzaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextHamzaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextHamzaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextTaaMarbootaLabel
         // 
@@ -3717,11 +3721,11 @@ partial class MainForm
         this.FindByTextTaaMarbootaLabel.TabIndex = 0;
         this.FindByTextTaaMarbootaLabel.Text = "ة";
         this.FindByTextTaaMarbootaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextTaaMarbootaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextTaaMarbootaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextTaaMarbootaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextTaaMarbootaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextTaaMarbootaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextTaaMarbootaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextTaaMarbootaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextElfMaqsuraLabel
         // 
@@ -3734,11 +3738,11 @@ partial class MainForm
         this.FindByTextElfMaqsuraLabel.TabIndex = 0;
         this.FindByTextElfMaqsuraLabel.Text = "ى";
         this.FindByTextElfMaqsuraLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextElfMaqsuraLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextElfMaqsuraLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextElfMaqsuraLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextElfMaqsuraLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextElfMaqsuraLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextElfMaqsuraLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextElfMaqsuraLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextHaaLabel
         // 
@@ -3751,11 +3755,11 @@ partial class MainForm
         this.FindByTextHaaLabel.TabIndex = 0;
         this.FindByTextHaaLabel.Text = "ه";
         this.FindByTextHaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextHaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextHaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextHaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextHaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextHaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextHaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextHaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextSheenLabel
         // 
@@ -3768,11 +3772,11 @@ partial class MainForm
         this.FindByTextSheenLabel.TabIndex = 0;
         this.FindByTextSheenLabel.Text = "ش";
         this.FindByTextSheenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextSheenLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextSheenLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextSheenLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextSheenLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextSheenLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextSheenLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextSheenLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextZaaiLabel
         // 
@@ -3785,11 +3789,11 @@ partial class MainForm
         this.FindByTextZaaiLabel.TabIndex = 0;
         this.FindByTextZaaiLabel.Text = "ز";
         this.FindByTextZaaiLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextZaaiLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextZaaiLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextZaaiLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextZaaiLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextZaaiLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextZaaiLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextZaaiLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextGhainLabel
         // 
@@ -3802,11 +3806,11 @@ partial class MainForm
         this.FindByTextGhainLabel.TabIndex = 0;
         this.FindByTextGhainLabel.Text = "غ";
         this.FindByTextGhainLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextGhainLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextGhainLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextGhainLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextGhainLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextGhainLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextGhainLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextGhainLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextHamzaBelowElfLabel
         // 
@@ -3819,11 +3823,11 @@ partial class MainForm
         this.FindByTextHamzaBelowElfLabel.TabIndex = 0;
         this.FindByTextHamzaBelowElfLabel.Text = "إ";
         this.FindByTextHamzaBelowElfLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextHamzaBelowElfLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextHamzaBelowElfLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextHamzaBelowElfLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextHamzaBelowElfLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextHamzaBelowElfLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextHamzaBelowElfLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextHamzaBelowElfLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextThaaLabel
         // 
@@ -3836,11 +3840,11 @@ partial class MainForm
         this.FindByTextThaaLabel.TabIndex = 0;
         this.FindByTextThaaLabel.Text = "ث";
         this.FindByTextThaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextThaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextThaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextThaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextThaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextThaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextThaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextThaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextHamzaAboveElfLabel
         // 
@@ -3853,11 +3857,11 @@ partial class MainForm
         this.FindByTextHamzaAboveElfLabel.TabIndex = 0;
         this.FindByTextHamzaAboveElfLabel.Text = "أ";
         this.FindByTextHamzaAboveElfLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextHamzaAboveElfLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextHamzaAboveElfLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextHamzaAboveElfLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextHamzaAboveElfLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextHamzaAboveElfLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextHamzaAboveElfLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextHamzaAboveElfLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextNoonLabel
         // 
@@ -3870,11 +3874,11 @@ partial class MainForm
         this.FindByTextNoonLabel.TabIndex = 0;
         this.FindByTextNoonLabel.Text = "ن";
         this.FindByTextNoonLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextNoonLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextNoonLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextNoonLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextNoonLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextNoonLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextNoonLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextNoonLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextDhaaLabel
         // 
@@ -3887,11 +3891,11 @@ partial class MainForm
         this.FindByTextDhaaLabel.TabIndex = 0;
         this.FindByTextDhaaLabel.Text = "ظ";
         this.FindByTextDhaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextDhaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextDhaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextDhaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextDhaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextDhaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextDhaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextDhaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextMeemLabel
         // 
@@ -3904,11 +3908,11 @@ partial class MainForm
         this.FindByTextMeemLabel.TabIndex = 0;
         this.FindByTextMeemLabel.Text = "م";
         this.FindByTextMeemLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextMeemLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextMeemLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextMeemLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextMeemLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextMeemLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextMeemLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextMeemLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextBaaLabel
         // 
@@ -3921,11 +3925,11 @@ partial class MainForm
         this.FindByTextBaaLabel.TabIndex = 0;
         this.FindByTextBaaLabel.Text = "ب";
         this.FindByTextBaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextBaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextBaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextBaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextBaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextBaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextBaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextBaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextQaafLabel
         // 
@@ -3938,11 +3942,11 @@ partial class MainForm
         this.FindByTextQaafLabel.TabIndex = 0;
         this.FindByTextQaafLabel.Text = "ق";
         this.FindByTextQaafLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextQaafLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextQaafLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextQaafLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextQaafLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextQaafLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextQaafLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextQaafLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextTaaLabel
         // 
@@ -3955,11 +3959,11 @@ partial class MainForm
         this.FindByTextTaaLabel.TabIndex = 0;
         this.FindByTextTaaLabel.Text = "ت";
         this.FindByTextTaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextTaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextTaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextTaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextTaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextTaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextTaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextTaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextDhaadLabel
         // 
@@ -3972,11 +3976,11 @@ partial class MainForm
         this.FindByTextDhaadLabel.TabIndex = 0;
         this.FindByTextDhaadLabel.Text = "ض";
         this.FindByTextDhaadLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextDhaadLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextDhaadLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextDhaadLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextDhaadLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextDhaadLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextDhaadLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextDhaadLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextJeemLabel
         // 
@@ -3989,11 +3993,11 @@ partial class MainForm
         this.FindByTextJeemLabel.TabIndex = 0;
         this.FindByTextJeemLabel.Text = "ج";
         this.FindByTextJeemLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextJeemLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextJeemLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextJeemLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextJeemLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextJeemLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextJeemLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextJeemLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextSeenLabel
         // 
@@ -4006,11 +4010,11 @@ partial class MainForm
         this.FindByTextSeenLabel.TabIndex = 0;
         this.FindByTextSeenLabel.Text = "س";
         this.FindByTextSeenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextSeenLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextSeenLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextSeenLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextSeenLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextSeenLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextSeenLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextSeenLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextSaadLabel
         // 
@@ -4023,11 +4027,11 @@ partial class MainForm
         this.FindByTextSaadLabel.TabIndex = 0;
         this.FindByTextSaadLabel.Text = "ص";
         this.FindByTextSaadLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextSaadLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextSaadLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextSaadLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextSaadLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextSaadLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextSaadLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextSaadLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextDaalLabel
         // 
@@ -4040,11 +4044,11 @@ partial class MainForm
         this.FindByTextDaalLabel.TabIndex = 0;
         this.FindByTextDaalLabel.Text = "د";
         this.FindByTextDaalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextDaalLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextDaalLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextDaalLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextDaalLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextDaalLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextDaalLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextDaalLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextLaamLabel
         // 
@@ -4057,11 +4061,11 @@ partial class MainForm
         this.FindByTextLaamLabel.TabIndex = 0;
         this.FindByTextLaamLabel.Text = "ل";
         this.FindByTextLaamLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextLaamLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextLaamLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextLaamLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextLaamLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextLaamLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextLaamLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextLaamLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextKhaaLabel
         // 
@@ -4074,11 +4078,11 @@ partial class MainForm
         this.FindByTextKhaaLabel.TabIndex = 0;
         this.FindByTextKhaaLabel.Text = "خ";
         this.FindByTextKhaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextKhaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextKhaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextKhaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextKhaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextKhaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextKhaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextKhaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextFaaLabel
         // 
@@ -4091,11 +4095,11 @@ partial class MainForm
         this.FindByTextFaaLabel.TabIndex = 0;
         this.FindByTextFaaLabel.Text = "ف";
         this.FindByTextFaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextFaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextFaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextFaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextFaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextFaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextFaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextFaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextThaalLabel
         // 
@@ -4108,11 +4112,11 @@ partial class MainForm
         this.FindByTextThaalLabel.TabIndex = 0;
         this.FindByTextThaalLabel.Text = "ذ";
         this.FindByTextThaalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextThaalLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextThaalLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextThaalLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextThaalLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextThaalLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextThaalLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextThaalLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextTtaaLabel
         // 
@@ -4125,11 +4129,11 @@ partial class MainForm
         this.FindByTextTtaaLabel.TabIndex = 0;
         this.FindByTextTtaaLabel.Text = "ط";
         this.FindByTextTtaaLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-        this.FindByTextTtaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
         this.FindByTextTtaaLabel.Click += new System.EventHandler(this.FindByTextKeyboardLabel_Click);
         this.FindByTextTtaaLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
-        this.FindByTextTtaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         this.FindByTextTtaaLabel.MouseEnter += new System.EventHandler(this.FindByTextKeyboardLabel_MouseEnter);
+        this.FindByTextTtaaLabel.MouseLeave += new System.EventHandler(this.FindByTextKeyboardLabel_MouseLeave);
+        this.FindByTextTtaaLabel.MouseHover += new System.EventHandler(this.FindByTextOrLabel_MouseHover);
         // 
         // FindByTextSearchBlockSizeHalfLabel
         // 
@@ -4234,8 +4238,8 @@ partial class MainForm
         this.FindByTextRootSearchTypeLabel.Text = "ROOTS";
         this.FindByTextRootSearchTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.FindByTextRootSearchTypeLabel.Click += new System.EventHandler(this.FindByTextRootSearchTypeLabel_Click);
-        this.FindByTextRootSearchTypeLabel.Leave += new System.EventHandler(this.FindByTextPanel_Leave);
         this.FindByTextRootSearchTypeLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+        this.FindByTextRootSearchTypeLabel.Leave += new System.EventHandler(this.FindByTextPanel_Leave);
         // 
         // FindByTextMultiplicityNumericUpDown
         // 
@@ -4264,9 +4268,9 @@ partial class MainForm
             0,
             -2147483648});
         this.FindByTextMultiplicityNumericUpDown.ValueChanged += new System.EventHandler(this.FindByTextMultiplicityNumericUpDown_ValueChanged);
-        this.FindByTextMultiplicityNumericUpDown.Leave += new System.EventHandler(this.FindByTextControls_Leave);
-        this.FindByTextMultiplicityNumericUpDown.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         this.FindByTextMultiplicityNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByTextControl_EnabledChanged);
+        this.FindByTextMultiplicityNumericUpDown.Enter += new System.EventHandler(this.FindByTextControls_Enter);
+        this.FindByTextMultiplicityNumericUpDown.Leave += new System.EventHandler(this.FindByTextControls_Leave);
         // 
         // FindByTextLabel
         // 
@@ -4497,8 +4501,8 @@ partial class MainForm
         this.ChapterDiffTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.ChapterDiffTextBox, "Chapters between mouse clicks");
         this.ChapterDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.ChapterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.ChapterDiffTextBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
+        this.ChapterDiffTextBox.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // LetterNumericUpDown
         // 
@@ -4517,9 +4521,9 @@ partial class MainForm
         this.LetterNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.LetterNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.LetterNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.LetterNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.LetterNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.LetterNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.LetterNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // WordNumericUpDown
         // 
@@ -4538,9 +4542,9 @@ partial class MainForm
         this.WordNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.WordNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.WordNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.WordNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.WordNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.WordNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.WordNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // VerseNumericUpDown
         // 
@@ -4559,9 +4563,9 @@ partial class MainForm
         this.VerseNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.VerseNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.VerseNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.VerseNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.VerseNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.VerseNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.VerseNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // BowingNumericUpDown
         // 
@@ -4578,9 +4582,9 @@ partial class MainForm
         this.BowingNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.BowingNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.BowingNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.BowingNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.BowingNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.BowingNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.BowingNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // QuarterNumericUpDown
         // 
@@ -4597,9 +4601,9 @@ partial class MainForm
         this.QuarterNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.QuarterNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.QuarterNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.QuarterNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.QuarterNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.QuarterNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.QuarterNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // HalfNumericUpDown
         // 
@@ -4616,9 +4620,9 @@ partial class MainForm
         this.HalfNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.HalfNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.HalfNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.HalfNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.HalfNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.HalfNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.HalfNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // GroupNumericUpDown
         // 
@@ -4635,9 +4639,9 @@ partial class MainForm
         this.GroupNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.GroupNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.GroupNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.GroupNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.GroupNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.GroupNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.GroupNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // PartNumericUpDown
         // 
@@ -4654,9 +4658,9 @@ partial class MainForm
         this.PartNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.PartNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.PartNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.PartNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.PartNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.PartNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.PartNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // StationNumericUpDown
         // 
@@ -4673,9 +4677,9 @@ partial class MainForm
         this.StationNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.StationNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.StationNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.StationNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.StationNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.StationNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.StationNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // PageNumericUpDown
         // 
@@ -4693,9 +4697,9 @@ partial class MainForm
         this.PageNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.PageNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.PageNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.PageNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.PageNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.PageNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.PageNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // ChapterLetterNumericUpDown
         // 
@@ -4713,9 +4717,9 @@ partial class MainForm
         this.ChapterLetterNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ChapterLetterNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.ChapterLetterNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.ChapterLetterNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.ChapterLetterNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.ChapterLetterNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.ChapterLetterNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // ChapterWordNumericUpDown
         // 
@@ -4733,9 +4737,9 @@ partial class MainForm
         this.ChapterWordNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ChapterWordNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.ChapterWordNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.ChapterWordNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.ChapterWordNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.ChapterWordNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.ChapterWordNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // ChapterVerseNumericUpDown
         // 
@@ -4753,9 +4757,9 @@ partial class MainForm
         this.ChapterVerseNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ChapterVerseNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
         this.ChapterVerseNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.ChapterVerseNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         this.ChapterVerseNumericUpDown.Enter += new System.EventHandler(this.NumericUpDown_Enter);
         this.ChapterVerseNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumericUpDown_KeyDown);
+        this.ChapterVerseNumericUpDown.Leave += new System.EventHandler(this.NumericUpDown_Leave);
         // 
         // ChapterComboBox
         // 
@@ -4769,15 +4773,15 @@ partial class MainForm
         this.ChapterComboBox.Size = new System.Drawing.Size(91, 20);
         this.ChapterComboBox.TabIndex = 5;
         this.ChapterComboBox.SelectedIndexChanged += new System.EventHandler(this.ChapterComboBox_SelectedIndexChanged);
-        this.ChapterComboBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
-        this.ChapterComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.ChapterComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChapterComboBox_KeyDown);
         this.ChapterComboBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.ChapterComboBox.Enter += new System.EventHandler(this.NumericUpDown_Enter);
+        this.ChapterComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChapterComboBox_KeyDown);
+        this.ChapterComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // ChapterGroupBox
         // 
         this.ChapterGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)));
+        | System.Windows.Forms.AnchorStyles.Left)));
         this.ChapterGroupBox.BackColor = System.Drawing.Color.Transparent;
         this.ChapterGroupBox.Controls.Add(this.WordsListBox);
         this.ChapterGroupBox.Controls.Add(this.PinChapter1CheckBox);
@@ -4807,15 +4811,15 @@ partial class MainForm
         this.WordsListBox.Name = "WordsListBox";
         this.WordsListBox.ScrollAlwaysVisible = true;
         this.WordsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-        this.WordsListBox.Size = new System.Drawing.Size(96, 615);
+        this.WordsListBox.Size = new System.Drawing.Size(96, 621);
         this.WordsListBox.TabIndex = 3;
-        this.WordsListBox.SelectedIndexChanged += new System.EventHandler(this.WordsListBox_SelectedIndexChanged);
-        this.WordsListBox.Enter += new System.EventHandler(this.WordsListBox_Enter);
-        this.WordsListBox.DoubleClick += new System.EventHandler(this.WordsListBox_DoubleClick);
-        this.WordsListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WordsListBox_MouseMove);
-        this.WordsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WordsListBox_MouseDown);
-        this.WordsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WordsListBox_KeyDown);
         this.WordsListBox.Click += new System.EventHandler(this.WordsListBox_Click);
+        this.WordsListBox.SelectedIndexChanged += new System.EventHandler(this.WordsListBox_SelectedIndexChanged);
+        this.WordsListBox.DoubleClick += new System.EventHandler(this.WordsListBox_DoubleClick);
+        this.WordsListBox.Enter += new System.EventHandler(this.WordsListBox_Enter);
+        this.WordsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WordsListBox_KeyDown);
+        this.WordsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.WordsListBox_MouseDown);
+        this.WordsListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.WordsListBox_MouseMove);
         // 
         // PinChapter1CheckBox
         // 
@@ -4842,7 +4846,7 @@ partial class MainForm
         this.ChaptersListBox.Name = "ChaptersListBox";
         this.ChaptersListBox.ScrollAlwaysVisible = true;
         this.ChaptersListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-        this.ChaptersListBox.Size = new System.Drawing.Size(96, 615);
+        this.ChaptersListBox.Size = new System.Drawing.Size(96, 621);
         this.ChaptersListBox.TabIndex = 3;
         this.ChaptersListBox.SelectedIndexChanged += new System.EventHandler(this.ChaptersListBox_SelectedIndexChanged);
         this.ChaptersListBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChaptersListBox_MouseMove);
@@ -4894,8 +4898,8 @@ partial class MainForm
         // ClientSplitContainer
         // 
         this.ClientSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ClientSplitContainer.BackColor = System.Drawing.Color.Transparent;
         this.ClientSplitContainer.ForeColor = System.Drawing.SystemColors.WindowText;
         this.ClientSplitContainer.Location = new System.Drawing.Point(102, 41);
@@ -4919,14 +4923,14 @@ partial class MainForm
         this.ClientSplitContainer.SplitterDistance = 449;
         this.ClientSplitContainer.SplitterWidth = 3;
         this.ClientSplitContainer.TabIndex = 6;
-        this.ClientSplitContainer.Resize += new System.EventHandler(this.ClientSplitContainer_Resize);
         this.ClientSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.ClientSplitContainer_SplitterMoved);
+        this.ClientSplitContainer.Resize += new System.EventHandler(this.ClientSplitContainer_Resize);
         // 
         // MainTextBox
         // 
         this.MainTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.MainTextBox.BackColor = System.Drawing.SystemColors.Info;
         this.MainTextBox.Font = new System.Drawing.Font("Traditional Arabic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.MainTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -4940,25 +4944,25 @@ partial class MainForm
         this.MainTextBox.TabIndex = 69;
         this.MainTextBox.Text = "";
         this.MainTextBox.WordWrap = false;
-        this.MainTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainTextBox_KeyDown);
-        this.MainTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseUp);
         this.MainTextBox.SelectionChanged += new System.EventHandler(this.MainTextBox_SelectionChanged);
-        this.MainTextBox.Enter += new System.EventHandler(this.MainTextBox_Enter);
-        this.MainTextBox.MouseEnter += new System.EventHandler(this.MainTextBox_MouseEnter);
+        this.MainTextBox.Click += new System.EventHandler(this.MainTextBox_Click);
+        this.MainTextBox.TextChanged += new System.EventHandler(this.MainTextBox_TextChanged);
         this.MainTextBox.DoubleClick += new System.EventHandler(this.MainTextBox_DoubleClick);
-        this.MainTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseMove);
-        this.MainTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseDown);
+        this.MainTextBox.Enter += new System.EventHandler(this.MainTextBox_Enter);
+        this.MainTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainTextBox_KeyDown);
         this.MainTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTextBox_KeyPress);
         this.MainTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainTextBox_KeyUp);
-        this.MainTextBox.TextChanged += new System.EventHandler(this.MainTextBox_TextChanged);
+        this.MainTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseDown);
+        this.MainTextBox.MouseEnter += new System.EventHandler(this.MainTextBox_MouseEnter);
         this.MainTextBox.MouseLeave += new System.EventHandler(this.MainTextBox_MouseLeave);
-        this.MainTextBox.Click += new System.EventHandler(this.MainTextBox_Click);
+        this.MainTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseMove);
+        this.MainTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseUp);
         // 
         // SearchResultTextBox
         // 
         this.SearchResultTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.SearchResultTextBox.BackColor = System.Drawing.Color.AliceBlue;
         this.SearchResultTextBox.Font = new System.Drawing.Font("Traditional Arabic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.SearchResultTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -4972,19 +4976,19 @@ partial class MainForm
         this.SearchResultTextBox.TabIndex = 70;
         this.SearchResultTextBox.Text = "";
         this.SearchResultTextBox.WordWrap = false;
-        this.SearchResultTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainTextBox_KeyDown);
-        this.SearchResultTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseUp);
         this.SearchResultTextBox.SelectionChanged += new System.EventHandler(this.MainTextBox_SelectionChanged);
-        this.SearchResultTextBox.Enter += new System.EventHandler(this.MainTextBox_Enter);
-        this.SearchResultTextBox.MouseEnter += new System.EventHandler(this.MainTextBox_MouseEnter);
+        this.SearchResultTextBox.Click += new System.EventHandler(this.MainTextBox_Click);
+        this.SearchResultTextBox.TextChanged += new System.EventHandler(this.MainTextBox_TextChanged);
         this.SearchResultTextBox.DoubleClick += new System.EventHandler(this.MainTextBox_DoubleClick);
-        this.SearchResultTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseMove);
-        this.SearchResultTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseDown);
+        this.SearchResultTextBox.Enter += new System.EventHandler(this.MainTextBox_Enter);
+        this.SearchResultTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainTextBox_KeyDown);
         this.SearchResultTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.MainTextBox_KeyPress);
         this.SearchResultTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainTextBox_KeyUp);
-        this.SearchResultTextBox.TextChanged += new System.EventHandler(this.MainTextBox_TextChanged);
+        this.SearchResultTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseDown);
+        this.SearchResultTextBox.MouseEnter += new System.EventHandler(this.MainTextBox_MouseEnter);
         this.SearchResultTextBox.MouseLeave += new System.EventHandler(this.MainTextBox_MouseLeave);
-        this.SearchResultTextBox.Click += new System.EventHandler(this.MainTextBox_Click);
+        this.SearchResultTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseMove);
+        this.SearchResultTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainTextBox_MouseUp);
         // 
         // HeaderPanel
         // 
@@ -5199,8 +5203,8 @@ partial class MainForm
         // HeaderLabel
         // 
         this.HeaderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.HeaderLabel.BackColor = System.Drawing.Color.Transparent;
         this.HeaderLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.HeaderLabel.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -5215,8 +5219,8 @@ partial class MainForm
         // PictureBox
         // 
         this.PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.PictureBox.BackColor = System.Drawing.Color.Black;
         this.PictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
         this.PictureBox.Image = null;
@@ -5229,14 +5233,14 @@ partial class MainForm
         this.PictureBox.TabIndex = 99;
         this.PictureBox.Visible = false;
         this.PictureBox.ZoomFactor = 1F;
-        this.PictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseMove);
         this.PictureBox.MouseHover += new System.EventHandler(this.PictureBox_MouseHover);
+        this.PictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox_MouseMove);
         // 
         // TabControl
         // 
         this.TabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.TabControl.Controls.Add(this.TranslationTabPage);
         this.TabControl.Controls.Add(this.GrammarTabPage);
         this.TabControl.Controls.Add(this.RelatedWordsTabPage);
@@ -5254,9 +5258,9 @@ partial class MainForm
         this.TabControl.ShowToolTips = true;
         this.TabControl.Size = new System.Drawing.Size(816, 192);
         this.TabControl.TabIndex = 102;
+        this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
         this.TabControl.Click += new System.EventHandler(this.TabControl_Click);
         this.TabControl.Enter += new System.EventHandler(this.TabControl_Enter);
-        this.TabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
         // 
         // TranslationTabPage
         // 
@@ -5274,8 +5278,8 @@ partial class MainForm
         // TranslationSplitContainer
         // 
         this.TranslationSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.TranslationSplitContainer.Location = new System.Drawing.Point(-2, 1);
         this.TranslationSplitContainer.Name = "TranslationSplitContainer";
         // 
@@ -5367,7 +5371,7 @@ partial class MainForm
         // TranslatorsCheckedListBox
         // 
         this.TranslatorsCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.TranslatorsCheckedListBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.TranslatorsCheckedListBox.CheckOnClick = true;
         this.TranslatorsCheckedListBox.FormattingEnabled = true;
@@ -5463,14 +5467,14 @@ partial class MainForm
         this.GrammarTabPage.TabIndex = 193;
         this.GrammarTabPage.Text = " Grammar";
         this.GrammarTabPage.ToolTipText = "Grammar details of the current word in Arabic and English\r\nإعراب الكلمة بالعربي و" +
-            "الإنكليزي";
+"الإنكليزي";
         this.GrammarTabPage.UseVisualStyleBackColor = true;
         // 
         // GrammarTextBox
         // 
         this.GrammarTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.GrammarTextBox.BackColor = System.Drawing.Color.LightGray;
         this.GrammarTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.GrammarTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -5497,7 +5501,7 @@ partial class MainForm
         this.RelatedWordsTabPage.TabIndex = 192;
         this.RelatedWordsTabPage.Text = "Related Words";
         this.RelatedWordsTabPage.ToolTipText = "Related words from the same root as the current word\r\nالكلمات المشتقة من نفس جذر " +
-            "الكلمة الحالية";
+"الكلمة الحالية";
         this.RelatedWordsTabPage.UseVisualStyleBackColor = true;
         // 
         // RelatedWordsButton
@@ -5521,8 +5525,8 @@ partial class MainForm
         // RelatedWordsTextBox
         // 
         this.RelatedWordsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.RelatedWordsTextBox.BackColor = System.Drawing.Color.LightGray;
         this.RelatedWordsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.RelatedWordsTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -5552,7 +5556,7 @@ partial class MainForm
         this.SymmetryTabPage.TabIndex = 201;
         this.SymmetryTabPage.Text = "Symmetry";
         this.SymmetryTabPage.ToolTipText = "Text symmetries starting from both ends [Dr Waleed S. Mohammed]\r\nتناظر النص من ال" +
-            "طرفين (د. وليد محمد)";
+"طرفين (د. وليد محمد)";
         // 
         // SymmetryIncludeBoundaryCasesCheckBox
         // 
@@ -5600,8 +5604,8 @@ partial class MainForm
         // SymmetryTextBox
         // 
         this.SymmetryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.SymmetryTextBox.BackColor = System.Drawing.Color.LightGray;
         this.SymmetryTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.SymmetryTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -5632,7 +5636,7 @@ partial class MainForm
         this.ValuesSequenceTabPage.TabIndex = 198;
         this.ValuesSequenceTabPage.Text = "Values";
         this.ValuesSequenceTabPage.ToolTipText = "Values of letter/word/verse/chapter values in bases 2 to 36\r\nقيم الحروف والكلمات " +
-            "والءايات والسُوَر بالأنظمة الرقمية لأساسات 2 الى 36";
+"والءايات والسُوَر بالأنظمة الرقمية لأساسات 2 الى 36";
         // 
         // ValuesSequenceScopeComboBox
         // 
@@ -5721,8 +5725,8 @@ partial class MainForm
         // ValuesSequenceTextBox
         // 
         this.ValuesSequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ValuesSequenceTextBox.BackColor = System.Drawing.Color.LightGray;
         this.ValuesSequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.ValuesSequenceTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -5735,7 +5739,7 @@ partial class MainForm
         this.ValuesSequenceTextBox.Size = new System.Drawing.Size(811, 166);
         this.ValuesSequenceTextBox.TabIndex = 1;
         this.ValuesSequenceTextBox.Text = "Select text to convert its letter/word/verse/chapter values into a number sequenc" +
-            "e in the specified base.";
+"e in the specified base.";
         this.ValuesSequenceTextBox.WordWrap = false;
         this.ValuesSequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
         // 
@@ -5753,7 +5757,7 @@ partial class MainForm
         this.CVWLSequenceTabPage.TabIndex = 200;
         this.CVWLSequenceTabPage.Text = "CVWL";
         this.CVWLSequenceTabPage.ToolTipText = "Concatenated chapter/verse/word/letter numbers and counts\r\nرصف أرقام وأعداد الحرو" +
-            "ف والكلمات والءايات والسُوَر";
+"ف والكلمات والءايات والسُوَر";
         // 
         // CVWLSequenceShowFactorsCheckBox
         // 
@@ -5817,8 +5821,8 @@ partial class MainForm
         // CVWLSequenceTextBox
         // 
         this.CVWLSequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.CVWLSequenceTextBox.BackColor = System.Drawing.Color.LightGray;
         this.CVWLSequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.CVWLSequenceTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -5831,7 +5835,7 @@ partial class MainForm
         this.CVWLSequenceTextBox.Size = new System.Drawing.Size(811, 166);
         this.CVWLSequenceTextBox.TabIndex = 1;
         this.CVWLSequenceTextBox.Text = "Select text to display concatenated chapter/verse/word/letter numbers and counts." +
-            "";
+"";
         this.CVWLSequenceTextBox.WordWrap = false;
         this.CVWLSequenceTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
         // 
@@ -5848,8 +5852,8 @@ partial class MainForm
         this.DNASequenceTabPage.TabIndex = 195;
         this.DNASequenceTabPage.Text = "DNA";
         this.DNASequenceTabPage.ToolTipText = "Convert text into a DNA sequence to compare with the human genome [Belkacem Meghz" +
-            "ouchene]\r\n(حوّل النص المظلل الى سلسلة د ن ا للمقارنة مع سلسلة الإنسان (بوالقاسم " +
-            "مغزوكين";
+"ouchene]\r\n(حوّل النص المظلل الى سلسلة د ن ا للمقارنة مع سلسلة الإنسان (بوالقاسم " +
+"مغزوكين";
         this.DNASequenceTabPage.UseVisualStyleBackColor = true;
         // 
         // DNASequenceDirectionLabel
@@ -5899,8 +5903,8 @@ partial class MainForm
         // DNASequenceTextBox
         // 
         this.DNASequenceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.DNASequenceTextBox.BackColor = System.Drawing.Color.LightGray;
         this.DNASequenceTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.DNASequenceTextBox.ForeColor = System.Drawing.Color.Navy;
@@ -7328,7 +7332,7 @@ partial class MainForm
         this.DistancesTabPage.TabIndex = 199;
         this.DistancesTabPage.Text = "Distances";
         this.DistancesTabPage.ToolTipText = "Distances to the start and end of Book, current chapter/verse/word\r\nالمسافات الى " +
-            "بداية ونهاية الكتاب";
+"بداية ونهاية الكتاب";
         // 
         // DistancesPanel
         // 
@@ -8028,7 +8032,7 @@ partial class MainForm
         this.DistancesWordLabel.Size = new System.Drawing.Size(328, 16);
         this.DistancesWordLabel.TabIndex = 0;
         this.DistancesWordLabel.Text = "|<-----                          Words                           ----->|         " +
-            "     Δ";
+"     Δ";
         this.DistancesWordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
         // 
         // DistancesVerseBeforeWithinBookTextBox
@@ -8264,7 +8268,7 @@ partial class MainForm
         this.UserTextTabPage.TabIndex = 194;
         this.UserTextTabPage.Text = " User Text ";
         this.UserTextTabPage.ToolTipText = "Calculate the value of any given text or find all words with a given value\r\nحساب " +
-            "القيمة لنص معين أو إيجاد الكلمات ذوات قيمة معينة";
+"القيمة لنص معين أو إيجاد الكلمات ذوات قيمة معينة";
         // 
         // UserText8LoadLabel
         // 
@@ -8562,8 +8566,8 @@ partial class MainForm
         // 
         this.UserTextTextBox.AcceptsReturn = true;
         this.UserTextTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.UserTextTextBox.BackColor = System.Drawing.SystemColors.Window;
         this.UserTextTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.UserTextTextBox.ForeColor = System.Drawing.Color.Blue;
@@ -8578,12 +8582,12 @@ partial class MainForm
         this.UserTextTextBox.TabIndex = 1;
         this.UserTextTextBox.WordWrap = false;
         this.UserTextTextBox.TextChanged += new System.EventHandler(this.UserTextTextBox_TextChanged);
-        this.UserTextTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseMove);
-        this.UserTextTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
-        this.UserTextTextBox.Leave += new System.EventHandler(this.UserTextTextBox_Leave);
-        this.UserTextTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.UserTextTextBox_KeyUp);
-        this.UserTextTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseDown);
         this.UserTextTextBox.Enter += new System.EventHandler(this.UserTextTextBox_Enter);
+        this.UserTextTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
+        this.UserTextTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.UserTextTextBox_KeyUp);
+        this.UserTextTextBox.Leave += new System.EventHandler(this.UserTextTextBox_Leave);
+        this.UserTextTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseDown);
+        this.UserTextTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseMove);
         this.UserTextTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UserTextTextBox_MouseUp);
         // 
         // TanzilLabel
@@ -8599,7 +8603,7 @@ partial class MainForm
         this.TanzilLabel.TabIndex = 1;
         this.TanzilLabel.Tag = "http://tanzil.net/";
         this.TanzilLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.TanzilLabel, "Copyright ©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TanzilLabel, "©2008 Tanzil Quran Text");
         this.TanzilLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.TanzilLabel.Enter += new System.EventHandler(this.FindByTextControls_Enter);
         // 
@@ -8636,17 +8640,17 @@ partial class MainForm
         this.FindByFrequencySumNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.FindByFrequencySumNumericUpDown, "Letter frequency sum");
         this.FindByFrequencySumNumericUpDown.ValueChanged += new System.EventHandler(this.FindByFrequencySumNumericUpDown_ValueChanged);
-        this.FindByFrequencySumNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
-        this.FindByFrequencySumNumericUpDown.Leave += new System.EventHandler(this.FindByFrequencySumNumericUpDown_Leave);
-        this.FindByFrequencySumNumericUpDown.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.FindByFrequencySumNumericUpDown.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
         this.FindByFrequencySumNumericUpDown.EnabledChanged += new System.EventHandler(this.FindByFrequencyControl_EnabledChanged);
+        this.FindByFrequencySumNumericUpDown.Click += new System.EventHandler(this.NumericUpDown_Enter);
+        this.FindByFrequencySumNumericUpDown.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
+        this.FindByFrequencySumNumericUpDown.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+        this.FindByFrequencySumNumericUpDown.Leave += new System.EventHandler(this.FindByFrequencySumNumericUpDown_Leave);
         // 
         // StatisticsGroupBox
         // 
         this.StatisticsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.StatisticsGroupBox.Controls.Add(this.TanzilLabel);
         this.StatisticsGroupBox.Controls.Add(this.TotalChapterCountsCheckBox);
         this.StatisticsGroupBox.Controls.Add(this.ShaddaAsLetterCheckBox);
@@ -8720,8 +8724,8 @@ partial class MainForm
         this.ShaddaAsLetterCheckBox.Text = "Shadda";
         this.ToolTip.SetToolTip(this.ShaddaAsLetterCheckBox, "Shadda as letter  شدّة كحرف");
         this.ShaddaAsLetterCheckBox.UseVisualStyleBackColor = false;
-        this.ShaddaAsLetterCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.ShaddaAsLetterCheckBox.CheckedChanged += new System.EventHandler(this.ShaddaAsLetterCheckBox_CheckedChanged);
+        this.ShaddaAsLetterCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // WawAsWordCheckBox
         // 
@@ -8736,8 +8740,8 @@ partial class MainForm
         this.WawAsWordCheckBox.Text = "Waw";
         this.ToolTip.SetToolTip(this.WawAsWordCheckBox, "Waw as word  واو ككلمة");
         this.WawAsWordCheckBox.UseVisualStyleBackColor = false;
-        this.WawAsWordCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.WawAsWordCheckBox.CheckedChanged += new System.EventHandler(this.WawAsWordCheckBox_CheckedChanged);
+        this.WawAsWordCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // WithBismAllahCheckBox
         // 
@@ -8754,13 +8758,13 @@ partial class MainForm
         this.WithBismAllahCheckBox.Text = "Bism";
         this.ToolTip.SetToolTip(this.WithBismAllahCheckBox, "With 112 bismAllah  مع 112 بسم الله الرحمن الرحيم");
         this.WithBismAllahCheckBox.UseVisualStyleBackColor = false;
-        this.WithBismAllahCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.WithBismAllahCheckBox.CheckedChanged += new System.EventHandler(this.WithBismAllahCheckBox_CheckedChanged);
+        this.WithBismAllahCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // ValueNavigatorPanel
         // 
         this.ValueNavigatorPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ValueNavigatorPanel.BackColor = System.Drawing.Color.Transparent;
         this.ValueNavigatorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
         this.ValueNavigatorPanel.Controls.Add(this.ValueNavigatorLinkLabel);
@@ -8785,7 +8789,7 @@ partial class MainForm
         this.ValueNavigatorLinkLabel.Size = new System.Drawing.Size(6, 4);
         this.ValueNavigatorLinkLabel.TabIndex = 0;
         this.ValueNavigatorLinkLabel.Tag = "http://quran-2012.ir";
-        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "Copyright ©2009 Aminreza Ebrahimi Saba");
+        this.ToolTip.SetToolTip(this.ValueNavigatorLinkLabel, "©2009 Aminreza Ebrahimi Saba");
         this.ValueNavigatorLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.ValueNavigatorLinkLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
@@ -8830,8 +8834,8 @@ partial class MainForm
         this.ChapterNumberSumTextBox.Size = new System.Drawing.Size(55, 20);
         this.ChapterNumberSumTextBox.TabIndex = 9;
         this.ChapterNumberSumTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.ChapterNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.ChapterNumberSumTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.ChapterNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // DecimalChaptersTextBox
         // 
@@ -8845,13 +8849,13 @@ partial class MainForm
         this.DecimalChaptersTextBox.Size = new System.Drawing.Size(55, 20);
         this.DecimalChaptersTextBox.TabIndex = 8;
         this.DecimalChaptersTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.DecimalChaptersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.DecimalChaptersTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.DecimalChaptersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // ChaptersTextBox
         // 
         this.ChaptersTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ChaptersTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.ChaptersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.ChaptersTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -8863,8 +8867,8 @@ partial class MainForm
         this.ChaptersTextBox.TabIndex = 10;
         this.ChaptersTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         this.ChaptersTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.ChaptersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.ChaptersTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.ChaptersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // ChaptersLabel
         // 
@@ -8880,8 +8884,8 @@ partial class MainForm
         // LetterFrequencyPanel
         // 
         this.LetterFrequencyPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.LetterFrequencyPanel.BackColor = System.Drawing.Color.LightSteelBlue;
         this.LetterFrequencyPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
         this.LetterFrequencyPanel.Controls.Add(this.LetterFrequencyWithDiacriticsCheckBox);
@@ -8946,8 +8950,8 @@ partial class MainForm
         // LetterFrequencyListView
         // 
         this.LetterFrequencyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Left)
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.LetterFrequencyListView.BackColor = System.Drawing.Color.LightSteelBlue;
         this.LetterFrequencyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.LetterOrderColumnHeader,
@@ -8967,10 +8971,10 @@ partial class MainForm
         this.LetterFrequencyListView.TabIndex = 11;
         this.LetterFrequencyListView.UseCompatibleStateImageBehavior = false;
         this.LetterFrequencyListView.View = System.Windows.Forms.View.Details;
+        this.LetterFrequencyListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LetterFrequencyListView_ColumnClick);
         this.LetterFrequencyListView.SelectedIndexChanged += new System.EventHandler(this.LetterFrequencyListView_SelectedIndexChanged);
         this.LetterFrequencyListView.DoubleClick += new System.EventHandler(this.LetterFrequencyListView_DoubleClick);
         this.LetterFrequencyListView.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-        this.LetterFrequencyListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LetterFrequencyListView_ColumnClick);
         // 
         // LetterOrderColumnHeader
         // 
@@ -9094,9 +9098,9 @@ partial class MainForm
         this.FindByFrequencySumComparisonOperatorLabel.Text = "=";
         this.FindByFrequencySumComparisonOperatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         this.ToolTip.SetToolTip(this.FindByFrequencySumComparisonOperatorLabel, "equals to");
+        this.FindByFrequencySumComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByFrequencyControl_EnabledChanged);
         this.FindByFrequencySumComparisonOperatorLabel.Click += new System.EventHandler(this.FindByFrequencyComparisonOperatorLabel_Click);
         this.FindByFrequencySumComparisonOperatorLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-        this.FindByFrequencySumComparisonOperatorLabel.EnabledChanged += new System.EventHandler(this.FindByFrequencyControl_EnabledChanged);
         // 
         // FindByFrequencySumNumberTypeLabel
         // 
@@ -9110,9 +9114,9 @@ partial class MainForm
         this.FindByFrequencySumNumberTypeLabel.Size = new System.Drawing.Size(29, 19);
         this.FindByFrequencySumNumberTypeLabel.TabIndex = 10;
         this.FindByFrequencySumNumberTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.FindByFrequencySumNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByFrequencyControl_EnabledChanged);
         this.FindByFrequencySumNumberTypeLabel.Click += new System.EventHandler(this.FindByFrequencyNumberTypeLabel_Click);
         this.FindByFrequencySumNumberTypeLabel.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-        this.FindByFrequencySumNumberTypeLabel.EnabledChanged += new System.EventHandler(this.FindByFrequencyControl_EnabledChanged);
         // 
         // FindByFrequencyLinkLabel
         // 
@@ -9126,7 +9130,7 @@ partial class MainForm
         this.FindByFrequencyLinkLabel.TabIndex = 110;
         this.FindByFrequencyLinkLabel.Tag = "http://www.facebook.com/hadyalthahaby";
         this.FindByFrequencyLinkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "Copyright ©2005 Hadi Al-Thehabi");
+        this.ToolTip.SetToolTip(this.FindByFrequencyLinkLabel, "©2005 Hadi Al-Thehabi");
         this.FindByFrequencyLinkLabel.Visible = false;
         this.FindByFrequencyLinkLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
@@ -9143,8 +9147,8 @@ partial class MainForm
         this.FindByFrequencyPhraseCheckBox.TabIndex = 109;
         this.ToolTip.SetToolTip(this.FindByFrequencyPhraseCheckBox, "Phrase Letter Frequency");
         this.FindByFrequencyPhraseCheckBox.UseVisualStyleBackColor = false;
-        this.FindByFrequencyPhraseCheckBox.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
         this.FindByFrequencyPhraseCheckBox.CheckedChanged += new System.EventHandler(this.FindByFrequencyPhraseCheckBox_CheckedChanged);
+        this.FindByFrequencyPhraseCheckBox.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
         // 
         // FindByFrequencyButton
         // 
@@ -9158,9 +9162,9 @@ partial class MainForm
         this.FindByFrequencyButton.TabIndex = 11;
         this.FindByFrequencyButton.Text = "Find";
         this.FindByFrequencyButton.UseVisualStyleBackColor = true;
+        this.FindByFrequencyButton.EnabledChanged += new System.EventHandler(this.FindByFrequencyButton_EnabledChanged);
         this.FindByFrequencyButton.Click += new System.EventHandler(this.FindByFrequencyButton_Click);
         this.FindByFrequencyButton.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
-        this.FindByFrequencyButton.EnabledChanged += new System.EventHandler(this.FindByFrequencyButton_EnabledChanged);
         // 
         // FindByFrequencyLabel
         // 
@@ -9265,10 +9269,10 @@ partial class MainForm
         this.FindByFrequencyPhraseTextBox.TabIndex = 7;
         this.FindByFrequencyPhraseTextBox.WordWrap = false;
         this.FindByFrequencyPhraseTextBox.TextChanged += new System.EventHandler(this.FindByFrequencyPhraseTextBox_TextChanged);
-        this.FindByFrequencyPhraseTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FindByFrequencyPhraseTextBox_MouseMove);
+        this.FindByFrequencyPhraseTextBox.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
         this.FindByFrequencyPhraseTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
         this.FindByFrequencyPhraseTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FindByFrequencyPhraseTextBox_KeyUp);
-        this.FindByFrequencyPhraseTextBox.Enter += new System.EventHandler(this.FindByFrequencyControls_Enter);
+        this.FindByFrequencyPhraseTextBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FindByFrequencyPhraseTextBox_MouseMove);
         this.FindByFrequencyPhraseTextBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FindByFrequencyPhraseTextBox_MouseUp);
         // 
         // LetterFrequencyPositionSumSumLabel
@@ -9315,8 +9319,8 @@ partial class MainForm
         this.LetterNumberSumTextBox.Size = new System.Drawing.Size(55, 20);
         this.LetterNumberSumTextBox.TabIndex = 18;
         this.LetterNumberSumTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.LetterNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.LetterNumberSumTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.LetterNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // WordNumberSumTextBox
         // 
@@ -9330,8 +9334,8 @@ partial class MainForm
         this.WordNumberSumTextBox.Size = new System.Drawing.Size(55, 20);
         this.WordNumberSumTextBox.TabIndex = 15;
         this.WordNumberSumTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.WordNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.WordNumberSumTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.WordNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // VerseNumberSumTextBox
         // 
@@ -9345,13 +9349,13 @@ partial class MainForm
         this.VerseNumberSumTextBox.Size = new System.Drawing.Size(55, 20);
         this.VerseNumberSumTextBox.TabIndex = 12;
         this.VerseNumberSumTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.VerseNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.VerseNumberSumTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.VerseNumberSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // DecimalLettersTextBox
         // 
         this.DecimalLettersTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.DecimalLettersTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.DecimalLettersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.DecimalLettersTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -9362,8 +9366,8 @@ partial class MainForm
         this.DecimalLettersTextBox.Size = new System.Drawing.Size(55, 20);
         this.DecimalLettersTextBox.TabIndex = 17;
         this.DecimalLettersTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.DecimalLettersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.DecimalLettersTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.DecimalLettersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // DecimalWordsTextBox
         // 
@@ -9377,8 +9381,8 @@ partial class MainForm
         this.DecimalWordsTextBox.Size = new System.Drawing.Size(55, 20);
         this.DecimalWordsTextBox.TabIndex = 14;
         this.DecimalWordsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.DecimalWordsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.DecimalWordsTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.DecimalWordsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // DecimalVersesTextBox
         // 
@@ -9392,8 +9396,8 @@ partial class MainForm
         this.DecimalVersesTextBox.Size = new System.Drawing.Size(55, 20);
         this.DecimalVersesTextBox.TabIndex = 11;
         this.DecimalVersesTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.DecimalVersesTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.DecimalVersesTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.DecimalVersesTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // RadixValueUpLabel
         // 
@@ -9441,7 +9445,7 @@ partial class MainForm
         // ValuePanel
         // 
         this.ValuePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.ValuePanel.Controls.Add(this.PrimalogyARLabel);
         this.ValuePanel.Controls.Add(this.PrimalogyLabel);
         this.ValuePanel.Controls.Add(this.SumOfDivisorsTextBox);
@@ -9486,9 +9490,9 @@ partial class MainForm
         this.ValuePanel.Controls.Add(this.ValueLabel);
         this.ValuePanel.Controls.Add(this.DisplayPerfectNumbersLabel);
         this.ValuePanel.Controls.Add(this.AddDistancesWithinChaptersCheckBox);
-        this.ValuePanel.Controls.Add(this.AddDistancesToNextCheckBox);
         this.ValuePanel.Controls.Add(this.AddDistancesToPreviousCheckBox);
         this.ValuePanel.Controls.Add(this.AddPositionsCheckBox);
+        this.ValuePanel.Controls.Add(this.AddDistancesToNextCheckBox);
         this.ValuePanel.Location = new System.Drawing.Point(4, 133);
         this.ValuePanel.Name = "ValuePanel";
         this.ValuePanel.Size = new System.Drawing.Size(181, 276);
@@ -9508,13 +9512,13 @@ partial class MainForm
         this.SumOfDivisorsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.SumOfDivisorsTextBox, "Sum of divisors");
         this.SumOfDivisorsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.SumOfDivisorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.SumOfDivisorsTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.SumOfDivisorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // SquareDiffTextBox
         // 
         this.SquareDiffTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.SquareDiffTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.SquareDiffTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.SquareDiffTextBox.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -9524,13 +9528,13 @@ partial class MainForm
         this.SquareDiffTextBox.Size = new System.Drawing.Size(178, 20);
         this.SquareDiffTextBox.TabIndex = 24;
         this.SquareDiffTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.SquareDiffTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.SquareDiffTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.SquareDiffTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // SquareSumTextBox
         // 
         this.SquareSumTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.SquareSumTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.SquareSumTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.SquareSumTextBox.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -9540,8 +9544,8 @@ partial class MainForm
         this.SquareSumTextBox.Size = new System.Drawing.Size(178, 20);
         this.SquareSumTextBox.TabIndex = 23;
         this.SquareSumTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.SquareSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.SquareSumTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.SquareSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // ValueInspectLabel
         // 
@@ -9561,7 +9565,7 @@ partial class MainForm
         // NthNonAdditiveNumberTextBox
         // 
         this.NthNonAdditiveNumberTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.NthNonAdditiveNumberTextBox.BackColor = System.Drawing.SystemColors.Window;
         this.NthNonAdditiveNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.NthNonAdditiveNumberTextBox.Location = new System.Drawing.Point(119, 100);
@@ -9571,9 +9575,9 @@ partial class MainForm
         this.NthNonAdditiveNumberTextBox.TabIndex = 27;
         this.NthNonAdditiveNumberTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.NthNonAdditiveNumberTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.NthNonAdditiveNumberTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.NthNonAdditiveNumberTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NthNonAdditiveNumberTextBox_KeyDown);
         this.NthNonAdditiveNumberTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.NthNonAdditiveNumberTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // DisplayAbundantNumbersLabel
         // 
@@ -9617,8 +9621,8 @@ partial class MainForm
         this.DecimalValueTextBox.Size = new System.Drawing.Size(55, 20);
         this.DecimalValueTextBox.TabIndex = 20;
         this.DecimalValueTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.DecimalValueTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.DecimalValueTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.DecimalValueTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // EditNumerologySystemLabel
         // 
@@ -9650,9 +9654,9 @@ partial class MainForm
         this.NumberKindIndexTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.NumberKindIndexTextBox, "Deficient number index");
         this.NumberKindIndexTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.NumberKindIndexTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.NumberKindIndexTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NumberKindIndexTextBox_KeyDown);
         this.NumberKindIndexTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.NumberKindIndexTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // SumOfProperDivisorsTextBox
         // 
@@ -9668,13 +9672,13 @@ partial class MainForm
         this.SumOfProperDivisorsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.ToolTip.SetToolTip(this.SumOfProperDivisorsTextBox, "Sum of proper divisors");
         this.SumOfProperDivisorsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.SumOfProperDivisorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.SumOfProperDivisorsTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.SumOfProperDivisorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // PCIndexChainPanel
         // 
         this.PCIndexChainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.PCIndexChainPanel.BackColor = System.Drawing.Color.LightSteelBlue;
         this.PCIndexChainPanel.Controls.Add(this.PCIndexChainLabel);
         this.PCIndexChainPanel.Controls.Add(this.IndexChainLengthTextBox);
@@ -9699,9 +9703,9 @@ partial class MainForm
         this.PCIndexChainLabel.Size = new System.Drawing.Size(6, 4);
         this.PCIndexChainLabel.TabIndex = 155;
         this.PCIndexChainLabel.Tag = "http://eng.bu.ac.th/bucroccs/index.php/research/14-people-detail/19-dr-waleed-s-m" +
-            "ohammed";
+"ohammed";
         this.PCIndexChainLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "Copyright ©2016 Dr Waleed S. Mohammed");
+        this.ToolTip.SetToolTip(this.PCIndexChainLabel, "©2016 Dr Waleed S. Mohammed");
         this.PCIndexChainLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // IndexChainLengthTextBox
@@ -9718,8 +9722,8 @@ partial class MainForm
         this.IndexChainLengthTextBox.TabIndex = 35;
         this.IndexChainLengthTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.IndexChainLengthTextBox.Click += new System.EventHandler(this.IndexChainLengthTextBox_Click);
-        this.IndexChainLengthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.IndexChainLengthTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.IndexChainLengthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // CPIndexChainL2RTextBox
         // 
@@ -9733,10 +9737,10 @@ partial class MainForm
         this.CPIndexChainL2RTextBox.Size = new System.Drawing.Size(40, 20);
         this.CPIndexChainL2RTextBox.TabIndex = 33;
         this.CPIndexChainL2RTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.CPIndexChainL2RTextBox.TextChanged += new System.EventHandler(this.CPIndexChainL2RTextBox_TextChanged);
         this.CPIndexChainL2RTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.CPIndexChainL2RTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+        this.CPIndexChainL2RTextBox.TextChanged += new System.EventHandler(this.CPIndexChainL2RTextBox_TextChanged);
         this.CPIndexChainL2RTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.CPIndexChainL2RTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // PCIndexChainR2LTextBox
         // 
@@ -9750,10 +9754,10 @@ partial class MainForm
         this.PCIndexChainR2LTextBox.Size = new System.Drawing.Size(40, 20);
         this.PCIndexChainR2LTextBox.TabIndex = 32;
         this.PCIndexChainR2LTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.PCIndexChainR2LTextBox.TextChanged += new System.EventHandler(this.PCIndexChainR2LTextBox_TextChanged);
         this.PCIndexChainR2LTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.PCIndexChainR2LTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+        this.PCIndexChainR2LTextBox.TextChanged += new System.EventHandler(this.PCIndexChainR2LTextBox_TextChanged);
         this.PCIndexChainR2LTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.PCIndexChainR2LTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // CPIndexChainR2LTextBox
         // 
@@ -9767,10 +9771,10 @@ partial class MainForm
         this.CPIndexChainR2LTextBox.Size = new System.Drawing.Size(40, 20);
         this.CPIndexChainR2LTextBox.TabIndex = 34;
         this.CPIndexChainR2LTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.CPIndexChainR2LTextBox.TextChanged += new System.EventHandler(this.CPIndexChainR2LTextBox_TextChanged);
         this.CPIndexChainR2LTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.CPIndexChainR2LTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+        this.CPIndexChainR2LTextBox.TextChanged += new System.EventHandler(this.CPIndexChainR2LTextBox_TextChanged);
         this.CPIndexChainR2LTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.CPIndexChainR2LTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // PCIndexChainL2RTextBox
         // 
@@ -9784,10 +9788,10 @@ partial class MainForm
         this.PCIndexChainL2RTextBox.Size = new System.Drawing.Size(40, 20);
         this.PCIndexChainL2RTextBox.TabIndex = 31;
         this.PCIndexChainL2RTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-        this.PCIndexChainL2RTextBox.TextChanged += new System.EventHandler(this.PCIndexChainL2RTextBox_TextChanged);
         this.PCIndexChainL2RTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.PCIndexChainL2RTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
+        this.PCIndexChainL2RTextBox.TextChanged += new System.EventHandler(this.PCIndexChainL2RTextBox_TextChanged);
         this.PCIndexChainL2RTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.PCIndexChainL2RTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // AddToChapterCNumberCheckBox
         // 
@@ -9800,9 +9804,9 @@ partial class MainForm
         this.AddToChapterCNumberCheckBox.TabIndex = 138;
         this.AddToChapterCNumberCheckBox.Text = "C";
         this.AddToChapterCNumberCheckBox.UseVisualStyleBackColor = false;
+        this.AddToChapterCNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToChapterCNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
         this.AddToChapterCNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
-        this.AddToChapterCNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         // 
         // AddToVerseCDistanceCheckBox
         // 
@@ -9815,10 +9819,10 @@ partial class MainForm
         this.AddToVerseCDistanceCheckBox.TabIndex = 137;
         this.AddToVerseCDistanceCheckBox.Text = "∆C";
         this.AddToVerseCDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToVerseCDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToVerseCDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToVerseCDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToVerseCDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToVerseCDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToVerseCDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToVerseCNumberCheckBox
         // 
@@ -9831,10 +9835,10 @@ partial class MainForm
         this.AddToVerseCNumberCheckBox.TabIndex = 135;
         this.AddToVerseCNumberCheckBox.Text = "C";
         this.AddToVerseCNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToVerseCNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToVerseCNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToVerseCNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToVerseCNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToVerseCNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToVerseCNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToWordCDistanceCheckBox
         // 
@@ -9847,10 +9851,10 @@ partial class MainForm
         this.AddToWordCDistanceCheckBox.TabIndex = 133;
         this.AddToWordCDistanceCheckBox.Text = "∆C";
         this.AddToWordCDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToWordCDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToWordCDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToWordCDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToWordCDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToWordCDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToWordCDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToWordCNumberCheckBox
         // 
@@ -9863,10 +9867,10 @@ partial class MainForm
         this.AddToWordCNumberCheckBox.TabIndex = 130;
         this.AddToWordCNumberCheckBox.Text = "C";
         this.AddToWordCNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToWordCNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToWordCNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToWordCNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToWordCNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToWordCNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToWordCNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToVerseVDistanceCheckBox
         // 
@@ -9879,10 +9883,10 @@ partial class MainForm
         this.AddToVerseVDistanceCheckBox.TabIndex = 136;
         this.AddToVerseVDistanceCheckBox.Text = "∆V";
         this.AddToVerseVDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToVerseVDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToVerseVDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToVerseVDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToVerseVDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToVerseVDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToVerseVDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // NumerologySystemComboBox
         // 
@@ -9894,9 +9898,9 @@ partial class MainForm
         this.NumerologySystemComboBox.Name = "NumerologySystemComboBox";
         this.NumerologySystemComboBox.Size = new System.Drawing.Size(173, 20);
         this.NumerologySystemComboBox.TabIndex = 7;
+        this.NumerologySystemComboBox.DropDown += new System.EventHandler(this.NumerologySystemComboBox_DropDown);
         this.NumerologySystemComboBox.SelectedIndexChanged += new System.EventHandler(this.NumerologySystemComboBox_SelectedIndexChanged);
         this.NumerologySystemComboBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
-        this.NumerologySystemComboBox.DropDown += new System.EventHandler(this.NumerologySystemComboBox_DropDown);
         // 
         // AddToVerseVNumberCheckBox
         // 
@@ -9909,10 +9913,10 @@ partial class MainForm
         this.AddToVerseVNumberCheckBox.TabIndex = 134;
         this.AddToVerseVNumberCheckBox.Text = "V";
         this.AddToVerseVNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToVerseVNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToVerseVNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToVerseVNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToVerseVNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToVerseVNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToVerseVNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToWordVDistanceCheckBox
         // 
@@ -9925,10 +9929,10 @@ partial class MainForm
         this.AddToWordVDistanceCheckBox.TabIndex = 132;
         this.AddToWordVDistanceCheckBox.Text = "∆V";
         this.AddToWordVDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToWordVDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToWordVDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToWordVDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToWordVDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToWordVDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToWordVDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToWordWDistanceCheckBox
         // 
@@ -9941,10 +9945,10 @@ partial class MainForm
         this.AddToWordWDistanceCheckBox.TabIndex = 131;
         this.AddToWordWDistanceCheckBox.Text = "∆W";
         this.AddToWordWDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToWordWDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToWordWDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToWordWDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToWordWDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToWordWDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToWordWDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToWordVNumberCheckBox
         // 
@@ -9957,10 +9961,10 @@ partial class MainForm
         this.AddToWordVNumberCheckBox.TabIndex = 129;
         this.AddToWordVNumberCheckBox.Text = "V";
         this.AddToWordVNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToWordVNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToWordVNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToWordVNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToWordVNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToWordVNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToWordVNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToWordWNumberCheckBox
         // 
@@ -9973,10 +9977,10 @@ partial class MainForm
         this.AddToWordWNumberCheckBox.TabIndex = 128;
         this.AddToWordWNumberCheckBox.Text = "W";
         this.AddToWordWNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToWordWNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToWordWNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToWordWNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToWordWNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToWordWNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToWordWNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // DigitalRootTextBox
         // 
@@ -9992,8 +9996,8 @@ partial class MainForm
         this.DigitalRootTextBox.TabIndex = 32;
         this.DigitalRootTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.DigitalRootTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.DigitalRootTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.DigitalRootTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.DigitalRootTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // DigitSumTextBox
         // 
@@ -10009,13 +10013,13 @@ partial class MainForm
         this.DigitSumTextBox.TabIndex = 31;
         this.DigitSumTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.DigitSumTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.DigitSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.DigitSumTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.DigitSumTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // NthAdditiveNumberTextBox
         // 
         this.NthAdditiveNumberTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.NthAdditiveNumberTextBox.BackColor = System.Drawing.SystemColors.Window;
         this.NthAdditiveNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.NthAdditiveNumberTextBox.Location = new System.Drawing.Point(60, 100);
@@ -10025,9 +10029,9 @@ partial class MainForm
         this.NthAdditiveNumberTextBox.TabIndex = 26;
         this.NthAdditiveNumberTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.NthAdditiveNumberTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.NthAdditiveNumberTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.NthAdditiveNumberTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NthAdditiveNumberTextBox_KeyDown);
         this.NthAdditiveNumberTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.NthAdditiveNumberTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // NthNumberTextBox
         // 
@@ -10040,9 +10044,9 @@ partial class MainForm
         this.NthNumberTextBox.TabIndex = 25;
         this.NthNumberTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
         this.NthNumberTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.NthNumberTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.NthNumberTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.NthNumberTextBox_KeyDown);
         this.NthNumberTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
-        this.NthNumberTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterCDistanceCheckBox
         // 
@@ -10055,10 +10059,10 @@ partial class MainForm
         this.AddToLetterCDistanceCheckBox.TabIndex = 127;
         this.AddToLetterCDistanceCheckBox.Text = "∆C";
         this.AddToLetterCDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterCDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterCDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterCDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterCDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterCDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterCDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterCNumberCheckBox
         // 
@@ -10071,10 +10075,10 @@ partial class MainForm
         this.AddToLetterCNumberCheckBox.TabIndex = 123;
         this.AddToLetterCNumberCheckBox.Text = "C";
         this.AddToLetterCNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterCNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterCNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterCNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterCNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterCNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterCNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterVDistanceCheckBox
         // 
@@ -10087,10 +10091,10 @@ partial class MainForm
         this.AddToLetterVDistanceCheckBox.TabIndex = 126;
         this.AddToLetterVDistanceCheckBox.Text = "∆V";
         this.AddToLetterVDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterVDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterVDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterVDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterVDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterVDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterVDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterWDistanceCheckBox
         // 
@@ -10103,10 +10107,10 @@ partial class MainForm
         this.AddToLetterWDistanceCheckBox.TabIndex = 125;
         this.AddToLetterWDistanceCheckBox.Text = "∆W";
         this.AddToLetterWDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterWDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterWDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterWDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterWDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterWDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterWDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterLDistanceCheckBox
         // 
@@ -10119,10 +10123,10 @@ partial class MainForm
         this.AddToLetterLDistanceCheckBox.TabIndex = 124;
         this.AddToLetterLDistanceCheckBox.Text = "∆L";
         this.AddToLetterLDistanceCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterLDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterLDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterLDistanceCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterLDistanceCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterLDistanceCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterLDistanceCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterVNumberCheckBox
         // 
@@ -10135,10 +10139,10 @@ partial class MainForm
         this.AddToLetterVNumberCheckBox.TabIndex = 122;
         this.AddToLetterVNumberCheckBox.Text = "V";
         this.AddToLetterVNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterVNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterVNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterVNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterVNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterVNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterVNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterWNumberCheckBox
         // 
@@ -10151,10 +10155,10 @@ partial class MainForm
         this.AddToLetterWNumberCheckBox.TabIndex = 121;
         this.AddToLetterWNumberCheckBox.Text = "W";
         this.AddToLetterWNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterWNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterWNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterWNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterWNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterWNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterWNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddToLetterLNumberCheckBox
         // 
@@ -10167,10 +10171,10 @@ partial class MainForm
         this.AddToLetterLNumberCheckBox.TabIndex = 120;
         this.AddToLetterLNumberCheckBox.Text = "L";
         this.AddToLetterLNumberCheckBox.UseVisualStyleBackColor = false;
-        this.AddToLetterLNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.AddToLetterLNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         this.AddToLetterLNumberCheckBox.CheckedChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
         this.AddToLetterLNumberCheckBox.EnabledChanged += new System.EventHandler(this.AddToControlCheckBox_CheckedChanged);
+        this.AddToLetterLNumberCheckBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
+        this.AddToLetterLNumberCheckBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
         // AddPositionsAndDistancesToValueLabel
         // 
@@ -10189,7 +10193,7 @@ partial class MainForm
         // PrimeFactorsTextBox
         // 
         this.PrimeFactorsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.PrimeFactorsTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.PrimeFactorsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.PrimeFactorsTextBox.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -10199,8 +10203,8 @@ partial class MainForm
         this.PrimeFactorsTextBox.Size = new System.Drawing.Size(178, 20);
         this.PrimeFactorsTextBox.TabIndex = 22;
         this.PrimeFactorsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.PrimeFactorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.PrimeFactorsTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.PrimeFactorsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // ValueLabel
         // 
@@ -10262,7 +10266,7 @@ partial class MainForm
         this.AddDistancesToPreviousCheckBox.BackColor = System.Drawing.Color.Transparent;
         this.AddDistancesToPreviousCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.AddDistancesToPreviousCheckBox.ForeColor = System.Drawing.Color.Maroon;
-        this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(7, 228);
+        this.AddDistancesToPreviousCheckBox.Location = new System.Drawing.Point(7, 243);
         this.AddDistancesToPreviousCheckBox.Name = "AddDistancesToPreviousCheckBox";
         this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(172, 16);
         this.AddDistancesToPreviousCheckBox.TabIndex = 141;
@@ -10273,20 +10277,20 @@ partial class MainForm
         // AddPositionsCheckBox
         // 
         this.AddPositionsCheckBox.BackColor = System.Drawing.Color.Transparent;
-        this.AddPositionsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.AddPositionsCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.AddPositionsCheckBox.ForeColor = System.Drawing.Color.Maroon;
-        this.AddPositionsCheckBox.Location = new System.Drawing.Point(7, 213);
+        this.AddPositionsCheckBox.Location = new System.Drawing.Point(7, 228);
         this.AddPositionsCheckBox.Name = "AddPositionsCheckBox";
         this.AddPositionsCheckBox.Size = new System.Drawing.Size(172, 16);
         this.AddPositionsCheckBox.TabIndex = 140;
-        this.AddPositionsCheckBox.Text = "√";
+        this.AddPositionsCheckBox.Text = "Pos";
         this.AddPositionsCheckBox.UseVisualStyleBackColor = false;
         this.AddPositionsCheckBox.CheckedChanged += new System.EventHandler(this.AddPositionsCheckBox_CheckedChanged);
         // 
         // VersesTextBox
         // 
         this.VersesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.VersesTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.VersesTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.VersesTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -10298,13 +10302,13 @@ partial class MainForm
         this.VersesTextBox.TabIndex = 13;
         this.VersesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         this.VersesTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.VersesTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.VersesTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.VersesTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // LettersTextBox
         // 
         this.LettersTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.LettersTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.LettersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.LettersTextBox.Location = new System.Drawing.Point(111, 112);
@@ -10315,13 +10319,13 @@ partial class MainForm
         this.LettersTextBox.TabIndex = 19;
         this.LettersTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         this.LettersTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.LettersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.LettersTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.LettersTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // WordsTextBox
         // 
         this.WordsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.WordsTextBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.WordsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.WordsTextBox.Location = new System.Drawing.Point(111, 93);
@@ -10332,8 +10336,8 @@ partial class MainForm
         this.WordsTextBox.TabIndex = 16;
         this.WordsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
         this.WordsTextBox.Click += new System.EventHandler(this.TextBoxLabelControls_CtrlClick);
-        this.WordsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         this.WordsTextBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
+        this.WordsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FixMicrosoft);
         // 
         // VersesLabel
         // 
@@ -10378,9 +10382,9 @@ partial class MainForm
         this.TextModeComboBox.Name = "TextModeComboBox";
         this.TextModeComboBox.Size = new System.Drawing.Size(141, 20);
         this.TextModeComboBox.TabIndex = 3;
+        this.TextModeComboBox.DropDown += new System.EventHandler(this.TextModeComboBox_DropDown);
         this.TextModeComboBox.SelectedIndexChanged += new System.EventHandler(this.TextModeComboBox_SelectedIndexChanged);
         this.TextModeComboBox.Enter += new System.EventHandler(this.StatisticsControls_Enter);
-        this.TextModeComboBox.DropDown += new System.EventHandler(this.TextModeComboBox_DropDown);
         // 
         // DivisorLabel
         // 
@@ -10398,7 +10402,7 @@ partial class MainForm
         // DivisorValueLabel
         // 
         this.DivisorValueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.DivisorValueLabel.BackColor = System.Drawing.Color.Black;
         this.DivisorValueLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.DivisorValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -10415,7 +10419,7 @@ partial class MainForm
         // RadixValueLabel
         // 
         this.RadixValueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.RadixValueLabel.BackColor = System.Drawing.Color.Black;
         this.RadixValueLabel.Cursor = System.Windows.Forms.Cursors.Hand;
         this.RadixValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -10440,13 +10444,13 @@ partial class MainForm
         this.TextModeLabel.TabIndex = 0;
         this.TextModeLabel.Tag = "http://tanzil.net/";
         this.TextModeLabel.Text = "Text";
-        this.ToolTip.SetToolTip(this.TextModeLabel, "Copyright ©2008 Tanzil Quran Text");
+        this.ToolTip.SetToolTip(this.TextModeLabel, "©2008 Tanzil Quran Text");
         this.TextModeLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         // 
         // RecitationsCheckedListBox
         // 
         this.RecitationsCheckedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Left)));
+        | System.Windows.Forms.AnchorStyles.Left)));
         this.RecitationsCheckedListBox.BackColor = System.Drawing.SystemColors.ControlLight;
         this.RecitationsCheckedListBox.CheckOnClick = true;
         this.RecitationsCheckedListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -10455,13 +10459,13 @@ partial class MainForm
         this.RecitationsCheckedListBox.Name = "RecitationsCheckedListBox";
         this.RecitationsCheckedListBox.Size = new System.Drawing.Size(180, 319);
         this.RecitationsCheckedListBox.TabIndex = 92;
-        this.RecitationsCheckedListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.RecitationsCheckedListBox_MouseUp);
         this.RecitationsCheckedListBox.SelectedIndexChanged += new System.EventHandler(this.RecitationsCheckedListBox_SelectedIndexChanged);
+        this.RecitationsCheckedListBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.RecitationsCheckedListBox_MouseUp);
         // 
         // StatisticsSplitContainer
         // 
         this.StatisticsSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.StatisticsSplitContainer.Location = new System.Drawing.Point(1086, 8);
         this.StatisticsSplitContainer.Name = "StatisticsSplitContainer";
         this.StatisticsSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -10673,7 +10677,7 @@ partial class MainForm
         // PlayerVolumeTrackBar
         // 
         this.PlayerVolumeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.PlayerVolumeTrackBar.AutoSize = false;
         this.PlayerVolumeTrackBar.BackColor = System.Drawing.SystemColors.WindowText;
         this.PlayerVolumeTrackBar.LargeChange = 10;
@@ -10702,7 +10706,7 @@ partial class MainForm
         this.EveryAyahLabel.TabIndex = 91;
         this.EveryAyahLabel.Tag = "http://everyayah.com";
         this.EveryAyahLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.ToolTip.SetToolTip(this.EveryAyahLabel, "Copyright ©2009 Quran Audio Server");
+        this.ToolTip.SetToolTip(this.EveryAyahLabel, "©2009 Quran Audio Server");
         this.EveryAyahLabel.Click += new System.EventHandler(this.LinkLabel_Click);
         this.EveryAyahLabel.Enter += new System.EventHandler(this.StatisticsControls_Enter);
         // 
@@ -10724,7 +10728,7 @@ partial class MainForm
         // PlayerVerseSilenceGapTrackBar
         // 
         this.PlayerVerseSilenceGapTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.PlayerVerseSilenceGapTrackBar.AutoSize = false;
         this.PlayerVerseSilenceGapTrackBar.BackColor = System.Drawing.SystemColors.WindowText;
         this.PlayerVerseSilenceGapTrackBar.Location = new System.Drawing.Point(1, 28);
@@ -10753,7 +10757,7 @@ partial class MainForm
         // PlayerSelectionSilenceGapTrackBar
         // 
         this.PlayerSelectionSilenceGapTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.PlayerSelectionSilenceGapTrackBar.AutoSize = false;
         this.PlayerSelectionSilenceGapTrackBar.BackColor = System.Drawing.SystemColors.WindowText;
         this.PlayerSelectionSilenceGapTrackBar.LargeChange = 1;
@@ -10767,7 +10771,7 @@ partial class MainForm
         // RecitationsDownloadGroupBox
         // 
         this.RecitationsDownloadGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                    | System.Windows.Forms.AnchorStyles.Right)));
+        | System.Windows.Forms.AnchorStyles.Right)));
         this.RecitationsDownloadGroupBox.Controls.Add(this.RecitationsCheckedListBox);
         this.RecitationsDownloadGroupBox.Location = new System.Drawing.Point(4, 38);
         this.RecitationsDownloadGroupBox.Name = "RecitationsDownloadGroupBox";
@@ -10836,12 +10840,12 @@ partial class MainForm
         this.Name = "MainForm";
         this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
         this.Text = "QuranCode";
+        this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+        this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
         this.Load += new System.EventHandler(this.MainForm_Load);
         this.Shown += new System.EventHandler(this.MainForm_Shown);
-        this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-        this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-        this.Resize += new System.EventHandler(this.MainForm_Resize);
         this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+        this.Resize += new System.EventHandler(this.MainForm_Resize);
         this.StatusPanel.ResumeLayout(false);
         this.ChapterSortPanel.ResumeLayout(false);
         this.DrawingsPanel.ResumeLayout(false);
@@ -10853,6 +10857,7 @@ partial class MainForm
         this.ToolbarPanel.ResumeLayout(false);
         this.MainSplitContainer.Panel1.ResumeLayout(false);
         this.MainSplitContainer.Panel2.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).EndInit();
         this.MainSplitContainer.ResumeLayout(false);
         this.SearchGroupBox.ResumeLayout(false);
         this.FindByNumbersPanel.ResumeLayout(false);
@@ -10894,6 +10899,7 @@ partial class MainForm
         this.ChapterGroupBox.PerformLayout();
         this.ClientSplitContainer.Panel1.ResumeLayout(false);
         this.ClientSplitContainer.Panel2.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)(this.ClientSplitContainer)).EndInit();
         this.ClientSplitContainer.ResumeLayout(false);
         this.HeaderPanel.ResumeLayout(false);
         this.TabControl.ResumeLayout(false);
@@ -10902,6 +10908,7 @@ partial class MainForm
         this.TranslationSplitContainer.Panel1.PerformLayout();
         this.TranslationSplitContainer.Panel2.ResumeLayout(false);
         this.TranslationSplitContainer.Panel2.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)(this.TranslationSplitContainer)).EndInit();
         this.TranslationSplitContainer.ResumeLayout(false);
         this.GrammarTabPage.ResumeLayout(false);
         this.GrammarTabPage.PerformLayout();
@@ -10940,6 +10947,7 @@ partial class MainForm
         this.PCIndexChainPanel.ResumeLayout(false);
         this.PCIndexChainPanel.PerformLayout();
         this.StatisticsSplitContainer.Panel1.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)(this.StatisticsSplitContainer)).EndInit();
         this.StatisticsSplitContainer.ResumeLayout(false);
         this.RecitationGroupBox.ResumeLayout(false);
         ((System.ComponentModel.ISupportInitialize)(this.PlayerVolumeTrackBar)).EndInit();

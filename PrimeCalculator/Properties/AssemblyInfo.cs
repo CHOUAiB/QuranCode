@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("اللهُمَّ صَلِّ على مُحَمَّدٍ وءالِ مُحَمَّدٍ")]
 [assembly: AssemblyProduct("Prime Calculator")]
-[assembly: AssemblyCopyright("Copyright ©2013 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي")]
+[assembly: AssemblyCopyright("©2009-2019 Ali Adams - علي عبد الرزاق عبد الكريم القره غولي")]
 [assembly: AssemblyTrademark("http://qurancode.com/")]
 [assembly: AssemblyCulture("")]
 

@@ -295,9 +295,9 @@ public class Client : IPublisher, ISubscriber
     {
         return Server.CalculateValue(book);
     }
-    public long CalculateValue(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2)
+    public long CalculateValue(List<Verse> verses, Letter start_letter, Letter end_letter)
     {
-        return Server.CalculateValue(verses, letter_index_in_verse1, letter_index_in_verse2);
+        return Server.CalculateValue(verses, start_letter, end_letter);
     }
     public List<long> CalculateVerseValues(List<Verse> verses)
     {

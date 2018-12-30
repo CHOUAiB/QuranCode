@@ -1753,7 +1753,7 @@ public class Server : IPublisher
         }
         return result;
     }
-    public static long CalculateValue(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2)
+    public static long CalculateValue(List<Verse> verses, Letter start_letter, Letter end_letter)
     {
         if (verses == null) return 0L;
         if (verses.Count == 0) return 0L;
@@ -1762,7 +1762,7 @@ public class Server : IPublisher
         if (s_numerology_system != null)
         {
             // adjust value of chapters
-            List<Chapter> chapters = GetCompleteChapters(verses, letter_index_in_verse1, letter_index_in_verse2);
+            List<Chapter> chapters = GetCompleteChapters(verses, start_letter, end_letter);
             if (chapters != null)
             {
                 foreach (Chapter chapter in chapters)
@@ -1773,16 +1773,41 @@ public class Server : IPublisher
 
             if (verses.Count == 1)
             {
-                result += CalculateMiddlePartValue(verses[0], letter_index_in_verse1, letter_index_in_verse2);
+                result += CalculateVersePartValue(verses[0], start_letter, end_letter);
             }
             else if (verses.Count == 2)
             {
-                result += CalculateEndPartValue(verses[0], letter_index_in_verse1);
-                result += CalculateBeginningPartValue(verses[1], letter_index_in_verse2);
+                Word verse0_end_word = verses[0].Words[verses[0].Words.Count - 1];
+                if (verse0_end_word != null)
+                {
+                    Letter verse0_end_letter = verse0_end_word.Letters[verse0_end_word.Letters.Count - 1];
+                    if (verse0_end_letter != null)
+                    {
+                        result += CalculateVersePartValue(verses[0], start_letter, verse0_end_letter);
+                    }
+                }
+
+                Word verse1_start_word = verses[1].Words[0];
+                if (verse1_start_word != null)
+                {
+                    Letter verse1_start_letter = verse1_start_word.Letters[0];
+                    if (verse1_start_letter != null)
+                    {
+                        result += CalculateVersePartValue(verses[1], verse1_start_letter, end_letter);
+                    }
+                }
             }
             else //if (verses.Count > 2)
             {
-                result += CalculateEndPartValue(verses[0], letter_index_in_verse1);
+                Word verse0_end_word = verses[0].Words[verses[0].Words.Count - 1];
+                if (verse0_end_word != null)
+                {
+                    Letter verse0_end_letter = verse0_end_word.Letters[verse0_end_word.Letters.Count - 1];
+                    if (verse0_end_letter != null)
+                    {
+                        result += CalculateVersePartValue(verses[0], start_letter, verse0_end_letter);
+                    }
+                }
 
                 // middle verses
                 for (int i = 1; i < verses.Count - 1; i++)
@@ -1790,16 +1815,20 @@ public class Server : IPublisher
                     result += CalculateValue(verses[i]);
                 }
 
-                result += CalculateBeginningPartValue(verses[verses.Count - 1], letter_index_in_verse2);
+                Word last_verse_start_word = verses[verses.Count - 1].Words[0];
+                if (last_verse_start_word != null)
+                {
+                    Letter last_verse_start_letter = last_verse_start_word.Letters[0];
+                    if (last_verse_start_letter != null)
+                    {
+                        result += CalculateVersePartValue(verses[verses.Count - 1], last_verse_start_letter, end_letter);
+                    }
+                }
             }
         }
         return result;
     }
-    private static long CalculateBeginningPartValue(Verse verse, int to_letter_index)
-    {
-        return CalculateMiddlePartValue(verse, 0, to_letter_index);
-    }
-    private static long CalculateMiddlePartValue(Verse verse, int from_letter_index, int to_letter_index)
+    private static long CalculateVersePartValue(Verse verse, Letter from_letter, Letter to_letter)
     {
         if (verse == null) return 0L;
 
@@ -1833,8 +1862,8 @@ public class Server : IPublisher
                             {
                                 letter_index++;
 
-                                if (letter_index < from_letter_index) continue;
-                                if (letter_index > to_letter_index)
+                                if (letter_index < from_letter.NumberInVerse - 1) continue;
+                                if (letter_index > to_letter.NumberInVerse - 1)
                                 {
                                     done = true;
                                     break;
@@ -1853,7 +1882,7 @@ public class Server : IPublisher
             else
             {
                 // adjust value of verse
-                if ((from_letter_index == 0) && (to_letter_index == verse.LetterCount - 1))
+                if ((from_letter.NumberInVerse == 1) && (to_letter.NumberInVerse == verse.LetterCount))
                 {
                     result += AdjustValue(verse);
                 }
@@ -1868,9 +1897,9 @@ public class Server : IPublisher
                     if ((word.Letters != null) && (word.Letters.Count > 0))
                     {
                         // adjust value of word (if fully selected)
-                        if ((from_letter_index <= word.Letters[0].NumberInVerse - 1)                    // if selection starts before or at first letter in word
-                            &&                                                                          // AND
-                            (to_letter_index >= word.Letters[word.Letters.Count - 1].NumberInVerse - 1) // if selection ends   at or after  last  letter in word
+                        if ((from_letter.NumberInVerse <= word.Letters[0].NumberInVerse)                    // if selection starts before or at first letter in word
+                            &&                                                                              // AND
+                            (to_letter.NumberInVerse >= word.Letters[word.Letters.Count - 1].NumberInVerse) // if selection ends   at or after  last  letter in word
                            )
                         {
                             result += AdjustValue(word);
@@ -1880,8 +1909,8 @@ public class Server : IPublisher
                         {
                             letter_index++;
 
-                            if (letter_index < from_letter_index) continue;
-                            if (letter_index > to_letter_index)
+                            if (letter_index < from_letter.NumberInVerse - 1) continue;
+                            if (letter_index > to_letter.NumberInVerse - 1)
                             {
                                 done = true;
                                 break;
@@ -1900,10 +1929,6 @@ public class Server : IPublisher
             }
         }
         return result;
-    }
-    private static long CalculateEndPartValue(Verse verse, int from_letter_index)
-    {
-        return CalculateMiddlePartValue(verse, from_letter_index, verse.LetterCount - 1);
     }
     // get complete words/verses/chapters
     private static List<Word> GetCompleteWords(List<Letter> letters)
@@ -2085,7 +2110,7 @@ public class Server : IPublisher
 
         return result;
     }
-    private static List<Chapter> GetCompleteChapters(List<Verse> verses, int letter_index_in_verse1, int letter_index_in_verse2)
+    private static List<Chapter> GetCompleteChapters(List<Verse> verses, Letter start_letter, Letter end_letter)
     {
         if (verses == null) return null;
         if (verses.Count == 0) return null;
@@ -2100,25 +2125,25 @@ public class Server : IPublisher
                 Verse first_verse = copy_verses[0];
                 if (first_verse != null)
                 {
-                    if (letter_index_in_verse1 != 0)
+                    if (start_letter.NumberInVerse > 1)
                     {
                         copy_verses.Remove(first_verse);
                     }
                 }
 
-                if (copy_verses.Count > 0) // check again after maybe removing a verse
+                if (copy_verses.Count > 0) // check again after removing a verse
                 {
                     Verse last_verse = copy_verses[copy_verses.Count - 1];
                     if (last_verse != null)
                     {
-                        if (letter_index_in_verse2 != last_verse.LetterCount - 1)
+                        if (end_letter.NumberInVerse < last_verse.LetterCount)
                         {
                             copy_verses.Remove(last_verse);
                         }
                     }
                 }
 
-                if (copy_verses.Count > 0) // check again after maybe removing a verse
+                if (copy_verses.Count > 0) // check again after removing a verse
                 {
                     foreach (Chapter chapter in s_book.Chapters)
                     {
