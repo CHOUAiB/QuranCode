@@ -20,20 +20,20 @@ namespace Composites
                 string filename = folder + "/" + DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss") + ".txt";
                 writer = System.IO.File.CreateText(filename);
 
-                Console.WriteLine("--------------------------------------------------");
-                Console.WriteLine("Prime-composite Number Indices - (c)2016 Ali Adams");
-                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------");
+                Console.WriteLine("Prime-composite Number Indices - (c)2009-2019 Ali Adams");
+                Console.WriteLine("-------------------------------------------------------");
 
                 ConsoleKeyInfo exit;
                 do
                 {
                     Console.WriteLine();
-                    Console.WriteLine("factros = -1  ==>  unit, primes and composites.");
-                    Console.WriteLine("factros =  0  ==>  composites.");
-                    Console.WriteLine("factros =  1  ==>  primes.");
-                    Console.WriteLine("factros =  n  ==>  composites with n factors.");
+                    Console.WriteLine("factors = -1  ==>  unit, primes and composites.");
+                    Console.WriteLine("factors =  0  ==>  composites.");
+                    Console.WriteLine("factors =  1  ==>  primes.");
+                    Console.WriteLine("factors =  n  ==>  composites with n factors.");
                     Console.WriteLine();
-                    Console.Write("How many factros-per-number to find?       ");
+                    Console.Write("How many factors-per-number to find?       ");
                     string n_str = Console.ReadLine();
                     int n = 0;
                     if (int.TryParse(n_str, out n))
@@ -71,7 +71,7 @@ namespace Composites
                 StringBuilder str = new StringBuilder();
 
                 writer.WriteLine();
-                writer.WriteLine("How many factros-per-number to find?       " + n.ToString());
+                writer.WriteLine("How many factors-per-number to find?       " + n.ToString());
 
                 Console.Write("Duplicate, unique, or any factors (d/u/a)? ");
                 string factors_type = Console.ReadLine();
