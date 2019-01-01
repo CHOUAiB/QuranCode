@@ -3669,6 +3669,6 @@ Console.WriteLine("Not prime!  Divisible by {0}\n",
     }
 
 }
-//TODO: use Furer algorithm for multiplication
+//TODO: use Furer's algorithm for multiplication
 // http://en.wikipedia.org/wiki/F%C3%BCrer%27s_algorithm
 // Maybe it's better to use faster multiplication algorithm like multiplication using FFT (or FHT)? Take a look at my library IntX: http://contest2005.gotdotnet.ru/Request/Tools/UtilitiesLib/Downloads_GetFile.aspx?id=169728[^] (there is also a description in Russian: http://contest2005.gotdotnet.ru/Request/Tools/UtilitiesLib/169728.aspx[^]) - it multiplies using FFT which takes O(N*log N) instead of classic O(N^2).

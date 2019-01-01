@@ -625,7 +625,6 @@ partial class MainForm
         this.ValueLabel = new System.Windows.Forms.Label();
         this.DisplayPerfectNumbersLabel = new System.Windows.Forms.Label();
         this.AddDistancesWithinChaptersCheckBox = new System.Windows.Forms.CheckBox();
-        this.AddDistancesToNextCheckBox = new System.Windows.Forms.CheckBox();
         this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
         this.AddPositionsCheckBox = new System.Windows.Forms.CheckBox();
         this.VersesTextBox = new System.Windows.Forms.TextBox();
@@ -9492,7 +9491,6 @@ partial class MainForm
         this.ValuePanel.Controls.Add(this.AddDistancesWithinChaptersCheckBox);
         this.ValuePanel.Controls.Add(this.AddDistancesToPreviousCheckBox);
         this.ValuePanel.Controls.Add(this.AddPositionsCheckBox);
-        this.ValuePanel.Controls.Add(this.AddDistancesToNextCheckBox);
         this.ValuePanel.Location = new System.Drawing.Point(4, 133);
         this.ValuePanel.Name = "ValuePanel";
         this.ValuePanel.Size = new System.Drawing.Size(181, 276);
@@ -10248,19 +10246,6 @@ partial class MainForm
         this.AddDistancesWithinChaptersCheckBox.UseVisualStyleBackColor = false;
         this.AddDistancesWithinChaptersCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesWithinChaptersCheckBox_CheckedChanged);
         // 
-        // AddDistancesToNextCheckBox
-        // 
-        this.AddDistancesToNextCheckBox.BackColor = System.Drawing.Color.Transparent;
-        this.AddDistancesToNextCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.AddDistancesToNextCheckBox.ForeColor = System.Drawing.Color.Maroon;
-        this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(7, 243);
-        this.AddDistancesToNextCheckBox.Name = "AddDistancesToNextCheckBox";
-        this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(172, 16);
-        this.AddDistancesToNextCheckBox.TabIndex = 142;
-        this.AddDistancesToNextCheckBox.Text = "∆ →";
-        this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = false;
-        this.AddDistancesToNextCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToNextCheckBox_CheckedChanged);
-        // 
         // AddDistancesToPreviousCheckBox
         // 
         this.AddDistancesToPreviousCheckBox.BackColor = System.Drawing.Color.Transparent;
@@ -10270,7 +10255,7 @@ partial class MainForm
         this.AddDistancesToPreviousCheckBox.Name = "AddDistancesToPreviousCheckBox";
         this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(172, 16);
         this.AddDistancesToPreviousCheckBox.TabIndex = 141;
-        this.AddDistancesToPreviousCheckBox.Text = "∆ ←";
+        this.AddDistancesToPreviousCheckBox.Text = "∆";
         this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = false;
         this.AddDistancesToPreviousCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckedChanged);
         // 
@@ -11108,7 +11093,6 @@ partial class MainForm
     private System.Windows.Forms.TextBox BookmarkTextBox;
     private System.Windows.Forms.Panel ResearchPanel;
     private System.Windows.Forms.CheckBox AddPositionsCheckBox;
-    private System.Windows.Forms.CheckBox AddDistancesToNextCheckBox;
     private System.Windows.Forms.CheckBox AddDistancesToPreviousCheckBox;
     private System.Windows.Forms.CheckBox AddDistancesWithinChaptersCheckBox;
     private System.Windows.Forms.CheckBox AddToChapterCNumberCheckBox;

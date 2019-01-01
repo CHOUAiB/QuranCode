@@ -52,7 +52,6 @@ namespace Model
         }
 
         public Distance DistanceToPrevious = new Distance();
-        public Distance DistanceToNext = new Distance();
 
         private char character;
         public char Character

@@ -147,7 +147,6 @@ namespace Model
         public bool AddToChapterCNumber;
 
         public bool AddDistancesToPrevious;
-        public bool AddDistancesToNext;
         public bool AddDistancesWithinChapters = true;
 
         public NumerologySystem()
@@ -352,7 +351,6 @@ namespace Model
             }
 
             str.AppendLine("AddDistancesToPrevious = " + AddDistancesToPrevious);
-            str.AppendLine("AddDistancesToNext     = " + AddDistancesToNext);
             str.AppendLine("AddDistancesWithinChapters = " + AddDistancesWithinChapters);
             str.AppendLine();
 
@@ -392,7 +390,6 @@ namespace Model
             "\t" + (AddToVerseCDistance ? "∆C" : "") +
             "\t" + (AddToChapterCNumber ? "C" : "") +
             "\t" + (AddDistancesToPrevious) +
-            "\t" + (AddDistancesToNext) +
             "\t" + (AddDistancesWithinChapters)
             );
         }

@@ -252,10 +252,12 @@ public class Client : IPublisher, ISubscriber
     // used for non-Quran text
     public long CalculateValue(char user_char)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(user_char);
     }
     public long CalculateValue(string user_text)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(user_text);
     }
     // used for Quran text only
@@ -265,38 +267,47 @@ public class Client : IPublisher, ISubscriber
     }
     public long CalculateValue(List<Letter> letters)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(letters);
     }
     public long CalculateValue(Word word)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(word);
     }
     public long CalculateValue(List<Word> words)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(words);
     }
     public long CalculateValue(Verse verse)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(verse);
     }
     public long CalculateValue(List<Verse> verses)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(verses);
     }
     public long CalculateValue(Chapter chapter)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(chapter);
     }
     public long CalculateValue(List<Chapter> chapters)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(chapters);
     }
     public long CalculateValue(Book book)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(book);
     }
     public long CalculateValue(List<Verse> verses, Letter start_letter, Letter end_letter)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(verses, start_letter, end_letter);
     }
     public List<long> CalculateVerseValues(List<Verse> verses)
@@ -304,6 +315,7 @@ public class Client : IPublisher, ISubscriber
         List<long> result = new List<long>();
         foreach (Verse verse in verses)
         {
+            Server.Log.Length = 0;
             long value = Server.CalculateValue(verse);
             result.Add(value);
         }
@@ -316,6 +328,7 @@ public class Client : IPublisher, ISubscriber
         {
             foreach (Word word in verse.Words)
             {
+                Server.Log.Length = 0;
                 long value = Server.CalculateValue(word);
                 result.Add(value);
             }
@@ -331,6 +344,7 @@ public class Client : IPublisher, ISubscriber
             {
                 foreach (Letter letter in word.Letters)
                 {
+                    Server.Log.Length = 0;
                     long value = Server.CalculateValue(letter);
                     result.Add(value);
                 }
@@ -391,15 +405,7 @@ public class Client : IPublisher, ISubscriber
             return result;
         }
     }
-    public void SaveValueCalculations(string filename, string text, List<Letter> letters)
-    {
-        //?????
-        // display letter  value positions distances ...
-        // display word    value positions distances ...
-        // display verse   value positions distances ...
-        // display chapter value positions           ...
-    }
-    public void SaveValueCalculations(string filename, string text)
+    public void SaveValueCalculations(string filename, string text, List<Verse> verses, Letter start_letter, Letter end_letter)
     {
         if (Directory.Exists(Globals.STATISTICS_FOLDER))
         {
@@ -430,8 +436,10 @@ public class Client : IPublisher, ISubscriber
                         writer.WriteLine("----------------------------------------");
                         writer.WriteLine(text);
                         writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
-                        writer.WriteLine("Letter" + "\t" + "Value" + "\t" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "L◄" + "\t" + "W◄" + "\t" + "V◄" + "\t" + "◄C" + "\t" + "►L" + "\t" + "►W" + "\t" + "►V" + "\t" + "►C");
+                        writer.WriteLine("Letter" + "\t" + "Value");// + "\t" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "∆L" + "\t" + "∆W" + "\t" + "∆V" + "\t" + "∆C");
                         writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
+
+                        //?????writer.WriteLine(Server.Log.ToString());
 
                         int pos = text.IndexOf("----------------------------------------"); ;
                         text = text.Substring(0, pos);

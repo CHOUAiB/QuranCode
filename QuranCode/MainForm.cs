@@ -1379,7 +1379,6 @@ public partial class MainForm : Form, ISubscriber
         this.PrimeFactorsTextBox = new System.Windows.Forms.TextBox();
         this.ValueLabel = new System.Windows.Forms.Label();
         this.AddDistancesWithinChaptersCheckBox = new System.Windows.Forms.CheckBox();
-        this.AddDistancesToNextCheckBox = new System.Windows.Forms.CheckBox();
         this.AddDistancesToPreviousCheckBox = new System.Windows.Forms.CheckBox();
         this.AddPositionsCheckBox = new System.Windows.Forms.CheckBox();
         this.VersesTextBox = new System.Windows.Forms.TextBox();
@@ -10605,7 +10604,6 @@ public partial class MainForm : Form, ISubscriber
         this.ValuePanel.Controls.Add(this.PrimeFactorsTextBox);
         this.ValuePanel.Controls.Add(this.ValueLabel);
         this.ValuePanel.Controls.Add(this.AddDistancesWithinChaptersCheckBox);
-        this.ValuePanel.Controls.Add(this.AddDistancesToNextCheckBox);
         this.ValuePanel.Controls.Add(this.AddDistancesToPreviousCheckBox);
         this.ValuePanel.Controls.Add(this.AddPositionsCheckBox);
         this.ValuePanel.Location = new System.Drawing.Point(5, 161);
@@ -11408,19 +11406,6 @@ public partial class MainForm : Form, ISubscriber
         this.AddDistancesWithinChaptersCheckBox.UseVisualStyleBackColor = false;
         this.AddDistancesWithinChaptersCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesWithinChaptersCheckBox_CheckedChanged);
         // 
-        // AddDistancesToNextCheckBox
-        // 
-        this.AddDistancesToNextCheckBox.BackColor = System.Drawing.Color.Transparent;
-        this.AddDistancesToNextCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-        this.AddDistancesToNextCheckBox.ForeColor = System.Drawing.Color.Maroon;
-        this.AddDistancesToNextCheckBox.Location = new System.Drawing.Point(7, 243);
-        this.AddDistancesToNextCheckBox.Name = "AddDistancesToNextCheckBox";
-        this.AddDistancesToNextCheckBox.Size = new System.Drawing.Size(172, 16);
-        this.AddDistancesToNextCheckBox.TabIndex = 142;
-        this.AddDistancesToNextCheckBox.Text = "∆ →";
-        this.AddDistancesToNextCheckBox.UseVisualStyleBackColor = false;
-        this.AddDistancesToNextCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToNextCheckBox_CheckedChanged);
-        // 
         // AddDistancesToPreviousCheckBox
         // 
         this.AddDistancesToPreviousCheckBox.BackColor = System.Drawing.Color.Transparent;
@@ -11430,7 +11415,7 @@ public partial class MainForm : Form, ISubscriber
         this.AddDistancesToPreviousCheckBox.Name = "AddDistancesToPreviousCheckBox";
         this.AddDistancesToPreviousCheckBox.Size = new System.Drawing.Size(172, 16);
         this.AddDistancesToPreviousCheckBox.TabIndex = 141;
-        this.AddDistancesToPreviousCheckBox.Text = "∆ ←";
+        this.AddDistancesToPreviousCheckBox.Text = "∆";
         this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = false;
         this.AddDistancesToPreviousCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckedChanged);
         // 
@@ -13955,13 +13940,6 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddDistancesToNext = bool.Parse(parts[1].Trim());
-                                                        }
-
-                                                        line = reader.ReadLine();
-                                                        parts = line.Split('=');
-                                                        if (parts.Length >= 2)
-                                                        {
                                                             m_client.NumerologySystem.AddDistancesWithinChapters = bool.Parse(parts[1].Trim());
                                                             if (m_client.Book != null)
                                                             {
@@ -14628,7 +14606,6 @@ public partial class MainForm : Form, ISubscriber
                         writer.WriteLine("AddToVerseCDistance" + "=" + m_client.NumerologySystem.AddToVerseCDistance.ToString());
                         writer.WriteLine("AddToChapterCNumber" + "=" + m_client.NumerologySystem.AddToChapterCNumber.ToString());
                         writer.WriteLine("AddDistancesToPrevious" + "=" + m_client.NumerologySystem.AddDistancesToPrevious.ToString());
-                        writer.WriteLine("AddDistancesToNext" + "=" + m_client.NumerologySystem.AddDistancesToNext.ToString());
                         writer.WriteLine("AddDistancesWithinChapters" + "=" + m_client.NumerologySystem.AddDistancesWithinChapters.ToString());
                         writer.WriteLine("AddPositions" + "=" + AddPositionsCheckBox.Checked.ToString());
                         writer.WriteLine("ShowAddControls" + "=" + m_show_add_controls.ToString());
@@ -38766,6 +38743,7 @@ public partial class MainForm : Form, ISubscriber
                     try
                     {
                         AddPositionsCheckBox.CheckedChanged -= new EventHandler(AddPositionsCheckBox_CheckedChanged);
+                        AddDistancesToPreviousCheckBox.CheckedChanged -= new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
 
                         bool is_checked = (sender as CheckBox).Enabled && (sender as CheckBox).Checked;
 
@@ -38855,27 +38833,30 @@ public partial class MainForm : Form, ISubscriber
                                 AddToLetterWNumberCheckBox.Checked &&
                                 AddToLetterVNumberCheckBox.Checked &&
                                 AddToLetterCNumberCheckBox.Checked &&
+                                AddToWordWNumberCheckBox.Checked &&
+                                AddToWordVNumberCheckBox.Checked &&
+                                AddToWordCNumberCheckBox.Checked &&
+                                AddToVerseVNumberCheckBox.Checked &&
+                                AddToVerseCNumberCheckBox.Checked &&
+                                AddToChapterCNumberCheckBox.Checked;
+
+                        AddDistancesToPreviousCheckBox.Checked =
                                 AddToLetterLDistanceCheckBox.Checked &&
                                 AddToLetterWDistanceCheckBox.Checked &&
                                 AddToLetterVDistanceCheckBox.Checked &&
                                 AddToLetterCDistanceCheckBox.Checked &&
-                                AddToWordWNumberCheckBox.Checked &&
-                                AddToWordVNumberCheckBox.Checked &&
-                                AddToWordCNumberCheckBox.Checked &&
                                 AddToWordWDistanceCheckBox.Checked &&
                                 AddToWordVDistanceCheckBox.Checked &&
                                 AddToWordCDistanceCheckBox.Checked &&
-                                AddToVerseVNumberCheckBox.Checked &&
-                                AddToVerseCNumberCheckBox.Checked &&
                                 AddToVerseVDistanceCheckBox.Checked &&
-                                AddToVerseCDistanceCheckBox.Checked &&
-                                AddToChapterCNumberCheckBox.Checked;
+                                AddToVerseCDistanceCheckBox.Checked;
 
                         CalculateCurrentValue();
                     }
                     finally
                     {
                         AddPositionsCheckBox.CheckedChanged += new EventHandler(AddPositionsCheckBox_CheckedChanged);
+                        AddDistancesToPreviousCheckBox.CheckedChanged += new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
                     }
                 }
             }
@@ -38890,10 +38871,6 @@ public partial class MainForm : Form, ISubscriber
         UpdatePositionCheckBoxes();
     }
     private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
-    {
-        UpdateDistanceCheckBoxes();
-    }
-    private void AddDistancesToNextCheckBox_CheckedChanged(object sender, EventArgs e)
     {
         UpdateDistanceCheckBoxes();
     }
@@ -38960,7 +38937,7 @@ public partial class MainForm : Form, ISubscriber
             for (int i = 0; i < 3; i++) AddToVerseVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
             for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
 
-            bool is_checked = AddDistancesToPreviousCheckBox.Checked || AddDistancesToNextCheckBox.Checked;
+            bool is_checked = AddDistancesToPreviousCheckBox.Checked;
 
             AddToLetterLDistanceCheckBox.Checked = is_checked;
             AddToLetterWDistanceCheckBox.Checked = is_checked;
@@ -39058,7 +39035,6 @@ public partial class MainForm : Form, ISubscriber
                 m_client.NumerologySystem.AddToChapterCNumber = AddToChapterCNumberCheckBox.Checked;
 
                 m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
-                m_client.NumerologySystem.AddDistancesToNext = AddDistancesToNextCheckBox.Checked;
                 m_client.NumerologySystem.AddDistancesWithinChapters = AddDistancesWithinChaptersCheckBox.Checked;
                 if (m_client.Book != null)
                 {
@@ -39095,7 +39071,6 @@ public partial class MainForm : Form, ISubscriber
                     for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
                     for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
                     for (int i = 0; i < 3; i++) AddDistancesToPreviousCheckBox.CheckedChanged -= new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
-                    for (int i = 0; i < 3; i++) AddDistancesToNextCheckBox.CheckedChanged -= new EventHandler(AddDistancesToNextCheckBox_CheckedChanged);
                     for (int i = 0; i < 3; i++) AddDistancesWithinChaptersCheckBox.CheckedChanged -= new EventHandler(AddDistancesWithinChaptersCheckBox_CheckedChanged);
 
                     // copy from client to gui controls
@@ -39119,7 +39094,6 @@ public partial class MainForm : Form, ISubscriber
                     AddToVerseCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseCDistance;
                     AddToChapterCNumberCheckBox.Checked = m_client.NumerologySystem.AddToChapterCNumber;
                     AddDistancesToPreviousCheckBox.Checked = m_client.NumerologySystem.AddDistancesToPrevious;
-                    AddDistancesToNextCheckBox.Checked = m_client.NumerologySystem.AddDistancesToNext;
                     AddDistancesWithinChaptersCheckBox.Checked = m_client.NumerologySystem.AddDistancesWithinChapters;
                 }
                 finally
@@ -39144,7 +39118,6 @@ public partial class MainForm : Form, ISubscriber
                     AddToVerseCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
                     AddToChapterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
                     AddDistancesToPreviousCheckBox.CheckedChanged += new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
-                    AddDistancesToNextCheckBox.CheckedChanged += new EventHandler(AddDistancesToNextCheckBox_CheckedChanged);
                     AddDistancesWithinChaptersCheckBox.CheckedChanged += new EventHandler(AddDistancesWithinChaptersCheckBox_CheckedChanged);
                 }
             }
@@ -40389,7 +40362,7 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             string filename = Globals.NUMBERS_FOLDER + "/" + "abundant_numbers.txt";
-            using (StreamWriter writer = new StreamWriter(filename, false))
+            using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
             {
                 StringBuilder str = new StringBuilder();
 
@@ -40426,7 +40399,7 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             string filename = Globals.NUMBERS_FOLDER + "/" + "deficient_numbers.txt";
-            using (StreamWriter writer = new StreamWriter(filename, false))
+            using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
             {
                 StringBuilder str = new StringBuilder();
 
@@ -44092,7 +44065,7 @@ public partial class MainForm : Form, ISubscriber
                         str.AppendLine("----------------------------------------");
 
                         str.AppendLine();
-                        m_client.SaveValueCalculations(filename, str.ToString()); //?????
+                        m_client.SaveValueCalculations(filename, str.ToString(), m_current_verses, m_current_start_letter, m_current_end_letter);
                     }
                 }
             }
