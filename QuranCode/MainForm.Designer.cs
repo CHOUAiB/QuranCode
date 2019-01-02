@@ -10941,7 +10941,6 @@ partial class MainForm
         this.RecitationsDownloadGroupBox.ResumeLayout(false);
         this.NotifyIconContextMenuStrip.ResumeLayout(false);
         this.ResumeLayout(false);
-
     }
     #endregion
 
@@ -11579,6 +11578,6 @@ partial class MainForm
     private System.Windows.Forms.ColumnHeader LetterDistanceSumColumnHeader;
     private System.Windows.Forms.Label LetterFrequencyDistanceSumSumLabel;
     private System.Windows.Forms.Label FindByFrequencyTotalLabel;
-    private System.Windows.Forms.Label RussianLanguageLabel;
     private System.Windows.Forms.Label ChineseLanguageLabel;
+    private System.Windows.Forms.Label RussianLanguageLabel;
 }
