@@ -250,19 +250,18 @@ public class Client : IPublisher, ISubscriber
     }
 
     // used for non-Quran text
-    public long CalculateValue(char user_char)
+    public long CalculateValueXXX(char user_char)
     {
-        Server.Log.Length = 0;
-        return Server.CalculateValue(user_char);
+        return Server.CalculateValueXXX(user_char);
     }
-    public long CalculateValue(string user_text)
+    public long CalculateValueXXX(string user_text)
     {
-        Server.Log.Length = 0;
-        return Server.CalculateValue(user_text);
+        return Server.CalculateValueXXX(user_text);
     }
     // used for Quran text only
     public long CalculateValue(Letter letter)
     {
+        Server.Log.Length = 0;
         return Server.CalculateValue(letter);
     }
     public long CalculateValue(List<Letter> letters)
@@ -416,7 +415,6 @@ public class Client : IPublisher, ISubscriber
                 {
                     using (StreamWriter writer = new StreamWriter(filename, false, Encoding.Unicode))
                     {
-                        writer.WriteLine("----------------------------------------");
                         StringBuilder numbers = new StringBuilder();
                         foreach (int index in Selection.Indexes)
                         {
@@ -426,56 +424,23 @@ public class Client : IPublisher, ISubscriber
                         {
                             numbers.Remove(numbers.Length - 2, 2);
                         }
+
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
                         writer.WriteLine(NumerologySystem.Name);
                         writer.WriteLine("Selection = " + Selection.Scope.ToString() + " " + numbers.ToString());
-                        writer.WriteLine("----------------------------------------");
-                        writer.WriteLine();
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
                         writer.WriteLine(NumerologySystem.ToOverview());
-                        writer.WriteLine("----------------------------------------");
+                        writer.WriteLine();
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
                         writer.WriteLine("Text");
-                        writer.WriteLine("----------------------------------------");
                         writer.WriteLine(text);
-                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
-                        writer.WriteLine("Letter" + "\t" + "Value");// + "\t" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "∆L" + "\t" + "∆W" + "\t" + "∆V" + "\t" + "∆C");
-                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
-
-                        //?????writer.WriteLine(Server.Log.ToString());
-
-                        int pos = text.IndexOf("----------------------------------------"); ;
-                        text = text.Substring(0, pos);
-
-                        text = text.SimplifyTo(NumerologySystem.TextMode);
-                        foreach (char character in text)
-                        {
-                            if (character == '-')
-                            {
-                                break;
-                            }
-                            else if (character == ' ')
-                            {
-                                writer.WriteLine();
-                            }
-                            else if (character == '\r')
-                            {
-                                writer.WriteLine();
-                            }
-                            else if (character == '\n')
-                            {
-                                writer.WriteLine();
-                            }
-                            else
-                            {
-                                writer.WriteLine(character.ToString() + "\t" + CalculateValue(character.ToString().ToUpper()));
-                            }
-                        }
-
-                        if (!text.IsArabic())  // eg English
-                        {
-                            text = text.ToUpper();
-                        }
-                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
-                        writer.WriteLine("Total" + "\t" + CalculateValue(text));
-                        writer.WriteLine("--------------------------------------------------------------------------------------------------------------------");
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
+                        writer.WriteLine("Letter" + "\t" + "Value" + "\t" + "\t" + "\t" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "∆L" + "\t" + "∆W" + "\t" + "∆V" + "\t" + "∆C");
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
+                        writer.WriteLine(Server.Log.ToString());
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
+                        writer.WriteLine("Total" + "\t" + CalculateValueXXX(text));
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
                     }
                 }
             }

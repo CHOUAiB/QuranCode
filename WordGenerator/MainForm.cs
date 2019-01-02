@@ -1100,7 +1100,7 @@ public partial class MainForm : Form
                         int length = key.Length;
                         length_sum += length;
 
-                        long value = m_client.CalculateValue(key);
+                        long value = m_client.CalculateValueXXX(key);
                         value_sum += value;
 
                         str.AppendLine(count + "\t" + key + "\t" + frequency + "\t" + length + "\t" + value);

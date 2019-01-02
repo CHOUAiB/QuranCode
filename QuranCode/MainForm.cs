@@ -30857,7 +30857,7 @@ public partial class MainForm : Form, ISubscriber
                                         else
                                         {
                                             str.Insert(line_start, " ");
-                                            long value = m_client.CalculateValue(c);
+                                            long value = m_client.CalculateValueXXX(c);
                                             str.Insert(line_start, Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 8, '0'));
                                         }
                                     }
@@ -30868,10 +30868,10 @@ public partial class MainForm : Form, ISubscriber
                                     string[] lines = text.Split('\n');
                                     foreach (string line in lines)
                                     {
-                                        string[] words = line.Split(' ');
-                                        foreach (string word in words)
+                                        string[] word_texts = line.Split(' ');
+                                        foreach (string word_text in word_texts)
                                         {
-                                            long value = m_client.CalculateValue(word);
+                                            long value = m_client.CalculateValueXXX(word_text);
                                             str.Insert(line_start, Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 16, '0'));
                                             str.Insert(line_start, " ");
                                         }
@@ -30886,7 +30886,7 @@ public partial class MainForm : Form, ISubscriber
                                     string[] lines = text.Split('\n');
                                     foreach (string line in lines)
                                     {
-                                        long value = m_client.CalculateValue(line);
+                                        long value = m_client.CalculateValueXXX(line);
                                         str.AppendLine(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 32, '0'));
                                     }
                                 }
@@ -30926,7 +30926,7 @@ public partial class MainForm : Form, ISubscriber
                                         }
                                         else
                                         {
-                                            long value = m_client.CalculateValue(c);
+                                            long value = m_client.CalculateValueXXX(c);
                                             str.Append(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 8, '0'));
                                             str.Append(" ");
                                         }
@@ -30938,10 +30938,10 @@ public partial class MainForm : Form, ISubscriber
                                     string[] lines = text.Split('\n');
                                     foreach (string line in lines)
                                     {
-                                        string[] words = line.Split(' ');
-                                        foreach (string word in words)
+                                        string[] word_texts = line.Split(' ');
+                                        foreach (string word_text in word_texts)
                                         {
-                                            long value = m_client.CalculateValue(word);
+                                            long value = m_client.CalculateValueXXX(word_text);
                                             str.Append(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 16, '0'));
                                             str.Append(" ");
                                         }
@@ -30955,7 +30955,7 @@ public partial class MainForm : Form, ISubscriber
                                     string[] lines = text.Split('\n');
                                     foreach (string line in lines)
                                     {
-                                        long value = m_client.CalculateValue(line);
+                                        long value = m_client.CalculateValueXXX(line);
                                         str.AppendLine(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 32, '0'));
                                     }
                                 }
@@ -37388,7 +37388,7 @@ public partial class MainForm : Form, ISubscriber
                         word_count += phrase.Text.Split(' ').Length;
                         string phrase_nospaces = phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Replace(" ", "");
                         letter_count += phrase_nospaces.Length;
-                        value += m_client.CalculateValue(phrase.Text);
+                        value += m_client.CalculateValueXXX(phrase.Text);
                     }
                 }
 
@@ -39860,7 +39860,7 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_client != null)
         {
-            long value = m_client.CalculateValue(user_text);
+            long value = m_client.CalculateValueXXX(user_text);
             FactorizeValue(value, false);
         }
     }
@@ -39996,7 +39996,7 @@ public partial class MainForm : Form, ISubscriber
             }
             else if (expression.IsArabic() || ((m_radix <= 10) && expression.IsEnglish()))
             {
-                m_double_value = m_client.CalculateValue(expression);
+                m_double_value = m_client.CalculateValueXXX(expression);
                 value = (long)Math.Round(m_double_value);
                 FactorizeValue(value, true); // direct text enty
                 ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + L[l]["Text"];
@@ -40065,7 +40065,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     try
                     {
-                        result = m_client.CalculateValue(expression);
+                        result = m_client.CalculateValueXXX(expression);
                     }
                     catch // text
                     {
@@ -43980,8 +43980,9 @@ public partial class MainForm : Form, ISubscriber
                     StringBuilder str = new StringBuilder();
                     if (long.TryParse(ValueTextBox.Text, out value))
                     {
+                        str.AppendLine("--------------------------------------------------------------------------------------------------");
                         str.AppendLine(m_current_text);
-                        str.AppendLine("----------------------------------------");
+                        str.AppendLine("--------------------------------------------------------------------------------------------------");
                         str.AppendLine();
                         str.AppendLine("Verses\t\t=\t" + VersesTextBox.Text);
                         str.AppendLine("Words\t\t=\t" + WordsTextBox.Text);
@@ -44108,9 +44109,9 @@ public partial class MainForm : Form, ISubscriber
                         str.AppendLine("Left-to-right composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainL2R(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryCPIndexChainL2R(value) + "  =  " + DecimalCPIndexChainL2R(value));
                         str.AppendLine();
                         str.AppendLine("Right-to-left composite/prime index chain | C=0 P=1\r\n" + GetCPIndexChainR2L(value) + "\r\n" + "Chain length = " + IndexChainLength(value) + "\t\t" + BinaryCPIndexChainR2L(value) + "  =  " + DecimalCPIndexChainR2L(value));
-                        str.AppendLine("----------------------------------------");
-
+                        str.AppendLine("--------------------------------------------------------------------------------------------------");
                         str.AppendLine();
+
                         m_client.SaveValueCalculations(filename, str.ToString(), m_current_verses, m_current_start_letter, m_current_end_letter);
                     }
                 }

@@ -1217,7 +1217,7 @@ public static partial class Research
         {
             if (result.Count > 0)
             {
-                i += (int)client.CalculateValue(result[result.Count - 1]);
+                i += (int)client.CalculateValueXXX(result[result.Count - 1]);
             }
             if (i >= words.Count) break;
 
