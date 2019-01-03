@@ -91,9 +91,9 @@ public partial class MainForm : Form
         {
             Environment.Exit(0); // close Console and WinForms applications immediately
         }
-        catch
+        catch (Exception ex)
         {
-            // silence exception
+            MessageBox.Show(ex.Message, Application.ProductName);
         }
     }
     private void PopulateTextModeComboBox()

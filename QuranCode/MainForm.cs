@@ -12872,9 +12872,9 @@ public partial class MainForm : Form, ISubscriber
                 DivisorDownTimer.Dispose();
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence IO error in case running from read-only media (CD/DVD)
+            MessageBox.Show(ex.Message, Application.ProductName);
         }
     }
     private bool m_maximized_before_minimized = false;
@@ -13275,7 +13275,6 @@ public partial class MainForm : Form, ISubscriber
             }
             catch
             {
-                // silence Parse exceptions
                 // continue with next INI entry
             }
         }
@@ -14570,7 +14569,6 @@ public partial class MainForm : Form, ISubscriber
         }
         catch
         {
-            // silence Parse exceptions
             // continue with next INI entry
         }
     }
@@ -16649,10 +16647,7 @@ public partial class MainForm : Form, ISubscriber
                             }
 
                             // show file content after save
-                            if (File.Exists(filename))
-                            {
-                                System.Diagnostics.Process.Start("Notepad.exe", filename);
-                            }
+                            FileHelper.DisplayFile(filename);
                         }
                     }
                 }
@@ -23346,9 +23341,9 @@ public partial class MainForm : Form, ISubscriber
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence exception
+            MessageBox.Show(ex.Message, Application.ProductName);
         }
     }
     private void FontDialog_Apply(object sender, EventArgs e)
@@ -24971,12 +24966,7 @@ public partial class MainForm : Form, ISubscriber
     {
         // display the interesting.txt file for live editing using ISubscriber
         string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
-        if (File.Exists(filename))
-        {
-            FileHelper.WaitForReady(filename);
-
-            System.Diagnostics.Process.Start("Notepad.exe", filename);
-        }
+        FileHelper.DisplayFile(filename);
     }
 
     private List<Verse> m_maths_verses = null;
@@ -27245,12 +27235,7 @@ public partial class MainForm : Form, ISubscriber
     {
         // display the interesting.txt file for live editing using ISubscriber
         string filename = Globals.NUMBERS_FOLDER + "/" + "interesting_numbers.txt";
-        if (File.Exists(filename))
-        {
-            FileHelper.WaitForReady(filename);
-
-            System.Diagnostics.Process.Start("Notepad.exe", filename);
-        }
+        FileHelper.DisplayFile(filename);
     }
 
     private NumberScope m_distances_running_chapter_number_scope = NumberScope.Number;
@@ -31185,12 +31170,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 // display the DNASequenceSystem file for live editing using ISubscriber
                 string filename = Globals.VALUES_FOLDER + "/" + m_client.DNASequenceSystem.Name + ".txt";
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
+                FileHelper.DisplayFile(filename);
             }
         }
         DNASequenceSystemComboBox.Focus();
@@ -32510,12 +32490,7 @@ public partial class MainForm : Form, ISubscriber
                 }
 
                 // show file content after save
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
+                FileHelper.DisplayFile(filename);
             }
         }
         finally
@@ -39434,7 +39409,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     if (m_client.Book != null)
                     {
-                        // ALWAYS rebuild book to allow user to edit SimplificationRules file in Notepad and update text on the fly
+                        // ALWAYS rebuild book to support dynamically editing SimplificationRules
                         //if ((m_client.Book.TextMode != text_mode) ||
                         //    (m_client.Book.WithBismAllah != m_with_bism_Allah) ||
                         //    (m_client.Book.WawAsWord != m_waw_as_word) ||
@@ -39570,12 +39545,7 @@ public partial class MainForm : Form, ISubscriber
             {
                 // display the NumerologySystem file for live editing using ISubscriber
                 string filename = Globals.VALUES_FOLDER + "/" + m_client.NumerologySystem.Name + ".txt";
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
+                FileHelper.DisplayFile(filename);
             }
         }
         NumerologySystemComboBox.Focus();
@@ -40388,23 +40358,24 @@ public partial class MainForm : Form, ISubscriber
     }
     private void DisplayPerfectNumbersLabel_Click(object sender, EventArgs e)
     {
+        this.Cursor = Cursors.WaitCursor;
         try
         {
             string filename = Globals.NUMBERS_FOLDER + "/" + "perfect_numbers.txt";
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
-        catch
+        catch (Exception ex)
         {
-            // silence IO error in case running from read-only media (CD/DVD)
+            MessageBox.Show(ex.Message, Application.ProductName);
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
         }
     }
     private void DisplayAbundantNumbersLabel_Click(object sender, EventArgs e)
     {
+        this.Cursor = Cursors.WaitCursor;
         try
         {
             string filename = Globals.NUMBERS_FOLDER + "/" + "abundant_numbers.txt";
@@ -40428,20 +40399,20 @@ public partial class MainForm : Form, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
-        catch
+        catch (Exception ex)
         {
-            // silence IO error in case running from read-only media (CD/DVD)
+            MessageBox.Show(ex.Message, Application.ProductName);
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
         }
     }
     private void DisplayDeficientNumbersLabel_Click(object sender, EventArgs e)
     {
+        this.Cursor = Cursors.WaitCursor;
         try
         {
             string filename = Globals.NUMBERS_FOLDER + "/" + "deficient_numbers.txt";
@@ -40465,16 +40436,15 @@ public partial class MainForm : Form, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
-        catch
+        catch (Exception ex)
         {
-            // silence IO error in case running from read-only media (CD/DVD)
+            MessageBox.Show(ex.Message, Application.ProductName);
+        }
+        finally
+        {
+            this.Cursor = Cursors.Default;
         }
     }
     private void UpdateSumOfDivisors(long value)
@@ -43158,12 +43128,7 @@ public partial class MainForm : Form, ISubscriber
         try
         {
             string filename = Globals.HELP_FOLDER + "/" + "AllahWords.txt";
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
         catch (Exception ex)
         {

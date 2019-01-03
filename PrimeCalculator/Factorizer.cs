@@ -160,9 +160,9 @@ class Factorizer
                         KillProcessAndDescendents(m_process.Id);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // silence error
+                    MessageBox.Show(ex.Message, Application.ProductName);
                 }
             }
             else

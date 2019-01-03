@@ -303,9 +303,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
 
@@ -1649,9 +1649,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
     private static void LoadAdditivePrimes()
@@ -1682,9 +1682,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
     private static void LoadNonAdditivePrimes()
@@ -1715,9 +1715,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
     private static void SavePrimes()
@@ -2008,9 +2008,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
     private static void LoadAdditiveComposites()
@@ -2041,9 +2041,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
     private static void LoadNonAdditiveComposites()
@@ -2074,9 +2074,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
     private static void SaveComposites()
@@ -2147,9 +2147,9 @@ public static class Numbers
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
     }
 

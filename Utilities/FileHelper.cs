@@ -63,7 +63,7 @@ public static class FileHelper
         }
         catch
         {
-            // silence error
+            // silence IO error in case running from read-only media (CD/DVD)
         }
     }
     public static void SaveText(string path, string text)
@@ -78,7 +78,7 @@ public static class FileHelper
         }
         catch
         {
-            // silence error
+            // silence IO error in case running from read-only media (CD/DVD)
         }
     }
     public static void SaveLetters(string path, char[] characters)
@@ -99,7 +99,7 @@ public static class FileHelper
         }
         catch
         {
-            // silence error
+            // silence IO error in case running from read-only media (CD/DVD)
         }
     }
     public static void SaveWords(string path, List<string> words)
@@ -120,7 +120,7 @@ public static class FileHelper
         }
         catch
         {
-            // silence error
+            // silence IO error in case running from read-only media (CD/DVD)
         }
     }
     public static void SaveValues(string path, List<long> values)
@@ -137,7 +137,7 @@ public static class FileHelper
         }
         catch
         {
-            // silence error
+            // silence IO error in case running from read-only media (CD/DVD)
         }
     }
 
@@ -160,9 +160,9 @@ public static class FileHelper
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
         return result;
     }
@@ -185,9 +185,9 @@ public static class FileHelper
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // silence error
+            Console.WriteLine(ex.Message);
         }
         return str.ToString();
     }
@@ -198,7 +198,14 @@ public static class FileHelper
         {
             FileHelper.WaitForReady(path);
 
-            System.Diagnostics.Process.Start("Notepad.exe", path);
+            try
+            {
+                System.Diagnostics.Process.Start(path);
+            }
+            catch
+            {
+                System.Diagnostics.Process.Start(path.Replace(@"/", @"\"));
+            }
         }
     }
 }

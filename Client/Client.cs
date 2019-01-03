@@ -450,12 +450,7 @@ public class Client : IPublisher, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
     public void SaveNumberIndexChain(string filename, long number, int chain_length, string text)
@@ -482,12 +477,7 @@ public class Client : IPublisher, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
     public void SaveIndexChainLength(string filename, NumberType number_type, int chain_length, string text)
@@ -514,12 +504,7 @@ public class Client : IPublisher, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
 
@@ -2163,12 +2148,7 @@ public class Client : IPublisher, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
     /// <summary>
@@ -2313,12 +2293,7 @@ public class Client : IPublisher, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
 
@@ -2533,12 +2508,7 @@ public class Client : IPublisher, ISubscriber
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
 

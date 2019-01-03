@@ -99,9 +99,9 @@ static class Program
         {
             Application.Run(form);
         }
-        catch
+        catch (Exception ex)
         {
-            // silence exception
+            MessageBox.Show(ex.Message, Application.ProductName);
         }
     }
 }

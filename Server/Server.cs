@@ -280,9 +280,9 @@ public class Server : IPublisher
                     // add to dictionary
                     s_loaded_simplification_systems.Add(simplification_system.Name, simplification_system);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // silence error
+                    Console.WriteLine(ex.Message);
                 }
             }
 
@@ -1278,9 +1278,9 @@ public class Server : IPublisher
                         // add to dictionary
                         s_loaded_dna_sequence_systems.Add(dna_sequence_system.Name, dna_sequence_system);
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // silence error
+                        Console.WriteLine(ex.Message);
                     }
                 }
 
@@ -1429,6 +1429,7 @@ public class Server : IPublisher
         if (letters.Count == 0) return 0L;
 
         long result = 0L;
+        long value = 0L;
         if (s_numerology_system != null)
         {
             foreach (Letter letter in letters)
@@ -1436,32 +1437,38 @@ public class Server : IPublisher
                 result += CalculateValue(letter);
             }
 
-            // adjust value of words
             List<Word> words = GetCompleteWords(letters);
             if (words != null)
             {
                 foreach (Word word in words)
                 {
+                    value = s_numerology_system.CalculateValue(word.Text);
+                    Log.Append("\t" + "\t" + value);
+                    // adjust value of word
                     result += AdjustValue(word);
                 }
             }
 
-            // adjust value of verses
             List<Verse> verses = GetCompleteVerses(words);
             if (verses != null)
             {
                 foreach (Verse verse in verses)
                 {
+                    value = s_numerology_system.CalculateValue(verse.Text);
+                    Log.Append("\t" + "\t" + "\t" + value);
+                    // adjust value of verse
                     result += AdjustValue(verse);
                 }
             }
 
-            // adjust value of chapters
             List<Chapter> chapters = GetCompleteChapters(verses);
             if (chapters != null)
             {
                 foreach (Chapter chapter in chapters)
                 {
+                    value = s_numerology_system.CalculateValue(chapter.Text);
+                    Log.Append("\t" + "\t" + "\t" + "\t" + value);
+                    // adjust value of chapter
                     result += AdjustValue(chapter);
                 }
             }
@@ -1505,13 +1512,21 @@ public class Server : IPublisher
                     result += CalculateValue(letter);
                 }
 
+                value = s_numerology_system.CalculateValue(word.Text);
+                Log.Append("\t" + "\t" + value);
                 // adjust value of word
                 result += AdjustValue(word);
 
-                // adjust value of verse
-                if (word.Verse.Words.Count == 1)
+                Verse verse = word.Verse;
+                if (verse != null)
                 {
-                    result += AdjustValue(word.Verse);
+                    if (word.Verse.Words.Count == 1)
+                    {
+                        value = s_numerology_system.CalculateValue(verse.Text);
+                        Log.Append("\t" + "\t" + "\t" + value);
+                        // adjust value of verse
+                        result += AdjustValue(word.Verse);
+                    }
                 }
             }
         }
@@ -1523,6 +1538,7 @@ public class Server : IPublisher
         if (words.Count == 0) return 0L;
 
         long result = 0L;
+        long value = 0L;
         if (s_numerology_system != null)
         {
             foreach (Word word in words)
@@ -1530,22 +1546,26 @@ public class Server : IPublisher
                 result += CalculateValue(word);
             }
 
-            // adjust value of verses
             List<Verse> verses = GetCompleteVerses(words);
             if (verses != null)
             {
                 foreach (Verse verse in verses)
                 {
+                    value = s_numerology_system.CalculateValue(verse.Text);
+                    Log.Append("\t" + "\t" + "\t" + value);
+                    // adjust value of verse
                     result += AdjustValue(verse);
                 }
             }
 
-            // adjust value of chapters
             List<Chapter> chapters = GetCompleteChapters(verses);
             if (chapters != null)
             {
                 foreach (Chapter chapter in chapters)
                 {
+                    value = s_numerology_system.CalculateValue(chapter.Text);
+                    Log.Append("\t" + "\t" + "\t" + "\t" + value);
+                    // adjust value of chapter
                     result += AdjustValue(chapter);
                 }
             }
@@ -1604,17 +1624,21 @@ public class Server : IPublisher
                             result += CalculateValue(letter);
                         }
 
+                        value = s_numerology_system.CalculateValue(word.Text);
+                        Log.Append("\t" + "\t" + value);
                         // adjust value of word
                         result += AdjustValue(word);
                     }
                 }
 
-                // adjust value of verses
                 List<Verse> verses = GetCompleteVerses(sentence);
                 if (verses != null)
                 {
                     foreach (Verse verse in verses)
                     {
+                        value = s_numerology_system.CalculateValue(verse.Text);
+                        Log.Append("\t" + "\t" + "\t" + value);
+                        // adjust value of verse
                         result += AdjustValue(verse);
                     }
                 }
@@ -1666,10 +1690,14 @@ public class Server : IPublisher
                         result += CalculateValue(letter);
                     }
 
+                    value = s_numerology_system.CalculateValue(word.Text);
+                    Log.Append("\t" + "\t" + value);
                     // adjust value of word
                     result += AdjustValue(word);
                 }
 
+                value = s_numerology_system.CalculateValue(verse.Text);
+                Log.Append("\t" + "\t" + "\t" + value);
                 // adjust value of verse
                 result += AdjustValue(verse);
             }
@@ -1756,23 +1784,35 @@ public class Server : IPublisher
                             result += CalculateValue(letter);
                         }
 
-                        // adjust value of word (if fully selected)
                         if ((from_letter.NumberInVerse <= word.Letters[0].NumberInVerse)                    // if selection starts before or at first letter in word
                             &&                                                                              // AND
                             (to_letter.NumberInVerse >= word.Letters[word.Letters.Count - 1].NumberInVerse) // if selection ends   at or after  last  letter in word
                            )
                         {
+                            value = s_numerology_system.CalculateValue(word.Text);
+                            Log.Append("\t" + "\t" + value);
+                            // adjust value of word
                             result += AdjustValue(word);
+                        }
+                        else
+                        {
+                            Log.Append("\t" + "\t" + "0");
                         }
                     }
 
-                    // adjust value of verse
-                    if ((from_letter.NumberInVerse == 1) && (to_letter.NumberInVerse == verse.LetterCount))
-                    {
-                        result += AdjustValue(verse);
-                    }
-
                     if (done) break;
+                }
+
+                if ((from_letter.NumberInVerse == 1) && (to_letter.NumberInVerse == verse.LetterCount))
+                {
+                    value = s_numerology_system.CalculateValue(verse.Text);
+                    Log.Append("\t" + "\t" + "\t" + value);
+                    // adjust value of verse
+                    result += AdjustValue(verse);
+                }
+                else
+                {
+                    Log.Append("\t" + "\t" + "\t" + "0");
                 }
             }
         }
@@ -1784,6 +1824,7 @@ public class Server : IPublisher
         if (verses.Count == 0) return 0L;
 
         long result = 0L;
+        long value = 0L;
         if (s_numerology_system != null)
         {
             foreach (Verse verse in verses)
@@ -1791,12 +1832,14 @@ public class Server : IPublisher
                 result += CalculateValue(verse);
             }
 
-            // adjust value of chapters
             List<Chapter> chapters = GetCompleteChapters(verses);
             if (chapters != null)
             {
                 foreach (Chapter chapter in chapters)
                 {
+                    value = s_numerology_system.CalculateValue(chapter.Text);
+                    Log.Append("\t" + "\t" + "\t" + "\t" + value);
+                    // adjust value of chapter
                     result += AdjustValue(chapter);
                 }
             }
@@ -1809,6 +1852,7 @@ public class Server : IPublisher
         if (verses.Count == 0) return 0L;
 
         long result = 0L;
+        long value = 0L;
         if (s_numerology_system != null)
         {
             if (verses.Count == 1)
@@ -1817,35 +1861,36 @@ public class Server : IPublisher
             }
             else if (verses.Count == 2)
             {
-                Word verse0_end_word = verses[0].Words[verses[0].Words.Count - 1];
-                if (verse0_end_word != null)
+                Word first_verse_end_word = verses[0].Words[verses[0].Words.Count - 1];
+                if (first_verse_end_word != null)
                 {
-                    Letter verse0_end_letter = verse0_end_word.Letters[verse0_end_word.Letters.Count - 1];
-                    if (verse0_end_letter != null)
+                    Letter first_verse_end_letter = first_verse_end_word.Letters[first_verse_end_word.Letters.Count - 1];
+                    if (first_verse_end_letter != null)
                     {
-                        result += CalculateValue(verses[0], start_letter, verse0_end_letter);
+                        result += CalculateValue(verses[0], start_letter, first_verse_end_letter);
                     }
                 }
 
-                Word verse1_start_word = verses[1].Words[0];
-                if (verse1_start_word != null)
+                Word last_verse_start_word = verses[1].Words[0];
+                if (last_verse_start_word != null)
                 {
-                    Letter verse1_start_letter = verse1_start_word.Letters[0];
-                    if (verse1_start_letter != null)
+                    Letter last_verse_start_letter = last_verse_start_word.Letters[0];
+                    if (last_verse_start_letter != null)
                     {
-                        result += CalculateValue(verses[1], verse1_start_letter, end_letter);
+                        result += CalculateValue(verses[1], last_verse_start_letter, end_letter);
                     }
                 }
             }
             else //if (verses.Count > 2)
             {
-                Word verse0_end_word = verses[0].Words[verses[0].Words.Count - 1];
-                if (verse0_end_word != null)
+                // first verse
+                Word first_verse_end_word = verses[0].Words[verses[0].Words.Count - 1];
+                if (first_verse_end_word != null)
                 {
-                    Letter verse0_end_letter = verse0_end_word.Letters[verse0_end_word.Letters.Count - 1];
-                    if (verse0_end_letter != null)
+                    Letter first_verse_end_letter = first_verse_end_word.Letters[first_verse_end_word.Letters.Count - 1];
+                    if (first_verse_end_letter != null)
                     {
-                        result += CalculateValue(verses[0], start_letter, verse0_end_letter);
+                        result += CalculateValue(verses[0], start_letter, first_verse_end_letter);
                     }
                 }
 
@@ -1855,6 +1900,7 @@ public class Server : IPublisher
                     result += CalculateValue(verses[i]);
                 }
 
+                // last verse
                 Word last_verse_start_word = verses[verses.Count - 1].Words[0];
                 if (last_verse_start_word != null)
                 {
@@ -1864,15 +1910,17 @@ public class Server : IPublisher
                         result += CalculateValue(verses[verses.Count - 1], last_verse_start_letter, end_letter);
                     }
                 }
-            }
 
-            // adjust value of chapters
-            List<Chapter> chapters = GetCompleteChapters(verses, start_letter, end_letter);
-            if (chapters != null)
-            {
-                foreach (Chapter chapter in chapters)
+                List<Chapter> chapters = GetCompleteChapters(verses, start_letter, end_letter);
+                if (chapters != null)
                 {
-                    result += AdjustValue(chapter);
+                    foreach (Chapter chapter in chapters)
+                    {
+                        value = s_numerology_system.CalculateValue(chapter.Text);
+                        Log.Append("\t" + "\t" + "\t" + "\t" + value);
+                        // adjust value of chapter
+                        result += AdjustValue(chapter);
+                    }
                 }
             }
         }
@@ -2242,9 +2290,6 @@ public class Server : IPublisher
         {
             if (word != null)
             {
-                value = s_numerology_system.CalculateValue(word.Text);
-                //Log.Append(word.Text + "\t" + "\t" + value);
-                Log.Append("\t" + "\t" + value);
                 Log.Append("\t" + "\t" + "\t");
 
                 Log.Append("\t");
@@ -2308,9 +2353,6 @@ public class Server : IPublisher
         {
             if (verse != null)
             {
-                value = s_numerology_system.CalculateValue(verse.Text);
-                //Log.Append(verse.Number + "\t" + verse.Address + "\t" + "\t" + value);
-                Log.Append("\t" + "\t" + "\t" + value);
                 Log.Append("\t" + "\t" + "\t");
 
                 Log.Append("\t");
@@ -2358,9 +2400,6 @@ public class Server : IPublisher
         {
             if (chapter != null)
             {
-                value = s_numerology_system.CalculateValue(chapter.Text);
-                //Log.Append(chapter.SortedNumber + "\t" + chapter.RevelationOrder + "\t" + chapter.Name + "\t" + "\t" + value);
-                Log.Append("\t" + "\t" + "\t" + "\t" + value);
                 Log.Append("\t" + "\t" + "\t");
 
                 Log.Append("\t");

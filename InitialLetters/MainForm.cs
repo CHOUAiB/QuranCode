@@ -266,7 +266,14 @@ namespace InitialLetters
             // show file content after save
             if (File.Exists(filename))
             {
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
+                try
+                {
+                    System.Diagnostics.Process.Start(filename);
+                }
+                catch
+                {
+                    System.Diagnostics.Process.Start(filename.Replace(@"/", @"\"));
+                }
             }
         }
         private void InitialLettersToolStripMenuItem_Click(object sender, EventArgs e)

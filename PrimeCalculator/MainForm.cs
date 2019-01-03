@@ -814,16 +814,7 @@ public partial class MainForm : Form
             try
             {
                 string filename = Globals.NUMBERS_FOLDER + "/" + "perfect_numbers.txt";
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
-            }
-            catch
-            {
-                // silence IO error in case running from read-only media (CD/DVD)
+                FileHelper.DisplayFile(filename);
             }
             finally
             {
@@ -859,16 +850,7 @@ public partial class MainForm : Form
                 }
 
                 // show file content after save
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
-            }
-            catch
-            {
-                // silence IO error in case running from read-only media (CD/DVD)
+                FileHelper.DisplayFile(filename);
             }
             finally
             {
@@ -904,16 +886,7 @@ public partial class MainForm : Form
                 }
 
                 // show file content after save
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
-            }
-            catch
-            {
-                // silence IO error in case running from read-only media (CD/DVD)
+                FileHelper.DisplayFile(filename);
             }
             finally
             {
@@ -1052,12 +1025,7 @@ public partial class MainForm : Form
                 FileHelper.SaveText(filename, str.ToString());
 
                 // show file content after save
-                if (File.Exists(filename))
-                {
-                    FileHelper.WaitForReady(filename);
-
-                    System.Diagnostics.Process.Start("Notepad.exe", filename);
-                }
+                FileHelper.DisplayFile(filename);
             }
         }
     }
@@ -1545,12 +1513,7 @@ public partial class MainForm : Form
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
     public void SaveIndexChainLength(string filename, NumberType number_type, int chain_length, string text)
@@ -1577,12 +1540,7 @@ public partial class MainForm : Form
             }
 
             // show file content after save
-            if (File.Exists(filename))
-            {
-                FileHelper.WaitForReady(filename);
-
-                System.Diagnostics.Process.Start("Notepad.exe", filename);
-            }
+            FileHelper.DisplayFile(filename);
         }
     }
 
