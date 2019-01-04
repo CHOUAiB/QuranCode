@@ -1375,25 +1375,25 @@ public class Server : IPublisher
 
     public static StringBuilder Log = new StringBuilder();
     // used for non-Quran text
-    public static long CalculateValueXXX(char user_char)
+    public static long CalculateValueUserText(char character)
     {
-        if (user_char == '\0') return 0L;
+        if (character == '\0') return 0L;
 
         long result = 0L;
         if (s_numerology_system != null)
         {
-            result = s_numerology_system.CalculateValue(user_char);
+            result = s_numerology_system.CalculateValue(character);
         }
         return result;
     }
-    public static long CalculateValueXXX(string user_text)
+    public static long CalculateValueUserText(string text)
     {
-        if (string.IsNullOrEmpty(user_text)) return 0L;
+        if (string.IsNullOrEmpty(text)) return 0L;
 
         long result = 0L;
         if (s_numerology_system != null)
         {
-            result = s_numerology_system.CalculateValue(user_text);
+            result = s_numerology_system.CalculateValue(text);
         }
         return result;
     }
@@ -1796,7 +1796,7 @@ public class Server : IPublisher
                         }
                         else
                         {
-                            Log.AppendLine("\t" + "\t" + "0");
+                            Log.AppendLine("\t" + "\t" + "---");
                         }
                     }
 
@@ -1812,7 +1812,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    Log.AppendLine("\t" + "\t" + "\t" + "0");
+                    Log.AppendLine("\t" + "\t" + "\t" + "---");
                 }
             }
         }
@@ -1830,17 +1830,28 @@ public class Server : IPublisher
             foreach (Verse verse in verses)
             {
                 result += CalculateValue(verse);
-            }
 
-            List<Chapter> chapters = GetCompleteChapters(verses);
-            if (chapters != null)
-            {
-                foreach (Chapter chapter in chapters)
+                Chapter chapter = verse.Chapter;
+                if (chapter != null)
                 {
-                    value = s_numerology_system.CalculateValue(chapter.Text);
-                    Log.Append("\t" + "\t" + "\t" + "\t" + value);
-                    // adjust value of chapter
-                    result += AdjustValue(chapter);
+                    if (verse.NumberInChapter == verse.Chapter.Verses.Count)
+                    {
+                        List<Chapter> chapters = GetCompleteChapters(verses);
+                        if (chapters != null)
+                        {
+                            if (chapters.Contains(chapter))
+                            {
+                                value = s_numerology_system.CalculateValue(chapter.Text);
+                                Log.Append("\t" + "\t" + "\t" + "\t" + value);
+                                // adjust value of chapter
+                                result += AdjustValue(chapter);
+                            }
+                            else
+                            {
+                                Log.AppendLine("\t" + "\t" + "\t" + "\t" + "---");
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1883,6 +1894,12 @@ public class Server : IPublisher
             }
             else //if (verses.Count > 2)
             {
+                // WARNING: no null check ???
+                bool first_verse_is_fully_selected = (start_letter.NumberInChapter == 1);
+                bool last_verse_is_fully_selected = (end_letter.NumberInChapter == end_letter.Word.Verse.Chapter.LetterCount);
+                Chapter first_chapter = start_letter.Word.Verse.Chapter;
+                Chapter last_chapter = end_letter.Word.Verse.Chapter;
+
                 // first verse
                 Word first_verse_end_word = verses[0].Words[verses[0].Words.Count - 1];
                 if (first_verse_end_word != null)
@@ -1898,6 +1915,40 @@ public class Server : IPublisher
                 for (int i = 1; i < verses.Count - 1; i++)
                 {
                     result += CalculateValue(verses[i]);
+
+                    Verse verse = verses[i];
+                    if (verse != null)
+                    {
+                        Chapter chapter = verse.Chapter;
+                        if (chapter != null)
+                        {
+                            if (verse.NumberInChapter == verse.Chapter.Verses.Count)    // last verse in chapter
+                            {
+                                if (
+                                     (verse.Chapter != first_chapter)
+                                     ||
+                                     ((verse.Chapter == first_chapter) && first_verse_is_fully_selected)
+                                   )
+                                {
+                                    List<Chapter> chapters = GetCompleteChapters(verses);
+                                    if (chapters != null)
+                                    {
+                                        if (chapters.Contains(chapter))
+                                        {
+                                            value = s_numerology_system.CalculateValue(chapter.Text);
+                                            Log.Append("\t" + "\t" + "\t" + "\t" + value);
+                                            // adjust value of chapter
+                                            result += AdjustValue(chapter);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    Log.AppendLine("\t" + "\t" + "\t" + "\t" + "---");
+                                }
+                            }
+                        }
+                    }
                 }
 
                 // last verse
@@ -1908,18 +1959,40 @@ public class Server : IPublisher
                     if (last_verse_start_letter != null)
                     {
                         result += CalculateValue(verses[verses.Count - 1], last_verse_start_letter, end_letter);
-                    }
-                }
 
-                List<Chapter> chapters = GetCompleteChapters(verses, start_letter, end_letter);
-                if (chapters != null)
-                {
-                    foreach (Chapter chapter in chapters)
-                    {
-                        value = s_numerology_system.CalculateValue(chapter.Text);
-                        Log.Append("\t" + "\t" + "\t" + "\t" + value);
-                        // adjust value of chapter
-                        result += AdjustValue(chapter);
+                        Verse verse = verses[verses.Count - 1];
+                        if (verse != null)
+                        {
+                            if (
+                                 ((last_chapter == first_chapter) && first_verse_is_fully_selected && last_verse_is_fully_selected)
+                                 ||
+                                 ((last_chapter != first_chapter) && (verse.Chapter == last_chapter) && last_verse_is_fully_selected)
+                               )
+                            {
+                                Chapter chapter = verse.Chapter;
+                                if (chapter != null)
+                                {
+                                    if (verse.NumberInChapter == verse.Chapter.Verses.Count)    // last verse in chapter
+                                    {
+                                        List<Chapter> chapters = GetCompleteChapters(verses);
+                                        if (chapters != null)
+                                        {
+                                            if (chapters.Contains(chapter))
+                                            {
+                                                value = s_numerology_system.CalculateValue(chapter.Text);
+                                                Log.Append("\t" + "\t" + "\t" + "\t" + value);
+                                                // adjust value of chapter
+                                                result += AdjustValue(chapter);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Log.AppendLine("\t" + "\t" + "\t" + "\t" + "---");
+                            }
+                        }
                     }
                 }
             }
@@ -2248,7 +2321,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToLetterLDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = letter.DistanceToPrevious.dL;
+                    value = letter.DistanceToPrevious.dL;
                     result += value;
                     Log.Append(value);
                 }
@@ -2256,7 +2329,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToLetterWDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = letter.DistanceToPrevious.dW;
+                    value = letter.DistanceToPrevious.dW;
                     result += value;
                     Log.Append(value);
                 }
@@ -2264,7 +2337,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToLetterVDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = letter.DistanceToPrevious.dV;
+                    value = letter.DistanceToPrevious.dV;
                     result += value;
                     Log.Append(value);
                 }
@@ -2272,7 +2345,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToLetterCDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = letter.DistanceToPrevious.dC;
+                    value = letter.DistanceToPrevious.dC;
                     result += value;
                     Log.Append(value);
                 }
@@ -2319,7 +2392,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToWordWDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = word.DistanceToPrevious.dW;
+                    value = word.DistanceToPrevious.dW;
                     result += value;
                     Log.Append(value);
                 }
@@ -2327,7 +2400,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToWordVDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = word.DistanceToPrevious.dV;
+                    value = word.DistanceToPrevious.dV;
                     result += value;
                     Log.Append(value);
                 }
@@ -2335,7 +2408,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToWordCDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = word.DistanceToPrevious.dC;
+                    value = word.DistanceToPrevious.dC;
                     result += value;
                     Log.Append(value);
                 }
@@ -2374,7 +2447,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToVerseVDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = verse.DistanceToPrevious.dV;
+                    value = verse.DistanceToPrevious.dV;
                     result += value;
                     Log.Append(value);
                 }
@@ -2382,7 +2455,7 @@ public class Server : IPublisher
                 Log.Append("\t");
                 if (s_numerology_system.AddToVerseCDistance)
                 {
-                    if (s_numerology_system.AddDistancesToPrevious) value = verse.DistanceToPrevious.dC;
+                    value = verse.DistanceToPrevious.dC;
                     result += value;
                     Log.Append(value);
                 }

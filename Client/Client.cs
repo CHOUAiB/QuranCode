@@ -250,13 +250,13 @@ public class Client : IPublisher, ISubscriber
     }
 
     // used for non-Quran text
-    public long CalculateValueXXX(char user_char)
+    public long CalculateValueUserText(char character)
     {
-        return Server.CalculateValueXXX(user_char);
+        return Server.CalculateValueUserText(character);
     }
-    public long CalculateValueXXX(string user_text)
+    public long CalculateValueUserText(string text)
     {
-        return Server.CalculateValueXXX(user_text);
+        return Server.CalculateValueUserText(text);
     }
     // used for Quran text only
     public long CalculateValue(Letter letter)
@@ -435,11 +435,38 @@ public class Client : IPublisher, ISubscriber
                         writer.WriteLine("Text");
                         writer.WriteLine(text);
                         writer.WriteLine("--------------------------------------------------------------------------------------------------");
-                        writer.WriteLine("Letter" + "\t" + "Value" + "\t" + "\t" + "\t" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "∆L" + "\t" + "∆W" + "\t" + "∆V" + "\t" + "∆C");
+                        if (
+                                NumerologySystem.AddToLetterLNumber ||
+                                NumerologySystem.AddToLetterWNumber ||
+                                NumerologySystem.AddToLetterVNumber ||
+                                NumerologySystem.AddToLetterCNumber ||
+                                NumerologySystem.AddToLetterLDistance ||
+                                NumerologySystem.AddToLetterWDistance ||
+                                NumerologySystem.AddToLetterVDistance ||
+                                NumerologySystem.AddToLetterCDistance ||
+                                NumerologySystem.AddToWordWNumber ||
+                                NumerologySystem.AddToWordVNumber ||
+                                NumerologySystem.AddToWordCNumber ||
+                                NumerologySystem.AddToWordWDistance ||
+                                NumerologySystem.AddToWordVDistance ||
+                                NumerologySystem.AddToWordCDistance ||
+                                NumerologySystem.AddToVerseVNumber ||
+                                NumerologySystem.AddToVerseCNumber ||
+                                NumerologySystem.AddToVerseVDistance ||
+                                NumerologySystem.AddToVerseCDistance ||
+                                NumerologySystem.AddToChapterCNumber
+                            )
+                        {
+                            writer.WriteLine("Letter" + "\t" + "Value" + "\t" + "\t" + "\t" + "\t" + "L" + "\t" + "W" + "\t" + "V" + "\t" + "C" + "\t" + "∆L" + "\t" + "∆W" + "\t" + "∆V" + "\t" + "∆C");
+                        }
+                        else
+                        {
+                            writer.WriteLine("Letter" + "\t" + "Value");
+                        }
                         writer.WriteLine("--------------------------------------------------------------------------------------------------");
                         writer.WriteLine(Server.Log.ToString());
                         writer.WriteLine("--------------------------------------------------------------------------------------------------");
-                        writer.WriteLine("Total" + "\t" + CalculateValueXXX(text));
+                        writer.WriteLine("Total" + "\t" + CalculateValueUserText(text));
                         writer.WriteLine("--------------------------------------------------------------------------------------------------");
                     }
                 }

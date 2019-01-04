@@ -288,7 +288,6 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToVerseCDistance = false;
             m_client.NumerologySystem.AddToChapterCNumber = false;
 
-            m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_letter_value;
             m_client.NumerologySystem.AddDistancesWithinChapters = true;
             if (m_client.Book != null)
             {
@@ -866,7 +865,7 @@ public partial class MainForm : Form
                     if (m_use_ya_husein) value += m_ya_husein_letter_values[i];
                     fatiha_letter_values.Add(value);
 
-                    value = m_client.CalculateValueXXX(m_infallible_letters[i]);
+                    value = m_client.CalculateValueUserText(m_infallible_letters[i]);
                     if (m_use_ya_husein) value -= m_ya_husein_letter_values[i];
                     infallible_letter_values.Add(Math.Abs(value));
                 }

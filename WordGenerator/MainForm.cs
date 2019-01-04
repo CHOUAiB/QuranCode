@@ -257,9 +257,8 @@ public partial class MainForm : Form
             m_client.NumerologySystem.AddToVerseVDistance = true;
             m_client.NumerologySystem.AddToVerseCDistance = false;
             m_client.NumerologySystem.AddToChapterCNumber = false;
-
-            m_client.NumerologySystem.AddDistancesToPrevious = m_add_distances_to_previous_to_letter_value;
             m_client.NumerologySystem.AddDistancesWithinChapters = true;
+
             if (m_client.Book != null)
             {
                 m_client.Book.SetupDistances(m_client.NumerologySystem.AddDistancesWithinChapters);
@@ -1100,7 +1099,7 @@ public partial class MainForm : Form
                         int length = key.Length;
                         length_sum += length;
 
-                        long value = m_client.CalculateValueXXX(key);
+                        long value = m_client.CalculateValueUserText(key);
                         value_sum += value;
 
                         str.AppendLine(count + "\t" + key + "\t" + frequency + "\t" + length + "\t" + value);

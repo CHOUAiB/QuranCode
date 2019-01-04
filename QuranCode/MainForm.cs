@@ -490,25 +490,25 @@ public partial class MainForm : Form, ISubscriber
             this.ToolTip.SetToolTip(this.NthAdditiveNumberTextBox, L[l]["Additive prime index"]);
             this.ToolTip.SetToolTip(this.NthNonAdditiveNumberTextBox, L[l]["Non-additive prime index"]);
             this.ToolTip.SetToolTip(this.AddPositionsAndDistancesToValueLabel, L[l]["Dynamic Numerology System - ©2008 Ali Adams"]);
-            this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, L[l]["Add letter number in word to each letter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, L[l]["Add word number in verse to each letter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, L[l]["Add verse number in chapter to each letter"]);
-            this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, L[l]["Add chapter number in book to each letter"]);
+            this.ToolTip.SetToolTip(this.AddToLetterLNumberCheckBox, L[l]["Add letter number in word to each letter value"]);
+            this.ToolTip.SetToolTip(this.AddToLetterWNumberCheckBox, L[l]["Add word number in verse to each letter value"]);
+            this.ToolTip.SetToolTip(this.AddToLetterVNumberCheckBox, L[l]["Add verse number in chapter to each letter value"]);
+            this.ToolTip.SetToolTip(this.AddToLetterCNumberCheckBox, L[l]["Add chapter number in book to each letter value"]);
             this.ToolTip.SetToolTip(this.AddToLetterLDistanceCheckBox, L[l]["Add the number of letters back to the same letter"]);
             this.ToolTip.SetToolTip(this.AddToLetterWDistanceCheckBox, L[l]["Add the number of words back to the same letter"]);
             this.ToolTip.SetToolTip(this.AddToLetterVDistanceCheckBox, L[l]["Add the number of verses back to the same letter"]);
             this.ToolTip.SetToolTip(this.AddToLetterCDistanceCheckBox, L[l]["Add the number of chapters back to the same letter"]);
-            this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, L[l]["Add word number in verse to each word"]);
-            this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, L[l]["Add verse number in chapter to each word"]);
-            this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, L[l]["Add chapter number in book to each word"]);
+            this.ToolTip.SetToolTip(this.AddToWordWNumberCheckBox, L[l]["Add word number in verse to each word value"]);
+            this.ToolTip.SetToolTip(this.AddToWordVNumberCheckBox, L[l]["Add verse number in chapter to each word value"]);
+            this.ToolTip.SetToolTip(this.AddToWordCNumberCheckBox, L[l]["Add chapter number in book to each word value"]);
             this.ToolTip.SetToolTip(this.AddToWordWDistanceCheckBox, L[l]["Add the number of words back to the same word"]);
             this.ToolTip.SetToolTip(this.AddToWordVDistanceCheckBox, L[l]["Add the number of verses back to the same word"]);
             this.ToolTip.SetToolTip(this.AddToWordCDistanceCheckBox, L[l]["Add the number of chapters back to the same word"]);
-            this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, L[l]["Add verse number in chapter to each verse"]);
-            this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, L[l]["Add chapter number in book to each verse"]);
+            this.ToolTip.SetToolTip(this.AddToVerseVNumberCheckBox, L[l]["Add verse number in chapter to each verse value"]);
+            this.ToolTip.SetToolTip(this.AddToVerseCNumberCheckBox, L[l]["Add chapter number in book to each verse value"]);
             this.ToolTip.SetToolTip(this.AddToVerseVDistanceCheckBox, L[l]["Add the number of verses back to the same verse"]);
             this.ToolTip.SetToolTip(this.AddToVerseCDistanceCheckBox, L[l]["Add the number of chapters back to the same verse"]);
-            this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, L[l]["Add chapter number in book to each chapter"]);
+            this.ToolTip.SetToolTip(this.AddToChapterCNumberCheckBox, L[l]["Add chapter number in book to each chapter value"]);
             this.ToolTip.SetToolTip(this.ChapterComboBox, "C, C-C, C:V, C:V-C, C-C:V, C:V-C:V, ..." + "\r\n" + "36  40-46  15:87  18:9-25  1-2:5  24:35-27:62  2:29,41:9-12");
             this.ToolTip.SetToolTip(this.ChapterVerseNumericUpDown, "V, V-V, ...");
             this.ToolTip.SetToolTip(this.ChapterWordNumericUpDown, "W, W-W, ...");
@@ -11461,7 +11461,7 @@ public partial class MainForm : Form, ISubscriber
         this.AddDistancesToPreviousCheckBox.TabIndex = 141;
         this.AddDistancesToPreviousCheckBox.Text = "∆";
         this.AddDistancesToPreviousCheckBox.UseVisualStyleBackColor = false;
-        this.AddDistancesToPreviousCheckBox.CheckedChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckedChanged);
+        this.AddDistancesToPreviousCheckBox.CheckStateChanged += new System.EventHandler(this.AddDistancesToPreviousCheckBox_CheckStateChanged);
         // 
         // AddPositionsCheckBox
         // 
@@ -11474,7 +11474,7 @@ public partial class MainForm : Form, ISubscriber
         this.AddPositionsCheckBox.TabIndex = 140;
         this.AddPositionsCheckBox.Text = "Pos";
         this.AddPositionsCheckBox.UseVisualStyleBackColor = false;
-        this.AddPositionsCheckBox.CheckedChanged += new System.EventHandler(this.AddPositionsCheckBox_CheckedChanged);
+        this.AddPositionsCheckBox.CheckStateChanged += new System.EventHandler(this.AddPositionsCheckBox_CheckStateChanged);
         // 
         // VersesTextBox
         // 
@@ -13407,6 +13407,8 @@ public partial class MainForm : Form, ISubscriber
 
             UpdateFindByNumbersResultType();
             UpdateDistancesOptions();
+
+            UpdateAddPositionsDistancesCheckBoxes();
         }
         catch (Exception ex)
         {
@@ -13978,13 +13980,6 @@ public partial class MainForm : Form, ISubscriber
                                                         parts = line.Split('=');
                                                         if (parts.Length >= 2)
                                                         {
-                                                            m_client.NumerologySystem.AddDistancesToPrevious = bool.Parse(parts[1].Trim());
-                                                        }
-
-                                                        line = reader.ReadLine();
-                                                        parts = line.Split('=');
-                                                        if (parts.Length >= 2)
-                                                        {
                                                             m_client.NumerologySystem.AddDistancesWithinChapters = bool.Parse(parts[1].Trim());
                                                             if (m_client.Book != null)
                                                             {
@@ -13994,13 +13989,6 @@ public partial class MainForm : Form, ISubscriber
 
                                                         // must be called here
                                                         UpdateNumerologySystemControls();
-
-                                                        line = reader.ReadLine();
-                                                        parts = line.Split('=');
-                                                        if (parts.Length >= 2)
-                                                        {
-                                                            AddPositionsCheckBox.Checked = bool.Parse(parts[1].Trim());
-                                                        }
 
                                                         line = reader.ReadLine();
                                                         parts = line.Split('=');
@@ -14649,9 +14637,7 @@ public partial class MainForm : Form, ISubscriber
                         writer.WriteLine("AddToVerseVDistance" + "=" + m_client.NumerologySystem.AddToVerseVDistance.ToString());
                         writer.WriteLine("AddToVerseCDistance" + "=" + m_client.NumerologySystem.AddToVerseCDistance.ToString());
                         writer.WriteLine("AddToChapterCNumber" + "=" + m_client.NumerologySystem.AddToChapterCNumber.ToString());
-                        writer.WriteLine("AddDistancesToPrevious" + "=" + m_client.NumerologySystem.AddDistancesToPrevious.ToString());
                         writer.WriteLine("AddDistancesWithinChapters" + "=" + m_client.NumerologySystem.AddDistancesWithinChapters.ToString());
-                        writer.WriteLine("AddPositions" + "=" + AddPositionsCheckBox.Checked.ToString());
                         writer.WriteLine("ShowAddControls" + "=" + m_show_add_controls.ToString());
                     }
                     writer.WriteLine("MathsDivisor" + "=" + m_maths_divisor);
@@ -30842,7 +30828,7 @@ public partial class MainForm : Form, ISubscriber
                                         else
                                         {
                                             str.Insert(line_start, " ");
-                                            long value = m_client.CalculateValueXXX(c);
+                                            long value = m_client.CalculateValueUserText(c);
                                             str.Insert(line_start, Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 8, '0'));
                                         }
                                     }
@@ -30856,7 +30842,7 @@ public partial class MainForm : Form, ISubscriber
                                         string[] word_texts = line.Split(' ');
                                         foreach (string word_text in word_texts)
                                         {
-                                            long value = m_client.CalculateValueXXX(word_text);
+                                            long value = m_client.CalculateValueUserText(word_text);
                                             str.Insert(line_start, Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 16, '0'));
                                             str.Insert(line_start, " ");
                                         }
@@ -30871,7 +30857,7 @@ public partial class MainForm : Form, ISubscriber
                                     string[] lines = text.Split('\n');
                                     foreach (string line in lines)
                                     {
-                                        long value = m_client.CalculateValueXXX(line);
+                                        long value = m_client.CalculateValueUserText(line);
                                         str.AppendLine(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 32, '0'));
                                     }
                                 }
@@ -30911,7 +30897,7 @@ public partial class MainForm : Form, ISubscriber
                                         }
                                         else
                                         {
-                                            long value = m_client.CalculateValueXXX(c);
+                                            long value = m_client.CalculateValueUserText(c);
                                             str.Append(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 8, '0'));
                                             str.Append(" ");
                                         }
@@ -30926,7 +30912,7 @@ public partial class MainForm : Form, ISubscriber
                                         string[] word_texts = line.Split(' ');
                                         foreach (string word_text in word_texts)
                                         {
-                                            long value = m_client.CalculateValueXXX(word_text);
+                                            long value = m_client.CalculateValueUserText(word_text);
                                             str.Append(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 16, '0'));
                                             str.Append(" ");
                                         }
@@ -30940,7 +30926,7 @@ public partial class MainForm : Form, ISubscriber
                                     string[] lines = text.Split('\n');
                                     foreach (string line in lines)
                                     {
-                                        long value = m_client.CalculateValueXXX(line);
+                                        long value = m_client.CalculateValueUserText(line);
                                         str.AppendLine(Radix.Encode(value, m_values_sequence_radix).PadLeft((m_values_sequence_radix > 2) ? 0 : 32, '0'));
                                     }
                                 }
@@ -34295,15 +34281,15 @@ public partial class MainForm : Form, ISubscriber
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
-        FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
@@ -34343,15 +34329,15 @@ public partial class MainForm : Form, ISubscriber
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
-        FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
@@ -34391,15 +34377,15 @@ public partial class MainForm : Form, ISubscriber
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
-        FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 0;
@@ -34439,15 +34425,15 @@ public partial class MainForm : Form, ISubscriber
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
-        FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 0;
         FindByNumbersVersesNumericUpDown.Value = 1;
@@ -34487,15 +34473,15 @@ public partial class MainForm : Form, ISubscriber
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitSumNumberTypeLabel);
         ResetFindByNumbersNumberTypeControl(FindByNumbersValueDigitalRootNumberTypeLabel);
 
-        FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
-        FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersNumberNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersChaptersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersVersesNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersWordsNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersUniqueLettersNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitSumNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
+        for (int i = 0; i < 3; i++) FindByNumbersValueDigitalRootNumericUpDown.ValueChanged -= new EventHandler(FindByNumbersNumericUpDown_ValueChanged);
         FindByNumbersNumberNumericUpDown.Value = 0;
         FindByNumbersChaptersNumericUpDown.Value = 1;
         FindByNumbersVersesNumericUpDown.Value = 0;
@@ -37363,7 +37349,7 @@ public partial class MainForm : Form, ISubscriber
                         word_count += phrase.Text.Split(' ').Length;
                         string phrase_nospaces = phrase.Text.SimplifyTo(m_client.NumerologySystem.TextMode).Replace(" ", "");
                         letter_count += phrase_nospaces.Length;
-                        value += m_client.CalculateValueXXX(phrase.Text);
+                        value += m_client.CalculateValueUserText(phrase.Text);
                     }
                 }
 
@@ -38763,8 +38749,8 @@ public partial class MainForm : Form, ISubscriber
                 {
                     try
                     {
-                        AddPositionsCheckBox.CheckedChanged -= new EventHandler(AddPositionsCheckBox_CheckedChanged);
-                        AddDistancesToPreviousCheckBox.CheckedChanged -= new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
+                        for (int i = 0; i < 3; i++) AddPositionsCheckBox.CheckStateChanged -= new EventHandler(AddPositionsCheckBox_CheckStateChanged);
+                        for (int i = 0; i < 3; i++) AddDistancesToPreviousCheckBox.CheckStateChanged -= new EventHandler(AddDistancesToPreviousCheckBox_CheckStateChanged);
 
                         bool is_checked = (sender as CheckBox).Enabled && (sender as CheckBox).Checked;
 
@@ -38849,35 +38835,14 @@ public partial class MainForm : Form, ISubscriber
                             m_client.NumerologySystem.AddToChapterCNumber = is_checked;
                         }
 
-                        AddPositionsCheckBox.Checked =
-                                AddToLetterLNumberCheckBox.Checked &&
-                                AddToLetterWNumberCheckBox.Checked &&
-                                AddToLetterVNumberCheckBox.Checked &&
-                                AddToLetterCNumberCheckBox.Checked &&
-                                AddToWordWNumberCheckBox.Checked &&
-                                AddToWordVNumberCheckBox.Checked &&
-                                AddToWordCNumberCheckBox.Checked &&
-                                AddToVerseVNumberCheckBox.Checked &&
-                                AddToVerseCNumberCheckBox.Checked &&
-                                AddToChapterCNumberCheckBox.Checked;
-
-                        AddDistancesToPreviousCheckBox.Checked =
-                                AddToLetterLDistanceCheckBox.Checked &&
-                                AddToLetterWDistanceCheckBox.Checked &&
-                                AddToLetterVDistanceCheckBox.Checked &&
-                                AddToLetterCDistanceCheckBox.Checked &&
-                                AddToWordWDistanceCheckBox.Checked &&
-                                AddToWordVDistanceCheckBox.Checked &&
-                                AddToWordCDistanceCheckBox.Checked &&
-                                AddToVerseVDistanceCheckBox.Checked &&
-                                AddToVerseCDistanceCheckBox.Checked;
+                        UpdateAddPositionsDistancesCheckBoxes();
 
                         CalculateCurrentValue();
                     }
                     finally
                     {
-                        AddPositionsCheckBox.CheckedChanged += new EventHandler(AddPositionsCheckBox_CheckedChanged);
-                        AddDistancesToPreviousCheckBox.CheckedChanged += new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
+                        AddPositionsCheckBox.CheckStateChanged += new EventHandler(AddPositionsCheckBox_CheckStateChanged);
+                        AddDistancesToPreviousCheckBox.CheckStateChanged += new EventHandler(AddDistancesToPreviousCheckBox_CheckStateChanged);
                     }
                 }
             }
@@ -38887,12 +38852,104 @@ public partial class MainForm : Form, ISubscriber
             this.Cursor = Cursors.Default;
         }
     }
-    private void AddPositionsCheckBox_CheckedChanged(object sender, EventArgs e)
+    private void UpdateAddPositionsDistancesCheckBoxes()
     {
+        this.Cursor = Cursors.WaitCursor;
+        try
+        {
+            for (int i = 0; i < 3; i++) AddPositionsCheckBox.CheckStateChanged -= new EventHandler(AddPositionsCheckBox_CheckStateChanged);
+            for (int i = 0; i < 3; i++) AddDistancesToPreviousCheckBox.CheckStateChanged -= new EventHandler(AddDistancesToPreviousCheckBox_CheckStateChanged);
+
+            if (
+                    AddToLetterLNumberCheckBox.Checked &&
+                    AddToLetterWNumberCheckBox.Checked &&
+                    AddToLetterVNumberCheckBox.Checked &&
+                    AddToLetterCNumberCheckBox.Checked &&
+                    AddToWordWNumberCheckBox.Checked &&
+                    AddToWordVNumberCheckBox.Checked &&
+                    AddToWordCNumberCheckBox.Checked &&
+                    AddToVerseVNumberCheckBox.Checked &&
+                    AddToVerseCNumberCheckBox.Checked &&
+                    AddToChapterCNumberCheckBox.Checked
+                )
+            {
+                AddPositionsCheckBox.CheckState = CheckState.Checked;
+            }
+            else if (
+                     !AddToLetterLNumberCheckBox.Checked &&
+                     !AddToLetterWNumberCheckBox.Checked &&
+                     !AddToLetterVNumberCheckBox.Checked &&
+                     !AddToLetterCNumberCheckBox.Checked &&
+                     !AddToWordWNumberCheckBox.Checked &&
+                     !AddToWordVNumberCheckBox.Checked &&
+                     !AddToWordCNumberCheckBox.Checked &&
+                     !AddToVerseVNumberCheckBox.Checked &&
+                     !AddToVerseCNumberCheckBox.Checked &&
+                     !AddToChapterCNumberCheckBox.Checked
+                 )
+            {
+                AddPositionsCheckBox.CheckState = CheckState.Unchecked;
+            }
+            else
+            {
+                AddPositionsCheckBox.CheckState = CheckState.Indeterminate;
+            }
+
+            if (
+                    AddToLetterLDistanceCheckBox.Checked &&
+                    AddToLetterWDistanceCheckBox.Checked &&
+                    AddToLetterVDistanceCheckBox.Checked &&
+                    AddToLetterCDistanceCheckBox.Checked &&
+                    AddToWordWDistanceCheckBox.Checked &&
+                    AddToWordVDistanceCheckBox.Checked &&
+                    AddToWordCDistanceCheckBox.Checked &&
+                    AddToVerseVDistanceCheckBox.Checked &&
+                    AddToVerseCDistanceCheckBox.Checked
+                )
+            {
+                AddDistancesToPreviousCheckBox.CheckState = CheckState.Checked;
+            }
+            else if (
+                    !AddToLetterLDistanceCheckBox.Checked &&
+                    !AddToLetterWDistanceCheckBox.Checked &&
+                    !AddToLetterVDistanceCheckBox.Checked &&
+                    !AddToLetterCDistanceCheckBox.Checked &&
+                    !AddToWordWDistanceCheckBox.Checked &&
+                    !AddToWordVDistanceCheckBox.Checked &&
+                    !AddToWordCDistanceCheckBox.Checked &&
+                    !AddToVerseVDistanceCheckBox.Checked &&
+                    !AddToVerseCDistanceCheckBox.Checked
+                )
+            {
+                AddDistancesToPreviousCheckBox.CheckState = CheckState.Unchecked;
+            }
+            else
+            {
+                AddDistancesToPreviousCheckBox.CheckState = CheckState.Indeterminate;
+            }
+        }
+        finally
+        {
+            AddPositionsCheckBox.CheckStateChanged += new EventHandler(AddPositionsCheckBox_CheckStateChanged);
+            AddDistancesToPreviousCheckBox.CheckStateChanged += new EventHandler(AddDistancesToPreviousCheckBox_CheckStateChanged);
+
+            this.Cursor = Cursors.Default;
+        }
+    }
+    private void AddPositionsCheckBox_CheckStateChanged(object sender, EventArgs e)
+    {
+        if (AddPositionsCheckBox.CheckState == CheckState.Indeterminate)
+        {
+            AddPositionsCheckBox.CheckState = CheckState.Unchecked;
+        }
         UpdatePositionCheckBoxes();
     }
-    private void AddDistancesToPreviousCheckBox_CheckedChanged(object sender, EventArgs e)
+    private void AddDistancesToPreviousCheckBox_CheckStateChanged(object sender, EventArgs e)
     {
+        if (AddDistancesToPreviousCheckBox.CheckState == CheckState.Indeterminate)
+        {
+            AddDistancesToPreviousCheckBox.CheckState = CheckState.Unchecked;
+        }
         UpdateDistanceCheckBoxes();
     }
     private void UpdatePositionCheckBoxes()
@@ -38911,21 +38968,24 @@ public partial class MainForm : Form, ISubscriber
             for (int i = 0; i < 3; i++) AddToVerseCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
             for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
 
-            bool is_checked = AddPositionsCheckBox.Checked;
+            if (AddPositionsCheckBox.CheckState != CheckState.Indeterminate)
+            {
+                bool is_checked = AddPositionsCheckBox.Checked;
 
-            AddToLetterLNumberCheckBox.Checked = is_checked;
-            AddToLetterWNumberCheckBox.Checked = is_checked;
-            AddToLetterVNumberCheckBox.Checked = is_checked;
-            AddToLetterCNumberCheckBox.Checked = is_checked;
-            AddToWordWNumberCheckBox.Checked = is_checked;
-            AddToWordVNumberCheckBox.Checked = is_checked;
-            AddToWordCNumberCheckBox.Checked = is_checked;
-            AddToVerseVNumberCheckBox.Checked = is_checked;
-            AddToVerseCNumberCheckBox.Checked = is_checked;
-            AddToChapterCNumberCheckBox.Checked = is_checked;
+                AddToLetterLNumberCheckBox.Checked = is_checked;
+                AddToLetterWNumberCheckBox.Checked = is_checked;
+                AddToLetterVNumberCheckBox.Checked = is_checked;
+                AddToLetterCNumberCheckBox.Checked = is_checked;
+                AddToWordWNumberCheckBox.Checked = is_checked;
+                AddToWordVNumberCheckBox.Checked = is_checked;
+                AddToWordCNumberCheckBox.Checked = is_checked;
+                AddToVerseVNumberCheckBox.Checked = is_checked;
+                AddToVerseCNumberCheckBox.Checked = is_checked;
+                AddToChapterCNumberCheckBox.Checked = is_checked;
 
-            UpdateNumerologySystem();
-            CalculateCurrentValue();
+                UpdateNumerologySystem();
+                CalculateCurrentValue();
+            }
         }
         finally
         {
@@ -38958,20 +39018,23 @@ public partial class MainForm : Form, ISubscriber
             for (int i = 0; i < 3; i++) AddToVerseVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
             for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
 
-            bool is_checked = AddDistancesToPreviousCheckBox.Checked;
+            if (AddDistancesToPreviousCheckBox.CheckState != CheckState.Indeterminate)
+            {
+                bool is_checked = AddDistancesToPreviousCheckBox.Checked;
 
-            AddToLetterLDistanceCheckBox.Checked = is_checked;
-            AddToLetterWDistanceCheckBox.Checked = is_checked;
-            AddToLetterVDistanceCheckBox.Checked = is_checked;
-            AddToLetterCDistanceCheckBox.Checked = is_checked;
-            AddToWordWDistanceCheckBox.Checked = is_checked;
-            AddToWordVDistanceCheckBox.Checked = is_checked;
-            AddToWordCDistanceCheckBox.Checked = is_checked;
-            AddToVerseVDistanceCheckBox.Checked = is_checked;
-            AddToVerseCDistanceCheckBox.Checked = is_checked;
+                AddToLetterLDistanceCheckBox.Checked = is_checked;
+                AddToLetterWDistanceCheckBox.Checked = is_checked;
+                AddToLetterVDistanceCheckBox.Checked = is_checked;
+                AddToLetterCDistanceCheckBox.Checked = is_checked;
+                AddToWordWDistanceCheckBox.Checked = is_checked;
+                AddToWordVDistanceCheckBox.Checked = is_checked;
+                AddToWordCDistanceCheckBox.Checked = is_checked;
+                AddToVerseVDistanceCheckBox.Checked = is_checked;
+                AddToVerseCDistanceCheckBox.Checked = is_checked;
 
-            UpdateNumerologySystem();
-            CalculateCurrentValue();
+                UpdateNumerologySystem();
+                CalculateCurrentValue();
+            }
         }
         finally
         {
@@ -39054,9 +39117,8 @@ public partial class MainForm : Form, ISubscriber
                 m_client.NumerologySystem.AddToVerseVDistance = AddToVerseVDistanceCheckBox.Checked;
                 m_client.NumerologySystem.AddToVerseCDistance = AddToVerseCDistanceCheckBox.Checked;
                 m_client.NumerologySystem.AddToChapterCNumber = AddToChapterCNumberCheckBox.Checked;
-
-                m_client.NumerologySystem.AddDistancesToPrevious = AddDistancesToPreviousCheckBox.Checked;
                 m_client.NumerologySystem.AddDistancesWithinChapters = AddDistancesWithinChaptersCheckBox.Checked;
+
                 if (m_client.Book != null)
                 {
                     m_client.Book.SetupDistances(m_client.NumerologySystem.AddDistancesWithinChapters);
@@ -39091,7 +39153,6 @@ public partial class MainForm : Form, ISubscriber
                     for (int i = 0; i < 3; i++) AddToVerseVDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
                     for (int i = 0; i < 3; i++) AddToVerseCDistanceCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
                     for (int i = 0; i < 3; i++) AddToChapterCNumberCheckBox.CheckedChanged -= new EventHandler(AddToControlCheckBox_CheckedChanged);
-                    for (int i = 0; i < 3; i++) AddDistancesToPreviousCheckBox.CheckedChanged -= new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
                     for (int i = 0; i < 3; i++) AddDistancesWithinChaptersCheckBox.CheckedChanged -= new EventHandler(AddDistancesWithinChaptersCheckBox_CheckedChanged);
 
                     // copy from client to gui controls
@@ -39114,7 +39175,6 @@ public partial class MainForm : Form, ISubscriber
                     AddToVerseVDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseVDistance;
                     AddToVerseCDistanceCheckBox.Checked = m_client.NumerologySystem.AddToVerseCDistance;
                     AddToChapterCNumberCheckBox.Checked = m_client.NumerologySystem.AddToChapterCNumber;
-                    AddDistancesToPreviousCheckBox.Checked = m_client.NumerologySystem.AddDistancesToPrevious;
                     AddDistancesWithinChaptersCheckBox.Checked = m_client.NumerologySystem.AddDistancesWithinChapters;
                 }
                 finally
@@ -39138,7 +39198,6 @@ public partial class MainForm : Form, ISubscriber
                     AddToVerseVDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
                     AddToVerseCDistanceCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
                     AddToChapterCNumberCheckBox.CheckedChanged += new EventHandler(AddToControlCheckBox_CheckedChanged);
-                    AddDistancesToPreviousCheckBox.CheckedChanged += new EventHandler(AddDistancesToPreviousCheckBox_CheckedChanged);
                     AddDistancesWithinChaptersCheckBox.CheckedChanged += new EventHandler(AddDistancesWithinChaptersCheckBox_CheckedChanged);
                 }
             }
@@ -39830,7 +39889,7 @@ public partial class MainForm : Form, ISubscriber
     {
         if (m_client != null)
         {
-            long value = m_client.CalculateValueXXX(user_text);
+            long value = m_client.CalculateValueUserText(user_text);
             FactorizeValue(value, false);
         }
     }
@@ -39966,7 +40025,7 @@ public partial class MainForm : Form, ISubscriber
             }
             else if (expression.IsArabic() || ((m_radix <= 10) && expression.IsEnglish()))
             {
-                m_double_value = m_client.CalculateValueXXX(expression);
+                m_double_value = m_client.CalculateValueUserText(expression);
                 value = (long)Math.Round(m_double_value);
                 FactorizeValue(value, true); // direct text enty
                 ValueLabel.Text = (m_show_add_controls ? "-- " : "+ ") + L[l]["Text"];
@@ -40035,7 +40094,7 @@ public partial class MainForm : Form, ISubscriber
                 {
                     try
                     {
-                        result = m_client.CalculateValueXXX(expression);
+                        result = m_client.CalculateValueUserText(expression);
                     }
                     catch // text
                     {
