@@ -1796,7 +1796,7 @@ public class Server : IPublisher
                         }
                         else
                         {
-                            Log.Append("\t" + "\t" + "0");
+                            Log.AppendLine("\t" + "\t" + "0");
                         }
                     }
 
@@ -1812,7 +1812,7 @@ public class Server : IPublisher
                 }
                 else
                 {
-                    Log.Append("\t" + "\t" + "\t" + "0");
+                    Log.AppendLine("\t" + "\t" + "\t" + "0");
                 }
             }
         }
