@@ -1,5 +1,7 @@
 @echo off
 
+CALL Version.bat
+
 CALL Clean.bat
 CD NET2
 CALL Clean.bat
