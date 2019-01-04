@@ -261,52 +261,52 @@ public class Client : IPublisher, ISubscriber
     // used for Quran text only
     public long CalculateValue(Letter letter)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(letter);
     }
     public long CalculateValue(List<Letter> letters)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(letters);
     }
     public long CalculateValue(Word word)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(word);
     }
     public long CalculateValue(List<Word> words)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(words);
     }
     public long CalculateValue(Verse verse)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(verse);
     }
     public long CalculateValue(List<Verse> verses)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(verses);
     }
     public long CalculateValue(Chapter chapter)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(chapter);
     }
     public long CalculateValue(List<Chapter> chapters)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(chapters);
     }
     public long CalculateValue(Book book)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(book);
     }
     public long CalculateValue(List<Verse> verses, Letter start_letter, Letter end_letter)
     {
-        Server.Log.Length = 0;
+        Server.ClearLog();
         return Server.CalculateValue(verses, start_letter, end_letter);
     }
     public List<long> CalculateVerseValues(List<Verse> verses)
@@ -314,7 +314,7 @@ public class Client : IPublisher, ISubscriber
         List<long> result = new List<long>();
         foreach (Verse verse in verses)
         {
-            Server.Log.Length = 0;
+            Server.ClearLog();
             long value = Server.CalculateValue(verse);
             result.Add(value);
         }
@@ -327,7 +327,7 @@ public class Client : IPublisher, ISubscriber
         {
             foreach (Word word in verse.Words)
             {
-                Server.Log.Length = 0;
+                Server.ClearLog();
                 long value = Server.CalculateValue(word);
                 result.Add(value);
             }
@@ -343,7 +343,7 @@ public class Client : IPublisher, ISubscriber
             {
                 foreach (Letter letter in word.Letters)
                 {
-                    Server.Log.Length = 0;
+                    Server.ClearLog();
                     long value = Server.CalculateValue(letter);
                     result.Add(value);
                 }
@@ -466,7 +466,10 @@ public class Client : IPublisher, ISubscriber
                         writer.WriteLine("--------------------------------------------------------------------------------------------------");
                         writer.WriteLine(Server.Log.ToString());
                         writer.WriteLine("--------------------------------------------------------------------------------------------------");
-                        writer.WriteLine("Total" + "\t" + CalculateValueUserText(text));
+                        writer.WriteLine("Sum" + "\t" + Server.ValueSum + "\t" + "\t" + "\t" + "\t" + Server.LSum + "\t" + Server.WSum + "\t" + Server.VSum + "\t" + Server.CSum + "\t" + Server.dLSum + "\t" + Server.dWSum + "\t" + Server.dVSum + "\t" + Server.dCSum);
+                        writer.WriteLine("--------------------------------------------------------------------------------------------------");
+                        long total = Server.ValueSum + Server.LSum + Server.WSum + Server.VSum + Server.CSum + Server.dLSum + Server.dWSum + Server.dVSum + Server.dCSum;
+                        writer.WriteLine("Total" + "\t" + total);
                         writer.WriteLine("--------------------------------------------------------------------------------------------------");
                     }
                 }

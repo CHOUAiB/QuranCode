@@ -1374,6 +1374,19 @@ public class Server : IPublisher
     }
 
     public static StringBuilder Log = new StringBuilder();
+    public static void ClearLog()
+    {
+        Log.Length = 0;
+        ValueSum = 0L;
+        LSum = 0L;
+        WSum = 0L;
+        VSum = 0L;
+        CSum = 0L;
+        dLSum = 0L;
+        dWSum = 0L;
+        dVSum = 0L;
+        dCSum = 0L;
+    }
     // used for non-Quran text
     public static long CalculateValueUserText(char character)
     {
@@ -1408,7 +1421,7 @@ public class Server : IPublisher
             Log.Append(letter.ToString());
 
             long value = s_numerology_system.CalculateValue(letter.Character);
-            result += value;
+            result += value; ValueSum += value;
             Log.Append("\t" + value);
 
             if (s_numerology_system.LetterValue.StartsWith("Base"))
@@ -1501,7 +1514,7 @@ public class Server : IPublisher
                         str.Insert(0, s_numerology_system.CalculateValue(letter.Character));
                     }
                     value = Radix.Decode(str.ToString(), radix);
-                    result += value;
+                    result += value; ValueSum += value;
                     Log.Append("\t" + value);
                 }
             }
@@ -1604,7 +1617,7 @@ public class Server : IPublisher
                                 str.Insert(0, s_numerology_system.CalculateValue(letter.Character));
                             }
                             value = Radix.Decode(str.ToString(), radix);
-                            result += value;
+                            result += value; ValueSum += value;
                             Log.Append("\t" + value);
 
                             str.Length = 0;
@@ -1674,7 +1687,7 @@ public class Server : IPublisher
                             str.Insert(0, s_numerology_system.CalculateValue(letter.Character));
                         }
                         value = Radix.Decode(str.ToString(), radix);
-                        result += value;
+                        result += value; ValueSum += value;
                         Log.Append("\t" + value);
 
                         str.Length = 0;
@@ -1750,7 +1763,7 @@ public class Server : IPublisher
                             }
                         }
                         value = Radix.Decode(str.ToString(), radix);
-                        result += value;
+                        result += value; ValueSum += value;
                         Log.Append("\t" + value);
 
                         str.Length = 0;
@@ -2276,6 +2289,15 @@ public class Server : IPublisher
         return result;
     }
     // AddTo... 19 parameters
+    public static long ValueSum = 0L;
+    public static long LSum = 0L;
+    public static long WSum = 0L;
+    public static long VSum = 0L;
+    public static long CSum = 0L;
+    public static long dLSum = 0L;
+    public static long dWSum = 0L;
+    public static long dVSum = 0L;
+    public static long dCSum = 0L;
     private static long AdjustValue(Letter letter)
     {
         long result = 0L;
@@ -2290,7 +2312,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterLNumber)
                 {
                     value = letter.NumberInWord;
-                    result += value;
+                    result += value; LSum += value;
                     Log.Append(value);
                 }
 
@@ -2298,7 +2320,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterWNumber)
                 {
                     value = letter.Word.NumberInVerse;
-                    result += value;
+                    result += value; WSum += value;
                     Log.Append(value);
                 }
 
@@ -2306,7 +2328,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterVNumber)
                 {
                     value = letter.Word.Verse.NumberInChapter;
-                    result += value;
+                    result += value; VSum += value;
                     Log.Append(value);
                 }
 
@@ -2314,7 +2336,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterCNumber)
                 {
                     value = letter.Word.Verse.Chapter.SortedNumber;
-                    result += value;
+                    result += value; CSum += value;
                     Log.Append(value);
                 }
 
@@ -2322,7 +2344,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterLDistance)
                 {
                     value = letter.DistanceToPrevious.dL;
-                    result += value;
+                    result += value; dLSum += value;
                     Log.Append(value);
                 }
 
@@ -2330,7 +2352,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterWDistance)
                 {
                     value = letter.DistanceToPrevious.dW;
-                    result += value;
+                    result += value; dWSum += value;
                     Log.Append(value);
                 }
 
@@ -2338,7 +2360,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterVDistance)
                 {
                     value = letter.DistanceToPrevious.dV;
-                    result += value;
+                    result += value; dVSum += value;
                     Log.Append(value);
                 }
 
@@ -2346,7 +2368,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToLetterCDistance)
                 {
                     value = letter.DistanceToPrevious.dC;
-                    result += value;
+                    result += value; dCSum += value;
                     Log.Append(value);
                 }
 
@@ -2369,7 +2391,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToWordWNumber)
                 {
                     value = word.NumberInVerse;
-                    result += value;
+                    result += value; WSum += value;
                     Log.Append(value);
                 }
 
@@ -2377,7 +2399,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToWordVNumber)
                 {
                     value = word.Verse.NumberInChapter;
-                    result += value;
+                    result += value; VSum += value;
                     Log.Append(value);
                 }
 
@@ -2385,7 +2407,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToWordCNumber)
                 {
                     value = word.Verse.Chapter.SortedNumber;
-                    result += value;
+                    result += value; CSum += value;
                     Log.Append(value);
                 }
 
@@ -2393,7 +2415,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToWordWDistance)
                 {
                     value = word.DistanceToPrevious.dW;
-                    result += value;
+                    result += value; dWSum += value;
                     Log.Append(value);
                 }
 
@@ -2401,7 +2423,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToWordVDistance)
                 {
                     value = word.DistanceToPrevious.dV;
-                    result += value;
+                    result += value; dVSum += value;
                     Log.Append(value);
                 }
 
@@ -2409,7 +2431,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToWordCDistance)
                 {
                     value = word.DistanceToPrevious.dC;
-                    result += value;
+                    result += value; dCSum += value;
                     Log.Append(value);
                 }
 
@@ -2432,7 +2454,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToVerseVNumber)
                 {
                     value = verse.NumberInChapter;
-                    result += value;
+                    result += value; VSum += value;
                     Log.Append(value);
                 }
 
@@ -2440,7 +2462,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToVerseCNumber)
                 {
                     value = verse.Chapter.SortedNumber;
-                    result += value;
+                    result += value; CSum += value;
                     Log.Append(value);
                 }
 
@@ -2448,7 +2470,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToVerseVDistance)
                 {
                     value = verse.DistanceToPrevious.dV;
-                    result += value;
+                    result += value; dVSum += value;
                     Log.Append(value);
                 }
 
@@ -2456,7 +2478,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToVerseCDistance)
                 {
                     value = verse.DistanceToPrevious.dC;
-                    result += value;
+                    result += value; dCSum += value;
                     Log.Append(value);
                 }
 
@@ -2479,7 +2501,7 @@ public class Server : IPublisher
                 if (s_numerology_system.AddToChapterCNumber)
                 {
                     value = chapter.SortedNumber;
-                    result += value;
+                    result += value; CSum += value;
                     Log.Append(value);
                 }
 
